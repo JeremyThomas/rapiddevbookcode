@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Data;
@@ -171,7 +172,7 @@ namespace AW.DebugVisualizers.Tests
       TestShowTransported(northwindLinqMetaData.Customer.ToEntityCollection2(), expectedColumnCount);
     }
 
-    public static LinqMetaData GetNorthwindLinqMetaData()
+    private static LinqMetaData GetNorthwindLinqMetaData()
     {
       return new LinqMetaData {AdapterToUse = new DataAccessAdapter()};
     }
@@ -217,7 +218,7 @@ namespace AW.DebugVisualizers.Tests
     {
       var listofNonSerializableClasses = NonSerializableClass.GenerateList();
       TestSerialize(listofNonSerializableClasses);
-      listofNonSerializableClasses.Insert(0, new SerializableClass {DateTimeField = DateTime.Now, IntField = listofNonSerializableClasses.Count, StringField = listofNonSerializableClasses.Count.ToString()});
+      listofNonSerializableClasses.Insert(0, new SerializableClass {DateTimeField = DateTime.Now, IntField = listofNonSerializableClasses.Count, StringField = listofNonSerializableClasses.Count.ToString(CultureInfo.InvariantCulture)});
       TestSerialize(listofNonSerializableClasses);
       TestSerialize(new ArrayList(listofNonSerializableClasses));
       TestShow(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)), 14);
@@ -272,7 +273,7 @@ namespace AW.DebugVisualizers.Tests
     {
       var dictionary = NonSerializableClass.GenerateList().ToDictionary(ns => ns.IntProperty, ns => ns);
       TestShowTransported(dictionary, 2, 1);
-      var expectedColumnCount = NonSerializableClass.NumberOfNonSerializableClassProperties*2;
+      const int expectedColumnCount = NonSerializableClass.NumberOfNonSerializableClassProperties*2;
       TestShowTransported(dictionary.Values, expectedColumnCount);
       TestShowTransported(dictionary.Keys, 1);
     }
@@ -334,7 +335,7 @@ namespace AW.DebugVisualizers.Tests
       TestSerialize(assemblies);
     }
 
-    public static void TestSerialize(object enumerableOrDataTableToVisualize)
+    private static void TestSerialize(object enumerableOrDataTableToVisualize)
     {
       //Assert.IsInstanceOfType(enumerableToVisualize, typeof(IEnumerable));
       AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, VisualizerObjectProviderFake.SerializeDeserialize(enumerableOrDataTableToVisualize));
@@ -363,7 +364,7 @@ namespace AW.DebugVisualizers.Tests
     /// </summary>
     /// <param name="enumerableOrDataTableToVisualize"> The enumerable or data table to visualize. </param>
     /// <param name="expectedColumnCount"> The expected column count. </param>
-    public static void TestShow(object enumerableOrDataTableToVisualize, int expectedColumnCount)
+    private static void TestShow(object enumerableOrDataTableToVisualize, int expectedColumnCount)
     {
       Assert.IsTrue(enumerableOrDataTableToVisualize is IEnumerable || enumerableOrDataTableToVisualize is DataTableSurrogate || enumerableOrDataTableToVisualize is WeakReference);
       var visualizerObjectProviderFake = new VisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
@@ -389,7 +390,7 @@ namespace AW.DebugVisualizers.Tests
     /// <param name="enumerableOrDataTableToVisualize"> The enumerable or data table to visualize. </param>
     /// <param name="expectedColumnCount"> The expected column count. </param>
     /// <param name="expectedTransportedColumnCount"> The expected transported column count. </param>
-    public static void TestShowTransported(object enumerableOrDataTableToVisualize, int expectedColumnCount, int expectedTransportedColumnCount = -1)
+    private static void TestShowTransported(object enumerableOrDataTableToVisualize, int expectedColumnCount, int expectedTransportedColumnCount = -1)
     {
       TestShow(enumerableOrDataTableToVisualize, expectedColumnCount);
       var transportedEnumerableOrDataTable = VisualizerObjectProviderFake.SerializeDeserialize(enumerableOrDataTableToVisualize);
@@ -402,7 +403,7 @@ namespace AW.DebugVisualizers.Tests
 
   internal class DialogVisualizerServiceFake : IDialogVisualizerService
   {
-    public Form VisualizerForm { get; set; }
+    public Form VisualizerForm { get; private set; }
 
     #region Implementation of IDialogVisualizerService
 

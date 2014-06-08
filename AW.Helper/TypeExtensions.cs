@@ -30,6 +30,7 @@ namespace AW.Helper
       {typeof (string), "string"},
       {typeof (object), "object"}
     };
+
 // ReSharper restore StringLiteralTypo
     public static string GetKeyword(this Type type)
     {
@@ -52,7 +53,7 @@ namespace AW.Helper
       var isBasic = true;
       if (showDeclaringType && type.IsNested && !type.IsGenericParameter)
       {
-        BuildFriendlyName(builder, type.DeclaringType, useKeywords, showGenericArguments, showDeclaringType, compactNullable);
+        BuildFriendlyName(builder, type.DeclaringType, useKeywords, showGenericArguments, true, compactNullable);
         builder.Append('.');
       }
       if (type.IsArray)
@@ -103,7 +104,7 @@ namespace AW.Helper
             for (var i = 0; i < args.Length; ++i)
             {
               if (i > 0) builder.Append(", ");
-              BuildFriendlyName(builder, args[i], useKeywords, showGenericArguments, showDeclaringType, compactNullable);
+              BuildFriendlyName(builder, args[i], useKeywords, true, showDeclaringType, compactNullable);
             }
           }
           else
@@ -120,7 +121,7 @@ namespace AW.Helper
           var isNullable = compactNullable && type.GetGenericTypeDefinition() == typeof (Nullable<>);
           if (isNullable)
           {
-            BuildFriendlyName(builder, Nullable.GetUnderlyingType(type), useKeywords, showGenericArguments, showDeclaringType, compactNullable);
+            BuildFriendlyName(builder, Nullable.GetUnderlyingType(type), useKeywords, showGenericArguments, showDeclaringType, true);
             builder.Append('?');
           }
           else

@@ -626,7 +626,7 @@
                DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type Window}}}">
         <Grid>
           <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" Name="RowDefAdditionalAssemblies" />
+            <RowDefinition Height="Auto" Name="RowDefAdditionalAssemblies" x:FieldModifier="private" />
             <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
@@ -692,7 +692,7 @@
                         VerticalAlignment="Top" Grid.Row="1"
                         Background="Black" ResizeBehavior="PreviousAndNext"
                         ShowsPreview="True" DragStarted="GridSplitter_DragStarted"
-                        DragCompleted="GridSplitter_DragCompleted" />
+                        DragCompleted="GridSplitter_DragCompleted" x:FieldModifier="private" />
         </Grid>
       </TabItem>
       <TabItem x:Name="DriverTab"

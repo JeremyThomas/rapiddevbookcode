@@ -16,14 +16,14 @@ internal static class AssemblyInfoConstants
   /// </summary>
   public const string AssemblyInformationalVersion = "4.1";
 
-  public const string AssemblyRevision = "0";
+  private const string AssemblyRevision = "0";
 
   /// <summary>
   ///   4.1.0.0
   /// </summary>
   public const string AssemblyVersion = AssemblyInformationalVersion + ".0." + AssemblyRevision;
 
-  public const string ExecutableRevision = "0";
+  private const string ExecutableRevision = "0";
   public const string ExecutableVersion = AssemblyInformationalVersion + ".0." + ExecutableRevision;
   // Compile a Debug or Release flag into the assembly.
 #if DEBUG

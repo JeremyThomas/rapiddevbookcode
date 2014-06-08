@@ -14,7 +14,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Win
 {
-  public partial class FrmTrace : FrmPersistantLocation, INotifyPropertyChanged
+  public sealed partial class FrmTrace : FrmPersistantLocation, INotifyPropertyChanged
   {
     private int _textBoxTraceListenerIndex;
     private TextBoxTraceListener _textBoxTraceListener;
@@ -57,6 +57,7 @@ namespace AW.Win
       Settings.Default.SQLTrace = checkBoxSQLTrace.Checked;
     }
 
+// ReSharper disable MemberCanBePrivate.Global
     public TraceLevel DQETraceLevel
     {
       get { return DynamicQueryEngineBase.Switch.Level; }
@@ -102,6 +103,8 @@ namespace AW.Win
       get { return _traceLevelEnumerable; }
     }
 
+    // ReSharper restore MemberCanBePrivate.Global
+
     private void buttonClearTrace_Click(object sender, EventArgs e)
     {
       textBoxTrace.Clear();
@@ -128,7 +131,7 @@ namespace AW.Win
     public event PropertyChangedEventHandler PropertyChanged;
 
     [NotifyPropertyChangedInvocator]
-    protected virtual void OnPropertyChanged(string propertyName)
+    private void OnPropertyChanged(string propertyName)
     {
       var handler = PropertyChanged;
       if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));

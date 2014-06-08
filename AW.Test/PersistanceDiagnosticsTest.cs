@@ -58,7 +58,7 @@ namespace AW.Tests
 
     #endregion
 
-    public static LinqMetaData GetNorthwindLinqMetaData()
+    private static LinqMetaData GetNorthwindLinqMetaData()
     {
       return new LinqMetaData {AdapterToUse = new DataAccessAdapter()};
     }

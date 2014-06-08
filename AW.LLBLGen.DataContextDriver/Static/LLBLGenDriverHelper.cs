@@ -248,9 +248,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
         else if (!tablePrefixesToGroupBy.IsNullOrEmpty() && !String.IsNullOrWhiteSpace(table.SqlName))
         {
           var prefixMatch = false;
-          foreach (var prefix in tablePrefixesToGroupBy)
+          if (tablePrefixesToGroupBy != null)
           {
-            if (table.SqlName.StartsWith(prefix, true, null))
+            var table1 = table;
+            foreach (var prefix in tablePrefixesToGroupBy.Where(prefix => table1.SqlName.StartsWith(prefix, true, null)))
             {
               ExplorerItem value;
               if (prefixesAsSchemas.TryGetValue(prefix, out value))
@@ -441,7 +442,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       var hyperlinkTarget = explorerItems.SingleOrDefault();
       if (hyperlinkTarget == null)
       {
-        GeneralHelper.TraceOut(GeneralHelper.Join(GeneralHelper.StringJoinSeperator, entity.LLBLGenProEntityName, navigatorProperty.Name, navigatorProperty.DisplayName, navigatorProperty.Description));
+        GeneralHelper.TraceOut(GeneralHelper.Join(GeneralHelper.StringJoinSeparator, entity.LLBLGenProEntityName, navigatorProperty.Name, navigatorProperty.DisplayName, navigatorProperty.Description));
         return null;
       }
       var explorerIcon = GetExplorerIcon(entity, navigatorProperty.Name);

@@ -120,7 +120,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
       Assert.AreEqual(ExplorerIcon.ManyToMany, employeeExplorerItem.Icon);
     }
 
-    private static ExplorerItem TestNorthWindToolTips(List<ExplorerItem> explorerItems, bool testForiegnKey = true)
+    private static ExplorerItem TestNorthWindToolTips(List<ExplorerItem> explorerItems, bool testForeignKey = true)
     {
       var customerName = EntityHelper.GetNameFromEntityEnum(Northwind.DAL.EntityType.CustomerEntity);
       var explorerItem = explorerItems.First(e => e.Text == customerName);
@@ -148,7 +148,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
       StringAssert.Contains(customerNavigator.ToolTipText, customerPropertyDescriptor.Description);
       StringAssert.Contains(customerNavigator.ToolTipText, customerPropertyDescriptor.DisplayName);
 
-      if (testForiegnKey)
+      if (testForeignKey)
         StringAssert.Contains(customerNavigator.ToolTipText, OrderFieldIndex.CustomerId.ToString());
 
       var first = explorerItem.Children.First();

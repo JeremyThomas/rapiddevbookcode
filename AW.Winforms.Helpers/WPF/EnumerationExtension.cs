@@ -15,10 +15,10 @@ namespace AW.Winforms.Helpers.WPF
       EnumType = enumType;
     }
 
-    public Type EnumType
+    private Type EnumType
     {
       get { return _enumType; }
-      private set
+      set
       {
         if (_enumType == value) return;
         var enumType = MetaDataHelper.GetCoreType(value);
@@ -30,14 +30,16 @@ namespace AW.Winforms.Helpers.WPF
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
       var enumValues = Enum.GetValues(EnumType);
-      return (from object enumValue in enumValues select new EnumerationMember { Value = enumValue, Description = ((Enum)enumValue).EnumToString() }).ToArray();
+      return (from object enumValue in enumValues select new EnumerationMember {Value = enumValue, Description = ((Enum) enumValue).EnumToString()}).ToArray();
     }
 
-    public class EnumerationMember
+    private class EnumerationMember
     {
+// ReSharper disable UnusedAutoPropertyAccessor.Local
       public string Description { get; set; }
-      public object Value { get; set; }
-    }
 
+      public object Value { get; set; }
+// ReSharper restore UnusedAutoPropertyAccessor.Local
+    }
   }
 }

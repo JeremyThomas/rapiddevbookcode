@@ -9,7 +9,7 @@ namespace AW.Helper.LLBL
   /// <summary>
   ///   Class to Dynamically Composing Expression Predicates.
   ///   How to use Linq to LLBLGen Pro with a predicate builder?
-  /// </summary
+  /// </summary>
   /// <see cref="http://www.albahari.com/nutshell/predicatebuilder.aspx" />
   /// <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=14144" />
   public static class PredicateBuilder

@@ -10,7 +10,7 @@ namespace AW.Win
 {
   public static class OrganizationHelper
   {
-    public static TreeNode MakeNode(object lastName, object firstName, object employeeID)
+    private static TreeNode MakeNode(object lastName, object firstName, object employeeID)
     {
       return new TreeNode(lastName + ", " + firstName + " [" + employeeID + "]") {Tag = employeeID};
     }
@@ -38,24 +38,24 @@ namespace AW.Win
     private static TreeNode FindEmployeeRecursive(
       int employeeID, TreeNodeCollection nodes)
     {
-      TreeNode FoundNode = null;
+      TreeNode foundNode = null;
       foreach (TreeNode node in nodes)
       {
-        if (FoundNode != null)
-          return FoundNode;
+        if (foundNode != null)
+          return foundNode;
         if (Convert.ToInt32(node.Tag) == employeeID)
         {
-          FoundNode = node;
+          foundNode = node;
           break;
         }
         if (node.Nodes.Count > 0)
-          FoundNode = FindEmployeeRecursive(
+          foundNode = FindEmployeeRecursive(
             employeeID, node.Nodes);
       }
-      return FoundNode;
+      return foundNode;
     }
 
-    internal static void GetManagerEmployees(int employeeID, TreeNode masterNode)
+    private static void GetManagerEmployees(int employeeID, TreeNode masterNode)
     {
       var managees = RetrievalProcedures.UspGetManagerEmployees(employeeID);
       foreach (DataRow row in managees.Rows)
@@ -64,25 +64,25 @@ namespace AW.Win
 
     internal static TreeNode GetEmployeeManagersNodes(int employeeID)
     {
-      TreeNode MasterNode;
-      var Managers = RetrievalProcedures.UspGetEmployeeManagers(employeeID);
+      TreeNode masterNode;
+      var managers = RetrievalProcedures.UspGetEmployeeManagers(employeeID);
 
-      if (Managers.Rows.Count > 0)
+      if (managers.Rows.Count > 0)
       {
-        var ManagersCol = new TreeNode().Nodes;
-        CreateNode(Managers.Rows[Managers.Rows.Count - 1], ManagersCol);
+        var managersCol = new TreeNode().Nodes;
+        CreateNode(managers.Rows[managers.Rows.Count - 1], managersCol);
 
-        var CEORow = Managers.Rows[Managers.Rows.Count - 1];
-        var CEONode = MakeNode(CEORow["ManagerLastName"], CEORow["ManagerFirstName"], CEORow["ManagerID"]);
-        CEONode.Nodes.Add(ManagersCol[0]);
-        MasterNode = CEONode;
+        var ceoRow = managers.Rows[managers.Rows.Count - 1];
+        var ceoNode = MakeNode(ceoRow["ManagerLastName"], ceoRow["ManagerFirstName"], ceoRow["ManagerID"]);
+        ceoNode.Nodes.Add(managersCol[0]);
+        masterNode = ceoNode;
       }
       else
       {
-        MasterNode = MakeNode(null, null, employeeID);
-        MasterNode.Nodes.Add(MakeNode(null, null, employeeID));
+        masterNode = MakeNode(null, null, employeeID);
+        masterNode.Nodes.Add(MakeNode(null, null, employeeID));
       }
-      return MasterNode;
+      return masterNode;
     }
 
     public static void ShowEmployeesPlaceInOrganization(int employeeID, TreeNodeCollection treeNodeCollection)
@@ -136,25 +136,25 @@ namespace AW.Win
 
     internal static TreeNode GetManagersRecursive(EmployeeEntity employee)
     {
-      var EmployeeNode = MakeNode(employee);
+      var employeeNode = MakeNode(employee);
       if (employee.ManagerID != 0 && employee.ManagerID != null)
       {
-        var ManagerNode = GetManagersRecursive(employee.Manager);
-        FindLowestNode(ManagerNode).Nodes.Add(EmployeeNode);
-        return ManagerNode;
+        var managerNode = GetManagersRecursive(employee.Manager);
+        FindLowestNode(managerNode).Nodes.Add(employeeNode);
+        return managerNode;
       }
-      return EmployeeNode;
+      return employeeNode;
     }
 
     internal static TreeNode GetEmployeesRecursive(EmployeeEntity employee)
     {
-      var EmployeeNode = MakeNode(employee);
+      var employeeNode = MakeNode(employee);
       if (employee.Manages.Count > 0)
         foreach (var subordinate in employee.Manages)
         {
-          EmployeeNode.Nodes.Add(GetEmployeesRecursive(subordinate));
+          employeeNode.Nodes.Add(GetEmployeesRecursive(subordinate));
         }
-      return EmployeeNode;
+      return employeeNode;
     }
 
     public static void ShowEmployeesPlaceInOrganization(EmployeeEntity employee, TreeNodeCollection treeNodeCollection)

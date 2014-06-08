@@ -12,7 +12,7 @@ namespace AW.Winforms.Helpers
 
     public string WindowSettingsName
     {
-      get
+      private get
       {
         if (string.IsNullOrEmpty(_windowSettingsName))
           _windowSettingsName = GetType().Name + "WindowSettings";
@@ -26,7 +26,7 @@ namespace AW.Winforms.Helpers
       InitializeComponent();
     }
 
-    protected WindowSettings WindowSettings
+    private WindowSettings WindowSettings
     {
       get
       {
@@ -46,7 +46,7 @@ namespace AW.Winforms.Helpers
       get { return null; }
     }
 
-    protected SettingsPropertyValue WindowSettingsSettingsProperty
+    private SettingsPropertyValue WindowSettingsSettingsProperty
     {
       get { return _windowSettingsSettingsProperty ?? (_windowSettingsSettingsProperty = GeneralHelper.GetSetting(Settings.Default, WindowSettingsName, typeof (WindowSettings))); }
     }
@@ -54,7 +54,7 @@ namespace AW.Winforms.Helpers
     #region Overrides of Form
 
     /// <summary>
-    /// Raises the CreateControl event.
+    ///   Raises the CreateControl event.
     /// </summary>
     protected override void OnCreateControl()
     {
@@ -63,10 +63,11 @@ namespace AW.Winforms.Helpers
     }
 
     /// <summary>
-    /// Raises the <see cref="E:System.Windows.Forms.Form.FormClosing"/> event.
+    ///   Raises the <see cref="E:System.Windows.Forms.Form.FormClosing" /> event.
     /// </summary>
-    /// <param name="e">A <see cref="T:System.Windows.Forms.FormClosingEventArgs"/> that contains the event data. 
-    ///                 </param>
+    /// <param name="e">
+    ///   A <see cref="T:System.Windows.Forms.FormClosingEventArgs" /> that contains the event data.
+    /// </param>
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
       RecordWindowSettings();
@@ -74,10 +75,11 @@ namespace AW.Winforms.Helpers
     }
 
     /// <summary>
-    /// Raises the <see cref="E:System.Windows.Forms.Form.FormClosed"/> event.
+    ///   Raises the <see cref="E:System.Windows.Forms.Form.FormClosed" /> event.
     /// </summary>
-    /// <param name="e">A <see cref="T:System.Windows.Forms.FormClosedEventArgs"/> that contains the event data. 
-    ///                 </param>
+    /// <param name="e">
+    ///   A <see cref="T:System.Windows.Forms.FormClosedEventArgs" /> that contains the event data.
+    /// </param>
     protected override void OnFormClosed(FormClosedEventArgs e)
     {
       base.OnFormClosed(e);
@@ -92,7 +94,7 @@ namespace AW.Winforms.Helpers
         WindowSettings.Restore(this, Splitters);
     }
 
-    protected virtual void RecordWindowSettings()
+    private void RecordWindowSettings()
     {
       if (WindowSettings == null)
         WindowSettings = new WindowSettings();

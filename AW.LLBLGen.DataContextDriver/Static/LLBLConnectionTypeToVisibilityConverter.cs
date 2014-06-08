@@ -7,9 +7,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 {
 	public class LLBLConnectionTypeToVisibilityConverter : IValueConverter
 	{
-		public LLBLConnectionType LLBLConnectionType { get; set; }
+		public LLBLConnectionType LLBLConnectionType { private get; set; }
 
-		public bool Invert { get; set; }
+		public bool Invert { private get; set; }
 
 		private object VisibilityToLLBLConnectionType(object value)
 		{

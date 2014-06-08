@@ -94,17 +94,17 @@ namespace AW.Helper.LLBL
       {
         elementType = expression.Type.GetGenericArguments()[0];
       }
-      var queryableType = typeof(IQueryable<>).MakeGenericType(new[] { elementType });
+      var queryableType = typeof (IQueryable<>).MakeGenericType(new[] {elementType});
       if (queryableType.IsAssignableFrom(expression.Type))
       {
         provider.CreateQuery(expression);
       }
-      var enumerableType = typeof(IEnumerable<>).MakeGenericType(new[] { elementType });
+      var enumerableType = typeof (IEnumerable<>).MakeGenericType(new[] {elementType});
       if (!enumerableType.IsAssignableFrom(expression.Type))
       {
         throw new ArgumentException("expression isn't enumerable");
       }
-      return (IQueryable)Activator.CreateInstance(typeof(LLBLGenProQuery<>).MakeGenericType(new[] { elementType }), new object[] { provider, expression });
+      return (IQueryable) Activator.CreateInstance(typeof (LLBLGenProQuery<>).MakeGenericType(new[] {elementType}), new object[] {provider, expression});
     }
 
     public static Tuple<Expression, Expression, Expression> GetMethodCallExpressionParts(MethodCallExpression methodCallExpression)
@@ -188,6 +188,11 @@ namespace AW.Helper.LLBL
 
     #region GetFactoryCore
 
+    //public static IEntityFactory GetFactory<T>() where T : EntityBase
+    //{
+    //  return ((IEntity) CreateEntity<T>()).GetEntityFactory();
+    //}
+
     public static IEntityFactoryCore GetFactoryCore<T>(IElementCreatorCore elementCreatorCore) where T : class, IEntityCore
     {
       return (elementCreatorCore.GetFactory(typeof (T)));
@@ -215,7 +220,7 @@ namespace AW.Helper.LLBL
     {
       if (!enumerable.IsNullOrEmpty())
       {
-        var first = enumerable.FirstOrDefault(e => e.GetType().Equals(typeof (T))) as IEntityCore;
+        var first = enumerable.FirstOrDefault(e => e.GetType() == typeof (T)) as IEntityCore;
         if (first != null) return GetFactoryCore(first);
       }
       return GetFactoryCore<T>();
@@ -306,7 +311,7 @@ namespace AW.Helper.LLBL
         while (enumerator.MoveNext())
         {
           var firstEntity = ((IEntity) enumerator.Current);
-          if (firstEntity == null || !itemType.Equals(firstEntity.GetType())) continue;
+          if (firstEntity == null || !(itemType == firstEntity.GetType())) continue;
           entities = firstEntity.GetEntityFactory().CreateEntityCollection();
           if (entities == null)
             return null;
@@ -522,8 +527,9 @@ namespace AW.Helper.LLBL
         var enumerable = modifiedData as IEnumerable;
         if (enumerable == null)
         {
-          if (modifiedData is IEntity)
-            RevertChangesToDBValue((IEntity) modifiedData);
+          var entity = modifiedData as IEntity;
+          if (entity != null)
+            RevertChangesToDBValue(entity);
           else
             RevertChangesToDBValue((IEntity2) modifiedData);
         }
@@ -531,15 +537,10 @@ namespace AW.Helper.LLBL
           RevertChangesToDBValue(enumerable);
       }
     }
-
-    //public static IEntityFactory GetFactory<T>() where T : EntityBase
-    //{
-    //  return ((IEntity) CreateEntity<T>()).GetEntityFactory();
-    //}
+    
     /// <summary>
     ///   Gets the factory of the entity with the .NET type specified
     /// </summary>
-    /// <typeparam name="T">The type of entity.</typeparam>
     /// <returns>factory to use or null if not found</returns>
     /// <summary>
     ///   Deletes the entities.
@@ -548,8 +549,9 @@ namespace AW.Helper.LLBL
     /// <returns></returns>
     public static int DeleteEntities(IEnumerable entitiesToDelete)
     {
-      if (entitiesToDelete is EntityCollectionBase<EntityBase>)
-        return ((EntityCollectionBase<EntityBase>) entitiesToDelete).DeleteMulti();
+      var entityCollectionBase = entitiesToDelete as EntityCollectionBase<EntityBase>;
+      if (entityCollectionBase != null)
+        return entityCollectionBase.DeleteMulti();
       return entitiesToDelete.Cast<EntityBase>().Count(entity => entity.Delete() || entity.IsNew);
     }
 
@@ -578,9 +580,10 @@ namespace AW.Helper.LLBL
     {
       if (entitiesToSave is IEntityView)
         entitiesToSave = ((IEntityView) entitiesToSave).RelatedCollection;
-      if (entitiesToSave is IEntityCollection)
+      var collection = entitiesToSave as IEntityCollection;
+      if (collection != null)
       {
-        var entityCollection = (IEntityCollection) entitiesToSave;
+        var entityCollection = collection;
         var modifyCount = 0;
         if (entityCollection.RemovedEntitiesTracker != null)
           modifyCount = entityCollection.RemovedEntitiesTracker.DeleteMulti();
@@ -619,13 +622,14 @@ namespace AW.Helper.LLBL
     {
       if (entitiesToSave is IEntityView2)
         entitiesToSave = ((IEntityView2) entitiesToSave).RelatedCollection;
-      if (entitiesToSave is IEntityCollection2)
+      var collectionToSave = entitiesToSave as IEntityCollection2;
+      if (collectionToSave != null)
       {
-        var entityCollection = (IEntityCollection2) entitiesToSave;
+        var entityCollection = collectionToSave;
         var modifyCount = 0;
         if (entityCollection.RemovedEntitiesTracker != null)
           modifyCount = dataAccessAdapter.DeleteEntityCollection(entityCollection.RemovedEntitiesTracker);
-        return modifyCount + dataAccessAdapter.SaveEntityCollection((IEntityCollection2) entitiesToSave);
+        return modifyCount + dataAccessAdapter.SaveEntityCollection(collectionToSave);
       }
       return SaveEntities(entitiesToSave.Cast<IEntity2>(), dataAccessAdapter);
     }
@@ -677,8 +681,9 @@ namespace AW.Helper.LLBL
     /// <returns></returns>
     public static int DeleteEntities(IEnumerable entitiesToDelete, IDataAccessAdapter dataAccessAdapter)
     {
-      if (entitiesToDelete is IEntityCollection2)
-        return dataAccessAdapter.DeleteEntityCollection((IEntityCollection2) entitiesToDelete);
+      var collectionToDelete = entitiesToDelete as IEntityCollection2;
+      if (collectionToDelete != null)
+        return dataAccessAdapter.DeleteEntityCollection(collectionToDelete);
       return DeleteEntities(entitiesToDelete.Cast<IEntity2>(), dataAccessAdapter);
     }
 
@@ -734,7 +739,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Gets the IDataAccessAdapter from a ILinqMetaData Via the provider.
+    ///   Gets the IDataAccessAdapter from a ILinqMetaData Via the provider.
     /// </summary>
     /// <param name="linqMetaData">The ILinqMetaData.</param>
     /// <returns></returns>
@@ -770,6 +775,7 @@ namespace AW.Helper.LLBL
     #endregion
 
     #region ToEntityCollection2
+
     /// <summary>
     ///   Converts an entity enumeration to an entity collection. If the enumeration is a ILLBLGenProQuery then executes
     ///   the query this object represents and returns its results in its native container - an entity collection.
@@ -811,7 +817,7 @@ namespace AW.Helper.LLBL
         while (enumerator.MoveNext())
         {
           var firstEntity = ((IEntity2) enumerator.Current);
-          if (firstEntity == null || !itemType.Equals(firstEntity.GetType())) continue;
+          if (firstEntity == null || !(itemType == firstEntity.GetType())) continue;
           entities = firstEntity.GetEntityFactory().CreateEntityCollection();
           if (entities == null)
             return null;
@@ -902,14 +908,14 @@ namespace AW.Helper.LLBL
     {
       var ef = CreateEntity(type) as IEntity;
       //			return ef.Create().Fields;
-      return ef.Fields;
+      return ef == null ? null : ef.Fields;
     }
 
     public static IEntityFields2 GetFieldsFromType2(Type type)
     {
       var ef = CreateEntity(type) as IEntity2;
       //			return ef.Create().Fields;
-      return ef.Fields;
+      return ef == null ? null : ef.Fields;
     }
 
     public static IEnumerable<PropertyDescriptor> GetNavigatorProperties(IEntityCore entityCore)
@@ -924,7 +930,7 @@ namespace AW.Helper.LLBL
 
     public static IEnumerable<PropertyDescriptor> FilterByIsField(this IEnumerable<PropertyDescriptor> propertyDescriptors, IEntityCore entityCore)
     {
-      var propertyNames = entityCore.Fields.Cast<IEntityFieldCore>().Select(ef => ef.Name);
+      var propertyNames = entityCore.Fields.Select(ef => ef.Name);
       return propertyDescriptors.Where(propertyDescriptor => propertyNames.Contains(propertyDescriptor.Name));
     }
 
@@ -950,6 +956,7 @@ namespace AW.Helper.LLBL
     }
 
     #region GetFieldPersistenceInfo
+
     public static IFieldPersistenceInfo GetFieldPersistenceInfo(IDataAccessAdapter dataAccessAdapter, IEntityField2 field)
     {
       var fullListQueryMethod = dataAccessAdapter.GetType().GetMethod("GetFieldPersistenceInfo", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {typeof (IEntityField2)}, null);

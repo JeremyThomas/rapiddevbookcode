@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using AW.Data.EntityClasses;
 using AW.Winforms.Helpers;
 
@@ -16,7 +17,7 @@ namespace AW.Win
       lblResult.Text = EmployeeEntity.AddBonusVacationHours(
         dtpHireDate.Value,
         Convert.ToInt32(nudSalariedHours.Value),
-        Convert.ToInt32(nudUnsalariedHours.Value)).ToString();
+        Convert.ToInt32(nudUnsalariedHours.Value)).ToString(CultureInfo.InvariantCulture);
     }
   }
 }

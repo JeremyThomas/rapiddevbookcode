@@ -6,8 +6,7 @@ using System.Reflection;
 
 internal static class AdventureWorksAssemblyInfoConstants
 {
-	public const string AssemblyCompany = "Adventure Works Cycles";
-	public const string AssemblyCopyright = "Copyright © 2014 " + AssemblyCompany;
-	public const string AssemblyProduct = AssemblyCompany + " LLBL Sample";
+  public const string AssemblyCompany = "Adventure Works Cycles";
+  public const string AssemblyCopyright = "Copyright © 2014 " + AssemblyCompany;
+  public const string AssemblyProduct = AssemblyCompany + " LLBL Sample";
 }
-

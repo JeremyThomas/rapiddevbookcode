@@ -192,7 +192,7 @@ namespace NUnit.Extensions.Forms.UnitTests
 			Stub.On(group).GetProperty("EscapedKey").Will(Return.Value(escapedKeys));
 			Stub.On(group).GetProperty("Body").Will(Return.Value(body));
 
-			Stub.On(parser).GetProperty("Groups").Will(Return.Value(new ISendKeysParserGroup[] { group }));
+			Stub.On(parser).GetProperty("Groups").Will(Return.Value(new[] { group }));
 		}
 	}
 }

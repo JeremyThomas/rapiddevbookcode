@@ -22,8 +22,8 @@ namespace AW.Winforms.Helpers.LLBL
     {
       BindingListHelper.RegisterbindingListViewCreater(typeof (IEntity), EntityHelper.CreateEntityView);
       BindingListHelper.RegisterbindingListViewCreater(typeof (IEntity2), EntityHelper.CreateEntityView2);
-      BindingListHelper.RegisterBindingListSourceProvider(typeof(IEntityView), EntityHelper.GetRelatedCollection);
-      BindingListHelper.RegisterBindingListSourceProvider(typeof(IEntityView2), EntityHelper.GetRelatedCollection);
+      BindingListHelper.RegisterBindingListSourceProvider(typeof (IEntityView), EntityHelper.GetRelatedCollection);
+      BindingListHelper.RegisterBindingListSourceProvider(typeof (IEntityView2), EntityHelper.GetRelatedCollection);
     }
 
     /// <summary>
@@ -146,14 +146,9 @@ namespace AW.Winforms.Helpers.LLBL
       return enumerable.ShowInGrid(new DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
     }
 
-    public static IEnumerable<T> ShowAdapterInGrid<T>(this IQueryable<T> query, ushort pageSize) where T : EntityBase2
+    public static IEnumerable<T> ShowAdapterInGrid<T>(this IQueryable<T> query, ushort pageSize = DataEditorExtensions.DefaultPageSize) where T : EntityBase2
     {
       return ShowInGrid(query, EntityHelper.GetDataAccessAdapter(query), pageSize);
-    }
-
-    public static IEnumerable<T> ShowAdapterInGrid<T>(this IQueryable<T> query) where T : EntityBase2
-    {
-      return ShowAdapterInGrid(query, DataEditorExtensions.DefaultPageSize);
     }
 
     public static IEnumerable<T> ShowHierarchyInTree<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
@@ -203,7 +198,7 @@ namespace AW.Winforms.Helpers.LLBL
     {
       var entitiesTypes = EntityHelper.GetEntitiesTypes(baseType, linqMetaData).ToList();
       PopulateTreeViewWithSchema(schemaTreeNodeCollection, entitiesTypes, useSchema, prefixDelimiter, EntityHelper.GetDataAccessAdapter(linqMetaData));
-      if (schemaTreeNodeCollection.Count == 0 && linqMetaData != null) 
+      if (schemaTreeNodeCollection.Count == 0 && linqMetaData != null)
         PopulateTreeViewWithSchema(schemaTreeNodeCollection, linqMetaData.GetType());
     }
 
@@ -215,7 +210,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, IEnumerable<Type> entitiesTypes, bool useSchema = true, string prefixDelimiter = null, IDataAccessAdapter adapter = null)
     {
-      IElementCreatorCore elementCreator = null;     
+      IElementCreatorCore elementCreator = null;
       var schemas = new Dictionary<string, TreeNode>();
       var prefixesToGroupBy = new Dictionary<string, TreeNode>();
       var usePrefixes = !String.IsNullOrWhiteSpace(prefixDelimiter);
@@ -228,7 +223,7 @@ namespace AW.Winforms.Helpers.LLBL
         var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafely(entity, adapter);
         var treeNodeCollectionToAddTo = schemaTreeNodeCollection;
         if (fieldPersistenceInfo != null)
-        {            
+        {
           var schema = fieldPersistenceInfo.SourceSchemaName;
           if (useSchema && !String.IsNullOrWhiteSpace(schema))
           {
@@ -267,28 +262,26 @@ namespace AW.Winforms.Helpers.LLBL
         entityNode.Tag = entityType;
 
         entityNode.ToolTipText = CreateTableToolTipText(entity, fieldPersistenceInfo);
-        entityNodes.Add(entityType, new Tuple<TreeNode, IEntityCore>(entityNode,entity));
-
+        entityNodes.Add(entityType, new Tuple<TreeNode, IEntityCore>(entityNode, entity));
       }
 
       foreach (var entityNode in entityNodes)
       {
-        PopulateEntityFields(entityNode.Value.Item1, entityNode.Value.Item2,entityNodes, adapter);
+        PopulateEntityFields(entityNode.Value.Item1, entityNode.Value.Item2, entityNodes, adapter);
       }
 
-      if (schemas.Count==1)
+      if (schemas.Count == 1)
         schemaTreeNodeCollection.AddRange(schemas.First().Value.Nodes.OfType<TreeNode>().ToArray());
       else
-      foreach (var treeNode in schemas)
-      {
-        schemaTreeNodeCollection.Add(treeNode.Value);
-      }
+        foreach (var treeNode in schemas)
+        {
+          schemaTreeNodeCollection.Add(treeNode.Value);
+        }
     }
 
 
     private static void PopulateEntityFields(TreeNode entityNode, IEntityCore entity, Dictionary<Type, Tuple<TreeNode, IEntityCore>> entityNodes, IDataAccessAdapter adapter)
     {
-      IFieldPersistenceInfo fieldPersistenceInfo;
       var entityType = entity.GetType();
       var entityFields = entity.GetFields();
 
@@ -301,7 +294,7 @@ namespace AW.Winforms.Helpers.LLBL
           if (field != null)
           {
             fieldNode.Text = CreateFieldText(field);
-            fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafely(field, adapter);
+            var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafely(field, adapter);
             var fkNavigator = field.IsForeignKey ? "Navigator: " + EntityHelper.GetNavigatorNames(entity, field.Name).JoinAsString() : "";
             fieldNode.ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, fieldNode.Tag as PropertyDescriptor, fkNavigator);
           }
@@ -355,7 +348,7 @@ namespace AW.Winforms.Helpers.LLBL
       return toolTipText.Trim();
     }
 
-    public static string CreateDisplayNameDescriptionCustomPropertiesToolTipText(IEntityCore entity, MemberDescriptor propertyDescriptor)
+    private static string CreateDisplayNameDescriptionCustomPropertiesToolTipText(IEntityCore entity, MemberDescriptor propertyDescriptor)
     {
       if (propertyDescriptor != null)
       {
@@ -375,10 +368,10 @@ namespace AW.Winforms.Helpers.LLBL
       }
       catch (Exception e)
       {
-        GeneralHelper.TraceOut(e);
+        e.TraceOut();
       }
       displayName = displayName == propertyDescriptor.Name ? "" : displayName;
-      var toolTipText = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, displayName, propertyDescriptor.Description);
+      var toolTipText = GeneralHelper.Join(GeneralHelper.StringJoinSeparator, displayName, propertyDescriptor.Description);
       return toolTipText;
     }
 
@@ -417,12 +410,12 @@ namespace AW.Winforms.Helpers.LLBL
 
     public static string CreateFieldText(IFieldInfo field)
     {
-      var extra = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, field.IsPrimaryKey
+      var extra = GeneralHelper.Join(GeneralHelper.StringJoinSeparator, field.IsPrimaryKey
         ? "PK"
         : "", field.IsForeignKey
           ? "FK"
           : "", field.IsReadOnly ? "RO" : "");
-      var typeName = FormatTypeName(field.DataType, false);
+      var typeName = FormatTypeName(field.DataType);
       var coreDataType = MetaDataHelper.GetCoreType(field.DataType);
       var typeCode = Type.GetTypeCode(coreDataType);
       if (!coreDataType.IsEnum && typeCode != TypeCode.Boolean)
@@ -432,10 +425,10 @@ namespace AW.Winforms.Helpers.LLBL
         {
           var scalePrecision = String.Empty;
           if (field.Scale > 0)
-            scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, field.Scale.ToString());
+            scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeparator, scalePrecision, field.Scale.ToString());
           var precision = field.Precision;
           if (precision > 0 && IsNonNormalPrecision(typeCode, precision))
-            scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, precision.ToString());
+            scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeparator, scalePrecision, precision.ToString());
           if (!String.IsNullOrEmpty(scalePrecision))
             typeName += "{" + scalePrecision + "}";
         }
@@ -462,7 +455,7 @@ namespace AW.Winforms.Helpers.LLBL
           sizeAndPrecision = String.Format("({0})", fieldPersistenceInfo.SourceColumnMaxLength + fieldPersistenceInfo.SourceColumnPrecision);
         var dbInfo = String.Format("Column: {0} ({1}{2}, {3} null)", fieldPersistenceInfo.SourceColumnName, fieldPersistenceInfo.SourceColumnDbType,
           sizeAndPrecision, sourceColumnIsNullable);
-        toolTipText += Environment.NewLine + GeneralHelper.Join(GeneralHelper.StringJoinSeperator, dbInfo, fieldPersistenceInfo.IdentityValueSequenceName);
+        toolTipText += Environment.NewLine + GeneralHelper.Join(GeneralHelper.StringJoinSeparator, dbInfo, fieldPersistenceInfo.IdentityValueSequenceName);
       }
       return toolTipText.Trim();
     }
@@ -488,7 +481,7 @@ namespace AW.Winforms.Helpers.LLBL
           orderby prop.Name
           select new TreeNode(prop.Name)
           {
-            ToolTipText = FormatTypeName(prop.PropertyType, false),
+            ToolTipText = FormatTypeName(prop.PropertyType),
             // Store the entity type to the Tag property. We'll use it later.
             Tag = typeArgument,
             Name = typeArgument.Name
@@ -567,7 +560,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     private static TreeNode CreateSimpleTypeTreeNode(PropertyDescriptor childProp, int imageIndex)
     {
-      return new TreeNode(CreateTreeNodeText(childProp)) {ImageIndex = imageIndex, Name = childProp.Name, Tag = childProp, ToolTipText = FormatTypeName(childProp.PropertyType, false),};
+      return new TreeNode(CreateTreeNodeText(childProp)) {ImageIndex = imageIndex, Name = childProp.Name, Tag = childProp, ToolTipText = FormatTypeName(childProp.PropertyType),};
     }
 
     private static string CreateTreeNodeText(PropertyDescriptor childProp)
@@ -583,7 +576,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     private static string FormatTypeName(Type propertyType, bool includeNamespace = false)
     {
-      return GetFormatTypeName == null ? (includeNamespace ? propertyType.ToString() : TypeExtensions.FriendlyName(propertyType)) : GetFormatTypeName(propertyType, includeNamespace);
+      return GetFormatTypeName == null ? (includeNamespace ? propertyType.ToString() : propertyType.FriendlyName()) : GetFormatTypeName(propertyType, includeNamespace);
     }
   }
 }

@@ -45,14 +45,14 @@ namespace NUnit.Extensions.Forms.TestApplications
             new ListBoxTestForm().Show();
         }
 
-        private string[] rainbowArray = new string[] {"Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Violet"};
+        private string[] rainbowArray = {"Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Violet"};
 
         [Test]
         public void ListBoxMultiSelection()
         {
             ListBoxTester myListBox = new ListBoxTester("myListBox");
 
-            string[] alternateColors = new string[] {"Red", "Yellow", "Blue", "Violet"};
+            string[] alternateColors = {"Red", "Yellow", "Blue", "Violet"};
             StringCollection alternates = new StringCollection();
             alternates.AddRange(alternateColors);
 

@@ -11,7 +11,7 @@ namespace AW.Winforms.Helpers.EntityViewer
     private static TypeDescriptionProvider _commonEntityBaseTypeDescriptionProvider;
     private bool _doingObjectBrowserNodeSelection;
 
-    public FrmEntityViewer()
+    protected FrmEntityViewer()
     {
       InitializeComponent();
       Initialize();
@@ -29,7 +29,7 @@ namespace AW.Winforms.Helpers.EntityViewer
       ObjectBrowser.ObjectToBrowse = entity;
     }
 
-    public FrmEntityViewer(object entity, IDataEditorPersister dataEditorPersister)
+    protected FrmEntityViewer(object entity, IDataEditorPersister dataEditorPersister)
       : this(entity)
     {
       gridDataEditor.DataEditorPersister = dataEditorPersister;
@@ -84,11 +84,9 @@ namespace AW.Winforms.Helpers.EntityViewer
 
     private void propertyGrid1_SelectedGridItemChanged(object sender, SelectedGridItemChangedEventArgs e)
     {
-      var x = e.NewSelection;
-      var t = x.PropertyDescriptor;
       if (!_doingObjectBrowserNodeSelection && e.NewSelection.Value != null && !(e.OldSelection == null && gridDataEditor.DataSource == propertyGrid1.SelectedObject))
         if (!ShowEnumerable(e.NewSelection.Value as IEnumerable))
-          if (!e.NewSelection.PropertyDescriptor.PropertyType.IsValueType)
+          if (e.NewSelection.PropertyDescriptor != null && !e.NewSelection.PropertyDescriptor.PropertyType.IsValueType)
             gridDataEditor.DataSource = e.NewSelection.Value;
     }
 
@@ -122,7 +120,7 @@ namespace AW.Winforms.Helpers.EntityViewer
         propertyGrid1.SelectedObject = propertyGrid1.SelectedGridItem.Value;
     }
 
-    public object ObjectBeingBrowsed
+    private object ObjectBeingBrowsed
     {
       get { return ObjectBrowser.ObjectToBrowse; }
     }

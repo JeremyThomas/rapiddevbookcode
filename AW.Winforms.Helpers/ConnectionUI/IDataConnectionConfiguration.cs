@@ -6,12 +6,12 @@
 
 namespace AW.Winforms.Helpers.ConnectionUI
 {
-	public interface IDataConnectionConfiguration
-	{
-		string GetSelectedSource();
-		void SaveSelectedSource(string provider);
+  public interface IDataConnectionConfiguration
+  {
+    string GetSelectedSource();
+    void SaveSelectedSource(string provider);
 
-		string GetSelectedProvider();
-		void SaveSelectedProvider(string provider);
-	}
+    string GetSelectedProvider();
+    void SaveSelectedProvider(string provider);
+  }
 }

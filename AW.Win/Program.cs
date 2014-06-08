@@ -21,7 +21,7 @@ namespace AW.Win
       {
         GeneralHelper.TraceOut(e.Exception.ToString());
         if (!e.Exception.StackTrace.Contains("System.Windows.Forms.DataGridTextBoxColumn.GetText(Object value)")) //As DataGrid doesn't have DataError event
-        dialog.ShowDialog();
+          dialog.ShowDialog();
       }
     }
 

@@ -112,7 +112,7 @@ namespace AW.Win
 
     private void dgResults_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
     {
-      EditOrder(((DataGridView)(sender)).Rows[e.RowIndex].DataBoundItem as SalesOrderHeaderEntity);
+      EditOrder(((DataGridView) (sender)).Rows[e.RowIndex].DataBoundItem as SalesOrderHeaderEntity);
     }
 
     private void EditOrder(ITransactionalElement order)
@@ -178,8 +178,9 @@ namespace AW.Win
             salesOrderHeaderQuery = salesOrderHeaderQueryFromEasyQuery;
         }
       }
-      catch (Exception)
+      catch (Exception e)
       {
+        e.TraceOut();
       }
       if (Settings.Default.UsePredicate)
       {

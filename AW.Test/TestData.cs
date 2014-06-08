@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -15,8 +16,8 @@ namespace AW.Tests
   public static class TestData
   {
     /// <summary>
-    /// 37 - The number of field properties.
-    /// No LinkedSubTypeFields or LinkedSuperTypeField in LLBL 4
+    ///   37 - The number of field properties.
+    ///   No LinkedSubTypeFields or LinkedSuperTypeField in LLBL 4
     /// </summary>
     public const int NumFieldProperties = 37;
 
@@ -142,11 +143,11 @@ namespace AW.Tests
       return GetTestXmlSchema();
     }
 
-    public static void ValidationCallbackOne(object sender, ValidationEventArgs args)
+    private static void ValidationCallbackOne(object sender, ValidationEventArgs args)
     {
     }
 
-    public static DataSet GetAddressTypeDataSet()
+    private static DataSet GetAddressTypeDataSet()
     {
       var ds = new DataSet();
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
@@ -212,7 +213,7 @@ namespace AW.Tests
       set { StringField = value; }
     }
 
-    public new static List<SerializableBaseClass2> GenerateList()
+    private new static List<SerializableBaseClass2> GenerateList()
     {
       var list = new List<SerializableBaseClass2>();
       for (var i = 0; i < 10; i++)
@@ -223,7 +224,7 @@ namespace AW.Tests
     public static List<SerializableBaseClass> GenerateListWithBothSerializableClasses()
     {
       var list = SerializableBaseClass.GenerateList();
-      list.AddRange(GenerateList().Cast<SerializableBaseClass>());
+      list.AddRange(GenerateList());
       return list;
     }
   }
@@ -233,7 +234,7 @@ namespace AW.Tests
     /// <summary>
     ///   3
     /// </summary>
-    public static int NumberOfNonSerializableClassProperties = 3;
+    public const int NumberOfNonSerializableClassProperties = 3;
 
     public DateTime DateTimeField;
 
@@ -247,7 +248,7 @@ namespace AW.Tests
     {
       var list = new List<NonSerializableClass>();
       for (var i = 0; i < 10; i++)
-        list.Add(new NonSerializableClass {DateTimeField = DateTime.Now, IntField = list.Count, StringField = list.Count.ToString()});
+        list.Add(new NonSerializableClass {DateTimeField = DateTime.Now, IntField = list.Count, StringField = list.Count.ToString(CultureInfo.InvariantCulture)});
       return list;
     }
   }
@@ -267,21 +268,21 @@ namespace AW.Tests
     {
       var list = new List<SerializableClass>();
       for (var i = 0; i < 10; i++)
-        list.Add(new SerializableClass {DateTimeField = DateTime.Now, IntField = list.Count, StringField = list.Count.ToString()});
+        list.Add(new SerializableClass {DateTimeField = DateTime.Now, IntField = list.Count, StringField = list.Count.ToString(CultureInfo.InvariantCulture)});
       return list;
     }
 
     public static List<NonSerializableClass> GenerateListWithBoth()
     {
       var list = NonSerializableClass.GenerateList();
-      list.AddRange(GenerateList().Cast<NonSerializableClass>());
+      list.AddRange(GenerateList());
       return list;
     }
 
     public new static List<SerializableBaseClass> GenerateListWithBothSerializableClasses()
     {
       var list = SerializableBaseClass.GenerateList();
-      list.AddRange(GenerateList().Cast<SerializableBaseClass>());
+      list.AddRange(GenerateList());
       return list;
     }
   }

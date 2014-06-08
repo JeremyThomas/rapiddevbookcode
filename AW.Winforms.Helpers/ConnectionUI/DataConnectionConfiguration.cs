@@ -74,7 +74,7 @@ namespace AW.Winforms.Helpers.ConnectionUI
       RootElement = _xDoc.Root;
     }
 
-    public XElement RootElement { get; set; }
+    private XElement RootElement { get; set; }
 
     public static bool SelectDataProvider(DataConnectionDialog dcd, string provider)
     {
@@ -231,7 +231,6 @@ namespace AW.Winforms.Helpers.ConnectionUI
     public string GetSelectedProvider()
     {
       return GetDataSourceSelectionElement(SelectedProviderElementName);
-      ;
     }
 
     public void SaveSelectedSource(string source)
@@ -249,8 +248,9 @@ namespace AW.Winforms.Helpers.ConnectionUI
               xElem.Add(new XElement(SelectedSourceElementName, source));
           }
         }
-        catch
+        catch (Exception e)
         {
+          e.TraceOut();
         }
     }
 
@@ -266,8 +266,9 @@ namespace AW.Winforms.Helpers.ConnectionUI
           else
             xElem.Add(new XElement(SelectedProviderElementName, provider));
         }
-        catch
+        catch (Exception e)
         {
+          e.TraceOut();
         }
     }
 
@@ -297,7 +298,7 @@ namespace AW.Winforms.Helpers.ConnectionUI
           var dbProviderFactory = DbProviderFactories.GetFactory(providerInvariantName);
           var dbConnection = dbProviderFactory.CreateConnection();
           var dataSource2 = CreateDataSource(providerInvariantName, displayName, shortDisplayName,
-            description, dbConnection.GetType(),
+            description, dbConnection == null ? null : dbConnection.GetType(),
             assignable, dataConnectionUIControlType);
           return dataSource2;
         }
@@ -322,7 +323,7 @@ namespace AW.Winforms.Helpers.ConnectionUI
       return Assembly.LoadFrom(@"C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\" + shortAssemblyName);
     }
 
-    public static DataSource CreateDataSource(string name, string displayName, string shortDisplayName,
+    private static DataSource CreateDataSource(string name, string displayName, string shortDisplayName,
       string description, Type targetConnectionType,
       Type connectionPropertiesType, Type dataConnectionUIControlType)
     {

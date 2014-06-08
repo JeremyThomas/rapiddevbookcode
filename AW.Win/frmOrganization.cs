@@ -16,7 +16,7 @@ namespace AW.Win
       InitializeComponent();
     }
 
-    public int SelectedEmployeeID
+    private int SelectedEmployeeID
     {
       get { return Convert.ToInt32(cbEmployee.SelectedValue); }
     }

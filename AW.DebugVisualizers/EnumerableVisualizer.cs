@@ -113,8 +113,12 @@ namespace AW.DebugVisualizers
         else
           Serialize(outgoingData, enumerable.CopyToDataTable());
       }
-      else if (target is DataTable)
-        Serialize(outgoingData, (DataTable) target);
+      else
+      {
+        var table = target as DataTable;
+        if (table != null)
+          Serialize(outgoingData, table);
+      }
     }
 
     #endregion
@@ -128,7 +132,7 @@ namespace AW.DebugVisualizers
     /// 	The default binary serialization of a DataTable is XML but we want the data to be serialized binary "column" wise
     /// 	so a DataTableSurrogate is used to do this.
     /// </remarks>
-    public static void Serialize(Stream outgoingData, DataTable target)
+    private static void Serialize(Stream outgoingData, DataTable target)
     {
       outgoingData.Position = 0;
       var dataTableSurrogate = new DataTableSurrogate(target);
@@ -141,7 +145,7 @@ namespace AW.DebugVisualizers
     /// </summary>
     /// <param name = "outgoingData">The outgoing data.</param>
     /// <param name = "enumerable">The enumerable.</param>
-    public static void Serialize(Stream outgoingData, IEnumerable enumerable)
+    private static void Serialize(Stream outgoingData, IEnumerable enumerable)
     {
       try
       {

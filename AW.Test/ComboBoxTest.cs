@@ -36,52 +36,52 @@ using NUnit.Extensions.Forms.TestApplications;
 
 namespace AW.Tests
 {
-	[TestClass]
-	public class ComboBoxTest : NUnitFormMSTest
-	{
-		private ComboBoxTester _box;
+  [TestClass]
+  public class ComboBoxTest : NUnitFormMSTest
+  {
+    private ComboBoxTester _box;
 
-		public override void Setup()
-		{
-			new ComboBoxTestForm().Show();
-			_box = new ComboBoxTester("myComboBox");
-		}
+    public override void Setup()
+    {
+      new ComboBoxTestForm().Show();
+      _box = new ComboBoxTester("myComboBox");
+    }
 
-		[TestMethod]
-		public void MethodInvokeOnControlTester()
-		{
-			var foundIndex = _box.Invoke("FindStringExact", "three");
-			Assert.AreEqual(2, foundIndex);
-		}
+    [TestMethod]
+    public void MethodInvokeOnControlTester()
+    {
+      var foundIndex = _box.Invoke("FindStringExact", "three");
+      Assert.AreEqual(2, foundIndex);
+    }
 
-		[TestMethod]
-		public void Select()
-		{
-			_box.Select(2);
-			Assert.AreEqual("three", _box.Text);
-		}
+    [TestMethod]
+    public void Select()
+    {
+      _box.Select(2);
+      Assert.AreEqual("three", _box.Text);
+    }
 
-		[TestMethod]
-		[ExpectedException(typeof (FormsTestAssertionException))]
-		//    ExpectedMessage = "Could not find text 'not-in-the-box' in ComboBox 'myComboBox'")]
-		public void SelectByBadText()
-		{
-			_box.Select("not-in-the-box");
-		}
+    [TestMethod]
+    [ExpectedException(typeof (FormsTestAssertionException))]
+    //    ExpectedMessage = "Could not find text 'not-in-the-box' in ComboBox 'myComboBox'")]
+    public void SelectByBadText()
+    {
+      _box.Select("not-in-the-box");
+    }
 
-		[TestMethod]
-		public void SelectByText()
-		{
-			_box.Select("three");
-			Assert.AreEqual("three", _box.Text);
-		}
+    [TestMethod]
+    public void SelectByText()
+    {
+      _box.Select("three");
+      Assert.AreEqual("three", _box.Text);
+    }
 
-		[TestMethod]
-		public void TextBox()
-		{
-			Assert.AreEqual("None", _box.Text);
-			_box.Enter("Text");
-			Assert.AreEqual("Text", _box.Text);
-		}
-	}
+    [TestMethod]
+    public void TextBox()
+    {
+      Assert.AreEqual("None", _box.Text);
+      _box.Enter("Text");
+      Assert.AreEqual("Text", _box.Text);
+    }
+  }
 }

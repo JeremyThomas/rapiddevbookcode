@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Windows.Forms;
@@ -79,7 +79,7 @@ namespace AW.Winforms.Helpers.LLBL
     #region Overrides of Form
 
     /// <summary>
-    /// Raises the CreateControl event.
+    ///   Raises the CreateControl event.
     /// </summary>
     protected override void OnCreateControl()
     {
@@ -175,7 +175,7 @@ namespace AW.Winforms.Helpers.LLBL
     {
       var entityQueryable = GetEntityQueryable();
       if (entityQueryable != null)
-        toolStripStatusLabelSelected.Text = entityQueryable.Count().ToString();
+        toolStripStatusLabelSelected.Text = entityQueryable.Count().ToString(CultureInfo.InvariantCulture);
     }
 
     private void treeViewEntities_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)

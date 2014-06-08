@@ -9,28 +9,26 @@ using AW.Helper.LLBL;
 using AW.Winforms.Helpers.LLBL;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Northwind.DAL.Linq;
-using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using CustomerEntity = Northwind.DAL.EntityClasses.CustomerEntity;
 
 namespace AW.Tests
 {
-  ///<summary>
-  ///  This is a test class for LLBLWinformHelperTest and is intended
-  ///  to contain all LLBLWinformHelperTest Unit Tests
-  ///</summary>
+  /// <summary>
+  ///   This is a test class for LLBLWinformHelperTest and is intended
+  ///   to contain all LLBLWinformHelperTest Unit Tests
+  /// </summary>
   [TestClass]
   public class LLBLWinformHelperTest : GridDataEditorTestBase
   {
     private static readonly TreeView EntityTreeView = new TreeView();
-    public static readonly int NumSchemaObjects = 852;
+    public const int NumSchemaObjects = 852;
 
-    ///<summary>
-    ///  Gets or sets the test context which provides
-    ///  information about and functionality for the current test run.
-    ///</summary>
+    /// <summary>
+    ///   Gets or sets the test context which provides
+    ///   information about and functionality for the current test run.
+    /// </summary>
     public TestContext TestContext { get; set; }
 
     #region Additional test attributes
@@ -65,10 +63,10 @@ namespace AW.Tests
 
     #endregion
 
-    ///<summary>
-    ///  A test for ShowInGrid
-    ///</summary>
-    public void EditInDataGridViewTestHelper<T>(ushort pageSize, int numProperties = -1, int numFieldsToShow = 0) where T : EntityBase
+    /// <summary>
+    ///   A test for ShowInGrid
+    /// </summary>
+    private void EditInDataGridViewTestHelper<T>(ushort pageSize, int numProperties = -1, int numFieldsToShow = 0) where T : EntityBase
     {
       ModalFormHandler = Handler;
       var enumerable = MetaSingletons.MetaData.GetQueryableForEntity<T>().AsEnumerable();
@@ -79,7 +77,7 @@ namespace AW.Tests
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
     }
 
-    public void EditAdapterInDataGridViewTestHelper<T>(ushort pageSize, int numProperties = -1, int numFieldsToShow = 0) where T : EntityBase2
+    private void EditAdapterInDataGridViewTestHelper<T>(ushort pageSize, int numProperties = -1, int numFieldsToShow = 0) where T : EntityBase2
     {
       ModalFormHandler = Handler;
       var enumerable = NorthwindTest.GetNorthwindLinqMetaData().GetQueryableForEntity<T>().AsEnumerable();
@@ -90,7 +88,7 @@ namespace AW.Tests
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
     }
 
-    protected void TestShowSelfServicingInGrid<T>(IEnumerable<T> enumerable, ushort pageSize, int numProperties = -1, int numFieldsToShow = 0) where T : EntityBase
+    private void TestShowSelfServicingInGrid<T>(IEnumerable<T> enumerable, ushort pageSize, int numProperties = -1, int numFieldsToShow = 0) where T : EntityBase
     {
       ModalFormHandler = Handler;
       GetNumberOfColumns<T>(numProperties, ref numFieldsToShow);
@@ -114,8 +112,8 @@ namespace AW.Tests
       EditInDataGridViewTestHelper<AddressEntity>(20);
 
       var addressTypes = from at in MetaSingletons.MetaData.AddressType
-                         orderby at.AddressTypeID
-                         select at;
+        orderby at.AddressTypeID
+        select at;
       var addressTypeEntities = addressTypes.ToEntityCollection();
       TestShowSelfServicingInGrid(addressTypeEntities, 2);
       TestShowSelfServicingInGrid(addressTypeEntities.DefaultView, 3);
@@ -129,36 +127,36 @@ namespace AW.Tests
       EditAdapterInDataGridViewTestHelper<CustomerEntity>(12);
     }
 
-    ///<summary>
-    ///  A test for PopulateTreeViewWithSchema
-    ///</summary>
+    /// <summary>
+    ///   A test for PopulateTreeViewWithSchema
+    /// </summary>
     [TestMethod]
     public void PopulateTreeViewWithSchemaTest()
     {
       TestPopulateTreeViewWithSchema(EntityTreeView, null, null);
     }
 
-    ///<summary>
-    ///  A test for PopulateTreeViewWithSchema
-    ///</summary>
+    /// <summary>
+    ///   A test for PopulateTreeViewWithSchema
+    /// </summary>
     [TestMethod]
     public void PopulateTreeViewWithSchemaCommonEntityBaseTest()
     {
       TestPopulateTreeViewWithSchema(EntityTreeView, typeof (CommonEntityBase), null);
     }
 
-    ///<summary>
-    ///  A test for PopulateTreeViewWithSchema
-    ///</summary>
+    /// <summary>
+    ///   A test for PopulateTreeViewWithSchema
+    /// </summary>
     [TestMethod]
     public void PopulateTreeViewWithSchemaILinqMetaDataTest()
     {
       TestPopulateTreeViewWithSchema(EntityTreeView, null, MetaSingletons.MetaData);
     }
 
-    ///<summary>
-    ///  A test for PopulateTreeViewWithSchema
-    ///</summary>
+    /// <summary>
+    ///   A test for PopulateTreeViewWithSchema
+    /// </summary>
     [TestMethod]
     public void PopulateTreeViewWithSchemaDataContextTypeTest()
     {

@@ -14,12 +14,12 @@ namespace AW.Win
   {
     private readonly SalesOrderHeaderEntity _order;
 
-    public FrmOrderEdit()
+    private FrmOrderEdit(DataGridViewTextBoxColumn productNameColumn)
     {
       InitializeComponent();
     }
 
-    public FrmOrderEdit(SalesOrderHeaderEntity order) : this()
+    public FrmOrderEdit(SalesOrderHeaderEntity order, DataGridViewTextBoxColumn productNameColumn) : this(productNameColumn)
     {
       _order = order;
     }
@@ -48,7 +48,7 @@ namespace AW.Win
       tbContact.Text = _order.Contact.DisplayName;
       if (_order.CustomerViewRelated != null) tbCustomer.Text = _order.CustomerViewRelated.DisplayName;
       if (_order.ShipDate != DateTime.MinValue)
-        dtpShipDate.Value = _order.ShipDate.Value;
+        dtpShipDate.Value = _order.ShipDate.GetValueOrDefault();
       else
         dtpShipDate.Checked = false;
     }

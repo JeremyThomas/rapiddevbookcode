@@ -96,7 +96,7 @@ namespace AW.Win
     private void toolStripButtonResolve_Click(object sender, EventArgs e)
     {
       entityFieldBindingSource.EndEdit();
-      var numUseYourChanges = conflicts.Where(c => c.UseYourChanges).Count();
+      var numUseYourChanges = conflicts.Count(c => c.UseYourChanges);
 
       if (numUseYourChanges == 0)
         Entity.Fields = DBEntity.Fields.Clone();
