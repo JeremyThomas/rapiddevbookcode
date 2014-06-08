@@ -61,7 +61,7 @@ namespace NUnit.Extensions.Forms
                                                                 BindingFlags.NonPublic);
             ParameterInfo[] param = minfo.GetParameters();
             Type parameterType = param[0].ParameterType;
-            minfo.Invoke(targetObject, new Object[] {Activator.CreateInstance(parameterType)});
+            minfo.Invoke(targetObject, new[] {Activator.CreateInstance(parameterType)});
         }
 
         ///<summary>
@@ -86,7 +86,7 @@ namespace NUnit.Extensions.Forms
                                                                 BindingFlags.NonPublic);
             ParameterInfo[] param = minfo.GetParameters();
             Type parameterType = param[0].ParameterType;
-            minfo.Invoke(targetObject, new object[] {Activator.CreateInstance(parameterType, args)});
+            minfo.Invoke(targetObject, new[] {Activator.CreateInstance(parameterType, args)});
         }
 
         ///<summary>

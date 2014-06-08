@@ -25,6 +25,7 @@ namespace LINQPad
     /// </summary>
     /// <param name="enumerable"> The enumerable. </param>
     /// <returns> </returns>
+// ReSharper disable UnusedMember.Global
     public static IEnumerable DisplayInGrid(this IEnumerable enumerable)
     {
       if (enumerable != null)
@@ -50,20 +51,10 @@ namespace LINQPad
     /// <param name="enumerable"> The enumerable. </param>
     /// <param name="pageSize"> Size of the page. </param>
     /// <returns> </returns>
+// ReSharper disable MemberCanBePrivate.Global
     public static IEnumerable DisplayInGrid(this IEnumerable enumerable, ushort pageSize)
     {
       return DisplayInGrid(enumerable, null, pageSize);
-    }
-
-    /// <summary>
-    ///   Displays the enumerable in a paged DataGridView Custom Visualizer.
-    /// </summary>
-    /// <param name="enumerable"> The enumerable. </param>
-    /// <param name="dataEditorPersister"> The data editor persister. </param>
-    /// <returns> </returns>
-    public static IEnumerable DisplayInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister)
-    {
-      return DisplayInGrid(enumerable, dataEditorPersister, DefaultPageSize);
     }
 
     // ReSharper disable PossibleMultipleEnumeration
@@ -76,7 +67,7 @@ namespace LINQPad
     /// <param name="pageSize">Size of the page.</param>
     /// <param name="options">The options.</param>
     /// <returns></returns>
-    public static IEnumerable DisplayInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, GridOptions options = null)
+    public static IEnumerable DisplayInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize = DefaultPageSize, GridOptions options = null)
     {
       if (enumerable != null)
       {
@@ -113,21 +104,9 @@ namespace LINQPad
     /// <typeparam name="T"> </typeparam>
     /// <param name="enumerable"> The enumerable. </param>
     /// <param name="dataEditorPersister"> The data editor persister. </param>
-    /// <returns> </returns>
-    public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister)
-    {
-      return DisplayInGrid(enumerable, dataEditorPersister, DefaultPageSize);
-    }
-
-    /// <summary>
-    ///   Displays the enumerable in a paged DataGridView Custom Visualizer.
-    /// </summary>
-    /// <typeparam name="T"> </typeparam>
-    /// <param name="enumerable"> The enumerable. </param>
-    /// <param name="dataEditorPersister"> The data editor persister. </param>
     /// <param name="pageSize"> Size of the page. </param>
     /// <returns> </returns>
-    public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
+    public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize = DefaultPageSize)
     {
       if (enumerable != null)
       {
@@ -142,20 +121,11 @@ namespace LINQPad
 
     #region LinqtoSQL
 
-    public static IEnumerable<T> DisplayInGrid<T>(this Table<T> table) where T : class
-    {
-      return DisplayInGrid(table, DefaultPageSize);
-    }
-
-    public static IEnumerable<T> DisplayInGrid<T>(this Table<T> table, ushort pageSize) where T : class
+    public static IEnumerable<T> DisplayInGrid<T>(this Table<T> table, ushort pageSize = DefaultPageSize) where T : class
     {
       return DisplayInGrid(table, table.Context, pageSize);
     }
 
-    public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> dataQuery, DataContext dataContext)
-    {
-      return DisplayInGrid(dataQuery, dataContext, DefaultPageSize);
-    }
 
     /// <summary>
     ///   Edits the DataQuery in a DataGridView.
@@ -165,21 +135,18 @@ namespace LINQPad
     /// <param name="dataContext"> The data context. </param>
     /// <param name="pageSize"> Size of the page. </param>
     /// <returns> </returns>
-    public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> dataQuery, DataContext dataContext, ushort pageSize)
+    public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> dataQuery, DataContext dataContext, ushort pageSize = DefaultPageSize)
     {
       return DisplayInGrid(dataQuery, new DataEditorLinqtoSQLPersister(dataContext), pageSize);
     }
+
+    // ReSharper restore MemberCanBePrivate.Global
 
     #endregion
 
     #region HierarchyEditor
 
-    public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn)
-    {
-      return DisplayHierarchyInTree(enumerable, iDPropertyName, parentIDPropertyName, nameColumn, null);
-    }
-
-    public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister, params string[] membersToExclude)
+    public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
     {
       if (enumerable != null)
       {
@@ -191,14 +158,8 @@ namespace LINQPad
     }
 
     public static IEnumerable<T> DisplayHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
-      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression)
-    {
-      return DisplayHierarchyInTree(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, null);
-    }
-
-    public static IEnumerable<T> DisplayHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
       Expression<Func<T, TParentId>> parentIDPropertyExpression,
-      Expression<Func<T, TName>> namePropertyExpression, IDataEditorPersister dataEditorPersister, params string[] membersToExclude)
+      Expression<Func<T, TName>> namePropertyExpression, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
     {
       if (enumerable != null)
       {
@@ -253,5 +214,6 @@ namespace LINQPad
     }
 
     // ReSharper restore PossibleMultipleEnumeration
+    // ReSharper restore UnusedMember.Global
   }
 }

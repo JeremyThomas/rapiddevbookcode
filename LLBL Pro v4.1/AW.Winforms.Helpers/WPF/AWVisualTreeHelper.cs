@@ -6,12 +6,12 @@ using System.Windows.Media;
 namespace AW.Winforms.Helpers.WPF
 {
   /// <summary>
-  /// http://social.msdn.microsoft.com/Forums/en/wpf/thread/a945608d-d072-4d3c-8f33-601d6e818457
+  ///   http://social.msdn.microsoft.com/Forums/en/wpf/thread/a945608d-d072-4d3c-8f33-601d6e818457
   /// </summary>
-  public class AWVisualTreeHelper
+  public static class AWVisualTreeHelper
   {
     /// <summary>
-    /// Get visual tree children of a type
+    ///   Get visual tree children of a type
     /// </summary>
     /// <typeparam name="T">Visual tree children type</typeparam>
     /// <param name="current">A DependencyObject reference</param>
@@ -20,9 +20,9 @@ namespace AW.Winforms.Helpers.WPF
     {
       if (current != null)
       {
-        if (current.GetType() == typeof(T))
+        if (current.GetType() == typeof (T))
         {
-          children.Add((T)current);
+          children.Add((T) current);
         }
 
         for (var i = 0; i < VisualTreeHelper.GetChildrenCount(current); i++)
@@ -33,7 +33,7 @@ namespace AW.Winforms.Helpers.WPF
     }
 
     /// <summary>
-    /// Get visual tree children of a type
+    ///   Get visual tree children of a type
     /// </summary>
     /// <typeparam name="T">Visaul tree children type</typeparam>
     /// <param name="current">A DependencyObject reference</param>
@@ -53,7 +53,7 @@ namespace AW.Winforms.Helpers.WPF
     }
 
     /// <summary>
-    /// Get the first visual child from a FrameworkElement Template
+    ///   Get the first visual child from a FrameworkElement Template
     /// </summary>
     /// <typeparam name="TP">FrameworkElement type</typeparam>
     /// <typeparam name="T">FrameworkElement type</typeparam>
@@ -68,22 +68,18 @@ namespace AW.Winforms.Helpers.WPF
     }
 
     public static TChildItem FindVisualChild<TChildItem>(DependencyObject obj)
-  where TChildItem : DependencyObject
+      where TChildItem : DependencyObject
     {
-      for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+      for (var i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
       {
-        DependencyObject child = VisualTreeHelper.GetChild(obj, i);
-        if (child != null && child is TChildItem)
-          return (TChildItem)child;
-        else
-        {
-          TChildItem childOfChild = FindVisualChild<TChildItem>(child);
-          if (childOfChild != null)
-            return childOfChild;
-        }
+        var child = VisualTreeHelper.GetChild(obj, i);
+        if (child is TChildItem)
+          return (TChildItem) child;
+        var childOfChild = FindVisualChild<TChildItem>(child);
+        if (childOfChild != null)
+          return childOfChild;
       }
       return null;
     }
-
   }
 }

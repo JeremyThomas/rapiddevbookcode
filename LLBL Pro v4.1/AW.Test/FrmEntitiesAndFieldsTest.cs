@@ -93,7 +93,7 @@ namespace AW.Tests
     private int? _rootNodesCount;
     private int? _nodesCount;
 
-    public void Handler(string name, IntPtr hWnd, Form form)
+    private void Handler(string name, IntPtr hWnd, Form form)
     {
       var treeNodeCollection = GetTreeViewEntitiesFromFrmEntitiesAndFields(form).Nodes;
       _rootNodesCount = treeNodeCollection.Count;
@@ -101,7 +101,7 @@ namespace AW.Tests
       form.Close();
     }
 
-    public static TreeView GetTreeViewEntitiesFromFrmEntitiesAndFields(Form form)
+    private static TreeView GetTreeViewEntitiesFromFrmEntitiesAndFields(Form form)
     {
       return form.GetAllContainedControls().First(c => c is TreeView) as TreeView;
     }

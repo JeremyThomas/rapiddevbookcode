@@ -19,9 +19,9 @@ namespace AW.LLBLGen.DataContextDriver
 		/// <summary>
 		/// LINQPadPath
 		/// </summary>
-		public const string LinqpadPath = "LINQPadPath";
+		private const string LinqpadPath = "LINQPadPath";
 
-		internal const string ProbePaths = "ProbePaths";
+	  private const string ProbePaths = "ProbePaths";
 
 		/// <summary>
 		/// SD.LLBLGen.Pro
@@ -36,7 +36,7 @@ namespace AW.LLBLGen.DataContextDriver
 		/// <summary>
 		/// linqpad,
 		/// </summary>
-		public static readonly string LinqpadAssemblyNameStart = LinqpadAssemblyName.ToLowerInvariant() + ",";
+		private static readonly string LinqpadAssemblyNameStart = LinqpadAssemblyName.ToLowerInvariant() + ",";
 
 		private readonly AppDomain _domain;
 
@@ -72,7 +72,7 @@ namespace AW.LLBLGen.DataContextDriver
 			if (fullName != null) ((AddAssemblyResolver) _domain.CreateInstanceFromAndUnwrap(typeof (AddAssemblyResolver).Assembly.Location, fullName)).Go();
 		}
 
-		public DomainIsolator(AppDomain domain)
+	  private DomainIsolator(AppDomain domain)
 		{
 			_domain = domain;
 		}
@@ -149,7 +149,7 @@ namespace AW.LLBLGen.DataContextDriver
 			}
 		}
 
-		internal static void UnloadAppDomain(AppDomain d, int attempts)
+	  private static void UnloadAppDomain(AppDomain d, int attempts)
 		{
 			for (var index = 0; index < attempts; ++index)
 			{

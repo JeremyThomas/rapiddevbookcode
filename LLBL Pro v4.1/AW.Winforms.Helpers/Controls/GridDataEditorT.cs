@@ -12,17 +12,12 @@ namespace AW.Winforms.Helpers.Controls
   {
     private IQueryable<T> _supersetG;
 
-    public GridDataEditorT()
+    private GridDataEditorT()
     {
       OnSetItemType();
     }
 
-    public static GridDataEditor GridDataEditorFactory(IEnumerable<T> enumerable)
-    {
-      return GridDataEditorFactory(enumerable, null, DataEditorExtensions.DefaultPageSize, true);
-    }
-
-    public static GridDataEditor GridDataEditorFactory(IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly)
+    public static GridDataEditor GridDataEditorFactory(IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister = null, ushort pageSize = DataEditorExtensions.DefaultPageSize, bool readOnly = true)
     {
       GridDataEditor gridDataEditor;
       if (ValueTypeWrapper<T>.TypeNeedsWrappingForBinding())
@@ -59,7 +54,7 @@ namespace AW.Winforms.Helpers.Controls
       var firstPageEnumerable = enumerable;
       if (Paging())
         firstPageEnumerable = firstPageEnumerable.AsQueryable().Take(PageSize);
-      var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, typeof(T)), EnsureFilteringEnabled);
+      var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, typeof (T)), EnsureFilteringEnabled);
       IsBinding = false;
       return isEnumerable;
     }
@@ -69,7 +64,7 @@ namespace AW.Winforms.Helpers.Controls
       return CreatePageDataSourceImplementation(pageSize, (IQueryable<T>) enumerable.AsQueryable());
     }
 
-    protected IEnumerable<int> CreatePageDataSourceImplementation(ushort pageSize, IQueryable<T> enumerable)
+    private IEnumerable<int> CreatePageDataSourceImplementation(ushort pageSize, IQueryable<T> enumerable)
     {
       PageSize = pageSize;
       _supersetG = enumerable;
@@ -107,7 +102,7 @@ namespace AW.Winforms.Helpers.Controls
 
     protected override IEnumerable SourceEnumerable
     {
-      get { return (IEnumerable)_supersetG ?? bindingSourceEnumerable.List; }
+      get { return (IEnumerable) _supersetG ?? bindingSourceEnumerable.List; }
     }
 
     private IEnumerable<T> SkipTake()

@@ -17,7 +17,7 @@ namespace AW.Win
       InitializeComponent();
     }
 
-    public EmployeeCollection EmployeeCollection
+    private EmployeeCollection EmployeeCollection
     {
       get { return ((EmployeeCollection) employeeEntityBindingSource.DataSource); }
       set { employeeEntityBindingSource.DataSource = value; }

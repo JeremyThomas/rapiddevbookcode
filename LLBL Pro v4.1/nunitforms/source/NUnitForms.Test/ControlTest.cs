@@ -147,7 +147,7 @@ namespace NUnit.Extensions.Forms.TestApplications
         [Test]
         public void ControlTestersHaveFourConstructorsAndIndexer()
         {
-            IList<Type> typesToSkip = new Type[] {typeof (MessageBoxTester), typeof (FormTester)};
+            IList<Type> typesToSkip = new[] {typeof (MessageBoxTester), typeof (FormTester)};
 
             Type[] types = typeof (ControlTester).Assembly.GetTypes();
             foreach (Type type in types)

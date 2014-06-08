@@ -54,7 +54,7 @@ namespace NUnit.Extensions.Forms.TestApplications
         private void FillListBox()
         {
             checkedListForm.Show();
-            checkedListBox.Items.AddRange(new string[] {"Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Violet"});
+            checkedListBox.Items.AddRange(new[] {"Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Violet"});
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace NUnit.Extensions.Forms.TestApplications
             checkedListBox.CheckItem("Indigo");
             checkedListBox.CheckItem("Violet");
 
-            checkedListBox.CheckSelectedItems(new ArrayList(new string[] {"Red", "Orange", "Indigo", "Violet"}));
+            checkedListBox.CheckSelectedItems(new ArrayList(new[] {"Red", "Orange", "Indigo", "Violet"}));
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace NUnit.Extensions.Forms.TestApplications
 
             checkedListBox.ClearItem("Orange");
 
-            checkedListBox.CheckSelectedItems(new ArrayList(new string[] {"Red", "Indigo", "Violet"}));
+            checkedListBox.CheckSelectedItems(new ArrayList(new[] {"Red", "Indigo", "Violet"}));
         }
 
         [Test]

@@ -1,6 +1,6 @@
 ﻿namespace AW.Win
 {
-  partial class FrmTrace
+  sealed partial class FrmTrace
   {
     /// <summary>
     /// Required designer variable.

@@ -607,8 +607,6 @@ namespace AW.Winforms.Helpers.Controls
       this.dataGridEnumerable.Name = "dataGridEnumerable";
       this.dataGridEnumerable.Size = new System.Drawing.Size(1321, 489);
       this.dataGridEnumerable.TabIndex = 6;
-      this.dataGridEnumerable.DataSourceChanged += new System.EventHandler(this.dataGridEnumerable_DataSourceChanged);
-      this.dataGridEnumerable.Navigate += new System.Windows.Forms.NavigateEventHandler(this.dataGridEnumerable_Navigate);
       // 
       // tabControlGrids
       // 

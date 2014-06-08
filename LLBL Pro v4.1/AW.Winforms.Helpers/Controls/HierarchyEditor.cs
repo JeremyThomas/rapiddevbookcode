@@ -10,12 +10,13 @@ namespace AW.Winforms.Helpers.Controls
 {
   public partial class HierarchyEditor : UserControl
   {
+// ReSharper disable once MemberCanBePrivate.Global
     public HierarchyEditor()
     {
       InitializeComponent();
     }
 
-    public HierarchyEditor(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn)
+    private HierarchyEditor(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn)
       : this()
     {
       if (hierarchicalData == null) throw new ArgumentNullException("hierarchicalData");

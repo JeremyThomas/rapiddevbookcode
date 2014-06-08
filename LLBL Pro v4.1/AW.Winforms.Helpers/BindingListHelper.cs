@@ -221,7 +221,7 @@ namespace AW.Winforms.Helpers
       return objectListView;
     }
 
-    public static ObjectListView CreateObjectListView()
+    private static ObjectListView CreateObjectListView()
     {
       return new ObjectListView(new ArrayList());
     }
@@ -257,36 +257,26 @@ namespace AW.Winforms.Helpers
 
     public static bool BindEnumerable(this BindingSource bindingSource, IEnumerable enumerable, bool setReadonly, bool ensureFilteringEnabled = false)
     {
-      //  var raiseListChangedEvents=bindingSource.RaiseListChangedEvents;
-      try
+      var showenEnumerable = BindEnumerableInternal(bindingSource, enumerable, ensureFilteringEnabled);
+      if (showenEnumerable)
       {
-        //    bindingSource.RaiseListChangedEvents = false;
-        var showenEnumerable = BindEnumerableInternal(bindingSource, enumerable, ensureFilteringEnabled);
-        if (showenEnumerable)
+        var list = bindingSource.DataSource as IBindingList;
+        if (setReadonly && (bindingSource.AllowEdit || bindingSource.AllowRemove) && list != null && SetReadonly(list))
         {
-          var list = bindingSource.DataSource as IBindingList;
-          if (setReadonly && (bindingSource.AllowEdit || bindingSource.AllowRemove) && list != null && SetReadonly(list))
-          {
-            bindingSource.ResetBindings(true); //To update UI for bindingSource.AllowRemove
-          }
-          else
-            try
-            {
-              bindingSource.AllowNew = !setReadonly;
-            }
-            catch (InvalidOperationException e)
-            {
-              GeneralHelper.TraceOut(e);
-            }
+          bindingSource.ResetBindings(true); //To update UI for bindingSource.AllowRemove
         }
+        else
+          try
+          {
+            bindingSource.AllowNew = !setReadonly;
+          }
+          catch (InvalidOperationException e)
+          {
+            e.TraceOut();
+          }
+      }
 
-        return showenEnumerable;
-      }
-      finally
-      {
-        //    bindingSource.RaiseListChangedEvents = raiseListChangedEvents;          
-        //      bindingSource.ResetBindings(true);
-      }
+      return showenEnumerable;
     }
 
     private static bool BindEnumerable<T>(BindingSource bindingSource, IEnumerable<T> enumerable)
@@ -323,7 +313,7 @@ namespace AW.Winforms.Helpers
       }
       catch (Exception e)
       {
-        GeneralHelper.TraceOut(e);
+        e.TraceOut();
       }
       bool shownEnumerable;
       try
@@ -340,7 +330,7 @@ namespace AW.Winforms.Helpers
       return shownEnumerable;
     }
 
-    public static bool SetReadonly(IBindingList bindingList)
+    private static bool SetReadonly(IBindingList bindingList)
     {
       var objectListView = bindingList as ObjectListView;
       var result = objectListView != null;
@@ -377,7 +367,7 @@ namespace AW.Winforms.Helpers
         propertyInfo.SetValue(bindingList, false, null);
     }
 
-    public static bool SetReadonly<T>(IBindingList bindingList)
+    private static bool SetReadonly<T>(IBindingList bindingList)
     {
       var result = bindingList is ObjectListView<T>;
       if (result)
@@ -410,7 +400,7 @@ namespace AW.Winforms.Helpers
       return bindingList == null ? bindingSource.List : GetDataSource(bindingList);
     }
 
-    public static IEnumerable GetDataSource(this ObjectListView objectListView)
+    private static IEnumerable GetDataSource(this ObjectListView objectListView)
     {
       var bindingSource = objectListView.List as BindingSource;
       if (bindingSource != null)
@@ -419,7 +409,7 @@ namespace AW.Winforms.Helpers
       return objectListViewSource == null ? objectListView.List : GetDataSource(objectListViewSource);
     }
 
-    public static IEnumerable GetDataSource(IBindingList bindingList)
+    private static IEnumerable GetDataSource(IBindingList bindingList)
     {
       if (bindingList == null)
         return null;

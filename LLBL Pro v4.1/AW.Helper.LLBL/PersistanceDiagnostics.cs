@@ -581,8 +581,9 @@ namespace AW.Helper.LLBL
     internal IFieldPersistenceInfo SQLServerFieldPersistenceInfo;
 
     /// <summary>
-    ///   Factory to create FieldInformation2 for the supplied entity types.
+    /// Factory to create FieldInformation2 for the supplied entity types.
     /// </summary>
+    /// <param name="adapter">The adapter.</param>
     /// <param name="entities">The entities.</param>
     /// <returns></returns>
     public static IEnumerable<FieldInformation2> FieldInfoFactory(IDataAccessAdapter adapter, List<Type> entities)
@@ -656,7 +657,10 @@ namespace AW.Helper.LLBL
     /// <value>The name of the SQL server column.</value>
     public string ColumnName
     {
-      get { return SQLServerFieldPersistenceInfo == null ? null : SQLServerFieldPersistenceInfo.SourceColumnName;; }
+      get
+      {
+        return SQLServerFieldPersistenceInfo == null ? null : SQLServerFieldPersistenceInfo.SourceColumnName;
+      }
     }
 
     /// <summary>
@@ -684,10 +688,7 @@ namespace AW.Helper.LLBL
     /// <value>The name of the SQL server table.</value>
     internal string TableName
     {
-      get
-      {
-        return SQLServerFieldPersistenceInfo == null ? null : SQLServerFieldPersistenceInfo.SourceObjectName;
-      }
+      get { return SQLServerFieldPersistenceInfo == null ? null : SQLServerFieldPersistenceInfo.SourceObjectName; }
     }
 
     /// <summary>
@@ -714,8 +715,9 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    ///   Factory to create FieldAndEntityInformation2 for the supplied entity types.
+    /// Factory to create FieldAndEntityInformation2 for the supplied entity types.
     /// </summary>
+    /// <param name="adapter">The adapter.</param>
     /// <param name="entities">The entities.</param>
     /// <returns></returns>
     public static IEnumerable<FieldAndEntityInformation2> FieldAndEntityInformationFactory(IDataAccessAdapter adapter, List<Type> entities)

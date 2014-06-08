@@ -67,7 +67,7 @@ namespace AW.LLBLGen.DataContextDriver
     ///   Initializes a new instance of the <see cref="ORMQueryExecutionListener" /> class.
     /// </summary>
     /// <param name="executionManager">The execution manager.</param>
-    public ORMQueryExecutionListener(QueryExecutionManager executionManager)
+    private ORMQueryExecutionListener(QueryExecutionManager executionManager)
     {
       _executionManager = executionManager;
     }

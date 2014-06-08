@@ -24,6 +24,7 @@ namespace AW.LLBLGen.DataContextDriver
     /// <param name="pageSize">Size of the page.</param>
     /// <param name="options">The options.</param>
     /// <returns></returns>
+// ReSharper disable UnusedMethodReturnValue.Global
     public static IEnumerable DisplayInGrid(IEnumerable enumerable, ushort pageSize, GridOptions options = null)
     {
       IDataEditorPersister dataEditorPersister = null;
@@ -50,6 +51,7 @@ namespace AW.LLBLGen.DataContextDriver
     /// <param name="ensureFilteringEnabled">if set to <c>true</c> ensure filtering enabled, i.e. use ObjectListView rather than native LLBL EntityView.</param>
     /// <returns>True if succeeded rather than void so can be passed to LINQPads Dump method.</returns>
     /// <example>LinqPad: this.BrowseData()</example>
+// ReSharper disable UnusedMember.Global
     public static bool BrowseData(this ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = null, bool ensureFilteringEnabled = true)
     {
       if (linqMetaData == null)
@@ -60,6 +62,7 @@ namespace AW.LLBLGen.DataContextDriver
 
     #region Self Servicing
 
+// ReSharper disable MemberCanBePrivate.Global
     public static IEnumerable<T> DisplaySelfServicingInGrid<T>(this IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
     {
       return enumerable.DisplayInGrid(new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister(), pageSize);
@@ -100,14 +103,9 @@ namespace AW.LLBLGen.DataContextDriver
       return enumerable.DisplayInGrid(new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
     }
 
-    public static IEnumerable<T> DisplayAdapterInGrid<T>(this IQueryable<T> query, ushort pageSize) where T : EntityBase2
+    public static IEnumerable<T> DisplayAdapterInGrid<T>(this IQueryable<T> query, ushort pageSize = LINQPad.CustomVisualizers.DefaultPageSize) where T : EntityBase2
     {
       return DisplayInGrid(query, EntityHelper.GetDataAccessAdapter(query), pageSize);
-    }
-
-    public static IEnumerable<T> DisplayAdapterInGrid<T>(this IQueryable<T> query) where T : EntityBase2
-    {
-      return DisplayAdapterInGrid(query, LINQPad.CustomVisualizers.DefaultPageSize);
     }
 
     public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
@@ -133,5 +131,9 @@ namespace AW.LLBLGen.DataContextDriver
     }
 
     #endregion
+
+    // ReSharper restore MemberCanBePrivate.Global
+    // ReSharper restore UnusedMethodReturnValue.Global
+    // ReSharper restore UnusedMember.Global
   }
 }

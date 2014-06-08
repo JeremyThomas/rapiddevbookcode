@@ -17,7 +17,7 @@ namespace AW.Win
       InitializeComponent();
     }
 
-    public int MaxNumberOfItemsToReturn
+    private int MaxNumberOfItemsToReturn
     {
       get { return Convert.ToInt32(numericUpDownNumRows.Value); }
       set { numericUpDownNumRows.Value = value; }
@@ -128,7 +128,5 @@ namespace AW.Win
     {
       View();
     }
-
-
   }
 }

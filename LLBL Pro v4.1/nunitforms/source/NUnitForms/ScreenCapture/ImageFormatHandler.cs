@@ -358,7 +358,7 @@ namespace NUnit.Extensions.Forms
 
             if (info != null)
             {
-                String[] extensions = info.FilenameExtension.Split(new char[] {';'});
+                String[] extensions = info.FilenameExtension.Split(new[] {';'});
                 ext = extensions[0];
                 if (ext.StartsWith("*."))
                 {

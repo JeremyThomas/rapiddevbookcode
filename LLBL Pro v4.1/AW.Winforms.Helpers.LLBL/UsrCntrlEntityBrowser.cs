@@ -10,11 +10,11 @@ namespace AW.Winforms.Helpers.LLBL
 {
   public partial class UsrCntrlEntityBrowser : UserControl
   {
-    public Type BaseType { get; set; }
+    private Type BaseType { get; set; }
     private ILinqMetaData _linqMetaData;
     private bool _userHasInteracted;
 
-    public static FrmPersistantLocation ShowDataBrowser(ILinqMetaData linqMetaData, Form parentForm = null, 
+    public static FrmPersistantLocation ShowDataBrowser(ILinqMetaData linqMetaData, Form parentForm = null,
       bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
     {
       var form = new FrmPersistantLocation
@@ -24,7 +24,7 @@ namespace AW.Winforms.Helpers.LLBL
         Icon = parentForm == null ? null : parentForm.Icon,
       };
 
-      form.Controls.Add(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, membersToExclude) { Dock = DockStyle.Fill });
+      form.Controls.Add(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, membersToExclude) {Dock = DockStyle.Fill});
       AWHelper.ShowForm(form, parentForm);
       return form;
     }
@@ -58,7 +58,7 @@ namespace AW.Winforms.Helpers.LLBL
     #region Overrides of UserControl
 
     /// <summary>
-    /// Raises the CreateControl event.
+    ///   Raises the CreateControl event.
     /// </summary>
     protected override void OnCreateControl()
     {
@@ -92,15 +92,15 @@ namespace AW.Winforms.Helpers.LLBL
             var treeNodes = treeViewEntities.Nodes.Find(typeParameter.Name, true);
             var firstOrDefault = treeNodes.FirstOrDefault();
             if (firstOrDefault != null)
-            {            
+            {
               treeViewEntities.SelectedNode = firstOrDefault;
               treeViewEntities.SelectedNode.Expand();
             }
           }
       }
-      else 
+      else
       {
-        openPagedToolStripMenuItem_Click(sender, e);
+        openPagedToolStripMenuItem_Click();
       }
     }
 
@@ -138,7 +138,7 @@ namespace AW.Winforms.Helpers.LLBL
       gridDataEditor.BindEnumerable(entityQueryable);
     }
 
-    private void openPagedToolStripMenuItem_Click(object sender, EventArgs e)
+    private void openPagedToolStripMenuItem_Click()
     {
       Open();
     }

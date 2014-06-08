@@ -14,10 +14,11 @@ namespace AW.Winforms.Helpers.QueryRunner
     public event Func<object, int> DeleteFunction;
     private readonly SplitContainer[] _splitContainers;
 
+// ReSharper disable once MemberCanBePrivate.Global
     public FrmQueryRunner()
     {
-      InitializeComponent();      
-      _splitContainers = new[] { queryRunner1.splitContainerScript };
+      InitializeComponent();
+      _splitContainers = new[] {queryRunner1.splitContainerScript};
     }
 
     public FrmQueryRunner(Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
@@ -27,7 +28,6 @@ namespace AW.Winforms.Helpers.QueryRunner
       SaveFunction += saveFunction;
       DeleteFunction += deleteFunction;
     }
-
 
     #region Overrides of FrmPersistantLocation
 
@@ -51,7 +51,7 @@ namespace AW.Winforms.Helpers.QueryRunner
       if (files != null) OpenFiles(files.Cast<string>());
     }
 
-    public void OpenFiles(IEnumerable<string> files)
+    private void OpenFiles(IEnumerable<string> files)
     {
       foreach (var file in files)
         DoFileOpen(file);
@@ -136,8 +136,8 @@ namespace AW.Winforms.Helpers.QueryRunner
     public StringCollection GetOpenFiles()
     {
       var t = from tabs in tabControl.TabPages.Cast<TabPage>()
-              where File.Exists(tabs.ToolTipText)
-              select tabs.ToolTipText;
+        where File.Exists(tabs.ToolTipText)
+        select tabs.ToolTipText;
       return CreateStringCollection(t);
     }
 

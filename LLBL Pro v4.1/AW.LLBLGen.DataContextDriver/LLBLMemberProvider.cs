@@ -28,7 +28,7 @@ namespace AW.LLBLGen.DataContextDriver
     private readonly object _objectToWrite;
     private readonly List<PropertyDescriptor> _propsToWrite;
 
-    public LLBLMemberProvider(object objectToWrite, Type itemType, IEnumerable<string> membersToExclude = null)
+    private LLBLMemberProvider(object objectToWrite, Type itemType, IEnumerable<string> membersToExclude = null)
     {
       _objectToWrite = objectToWrite;
       _propsToWrite = PropertyDescriptorCache.GetDescriptors(itemType, membersToExclude);

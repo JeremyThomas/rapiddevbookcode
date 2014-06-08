@@ -69,8 +69,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public const string ElementNameMembersUseSchema = "UseSchema";
     public const string ElementNameMembersTablePrefixesToGroupBy = "TablePrefixesToGroupBy";
     public const string ElementNameMembersTablePrefixDelimiterToGroupBy = "TablePrefixDelimiterToGroupBy";
-    public const string ElementNameDisplayInGrid = "DisplayInGrid";
-    public const string ElementNameMembersToExclude = "MembersToExclude";
+    private const string ElementNameDisplayInGrid = "DisplayInGrid";
+    private const string ElementNameMembersToExclude = "MembersToExclude";
     public const string TitleChooseLLBLEntityAssembly = "Choose LLBL entity assembly";
     public const string TitleChooseCustomType = "Choose LinqMetaData or ElementCreatorCore Type";
     public const string TitleChooseDataAccessAdapterAssembly = "Choose Data Access Adapter assembly";
@@ -318,7 +318,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
     }
 
-    public void SetDriverDataValue(string elementName, string value)
+    private void SetDriverDataValue(string elementName, string value)
     {
       SetDriverDataValue(CxInfo, elementName, value);
     }
@@ -360,7 +360,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       return usefieldsElement == true.ToString(CultureInfo.InvariantCulture);
     }
 
-    public string GetDriverDataValue(string elementName)
+    private string GetDriverDataValue(string elementName)
     {
       return GetDriverDataValue(CxInfo, elementName);
     }
@@ -634,7 +634,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       OnPropertyChanged("ConnectionTypeVisibility");
     }
 
-    public static bool IsSelfServicing(IConnectionInfo connectionInfo)
+    private static bool IsSelfServicing(IConnectionInfo connectionInfo)
     {
       var selfServicingEntities =
         connectionInfo.CustomTypeInfo.GetCustomTypesInAssembly(DomainIsolator.LlblgenProNameSpace + ".ORMSupportClasses.EntityBase");
@@ -898,6 +898,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         }
         catch (Exception ex)
         {
+          ex.TraceOut();
         }
       }
     }
@@ -1234,7 +1235,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       ValueTypeWrapper<string>.Add(additionalAssemblies, ormProfilerPathAssemblies);
     }
 
-    private static bool AddORMProfiler(ObservableCollection<ValueTypeWrapper<string>> additionalAssemblies, string[] ormProfilerPathAssemblies)
+    private static bool AddORMProfiler(ObservableCollection<ValueTypeWrapper<string>> additionalAssemblies, IEnumerable<string> ormProfilerPathAssemblies)
     {
       if (!string.IsNullOrWhiteSpace(ORMProfilerPath))
       {
@@ -1433,10 +1434,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     {
       var scrollView = AWVisualTreeHelper.FindVisualChild<ScrollViewer>(AdditionalAssembliesDataGridCnxt);
       var verticalVisibility = scrollView.ComputedVerticalScrollBarVisibility;
-      if (verticalVisibility == Visibility.Visible)
-        RowDefAdditionalAssemblies.MaxHeight = double.PositiveInfinity;
-      else
-        RowDefAdditionalAssemblies.MaxHeight = AdditionalAssembliesDataGridCnxt.ActualHeight;
+      RowDefAdditionalAssemblies.MaxHeight = verticalVisibility == Visibility.Visible ? double.PositiveInfinity : AdditionalAssembliesDataGridCnxt.ActualHeight;
     }
 
     private void GridSplitter_DragCompleted(object sender, DragCompletedEventArgs e)

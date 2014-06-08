@@ -110,7 +110,7 @@ namespace NUnit.Extensions.Forms
                                              BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             ParameterInfo[] param = minfo.GetParameters();
             Type parameterType = param[0].ParameterType;
-            minfo.Invoke(MenuItem, new Object[] {Activator.CreateInstance(parameterType)});
+            minfo.Invoke(MenuItem, new[] {Activator.CreateInstance(parameterType)});
         }
 
         #endregion

@@ -41,7 +41,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -53,7 +52,7 @@ namespace AW.Helper.LLBL
   public static class MembersToExcludeCache
   {
     /// <summary>
-    /// The AlreadyFetched prefix
+    ///   The AlreadyFetched prefix
     /// </summary>
     public const string AlreadyFetchedPrefix = "AlreadyFetched";
 
@@ -62,27 +61,28 @@ namespace AW.Helper.LLBL
     private static readonly object Semaphore = new object();
     private static readonly Dictionary<Type, string[]> Cache = new Dictionary<Type, string[]>();
 
-    private static readonly string[] EntityBasePropertyNames = typeof(EntityBase).GetProperties().Select(p => p.Name)
-      .Union(typeof(EntityBase2).GetProperties().Select(p => p.Name)).Distinct().ToArray();
+    private static readonly string[] EntityBasePropertyNames = typeof (EntityBase).GetProperties().Select(p => p.Name)
+      .Union(typeof (EntityBase2).GetProperties().Select(p => p.Name)).Distinct().ToArray();
 
     #endregion
 
     /// <summary>
-    /// Gets the entity property names that should not be displayed. I.e. Base properties and alwaysFetch/AlreadyFetched flag properties.
+    ///   Gets the entity property names that should not be displayed. I.e. Base properties and alwaysFetch/AlreadyFetched flag
+    ///   properties.
     /// </summary>
     /// <param name="elementType">Type of the element.</param>
     /// <returns></returns>
     public static IEnumerable<string> GetEntityPropertyNamesThatShouldNotBeDisplayed(Type elementType)
     {
-      if (typeof(IEntityCore).IsAssignableFrom(elementType))
+      if (typeof (IEntityCore).IsAssignableFrom(elementType))
       {
         IEnumerable<string> entityBasePropertyNames = EntityBasePropertyNames;
-        if (typeof(IEntity).IsAssignableFrom(elementType))
+        if (typeof (IEntity).IsAssignableFrom(elementType))
         {
           // remove alwaysFetch/AlreadyFetched flag properties
-           entityBasePropertyNames = entityBasePropertyNames
+          entityBasePropertyNames = entityBasePropertyNames
             .Union(elementType.GetProperties()
-              .Where(p => p.PropertyType == typeof(bool) &&
+              .Where(p => p.PropertyType == typeof (bool) &&
                           (p.Name.StartsWith(AlreadyFetchedPrefix) || p.Name.StartsWith("AlwaysFetch") || p.Name.EndsWith("NewIfNotFound")))
               .Select(p => p.Name));
         }
@@ -92,7 +92,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Gets the members to exclude for the type specified. If they're not available in the cache, they're added.
+    ///   Gets the members to exclude for the type specified. If they're not available in the cache, they're added.
     /// </summary>
     /// <param name="entityType">Type of the entity.</param>
     /// <param name="otherMembersToExclude">The other members to exclude.</param>

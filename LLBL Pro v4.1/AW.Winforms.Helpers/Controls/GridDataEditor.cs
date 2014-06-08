@@ -15,19 +15,20 @@ using AW.Helper;
 using AW.Helper.TypeConverters;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.EntityViewer;
-using DynamicTable;
+using AW.Winforms.Helpers.Reporting;
 using JesseJohnston;
 
 namespace AW.Winforms.Helpers.Controls
 {
   public partial class GridDataEditor : UserControl
   {
-    public string[] MembersToExclude { get; set; }
+    public string[] MembersToExclude { private get; set; }
 
     /// <summary>
-    /// The maximum automatic generate column width - 300
+    ///   The maximum automatic generate column width - 300
     /// </summary>
     private const int MaxAutoGenerateColumnWidth = 300;
+
     private readonly ArrayList _deleteItems = new ArrayList();
     protected bool IsBinding = true;
     private bool _loaded;
@@ -39,8 +40,8 @@ namespace AW.Winforms.Helpers.Controls
     public GridDataEditor()
     {
       InitializeComponent();
-      HumanizedEnumConverter.AddEnumerationConverter(typeof(DataGridViewClipboardCopyMode));
-      dataGridViewEnumerable.AutoGenerateColumns = true;      
+      HumanizedEnumConverter.AddEnumerationConverter(typeof (DataGridViewClipboardCopyMode));
+      dataGridViewEnumerable.AutoGenerateColumns = true;
       toolStripButtonShowDatagrid_Click(null, null);
       var toolStripItemFromBeginButton = searchToolBar.Items["fromBeginButton"] as ToolStripButton;
       if (toolStripItemFromBeginButton != null)
@@ -62,7 +63,7 @@ namespace AW.Winforms.Helpers.Controls
     /// <summary>
     ///   Initializes a new instance of the <see cref="T:System.Windows.Forms.UserControl" /> class.
     /// </summary>
-    public GridDataEditor(IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly, params string[] membersToExclude)
+    public GridDataEditor(IEnumerable enumerable, IDataEditorPersister dataEditorPersister = null, ushort pageSize = DataEditorExtensions.DefaultPageSize, bool readOnly = true, params string[] membersToExclude)
       : this()
     {
       MembersToExclude = membersToExclude;
@@ -72,10 +73,6 @@ namespace AW.Winforms.Helpers.Controls
         readOnly = true;
       }
       InitialiseAndBindGridDataEditor(enumerable, dataEditorPersister, pageSize, readOnly);
-    }
-
-    public GridDataEditor(IEnumerable enumerable) : this(enumerable, null, DataEditorExtensions.DefaultPageSize, true)
-    {
     }
 
     public void InitialiseAndBindGridDataEditor(IEnumerable enumerable, IDataEditorPersister dataEditorPersister,
@@ -93,7 +90,7 @@ namespace AW.Winforms.Helpers.Controls
      Description("Size of the page")]
     public ushort PageSize
     {
-      get { return _pageSize; }
+      protected get { return _pageSize; }
       set
       {
         _pageSize = value;
@@ -145,19 +142,19 @@ namespace AW.Winforms.Helpers.Controls
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the grid was set read-only.
+    ///   Gets or sets a value indicating whether the grid was set read-only.
     /// </summary>
     /// <value>
     ///   <c>true</c> if [read-only]; otherwise, <c>false</c>.
     /// </value>
     public bool Readonly
     {
-      get { return dataGridViewEnumerable.ReadOnly; }
+      private get { return dataGridViewEnumerable.ReadOnly; }
       set { dataGridViewEnumerable.ReadOnly = value; }
     }
 
     /// <summary>
-    /// Was the last bound Enumerable not writable when grid is not read-only
+    ///   Was the last bound Enumerable not writable when grid is not read-only
     /// </summary>
     private bool _shouldBeReadonly;
 
@@ -222,7 +219,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
     {
-      GeneralHelper.TraceOut(e.Exception);
+      e.Exception.TraceOut();
     }
 
     private void bindingSourceEnumerable_DataSourceChanged(object sender, EventArgs e)
@@ -265,6 +262,7 @@ namespace AW.Winforms.Helpers.Controls
       if (_shouldBeReadonly)
       {
         if (typeToEdit == null)
+// ReSharper disable once PossibleNullReferenceException
           typeToEdit = queryable.ElementType;
         _shouldBeReadonly = !CanSave(typeToEdit);
       }
@@ -353,7 +351,7 @@ namespace AW.Winforms.Helpers.Controls
         BindPage();
     }
 
-    protected void BindPage()
+    private void BindPage()
     {
       try
       {
@@ -390,7 +388,7 @@ namespace AW.Winforms.Helpers.Controls
       bindingSourcePaging.DataSource = null;
       bindingSourcePaging.DataSource = CreatePageDataSource(pageSize, enumerable);
       if (Paging())
-        return bindingSourceEnumerable.List != null;        
+        return bindingSourceEnumerable.List != null;
       return GetFirstPage(enumerable);
     }
 
@@ -435,7 +433,7 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
-    protected void TidyUp()
+    private void TidyUp()
     {
       if (ItemType != null && FieldsToPropertiesTypeDescriptionProviders.ContainsKey(ItemType))
       {
@@ -509,7 +507,7 @@ namespace AW.Winforms.Helpers.Controls
             toolStripButtonCancelEdit.Enabled = true;
             bindingNavigatorPaging.Enabled = false;
             break;
-    
+
           case ListChangedType.ItemChanged:
           case ListChangedType.ItemAdded:
             saveToolStripButton.Enabled = _canSave;
@@ -638,15 +636,6 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
-    private void dataGridEnumerable_Navigate(object sender, NavigateEventArgs ne)
-    {
-    }
-
-    private void dataGridEnumerable_DataSourceChanged(object sender, EventArgs e)
-    {
-      var count = dataGridEnumerable.TableStyles.Count;
-    }
-
     private void dataGridViewEnumerable_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
     {
       if (dataGridViewEnumerable.Columns.Count > 0 && dataGridViewEnumerable.Columns.Cast<DataGridViewColumn>().Any(c => !c.IsDataBound))
@@ -680,12 +669,12 @@ namespace AW.Winforms.Helpers.Controls
     private void toolStripButtonUnPage_Click(object sender, EventArgs e)
     {
       ChangePageSize(0);
-
     }
 
     private void toolStripButtonSetPageSize_Click(object sender, EventArgs e)
     {
-      ChangePageSize(Convert.ToUInt16(toolStripTextBoxNewPageSize.Text));}
+      ChangePageSize(Convert.ToUInt16(toolStripTextBoxNewPageSize.Text));
+    }
 
     private void ChangePageSize(ushort pageSize)
     {
@@ -703,7 +692,7 @@ namespace AW.Winforms.Helpers.Controls
         EnsureFilteringEnabled = true;
         BindEnumerable(SourceEnumerable);
 
-         //BindEnumerable(new Csla.ObjectListView(bindingSourceEnumerable.List));
+        //BindEnumerable(new Csla.ObjectListView(bindingSourceEnumerable.List));
         toolStripButtonEnableFilter.Visible = false;
       }
     }
@@ -713,7 +702,7 @@ namespace AW.Winforms.Helpers.Controls
       get { return _superset ?? bindingSourceEnumerable.GetDataSource(); }
     }
 
-    public bool EnsureFilteringEnabled { get; set; }
+    public bool EnsureFilteringEnabled { protected get; set; }
 
     private void toolStripButtonClearFilters_Click(object sender, EventArgs e)
     {
@@ -737,7 +726,7 @@ namespace AW.Winforms.Helpers.Controls
         searchToolBar.Hide();
     }
 
-    private void searchToolBar_Search(object sender, ADGV.SearchToolBarSearchEventArgs e)
+    private void searchToolBar_Search(object sender, SearchToolBarSearchEventArgs e)
     {
       var startColumn = 0;
       var startRow = 0;
@@ -791,6 +780,5 @@ namespace AW.Winforms.Helpers.Controls
         tabControlGrids.Appearance = TabAppearance.FlatButtons;
       }
     }
-
   }
 }

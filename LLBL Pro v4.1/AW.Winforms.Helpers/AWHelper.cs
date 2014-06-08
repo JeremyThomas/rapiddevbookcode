@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Drawing;
@@ -74,7 +75,7 @@ namespace AW.Winforms.Helpers
     }
 
     /// <summary>
-    /// Sets the window location only if the point exists on one of the screens.
+    ///   Sets the window location only if the point exists on one of the screens.
     /// </summary>
     /// <param name="form">The form.</param>
     /// <param name="location">The location.</param>
@@ -92,12 +93,12 @@ namespace AW.Winforms.Helpers
 
     #region Dynamic Form Instantiation
 
-    public static Form CreateForm(Type formType, params Object[] args)
+    private static Form CreateForm(Type formType, params Object[] args)
     {
       return MetaDataHelper.CreateInstanceOf(typeof (Form), formType, args) as Form;
     }
 
-    public static void ShowForm(Type formType, bool modal)
+    private static void ShowForm(Type formType, bool modal)
     {
       var aForm = CreateForm(formType);
       if (aForm != null)
@@ -140,7 +141,7 @@ namespace AW.Winforms.Helpers
 
     #region Forms
 
-    public static Form GetMdiParent()
+    private static Form GetMdiParent()
     {
       return Application.OpenForms.Cast<Form>().FirstOrDefault(form => form.IsMdiContainer);
     }
@@ -182,7 +183,7 @@ namespace AW.Winforms.Helpers
 
     #region Controls
 
-    public static Control GetFocusedControl(Control.ControlCollection controls)
+    private static Control GetFocusedControl(IEnumerable controls)
     {
       // store focused control...
       foreach (Control clsControl in controls)
@@ -201,7 +202,7 @@ namespace AW.Winforms.Helpers
     }
 
     /// <summary>
-    /// Recursively gets the focused control.
+    ///   Recursively gets the focused control.
     /// </summary>
     /// <param name="control">A parent control.</param>
     /// <returns>The child control(if any) that has focus</returns>
@@ -221,11 +222,12 @@ namespace AW.Winforms.Helpers
     }
 
     /// <summary>
-    /// Recursivly gets all the contained controls.
+    ///   Recursivly gets all the contained controls.
     /// </summary>
     /// <param name="controls">The controls.</param>
-    /// <see cref="http://weblogs.asp.net/dfindley/archive/2007/06/29/linq-the-uber-findcontrol.aspx"/>
-    /// /// <see cref="http://stackoverflow.com/questions/253937/recursive-control-search-with-linq"/>
+    /// <see cref="http://weblogs.asp.net/dfindley/archive/2007/06/29/linq-the-uber-findcontrol.aspx" />
+    /// ///
+    /// <see cref="http://stackoverflow.com/questions/253937/recursive-control-search-with-linq" />
     /// <returns>All the contained controls.</returns>
     public static IEnumerable<Control> All(this Control.ControlCollection controls)
     {
@@ -239,7 +241,7 @@ namespace AW.Winforms.Helpers
     }
 
     /// <summary>
-    /// Recursivly gets all the contained controls.
+    ///   Recursivly gets all the contained controls.
     /// </summary>
     /// <param name="control">The control.</param>
     /// <returns>All the contained controls.</returns>
@@ -251,7 +253,7 @@ namespace AW.Winforms.Helpers
     #endregion
 
     /// <summary>
-    /// Skips then takes.
+    ///   Skips then takes.
     /// </summary>
     /// <param name="queryable">The queryable.</param>
     /// <param name="pageIndex">Index of the page.</param>
@@ -259,11 +261,11 @@ namespace AW.Winforms.Helpers
     /// <returns></returns>
     public static IQueryable SkipTakeDynamic(this IQueryable queryable, int pageIndex, int pageSize)
     {
-      return queryable.Skip(pageIndex * pageSize).Take(pageSize);
+      return queryable.Skip(pageIndex*pageSize).Take(pageSize);
     }
 
     public static IQueryable WhereDynamic(this IQueryable source, Expression lambdaExpression)
-    {     
+    {
       if (source == null)
         throw new ArgumentNullException("source");
       if (lambdaExpression == null)
@@ -274,7 +276,7 @@ namespace AW.Winforms.Helpers
       }, source.Expression, (Expression) Expression.Quote(lambdaExpression)));
     }
 
-    public static IQueryable OrderByDynamic(this IQueryable source,  Expression expression, bool ascending = true)
+    public static IQueryable OrderByDynamic(this IQueryable source, Expression expression, bool ascending = true)
     {
       if (source == null)
         throw new ArgumentNullException("source");
@@ -282,14 +284,14 @@ namespace AW.Winforms.Helpers
         throw new ArgumentNullException("expression");
       const string str1 = "OrderBy";
       const string str2 = "OrderByDescending";
-      var newExpression = (Expression)Expression.Call(typeof(Queryable), ascending ? str1 : str2, new Type[2]
-        {
-          source.ElementType,
-          expression.Type
-        }, new Expression[2]
-        {
-          source.Expression, Expression.Quote(expression)
-        });
+      var newExpression = (Expression) Expression.Call(typeof (Queryable), ascending ? str1 : str2, new[]
+      {
+        source.ElementType,
+        expression.Type
+      }, new[]
+      {
+        source.Expression, Expression.Quote(expression)
+      });
       return source.Provider.CreateQuery(newExpression);
     }
   }

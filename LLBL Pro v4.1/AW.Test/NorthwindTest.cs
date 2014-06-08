@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
 using AW.Helper.LLBL;
-using AW.Winforms.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL;
 using Northwind.DAL.DTO;
@@ -401,7 +400,7 @@ namespace AW.Tests
     public void TestGroupByOrderDateYear()
     {
       var linqMetaData = GetNorthwindLinqMetaData();
-      IQueryable<IGrouping<int, OrderEntity>> ordersGroupedByYear = linqMetaData.Order.GroupBy(o => o.OrderDate.Value.Year);
+      var ordersGroupedByYear = linqMetaData.Order.GroupBy(o => o.OrderDate.Value.Year);
 
       Assert.AreEqual(3, ordersGroupedByYear.Select(o => o.Key).Count());
       //Fails Assert.AreEqual(3, ordersGroupedByYear.Count());
@@ -427,9 +426,9 @@ namespace AW.Tests
 
       Assert.AreEqual(23, ordersGroupedByYear.Select(o => o.Key).Count());
 
-      var ordersGroupedByYearNamed = linqMetaData.Order.GroupBy(o => new GroupByYear { Year = o.OrderDate.Value.Year, Month = o.OrderDate.Value.Month });
+      var ordersGroupedByYearNamed = linqMetaData.Order.GroupBy(o => new GroupByYear {Year = o.OrderDate.Value.Year, Month = o.OrderDate.Value.Month});
 
-      Assert.AreEqual(23, ordersGroupedByYearNamed.Select(o => new { o.Key.Year, o.Key.Month, count = o.Count() }).Count());
+      Assert.AreEqual(23, ordersGroupedByYearNamed.Select(o => new {o.Key.Year, o.Key.Month, count = o.Count()}).Count());
     }
 
     [TestMethod]
@@ -441,34 +440,34 @@ namespace AW.Tests
       //  into orderCountry
       //  select orderCountry;
       var ordersGroupedByCountry = linqMetaData.Order.GroupBy(o => new CountryRegion {ShipCountry = o.ShipCountry, ShipRegion = o.ShipRegion});
-      var ordersGroupedByCountryAnon = linqMetaData.Order.GroupBy(o => new  { ShipCountry = o.ShipCountry, ShipRegion = o.ShipRegion });
+      var ordersGroupedByCountryAnon = linqMetaData.Order.GroupBy(o => new {ShipCountry = o.ShipCountry, ShipRegion = o.ShipRegion});
 
-      var ordersGroupedByCountryList = ordersGroupedByCountry.Select(o => new CountryRegion { ShipCountry = o.Key.ShipCountry, ShipRegion = o.Key.ShipRegion, Count = o.Count() }).ToList();
+      var ordersGroupedByCountryList = ordersGroupedByCountry.Select(o => new CountryRegion {ShipCountry = o.Key.ShipCountry, ShipRegion = o.Key.ShipRegion, Count = o.Count()}).ToList();
       Assert.AreEqual(35, ordersGroupedByCountryList.Count());
 
-      var ordersGroupedByCountryList2Anon = ordersGroupedByCountryAnon.Select(o => new CountryRegion { ShipCountry = string.IsNullOrEmpty(o.Key.ShipCountry) ? "empty" : o.Key.ShipCountry }).ToList();
+      var ordersGroupedByCountryList2Anon = ordersGroupedByCountryAnon.Select(o => new CountryRegion {ShipCountry = string.IsNullOrEmpty(o.Key.ShipCountry) ? "empty" : o.Key.ShipCountry}).ToList();
       Assert.AreEqual(35, ordersGroupedByCountryList2Anon.Count());
-      var ordersGroupedByCountryList2 = ordersGroupedByCountry.Select(o => new CountryRegion { ShipCountry = string.IsNullOrEmpty(o.Key.ShipCountry) ? "empty" : o.Key.ShipCountry }).ToList();
+      var ordersGroupedByCountryList2 = ordersGroupedByCountry.Select(o => new CountryRegion {ShipCountry = string.IsNullOrEmpty(o.Key.ShipCountry) ? "empty" : o.Key.ShipCountry}).ToList();
       Assert.AreEqual(35, ordersGroupedByCountryList2.Count());
 
-      var ordersGroupedByCountryKeyList = ordersGroupedByCountry.Select(o => new CountryRegion { Key= o.Key, Count = o.Count() }).ToList();
+      var ordersGroupedByCountryKeyList = ordersGroupedByCountry.Select(o => new CountryRegion {Key = o.Key, Count = o.Count()}).ToList();
       Assert.AreEqual(35, ordersGroupedByCountryKeyList.Count());
 
       var ordersGroupedByCountryDynamic = (IQueryable<IGrouping<DynamicClass, OrderEntity>>) linqMetaData.Order.GroupBy("new(ShipCountry, ShipRegion)", "it");
       var countryRegions = new List<CountryRegion>();
-      foreach (IGrouping<DynamicClass, OrderEntity> grouping in ordersGroupedByCountryDynamic)
+      foreach (var grouping in ordersGroupedByCountryDynamic)
       {
         var countryRegion = new CountryRegion();
-        dynamic countryRegionDyn =grouping.Key;
+        dynamic countryRegionDyn = grouping.Key;
         countryRegion.ShipCountry = countryRegionDyn.ShipCountry;
         countryRegion.ShipRegion = countryRegionDyn.ShipRegion;
         countryRegions.Add(countryRegion);
       }
-      var groupedByCountryWithCountDynamic = (IQueryable<DynamicClass>)ordersGroupedByCountryDynamic.Select("new(Key.ShipCountry, Key.ShipRegion, Count() as Count)");
+      var groupedByCountryWithCountDynamic = (IQueryable<DynamicClass>) ordersGroupedByCountryDynamic.Select("new(Key.ShipCountry, Key.ShipRegion, Count() as Count)");
       var groupedByCountryWithCountDynamicList = groupedByCountryWithCountDynamic.ToList();
       Assert.AreEqual(35, groupedByCountryWithCountDynamicList.Count());
 
-      var groupedByCountryWithCount = ordersGroupedByCountryDynamic.Select(x => new { Key = x.Key, Count = x.Count() });
+      var groupedByCountryWithCount = ordersGroupedByCountryDynamic.Select(x => new {Key = x.Key, Count = x.Count()});
 
       var groupedByCountryWithCountList = groupedByCountryWithCount.ToList();
 

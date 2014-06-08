@@ -14,23 +14,24 @@ using AW.LinqToSQL;
 using AW.Tests.Properties;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
+using AW.Winforms.Helpers.EntityViewer;
 using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Tests
 {
-  ///<summary>
-  ///  This is a test class for DataEditorExtensionsTest and is intended
-  ///  to contain all DataEditorExtensionsTest Unit Tests
-  ///</summary>
+  /// <summary>
+  ///   This is a test class for DataEditorExtensionsTest and is intended
+  ///   to contain all DataEditorExtensionsTest Unit Tests
+  /// </summary>
   [TestClass]
   public class DataEditorExtensionsTest : GridDataEditorTestBase
   {
-    ///<summary>
-    ///  Gets or sets the test context which provides
-    ///  information about and functionality for the current test run.
-    ///</summary>
+    /// <summary>
+    ///   Gets or sets the test context which provides
+    ///   information about and functionality for the current test run.
+    /// </summary>
     public TestContext TestContext { get; set; }
 
     #region Additional test attributes
@@ -65,9 +66,9 @@ namespace AW.Tests
 
     #endregion
 
-    ///<summary>
-    ///  A test for ShowInGrid
-    ///</summary>
+    /// <summary>
+    ///   A test for ShowInGrid
+    /// </summary>
     [TestCategory("Winforms"), TestMethod]
     public void EditPropertiesInDataGridViewTest()
     {
@@ -75,9 +76,9 @@ namespace AW.Tests
       TestShowInGrid(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)), 14);
     }
 
-    ///<summary>
-    ///  A test for ShowInGrid
-    ///</summary>
+    /// <summary>
+    ///   A test for ShowInGrid
+    /// </summary>
     [TestCategory("Winforms"), TestMethod]
     public void EditInDataGridViewTest()
     {
@@ -109,7 +110,7 @@ namespace AW.Tests
       }
     }
 
-    protected void TidyUp(Type itemType)
+    private void TidyUp(Type itemType)
     {
       if (_fieldsToPropertiesTypeDescriptionProvider != null && itemType != null)
       {

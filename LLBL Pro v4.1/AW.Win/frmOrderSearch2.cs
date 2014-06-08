@@ -6,12 +6,10 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Data.Filters;
-using AW.Data.Linq;
+using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
-using Korzh.EasyQuery;
-using SD.LLBLGen.Pro.LinqSupportClasses;
 
 namespace AW.Win
 {
@@ -92,8 +90,9 @@ namespace AW.Win
       {
         predicate = predicate.AddMethodCallExpression(FrmEasyQuery.GetLinqExpression(query1) as MethodCallExpression);
       }
-      catch (Exception)
+      catch (Exception ex)
       {
+        ex.TraceOut();
       }
       if (Settings.Default.UsePredicate)
       {
@@ -114,7 +113,7 @@ namespace AW.Win
       _results = salesOrderHeaderQuery.ToEntityCollection();
     }
 
-    public int MaxNumberOfItemsToReturn
+    private int MaxNumberOfItemsToReturn
     {
       get { return Convert.ToInt32(numericUpDownNumRows.Value); }
       set { numericUpDownNumRows.Value = value; }

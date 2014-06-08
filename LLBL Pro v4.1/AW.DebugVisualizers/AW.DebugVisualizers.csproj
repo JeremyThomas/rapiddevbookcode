@@ -125,9 +125,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dynamic Expressions.html" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="FormDebuggerVisualizerInstaller.resx">
       <DependentUpon>FormDebuggerVisualizerInstaller.cs</DependentUpon>
     </EmbeddedResource>

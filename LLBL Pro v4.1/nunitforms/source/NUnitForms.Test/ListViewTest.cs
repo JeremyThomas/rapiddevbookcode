@@ -55,7 +55,7 @@ namespace NUnit.Extensions.Forms.TestApplications
         {
             listViewForm.Show();
             return
-                new ListViewItem[]
+                new[]
                     {
                         new ListViewItem("Red"), new ListViewItem("Orange"), new ListViewItem("Yellow"),
                         new ListViewItem("Green"), new ListViewItem("Blue"), new ListViewItem("Indigo"),
@@ -70,11 +70,11 @@ namespace NUnit.Extensions.Forms.TestApplications
             listViewDetails.Items.AddRange(ColorList());
             listViewForm.Show();
 
-            string[] selectedColors = new string[] {"Red"};
+            string[] selectedColors = {"Red"};
             listViewDetails.SelectItems(selectedColors);
             Assert.IsTrue(listViewDetails.SelectedItemsMatch(selectedColors));
 
-            selectedColors = new string[] {"Red", "Violet"};
+            selectedColors = new[] {"Red", "Violet"};
             listViewDetails.SelectItems(selectedColors);
             Assert.IsFalse(listViewDetails.SelectedItemsMatch(selectedColors));
         }
@@ -84,7 +84,7 @@ namespace NUnit.Extensions.Forms.TestApplications
         {
             listViewForm.Show();
             listViewDetails.Items.AddRange(ColorList());
-            string[] selectedColors = new string[] {"Red", "Violet"};
+            string[] selectedColors = {"Red", "Violet"};
             listViewDetails.SelectItems(selectedColors);
             Assert.IsTrue(listViewDetails.SelectedItemsMatch(selectedColors));
         }

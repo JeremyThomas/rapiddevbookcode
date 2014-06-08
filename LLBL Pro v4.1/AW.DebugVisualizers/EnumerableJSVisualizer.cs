@@ -84,10 +84,6 @@ namespace AW.DebugVisualizers
             var jToken = JToken.Parse(s2);
             if (jToken is JArray)
               dataTable = CopyToDataTable(jToken as JArray);
-            else
-            {
-              ;
-            }
           }
       }
       if (dataTable != null)
@@ -95,7 +91,7 @@ namespace AW.DebugVisualizers
       return enumerable;
     }
 
-    public DataTable CopyToDataTable(JArray source)
+    private DataTable CopyToDataTable(JArray source)
     {
       _firstJToken = source.FirstOrDefault();
       if (_firstJToken == null) return new DataTable();
@@ -107,7 +103,7 @@ namespace AW.DebugVisualizers
       return new ObjectShredder(GetPropertiesToSerialize).Shred(source, null, null);
     }
 
-    public IEnumerable<PropertyDescriptor> GetPropertiesToSerialize(Type type)
+    private IEnumerable<PropertyDescriptor> GetPropertiesToSerialize(Type type)
     {
       return (from childToken in _firstJToken.OfType<JProperty>()
         select
@@ -126,7 +122,7 @@ namespace AW.DebugVisualizers
   {
     private static readonly ITraceWriter TraceWriter = new MemoryTraceWriter();
     public static readonly JsonSerializerSettings JsonSerializerSettingsTypeNameHandlingAll = new JsonSerializerSettings {TraceWriter = TraceWriter, ReferenceLoopHandling = ReferenceLoopHandling.Ignore, TypeNameHandling = TypeNameHandling.All}; //
-    public static readonly JsonSerializerSettings JsonSerializerSettingsReferenceLoopHandlingIgnore = new JsonSerializerSettings {TraceWriter = TraceWriter, ReferenceLoopHandling = ReferenceLoopHandling.Ignore};
+    private static readonly JsonSerializerSettings JsonSerializerSettingsReferenceLoopHandlingIgnore = new JsonSerializerSettings {TraceWriter = TraceWriter, ReferenceLoopHandling = ReferenceLoopHandling.Ignore};
 
     #region Overrides of VisualizerObjectSource
 
@@ -164,7 +160,7 @@ namespace AW.DebugVisualizers
 
     #endregion
 
-    public static void SerializeJS(Stream outgoingData, IEnumerable enumerable)
+    private static void SerializeJS(Stream outgoingData, IEnumerable enumerable)
     {
       var dataView = enumerable as DataView;
       if (dataView != null)
@@ -219,7 +215,7 @@ namespace AW.DebugVisualizers
       StringToStream(outgoingData, JsonConvert.SerializeObject(enumerable));
     }
 
-    public static void SerializeJSTypeNameHandlingAll(Stream outgoingData, object enumerable)
+    private static void SerializeJSTypeNameHandlingAll(Stream outgoingData, object enumerable)
     {
       SerializeJS(outgoingData, enumerable, JsonSerializerSettingsTypeNameHandlingAll);
     }

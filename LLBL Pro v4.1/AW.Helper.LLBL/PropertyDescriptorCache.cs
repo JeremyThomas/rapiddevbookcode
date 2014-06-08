@@ -80,10 +80,10 @@ namespace AW.Helper.LLBL
           var rawDescriptors = TypeDescriptor.GetProperties(entityType).AsEnumerable();
           var membersToExclude = MembersToExcludeCache.GetMembersToExclude(entityType, otherMembersToExclude);
           descriptors = rawDescriptors.Where(descriptor => (descriptor.IsBrowsable || EntityHelper.IsEntityCore(descriptor))
-                                                                          && !membersToExclude.Contains(descriptor.Name)).ToList();
+                                                           && !membersToExclude.Contains(descriptor.Name)).ToList();
           Cache[entityType] = descriptors;
-          AlreadyFetchedCache[entityType] = rawDescriptors.Where(p => p.PropertyType == typeof(bool) &&
-                                                                   p.Name.StartsWith(MembersToExcludeCache.AlreadyFetchedPrefix)).ToList();
+          AlreadyFetchedCache[entityType] = rawDescriptors.Where(p => p.PropertyType == typeof (bool) &&
+                                                                      p.Name.StartsWith(MembersToExcludeCache.AlreadyFetchedPrefix)).ToList();
         }
         return descriptors;
       }
@@ -104,6 +104,7 @@ namespace AW.Helper.LLBL
       }
     }
 
+// ReSharper disable once ReturnTypeCanBeEnumerable.Local
     private static List<PropertyDescriptor> GetAlreadyFetchedDescriptors(PropertyDescriptor selfServicingPropertyDescriptor)
     {
       GetDescriptors(selfServicingPropertyDescriptor.ComponentType);
