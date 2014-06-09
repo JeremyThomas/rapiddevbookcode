@@ -163,7 +163,7 @@ namespace Northwind.DAL.SqlServer
     /// Called whenever a query is executed.
     /// </summary>
     /// <param name="query">The query.</param>
-    protected void OnExecuteQuery(IQuery query)
+    private void OnExecuteQuery(IQuery query)
     {
       if (SQLTraceEvent != null)
         SQLTraceEvent(this, new SQLTraceEventArgs(query));

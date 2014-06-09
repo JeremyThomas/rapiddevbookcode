@@ -62,7 +62,7 @@ namespace AW.Win
         FindEmployeeRecursive(Convert.ToInt32(row["ManagerID"]), masterNode.Nodes).Nodes.Add(MakeNode(row));
     }
 
-    internal static TreeNode GetEmployeeManagersNodes(int employeeID)
+    public static TreeNode GetEmployeeManagersNodes(int employeeID)
     {
       TreeNode masterNode;
       var managers = RetrievalProcedures.UspGetEmployeeManagers(employeeID);
@@ -134,7 +134,7 @@ namespace AW.Win
       return MakeNode(employee.Contact.LastName, employee.Contact.FirstName, employee.EmployeeID);
     }
 
-    internal static TreeNode GetManagersRecursive(EmployeeEntity employee)
+    public static TreeNode GetManagersRecursive(EmployeeEntity employee)
     {
       var employeeNode = MakeNode(employee);
       if (employee.ManagerID != 0 && employee.ManagerID != null)
@@ -146,7 +146,7 @@ namespace AW.Win
       return employeeNode;
     }
 
-    internal static TreeNode GetEmployeesRecursive(EmployeeEntity employee)
+    public static TreeNode GetEmployeesRecursive(EmployeeEntity employee)
     {
       var employeeNode = MakeNode(employee);
       if (employee.Manages.Count > 0)
