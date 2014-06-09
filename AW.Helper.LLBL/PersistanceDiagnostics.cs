@@ -117,7 +117,7 @@ namespace AW.Helper.LLBL
     /// <param name="maxNumberOfItemsToReturn">The max number of items to return.</param>
     /// <param name="entityTypes">The entity types.</param>
     /// <returns></returns>
-    public static StringBuilder CheckAllEntitiesCanBeFetchedUsingLINQ<TEnum>(ILinqMetaData metaData, ushort maxNumberOfItemsToReturn, params TEnum[] entityTypes)
+    public static StringBuilder CheckAllEntitiesCanBeFetchedUsingLINQ<TEnum>(ILinqMetaData metaData, int maxNumberOfItemsToReturn, params TEnum[] entityTypes)
     {
       if (entityTypes.IsNullOrEmpty())
         entityTypes = GeneralHelper.EnumAsEnumerable<TEnum>().ToArray();
@@ -127,7 +127,7 @@ namespace AW.Helper.LLBL
       foreach (var query in entityTypes
         .Select(entityType => metaData.GetQueryableForEntity(Convert.ToInt32(entityType)))
         .Select(dataSource => dataSource).OfType<ILLBLGenProQuery>())
-        CheckEntityCanBeFetchedUsingLINQ(query, true, maxNumberOfItemsToReturn, errors);
+        CheckEntityCanBeFetchedUsingLINQ(query, true, (ushort) maxNumberOfItemsToReturn, errors);
       return errors;
     }
 
@@ -297,7 +297,7 @@ namespace AW.Helper.LLBL
     /// <summary>
     ///   FieldInformation2 for the entity
     /// </summary>
-    public IEnumerable<FieldAndEntityInformation> FieldInformation;
+    public readonly IEnumerable<FieldAndEntityInformation> FieldInformation;
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="T:System.Object" /> class.

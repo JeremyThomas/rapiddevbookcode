@@ -72,8 +72,10 @@ namespace NUnit.Extensions.Forms.TestApplications
         [ExpectedException(typeof (ControlNotVisibleException), ExpectedMessage = "Message Box not visible")]
         public void NoModalFound()
         {
-            string text = new MessageBoxTester("NotFound").Text;
-            Assert.Fail("Should not find: " + text);
+#pragma warning disable 612, 618
+          string text = new MessageBoxTester("NotFound").Text;
+#pragma warning restore 612, 618
+          Assert.Fail("Should not find: " + text);
         }
 
         [Test]

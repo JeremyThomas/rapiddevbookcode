@@ -52,6 +52,8 @@ namespace NUnit.Extensions.Forms.TestApplications
             new OpenFileDialogTestForm().Show();
         }
 
+#pragma warning disable 612, 618
+
         ///<summary>
         /// Modal handler to click the open button.
         ///</summary>
@@ -126,5 +128,7 @@ namespace NUnit.Extensions.Forms.TestApplications
                 Assert.AreEqual(label1.Text.ToLowerInvariant(), fileName.ToLowerInvariant());
             }
         }
+
+#pragma warning restore 612, 618
     }
 }

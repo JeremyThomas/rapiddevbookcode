@@ -6,12 +6,15 @@ using Microsoft.VisualBasic.FileIO;
 
 namespace JesseJohnston
 {
+  /// <summary>
+  /// Helper methods
+  /// </summary>
   public static class ObjectListViewHelper
   {
     private static readonly string[] StringsToQuoteForCsv = {",", Environment.NewLine};
 
     /// <summary>
-    ///   Creates the visualizer form filled with either a ObjectListView or a ObjectListView<>.
+    ///   Creates the visualizer form filled with either a ObjectListView or a ObjectListView&lt;T&gt;.
     /// </summary>
     /// <param name="data">The data.</param>
     /// <returns></returns>
@@ -42,8 +45,8 @@ namespace JesseJohnston
 
     /// <summary>
     ///   Removed Quotes put in by ADGV.
-    ///   <see cref="ADGVFilterMenu.FormatString" />
     /// </summary>
+    /// <remarks>see ADGVFilterMenu.FormatString</remarks>
     /// <param name="data">The data.</param>
     /// <returns></returns>
     public static string UnQuoteStringFromAdvgIfNeed(string data)
@@ -65,7 +68,7 @@ namespace JesseJohnston
     /// <summary>
     ///   Quotes a string for adding to a delimited line of fields
     /// </summary>
-    /// <see cref="http://www.blackbeltcoder.com/Articles/files/reading-and-writing-csv-files-in-c"/>
+    /// <remarks>http://www.blackbeltcoder.com/Articles/files/reading-and-writing-csv-files-in-c</remarks>
     /// <param name="data">The data.</param>
     /// <param name="stringsToQuote">The strings to quote.</param>
     /// <param name="quoteString">The quote string.</param>

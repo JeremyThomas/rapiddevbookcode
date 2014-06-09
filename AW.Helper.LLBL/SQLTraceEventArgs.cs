@@ -34,7 +34,7 @@ namespace AW.Helper.LLBL
       private set { _sqlTrace = value; }
     }
 
-    public IQuery Query { get; private set; }
+    private IQuery Query { get; set; }
 
     public SQLTraceEventArgs(IQuery query)
     {
