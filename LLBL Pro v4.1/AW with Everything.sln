@@ -206,9 +206,11 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AW.WebDbEditor 4.1", "http:
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Win", "Northwind\Northwind.Win\Northwind.Win.csproj", "{3FC1967C-B85A-4455-8850-F1659B8EC163}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Test.Helper", "AW.Test.Helper\AW.Test.Helper.csproj", "{0D78311F-EF3D-442D-BB6F-17225EC0892C}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 29
+		SccNumberOfProjects = 30
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
@@ -321,6 +323,10 @@ Global
 		SccProjectName28 = AW.WebDbEditor
 		SccLocalPath28 = AW.WebDbEditor
 		SccProjectEnlistmentChoice28 = 2
+		SccProjectUniqueName29 = AW.Test.Helper\\AW.Test.Helper.csproj
+		SccProjectTopLevelParentUniqueName29 = AW\u0020with\u0020Everything.sln
+		SccProjectName29 = AW.Test.Helper
+		SccLocalPath29 = AW.Test.Helper
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug no unit tests|Any CPU = Debug no unit tests|Any CPU
@@ -668,6 +674,18 @@ Global
 		{3FC1967C-B85A-4455-8850-F1659B8EC163}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FC1967C-B85A-4455-8850-F1659B8EC163}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3FC1967C-B85A-4455-8850-F1659B8EC163}.Release|x86.ActiveCfg = Release|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Release - Test|x86.ActiveCfg = Release|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -699,6 +717,7 @@ Global
 		{53C14AAB-2D63-4063-92E3-CC43FA511696} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
 		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
 		{3FC1967C-B85A-4455-8850-F1659B8EC163} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW with Everything.vsmdi
