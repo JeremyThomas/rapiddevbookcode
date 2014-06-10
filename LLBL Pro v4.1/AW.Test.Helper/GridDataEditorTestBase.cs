@@ -10,9 +10,8 @@ using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NUnit.Extensions.Forms;
 
-namespace AW.Tests
+namespace AW.Test.Helpers
 {
   public class GridDataEditorTestBase : NUnitFormMSTest
   {

@@ -11,6 +11,7 @@ using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.LinqToSQL;
+using AW.Test.Helpers;
 using AW.Tests.Properties;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;

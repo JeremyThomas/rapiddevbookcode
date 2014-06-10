@@ -9,6 +9,7 @@ using AW.Data.Queries;
 using AW.Data.ViewModels;
 using AW.Helper;
 using AW.Helper.LLBL;
+using AW.Test.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 

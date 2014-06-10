@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace NUnit.Extensions.Forms.TestApplications.TestForms
+namespace AW.Test.Helpers
 {
 	public partial class DataGridViewTestForm : Form
 	{

@@ -3,7 +3,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 
-namespace AW.Tests
+namespace AW.Test.Helpers
 {
   /// <summary>
   ///   http://blogs.msdn.com/b/davidebb/archive/2009/10/23/using-c-dynamic-to-call-static-members.aspx

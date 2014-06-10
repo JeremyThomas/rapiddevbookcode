@@ -10,6 +10,7 @@ using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.TypeConverters;
+using AW.Test.Helpers;
 using Humanizer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

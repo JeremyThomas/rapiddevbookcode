@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using AW.Helper;
+using AW.Test.Helpers;
 using AW.Winforms.Helpers.ConnectionUI;
 using Microsoft.Data.ConnectionUI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

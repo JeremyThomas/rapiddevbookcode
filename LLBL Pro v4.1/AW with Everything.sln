@@ -206,7 +206,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AW.WebDbEditor 4.1", "http:
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Win", "Northwind\Northwind.Win\Northwind.Win.csproj", "{3FC1967C-B85A-4455-8850-F1659B8EC163}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Test.Helper", "AW.Test.Helper\AW.Test.Helper.csproj", "{0D78311F-EF3D-442D-BB6F-17225EC0892C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Test.Helpers", "AW.Test.Helper\AW.Test.Helpers.csproj", "{0D78311F-EF3D-442D-BB6F-17225EC0892C}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -323,7 +323,7 @@ Global
 		SccProjectName28 = AW.WebDbEditor
 		SccLocalPath28 = AW.WebDbEditor
 		SccProjectEnlistmentChoice28 = 2
-		SccProjectUniqueName29 = AW.Test.Helper\\AW.Test.Helper.csproj
+		SccProjectUniqueName29 = AW.Test.Helper\\AW.Test.Helpers.csproj
 		SccProjectTopLevelParentUniqueName29 = AW\u0020with\u0020Everything.sln
 		SccProjectName29 = AW.Test.Helper
 		SccLocalPath29 = AW.Test.Helper

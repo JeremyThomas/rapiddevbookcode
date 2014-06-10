@@ -105,19 +105,11 @@
       <HintPath>..\..\..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="SD.LLBLGen.Pro.TypeConverters, Version=3.1.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <HintPath>..\..\..\Lib\LLBL\SD.LLBLGen.Pro.TypeConverters.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.EnterpriseServices">
-      <Name>System.EnterpriseServices</Name>
     </Reference>
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
@@ -184,10 +176,6 @@
     <ProjectReference Include="..\..\..\AW.Helper\AW.Helper.csproj">
       <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
       <Name>AW.Helper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Northwind.DAL.csproj">
-      <Project>{24FA312C-06E0-462D-97FA-709AC20D09EF}</Project>
-      <Name>Northwind.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
