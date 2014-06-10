@@ -121,7 +121,6 @@
     <Compile Include="ScreenCapture\NativeMethods.cs" />
     <Compile Include="ScreenCapture\Program.cs" />
     <Compile Include="ScreenCapture\ScreenCapture.cs" />
-    <Compile Include="Testers\DataGridViewTester.cs" />
     <Compile Include="Testers\ToolBarButtonTester.cs" />
     <Compile Include="Util\EventHelper.cs" />
     <Compile Include="Exceptions\AmbiguousNameException.cs" />
