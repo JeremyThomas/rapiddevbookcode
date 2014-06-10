@@ -72,7 +72,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.ConnectionUI.Dialog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f4ca07f51760da93, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.0.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
@@ -115,7 +114,6 @@
     <Compile Include="EntityHelperTest.cs" />
     <Compile Include="FrmEntitiesAndFieldsTest.cs" />
     <Compile Include="GeneralHelperTest.cs" />
-    <Compile Include="GridDataEditorTestBase.cs" />
     <Compile Include="HierarchyEditorTest.cs" />
     <Compile Include="LLBLWinformHelperTest.cs" />
     <Compile Include="LookUpQueriesTest.cs" />
@@ -134,8 +132,6 @@
     <Compile Include="QuerySpecUnitTest.cs" />
     <Compile Include="SalesOrderQueriesTest.cs" />
     <Compile Include="BugsTest.cs" />
-    <Compile Include="StaticMembersDynamicWrapper.cs" />
-    <Compile Include="TestData.cs" />
     <Compile Include="ValueTypeWrapperTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -155,9 +151,9 @@
       <Project>{3A769AFA-83F9-4CB0-8F69-60B8487055E0}</Project>
       <Name>AW.LinqToSQL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AW.Test.Helper\AW.Test.Helper.csproj">
+    <ProjectReference Include="..\AW.Test.Helper\AW.Test.Helpers.csproj">
       <Project>{0d78311f-ef3d-442d-bb6f-17225ec0892c}</Project>
-      <Name>AW.Test.Helper</Name>
+      <Name>AW.Test.Helpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\AW.Winforms.Helpers.LLBL\AW.Winforms.Helpers.LLBL.csproj">
       <Project>{A67A2102-BA0E-48B3-9EF8-831F72B47160}</Project>

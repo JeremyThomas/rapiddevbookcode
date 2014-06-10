@@ -35,11 +35,10 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NUnit.Extensions.Forms.SendKey;
+using NUnit.Extensions.Forms;
 using NUnit.Extensions.Forms.Util;
-using NUnit.Extensions.Forms.Win32Interop;
 
-namespace NUnit.Extensions.Forms
+namespace AW.Test.Helpers
 {
 	/// <summary>
 	/// One of three base classes for your NUnitForms tests.  This one can be
@@ -108,21 +107,6 @@ namespace NUnit.Extensions.Forms
 			}
 		}
 
-		/// <summary>
-		/// Returns a reference to the current MouseController for doing Mouse tests.  I recommend
-		/// this only when you are writing your own custom controls and need to respond to actual
-		/// mouse input to test them properly.  In most other cases there is a better way to test
-		/// the form's logic.
-		/// </summary>
-		public MouseController Mouse { get; private set; }
-
-		/// <summary>
-		/// Returns a reference to the current KeyboardController for doing Keyboard tests.  I recommend
-		/// this only when you are writing your own custom controls and need to respond to actual
-		/// keyboard input to test them properly.  In most other cases there is a better way to test
-		/// for the form's logic.
-		/// </summary>
-		public KeyboardController Keyboard { get; private set; }
 
 		/// <summary>
 		/// Records a single shot modal form handler. The handler receives as arguments the title of the window,
@@ -176,43 +160,12 @@ namespace NUnit.Extensions.Forms
 			}
 
 			_modal = new ModalFormTester();
-			Mouse = new MouseController();
-			Keyboard = new KeyboardController(new OldSendKeysFactory());
 			GetMessageHook.InstallHook();
 			Setup();
 		}
 
-		/// <summary>
-		/// A patch method to allow migration to an alternative SendKeys class instead
-		/// of the dot Net SendKeys class. Once the new class is completed this method
-		/// will be replaced by a method to allow use of the dot Net class.
-		/// 
-		/// This method must only be called at the start of the test fixture's overriden
-		/// SetUp().
-		/// </summary>
-		protected void EmulateSendKeys()
-		{
-			Keyboard =
-				new KeyboardController(new SendKeysFactory(new SendKeysParserFactory(), new SendKeyboardInput()));
-		}
 
-		/// <summary>
-		/// A patch method to allow migration to an alternative SendKeys class instead
-		/// of the dot Net SendKeys class. Once the new class is completed this method
-		/// will be replaced by a method to allow use of the dot Net class.
-		/// 
-		/// This method must only be called at the start of the test fixture's overriden
-		/// SetUp().
-		/// </summary>
-		protected void EmulateWindowSpecificSendKeys()
-		{
-			Keyboard =
-				new KeyboardController(
-					new SendKeysFactory(new SendKeysParserFactory(), new WindowSpecificSendKeyboardInput()));
-		}
-
-
-		/// <summary>
+	  /// <summary>
 		/// Override this Setup method if you have custom behavior to execute before each test
 		/// in your fixture.
 		/// </summary>
@@ -281,8 +234,6 @@ namespace NUnit.Extensions.Forms
 			finally
 			{
 				_modal.Dispose();
-				Mouse.Dispose();
-				Keyboard.Dispose();
 			}
 		}
 

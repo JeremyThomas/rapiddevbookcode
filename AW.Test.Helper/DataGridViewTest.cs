@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using NUnit.Extensions.Forms.TestApplications.TestForms;
+using NUnit.Extensions.Forms;
 using NUnit.Extensions.Forms.Testers;
 using NUnit.Framework;
 
-namespace NUnit.Extensions.Forms.TestApplications
+namespace AW.Test.Helpers
 {
 	[TestFixture]
 	internal class DataGridViewTest : NUnitFormTest

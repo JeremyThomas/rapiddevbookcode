@@ -66,9 +66,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ADGV.0.1.0.10\lib\net40\AdvancedDataGridView.dll</HintPath>
     </Reference>
-    <Reference Include="AW.Helper.LLBL">
-      <HintPath>..\AW.Helper.LLBL\bin\Debug\AW.Helper.LLBL.dll</HintPath>
-    </Reference>
     <Reference Include="CSScriptLibrary">
       <HintPath>..\packages\CS-Script.3.7.2.0\lib\net40\CSScriptLibrary.dll</HintPath>
     </Reference>
@@ -90,9 +87,6 @@
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 12.0\ReportViewer\Microsoft.ReportViewer.WinForms.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Mono.CSharp">
-      <HintPath>..\packages\CS-Script.3.7.2.0\lib\net40\Mono.CSharp.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="sliver.Windows.Forms.StateBrowser, Version=2.0.0.0, Culture=neutral, PublicKeyToken=34afe62596d00324, processorArchitecture=MSIL">
@@ -100,7 +94,6 @@
       <HintPath>..\Lib\sliver.Windows.Forms.StateBrowser.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>

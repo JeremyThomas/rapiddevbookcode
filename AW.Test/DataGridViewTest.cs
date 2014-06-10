@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using AW.Test.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Extensions.Forms;
-using NUnit.Extensions.Forms.TestApplications.TestForms;
 using NUnit.Extensions.Forms.Testers;
 
 namespace AW.Tests

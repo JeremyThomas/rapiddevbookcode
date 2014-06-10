@@ -32,6 +32,7 @@
 
 using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 [assembly : AssemblyTitle("NUnitForms")]
 [assembly : AssemblyProduct("NUnitForms")]
@@ -39,3 +40,5 @@ using System.Reflection;
 [assembly : AssemblyVersion("2.0.*")]
 [assembly : AssemblyFileVersion("1.0.0.0")]
 [assembly : CLSCompliant(true)]
+
+//[assembly: InternalsVisibleTo("AW.Test.Helper")]

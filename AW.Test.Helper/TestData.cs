@@ -11,7 +11,7 @@ using AW.Data;
 using AW.Helper.LLBL;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Tests
+namespace AW.Test.Helpers
 {
   public static class TestData
   {

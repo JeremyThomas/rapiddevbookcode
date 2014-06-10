@@ -5,6 +5,7 @@ using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
+using AW.Test.Helpers;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

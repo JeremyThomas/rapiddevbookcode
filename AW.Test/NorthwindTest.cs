@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
 using AW.Helper.LLBL;
+using AW.Test.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL;
 using Northwind.DAL.DTO;

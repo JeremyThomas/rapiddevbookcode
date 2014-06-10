@@ -69,10 +69,6 @@
     <ApplicationIcon>Adventure Works Cycle Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dynamic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=68293a411f0cabcc, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\DynamicQuery.1.0\lib\35\Dynamic.dll</HintPath>
-    </Reference>
     <Reference Include="Korzh.EasyQuery.Db.NET45">
       <HintPath>..\Lib\KorzhEasyQuery\Korzh.EasyQuery.Db.NET45.dll</HintPath>
     </Reference>

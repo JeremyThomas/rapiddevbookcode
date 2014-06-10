@@ -30,6 +30,7 @@
 
 #endregion
 
+using AW.Test.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Extensions.Forms;
 using NUnit.Extensions.Forms.TestApplications;

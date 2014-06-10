@@ -11,6 +11,7 @@ using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
+using AW.Test.Helpers;
 using AW.Winforms.Helpers.EntityViewer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.EntityClasses;

@@ -6,6 +6,7 @@ using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
+using AW.Test.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AW.Tests

@@ -53,21 +53,9 @@
     <AssemblyOriginatorKeyFile>..\Ancillary\AdventureWorks.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions, Version=3.0.107.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FluentAssertions.3.0.107\lib\net45\FluentAssertions.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentAssertions.Core, Version=3.0.107.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FluentAssertions.3.0.107\lib\net45\FluentAssertions.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.0.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -121,9 +109,9 @@
       <Project>{3A769AFA-83F9-4CB0-8F69-60B8487055E0}</Project>
       <Name>AW.LinqToSQL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AW.Test\AW.Tests.csproj">
-      <Project>{80418BDD-8FF2-4F01-8782-AD22A496AF79}</Project>
-      <Name>AW.Tests</Name>
+    <ProjectReference Include="..\AW.Test.Helper\AW.Test.Helpers.csproj">
+      <Project>{0D78311F-EF3D-442D-BB6F-17225EC0892C}</Project>
+      <Name>AW.Test.Helpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\AW.Winforms.Helpers\AW.Winforms.Helpers.csproj">
       <Project>{D8041984-1823-4672-9B6E-3E99AB6A3A7A}</Project>
@@ -136,10 +124,6 @@
     <ProjectReference Include="..\Northwind\DAL\SQL Server %28SqlClient%29\Northwind.DAL.SqlServer.csproj">
       <Project>{0AAD790B-15C7-4119-9987-3137A0BB20B9}</Project>
       <Name>Northwind.DAL.SqlServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\nunitforms\source\NUnitForms\NUnitForms.csproj">
-      <Project>{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}</Project>
-      <Name>NUnitForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

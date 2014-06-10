@@ -1,4 +1,4 @@
-﻿namespace NUnit.Extensions.Forms.TestApplications.TestForms
+﻿namespace AW.Test.Helpers
 {
 	partial class DataGridViewTestForm
 	{
