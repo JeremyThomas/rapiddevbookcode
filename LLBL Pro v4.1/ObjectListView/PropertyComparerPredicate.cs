@@ -113,7 +113,7 @@ namespace JesseJohnston
     {
       if (item == null)
         throw new ArgumentNullException("item");
-      if (property.ComponentType != item.GetType())
+      if (!property.ComponentType.IsAssignableFrom(item.GetType()))
         throw new ArgumentException("item");
 
       try

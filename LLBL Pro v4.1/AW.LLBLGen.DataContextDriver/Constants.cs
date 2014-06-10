@@ -14,7 +14,7 @@ namespace AW.LLBLGen.DataContextDriver
     private const string CopyrightYear = "2014";
     public const string LLBLGenNameVersion = "LLBLGen Pro v" + LLBLVersion;
     public const string DriverName = "AW " + LLBLGenNameVersion;
-    public const string Name = DriverName + " (v" + Version + ")";
+    public const string Name = DriverName + " (v" + AssemblyVersion + ")";
     public const string AssemblyCopyright = "Copyright " + CopyrightYear + " " + Author;
     public const string AssemblyProduct = "AW LLBLGen typed data context driver";
     public const string AssemblyDescription = LLBLGenNameVersion + " LINQPad typed data context driver";
@@ -28,9 +28,9 @@ namespace AW.LLBLGen.DataContextDriver
   {
     [Description("Exclude EntityBase Properties")]
     ExcludeEntityBaseProperties,
-    [Description("Default Linqpad behavior")]
+    [Description("Default LINQPad behavior")]
     AllProperties,
-    [Description("Use the Editable Data Grid included with the driver rather than the LinqPad grid")]
+    [Description("Use the Editable Data Grid included with the driver, rather than the LINQPad ExplorerGrid")]
     UseEditableGrid,
     [Description("Use the Editable Data Grid with a page size of 10")]
     UseEditableGridPaged
