@@ -72,6 +72,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.ConnectionUI.Dialog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f4ca07f51760da93, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="NUnitForms, Version=2.0.5274.42396, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Test\NUnitForms.dll</HintPath>
+    </Reference>
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.0.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
@@ -100,9 +104,6 @@
     </Compile>
     <Compile Include="..\Ancillary\GlobalAssemblyVersion.cs">
       <Link>GlobalAssemblyVersion.cs</Link>
-    </Compile>
-    <Compile Include="ComboBoxTest.cs">
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="CustomerQueriesTest.cs" />
     <Compile Include="BindingListHelperTest.cs" />
@@ -170,14 +171,6 @@
     <ProjectReference Include="..\Northwind\DAL\SQL Server %28SqlClient%29\Northwind.DAL.SqlServer.csproj">
       <Project>{E6CE6B0B-46B0-46D6-A750-063EC3740EE5}</Project>
       <Name>Northwind.DAL.SqlServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\nunitforms\source\NUnitForms.Test\NUnitForms.Test.csproj">
-      <Project>{E779CBD7-1CCE-4796-AE12-00AB56A8A815}</Project>
-      <Name>NUnitForms.Test</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\nunitforms\source\NUnitForms\NUnitForms.csproj">
-      <Project>{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}</Project>
-      <Name>NUnitForms</Name>
     </ProjectReference>
     <ProjectReference Include="..\ObjectListView\ObjectListView.csproj">
       <Project>{3A62F36D-4E53-4532-B9EF-3B303A578B5E}</Project>

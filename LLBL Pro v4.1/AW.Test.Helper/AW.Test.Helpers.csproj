@@ -41,6 +41,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="NUnitForms, Version=2.0.2327.4786, Culture=neutral, PublicKeyToken=eba0990a10412e0e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Test\NUnitForms.dll</HintPath>
+    </Reference>
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
@@ -63,6 +67,7 @@
       <Link>GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="DataGridViewTest.cs" />
+    <Compile Include="DataGridViewTester.cs" />
     <Compile Include="DataGridViewTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,10 +96,6 @@
     <ProjectReference Include="..\AW.Winforms.Helpers\AW.Winforms.Helpers.csproj">
       <Project>{d8041984-1823-4672-9b6e-3e99ab6a3a7a}</Project>
       <Name>AW.Winforms.Helpers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\nunitforms\source\NUnitForms\NUnitForms.csproj">
-      <Project>{e579acda-8c4f-4e35-a18b-c001d9eecd2b}</Project>
-      <Name>NUnitForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
