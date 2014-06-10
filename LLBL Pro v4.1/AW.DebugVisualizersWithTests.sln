@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{109114F1-DE48-4B10-AF10-A18D9AF68E8B}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,22 +13,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{BDC4C511-A2CA-4CCC-9960-748D511B5BAC}"
 	ProjectSection(SolutionItems) = preProject
-		Lib\CSScriptLibrary.dll = Lib\CSScriptLibrary.dll
-		Lib\CSScriptLibrary.pdb = Lib\CSScriptLibrary.pdb
-		Lib\CSScriptLibrary.xml = Lib\CSScriptLibrary.xml
-		Lib\nunit.framework.dll = Lib\nunit.framework.dll
 		Lib\sliver.Windows.Forms.StateBrowser.dll = Lib\sliver.Windows.Forms.StateBrowser.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LLBL", "LLBL", "{F90642C7-E5E0-4B67-A97C-464F8697A452}"
 	ProjectSection(SolutionItems) = preProject
-		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll
-		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.xml = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.xml
-		Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll = Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll
-		Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.XML = Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.XML
-		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll
-		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.pdb = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.pdb
-		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.xml = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.xml
+		Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.dll = Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.dll
+		Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.pdb = Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.pdb
+		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.dll = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.dll
+		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.pdb = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.pdb
+		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.xml = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.xml
+		Lib\LLBL\SD.LLBLGen.Pro.DynamicDataSupportClasses.NET35.dll = Lib\LLBL\SD.LLBLGen.Pro.DynamicDataSupportClasses.NET35.dll
+		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.dll = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.dll
+		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.pdb = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.pdb
+		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.Web.dll = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.Web.dll
+		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.Web.pdb = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.Web.pdb
+		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.xml = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.xml
+		Lib\LLBL\SD.LLBLGen.Pro.TypeConverters.dll = Lib\LLBL\SD.LLBLGen.Pro.TypeConverters.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{F15CB949-7617-4315-BC90-9A4A94633C86}"
@@ -81,15 +82,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL", "Northwind\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.SqlServer", "Northwind\DAL\SQL Server (SqlClient)\Northwind.DAL.SqlServer.csproj", "{0AAD790B-15C7-4119-9987-3137A0BB20B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitForms", "nunitforms\source\NUnitForms\NUnitForms.csproj", "{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitForms.Test", "nunitforms\source\NUnitForms.Test\NUnitForms.Test.csproj", "{E779CBD7-1CCE-4796-AE12-00AB56A8A815}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnumerableVisualizerVSPackage", "EnumerableVisualizerVSPackage\EnumerableVisualizerVSPackage.csproj", "{5DDABF66-0501-474A-A84B-70FF6E672D51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Test.Helpers", "AW.Test.Helper\AW.Test.Helpers.csproj", "{0D78311F-EF3D-442D-BB6F-17225EC0892C}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 17
+		SccNumberOfProjects = 16
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
@@ -143,17 +142,13 @@ Global
 		SccProjectTopLevelParentUniqueName13 = AW.DebugVisualizersWithTests.sln
 		SccProjectName13 = Northwind/DAL/SQL\u0020Server\u0020(SqlClient)
 		SccLocalPath13 = Northwind\\DAL\\SQL\u0020Server\u0020(SqlClient)
-		SccProjectUniqueName14 = nunitforms\\source\\NUnitForms\\NUnitForms.csproj
-		SccProjectTopLevelParentUniqueName14 = AW.DebugVisualizersWithTests.sln
-		SccProjectName14 = nunitforms/source/NUnitForms
-		SccLocalPath14 = nunitforms\\source\\NUnitForms
-		SccProjectUniqueName15 = nunitforms\\source\\NUnitForms.Test\\NUnitForms.Test.csproj
+		SccProjectUniqueName14 = EnumerableVisualizerVSPackage\\EnumerableVisualizerVSPackage.csproj
+		SccProjectName14 = EnumerableVisualizerVSPackage
+		SccLocalPath14 = EnumerableVisualizerVSPackage
+		SccProjectUniqueName15 = AW.Test.Helper\\AW.Test.Helpers.csproj
 		SccProjectTopLevelParentUniqueName15 = AW.DebugVisualizersWithTests.sln
-		SccProjectName15 = nunitforms/source/NUnitForms.Test
-		SccLocalPath15 = nunitforms\\source\\NUnitForms.Test
-		SccProjectUniqueName16 = EnumerableVisualizerVSPackage\\EnumerableVisualizerVSPackage.csproj
-		SccProjectName16 = EnumerableVisualizerVSPackage
-		SccLocalPath16 = EnumerableVisualizerVSPackage
+		SccProjectName15 = AW.Test.Helper
+		SccLocalPath15 = AW.Test.Helper
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -212,18 +207,14 @@ Global
 		{0AAD790B-15C7-4119-9987-3137A0BB20B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AAD790B-15C7-4119-9987-3137A0BB20B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AAD790B-15C7-4119-9987-3137A0BB20B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E779CBD7-1CCE-4796-AE12-00AB56A8A815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E779CBD7-1CCE-4796-AE12-00AB56A8A815}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E779CBD7-1CCE-4796-AE12-00AB56A8A815}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E779CBD7-1CCE-4796-AE12-00AB56A8A815}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5DDABF66-0501-474A-A84B-70FF6E672D51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5DDABF66-0501-474A-A84B-70FF6E672D51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DDABF66-0501-474A-A84B-70FF6E672D51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DDABF66-0501-474A-A84B-70FF6E672D51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -231,19 +222,18 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F90642C7-E5E0-4B67-A97C-464F8697A452} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{A951B179-B81E-42E2-81CD-242D8E1D278D} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
-		{80418BDD-8FF2-4F01-8782-AD22A496AF79} = {881A675A-EB80-4108-821E-0665114D2C72}
 		{47F52527-A001-405B-9CEC-FCBF7FA10855} = {881A675A-EB80-4108-821E-0665114D2C72}
-		{3A769AFA-83F9-4CB0-8F69-60B8487055E0} = {881A675A-EB80-4108-821E-0665114D2C72}
-		{24FA312C-06E0-462D-97FA-709AC20D09EF} = {881A675A-EB80-4108-821E-0665114D2C72}
-		{0AAD790B-15C7-4119-9987-3137A0BB20B9} = {881A675A-EB80-4108-821E-0665114D2C72}
+		{80418BDD-8FF2-4F01-8782-AD22A496AF79} = {881A675A-EB80-4108-821E-0665114D2C72}
+		{FFC5B55E-9157-4CE6-81BD-E593E4C08422} = {58076FE5-6982-4C92-A968-12DD9CE85BE6}
 		{D8041984-1823-4672-9B6E-3E99AB6A3A7A} = {58076FE5-6982-4C92-A968-12DD9CE85BE6}
 		{7919C746-73F3-4279-A53B-CC6C08F42318} = {58076FE5-6982-4C92-A968-12DD9CE85BE6}
 		{A67A2102-BA0E-48B3-9EF8-831F72B47160} = {58076FE5-6982-4C92-A968-12DD9CE85BE6}
-		{FFC5B55E-9157-4CE6-81BD-E593E4C08422} = {58076FE5-6982-4C92-A968-12DD9CE85BE6}
 		{3A62F36D-4E53-4532-B9EF-3B303A578B5E} = {42C8D572-EEFF-496A-9D7E-D357651D2611}
 		{D978DA92-C5B6-4670-98E4-17390BBCCF08} = {42C8D572-EEFF-496A-9D7E-D357651D2611}
-		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B} = {42C8D572-EEFF-496A-9D7E-D357651D2611}
-		{E779CBD7-1CCE-4796-AE12-00AB56A8A815} = {42C8D572-EEFF-496A-9D7E-D357651D2611}
+		{3A769AFA-83F9-4CB0-8F69-60B8487055E0} = {881A675A-EB80-4108-821E-0665114D2C72}
+		{24FA312C-06E0-462D-97FA-709AC20D09EF} = {881A675A-EB80-4108-821E-0665114D2C72}
+		{0AAD790B-15C7-4119-9987-3137A0BB20B9} = {881A675A-EB80-4108-821E-0665114D2C72}
+		{0D78311F-EF3D-442D-BB6F-17225EC0892C} = {58076FE5-6982-4C92-A968-12DD9CE85BE6}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW.DebugVisualizersWithTests.vsmdi
