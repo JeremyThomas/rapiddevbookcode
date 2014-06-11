@@ -243,7 +243,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
       catch (Exception e)
       {
-        GeneralHelper.TraceOut(e.Message);
+        e.LogException();
         Application.OnThreadException(e);
       }
       DataContext = this;
@@ -394,7 +394,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
       catch (Exception ex)
       {
-        GeneralHelper.TraceOut(ex.Message);
+        ex.LogException();
         Application.OnThreadException(ex);
       }
     }
@@ -417,7 +417,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
       catch (Exception ex)
       {
-        GeneralHelper.TraceOut(ex.Message);
+        ex.LogException();
         Application.OnThreadException(ex);
       }
     }
@@ -586,7 +586,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
             assemblyName.Version));
           AppDomain.CurrentDomain.SetData("customType", "");
         }
-        GeneralHelper.TraceOut(e.Message);
+        e.LogException();
       }
     }
 
@@ -770,7 +770,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
       catch (Exception ex)
       {
-        GeneralHelper.TraceOut(ex.Message);
+        ex.LogException();
       }
     }
 
@@ -793,7 +793,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           //        assemblyName.Version));
           return Enumerable.Empty<string>();
         }
-        GeneralHelper.TraceOut(e.Message);
+        e.LogException();
       }
       catch (ReflectionTypeLoadException ex)
       {
@@ -898,7 +898,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         }
         catch (Exception ex)
         {
-          ex.TraceOut();
+          ex.LogException();
         }
       }
     }

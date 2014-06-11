@@ -307,7 +307,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         }
         catch (Exception e)
         {
-          GeneralHelper.TraceOut(e.Message);
+          LogException(e);
         }
         table.Tag = null;
       }
@@ -376,9 +376,29 @@ namespace AW.LLBLGen.DataContextDriver.Static
         }
         catch (Exception e)
         {
-          GeneralHelper.TraceOut(e.Message);
+          LogException(e);
         }
       return null;
+    }
+
+    public static void LogException(this Exception e)
+    {
+      e.TraceOut();
+      LogExceptionInLinqPad(e);
+    }
+
+    private static MethodInfo _writeMethodInfo;
+
+    private static void LogExceptionInLinqPad(Exception e)
+    {
+      if (_writeMethodInfo == null)
+      {
+        var logType = typeof (IConnectionInfo).Assembly.GetType("LINQPad.Log");
+        if (logType != null)
+          _writeMethodInfo = logType.GetMethod("Write", BindingFlags.Public | BindingFlags.Static, null, new[] {typeof (Exception)}, null);
+      }
+      if (_writeMethodInfo != null)
+        _writeMethodInfo.Invoke(null, BindingFlags.InvokeMethod, null, new object[] {e}, null);
     }
 
     private static ExplorerItem CreateTableExplorerItem(IEntityCore entity, string name, IDataAccessAdapter adapter)
@@ -409,7 +429,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
       catch (Exception e)
       {
-        GeneralHelper.TraceOut(e.Message);
+        LogException(e);
       }
       var fieldExplorerItems = new List<ExplorerItem>();
 

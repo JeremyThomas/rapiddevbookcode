@@ -74,7 +74,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
       catch (Exception e)
       {
-        GeneralHelper.TraceOut(e.Message);
+        e.LogException();
         Application.OnThreadException(e);
       }
       return true;
@@ -177,7 +177,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           }
           catch (Exception e)
           {
-            e.TraceOut();
+            e.LogException();
           }
 
           //baseType.GetProperty("AdapterToUse")
@@ -194,7 +194,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
       catch (Exception e)
       {
-        e.TraceOut();
+        e.LogException();
       }
     }
 
@@ -285,7 +285,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           }
           catch (Exception e)
           {
-            GeneralHelper.TraceOut(e.Message);
+            e.LogException();
           }
       }
     }
