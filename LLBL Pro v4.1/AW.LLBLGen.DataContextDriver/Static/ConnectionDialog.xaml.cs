@@ -1357,7 +1357,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       // string pluginsFolder = value.GetPluginsFolder(true); // LINQPad.UserOptions.Instance.GetPluginsFolder(true);
       if (thisDir != null && pluginsFolder != null)
       {
-        var filesToExclude = new[] {"Microsoft.Data.ConnectionUI", "CSScriptLibrary", "LLBLGen"};
+        var filesToExclude = new[] { "Microsoft.Data.ConnectionUI", "CSScriptLibrary", "Mono.CSharp", "LLBL", "SqlLocalDb" };
         var files = Directory.GetFiles(thisDir, "*.dll");
         foreach (var file in files)
         {
