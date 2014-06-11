@@ -5,6 +5,8 @@ using System.Data.Linq;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Windows.Forms;
+using AW.Helper;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.EntityViewer;
 using LINQPad.Extensibility.DataContext;
@@ -184,22 +186,23 @@ namespace LINQPad
       return panelTitle;
     }
 
+    private static MethodInfo _objectToStringMethodInfo;
+
     private static string GetFriendlyObjectTypeName(object o)
     {
-      var explorerGridType = typeof(PanelManager).Assembly.GetType("LINQPad.UI.ExplorerGrid");
-      if (explorerGridType != null)
+      if (_objectToStringMethodInfo == null)
       {
-        var objectToStringMethodInfo = explorerGridType.GetMethod("ObjectToString", BindingFlags.Public | BindingFlags.Static);
-        if (objectToStringMethodInfo != null)
-          return Convert.ToString(objectToStringMethodInfo.Invoke(null, BindingFlags.InvokeMethod, null, new[] { o }, null));
+        var explorerGridType = typeof (PanelManager).Assembly.GetType("LINQPad.UI.ExplorerGrid");
+        if (explorerGridType != null)
+          _objectToStringMethodInfo = explorerGridType.GetMethod("ObjectToString", BindingFlags.Public | BindingFlags.Static);
       }
-      return o.GetType().ToString();
+      return _objectToStringMethodInfo == null ? o.GetType().FriendlyName() : Convert.ToString(_objectToStringMethodInfo.Invoke(null, BindingFlags.InvokeMethod, null, new[] {o}, null));
     }
 
     /// <summary>
-    /// Browse the properties of an object and any objects it references in the LINQPad output panel.
+    ///   Browse the properties of an object and any objects it references in the LINQPad output panel.
     /// </summary>
-    /// <see cref="https://rapiddevbookcode.codeplex.com/wikipage?title=ObjectInspector"/>
+    /// <see cref="https://rapiddevbookcode.codeplex.com/wikipage?title=ObjectInspector" />
     /// <param name="objectToBrowse">The object to browse.</param>
     /// <returns>The object to browse.</returns>
     public static object Inspect(this object objectToBrowse)
@@ -207,7 +210,7 @@ namespace LINQPad
       if (objectToBrowse != null)
       {
         var panelTitle = GetPanelTitle(objectToBrowse);
-        var outputPanel = PanelManager.DisplayControl(new FrmEntityViewer(objectToBrowse) { TopLevel = false, FormBorderStyle = System.Windows.Forms.FormBorderStyle.None }, TrimTitle(panelTitle));
+        var outputPanel = PanelManager.DisplayControl(new FrmEntityViewer(objectToBrowse) {TopLevel = false, FormBorderStyle = FormBorderStyle.None}, TrimTitle(panelTitle));
         outputPanel.ToolTip = panelTitle;
       }
       return objectToBrowse;

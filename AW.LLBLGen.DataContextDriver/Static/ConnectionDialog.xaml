@@ -608,7 +608,7 @@
                       SelectedValue="{Binding CxInfo.DriverData.Element[DisplayInGrid].Value, Mode=TwoWay}"
                       SelectedValuePath="Value"
                       ToolTip="{Binding Content, ElementName=lblComboBoxDisplayInGrid}"
-                      Width="450" />
+                      Width="505" />
           </StackPanel>
           <Label x:Name="lblMembersToExclude" Grid.Row="3"
                  ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}">
