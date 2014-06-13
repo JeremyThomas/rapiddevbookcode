@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<StateFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<OutputFile>bin\release\AW.EnumerableVisualizer.dll</OutputFile>
-	<PrimaryAssembly>bin\release\AW.DebugVisualizers.dll</PrimaryAssembly> />
+<StateFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <OutputFile>bin\release\AW.EnumerableVisualizer.dll</OutputFile>
+  <PrimaryAssembly>bin\release\AW.DebugVisualizers.dll</PrimaryAssembly>
   <KeyFile />
   <ZeroPeKind>false</ZeroPeKind>
   <Type>Auto</Type>

@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
@@ -20,7 +20,6 @@ using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Data.DaoClasses;
 using AW.Data.HelperClasses;
-
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.CollectionClasses
@@ -40,7 +39,7 @@ namespace AW.Data.CollectionClasses
 
 		/// <summary> CTor</summary>
 		/// <param name="initialContents">The initial contents of this collection.</param>
-		public CurrencyCollection(IList<CurrencyEntity> initialContents):base(new CurrencyEntityFactory())
+		public CurrencyCollection(IEnumerable<CurrencyEntity> initialContents):base(new CurrencyEntityFactory())
 		{
 			AddRange(initialContents);
 		}
@@ -60,71 +59,63 @@ namespace AW.Data.CollectionClasses
 
 
 
-		/// <summary> Retrieves in this CurrencyCollection object all CurrencyEntity objects which are related via a  Relation of type 'm:n' with the passed in CountryRegionEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CurrencyCollection object all CurrencyEntity objects which are related via a  Relation of type 'm:n' with the passed in CountryRegionEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="countryRegionInstance">CountryRegionEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCountryRegionCollectionViaCountryRegionCurrency(IEntity countryRegionInstance)
+		public bool GetMultiManyToManyUsingCountryRegions(IEntity countryRegionInstance)
 		{
-			return GetMultiManyToManyUsingCountryRegionCollectionViaCountryRegionCurrency(countryRegionInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingCountryRegions(countryRegionInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this CurrencyCollection object all CurrencyEntity objects which are related via a  relation of type 'm:n' with the passed in CountryRegionEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CurrencyCollection object all CurrencyEntity objects which are related via a  relation of type 'm:n' with the passed in CountryRegionEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="countryRegionInstance">CountryRegionEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCountryRegionCollectionViaCountryRegionCurrency(IEntity countryRegionInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public bool GetMultiManyToManyUsingCountryRegions(IEntity countryRegionInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			return GetMultiManyToManyUsingCountryRegionCollectionViaCountryRegionCurrency(countryRegionInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+			return GetMultiManyToManyUsingCountryRegions(countryRegionInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CurrencyCollection object all CurrencyEntity objects which are related via a  relation of type 'm:n' with the passed in CountryRegionEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CurrencyCollection object all CurrencyEntity objects which are related via a Relation of type 'm:n' with the passed in CountryRegionEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="countryRegionInstance">CountryRegionEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCountryRegions(IEntity countryRegionInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingCountryRegions(countryRegionInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CurrencyCollection object all CurrencyEntity objects which are related via a  relation of type 'm:n' with the passed in CountryRegionEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="countryRegionInstance">CountryRegionEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingCountryRegionCollectionViaCountryRegionCurrency(IEntity countryRegionInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		public virtual bool GetMultiManyToManyUsingCountryRegions(IEntity countryRegionInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CurrencyDAO dao = DAOFactory.CreateCurrencyDAO();
-			return dao.GetMultiUsingCountryRegionCollectionViaCountryRegionCurrency(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, countryRegionInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCurrencyDAO().GetMultiUsingCountryRegions(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, countryRegionInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this CurrencyCollection object all CurrencyEntity objects which are related via a Relation of type 'm:n' with the passed in CountryRegionEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="countryRegionInstance">CountryRegionEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCountryRegionCollectionViaCountryRegionCurrency(IEntity countryRegionInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingCountryRegionCollectionViaCountryRegionCurrency(countryRegionInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CurrencyCollection object all CurrencyEntity objects which are related via a  relation of type 'm:n' with the passed in CountryRegionEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CurrencyCollection object all CurrencyEntity objects which are related via a  relation of type 'm:n' with the passed in CountryRegionEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="countryRegionInstance">CountryRegionEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCountryRegionCollectionViaCountryRegionCurrency(IEntity countryRegionInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		public bool GetMultiManyToManyUsingCountryRegions(IEntity countryRegionInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CurrencyDAO dao = DAOFactory.CreateCurrencyDAO();
-			return dao.GetMultiUsingCountryRegionCollectionViaCountryRegionCurrency(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, countryRegionInstance, prefetchPathToUse);
+			return DAOFactory.CreateCurrencyDAO().GetMultiUsingCountryRegions(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, countryRegionInstance, prefetchPathToUse, 0, 0);
 		}
-
 
 		/// <summary> Retrieves Entity rows in a datatable which match the specified filter. It will always create a new connection to the database.</summary>
 		/// <param name="selectFilter">A predicate or predicate expression which should be used as filter for the entities to retrieve.</param>
@@ -182,8 +173,7 @@ namespace AW.Data.CollectionClasses
 			return GetScalar(fieldIndex, expressionToExecute, aggregateToApply, null, null, null);
 		}
 
-		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are
-		/// applied on.</summary>
+		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are applied on.</summary>
 		/// <param name="fieldIndex">Field index of field to which to apply the aggregate function and expression</param>
 		/// <param name="expressionToExecute">The expression to execute. Can be null</param>
 		/// <param name="aggregateToApply">Aggregate function to apply. </param>
@@ -226,8 +216,7 @@ namespace AW.Data.CollectionClasses
 			{
 				fields[0].AggregateFunctionToApply = aggregateToApply;
 			}
-			CurrencyDAO dao = DAOFactory.CreateCurrencyDAO();
-			return dao.GetScalar(fields, base.Transaction, filter, relations, groupByClause);
+			return DAOFactory.CreateCurrencyDAO().GetScalar(fields, this.Transaction, filter, relations, groupByClause);
 		}
 		
 		/// <summary>Creats a new DAO instance so code which is in the base class can still use the proper DAO object.</summary>
@@ -243,7 +232,6 @@ namespace AW.Data.CollectionClasses
 		{
 			return new Transaction(levelOfIsolation, name);
 		}
-
 
 		#region Custom EntityCollection code
 		

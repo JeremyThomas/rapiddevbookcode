@@ -1,4 +1,4 @@
-namespace DynamicTable
+namespace AW.Winforms.Helpers.Reporting
 {
     partial class ReportOptionsDialog
     {

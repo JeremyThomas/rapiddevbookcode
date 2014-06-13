@@ -4,16 +4,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace AW.Tests
 {
   /// <summary>
-  ///This is a test class for LookUpQueries and is intended
-  ///to contain all LookUpQueries Unit Tests
-  ///</summary>
+  ///   This is a test class for LookUpQueries and is intended
+  ///   to contain all LookUpQueries Unit Tests
+  /// </summary>
   [TestClass]
   public class LookUpQueriesTest
   {
     /// <summary>
-    ///Gets or sets the test context which provides
-    ///information about and functionality for the current test run.
-    ///</summary>
+    ///   Gets or sets the test context which provides
+    ///   information about and functionality for the current test run.
+    /// </summary>
     public TestContext TestContext { get; set; }
 
     #region Additional test attributes
@@ -49,8 +49,8 @@ namespace AW.Tests
     #endregion
 
     /// <summary>
-    ///A test for GetStateProvinceCollection
-    ///</summary>
+    ///   A test for GetStateProvinceCollection
+    /// </summary>
     [TestMethod]
     public void GetStateProvinceCollectionTest()
     {
@@ -59,8 +59,8 @@ namespace AW.Tests
     }
 
     /// <summary>
-    ///A test for GetEmployees
-    ///</summary>
+    ///   A test for GetEmployees
+    /// </summary>
     [TestMethod]
     public void GetEmployeesTest()
     {
@@ -69,8 +69,8 @@ namespace AW.Tests
     }
 
     /// <summary>
-    ///A test for GetCountryRegionCollection
-    ///</summary>
+    ///   A test for GetCountryRegionCollection
+    /// </summary>
     [TestMethod]
     public void GetCountryRegionCollectionTest()
     {

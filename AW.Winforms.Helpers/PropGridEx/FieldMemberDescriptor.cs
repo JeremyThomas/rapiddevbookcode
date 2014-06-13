@@ -5,17 +5,18 @@ using System.ComponentModel;
 using System.Reflection;
 
 //http://www.codeproject.com/KB/grid/PropertyGridExWinForms.aspx
+
 namespace AW.Winforms.Helpers.PropGridEx
 {
   /// <summary>
-  /// Custom PropertyDescriptor for Fields
+  ///   Custom PropertyDescriptor for Fields
   /// </summary>
   internal class FieldMemberDescriptor : PropertyDescriptor
   {
     private readonly FieldInfo m_FieldInfo;
 
     internal FieldMemberDescriptor(FieldInfo field)
-      : base(String.Concat(field.DeclaringType.Name, ".", field.Name), (Attribute[])field.GetCustomAttributes(typeof(Attribute), true))
+      : base(String.Concat(field.DeclaringType.Name, ".", field.Name), (Attribute[]) field.GetCustomAttributes(typeof (Attribute), true))
     {
       m_FieldInfo = field;
     }
@@ -33,24 +34,23 @@ namespace AW.Winforms.Helpers.PropGridEx
 
     public override object GetValue(object component)
     {
-      if (component == null)
-        return null;
       // can be used for static fields too 
       if (m_FieldInfo.IsStatic)
         return m_FieldInfo.GetValue(null);
       var value = m_FieldInfo.GetValue(component);
-      if (value is Delegate)
+      var theDelegate = value as Delegate;
+      if (theDelegate != null)
       {
-        var m = ((Delegate)value).Method;
-        return m.DeclaringType.FullName + "." + m.Name;
+        var m = theDelegate.Method;
+        if (m.DeclaringType != null) return m.DeclaringType.FullName + "." + m.Name;
       }
-        return m_FieldInfo.GetValue(component);
+      return m_FieldInfo.GetValue(component);
     }
 
 
     /// <summary>
-    /// Create an AttributeCollection that ensures an ExpandableObjectConverter
-    /// and add Description and Category attributes
+    ///   Create an AttributeCollection that ensures an ExpandableObjectConverter
+    ///   and add Description and Category attributes
     /// </summary>
     public override AttributeCollection Attributes
     {
@@ -90,7 +90,7 @@ namespace AW.Winforms.Helpers.PropGridEx
 
         attributes.Add(new CategoryAttribute(category));
 
-        attributes.Add(new DescriptionAttribute(String.Format("{0} {1} {2}\n\rDefined in class {3}", category, m_FieldInfo.FieldType, m_FieldInfo.Name, m_FieldInfo.DeclaringType.FullName)));
+        attributes.Add(new DescriptionAttribute(String.Format("{0} {1} {2}\n\rDefined in class {3}", category, m_FieldInfo.FieldType, m_FieldInfo.Name, m_FieldInfo.DeclaringType == null ? null : m_FieldInfo.DeclaringType.FullName)));
 
 
         // add expandable type conv?
@@ -128,8 +128,6 @@ namespace AW.Winforms.Helpers.PropGridEx
 
     public override void SetValue(object component, object value)
     {
-      if (component == null)
-        return;
       m_FieldInfo.SetValue(component, value);
     }
 

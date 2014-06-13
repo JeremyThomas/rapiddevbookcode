@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: Address. </summary>
+	/// <summary>Implements the relations factory for the entity: Address. </summary>
 	public partial class AddressRelations
 	{
 		/// <summary>CTor</summary>
@@ -30,32 +30,16 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.CustomerAddressEntityUsingAddressID);
 			toReturn.Add(this.EmployeeAddressEntityUsingAddressID);
-			toReturn.Add(this.SalesOrderHeaderEntityUsingShipToAddressID);
-			toReturn.Add(this.SalesOrderHeaderEntityUsingBillToAddressID);
 			toReturn.Add(this.VendorAddressEntityUsingAddressID);
-
+			toReturn.Add(this.CustomerAddressEntityUsingAddressID);
+			toReturn.Add(this.SalesOrderHeaderEntityUsingBillToAddressID);
+			toReturn.Add(this.SalesOrderHeaderEntityUsingShipToAddressID);
 			toReturn.Add(this.StateProvinceEntityUsingStateProvinceID);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
-
-		/// <summary>Returns a new IEntityRelation object, between AddressEntity and CustomerAddressEntity over the 1:n relation they have, using the relation between the fields:
-		/// Address.AddressID - CustomerAddress.AddressID
-		/// </summary>
-		public virtual IEntityRelation CustomerAddressEntityUsingAddressID
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "CustomerAddresses" , true);
-				relation.AddEntityFieldPair(AddressFields.AddressID, CustomerAddressFields.AddressID);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerAddressEntity", false);
-				return relation;
-			}
-		}
 
 		/// <summary>Returns a new IEntityRelation object, between AddressEntity and EmployeeAddressEntity over the 1:n relation they have, using the relation between the fields:
 		/// Address.AddressID - EmployeeAddress.AddressID
@@ -72,17 +56,32 @@ namespace AW.Data.RelationClasses
 			}
 		}
 
-		/// <summary>Returns a new IEntityRelation object, between AddressEntity and SalesOrderHeaderEntity over the 1:n relation they have, using the relation between the fields:
-		/// Address.AddressID - SalesOrderHeader.ShipToAddressID
+		/// <summary>Returns a new IEntityRelation object, between AddressEntity and VendorAddressEntity over the 1:n relation they have, using the relation between the fields:
+		/// Address.AddressID - VendorAddress.AddressID
 		/// </summary>
-		public virtual IEntityRelation SalesOrderHeaderEntityUsingShipToAddressID
+		public virtual IEntityRelation VendorAddressEntityUsingAddressID
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SalesOrderHeaders_" , true);
-				relation.AddEntityFieldPair(AddressFields.AddressID, SalesOrderHeaderFields.ShipToAddressID);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "VendorAddresses" , true);
+				relation.AddEntityFieldPair(AddressFields.AddressID, VendorAddressFields.AddressID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("VendorAddressEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between AddressEntity and CustomerAddressEntity over the 1:n relation they have, using the relation between the fields:
+		/// Address.AddressID - CustomerAddress.AddressID
+		/// </summary>
+		public virtual IEntityRelation CustomerAddressEntityUsingAddressID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "CustomerAddresses" , true);
+				relation.AddEntityFieldPair(AddressFields.AddressID, CustomerAddressFields.AddressID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerAddressEntity", false);
 				return relation;
 			}
 		}
@@ -102,17 +101,17 @@ namespace AW.Data.RelationClasses
 			}
 		}
 
-		/// <summary>Returns a new IEntityRelation object, between AddressEntity and VendorAddressEntity over the 1:n relation they have, using the relation between the fields:
-		/// Address.AddressID - VendorAddress.AddressID
+		/// <summary>Returns a new IEntityRelation object, between AddressEntity and SalesOrderHeaderEntity over the 1:n relation they have, using the relation between the fields:
+		/// Address.AddressID - SalesOrderHeader.ShipToAddressID
 		/// </summary>
-		public virtual IEntityRelation VendorAddressEntityUsingAddressID
+		public virtual IEntityRelation SalesOrderHeaderEntityUsingShipToAddressID
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "VendorAddress" , true);
-				relation.AddEntityFieldPair(AddressFields.AddressID, VendorAddressFields.AddressID);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SalesOrderHeadersShipped" , true);
+				relation.AddEntityFieldPair(AddressFields.AddressID, SalesOrderHeaderFields.ShipToAddressID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("VendorAddressEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", false);
 				return relation;
 			}
 		}
@@ -132,16 +131,30 @@ namespace AW.Data.RelationClasses
 				return relation;
 			}
 		}
-
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticAddressRelations
+	{
+		internal static readonly IEntityRelation EmployeeAddressEntityUsingAddressIDStatic = new AddressRelations().EmployeeAddressEntityUsingAddressID;
+		internal static readonly IEntityRelation VendorAddressEntityUsingAddressIDStatic = new AddressRelations().VendorAddressEntityUsingAddressID;
+		internal static readonly IEntityRelation CustomerAddressEntityUsingAddressIDStatic = new AddressRelations().CustomerAddressEntityUsingAddressID;
+		internal static readonly IEntityRelation SalesOrderHeaderEntityUsingBillToAddressIDStatic = new AddressRelations().SalesOrderHeaderEntityUsingBillToAddressID;
+		internal static readonly IEntityRelation SalesOrderHeaderEntityUsingShipToAddressIDStatic = new AddressRelations().SalesOrderHeaderEntityUsingShipToAddressID;
+		internal static readonly IEntityRelation StateProvinceEntityUsingStateProvinceIDStatic = new AddressRelations().StateProvinceEntityUsingStateProvinceID;
+
+		/// <summary>CTor</summary>
+		static StaticAddressRelations()
+		{
+		}
 	}
 }

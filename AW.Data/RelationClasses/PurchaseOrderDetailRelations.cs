@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: PurchaseOrderDetail. </summary>
+	/// <summary>Implements the relations factory for the entity: PurchaseOrderDetail. </summary>
 	public partial class PurchaseOrderDetailRelations
 	{
 		/// <summary>CTor</summary>
@@ -30,8 +30,6 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-
-
 			toReturn.Add(this.ProductEntityUsingProductID);
 			toReturn.Add(this.PurchaseOrderHeaderEntityUsingPurchaseOrderID);
 			return toReturn;
@@ -69,16 +67,26 @@ namespace AW.Data.RelationClasses
 				return relation;
 			}
 		}
-
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticPurchaseOrderDetailRelations
+	{
+		internal static readonly IEntityRelation ProductEntityUsingProductIDStatic = new PurchaseOrderDetailRelations().ProductEntityUsingProductID;
+		internal static readonly IEntityRelation PurchaseOrderHeaderEntityUsingPurchaseOrderIDStatic = new PurchaseOrderDetailRelations().PurchaseOrderHeaderEntityUsingPurchaseOrderID;
+
+		/// <summary>CTor</summary>
+		static StaticPurchaseOrderDetailRelations()
+		{
+		}
 	}
 }

@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: CurrencyRate. </summary>
+	/// <summary>Implements the relations factory for the entity: CurrencyRate. </summary>
 	public partial class CurrencyRateRelations
 	{
 		/// <summary>CTor</summary>
@@ -31,9 +31,8 @@ namespace AW.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.SalesOrderHeaderEntityUsingCurrencyRateID);
-
-			toReturn.Add(this.CurrencyEntityUsingToCurrencyCode);
 			toReturn.Add(this.CurrencyEntityUsingFromCurrencyCode);
+			toReturn.Add(this.CurrencyEntityUsingToCurrencyCode);
 			return toReturn;
 		}
 
@@ -56,20 +55,6 @@ namespace AW.Data.RelationClasses
 
 
 		/// <summary>Returns a new IEntityRelation object, between CurrencyRateEntity and CurrencyEntity over the m:1 relation they have, using the relation between the fields:
-		/// CurrencyRate.ToCurrencyCode - Currency.CurrencyCode
-		/// </summary>
-		public virtual IEntityRelation CurrencyEntityUsingToCurrencyCode
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Currency_", false);
-				relation.AddEntityFieldPair(CurrencyFields.CurrencyCode, CurrencyRateFields.ToCurrencyCode);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CurrencyEntity", false);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CurrencyRateEntity", true);
-				return relation;
-			}
-		}
-		/// <summary>Returns a new IEntityRelation object, between CurrencyRateEntity and CurrencyEntity over the m:1 relation they have, using the relation between the fields:
 		/// CurrencyRate.FromCurrencyCode - Currency.CurrencyCode
 		/// </summary>
 		public virtual IEntityRelation CurrencyEntityUsingFromCurrencyCode
@@ -83,16 +68,41 @@ namespace AW.Data.RelationClasses
 				return relation;
 			}
 		}
-
+		/// <summary>Returns a new IEntityRelation object, between CurrencyRateEntity and CurrencyEntity over the m:1 relation they have, using the relation between the fields:
+		/// CurrencyRate.ToCurrencyCode - Currency.CurrencyCode
+		/// </summary>
+		public virtual IEntityRelation CurrencyEntityUsingToCurrencyCode
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Currency_", false);
+				relation.AddEntityFieldPair(CurrencyFields.CurrencyCode, CurrencyRateFields.ToCurrencyCode);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CurrencyEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CurrencyRateEntity", true);
+				return relation;
+			}
+		}
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticCurrencyRateRelations
+	{
+		internal static readonly IEntityRelation SalesOrderHeaderEntityUsingCurrencyRateIDStatic = new CurrencyRateRelations().SalesOrderHeaderEntityUsingCurrencyRateID;
+		internal static readonly IEntityRelation CurrencyEntityUsingFromCurrencyCodeStatic = new CurrencyRateRelations().CurrencyEntityUsingFromCurrencyCode;
+		internal static readonly IEntityRelation CurrencyEntityUsingToCurrencyCodeStatic = new CurrencyRateRelations().CurrencyEntityUsingToCurrencyCode;
+
+		/// <summary>CTor</summary>
+		static StaticCurrencyRateRelations()
+		{
+		}
 	}
 }

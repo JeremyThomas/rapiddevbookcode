@@ -2,7 +2,6 @@
 using System.Collections;
 using System.IO;
 using System.Windows.Forms;
-using ACorns.Hawkeye;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.EntityViewer;
 using CSScriptLibrary;
@@ -12,8 +11,6 @@ namespace AW.Winforms.Helpers.QueryRunner
 {
   public partial class QueryRunner : UserControl
   {
-    public event Func<object, int> SaveFunction;
-    public event Func<object, int> DeleteFunction;
 
     public QueryRunner()
     {
@@ -23,11 +20,14 @@ namespace AW.Winforms.Helpers.QueryRunner
     public QueryRunner(Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
       : this()
     {
-      SaveFunction = saveFunction;
-      DeleteFunction = deleteFunction;
-      gridDataEditorScript.DataEditorPersister = new DataEditorPersister(saveFunction, deleteFunction, saveableTypes);
+      gridDataEditorScript.DataEditorPersister = new DataEditorPersister(saveFunction, deleteFunction, null, saveableTypes);
     }
 
+    /// <summary>
+    ///   Handles the Click event of the toolStripButtonViewRunQuery control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
     private void toolStripButtonViewRunQuery_Click(object sender, EventArgs e)
     {
       var helper = new AsmHelper(CSScript.LoadCode(textBoxScript.Text, null, true));
@@ -73,12 +73,12 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     private void viewObjectToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      ObjectEditor.Instance.Show(gridDataEditorScript.BindingSource.Current);
+      //ObjectEditor.Instance.Show(gridDataEditorScript.BindingSource.Current);
     }
 
     private void toolStripButtonBrowse_Click(object sender, EventArgs e)
     {
-      FrmEntityViewer.LaunchAsChildForm(((ObjectListView)gridDataEditorScript.BindingSource.DataSource).List, gridDataEditorScript.DataEditorPersister);
+      FrmEntityViewer.LaunchAsChildForm(((ObjectListView) gridDataEditorScript.BindingSource.DataSource).List, gridDataEditorScript.DataEditorPersister);
     }
 
     private void browseObjectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -131,6 +131,12 @@ namespace AW.Winforms.Helpers.QueryRunner
     {
       //var txt = (TextBox)sender;
       //txt.DoDragDrop(txt.Text, DragDropEffects.Copy);
+    }
+
+    public int SplitterDistance
+    {
+      get { return splitContainerScript.SplitterDistance; }
+      set { splitContainerScript.SplitterDistance = value; }
     }
   }
 

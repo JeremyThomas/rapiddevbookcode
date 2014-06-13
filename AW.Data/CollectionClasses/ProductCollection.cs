@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
@@ -20,7 +20,6 @@ using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Data.DaoClasses;
 using AW.Data.HelperClasses;
-
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.CollectionClasses
@@ -40,7 +39,7 @@ namespace AW.Data.CollectionClasses
 
 		/// <summary> CTor</summary>
 		/// <param name="initialContents">The initial contents of this collection.</param>
-		public ProductCollection(IList<ProductEntity> initialContents):base(new ProductEntityFactory())
+		public ProductCollection(IEnumerable<ProductEntity> initialContents):base(new ProductEntityFactory())
 		{
 			AddRange(initialContents);
 		}
@@ -63,84 +62,82 @@ namespace AW.Data.CollectionClasses
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects to return</param>
 		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects to return</param>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
-		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="sizeUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="weightUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance)
+		public bool GetMultiManyToOne(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity sizeUnitMeasureInstance, IEntity weightUnitMeasureInstance)
 		{
-			return GetMultiManyToOne(productModelInstance, productSubcategoryInstance, unitMeasureInstance, unitMeasure_Instance, base.MaxNumberOfItemsToReturn, base.SortClauses, null, 0, 0);
+			return GetMultiManyToOne(productModelInstance, productSubcategoryInstance, sizeUnitMeasureInstance, weightUnitMeasureInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, null, 0, 0);
 		}
 
 		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects to return</param>
 		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects to return</param>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
-		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="sizeUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="weightUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance, IPredicateExpression filter)
+		public bool GetMultiManyToOne(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity sizeUnitMeasureInstance, IEntity weightUnitMeasureInstance, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(productModelInstance, productSubcategoryInstance, unitMeasureInstance, unitMeasure_Instance, base.MaxNumberOfItemsToReturn, base.SortClauses, filter, 0, 0);
+			return GetMultiManyToOne(productModelInstance, productSubcategoryInstance, sizeUnitMeasureInstance, weightUnitMeasureInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects to return</param>
 		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects to return</param>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
-		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="sizeUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="weightUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter)
+		public bool GetMultiManyToOne(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity sizeUnitMeasureInstance, IEntity weightUnitMeasureInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(productModelInstance, productSubcategoryInstance, unitMeasureInstance, unitMeasure_Instance, maxNumberOfItemsToReturn, sortClauses, filter, 0, 0);
+			return GetMultiManyToOne(productModelInstance, productSubcategoryInstance, sizeUnitMeasureInstance, weightUnitMeasureInstance, maxNumberOfItemsToReturn, sortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects to return</param>
 		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects to return</param>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
-		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="sizeUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="weightUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToOne(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter, int pageNumber, int pageSize)
+		public virtual bool GetMultiManyToOne(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity sizeUnitMeasureInstance, IEntity weightUnitMeasureInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter, int pageNumber, int pageSize)
 		{
 			bool validParameters = false;
 			validParameters |= (productModelInstance!=null);
 			validParameters |= (productSubcategoryInstance!=null);
-			validParameters |= (unitMeasureInstance!=null);
-			validParameters |= (unitMeasure_Instance!=null);
+			validParameters |= (sizeUnitMeasureInstance!=null);
+			validParameters |= (weightUnitMeasureInstance!=null);
 			if(!validParameters)
 			{
 				return GetMulti(filter, maxNumberOfItemsToReturn, sortClauses, null, pageNumber, pageSize);
 			}
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMulti(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, filter, productModelInstance, productSubcategoryInstance, unitMeasureInstance, unitMeasure_Instance, pageNumber, pageSize);
+			return DAOFactory.CreateProductDAO().GetMulti(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, filter, productModelInstance, productSubcategoryInstance, sizeUnitMeasureInstance, weightUnitMeasureInstance, pageNumber, pageSize);
 		}
 
 		/// <summary> Deletes from the persistent storage all Product entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.</summary>
 		/// <remarks>Runs directly on the persistent storage. It will not delete entity objects from the current collection.</remarks>
 		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects to return</param>
 		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects to return</param>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
-		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="sizeUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="weightUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int DeleteMultiManyToOne(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance)
+		public int DeleteMultiManyToOne(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity sizeUnitMeasureInstance, IEntity weightUnitMeasureInstance)
 		{
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.DeleteMulti(base.Transaction, productModelInstance, productSubcategoryInstance, unitMeasureInstance, unitMeasure_Instance);
+			return DAOFactory.CreateProductDAO().DeleteMulti(this.Transaction, productModelInstance, productSubcategoryInstance, sizeUnitMeasureInstance, weightUnitMeasureInstance);
 		}
 
 		/// <summary> Updates in the persistent storage all Product entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.
@@ -148,665 +145,129 @@ namespace AW.Data.CollectionClasses
 		/// <param name="entityWithNewValues">ProductEntity instance which holds the new values for the matching entities to update. Only changed fields are taken into account</param>
 		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects to return</param>
 		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects to return</param>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
-		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="sizeUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="weightUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int UpdateMultiManyToOne(ProductEntity entityWithNewValues, IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance)
+		public int UpdateMultiManyToOne(ProductEntity entityWithNewValues, IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity sizeUnitMeasureInstance, IEntity weightUnitMeasureInstance)
 		{
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.UpdateMulti(entityWithNewValues, base.Transaction, productModelInstance, productSubcategoryInstance, unitMeasureInstance, unitMeasure_Instance);
+			return DAOFactory.CreateProductDAO().UpdateMulti(entityWithNewValues, this.Transaction, productModelInstance, productSubcategoryInstance, sizeUnitMeasureInstance, weightUnitMeasureInstance);
 		}
 
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  Relation of type 'm:n' with the passed in DocumentEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="documentInstance">DocumentEntity object to be used as a filter in the m:n relation</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingDocumentCollectionViaProductDocument(IEntity documentInstance)
-		{
-			return GetMultiManyToManyUsingDocumentCollectionViaProductDocument(documentInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
-		}
-		
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in DocumentEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="documentInstance">DocumentEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingDocumentCollectionViaProductDocument(IEntity documentInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			return GetMultiManyToManyUsingDocumentCollectionViaProductDocument(documentInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in DocumentEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="documentInstance">DocumentEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingDocumentCollectionViaProductDocument(IEntity documentInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingDocumentCollectionViaProductDocument(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, documentInstance, pageNumber, pageSize);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a Relation of type 'm:n' with the passed in DocumentEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="documentInstance">DocumentEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingDocumentCollectionViaProductDocument(IEntity documentInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingDocumentCollectionViaProductDocument(documentInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in DocumentEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="documentInstance">DocumentEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingDocumentCollectionViaProductDocument(IEntity documentInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingDocumentCollectionViaProductDocument(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, documentInstance, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  Relation of type 'm:n' with the passed in LocationEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="locationInstance">LocationEntity object to be used as a filter in the m:n relation</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingLocationCollectionViaProductInventory(IEntity locationInstance)
-		{
-			return GetMultiManyToManyUsingLocationCollectionViaProductInventory(locationInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
-		}
-		
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in LocationEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="locationInstance">LocationEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingLocationCollectionViaProductInventory(IEntity locationInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			return GetMultiManyToManyUsingLocationCollectionViaProductInventory(locationInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in LocationEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="locationInstance">LocationEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingLocationCollectionViaProductInventory(IEntity locationInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingLocationCollectionViaProductInventory(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, locationInstance, pageNumber, pageSize);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a Relation of type 'm:n' with the passed in LocationEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="locationInstance">LocationEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingLocationCollectionViaProductInventory(IEntity locationInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingLocationCollectionViaProductInventory(locationInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in LocationEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="locationInstance">LocationEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingLocationCollectionViaProductInventory(IEntity locationInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingLocationCollectionViaProductInventory(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, locationInstance, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  Relation of type 'm:n' with the passed in ProductPhotoEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  Relation of type 'm:n' with the passed in ProductPhotoEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="productPhotoInstance">ProductPhotoEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingProductPhotoCollectionViaProductProductPhoto(IEntity productPhotoInstance)
+		public bool GetMultiManyToManyUsingPhotos(IEntity productPhotoInstance)
 		{
-			return GetMultiManyToManyUsingProductPhotoCollectionViaProductProductPhoto(productPhotoInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingPhotos(productPhotoInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in ProductPhotoEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in ProductPhotoEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="productPhotoInstance">ProductPhotoEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingProductPhotoCollectionViaProductProductPhoto(IEntity productPhotoInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public bool GetMultiManyToManyUsingPhotos(IEntity productPhotoInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			return GetMultiManyToManyUsingProductPhotoCollectionViaProductProductPhoto(productPhotoInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+			return GetMultiManyToManyUsingPhotos(productPhotoInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in ProductPhotoEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a Relation of type 'm:n' with the passed in ProductPhotoEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productPhotoInstance">ProductPhotoEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingPhotos(IEntity productPhotoInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingPhotos(productPhotoInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in ProductPhotoEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="productPhotoInstance">ProductPhotoEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingProductPhotoCollectionViaProductProductPhoto(IEntity productPhotoInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		public virtual bool GetMultiManyToManyUsingPhotos(IEntity productPhotoInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingProductPhotoCollectionViaProductProductPhoto(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, productPhotoInstance, pageNumber, pageSize);
+			return DAOFactory.CreateProductDAO().GetMultiUsingPhotos(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, productPhotoInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a Relation of type 'm:n' with the passed in ProductPhotoEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="productPhotoInstance">ProductPhotoEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingProductPhotoCollectionViaProductProductPhoto(IEntity productPhotoInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingProductPhotoCollectionViaProductProductPhoto(productPhotoInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in ProductPhotoEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in ProductPhotoEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="productPhotoInstance">ProductPhotoEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingProductPhotoCollectionViaProductProductPhoto(IEntity productPhotoInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		public bool GetMultiManyToManyUsingPhotos(IEntity productPhotoInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingProductPhotoCollectionViaProductProductPhoto(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, productPhotoInstance, prefetchPathToUse);
+			return DAOFactory.CreateProductDAO().GetMultiUsingPhotos(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, productPhotoInstance, prefetchPathToUse, 0, 0);
 		}
 
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  Relation of type 'm:n' with the passed in PurchaseOrderHeaderEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="purchaseOrderHeaderInstance">PurchaseOrderHeaderEntity object to be used as a filter in the m:n relation</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingPurchaseOrderHeaderCollectionViaPurchaseOrderDetail(IEntity purchaseOrderHeaderInstance)
-		{
-			return GetMultiManyToManyUsingPurchaseOrderHeaderCollectionViaPurchaseOrderDetail(purchaseOrderHeaderInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
-		}
-		
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in PurchaseOrderHeaderEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="purchaseOrderHeaderInstance">PurchaseOrderHeaderEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingPurchaseOrderHeaderCollectionViaPurchaseOrderDetail(IEntity purchaseOrderHeaderInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			return GetMultiManyToManyUsingPurchaseOrderHeaderCollectionViaPurchaseOrderDetail(purchaseOrderHeaderInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in PurchaseOrderHeaderEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="purchaseOrderHeaderInstance">PurchaseOrderHeaderEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingPurchaseOrderHeaderCollectionViaPurchaseOrderDetail(IEntity purchaseOrderHeaderInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingPurchaseOrderHeaderCollectionViaPurchaseOrderDetail(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, purchaseOrderHeaderInstance, pageNumber, pageSize);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a Relation of type 'm:n' with the passed in PurchaseOrderHeaderEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="purchaseOrderHeaderInstance">PurchaseOrderHeaderEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingPurchaseOrderHeaderCollectionViaPurchaseOrderDetail(IEntity purchaseOrderHeaderInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingPurchaseOrderHeaderCollectionViaPurchaseOrderDetail(purchaseOrderHeaderInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in PurchaseOrderHeaderEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="purchaseOrderHeaderInstance">PurchaseOrderHeaderEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingPurchaseOrderHeaderCollectionViaPurchaseOrderDetail(IEntity purchaseOrderHeaderInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingPurchaseOrderHeaderCollectionViaPurchaseOrderDetail(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, purchaseOrderHeaderInstance, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  Relation of type 'm:n' with the passed in ScrapReasonEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="scrapReasonInstance">ScrapReasonEntity object to be used as a filter in the m:n relation</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingScrapReasonCollectionViaWorkOrder(IEntity scrapReasonInstance)
-		{
-			return GetMultiManyToManyUsingScrapReasonCollectionViaWorkOrder(scrapReasonInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
-		}
-		
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in ScrapReasonEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="scrapReasonInstance">ScrapReasonEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingScrapReasonCollectionViaWorkOrder(IEntity scrapReasonInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			return GetMultiManyToManyUsingScrapReasonCollectionViaWorkOrder(scrapReasonInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in ScrapReasonEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="scrapReasonInstance">ScrapReasonEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingScrapReasonCollectionViaWorkOrder(IEntity scrapReasonInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingScrapReasonCollectionViaWorkOrder(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, scrapReasonInstance, pageNumber, pageSize);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a Relation of type 'm:n' with the passed in ScrapReasonEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="scrapReasonInstance">ScrapReasonEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingScrapReasonCollectionViaWorkOrder(IEntity scrapReasonInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingScrapReasonCollectionViaWorkOrder(scrapReasonInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in ScrapReasonEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="scrapReasonInstance">ScrapReasonEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingScrapReasonCollectionViaWorkOrder(IEntity scrapReasonInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingScrapReasonCollectionViaWorkOrder(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, scrapReasonInstance, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  Relation of type 'm:n' with the passed in SpecialOfferEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  Relation of type 'm:n' with the passed in SpecialOfferEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="specialOfferInstance">SpecialOfferEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingSpecialOfferCollectionViaSpecialOfferProduct(IEntity specialOfferInstance)
+		public bool GetMultiManyToManyUsingSpecialOffers(IEntity specialOfferInstance)
 		{
-			return GetMultiManyToManyUsingSpecialOfferCollectionViaSpecialOfferProduct(specialOfferInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingSpecialOffers(specialOfferInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in SpecialOfferEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in SpecialOfferEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="specialOfferInstance">SpecialOfferEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingSpecialOfferCollectionViaSpecialOfferProduct(IEntity specialOfferInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public bool GetMultiManyToManyUsingSpecialOffers(IEntity specialOfferInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			return GetMultiManyToManyUsingSpecialOfferCollectionViaSpecialOfferProduct(specialOfferInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+			return GetMultiManyToManyUsingSpecialOffers(specialOfferInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in SpecialOfferEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a Relation of type 'm:n' with the passed in SpecialOfferEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="specialOfferInstance">SpecialOfferEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingSpecialOffers(IEntity specialOfferInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingSpecialOffers(specialOfferInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in SpecialOfferEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="specialOfferInstance">SpecialOfferEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingSpecialOfferCollectionViaSpecialOfferProduct(IEntity specialOfferInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		public virtual bool GetMultiManyToManyUsingSpecialOffers(IEntity specialOfferInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingSpecialOfferCollectionViaSpecialOfferProduct(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, specialOfferInstance, pageNumber, pageSize);
+			return DAOFactory.CreateProductDAO().GetMultiUsingSpecialOffers(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, specialOfferInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a Relation of type 'm:n' with the passed in SpecialOfferEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="specialOfferInstance">SpecialOfferEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingSpecialOfferCollectionViaSpecialOfferProduct(IEntity specialOfferInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingSpecialOfferCollectionViaSpecialOfferProduct(specialOfferInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in SpecialOfferEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in SpecialOfferEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="specialOfferInstance">SpecialOfferEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingSpecialOfferCollectionViaSpecialOfferProduct(IEntity specialOfferInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		public bool GetMultiManyToManyUsingSpecialOffers(IEntity specialOfferInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingSpecialOfferCollectionViaSpecialOfferProduct(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, specialOfferInstance, prefetchPathToUse);
+			return DAOFactory.CreateProductDAO().GetMultiUsingSpecialOffers(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, specialOfferInstance, prefetchPathToUse, 0, 0);
 		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  Relation of type 'm:n' with the passed in UnitMeasureEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity object to be used as a filter in the m:n relation</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials(IEntity unitMeasureInstance)
-		{
-			return GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials(unitMeasureInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
-		}
-		
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in UnitMeasureEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials(IEntity unitMeasureInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			return GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials(unitMeasureInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in UnitMeasureEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials(IEntity unitMeasureInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingUnitMeasureCollectionViaBillOfMaterials(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, unitMeasureInstance, pageNumber, pageSize);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a Relation of type 'm:n' with the passed in UnitMeasureEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials(IEntity unitMeasureInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials(unitMeasureInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in UnitMeasureEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials(IEntity unitMeasureInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingUnitMeasureCollectionViaBillOfMaterials(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, unitMeasureInstance, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  Relation of type 'm:n' with the passed in UnitMeasureEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity object to be used as a filter in the m:n relation</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials_(IEntity unitMeasureInstance)
-		{
-			return GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials_(unitMeasureInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
-		}
-		
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in UnitMeasureEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials_(IEntity unitMeasureInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			return GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials_(unitMeasureInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in UnitMeasureEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials_(IEntity unitMeasureInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingUnitMeasureCollectionViaBillOfMaterials_(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, unitMeasureInstance, pageNumber, pageSize);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a Relation of type 'm:n' with the passed in UnitMeasureEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials_(IEntity unitMeasureInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials_(unitMeasureInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in UnitMeasureEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingUnitMeasureCollectionViaBillOfMaterials_(IEntity unitMeasureInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingUnitMeasureCollectionViaBillOfMaterials_(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, unitMeasureInstance, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  Relation of type 'm:n' with the passed in UnitMeasureEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity object to be used as a filter in the m:n relation</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingUnitMeasureCollectionViaProductVendor(IEntity unitMeasureInstance)
-		{
-			return GetMultiManyToManyUsingUnitMeasureCollectionViaProductVendor(unitMeasureInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
-		}
-		
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in UnitMeasureEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingUnitMeasureCollectionViaProductVendor(IEntity unitMeasureInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			return GetMultiManyToManyUsingUnitMeasureCollectionViaProductVendor(unitMeasureInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in UnitMeasureEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingUnitMeasureCollectionViaProductVendor(IEntity unitMeasureInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingUnitMeasureCollectionViaProductVendor(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, unitMeasureInstance, pageNumber, pageSize);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a Relation of type 'm:n' with the passed in UnitMeasureEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingUnitMeasureCollectionViaProductVendor(IEntity unitMeasureInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingUnitMeasureCollectionViaProductVendor(unitMeasureInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in UnitMeasureEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingUnitMeasureCollectionViaProductVendor(IEntity unitMeasureInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingUnitMeasureCollectionViaProductVendor(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, unitMeasureInstance, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  Relation of type 'm:n' with the passed in VendorEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingVendorCollectionViaProductVendor(IEntity vendorInstance)
-		{
-			return GetMultiManyToManyUsingVendorCollectionViaProductVendor(vendorInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
-		}
-		
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in VendorEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingVendorCollectionViaProductVendor(IEntity vendorInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			return GetMultiManyToManyUsingVendorCollectionViaProductVendor(vendorInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in VendorEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingVendorCollectionViaProductVendor(IEntity vendorInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingVendorCollectionViaProductVendor(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, vendorInstance, pageNumber, pageSize);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a Relation of type 'm:n' with the passed in VendorEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingVendorCollectionViaProductVendor(IEntity vendorInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingVendorCollectionViaProductVendor(vendorInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  relation of type 'm:n' with the passed in VendorEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingVendorCollectionViaProductVendor(IEntity vendorInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetMultiUsingVendorCollectionViaProductVendor(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, vendorInstance, prefetchPathToUse);
-		}
-
 
 		/// <summary> Retrieves Entity rows in a datatable which match the specified filter. It will always create a new connection to the database.</summary>
 		/// <param name="selectFilter">A predicate or predicate expression which should be used as filter for the entities to retrieve.</param>
@@ -864,8 +325,7 @@ namespace AW.Data.CollectionClasses
 			return GetScalar(fieldIndex, expressionToExecute, aggregateToApply, null, null, null);
 		}
 
-		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are
-		/// applied on.</summary>
+		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are applied on.</summary>
 		/// <param name="fieldIndex">Field index of field to which to apply the aggregate function and expression</param>
 		/// <param name="expressionToExecute">The expression to execute. Can be null</param>
 		/// <param name="aggregateToApply">Aggregate function to apply. </param>
@@ -908,8 +368,7 @@ namespace AW.Data.CollectionClasses
 			{
 				fields[0].AggregateFunctionToApply = aggregateToApply;
 			}
-			ProductDAO dao = DAOFactory.CreateProductDAO();
-			return dao.GetScalar(fields, base.Transaction, filter, relations, groupByClause);
+			return DAOFactory.CreateProductDAO().GetScalar(fields, this.Transaction, filter, relations, groupByClause);
 		}
 		
 		/// <summary>Creats a new DAO instance so code which is in the base class can still use the proper DAO object.</summary>
@@ -925,7 +384,6 @@ namespace AW.Data.CollectionClasses
 		{
 			return new Transaction(levelOfIsolation, name);
 		}
-
 
 		#region Custom EntityCollection code
 		

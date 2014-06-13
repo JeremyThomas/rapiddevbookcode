@@ -32,13 +32,14 @@
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QueryRunner));
       this.splitContainerScript = new System.Windows.Forms.SplitContainer();
       this.textBoxScript = new System.Windows.Forms.RichTextBox();
-      this.gridDataEditorScript = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.contextMenuStripGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.viewObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.browseObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.contextMenuStripBlank = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.gridDataEditorScript = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.toolStripButtonRunQuery = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonBrowse = new System.Windows.Forms.ToolStripButton();
-      this.contextMenuStripBlank = new System.Windows.Forms.ContextMenuStrip(this.components);
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainerScript)).BeginInit();
       this.splitContainerScript.Panel1.SuspendLayout();
       this.splitContainerScript.Panel2.SuspendLayout();
       this.splitContainerScript.SuspendLayout();
@@ -59,8 +60,8 @@
       // splitContainerScript.Panel2
       // 
       this.splitContainerScript.Panel2.Controls.Add(this.gridDataEditorScript);
-      this.splitContainerScript.Size = new System.Drawing.Size(841, 595);
-      this.splitContainerScript.SplitterDistance = 280;
+      this.splitContainerScript.Size = new System.Drawing.Size(913, 400);
+      this.splitContainerScript.SplitterDistance = 200;
       this.splitContainerScript.TabIndex = 6;
       // 
       // textBoxScript
@@ -70,29 +71,14 @@
       this.textBoxScript.EnableAutoDragDrop = true;
       this.textBoxScript.Location = new System.Drawing.Point(0, 0);
       this.textBoxScript.Name = "textBoxScript";
-      this.textBoxScript.Size = new System.Drawing.Size(841, 280);
+      this.textBoxScript.Size = new System.Drawing.Size(913, 200);
       this.textBoxScript.TabIndex = 0;
       this.textBoxScript.Text = resources.GetString("textBoxScript.Text");
       this.textBoxScript.WordWrap = false;
       this.textBoxScript.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragDrop);
-      this.textBoxScript.MouseDown += new System.Windows.Forms.MouseEventHandler(this.textBoxScript_MouseDown);
       this.textBoxScript.DragEnter += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragEnter);
       this.textBoxScript.DragOver += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragOver);
-      // 
-      // gridDataEditorScript
-      // 
-      this.gridDataEditorScript.ContextMenuStrip = this.contextMenuStripGrid;
-      this.gridDataEditorScript.DataMember = "";
-      this.gridDataEditorScript.DataSource = null;
-      this.gridDataEditorScript.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.gridDataEditorScript.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonRunQuery,
-            this.toolStripButtonBrowse});
-      this.gridDataEditorScript.Location = new System.Drawing.Point(0, 0);
-      this.gridDataEditorScript.Name = "gridDataEditorScript";
-      this.gridDataEditorScript.PageSize = ((ushort)(0));
-      this.gridDataEditorScript.Size = new System.Drawing.Size(841, 311);
-      this.gridDataEditorScript.TabIndex = 5;
+      this.textBoxScript.MouseDown += new System.Windows.Forms.MouseEventHandler(this.textBoxScript_MouseDown);
       // 
       // contextMenuStripGrid
       // 
@@ -100,21 +86,44 @@
             this.viewObjectToolStripMenuItem,
             this.browseObjectToolStripMenuItem});
       this.contextMenuStripGrid.Name = "contextMenuStripGrid";
-      this.contextMenuStripGrid.Size = new System.Drawing.Size(156, 48);
+      this.contextMenuStripGrid.Size = new System.Drawing.Size(151, 48);
       // 
       // viewObjectToolStripMenuItem
       // 
       this.viewObjectToolStripMenuItem.Name = "viewObjectToolStripMenuItem";
-      this.viewObjectToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+      this.viewObjectToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
       this.viewObjectToolStripMenuItem.Text = "View Object";
       this.viewObjectToolStripMenuItem.Click += new System.EventHandler(this.viewObjectToolStripMenuItem_Click);
       // 
       // browseObjectToolStripMenuItem
       // 
       this.browseObjectToolStripMenuItem.Name = "browseObjectToolStripMenuItem";
-      this.browseObjectToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+      this.browseObjectToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
       this.browseObjectToolStripMenuItem.Text = "Browse Object";
       this.browseObjectToolStripMenuItem.Click += new System.EventHandler(this.browseObjectToolStripMenuItem_Click);
+      // 
+      // contextMenuStripBlank
+      // 
+      this.contextMenuStripBlank.Name = "contextMenuStripBlank";
+      this.contextMenuStripBlank.Size = new System.Drawing.Size(61, 4);
+      // 
+      // gridDataEditorScript
+      // 
+      this.gridDataEditorScript.ContextMenuStrip = this.contextMenuStripGrid;
+      this.gridDataEditorScript.DataMember = "";
+      this.gridDataEditorScript.DataSource = null;
+      this.gridDataEditorScript.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.gridDataEditorScript.EnsureFilteringEnabled = false;
+      this.gridDataEditorScript.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonRunQuery,
+            this.toolStripButtonBrowse});
+      this.gridDataEditorScript.Location = new System.Drawing.Point(0, 0);
+      this.gridDataEditorScript.MembersToExclude = null;
+      this.gridDataEditorScript.Name = "gridDataEditorScript";
+      this.gridDataEditorScript.PageSize = ((ushort)(0));
+      this.gridDataEditorScript.Readonly = false;
+      this.gridDataEditorScript.Size = new System.Drawing.Size(913, 196);
+      this.gridDataEditorScript.TabIndex = 5;
       // 
       // toolStripButtonRunQuery
       // 
@@ -122,7 +131,7 @@
       this.toolStripButtonRunQuery.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonRunQuery.MergeIndex = 0;
       this.toolStripButtonRunQuery.Name = "toolStripButtonRunQuery";
-      this.toolStripButtonRunQuery.Size = new System.Drawing.Size(76, 22);
+      this.toolStripButtonRunQuery.Size = new System.Drawing.Size(80, 22);
       this.toolStripButtonRunQuery.Text = "RunQuery";
       this.toolStripButtonRunQuery.Click += new System.EventHandler(this.toolStripButtonViewRunQuery_Click);
       // 
@@ -132,14 +141,9 @@
       this.toolStripButtonBrowse.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonBrowse.Image")));
       this.toolStripButtonBrowse.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonBrowse.Name = "toolStripButtonBrowse";
-      this.toolStripButtonBrowse.Size = new System.Drawing.Size(62, 22);
+      this.toolStripButtonBrowse.Size = new System.Drawing.Size(65, 22);
       this.toolStripButtonBrowse.Text = "Browse";
       this.toolStripButtonBrowse.Click += new System.EventHandler(this.toolStripButtonBrowse_Click);
-      // 
-      // contextMenuStripBlank
-      // 
-      this.contextMenuStripBlank.Name = "contextMenuStripBlank";
-      this.contextMenuStripBlank.Size = new System.Drawing.Size(61, 4);
       // 
       // QueryRunner
       // 
@@ -147,11 +151,12 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.splitContainerScript);
       this.Name = "QueryRunner";
-      this.Size = new System.Drawing.Size(841, 595);
+      this.Size = new System.Drawing.Size(913, 400);
       this.Load += new System.EventHandler(this.QueryRunner_Load);
       this.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragDrop);
       this.splitContainerScript.Panel1.ResumeLayout(false);
       this.splitContainerScript.Panel2.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainerScript)).EndInit();
       this.splitContainerScript.ResumeLayout(false);
       this.contextMenuStripGrid.ResumeLayout(false);
       this.ResumeLayout(false);
@@ -160,7 +165,7 @@
 
     #endregion
 
-    private System.Windows.Forms.SplitContainer splitContainerScript;
+    internal System.Windows.Forms.SplitContainer splitContainerScript;
     private System.Windows.Forms.RichTextBox textBoxScript;
     private System.Windows.Forms.ContextMenuStrip contextMenuStripBlank;
     private System.Windows.Forms.ContextMenuStrip contextMenuStripGrid;

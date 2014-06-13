@@ -1,5 +1,7 @@
 namespace JesseJohnston
 {
+
+  //Use Equal for is 
   internal enum RelationalOperator
   {
     None = 0,
@@ -8,6 +10,8 @@ namespace JesseJohnston
     Greater,
     GreaterEqual,
     Less,
-    LessEqual
+    LessEqual,
+    In,
+    Is,
   }
 }

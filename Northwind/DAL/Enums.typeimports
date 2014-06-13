@@ -1,0 +1,3 @@
+﻿<typeImports>
+	<typeImport typeName="Northwind.DAL.Category" assemblyFile=".\Northwind.DAL.dll"/>
+</typeImports>

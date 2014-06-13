@@ -29,6 +29,7 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEntityViewer));
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.selectObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.copyObjectRefToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,35 +43,55 @@
       this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.tabControl1 = new System.Windows.Forms.TabControl();
-      this.tabPageBrowser = new System.Windows.Forms.TabPage();
-      this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.ObjectBrowser = new sliver.Windows.Forms.StateBrowser();
-      this.splitContainerValues = new System.Windows.Forms.SplitContainer();
-      this.panel1 = new System.Windows.Forms.Panel();
+      this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
+      this.panelOptions = new System.Windows.Forms.Panel();
       this.textBoxObjectBeingBrowsed = new System.Windows.Forms.TextBox();
       this.checkBoxShowNonPublicMembers = new System.Windows.Forms.CheckBox();
       this.checkBoxShowStaticMembers = new System.Windows.Forms.CheckBox();
       this.checkBoxShowDataTypes = new System.Windows.Forms.CheckBox();
+      this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.statusStrip1 = new System.Windows.Forms.StatusStrip();
       this.toolStripStatusLabelInstance = new System.Windows.Forms.ToolStripStatusLabel();
       this.toolStripStatusLabelSelectePath = new System.Windows.Forms.ToolStripStatusLabel();
-      this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
-      this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
+      this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
+      this.splitContainerVertical.Panel1.SuspendLayout();
+      this.splitContainerVertical.Panel2.SuspendLayout();
+      this.splitContainerVertical.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainerHorizontal)).BeginInit();
+      this.splitContainerHorizontal.Panel1.SuspendLayout();
+      this.splitContainerHorizontal.Panel2.SuspendLayout();
+      this.splitContainerHorizontal.SuspendLayout();
       this.contextMenuStrip1.SuspendLayout();
-      this.tabControl1.SuspendLayout();
-      this.tabPageBrowser.SuspendLayout();
-      this.splitContainer1.Panel1.SuspendLayout();
-      this.splitContainer1.Panel2.SuspendLayout();
-      this.splitContainer1.SuspendLayout();
-      this.splitContainerValues.Panel1.SuspendLayout();
-      this.splitContainerValues.Panel2.SuspendLayout();
-      this.splitContainerValues.SuspendLayout();
-      this.panel1.SuspendLayout();
+      this.panelOptions.SuspendLayout();
       this.statusStrip1.SuspendLayout();
       this.SuspendLayout();
+      // 
+      // splitContainerVertical
+      // 
+      // 
+      // splitContainerVertical.Panel1
+      // 
+      this.splitContainerVertical.Panel1.Controls.Add(this.ObjectBrowser);
+      this.splitContainerVertical.Size = new System.Drawing.Size(1031, 540);
+      this.splitContainerVertical.SplitterDistance = 343;
+      // 
+      // splitContainerHorizontal
+      // 
+      // 
+      // splitContainerHorizontal.Panel1
+      // 
+      this.splitContainerHorizontal.Panel1.Controls.Add(this.propertyGrid1);
+      this.splitContainerHorizontal.Panel1.Controls.Add(this.panelOptions);
+      // 
+      // splitContainerHorizontal.Panel2
+      // 
+      this.splitContainerHorizontal.Panel2.Controls.Add(this.gridDataEditor);
+      this.splitContainerHorizontal.Size = new System.Drawing.Size(684, 540);
+      this.splitContainerHorizontal.SplitterDistance = 179;
       // 
       // contextMenuStrip1
       // 
@@ -78,19 +99,19 @@
             this.selectObjectToolStripMenuItem,
             this.copyObjectRefToolStripMenuItem});
       this.contextMenuStrip1.Name = "contextMenuStrip1";
-      this.contextMenuStrip1.Size = new System.Drawing.Size(166, 48);
+      this.contextMenuStrip1.Size = new System.Drawing.Size(161, 48);
       // 
       // selectObjectToolStripMenuItem
       // 
       this.selectObjectToolStripMenuItem.Name = "selectObjectToolStripMenuItem";
-      this.selectObjectToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+      this.selectObjectToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
       this.selectObjectToolStripMenuItem.Text = "SelectObject";
       this.selectObjectToolStripMenuItem.Click += new System.EventHandler(this.selectObjectToolStripMenuItem_Click);
       // 
       // copyObjectRefToolStripMenuItem
       // 
       this.copyObjectRefToolStripMenuItem.Name = "copyObjectRefToolStripMenuItem";
-      this.copyObjectRefToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+      this.copyObjectRefToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
       this.copyObjectRefToolStripMenuItem.Text = "Copy Object Ref";
       this.copyObjectRefToolStripMenuItem.Click += new System.EventHandler(this.copyObjectRefToolStripMenuItem_Click);
       // 
@@ -169,92 +190,51 @@
       this.dataGridViewTextBoxColumn10.ReadOnly = true;
       this.dataGridViewTextBoxColumn10.Width = 73;
       // 
-      // tabControl1
-      // 
-      this.tabControl1.Controls.Add(this.tabPageBrowser);
-      this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tabControl1.Location = new System.Drawing.Point(0, 0);
-      this.tabControl1.Name = "tabControl1";
-      this.tabControl1.SelectedIndex = 0;
-      this.tabControl1.Size = new System.Drawing.Size(1031, 540);
-      this.tabControl1.TabIndex = 1;
-      // 
-      // tabPageBrowser
-      // 
-      this.tabPageBrowser.Controls.Add(this.splitContainer1);
-      this.tabPageBrowser.Location = new System.Drawing.Point(4, 22);
-      this.tabPageBrowser.Name = "tabPageBrowser";
-      this.tabPageBrowser.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageBrowser.Size = new System.Drawing.Size(1023, 514);
-      this.tabPageBrowser.TabIndex = 0;
-      this.tabPageBrowser.Text = "Browser";
-      this.tabPageBrowser.UseVisualStyleBackColor = true;
-      // 
-      // splitContainer1
-      // 
-      this.splitContainer1.DataBindings.Add(new System.Windows.Forms.Binding("SplitterDistance", global::AW.Winforms.Helpers.Properties.Settings.Default, "FrmEntityViewerSplitterDistance", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.splitContainer1.Location = new System.Drawing.Point(3, 3);
-      this.splitContainer1.Name = "splitContainer1";
-      // 
-      // splitContainer1.Panel1
-      // 
-      this.splitContainer1.Panel1.Controls.Add(this.ObjectBrowser);
-      // 
-      // splitContainer1.Panel2
-      // 
-      this.splitContainer1.Panel2.Controls.Add(this.splitContainerValues);
-      this.splitContainer1.Size = new System.Drawing.Size(1017, 508);
-      this.splitContainer1.SplitterDistance = global::AW.Winforms.Helpers.Properties.Settings.Default.FrmEntityViewerSplitterDistance;
-      this.splitContainer1.TabIndex = 2;
-      // 
       // ObjectBrowser
       // 
       this.ObjectBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
       this.ObjectBrowser.Location = new System.Drawing.Point(0, 0);
       this.ObjectBrowser.Name = "ObjectBrowser";
       this.ObjectBrowser.ObjectToBrowse = null;
-      this.ObjectBrowser.Size = new System.Drawing.Size(462, 508);
+      this.ObjectBrowser.Size = new System.Drawing.Size(343, 540);
       this.ObjectBrowser.TabIndex = 0;
+      this.toolTip1.SetToolTip(this.ObjectBrowser, "Properties of selected object");
       this.ObjectBrowser.NodeSelected += new System.EventHandler(this.ObjectBrowser_NodeSelected);
       // 
-      // splitContainerValues
+      // propertyGrid1
       // 
-      this.splitContainerValues.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.splitContainerValues.Location = new System.Drawing.Point(0, 0);
-      this.splitContainerValues.Name = "splitContainerValues";
-      this.splitContainerValues.Orientation = System.Windows.Forms.Orientation.Horizontal;
+      this.propertyGrid1.CommandsActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
+      this.propertyGrid1.CommandsDisabledLinkColor = System.Drawing.SystemColors.ControlDark;
+      this.propertyGrid1.CommandsLinkColor = System.Drawing.SystemColors.ActiveCaption;
+      this.propertyGrid1.ContextMenuStrip = this.contextMenuStrip1;
+      this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.propertyGrid1.DrawFlat = true;
+      this.propertyGrid1.Location = new System.Drawing.Point(0, 45);
+      this.propertyGrid1.Name = "propertyGrid1";
+      this.propertyGrid1.Size = new System.Drawing.Size(684, 134);
+      this.propertyGrid1.TabIndex = 0;
+      this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
       // 
-      // splitContainerValues.Panel1
+      // panelOptions
       // 
-      this.splitContainerValues.Panel1.Controls.Add(this.propertyGrid1);
-      this.splitContainerValues.Panel1.Controls.Add(this.panel1);
-      // 
-      // splitContainerValues.Panel2
-      // 
-      this.splitContainerValues.Panel2.Controls.Add(this.gridDataEditor);
-      this.splitContainerValues.Size = new System.Drawing.Size(551, 508);
-      this.splitContainerValues.SplitterDistance = 254;
-      this.splitContainerValues.TabIndex = 3;
-      // 
-      // panel1
-      // 
-      this.panel1.Controls.Add(this.textBoxObjectBeingBrowsed);
-      this.panel1.Controls.Add(this.checkBoxShowNonPublicMembers);
-      this.panel1.Controls.Add(this.checkBoxShowStaticMembers);
-      this.panel1.Controls.Add(this.checkBoxShowDataTypes);
-      this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-      this.panel1.Location = new System.Drawing.Point(0, 0);
-      this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(551, 63);
-      this.panel1.TabIndex = 1;
+      this.panelOptions.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+      this.panelOptions.Controls.Add(this.textBoxObjectBeingBrowsed);
+      this.panelOptions.Controls.Add(this.checkBoxShowNonPublicMembers);
+      this.panelOptions.Controls.Add(this.checkBoxShowStaticMembers);
+      this.panelOptions.Controls.Add(this.checkBoxShowDataTypes);
+      this.panelOptions.Dock = System.Windows.Forms.DockStyle.Top;
+      this.panelOptions.Location = new System.Drawing.Point(0, 0);
+      this.panelOptions.Name = "panelOptions";
+      this.panelOptions.Size = new System.Drawing.Size(684, 45);
+      this.panelOptions.TabIndex = 1;
       // 
       // textBoxObjectBeingBrowsed
       // 
       this.textBoxObjectBeingBrowsed.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.textBoxObjectBeingBrowsed.Location = new System.Drawing.Point(0, 43);
+      this.textBoxObjectBeingBrowsed.Location = new System.Drawing.Point(0, 25);
       this.textBoxObjectBeingBrowsed.Name = "textBoxObjectBeingBrowsed";
-      this.textBoxObjectBeingBrowsed.Size = new System.Drawing.Size(551, 20);
+      this.textBoxObjectBeingBrowsed.ReadOnly = true;
+      this.textBoxObjectBeingBrowsed.Size = new System.Drawing.Size(684, 20);
       this.textBoxObjectBeingBrowsed.TabIndex = 3;
       // 
       // checkBoxShowNonPublicMembers
@@ -296,6 +276,20 @@
       this.checkBoxShowDataTypes.UseVisualStyleBackColor = true;
       this.checkBoxShowDataTypes.CheckedChanged += new System.EventHandler(this.checkBoxShowDataTypes_CheckedChanged);
       // 
+      // gridDataEditor
+      // 
+      this.gridDataEditor.DataMember = "";
+      this.gridDataEditor.DataSource = null;
+      this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.gridDataEditor.EnsureFilteringEnabled = false;
+      this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
+      this.gridDataEditor.MembersToExclude = null;
+      this.gridDataEditor.Name = "gridDataEditor";
+      this.gridDataEditor.PageSize = ((ushort)(20));
+      this.gridDataEditor.Readonly = false;
+      this.gridDataEditor.Size = new System.Drawing.Size(684, 357);
+      this.gridDataEditor.TabIndex = 3;
+      // 
       // dataGridViewTextBoxColumn11
       // 
       this.dataGridViewTextBoxColumn11.DataPropertyName = "CurrentValue";
@@ -325,63 +319,39 @@
       // toolStripStatusLabelInstance
       // 
       this.toolStripStatusLabelInstance.Name = "toolStripStatusLabelInstance";
-      this.toolStripStatusLabelInstance.Size = new System.Drawing.Size(49, 17);
+      this.toolStripStatusLabelInstance.Size = new System.Drawing.Size(51, 17);
       this.toolStripStatusLabelInstance.Text = "Instance";
       // 
       // toolStripStatusLabelSelectePath
       // 
       this.toolStripStatusLabelSelectePath.Name = "toolStripStatusLabelSelectePath";
-      this.toolStripStatusLabelSelectePath.Size = new System.Drawing.Size(109, 17);
-      this.toolStripStatusLabelSelectePath.Text = "toolStripStatusLabel1";
-      // 
-      // propertyGrid1
-      // 
-      this.propertyGrid1.CommandsActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
-      this.propertyGrid1.CommandsDisabledLinkColor = System.Drawing.SystemColors.ControlDark;
-      this.propertyGrid1.CommandsLinkColor = System.Drawing.SystemColors.ActiveCaption;
-      this.propertyGrid1.ContextMenuStrip = this.contextMenuStrip1;
-      this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.propertyGrid1.DrawFlat = true;
-      this.propertyGrid1.Location = new System.Drawing.Point(0, 63);
-      this.propertyGrid1.Name = "propertyGrid1";
-      this.propertyGrid1.Size = new System.Drawing.Size(551, 191);
-      this.propertyGrid1.TabIndex = 0;
-      this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
-      // 
-      // gridDataEditor
-      // 
-      this.gridDataEditor.DataMember = "";
-      this.gridDataEditor.DataSource = null;
-      this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
-      this.gridDataEditor.Name = "gridDataEditor";
-      this.gridDataEditor.PageSize = ((ushort)(20));
-      this.gridDataEditor.Size = new System.Drawing.Size(551, 250);
-      this.gridDataEditor.TabIndex = 3;
+      this.toolStripStatusLabelSelectePath.Size = new System.Drawing.Size(68, 17);
+      this.toolStripStatusLabelSelectePath.Text = "SelectePath";
       // 
       // FrmEntityViewer
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(1031, 562);
-      this.Controls.Add(this.tabControl1);
       this.Controls.Add(this.statusStrip1);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "FrmEntityViewer";
       this.Tag = "False";
       this.Text = "Entity Viewer";
       this.Load += new System.EventHandler(this.FrmEntityViewer_Load);
-      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmEntityViewer_FormClosing);
+      this.Controls.SetChildIndex(this.statusStrip1, 0);
+      this.Controls.SetChildIndex(this.splitContainerVertical, 0);
+      this.splitContainerVertical.Panel1.ResumeLayout(false);
+      this.splitContainerVertical.Panel2.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).EndInit();
+      this.splitContainerVertical.ResumeLayout(false);
+      this.splitContainerHorizontal.Panel1.ResumeLayout(false);
+      this.splitContainerHorizontal.Panel2.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainerHorizontal)).EndInit();
+      this.splitContainerHorizontal.ResumeLayout(false);
       this.contextMenuStrip1.ResumeLayout(false);
-      this.tabControl1.ResumeLayout(false);
-      this.tabPageBrowser.ResumeLayout(false);
-      this.splitContainer1.Panel1.ResumeLayout(false);
-      this.splitContainer1.Panel2.ResumeLayout(false);
-      this.splitContainer1.ResumeLayout(false);
-      this.splitContainerValues.Panel1.ResumeLayout(false);
-      this.splitContainerValues.Panel2.ResumeLayout(false);
-      this.splitContainerValues.ResumeLayout(false);
-      this.panel1.ResumeLayout(false);
-      this.panel1.PerformLayout();
+      this.panelOptions.ResumeLayout(false);
+      this.panelOptions.PerformLayout();
       this.statusStrip1.ResumeLayout(false);
       this.statusStrip1.PerformLayout();
       this.ResumeLayout(false);
@@ -391,12 +361,10 @@
 
     #endregion
 
-    private System.Windows.Forms.SplitContainer splitContainer1;
-    private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
     private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-    private System.Windows.Forms.ToolStripMenuItem selectObjectToolStripMenuItem;
-    private System.Windows.Forms.SplitContainer splitContainerValues;
+		private System.Windows.Forms.ToolStripMenuItem selectObjectToolStripMenuItem;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
@@ -404,16 +372,14 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-    private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-    private System.Windows.Forms.TabControl tabControl1;
-    private System.Windows.Forms.TabPage tabPageBrowser;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
     private System.Windows.Forms.StatusStrip statusStrip1;
     private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelInstance;
     private System.Windows.Forms.ToolStripMenuItem copyObjectRefToolStripMenuItem;
     private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelSelectePath;
-    private System.Windows.Forms.Panel panel1;
+    private System.Windows.Forms.Panel panelOptions;
     private System.Windows.Forms.CheckBox checkBoxShowDataTypes;
     private System.Windows.Forms.CheckBox checkBoxShowNonPublicMembers;
     private System.Windows.Forms.CheckBox checkBoxShowStaticMembers;
@@ -421,6 +387,7 @@
     protected AW.Winforms.Helpers.PropGridEx.PropertyGridEx propertyGrid1;
     protected sliver.Windows.Forms.StateBrowser ObjectBrowser;
     protected AW.Winforms.Helpers.Controls.GridDataEditor gridDataEditor;
+    private System.Windows.Forms.ToolTip toolTip1;
 
   }
 }

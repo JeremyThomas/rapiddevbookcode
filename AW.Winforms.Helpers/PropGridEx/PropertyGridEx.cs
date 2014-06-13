@@ -8,8 +8,8 @@ using AW.Winforms.Helpers.Hosting;
 namespace AW.Winforms.Helpers.PropGridEx
 {
   /// <summary>
-  /// Special PropertyGrid that has an aditional TabPage for the instance members
-  /// and leverages IPropertyValueUIService 
+  ///   Special PropertyGrid that has an aditional TabPage for the instance members
+  ///   and leverages IPropertyValueUIService
   /// </summary>
   public class PropertyGridEx : PropertyGrid
   {
@@ -18,7 +18,7 @@ namespace AW.Winforms.Helpers.PropGridEx
     private DummySite _dummySite;
 
     /// <summary>
-    /// Default constructor
+    ///   Default constructor
     /// </summary>
     public PropertyGridEx()
       : this(null)
@@ -26,10 +26,10 @@ namespace AW.Winforms.Helpers.PropGridEx
     }
 
     /// <summary>
-    /// Use this constructor if you already have an ServiceProvider infrastructure
+    ///   Use this constructor if you already have an ServiceProvider infrastructure
     /// </summary>
     /// <param name="serviceProvider">a ServiceProvider</param>
-    public PropertyGridEx(IServiceProvider serviceProvider)
+    private PropertyGridEx(IServiceProvider serviceProvider)
     {
       DrawFlat = true;
       // add the RawPage now and for ever (static)
@@ -39,10 +39,10 @@ namespace AW.Winforms.Helpers.PropGridEx
     }
 
     /// <summary>
-    /// Set/Get the current ServiceProvider
+    ///   Set/Get the current ServiceProvider
     /// </summary>
     /// <param name="serviceProvider">a ServiceProvider</param>
-    public void SetServiceProvider(IServiceProvider serviceProvider)
+    private void SetServiceProvider(IServiceProvider serviceProvider)
     {
       // no valid service provider
       if (serviceProvider == null)
@@ -50,8 +50,8 @@ namespace AW.Winforms.Helpers.PropGridEx
         // create own
         if (_privateContainer == null)
           _privateContainer = new ServiceContainer();
-          // add our own IPropertyValueUIService
-          //this.m_PrivateContainer.AddService(typeof(IPropertyValueUIService), new AW.Winforms.Helpers.Hosting.PropertyValueUIService());
+        // add our own IPropertyValueUIService
+        //this.m_PrivateContainer.AddService(typeof(IPropertyValueUIService), new AW.Winforms.Helpers.Hosting.PropertyValueUIService());
         _serviceProvider = _privateContainer;
       }
       else
@@ -66,8 +66,8 @@ namespace AW.Winforms.Helpers.PropGridEx
     #region Stuff needed for the PropView to have access to our IServiceProvider
 
     /// <summary>
-    /// Strange enough, the proeprtygrid does not use it own GetService method (in some cases it does) 
-    /// to access the IPropertyValueUIService but the one of its Site !?
+    ///   Strange enough, the proeprtygrid does not use it own GetService method (in some cases it does)
+    ///   to access the IPropertyValueUIService but the one of its Site !?
     /// </summary>
     protected override object GetService(Type service)
     {
@@ -104,7 +104,7 @@ namespace AW.Winforms.Helpers.PropGridEx
       set { DrawFlatToolbar = value; }
     }
 
-    public void ShowEvents(bool show)
+    private void ShowEvents(bool show)
     {
       if (show)
         PropertyTabs.AddTabType(typeof (EventsTab));
@@ -112,7 +112,7 @@ namespace AW.Winforms.Helpers.PropGridEx
     }
 
     /// <summary>
-    /// Refreshes the selected object as the property tab goes invisible is SelectedObject is set in the forms constructor.
+    ///   Refreshes the selected object as the property tab goes invisible is SelectedObject is set in the forms constructor.
     /// </summary>
     public void RefreshSelectedObject()
     {

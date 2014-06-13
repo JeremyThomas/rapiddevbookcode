@@ -19,31 +19,34 @@
 //					 into List<string> and List<Rule>
 // - March 2nd, 2009 JT / AW: Namespace changed to reflect it's new location
 // -------------------------------------------------------------------------------
-using System.Text.RegularExpressions;
+
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace AW.Winforms.Helpers.Misc
 {
   /// <summary>
-  /// The Inflector class transforms words from one 
-  /// form to another. For example, from singular to plural.
+  ///   The Inflector class transforms words from one
+  ///   form to another. For example, from singular to plural.
   /// </summary>
   public class Inflector
   {
-
     #region Private class declarations
+
     /// <summary>
-    /// Rule class for defining a transformation rule
+    ///   Rule class for defining a transformation rule
     /// </summary>
     private class Rule
     {
       #region Class Member Declarations
+
       private readonly Regex _regexToUse;
       private readonly string _replacement;
+
       #endregion
 
       /// <summary>
-      /// Initializes a new instance of the <see cref="Rule"/> class.
+      ///   Initializes a new instance of the <see cref="Rule" /> class.
       /// </summary>
       /// <param name="pattern">The pattern.</param>
       /// <param name="replacement">The replacement.</param>
@@ -55,13 +58,13 @@ namespace AW.Winforms.Helpers.Misc
       }
 
       /// <summary>
-      /// Applies the specified word.
+      ///   Applies the specified word.
       /// </summary>
       /// <param name="word">The word.</param>
       /// <returns></returns>
       public string Apply(string word)
       {
-        if(!_regexToUse.IsMatch(word))
+        if (!_regexToUse.IsMatch(word))
         {
           return null;
         }
@@ -69,18 +72,20 @@ namespace AW.Winforms.Helpers.Misc
         return _regexToUse.Replace(word, _replacement);
       }
     }
+
     #endregion
 
     #region Statics
+
     // [FB] made rule list generic, so performance is higher as rule lists are checked a lot
     private static readonly List<Rule> _plurals = new List<Rule>();
     private static readonly List<Rule> _singulars = new List<Rule>();
     private static readonly List<string> _uncountables = new List<string>();
+
     #endregion
 
-
     /// <summary>
-    /// Initializes a new instance of the <see cref="Inflector"/> class.
+    ///   Initializes a new instance of the <see cref="Inflector" /> class.
     /// </summary>
     private Inflector()
     {
@@ -88,7 +93,7 @@ namespace AW.Winforms.Helpers.Misc
 
 
     /// <summary>
-    /// Initializes the <see cref="Inflector"/> class.
+    ///   Initializes the <see cref="Inflector" /> class.
     /// </summary>
     static Inflector()
     {
@@ -153,10 +158,10 @@ namespace AW.Winforms.Helpers.Misc
 
 
     /// <summary>
-    /// Return the plural of a word.
+    ///   Return the plural of a word.
     /// </summary>
     /// <param name="word">The singular form</param>
-    /// <returns>The plural form of <paramref name="word"/></returns>
+    /// <returns>The plural form of <paramref name="word" /></returns>
     public static string Pluralize(string word)
     {
       return ApplyRules(_plurals, word);
@@ -164,10 +169,10 @@ namespace AW.Winforms.Helpers.Misc
 
 
     /// <summary>
-    /// Return the singular of a word.
+    ///   Return the singular of a word.
     /// </summary>
     /// <param name="word">The plural form</param>
-    /// <returns>The singular form of <paramref name="word"/></returns>
+    /// <returns>The singular form of <paramref name="word" /></returns>
     public static string Singularize(string word)
     {
       return ApplyRules(_singulars, word);
@@ -175,10 +180,10 @@ namespace AW.Winforms.Helpers.Misc
 
 
     /// <summary>
-    /// Capitalizes a word.
+    ///   Capitalizes a word.
     /// </summary>
     /// <param name="word">The word to be capitalized.</param>
-    /// <returns><paramref name="word"/> capitalized.</returns>
+    /// <returns><paramref name="word" /> capitalized.</returns>
     public static string Capitalize(string word)
     {
       return word.Substring(0, 1).ToUpper() + word.Substring(1).ToLower();
@@ -186,7 +191,7 @@ namespace AW.Winforms.Helpers.Misc
 
 
     /// <summary>
-    /// Adds the passed in irregular form
+    ///   Adds the passed in irregular form
     /// </summary>
     /// <param name="singular">The singular.</param>
     /// <param name="plural">The plural.</param>
@@ -198,7 +203,7 @@ namespace AW.Winforms.Helpers.Misc
 
 
     /// <summary>
-    /// Adds the passed in uncountable form
+    ///   Adds the passed in uncountable form
     /// </summary>
     /// <param name="word">The word.</param>
     private static void AddUncountable(string word)
@@ -208,7 +213,7 @@ namespace AW.Winforms.Helpers.Misc
 
 
     /// <summary>
-    /// Adds the plural conversion rule with the replacement to use.
+    ///   Adds the plural conversion rule with the replacement to use.
     /// </summary>
     /// <param name="rule">The rule.</param>
     /// <param name="replacement">The replacement.</param>
@@ -219,7 +224,7 @@ namespace AW.Winforms.Helpers.Misc
 
 
     /// <summary>
-    /// Adds the singular conversion rule with the replacement to use.
+    ///   Adds the singular conversion rule with the replacement to use.
     /// </summary>
     /// <param name="rule">The rule.</param>
     /// <param name="replacement">The replacement.</param>
@@ -230,20 +235,20 @@ namespace AW.Winforms.Helpers.Misc
 
 
     /// <summary>
-    /// Applies the rules passed in to the word passed in
+    ///   Applies the rules passed in to the word passed in
     /// </summary>
     /// <param name="rules">The rules.</param>
     /// <param name="word">The word.</param>
     /// <returns>Result of the rule application on the word passed in.</returns>
     private static string ApplyRules(IList<Rule> rules, string word)
     {
-      string result = word;
+      var result = word;
 
       if (!_uncountables.Contains(word.ToLower()))
       {
-        for (int i = rules.Count - 1; i >= 0; i--)
+        for (var i = rules.Count - 1; i >= 0; i--)
         {
-          Rule rule = rules[i];
+          var rule = rules[i];
 
           if ((result = rule.Apply(word)) != null)
           {
@@ -254,11 +259,7 @@ namespace AW.Winforms.Helpers.Misc
 
       // [FB] Fixed an issue in the Castle Inflector version where it would return null if no rule applied. This isn't what
       // callcode expects, so we in that case return word again.
-      if(result == null)
-      {
-        result = word;
-      }
-      return result;
+      return result ?? (word);
     }
   }
 }

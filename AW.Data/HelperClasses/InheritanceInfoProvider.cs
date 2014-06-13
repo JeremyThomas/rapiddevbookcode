@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
@@ -14,29 +14,19 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.HelperClasses
 {
-	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	
-	/// <summary>
-	/// Singleton implementation of the inheritanceInfoProvider. This class is the singleton wrapper through which the actual instance is retrieved.
-	/// </summary>
+	/// <summary>Singleton implementation of the inheritanceInfoProvider. This class is the singleton wrapper through which the actual instance is retrieved.</summary>
 	/// <remarks>It uses a single instance of an internal class. The access isn't marked with locks as the InheritanceInfoProviderBase class is threadsafe.</remarks>
-	public sealed class InheritanceInfoProviderSingleton
+	public static class InheritanceInfoProviderSingleton
 	{
 		#region Class Member Declarations
 		private static readonly IInheritanceInfoProvider _providerInstance = new InheritanceInfoProviderCore();
 		#endregion
 		
-		/// <summary>private ctor to prevent instances of this class.</summary>
-		private InheritanceInfoProviderSingleton()
-		{
-		}
-
 		/// <summary>Dummy static constructor to make sure threadsafe initialization is performed.</summary>
-		static InheritanceInfoProviderSingleton()
-		{
-		}
+		static InheritanceInfoProviderSingleton() { }
 
 		/// <summary>Gets the singleton instance of the InheritanceInfoProviderCore</summary>
 		/// <returns>Instance of the InheritanceInfoProvider.</returns>
@@ -52,7 +42,6 @@ namespace AW.Data.HelperClasses
 		#endregion
 	}
 
-
 	/// <summary>Actual implementation of the InheritanceInfoProvider. Used by singleton wrapper.</summary>
 	internal class InheritanceInfoProviderCore : InheritanceInfoProviderBase
 	{
@@ -65,6 +54,15 @@ namespace AW.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
+			this.AddEntityInfo("EmployeeEntity", string.Empty, new EmployeeRelations(), new EmployeeEntityFactory());
+			this.AddEntityInfo("PurchaseOrderHistoryEntity", "TransactionHistoryEntity", new PurchaseOrderHistoryEntityFactory(), (int)PurchaseOrderHistoryFieldIndex.TransactionType, "P");
+			this.AddEntityInfo("SalesOrderHistoryEntity", "TransactionHistoryEntity", new SalesOrderHistoryEntityFactory(), (int)SalesOrderHistoryFieldIndex.TransactionType, "S");
+			this.AddEntityInfo("TransactionHistoryEntity", string.Empty, new TransactionHistoryEntityFactory(), (int)TransactionHistoryFieldIndex.TransactionType, "A");
+			this.AddEntityInfo("WorkOrderHistoryEntity", "TransactionHistoryEntity", new WorkOrderHistoryEntityFactory(), (int)WorkOrderHistoryFieldIndex.TransactionType, "W");
+			this.AddEntityInfo("CustomerEntity", string.Empty, new CustomerRelations(), new CustomerEntityFactory());
+			this.AddEntityInfo("IndividualEntity", "CustomerEntity", new IndividualRelations(), new IndividualEntityFactory(), 1-1);
+			this.AddEntityInfo("SalesPersonEntity", "EmployeeEntity", new SalesPersonRelations(), new SalesPersonEntityFactory(), 1-1);
+			this.AddEntityInfo("StoreEntity", "CustomerEntity", new StoreRelations(), new StoreEntityFactory(), 1-1);
 			base.BuildHierarchyInfoStore();
 		}
 

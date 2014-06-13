@@ -7,12 +7,7 @@ namespace AW.Winforms.Helpers.PropGridEx
 {
   public abstract class ListItemAbstractDescriptor : PropertyDescriptor
   {
-    protected ListItemAbstractDescriptor(string name)
-      : this(name, null)
-    {
-    }
-
-    protected ListItemAbstractDescriptor(string name, Attribute[] attrs) : base(name, attrs)
+    protected ListItemAbstractDescriptor(string name, Attribute[] attrs = null) : base(name, attrs)
     {
     }
 
@@ -112,7 +107,7 @@ namespace AW.Winforms.Helpers.PropGridEx
 
     public override Type ComponentType
     {
-      get { return typeof(IList); }
+      get { return typeof (IList); }
     }
 
     public override object GetValue(object component)

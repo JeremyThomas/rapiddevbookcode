@@ -87,6 +87,13 @@ namespace JesseJohnston
         // If the property is of string type, create a predicate that does regular expression matching.  Otherwise create a predicate
         // that uses the default Comparer<T> where T is the property type.
         Predicate predicate = null;
+        if (node.Term.Operator == RelationalOperator.In)
+        {
+          var predicateType = typeof(InComparerPredicate<>).MakeGenericType(new[] { property.PropertyType });
+          var pred = Activator.CreateInstance(predicateType, property, propertyValue);
+          predicate = (Predicate)Delegate.CreateDelegate(typeof(Predicate), pred, predicateType.GetMethod("Matches"));
+        }
+        else
         if (property.PropertyType == typeof (string))
           predicate = new StringComparerPredicate(property, propertyValue, node.Term.Operator).Matches;
         else

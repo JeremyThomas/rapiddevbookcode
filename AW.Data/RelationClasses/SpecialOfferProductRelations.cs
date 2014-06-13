@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: SpecialOfferProduct. </summary>
+	/// <summary>Implements the relations factory for the entity: SpecialOfferProduct. </summary>
 	public partial class SpecialOfferProductRelations
 	{
 		/// <summary>CTor</summary>
@@ -30,8 +30,7 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.SalesOrderDetailEntityUsingSpecialOfferIDProductID);
-
+			toReturn.Add(this.SalesOrderDetailEntityUsingProductIDSpecialOfferID);
 			toReturn.Add(this.ProductEntityUsingProductID);
 			toReturn.Add(this.SpecialOfferEntityUsingSpecialOfferID);
 			return toReturn;
@@ -40,16 +39,16 @@ namespace AW.Data.RelationClasses
 		#region Class Property Declarations
 
 		/// <summary>Returns a new IEntityRelation object, between SpecialOfferProductEntity and SalesOrderDetailEntity over the 1:n relation they have, using the relation between the fields:
-		/// SpecialOfferProduct.SpecialOfferID - SalesOrderDetail.SpecialOfferID
 		/// SpecialOfferProduct.ProductID - SalesOrderDetail.ProductID
+		/// SpecialOfferProduct.SpecialOfferID - SalesOrderDetail.SpecialOfferID
 		/// </summary>
-		public virtual IEntityRelation SalesOrderDetailEntityUsingSpecialOfferIDProductID
+		public virtual IEntityRelation SalesOrderDetailEntityUsingProductIDSpecialOfferID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SalesOrderDetails" , true);
-				relation.AddEntityFieldPair(SpecialOfferProductFields.SpecialOfferID, SalesOrderDetailFields.SpecialOfferID);
 				relation.AddEntityFieldPair(SpecialOfferProductFields.ProductID, SalesOrderDetailFields.ProductID);
+				relation.AddEntityFieldPair(SpecialOfferProductFields.SpecialOfferID, SalesOrderDetailFields.SpecialOfferID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SpecialOfferProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderDetailEntity", false);
 				return relation;
@@ -85,16 +84,27 @@ namespace AW.Data.RelationClasses
 				return relation;
 			}
 		}
-
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticSpecialOfferProductRelations
+	{
+		internal static readonly IEntityRelation SalesOrderDetailEntityUsingProductIDSpecialOfferIDStatic = new SpecialOfferProductRelations().SalesOrderDetailEntityUsingProductIDSpecialOfferID;
+		internal static readonly IEntityRelation ProductEntityUsingProductIDStatic = new SpecialOfferProductRelations().ProductEntityUsingProductID;
+		internal static readonly IEntityRelation SpecialOfferEntityUsingSpecialOfferIDStatic = new SpecialOfferProductRelations().SpecialOfferEntityUsingSpecialOfferID;
+
+		/// <summary>CTor</summary>
+		static StaticSpecialOfferProductRelations()
+		{
+		}
 	}
 }

@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.IO;
-using System.Windows.Forms;
 using System.Linq;
-using AW.Winforms.Helpers.Properties;
+using System.Windows.Forms;
 
 namespace AW.Winforms.Helpers.QueryRunner
 {
-  public partial class FrmQueryRunner : Form
+  public partial class FrmQueryRunner : FrmPersistantLocation
   {
     private readonly Type[] _saveableTypes;
     public event Func<object, int> SaveFunction;
     public event Func<object, int> DeleteFunction;
+    private readonly SplitContainer[] _splitContainers;
 
+// ReSharper disable once MemberCanBePrivate.Global
     public FrmQueryRunner()
     {
       InitializeComponent();
-      AWHelper.SetWindowSizeAndLocation(this, Settings.Default.QueryRunnerSizeAndLocation);
+      _splitContainers = new[] {queryRunner1.splitContainerScript};
     }
 
     public FrmQueryRunner(Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
@@ -29,18 +29,14 @@ namespace AW.Winforms.Helpers.QueryRunner
       DeleteFunction += deleteFunction;
     }
 
-    private void FrmQueryRunner_FormClosing(object sender, FormClosingEventArgs e)
+    #region Overrides of FrmPersistantLocation
+
+    protected override SplitContainer[] Splitters
     {
-      Settings.Default.QueryRunnerSizeAndLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
+      get { return _splitContainers; }
     }
 
-    private void FrmQueryRunner_Load(object sender, EventArgs e)
-    {
-    }
-
-    private void contextMenuStripTab_Opening(object sender, CancelEventArgs e)
-    {
-    }
+    #endregion
 
     private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
     {
@@ -55,11 +51,11 @@ namespace AW.Winforms.Helpers.QueryRunner
       if (files != null) OpenFiles(files.Cast<string>());
     }
 
-    public void OpenFiles(IEnumerable<string> files)
-     {
-       foreach (var file in files)
-         DoFileOpen(file);
-     }
+    private void OpenFiles(IEnumerable<string> files)
+    {
+      foreach (var file in files)
+        DoFileOpen(file);
+    }
 
     public void DoFileOpen(string fileName)
     {
@@ -140,8 +136,8 @@ namespace AW.Winforms.Helpers.QueryRunner
     public StringCollection GetOpenFiles()
     {
       var t = from tabs in tabControl.TabPages.Cast<TabPage>()
-              where File.Exists(tabs.ToolTipText)
-              select tabs.ToolTipText;
+        where File.Exists(tabs.ToolTipText)
+        select tabs.ToolTipText;
       return CreateStringCollection(t);
     }
 

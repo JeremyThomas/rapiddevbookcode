@@ -133,7 +133,7 @@ namespace JesseJohnston
     private readonly Queue<EventArgs> eventQueue = new Queue<EventArgs>();
     private bool suppressUpdates;
     private int lockCount;
-    [NonSerialized] private PropertyComparerCollection propertyComparers;
+    private PropertyComparerCollection propertyComparers;
     [NonSerialized] private ListChangedEventHandler listChangedEvent;
     [NonSerialized] private AddingNewEventHandler addingNewEvent;
     [NonSerialized] private EventHandler sortedEvent;
@@ -1755,8 +1755,14 @@ namespace JesseJohnston
     /// <param name="args">The <see cref="System.ComponentModel.ListChangedEventArgs"/> instance containing the event data.</param>
     protected virtual void OnListChanged(ListChangedEventArgs args)
     {
-      if (listChangedEvent != null)
+      if (listChangedEvent == null) return;
+      try
+      {
         listChangedEvent(this, args);
+      }
+      catch (ArgumentOutOfRangeException)
+      {
+      }
     }
 
     /// <summary>
@@ -2141,9 +2147,11 @@ namespace JesseJohnston
         while (eventQueue.Count > 0)
         {
           var e = eventQueue.Dequeue();
-          if (e is ListChangedEventArgs)
+          var le = e as ListChangedEventArgs;
+          if (le != null)
           {
-            var le = (ListChangedEventArgs) e;
+            //if (le.NewIndex < 0 && le.OldIndex < 0)
+            //  return;
             OnBeforeListChanged(le);
             OnListChanged(le);
             OnAfterListChanged(le);

@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 
 namespace JesseJohnston
 {
   /// <summary>
-  /// A node in the filter expression tree.  A node may be a terminal expression (i.e. property name, value, and relational operator)
-  /// or a sub-tree containing a logical operator, left and right terms.
+  ///   A node in the filter expression tree.  A node may be a terminal expression (i.e. property name, value, and relational
+  ///   operator)
+  ///   or a sub-tree containing a logical operator, left and right terms.
   /// </summary>
   internal class FilterNode : IEnumerable<FilterNode>
   {
@@ -115,6 +117,7 @@ namespace JesseJohnston
       ResolvedNode
     }
 
+    [DebuggerDisplay("{term}")]
     private class Token
     {
       private readonly string term;
@@ -237,6 +240,8 @@ namespace JesseJohnston
         relationalOps.Add("<=", RelationalOperator.LessEqual);
         relationalOps.Add(">", RelationalOperator.Greater);
         relationalOps.Add(">=", RelationalOperator.GreaterEqual);
+        relationalOps.Add("IN", RelationalOperator.In);
+        relationalOps.Add("IS", RelationalOperator.Is);
 
         foreach (var op in relationalOps.Keys)
         {
@@ -254,19 +259,32 @@ namespace JesseJohnston
 
         // Split into tokens delimited by spaces, relational operators, and parentheses.  Remove extra spaces.
         var parts = ExtractTokens(expression,
-                                  new[] {' ', '<', '>', '=', '!', '(', ')'},
-                                  new[] {'<', '>', '=', '!', '(', ')'},
-                                  new[] {'\'', '"'});
+          new[] {' ', '<', '>', '=', '!', '(', ')', '[', ']', ','},
+          new[] {'<', '>', '=', '!', '(', ')', 'I', 'N', 'S'},
+          new[] {'\'', '"'});
 
         if (parts.Count == 0)
           throw new ArgumentException("expression");
 
         // Parse into tokens that are either operators, terms or a paren.
         Token prevToken = null;
+        Token prevRelationalToken = null;
         var parenCount = 0;
+        var skipnext = false;
 
         foreach (var part in parts)
         {
+          if (skipnext)
+          {
+            skipnext = false;
+            continue;
+          }
+
+          if (part == "Convert" || part == "System.String")
+          {
+            skipnext = true;
+            continue;
+          }
           Token t = null;
 
           // Because a condition could also be the rvalue of a relation (e.g. State = OR), evaluate as a condition
@@ -291,6 +309,7 @@ namespace JesseJohnston
                 if (prevToken == null || prevToken.Type != TokenType.Term)
                   throw new ArgumentException("An operator must be preceded by an expression term.", "expression");
                 t = new Token(pair.Value);
+                prevRelationalToken = t;
                 break;
               }
             }
@@ -305,14 +324,22 @@ namespace JesseJohnston
             }
             else if (part == ")")
             {
-              if (prevToken == null || (prevToken.Type != TokenType.Term && prevToken.Type != TokenType.CloseParen))
-                throw new ArgumentException("A closing paren must be preceded by an expression term or a closing paren.", "expression");
+              if (prevToken == null)
+                throw new ArgumentException("A closing paren must be preceded by an expression term or a closing or opening paren.", "expression");
+              if (prevToken.Type == TokenType.OpenParen)
+              {
+                tokens.Add(new Token(string.Empty)); //for () insert string.Empty
+              }
+              else
+              if (prevToken.Type != TokenType.Term && prevToken.Type != TokenType.CloseParen)
+                throw new ArgumentException("A closing paren must be preceded by an expression term or a closing or opening paren.", "expression");
               if (parenCount == 0)
                 throw new ArgumentException("Unbalanced parentheses.", "expression");
               parenCount--;
             }
             else if (prevToken != null && prevToken.Type != TokenType.Condition && prevToken.Type != TokenType.Relation && prevToken.Type != TokenType.OpenParen)
-              throw new ArgumentException("An expression term must be preceded by an operator or opening paren.", "expression");
+              if (prevRelationalToken == null || prevRelationalToken.Relation != RelationalOperator.In)
+                throw new ArgumentException("An expression term must be preceded by an operator or opening paren.", "expression");
 
             t = new Token(part);
           }
@@ -341,7 +368,7 @@ namespace JesseJohnston
           throw new ArgumentException("An expression must contain at least two terms and a relational operator.", "expression");
       }
 
-      private ICollection<string> ExtractTokens(string expression, char[] delimiters, char[] delimitersIncludedAsTokens, char[] quotes)
+      private static ICollection<string> ExtractTokens(string expression, IEnumerable<char> delimiters, IEnumerable<char> delimitersIncludedAsTokens, IEnumerable<char> quotes)
       {
         var tokens = new List<string>();
         var delims = new List<char>(delimiters); // delimiters
@@ -352,9 +379,13 @@ namespace JesseJohnston
         var tokenEnd = 0;
         var inQuote = false;
         var prevQuote = ' ';
+        var escapingQuote = false;
 
         // Remove leading and trailing whitespace.
         expression = expression.Trim();
+        // Remove brackets around entire expression
+        //while (expression[expression.Length - 1] == ')' && expression[0] == '(')
+        //  expression = expression.Remove(expression.Length - 1).Remove(0, 1);
 
         for (var i = 0; i < expression.Length; i++)
         {
@@ -365,21 +396,51 @@ namespace JesseJohnston
             if (inQuote && c == prevQuote)
               tokens.Add(expression.Substring(tokenStart, i - tokenStart));
             else if (!delims.Contains(c) || delimTokens.Contains(c))
-              tokens.Add(expression.Substring(tokenStart));
+              if (tokenStart == i || !delims.Contains(c))
+                tokens.Add(expression.Substring(tokenStart));
+              else
+              {
+                tokens.Add(expression.Substring(tokenStart, i - tokenStart));
+                tokens.Add(c.ToString());
+              }
           }
           else if (quoteChars.Contains(c)) // Quote found
             if (inQuote)
             {
               if (c == prevQuote)
               {
-                inQuote = false;
+                if (escapingQuote)
+                  escapingQuote = false;
+                else
+                {
+                  if (i < expression.Length - 1)
+                  {
+                    var nextc = expression[i + 1];
+                    if (nextc == c)
+                      escapingQuote = true;
+                    else
+                      inQuote = false;
+                  }
+                  else
+                    inQuote = false;
+                  if (!inQuote)
+                  {
+                    tokenEnd = i;
 
-                tokenEnd = i;
+                    if (tokenEnd > tokenStart) // Non-empty?{
+                    {
+                      var substring = expression.Substring(tokenStart, tokenEnd - tokenStart);
+                      foreach (var quote in quotes)
+                      {
+                        var quoteAsString = quote.ToString();
+                        substring = substring.Replace(quoteAsString + quoteAsString, quoteAsString);
+                      }
+                      tokens.Add(substring);
+                    }
 
-                if (tokenEnd > tokenStart) // Non-empty?
-                  tokens.Add(expression.Substring(tokenStart, tokenEnd - tokenStart));
-
-                tokenStart = i + 1; // Start parsing the next token
+                    tokenStart = i + 1; // Start parsing the next token
+                  }
+                }
               }
             }
             else
@@ -478,10 +539,10 @@ namespace JesseJohnston
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="FilterNode"/> class that is a terminal node.
+    ///   Initializes a new instance of the <see cref="FilterNode" /> class that is a terminal node.
     /// </summary>
     /// <remarks>
-    /// A terminal node is a relational expression, and contains no child nodes.
+    ///   A terminal node is a relational expression, and contains no child nodes.
     /// </remarks>
     /// <param name="term">The expression term.</param>
     public FilterNode(RelationalExpression term)
@@ -492,7 +553,7 @@ namespace JesseJohnston
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="FilterNode"/> class that is not a terminal node.
+    ///   Initializes a new instance of the <see cref="FilterNode" /> class that is not a terminal node.
     /// </summary>
     /// <param name="left">The left child node.</param>
     /// <param name="right">The right node.</param>
@@ -512,7 +573,7 @@ namespace JesseJohnston
     }
 
     /// <summary>
-    /// Parses the specified text into a binary expression tree.
+    ///   Parses the specified text into a binary expression tree.
     /// </summary>
     /// <param name="expression">The expression text to parse.</param>
     /// <returns></returns>
@@ -535,23 +596,65 @@ namespace JesseJohnston
 
         if (evaluationIndex > -1)
         {
-          var expr = new RelationalExpression(tokens[evaluationIndex - 1].Term,
-                                              tokens[evaluationIndex + 1].Term,
-                                              tokens[evaluationIndex].Relation);
-          tokens.RemoveAt(evaluationIndex - 1);
-          tokens.RemoveAt(evaluationIndex - 1);
-          tokens.RemoveAt(evaluationIndex - 1);
-
-          tokens.Insert(evaluationIndex - 1, new Token(expr));
-
-          // Remove parentheses surrounding a resolved expression.
-          if (evaluationIndex - 2 > -1 && tokens[evaluationIndex - 2].Type == TokenType.OpenParen &&
-              evaluationIndex < tokens.Count && tokens[evaluationIndex].Type == TokenType.CloseParen)
+          var relationalOperator = tokens[evaluationIndex].Relation;
+          var index = evaluationIndex - 1;
+          if (relationalOperator == RelationalOperator.In)
           {
-            // New resolved expression is now at evaluationIndex - 1.
-            tokens.RemoveAt(evaluationIndex - 2);
-            // New resolved expression is now at evaluationIndex - 2.
-            tokens.RemoveAt(evaluationIndex - 1);
+            var numValues = 0;
+            var value = "";
+            for (var i = evaluationIndex + 2; i < tokens.Count; i++)
+            {
+              if (tokens[i].Type == TokenType.CloseParen)
+                break;
+              numValues += 1;
+              value = value + "," + ObjectListViewHelper.QuoteStringForCsvIfNeed(ObjectListViewHelper.UnQuoteStringFromAdvgIfNeed( tokens[i].Term));
+            }
+
+            var expr = new RelationalExpression(tokens[index].Term,
+              value.Trim(','),
+              relationalOperator);
+            tokens.RemoveAt(index);
+            tokens.RemoveAt(index);
+            tokens.RemoveAt(index);
+            tokens.RemoveAt(index);
+            for (var i = 0; i < numValues; i++)
+            {
+              if (index >= 0)
+                tokens.RemoveAt(index);
+            }
+
+            tokens.Insert(index, new Token(expr));
+
+            // Remove parentheses surrounding a resolved expression.
+            if (evaluationIndex - 2 > -1 && tokens[evaluationIndex - 2].Type == TokenType.OpenParen &&
+                evaluationIndex < tokens.Count && tokens[evaluationIndex].Type == TokenType.CloseParen)
+            {
+              // New resolved expression is now at evaluationIndex - 1.
+              tokens.RemoveAt(evaluationIndex - 2);
+              // New resolved expression is now at evaluationIndex - 2.
+              tokens.RemoveAt(index);
+            }
+          }
+          else
+          {
+            var expr = new RelationalExpression(tokens[index].Term,
+              tokens[evaluationIndex + 1].Term,
+              relationalOperator);
+            tokens.RemoveAt(index);
+            tokens.RemoveAt(index);
+            tokens.RemoveAt(index);
+
+            tokens.Insert(index, new Token(expr));
+
+            // Remove parentheses surrounding a resolved expression.
+            if (evaluationIndex - 2 > -1 && tokens[evaluationIndex - 2].Type == TokenType.OpenParen &&
+                evaluationIndex < tokens.Count && tokens[evaluationIndex].Type == TokenType.CloseParen)
+            {
+              // New resolved expression is now at evaluationIndex - 1.
+              tokens.RemoveAt(evaluationIndex - 2);
+              // New resolved expression is now at evaluationIndex - 2.
+              tokens.RemoveAt(index);
+            }
           }
         }
         else
@@ -640,7 +743,7 @@ namespace JesseJohnston
     }
 
     /// <summary>
-    /// Evaluates the current node and it's child nodes.
+    ///   Evaluates the current node and it's child nodes.
     /// </summary>
     /// <param name="evaluator">The delegate used to evaluate terminal nodes.</param>
     /// <returns>True if the current node and it's children evaluate to true; false otherwise.</returns>
@@ -684,7 +787,7 @@ namespace JesseJohnston
     }
 
     /// <summary>
-    /// Resets the evaluation status for each node in the expression tree, so that it can be re-evaluated.
+    ///   Resets the evaluation status for each node in the expression tree, so that it can be re-evaluated.
     /// </summary>
     public void Reset()
     {

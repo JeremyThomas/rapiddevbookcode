@@ -4,7 +4,7 @@ using System.Collections;
 namespace AW.Winforms.Helpers.PropGridEx
 {
   /// <summary>
-  /// PropertyDescriptor for all items in an IDictionary
+  ///   PropertyDescriptor for all items in an IDictionary
   /// </summary>
   public class DictionaryItemMemberDescriptor : ListItemAbstractDescriptor
   {

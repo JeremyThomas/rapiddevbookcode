@@ -1,29 +1,26 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+using AW.Winforms.Helpers;
 
 namespace AW.Win
 {
- 	public delegate void CancelButtonEventHandler(
- 		object sender, 
- 		CancelEventArgs e);
-    public partial class frmStatusBar : Form
+  public delegate void CancelButtonEventHandler(object sender, CancelEventArgs e);
+
+  public partial class FrmStatusBar : FrmPersistantLocation
+  {
+    public event CancelButtonEventHandler CancelButtonClicked;
+
+    public FrmStatusBar()
     {
-        public event CancelButtonEventHandler CancelButtonClicked;
-        public frmStatusBar()
-        {
-            InitializeComponent();
-        }
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            btnCancel.Enabled = false;
-      		CancelEventArgs eventarg = new CancelEventArgs(true);
-			CancelButtonClicked(sender, eventarg);
-			this.Close();
-        }
+      InitializeComponent();
     }
+
+    private void btnCancel_Click(object sender, EventArgs e)
+    {
+      btnCancel.Enabled = false;
+      var eventarg = new CancelEventArgs(true);
+      CancelButtonClicked(sender, eventarg);
+      Close();
+    }
+  }
 }

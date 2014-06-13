@@ -4,8 +4,8 @@ using System.ComponentModel;
 namespace AW.Winforms.Helpers.Hosting
 {
   /// <summary>
-  /// Dummy site. Used by the PropertyGridEx to have a site with a valid
-  /// ServiceProvider
+  ///   Dummy site. Used by the PropertyGridEx to have a site with a valid
+  ///   ServiceProvider
   /// </summary>
   internal class DummySite : ISite
   {
@@ -13,12 +13,7 @@ namespace AW.Winforms.Helpers.Hosting
     private readonly Container m_Container;
     private IServiceProvider m_ServiceProvider;
 
-    public DummySite(IComponent component, IServiceProvider serviceProvider)
-      : this(component, serviceProvider, "DummySite")
-    {
-    }
-
-    public DummySite(IComponent component, IServiceProvider serviceProvider, string name)
+    public DummySite(IComponent component, IServiceProvider serviceProvider, string name = "DummySite")
     {
       m_Component = component;
       m_Container = new Container();

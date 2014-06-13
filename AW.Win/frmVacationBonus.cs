@@ -1,12 +1,11 @@
 using System;
-using System.Windows.Forms;
+using System.Globalization;
 using AW.Data.EntityClasses;
-using AW.Win.Properties;
 using AW.Winforms.Helpers;
 
 namespace AW.Win
 {
-  public partial class FrmVacationBonus : Form
+  public partial class FrmVacationBonus : FrmPersistantLocation
   {
     public FrmVacationBonus()
     {
@@ -18,17 +17,7 @@ namespace AW.Win
       lblResult.Text = EmployeeEntity.AddBonusVacationHours(
         dtpHireDate.Value,
         Convert.ToInt32(nudSalariedHours.Value),
-        Convert.ToInt32(nudUnsalariedHours.Value)).ToString();
-    }
-
-    private void frmVacationBonus_Load(object sender, EventArgs e)
-    {
-      AWHelper.SetWindowSizeAndLocation(this, Settings.Default.VacationSizeLocation);
-    }
-
-    private void frmVacationBonus_FormClosing(object sender, FormClosingEventArgs e)
-    {
-      Settings.Default.VacationSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
+        Convert.ToInt32(nudUnsalariedHours.Value)).ToString(CultureInfo.InvariantCulture);
     }
   }
 }

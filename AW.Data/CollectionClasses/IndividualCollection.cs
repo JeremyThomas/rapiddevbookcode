@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
@@ -20,7 +20,6 @@ using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Data.DaoClasses;
 using AW.Data.HelperClasses;
-
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.CollectionClasses
@@ -40,7 +39,7 @@ namespace AW.Data.CollectionClasses
 
 		/// <summary> CTor</summary>
 		/// <param name="initialContents">The initial contents of this collection.</param>
-		public IndividualCollection(IList<IndividualEntity> initialContents):base(new IndividualEntityFactory())
+		public IndividualCollection(IEnumerable<IndividualEntity> initialContents):base(new IndividualEntityFactory())
 		{
 			AddRange(initialContents);
 		}
@@ -62,80 +61,83 @@ namespace AW.Data.CollectionClasses
 		/// <summary> Retrieves in this IndividualCollection object all IndividualEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity instance to use as a filter for the IndividualEntity objects to return</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the IndividualEntity objects to return</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity contactInstance)
+		public bool GetMultiManyToOne(IEntity contactInstance, IEntity salesTerritoryInstance)
 		{
-			return GetMultiManyToOne(contactInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, null, 0, 0);
+			return GetMultiManyToOne(contactInstance, salesTerritoryInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, null, 0, 0);
 		}
 
 		/// <summary> Retrieves in this IndividualCollection object all IndividualEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity instance to use as a filter for the IndividualEntity objects to return</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the IndividualEntity objects to return</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity contactInstance, IPredicateExpression filter)
+		public bool GetMultiManyToOne(IEntity contactInstance, IEntity salesTerritoryInstance, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(contactInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, filter, 0, 0);
+			return GetMultiManyToOne(contactInstance, salesTerritoryInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this IndividualCollection object all IndividualEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity instance to use as a filter for the IndividualEntity objects to return</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the IndividualEntity objects to return</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity contactInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter)
+		public bool GetMultiManyToOne(IEntity contactInstance, IEntity salesTerritoryInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(contactInstance, maxNumberOfItemsToReturn, sortClauses, filter, 0, 0);
+			return GetMultiManyToOne(contactInstance, salesTerritoryInstance, maxNumberOfItemsToReturn, sortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this IndividualCollection object all IndividualEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity instance to use as a filter for the IndividualEntity objects to return</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the IndividualEntity objects to return</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToOne(IEntity contactInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter, int pageNumber, int pageSize)
+		public virtual bool GetMultiManyToOne(IEntity contactInstance, IEntity salesTerritoryInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter, int pageNumber, int pageSize)
 		{
 			bool validParameters = false;
 			validParameters |= (contactInstance!=null);
+			validParameters |= (salesTerritoryInstance!=null);
 			if(!validParameters)
 			{
 				return GetMulti(filter, maxNumberOfItemsToReturn, sortClauses, null, pageNumber, pageSize);
 			}
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			IndividualDAO dao = DAOFactory.CreateIndividualDAO();
-			return dao.GetMulti(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, filter, contactInstance, pageNumber, pageSize);
+			return DAOFactory.CreateIndividualDAO().GetMulti(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, filter, contactInstance, salesTerritoryInstance, pageNumber, pageSize);
 		}
 
 		/// <summary> Deletes from the persistent storage all Individual entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.</summary>
 		/// <remarks>Runs directly on the persistent storage. It will not delete entity objects from the current collection.</remarks>
 		/// <param name="contactInstance">ContactEntity instance to use as a filter for the IndividualEntity objects to return</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the IndividualEntity objects to return</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int DeleteMultiManyToOne(IEntity contactInstance)
+		public int DeleteMultiManyToOne(IEntity contactInstance, IEntity salesTerritoryInstance)
 		{
-			IndividualDAO dao = DAOFactory.CreateIndividualDAO();
-			return dao.DeleteMulti(base.Transaction, contactInstance);
+			return DAOFactory.CreateIndividualDAO().DeleteMulti(this.Transaction, contactInstance, salesTerritoryInstance);
 		}
 
 		/// <summary> Updates in the persistent storage all Individual entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.
 		/// Which fields are updated in those matching entities depends on which fields are <i>changed</i> in the passed in entity entityWithNewValues. The new values of these fields are read from entityWithNewValues. </summary>
 		/// <param name="entityWithNewValues">IndividualEntity instance which holds the new values for the matching entities to update. Only changed fields are taken into account</param>
 		/// <param name="contactInstance">ContactEntity instance to use as a filter for the IndividualEntity objects to return</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the IndividualEntity objects to return</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int UpdateMultiManyToOne(IndividualEntity entityWithNewValues, IEntity contactInstance)
+		public int UpdateMultiManyToOne(IndividualEntity entityWithNewValues, IEntity contactInstance, IEntity salesTerritoryInstance)
 		{
-			IndividualDAO dao = DAOFactory.CreateIndividualDAO();
-			return dao.UpdateMulti(entityWithNewValues, base.Transaction, contactInstance);
+			return DAOFactory.CreateIndividualDAO().UpdateMulti(entityWithNewValues, this.Transaction, contactInstance, salesTerritoryInstance);
 		}
-
 
 
 		/// <summary> Retrieves Entity rows in a datatable which match the specified filter. It will always create a new connection to the database.</summary>
@@ -174,6 +176,22 @@ namespace AW.Data.CollectionClasses
 		}
 
 
+		/// <summary> Deletes from the persistent storage all Individual entities which match with the specified filter, formulated in the predicate or predicate expression definition.</summary>
+		/// <param name="deleteFilter">A predicate or predicate expression which should be used as filter for the entities to delete. Can be null, which will result in a query removing all Individual entities from the persistent storage</param>
+		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
+		public override int DeleteMulti(IPredicate deleteFilter)
+		{
+			throw new NotSupportedException("This method isn't supported for this entity");
+		}
+
+		/// <summary> Deletes from the persistent storage all Individual entities which match with the specified filter, formulated in the predicate or predicate expression definition.</summary>
+		/// <param name="deleteFilter">A predicate or predicate expression which should be used as filter for the entities to delete.</param>
+		/// <param name="relations">The set of relations to walk to construct the total query.</param>
+		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
+		public override int DeleteMulti(IPredicate deleteFilter, IRelationCollection relations)
+		{
+			throw new NotSupportedException("This method isn't supported for this entity");
+		}
 		
 		/// <summary> Gets a scalar value, calculated with the aggregate. the field index specified is the field the aggregate are applied on.</summary>
 		/// <param name="fieldIndex">Field index of field to which to apply the aggregate function and expression</param>
@@ -194,8 +212,7 @@ namespace AW.Data.CollectionClasses
 			return GetScalar(fieldIndex, expressionToExecute, aggregateToApply, null, null, null);
 		}
 
-		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are
-		/// applied on.</summary>
+		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are applied on.</summary>
 		/// <param name="fieldIndex">Field index of field to which to apply the aggregate function and expression</param>
 		/// <param name="expressionToExecute">The expression to execute. Can be null</param>
 		/// <param name="aggregateToApply">Aggregate function to apply. </param>
@@ -238,8 +255,7 @@ namespace AW.Data.CollectionClasses
 			{
 				fields[0].AggregateFunctionToApply = aggregateToApply;
 			}
-			IndividualDAO dao = DAOFactory.CreateIndividualDAO();
-			return dao.GetScalar(fields, base.Transaction, filter, relations, groupByClause);
+			return DAOFactory.CreateIndividualDAO().GetScalar(fields, this.Transaction, filter, relations, groupByClause);
 		}
 		
 		/// <summary>Creats a new DAO instance so code which is in the base class can still use the proper DAO object.</summary>
@@ -255,7 +271,6 @@ namespace AW.Data.CollectionClasses
 		{
 			return new Transaction(levelOfIsolation, name);
 		}
-
 
 		#region Custom EntityCollection code
 		

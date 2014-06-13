@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -12,24 +11,16 @@ using AW.Winforms.Helpers.Properties;
 namespace AW.Winforms.Helpers.PropGridEx
 {
   /// <summary>
-  /// A custom PropertyTab that simply list all instance fields
+  ///   A custom PropertyTab that simply list all instance fields
   /// </summary>
   public class RawMemberTab : PropertyTab
   {
-    public RawMemberTab()
-    {
-    }
-
-    public RawMemberTab(IServiceProvider serviceProvider)
-    {
-    }
-
-    public RawMemberTab(IDesignerHost designerHost)
+    protected RawMemberTab()
     {
     }
 
     /// <summary>
-    /// extend everything
+    ///   extend everything
     /// </summary>
     public override bool CanExtend(object extendee)
     {
@@ -37,7 +28,7 @@ namespace AW.Winforms.Helpers.PropGridEx
     }
 
     /// <summary>
-    /// the tab's iumage
+    ///   the tab's iumage
     /// </summary>
     public override Bitmap Bitmap
     {
@@ -45,7 +36,7 @@ namespace AW.Winforms.Helpers.PropGridEx
     }
 
     /// <summary>
-    /// the tab's name
+    ///   the tab's name
     /// </summary>
     public override string TabName
     {
@@ -54,7 +45,7 @@ namespace AW.Winforms.Helpers.PropGridEx
 
 
     /// <summary>
-    /// used to filter implemented interfaces in a type
+    ///   used to filter implemented interfaces in a type
     /// </summary>
     /// <returns>true if the requested interfaces are implemented</returns>
     protected static bool InterfaceFilter(Type typeObj, Object criteriaObj)
@@ -66,9 +57,9 @@ namespace AW.Winforms.Helpers.PropGridEx
     }
 
     /// <summary>
-    /// Add the instance fields of an object
+    ///   Add the instance fields of an object
     /// </summary>
-    private static void AddTypeFields(IReflect type, ICollection<PropertyDescriptor> fields, ICollection<string> addedMemberNames)
+    private static void AddTypeFields(Type type, ICollection<PropertyDescriptor> fields, ICollection<string> addedMemberNames)
     {
       // stop at List / ArrayList / Dictionary / SortedList / Hashtable 
       if ((type == typeof (ArrayList)) ||
@@ -97,13 +88,10 @@ namespace AW.Winforms.Helpers.PropGridEx
     }
 
     /// <summary>
-    /// Gather all PropertyDescriptors for the RawMemberTab
+    ///   Gather all PropertyDescriptors for the RawMemberTab
     /// </summary>
     public override PropertyDescriptorCollection GetProperties(object component, Attribute[] attributes)
     {
-      if (component == null)
-        return new PropertyDescriptorCollection(null, true);
-
       // use a stack to reverse hierarchy
       // if fieldnames occure in more than one class
       // use the one from the class that is highest in the class hierarchy
@@ -127,24 +115,24 @@ namespace AW.Winforms.Helpers.PropGridEx
       // special treatment for classes implementing IDictionary
       var dict = component as IDictionary;
       if (dict != null)
-        fields.AddRange((from object key in dict.Keys select new DictionaryItemMemberDescriptor(dict, key)).Cast<PropertyDescriptor>());
+        fields.AddRange((from object key in dict.Keys select new DictionaryItemMemberDescriptor(dict, key)));
 
 
       // add all the instance fields
       while (objectHierarchy.Count > 0)
       {
         AddTypeFields(objectHierarchy.Pop(), fields, addedMemberNames);
-      }     
+      }
 
       return new PropertyDescriptorCollection(fields.ToArray());
     }
 
-    public virtual void GetProperties(IList list, List<PropertyDescriptor> fields)
+    protected virtual void GetProperties(IList list, List<PropertyDescriptor> fields)
     {
       if (list != null)
       {
         // add an ListItemMemberDescriptor fore each item in the list
-        fields.AddRange(list.Cast<object>().Select((t, i) => new ListItemMemberDescriptor(list, i)).Cast<PropertyDescriptor>());
+        fields.AddRange(list.Cast<object>().Select((t, i) => new ListItemMemberDescriptor(list, i)));
       }
     }
   }

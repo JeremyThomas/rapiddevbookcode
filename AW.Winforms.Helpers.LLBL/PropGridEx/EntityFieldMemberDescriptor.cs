@@ -4,7 +4,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.LLBL.PropGridEx
 {
-  class EntityFieldMemberDescriptor : ListItemAbstractDescriptor
+  internal class EntityFieldMemberDescriptor : ListItemAbstractDescriptor
   {
     private readonly IEntityField _entityField;
 
@@ -21,7 +21,7 @@ namespace AW.Winforms.Helpers.LLBL.PropGridEx
 
     public override Type ComponentType
     {
-      get { return typeof(IEntityFields); }
+      get { return typeof (IEntityFields); }
     }
   }
 }

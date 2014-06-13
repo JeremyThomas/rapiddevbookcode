@@ -1,4 +1,4 @@
-namespace DynamicTable
+namespace AW.Winforms.Helpers.Reporting
 {
     partial class FrmReportViewer
     {
@@ -47,7 +47,6 @@ namespace DynamicTable
           this.Controls.Add(this.reportViewer1);
           this.Name = "FrmReportViewer";
           this.Text = "Form1";
-          this.Load += new System.EventHandler(this.Form1_Load);
           this.ResumeLayout(false);
 
         }
