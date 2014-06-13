@@ -1,0 +1,1 @@
+..\.nuget\nuget.exe pack AW.Winforms.Helpers.LLBL.csproj -IncludeReferencedProjects -Symbols

@@ -1,0 +1,8 @@
+﻿<CodeCloneSettings>
+  <Exclusions>
+    <File>EntityClasses\*.cs</File>
+    <File>FactoryClasses\*.cs</File>
+    <File>HelperClasses\*.cs</File>
+    <File>RelationClasses\*.cs</File>
+  </Exclusions>
+</CodeCloneSettings>
