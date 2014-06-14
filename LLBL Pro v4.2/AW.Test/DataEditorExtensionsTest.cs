@@ -53,17 +53,18 @@ namespace AW.Tests
     //}
     //
     //Use TestInitialize to run code before running each test
-    //[TestInitialize()]
-    //public void MyTestInitialize()
-    //{
-    //}
-    //
+    [TestInitialize()]
+    public void MyTestInitialize()
+    {
+      Init();
+    }
+
     //Use TestCleanup to run code after each test has run
-    //[TestCleanup()]
-    //public void MyTestCleanup()
-    //{
-    //}
-    //
+    [TestCleanup()]
+    public void MyTestCleanup()
+    {
+      Verify();
+    }
 
     #endregion
 
