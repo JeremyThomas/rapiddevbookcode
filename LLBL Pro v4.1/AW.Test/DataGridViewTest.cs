@@ -17,12 +17,26 @@ namespace AW.Tests
     ///   Override this Setup method if you have custom behavior to execute before each test
     ///   in your fixture.
     /// </summary>
-    public override void Setup()
+    protected override void Setup()
     {
       _dataGridViewTestForm = new DataGridViewTestForm {dataGridView = {DataSource = SerializableBaseClass.GenerateList()}};
     }
 
     #endregion
+
+    //Use TestInitialize to run code before running each test
+    [TestInitialize()]
+    public void MyTestInitialize()
+    {
+      Init();
+    }
+
+    //Use TestCleanup to run code after each test has run
+    [TestCleanup()]
+    public void MyTestCleanup()
+    {
+      Verify();
+    }
 
     [TestMethod]
     public void TestColumnsNonModal()

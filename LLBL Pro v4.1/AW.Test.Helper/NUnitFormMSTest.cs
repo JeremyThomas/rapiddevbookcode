@@ -71,7 +71,7 @@ namespace AW.Test.Helpers
     ///   It would be better form to make this private and provide a protected getter property, though
     ///   that could break existing tests.
     /// </remarks>
-    protected bool Verified;
+    private bool _verified;
 
     /// <summary>
     ///   This property controls whether the separate hidden desktop is displayed for the duration of
@@ -80,7 +80,7 @@ namespace AW.Test.Helpers
     ///   tests that do not use the keyboard and mouse controller (most should not) you don't need to do
     ///   anything with this.  The default behavior is fine.
     /// </summary>
-    public virtual bool DisplayHidden
+    protected virtual bool DisplayHidden
     {
       get { return false; }
     }
@@ -93,7 +93,7 @@ namespace AW.Test.Helpers
     ///   this method from your test class to return true. Or you can set an environment variable called
     ///   "UseHiddenDesktop" and set that to "true".
     /// </summary>
-    public virtual bool UseHidden
+    protected virtual bool UseHidden
     {
       get
       {
@@ -115,26 +115,10 @@ namespace AW.Test.Helpers
     ///   a message box tester or file dialog tester, passing the handle of the box (its second argument) to the
     ///   tester's constructor. The tester constructors taking as argument the box title are unreliable and deprecated.
     /// </summary>
-    public ModalFormHandler ModalFormHandler
+    protected ModalFormHandler ModalFormHandler
     {
       get { return _modal.FormHandler; }
       set { _modal.FormHandler = value; }
-    }
-
-    /// <summary>
-    ///   Shorter version of ModalFormHandler without the form argument; meant for dialogs.
-    /// </summary>
-    public DialogBoxHandler DialogBoxHandler
-    {
-      set
-      {
-        if (value == null)
-        {
-          ModalFormHandler = null;
-          return;
-        }
-        ModalFormHandler = delegate(string name, IntPtr hWnd, Form form) { value(name, hWnd); };
-      }
     }
 
 
@@ -142,10 +126,9 @@ namespace AW.Test.Helpers
     ///   This is the base classes setup method.  It will be called by NUnit before each test.
     ///   You should not have anything to do with it.
     /// </summary>
-    [TestInitialize]
     public void Init()
     {
-      Verified = false;
+      _verified = false;
 
 
       if (!SystemInformation.UserInteractive)
@@ -168,7 +151,7 @@ namespace AW.Test.Helpers
     ///   Override this Setup method if you have custom behavior to execute before each test
     ///   in your fixture.
     /// </summary>
-    public virtual void Setup()
+    protected virtual void Setup()
     {
     }
 
@@ -179,7 +162,6 @@ namespace AW.Test.Helpers
     ///   You should not need to do anything with it.  Do not call it.
     ///   If you do call it, call it as the last thing you do in your test.
     /// </summary>
-    [TestCleanup]
     public void Verify()
     {
       try
@@ -197,9 +179,9 @@ namespace AW.Test.Helpers
           }
         }
 
-        if (!Verified)
+        if (!_verified)
         {
-          Verified = true;
+          _verified = true;
           var allForms = new FormFinder().FindAll();
 
           foreach (var form in allForms)
@@ -244,58 +226,11 @@ namespace AW.Test.Helpers
     {
     }
 
-    // Deprecated modal handling interface
-
-    /// <summary>
-    ///   Unreliable. Deprecated in favor of ModalFormHandler/ModalDialogHandler.
-    /// </summary>
-    [Obsolete]
-    protected void ExpectFileDialog(string modalHandler)
-    {
-      ExpectModal(FileDialogTester.InitialFileDialogName, modalHandler);
-    }
-
-    /// <summary>
-    ///   Unreliable. Deprecated in favor of ModalFormHandler/ModalDialogHandler.
-    /// </summary>
-    [Obsolete]
-    protected void ExpectFileDialog(string modalHandler, bool expected)
-    {
-      ExpectModal(FileDialogTester.InitialFileDialogName, modalHandler, expected);
-    }
-
-    /// <summary>
-    ///   Unreliable. Deprecated in favor of ModalFormHandler/ModalDialogHandler.
-    /// </summary>
-    [Obsolete]
-    protected void ExpectFileDialog(ModalFormActivated handler)
-    {
-      _modal.ExpectModal(FileDialogTester.InitialFileDialogName, handler, true);
-    }
-
-    /// <summary>
-    ///   Unreliable. Deprecated in favor of ModalFormHandler/ModalDialogHandler.
-    /// </summary>
-    [Obsolete]
-    protected void ExpectFileDialog(ModalFormActivated handler, bool expected)
-    {
-      _modal.ExpectModal(FileDialogTester.InitialFileDialogName, handler, true);
-    }
-
     /// <summary>
     ///   Deprecated in favor of ModalFormHandler/ModalDialogHandler.
     /// </summary>
     [Obsolete]
-    protected void ExpectModal(string name, ModalFormActivated handler)
-    {
-      _modal.ExpectModal(name, handler, true);
-    }
-
-    /// <summary>
-    ///   Deprecated in favor of ModalFormHandler/ModalDialogHandler.
-    /// </summary>
-    [Obsolete]
-    protected void ExpectModal(string name, ModalFormActivated handler, bool expected)
+    private void ExpectModal(string name, ModalFormActivated handler, bool expected)
     {
       _modal.ExpectModal(name, handler, expected);
     }
@@ -304,7 +239,7 @@ namespace AW.Test.Helpers
     ///   Deprecated in favor of ModalFormHandler/ModalDialogHandler.
     /// </summary>
     [Obsolete]
-    protected void ExpectModal(string name, string handlerName, bool expected)
+    private void ExpectModal(string name, string handlerName, bool expected)
     {
       ExpectModal(name,
         (ModalFormActivated) Delegate.CreateDelegate(typeof (ModalFormActivated), this, handlerName),
@@ -315,7 +250,7 @@ namespace AW.Test.Helpers
     ///   Deprecated in favor of ModalFormHandler/ModalDialogHandler.
     /// </summary>
     [Obsolete]
-    protected void ExpectModal(string name, string handlerName)
+    private void ExpectModal(string name, string handlerName)
     {
       ExpectModal(name, handlerName, true);
     }
