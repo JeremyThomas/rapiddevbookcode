@@ -172,7 +172,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.LLBLGen.Pro.DynamicDataS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListIISApps", "WebSites\ListIISApps\ListIISApps.csproj", "{53C14AAB-2D63-4063-92E3-CC43FA511696}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AW.WebDbEditor 4.1", "http://localhost/AW.WebDbEditor 4.1", "{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AW.WebDbEditor 4.2", "http://localhost/AW.WebDbEditor 4.2", "{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}"
 	ProjectSection(WebsiteProperties) = preProject
 		SccProjectName = "SAK"
 		SccAuxPath = "SAK"
