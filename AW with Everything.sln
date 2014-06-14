@@ -113,7 +113,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D8433560-562E-4E96-8B8B-E055A2B2EDBA}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KorzhEasyQuery", "KorzhEasyQuery", "{23799F0F-BB39-4943-92D9-5356321F4A53}"
@@ -307,8 +306,8 @@ Global
 		SccWebProject26 = true
 		SccProjectUniqueName26 = http://localhost/AW.WebDbEditor\u00204.1
 		SccProjectTopLevelParentUniqueName26 = AW\u0020with\u0020Everything.sln
-		SccProjectName26 = AW.WebDbEditor
-		SccLocalPath26 = AW.WebDbEditor
+		SccProjectName26 = ../LLBL\u0020Pro\u0020v4.1/AW.WebDbEditor
+		SccLocalPath26 = http://localhost/AW.WebDbEditor\u00204.1/
 		SccProjectEnlistmentChoice26 = 2
 		SccProjectUniqueName27 = AW.Test.Helper\\AW.Test.Helpers.csproj
 		SccProjectTopLevelParentUniqueName27 = AW\u0020with\u0020Everything.sln
