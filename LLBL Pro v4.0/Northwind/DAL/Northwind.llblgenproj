@@ -1414,9 +1414,7 @@
       <TypedViewMappings />
       <SPCallMappings />
       <TvfCallMappings />
-      <TypeConversionDefinitions>
-        <TypeConversionDefinition TypeConverter="Northwind.DAL.CategoryConverter" DbDotNetType="System.Int32" />
-      </TypeConversionDefinitions>
+      <TypeConversionDefinitions />
     </MappingStore>
     <MappingStore Type="A8034CB0-319D-4cdd-BC7D-1E7CFDBA3B74">
       <EntityMappings>
@@ -1566,7 +1564,6 @@
       <TvfCallMappings />
       <TypeConversionDefinitions>
         <TypeConversionDefinition TypeConverter="AW.Helper.TypeConverters.IntegerNumericConverter" DbDotNetType="System.Int64" />
-        <TypeConversionDefinition TypeConverter="Northwind.DAL.CategoryConverter" DbDotNetType="System.Int64" />
       </TypeConversionDefinitions>
     </MappingStore>
   </MappingStores>

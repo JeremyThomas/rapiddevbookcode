@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--LLBLGen Pro v4.0 project file. Do not manually edit this file. Incorrect references could lead to an unloadable project file.-->
-<Project Version="4.0" TargetFrameworkName="LLBLGen Pro Runtime Framework">
+<!--LLBLGen Pro v4.1 project file. Do not manually edit this file. Incorrect references could lead to an unloadable project file.-->
+<Project Version="4.1" TargetFrameworkName="LLBLGen Pro Runtime Framework">
   <Properties>
     <Abbreviations />
     <Property Name="AdditionalTaskPerformerFolder" Value="" />
@@ -38,6 +38,7 @@
     <Property Name="NonExcludableOrphanedElementDetectedAction" Value="3" />
     <Property Name="PreferDecimalOverCurrencyTypes" Value="true" />
     <Property Name="PreferNaturalCharacterTypes" Value="true" />
+    <Property Name="PreferSystemSequencesOverSchemaSequencesIfApplicable" Value="true" />
     <Property Name="PreferVariableLengthTypes" Value="true" />
     <Property Name="ProjectCreator" Value="Jeremy" />
     <Property Name="ProjectName" Value="Northwind" />
@@ -68,7 +69,7 @@
     <Property Name="UseCustomFieldOrderingOnNewElements" Value="false" />
   </Properties>
   <TypeShortcuts>
-    <TypeShortcut Shortcut="Category" Type="Northwind.DAL.Category, Northwind.DAL, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="Category" Type="Northwind.DAL.Category, Northwind.DAL, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
   </TypeShortcuts>
   <CodeGenerationCyclePreferences>
     <OutputType Value="3">
@@ -1414,9 +1415,7 @@
       <TypedViewMappings />
       <SPCallMappings />
       <TvfCallMappings />
-      <TypeConversionDefinitions>
-        <TypeConversionDefinition TypeConverter="Northwind.DAL.CategoryConverter" DbDotNetType="System.Int32" />
-      </TypeConversionDefinitions>
+      <TypeConversionDefinitions />
     </MappingStore>
     <MappingStore Type="A8034CB0-319D-4cdd-BC7D-1E7CFDBA3B74">
       <EntityMappings>
@@ -1566,7 +1565,6 @@
       <TvfCallMappings />
       <TypeConversionDefinitions>
         <TypeConversionDefinition TypeConverter="AW.Helper.TypeConverters.IntegerNumericConverter" DbDotNetType="System.Int64" />
-        <TypeConversionDefinition TypeConverter="Northwind.DAL.CategoryConverter" DbDotNetType="System.Int64" />
       </TypeConversionDefinitions>
     </MappingStore>
   </MappingStores>
