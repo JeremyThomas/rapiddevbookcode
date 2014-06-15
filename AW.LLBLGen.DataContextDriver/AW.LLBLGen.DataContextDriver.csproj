@@ -79,9 +79,8 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LINQPad, Version=1.0.0.0, Culture=neutral, PublicKeyToken=21353812cd2a2db5, processorArchitecture=MSIL">
-      <ExecutableExtension>.exe</ExecutableExtension>
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LINQPad\LINQPad.exe</HintPath>
+    <Reference Include="LINQPad">
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LINQPad\4\LINQPad.exe</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.ConnectionUI.Dialog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f4ca07f51760da93, processorArchitecture=MSIL">
