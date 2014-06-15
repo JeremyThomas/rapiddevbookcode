@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 4.0
+// Code is generated using LLBLGen Pro version: 4.2
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
@@ -10,9 +10,11 @@
 using System;
 using System.Data;
 using System.Data.Common;
+using System.Collections.Generic;
 using AW.Data.DaoClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses.SelfServicingSpecific;
+using SD.LLBLGen.Pro.QuerySpec.SelfServicing;
 
 namespace AW.Data.StoredProcedureCallerClasses
 {

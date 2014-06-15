@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 4.0
+// Code is generated using LLBLGen Pro version: 4.2
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
@@ -66,7 +66,6 @@ namespace AW.Data.RelationClasses
 				return relation;
 			}
 		}
-
 
 		/// <summary>Returns a new IEntityRelation object, between IndividualEntity and ContactEntity over the m:1 relation they have, using the relation between the fields:
 		/// Individual.ContactID - Contact.ContactID
