@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--LLBLGen Pro v4.1 project file. Do not manually edit this file. Incorrect references could lead to an unloadable project file.-->
-<Project Version="4.1" TargetFrameworkName="LLBLGen Pro Runtime Framework">
+<!--LLBLGen Pro v4.2 project file. Do not manually edit this file. Incorrect references could lead to an unloadable project file.-->
+<Project Version="4.2" TargetFrameworkName="LLBLGen Pro Runtime Framework">
   <Properties>
     <Abbreviations />
     <Property Name="AdditionalTaskPerformerFolder" Value="" />
@@ -18,13 +18,15 @@
     <Property Name="DefaultDeleteRuleAction" Value="1" />
     <Property Name="DefaultUpdateRuleAction" Value="0" />
     <Property Name="EncodingToUse" Value="0" />
-    <Property Name="EnforcePascalCasingAlways" Value="true" />
+    <Property Name="EntityActionCombinationDefaultForTable" Value="0" />
+    <Property Name="EntityActionCombinationDefaultForView" Value="4" />
     <Property Name="EntityFieldNameStripPattern" Value="{}{}" />
     <Property Name="EntityNameStripPattern" Value="{tbl_}{}" />
     <Property Name="ExcludableOrphanedElementDetectedAction" Value="3" />
     <Property Name="FailCodeGenerationOnWriteError" Value="false" />
     <Property Name="FieldMappedOntoRelatedFieldPattern" Value="{$RelatedFieldName}" />
     <Property Name="FkFieldsAreNamedAfterTargetField" Value="true" />
+    <Property Name="ForeignKeyConstraintPattern" Value="FK_{$Guid}" />
     <Property Name="ForeignKeyFieldPattern" Value="{$NavigatorName}{$RelatedFieldName}" />
     <Property Name="GroupUsage" Value="0" />
     <Property Name="IdentifyingFieldsFollowDBPrimaryKeyConstraints" Value="0" />
@@ -40,6 +42,7 @@
     <Property Name="PreferNaturalCharacterTypes" Value="true" />
     <Property Name="PreferSystemSequencesOverSchemaSequencesIfApplicable" Value="true" />
     <Property Name="PreferVariableLengthTypes" Value="true" />
+    <Property Name="PrimaryKeyConstraintPattern" Value="PK_{$Guid}" />
     <Property Name="ProjectCreator" Value="Jeremy" />
     <Property Name="ProjectName" Value="Northwind" />
     <Property Name="ReflectNullabilityOfElementFieldInTargetField" Value="0" />
@@ -51,9 +54,11 @@
     <Property Name="ResetFieldOrderBasedOnTargetOrderAtRefresh" Value="false" />
     <Property Name="RetrieveDBCustomProperties" Value="true" />
     <Property Name="RootNamespace" Value="" />
+    <Property Name="SequenceNameMatchingPattern" Value="SEQ_{$TableName}" />
     <Property Name="SequencePattern" Value="SEQ_{$EntityName}" />
     <Property Name="SetGroupNameAfterSchemaName" Value="true" />
     <Property Name="SetSchemaNameAfterGroupName" Value="true" />
+    <Property Name="SingularizeElementNames" Value="true" />
     <Property Name="StoredProcNameStripPattern" Value="{pr_, sp_}{}" />
     <Property Name="StoreTimeLastGeneratedIntoProject" Value="false" />
     <Property Name="SyncMappedElementNamesAfterRefresh" Value="0" />
@@ -64,6 +69,7 @@
     <Property Name="TypedViewFieldNameStripPattern" Value="{}{}" />
     <Property Name="TypedViewMappedOnResultsetPattern" Value="{$ProcFunctionName}{$ResultsetName}Result" />
     <Property Name="TypedViewNameStripPattern" Value="{vw_}{}" />
+    <Property Name="UniqueConstraintPattern" Value="UC_{$Guid}" />
     <Property Name="UniqueConstraintsFollowDBUniqueConstraints" Value="0" />
     <Property Name="UpdateCustomPropertiesAfterRefresh" Value="0" />
     <Property Name="UseCustomFieldOrderingOnNewElements" Value="false" />
@@ -71,6 +77,8 @@
   <TypeShortcuts>
     <TypeShortcut Shortcut="Category" Type="Northwind.DAL.Category, Northwind.DAL, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
   </TypeShortcuts>
+  <IgnoredWarnings />
+  <SavedSearchQueries />
   <CodeGenerationCyclePreferences>
     <OutputType Value="3">
       <LastUsedPreferences>
@@ -82,10 +90,10 @@
         <RootNamespace Value="Northwind.DAL" />
         <TemplateGroup Value="Adapter" />
         <TemplateBindings>
+          <Binding Name="SD.TemplateBindings.SharedTemplates.Deprecated" />
+          <Binding Name="SD.TemplateBindings.SharedTemplates.NET40" />
           <Binding Name="SD.TemplateBindings.SharedTemplates" />
           <Binding Name="SD.TemplateBindings.SqlServerSpecific" />
-          <Binding Name="SD.AdditionalTemplates.DbEditor.Net2.0 v3.x" />
-          <Binding Name="SD.TemplateBindings.SharedTemplates.NET4x" />
           <Binding Name="SD.TemplateBindings.OracleODPNetSpecific" />
           <Binding Name="SD.TemplateBindings.General" />
         </TemplateBindings>
@@ -129,7 +137,7 @@
   <EntityModel>
     <ValueTypeDefinitions />
     <EntityDefinitions>
-      <EntityDefinition Name="Category">
+      <EntityDefinition Name="Category" ObjectID="521174a7-8359-49ea-a6ac-6f946d386550">
         <Fields>
           <Field Name="CategoryId" Type="Category" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
             <OutputSettingValues>
@@ -155,7 +163,7 @@
           </Field>
         </Fields>
       </EntityDefinition>
-      <EntityDefinition Name="Customer">
+      <EntityDefinition Name="Customer" ObjectID="cf221169-443c-4089-8a60-527f760f323f">
         <Fields>
           <Field Name="Address" Type="string" IsOptional="true" MaxLength="60">
             <OutputSettingValues>
@@ -216,19 +224,19 @@
           </Attributes>
         </OutputSettingValues>
       </EntityDefinition>
-      <EntityDefinition Name="CustomerCustomerDemo">
+      <EntityDefinition Name="CustomerCustomerDemo" ObjectID="296d4ff5-5003-4a5f-8a98-a36856a6d727">
         <Fields>
           <Field Name="CustomerId" Type="string" MaxLength="5" IsPrimaryKey="true" />
           <Field Name="CustomerTypeId" Type="string" MaxLength="10" IsPrimaryKey="true" />
         </Fields>
       </EntityDefinition>
-      <EntityDefinition Name="CustomerDemographic">
+      <EntityDefinition Name="CustomerDemographic" ObjectID="cfabaf8b-0930-4bee-b443-20b5c3354bf6">
         <Fields>
           <Field Name="CustomerDesc" Type="string" IsOptional="true" MaxLength="1073741823" />
           <Field Name="CustomerTypeId" Type="string" MaxLength="10" IsPrimaryKey="true" />
         </Fields>
       </EntityDefinition>
-      <EntityDefinition Name="Employee">
+      <EntityDefinition Name="Employee" ObjectID="207865ae-252c-47e6-ade7-debac7ba1bd3">
         <Fields>
           <Field Name="Address" Type="string" IsOptional="true" MaxLength="60">
             <OutputSettingValues>
@@ -316,13 +324,13 @@
           </Attributes>
         </OutputSettingValues>
       </EntityDefinition>
-      <EntityDefinition Name="EmployeeTerritory">
+      <EntityDefinition Name="EmployeeTerritory" ObjectID="cebafd77-eece-45c2-a19a-defb3e93c590">
         <Fields>
           <Field Name="EmployeeId" Type="int" Precision="10" IsPrimaryKey="true" />
           <Field Name="TerritoryId" Type="string" MaxLength="20" IsPrimaryKey="true" />
         </Fields>
       </EntityDefinition>
-      <EntityDefinition Name="Order">
+      <EntityDefinition Name="Order" ObjectID="4ea8daaf-dcc9-4e40-864f-f5190a70dec9">
         <Fields>
           <Field Name="CustomerId" Type="string" IsOptional="true" MaxLength="5">
             <OutputSettingValues>
@@ -382,7 +390,7 @@
           </Field>
         </Fields>
       </EntityDefinition>
-      <EntityDefinition Name="OrderDetail">
+      <EntityDefinition Name="OrderDetail" ObjectID="3f3cdc74-87ef-41b1-8fa0-9b1fa874a55f">
         <Fields>
           <Field Name="Discount" Type="single" Precision="24" />
           <Field Name="OrderId" Type="int" Precision="10" IsPrimaryKey="true">
@@ -411,7 +419,7 @@
           </Attributes>
         </OutputSettingValues>
       </EntityDefinition>
-      <EntityDefinition Name="Product">
+      <EntityDefinition Name="Product" ObjectID="e39d7cca-2607-4390-8d80-ac18baaa8df6">
         <Fields>
           <Field Name="CategoryId" Type="Category" IsOptional="true" Precision="10">
             <OutputSettingValues>
@@ -461,13 +469,13 @@
           <Field Name="UnitsOnOrder" Type="short" IsOptional="true" Precision="5" />
         </Fields>
       </EntityDefinition>
-      <EntityDefinition Name="Region">
+      <EntityDefinition Name="Region" ObjectID="e1fde13d-30b6-40b0-a8d5-84ec2fa3a511">
         <Fields>
           <Field Name="RegionDescription" Type="string" MaxLength="50" />
           <Field Name="RegionId" Type="int" Precision="10" IsPrimaryKey="true" />
         </Fields>
       </EntityDefinition>
-      <EntityDefinition Name="Shipper">
+      <EntityDefinition Name="Shipper" ObjectID="21aa003e-1f96-4d25-a7f7-676b6bed9cc3">
         <Fields>
           <Field Name="CompanyName" Type="string" MaxLength="40">
             <OutputSettingValues>
@@ -492,7 +500,7 @@
           </Field>
         </Fields>
       </EntityDefinition>
-      <EntityDefinition Name="Supplier">
+      <EntityDefinition Name="Supplier" ObjectID="c37ee84f-dd50-4457-ab04-a89fdd335b4a">
         <Fields>
           <Field Name="Address" Type="string" IsOptional="true" MaxLength="60">
             <OutputSettingValues>
@@ -544,7 +552,7 @@
           </Field>
         </Fields>
       </EntityDefinition>
-      <EntityDefinition Name="Territory">
+      <EntityDefinition Name="Territory" ObjectID="8d489591-f1d9-42f0-9fd1-7fdb6d090e81">
         <Fields>
           <Field Name="RegionId" Type="int" Precision="10" />
           <Field Name="TerritoryDescription" Type="string" MaxLength="50" />
@@ -649,8 +657,9 @@
             <Schema Name="dbo">
               <Tables>
                 <Table Name="Categories">
+                  <PkConstraintName Name="PK_Categories" />
                   <Fields>
-                    <Field Name="CategoryID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_Categories" DbType="8" Precision="10">
+                    <Field Name="CategoryID" Ordinal="1" IsPrimaryKey="true" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Number automatically assigned to a new category." />
                       </CustomProperties>
@@ -669,20 +678,23 @@
                   </Fields>
                 </Table>
                 <Table Name="CustomerCustomerDemo">
+                  <PkConstraintName Name="PK_CustomerCustomerDemo" />
                   <Fields>
-                    <Field Name="CustomerID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_CustomerCustomerDemo" DbType="10" Length="5" />
-                    <Field Name="CustomerTypeID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_CustomerCustomerDemo" DbType="10" Length="10" />
+                    <Field Name="CustomerID" Ordinal="1" IsPrimaryKey="true" DbType="10" Length="5" />
+                    <Field Name="CustomerTypeID" Ordinal="2" IsPrimaryKey="true" DbType="10" Length="10" />
                   </Fields>
                 </Table>
                 <Table Name="CustomerDemographics">
+                  <PkConstraintName Name="PK_CustomerDemographics" />
                   <Fields>
-                    <Field Name="CustomerTypeID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_CustomerDemographics" DbType="10" Length="10" />
+                    <Field Name="CustomerTypeID" Ordinal="1" IsPrimaryKey="true" DbType="10" Length="10" />
                     <Field Name="CustomerDesc" Ordinal="2" IsOptional="true" DbType="11" Length="1073741823" />
                   </Fields>
                 </Table>
                 <Table Name="Customers">
+                  <PkConstraintName Name="PK_Customers" />
                   <Fields>
-                    <Field Name="CustomerID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_Customers" DbType="10" Length="5">
+                    <Field Name="CustomerID" Ordinal="1" IsPrimaryKey="true" DbType="10" Length="5">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Unique five-character code based on customer name." />
                       </CustomProperties>
@@ -716,8 +728,9 @@
                   </Fields>
                 </Table>
                 <Table Name="Employees">
+                  <PkConstraintName Name="PK_Employees" />
                   <Fields>
-                    <Field Name="EmployeeID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Employees" DbType="8" Precision="10">
+                    <Field Name="EmployeeID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Number automatically assigned to new employee." />
                       </CustomProperties>
@@ -778,31 +791,34 @@
                   </Fields>
                 </Table>
                 <Table Name="EmployeeTerritories">
+                  <PkConstraintName Name="PK_EmployeeTerritories" />
                   <Fields>
-                    <Field Name="EmployeeID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_EmployeeTerritories" DbType="8" Precision="10" />
-                    <Field Name="TerritoryID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_EmployeeTerritories" DbType="12" Length="20" />
+                    <Field Name="EmployeeID" Ordinal="1" IsPrimaryKey="true" DbType="8" Precision="10" />
+                    <Field Name="TerritoryID" Ordinal="2" IsPrimaryKey="true" DbType="12" Length="20" />
                   </Fields>
                 </Table>
                 <Table Name="Order Details">
+                  <PkConstraintName Name="PK_Order_Details" />
                   <Fields>
-                    <Field Name="OrderID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_Order_Details" DbType="8" Precision="10">
+                    <Field Name="OrderID" Ordinal="1" IsPrimaryKey="true" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Same as Order ID in Orders table." />
                       </CustomProperties>
                     </Field>
-                    <Field Name="ProductID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_Order_Details" DbType="8" Precision="10">
+                    <Field Name="ProductID" Ordinal="2" IsPrimaryKey="true" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Same as Product ID in Products table." />
                       </CustomProperties>
                     </Field>
-                    <Field Name="UnitPrice" Ordinal="3" DefaultValue="((0))" DbType="9" Precision="19" Scale="4" />
-                    <Field Name="Quantity" Ordinal="4" DefaultValue="((1))" DbType="16" Precision="5" />
-                    <Field Name="Discount" Ordinal="5" DefaultValue="((0))" DbType="14" Precision="24" />
+                    <Field Name="UnitPrice" Ordinal="3" HasDefaultValue="true" DefaultValue="((0))" DbType="9" Precision="19" Scale="4" />
+                    <Field Name="Quantity" Ordinal="4" HasDefaultValue="true" DefaultValue="((1))" DbType="16" Precision="5" />
+                    <Field Name="Discount" Ordinal="5" HasDefaultValue="true" DefaultValue="((0))" DbType="14" Precision="24" />
                   </Fields>
                 </Table>
                 <Table Name="Orders">
+                  <PkConstraintName Name="PK_Orders" />
                   <Fields>
-                    <Field Name="OrderID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Orders" DbType="8" Precision="10">
+                    <Field Name="OrderID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Unique order number." />
                       </CustomProperties>
@@ -825,7 +841,7 @@
                         <CustomProperty Name="MS_Description" Value="Same as Shipper ID in Shippers table." />
                       </CustomProperties>
                     </Field>
-                    <Field Name="Freight" Ordinal="8" IsOptional="true" DefaultValue="((0))" DbType="9" Precision="19" Scale="4" />
+                    <Field Name="Freight" Ordinal="8" IsOptional="true" HasDefaultValue="true" DefaultValue="((0))" DbType="9" Precision="19" Scale="4" />
                     <Field Name="ShipName" Ordinal="9" IsOptional="true" DbType="12" Length="40">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Name of person or company to receive the shipment." />
@@ -847,8 +863,9 @@
                   </Fields>
                 </Table>
                 <Table Name="Products">
+                  <PkConstraintName Name="PK_Products" />
                   <Fields>
-                    <Field Name="ProductID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Products" DbType="8" Precision="10">
+                    <Field Name="ProductID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Number automatically assigned to new product." />
                       </CustomProperties>
@@ -869,15 +886,15 @@
                         <CustomProperty Name="MS_Description" Value="(e.g., 24-count case, 1-liter bottle)." />
                       </CustomProperties>
                     </Field>
-                    <Field Name="UnitPrice" Ordinal="6" IsOptional="true" DefaultValue="((0))" DbType="9" Precision="19" Scale="4" />
-                    <Field Name="UnitsInStock" Ordinal="7" IsOptional="true" DefaultValue="((0))" DbType="16" Precision="5" />
-                    <Field Name="UnitsOnOrder" Ordinal="8" IsOptional="true" DefaultValue="((0))" DbType="16" Precision="5" />
-                    <Field Name="ReorderLevel" Ordinal="9" IsOptional="true" DefaultValue="((0))" DbType="16" Precision="5">
+                    <Field Name="UnitPrice" Ordinal="6" IsOptional="true" HasDefaultValue="true" DefaultValue="((0))" DbType="9" Precision="19" Scale="4" />
+                    <Field Name="UnitsInStock" Ordinal="7" IsOptional="true" HasDefaultValue="true" DefaultValue="((0))" DbType="16" Precision="5" />
+                    <Field Name="UnitsOnOrder" Ordinal="8" IsOptional="true" HasDefaultValue="true" DefaultValue="((0))" DbType="16" Precision="5" />
+                    <Field Name="ReorderLevel" Ordinal="9" IsOptional="true" HasDefaultValue="true" DefaultValue="((0))" DbType="16" Precision="5">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Minimum units to maintain in stock." />
                       </CustomProperties>
                     </Field>
-                    <Field Name="Discontinued" Ordinal="10" DefaultValue="((0))" DbType="2">
+                    <Field Name="Discontinued" Ordinal="10" HasDefaultValue="true" DefaultValue="((0))" DbType="2">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Yes means item is no longer available." />
                       </CustomProperties>
@@ -885,14 +902,16 @@
                   </Fields>
                 </Table>
                 <Table Name="Region">
+                  <PkConstraintName Name="PK_Region" />
                   <Fields>
-                    <Field Name="RegionID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_Region" DbType="8" Precision="10" />
+                    <Field Name="RegionID" Ordinal="1" IsPrimaryKey="true" DbType="8" Precision="10" />
                     <Field Name="RegionDescription" Ordinal="2" DbType="10" Length="50" />
                   </Fields>
                 </Table>
                 <Table Name="Shippers">
+                  <PkConstraintName Name="PK_Shippers" />
                   <Fields>
-                    <Field Name="ShipperID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Shippers" DbType="8" Precision="10">
+                    <Field Name="ShipperID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Number automatically assigned to new shipper." />
                       </CustomProperties>
@@ -910,8 +929,9 @@
                   </Fields>
                 </Table>
                 <Table Name="Suppliers">
+                  <PkConstraintName Name="PK_Suppliers" />
                   <Fields>
-                    <Field Name="SupplierID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Suppliers" DbType="8" Precision="10">
+                    <Field Name="SupplierID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Number automatically assigned to new supplier." />
                       </CustomProperties>
@@ -950,8 +970,9 @@
                   </Fields>
                 </Table>
                 <Table Name="Territories">
+                  <PkConstraintName Name="PK_Territories" />
                   <Fields>
-                    <Field Name="TerritoryID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_Territories" DbType="12" Length="20" />
+                    <Field Name="TerritoryID" Ordinal="1" IsPrimaryKey="true" DbType="12" Length="20" />
                     <Field Name="TerritoryDescription" Ordinal="2" DbType="10" Length="50" />
                     <Field Name="RegionID" Ordinal="3" DbType="8" Precision="10" />
                   </Fields>
@@ -1052,28 +1073,32 @@
               </Sequences>
               <Tables>
                 <Table Name="CATEGORIES">
+                  <PkConstraintName Name="PK_CATEGORIES" />
                   <Fields>
-                    <Field Name="CATEGORYID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_CATEGORIES" DbType="22" Precision="10" />
+                    <Field Name="CATEGORYID" Ordinal="1" IsPrimaryKey="true" DbType="22" Precision="10" />
                     <Field Name="CATEGORYNAME" Ordinal="2" DbType="24" Length="15" />
                     <Field Name="DESCRIPTION" Ordinal="3" IsOptional="true" DbType="21" Length="2147483647" />
                     <Field Name="PICTURE" Ordinal="4" IsOptional="true" DbType="2" Length="2147483647" />
                   </Fields>
                 </Table>
                 <Table Name="CUSTOMERCUSTOMERDEMO">
+                  <PkConstraintName Name="PK_CUSTOMERCUSTOMERDEMO" />
                   <Fields>
-                    <Field Name="CUSTOMERID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_CUSTOMERCUSTOMERDEMO" DbType="20" Length="5" />
-                    <Field Name="CUSTOMERTYPEID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_CUSTOMERCUSTOMERDEMO" DbType="20" Length="10" />
+                    <Field Name="CUSTOMERID" Ordinal="1" IsPrimaryKey="true" DbType="20" Length="5" />
+                    <Field Name="CUSTOMERTYPEID" Ordinal="2" IsPrimaryKey="true" DbType="20" Length="10" />
                   </Fields>
                 </Table>
                 <Table Name="CUSTOMERDEMOGRAPHICS">
+                  <PkConstraintName Name="PK_CUSTOMERDEMOGRAPHICS" />
                   <Fields>
-                    <Field Name="CUSTOMERTYPEID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_CUSTOMERDEMOGRAPHICS" DbType="20" Length="10" />
+                    <Field Name="CUSTOMERTYPEID" Ordinal="1" IsPrimaryKey="true" DbType="20" Length="10" />
                     <Field Name="CUSTOMERDESC" Ordinal="2" IsOptional="true" DbType="21" Length="2147483647" />
                   </Fields>
                 </Table>
                 <Table Name="CUSTOMERS">
+                  <PkConstraintName Name="PK_CUSTOMERS" />
                   <Fields>
-                    <Field Name="CUSTOMERID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_CUSTOMERS" DbType="20" Length="5" />
+                    <Field Name="CUSTOMERID" Ordinal="1" IsPrimaryKey="true" DbType="20" Length="5" />
                     <Field Name="COMPANYNAME" Ordinal="2" DbType="24" Length="40" />
                     <Field Name="CONTACTNAME" Ordinal="3" IsOptional="true" DbType="24" Length="30" />
                     <Field Name="CONTACTTITLE" Ordinal="4" IsOptional="true" DbType="24" Length="30" />
@@ -1087,8 +1112,9 @@
                   </Fields>
                 </Table>
                 <Table Name="EMPLOYEES">
+                  <PkConstraintName Name="PK_EMPLOYEES" />
                   <Fields>
-                    <Field Name="EMPLOYEEID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_EMPLOYEES" DbType="22" Precision="10" />
+                    <Field Name="EMPLOYEEID" Ordinal="1" IsPrimaryKey="true" DbType="22" Precision="10" />
                     <Field Name="LASTNAME" Ordinal="2" DbType="24" Length="20" />
                     <Field Name="FIRSTNAME" Ordinal="3" DbType="24" Length="10" />
                     <Field Name="TITLE" Ordinal="4" IsOptional="true" DbType="24" Length="30" />
@@ -1109,15 +1135,17 @@
                   </Fields>
                 </Table>
                 <Table Name="EMPLOYEETERRITORIES">
+                  <PkConstraintName Name="PK_EMPLOYEETERRITORIES" />
                   <Fields>
-                    <Field Name="EMPLOYEEID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_EMPLOYEETERRITORIES" DbType="22" Precision="10" />
-                    <Field Name="TERRITORYID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_EMPLOYEETERRITORIES" DbType="24" Length="20" />
+                    <Field Name="EMPLOYEEID" Ordinal="1" IsPrimaryKey="true" DbType="22" Precision="10" />
+                    <Field Name="TERRITORYID" Ordinal="2" IsPrimaryKey="true" DbType="24" Length="20" />
                   </Fields>
                 </Table>
                 <Table Name="ORDER_DETAILS">
+                  <PkConstraintName Name="PK_ORDER_DETAILS" />
                   <Fields>
-                    <Field Name="ORDERID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_ORDER_DETAILS" DbType="22" Precision="10" />
-                    <Field Name="PRODUCTID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_ORDER_DETAILS" DbType="22" Precision="10" />
+                    <Field Name="ORDERID" Ordinal="1" IsPrimaryKey="true" DbType="22" Precision="10" />
+                    <Field Name="PRODUCTID" Ordinal="2" IsPrimaryKey="true" DbType="22" Precision="10" />
                     <Field Name="UNITPRICE" Ordinal="3" DbType="22" Precision="19" Scale="4" />
                     <Field Name="QUANTITY" Ordinal="4" DbType="22" Precision="5" />
                     <Field Name="DISCOUNT" Ordinal="5" DbType="11" Precision="38" Scale="38" />
@@ -1127,8 +1155,9 @@
                   </CustomProperties>
                 </Table>
                 <Table Name="ORDERS">
+                  <PkConstraintName Name="PK_ORDERS" />
                   <Fields>
-                    <Field Name="ORDERID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_ORDERS" DbType="22" Precision="10" />
+                    <Field Name="ORDERID" Ordinal="1" IsPrimaryKey="true" DbType="22" Precision="10" />
                     <Field Name="CUSTOMERID" Ordinal="2" IsOptional="true" DbType="20" Length="5" />
                     <Field Name="EMPLOYEEID" Ordinal="3" IsOptional="true" DbType="22" Precision="10" />
                     <Field Name="ORDERDATE" Ordinal="4" IsOptional="true" DbType="7" />
@@ -1145,8 +1174,9 @@
                   </Fields>
                 </Table>
                 <Table Name="PRODUCTS">
+                  <PkConstraintName Name="PK_PRODUCTS" />
                   <Fields>
-                    <Field Name="PRODUCTID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_PRODUCTS" DbType="22" Precision="10" />
+                    <Field Name="PRODUCTID" Ordinal="1" IsPrimaryKey="true" DbType="22" Precision="10" />
                     <Field Name="PRODUCTNAME" Ordinal="2" DbType="24" Length="40" />
                     <Field Name="SUPPLIERID" Ordinal="3" IsOptional="true" DbType="22" Precision="10" />
                     <Field Name="CATEGORYID" Ordinal="4" IsOptional="true" DbType="22" Precision="10" />
@@ -1159,21 +1189,24 @@
                   </Fields>
                 </Table>
                 <Table Name="REGION">
+                  <PkConstraintName Name="PK_REGION" />
                   <Fields>
-                    <Field Name="REGIONID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_REGION" DbType="22" Precision="10" />
+                    <Field Name="REGIONID" Ordinal="1" IsPrimaryKey="true" DbType="22" Precision="10" />
                     <Field Name="REGIONDESCRIPTION" Ordinal="2" DbType="20" Length="50" />
                   </Fields>
                 </Table>
                 <Table Name="SHIPPERS">
+                  <PkConstraintName Name="PK_SHIPPERS" />
                   <Fields>
-                    <Field Name="SHIPPERID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_SHIPPERS" DbType="22" Precision="10" />
+                    <Field Name="SHIPPERID" Ordinal="1" IsPrimaryKey="true" DbType="22" Precision="10" />
                     <Field Name="COMPANYNAME" Ordinal="2" DbType="24" Length="40" />
                     <Field Name="PHONE" Ordinal="3" IsOptional="true" DbType="24" Length="24" />
                   </Fields>
                 </Table>
                 <Table Name="SUPPLIERS">
+                  <PkConstraintName Name="PK_SUPPLIERS" />
                   <Fields>
-                    <Field Name="SUPPLIERID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_SUPPLIERS" DbType="22" Precision="10" />
+                    <Field Name="SUPPLIERID" Ordinal="1" IsPrimaryKey="true" DbType="22" Precision="10" />
                     <Field Name="COMPANYNAME" Ordinal="2" DbType="24" Length="40" />
                     <Field Name="CONTACTNAME" Ordinal="3" IsOptional="true" DbType="24" Length="30" />
                     <Field Name="CONTACTTITLE" Ordinal="4" IsOptional="true" DbType="24" Length="30" />
@@ -1188,8 +1221,9 @@
                   </Fields>
                 </Table>
                 <Table Name="TERRITORIES">
+                  <PkConstraintName Name="PK_TERRITORIES" />
                   <Fields>
-                    <Field Name="TERRITORYID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_TERRITORIES" DbType="24" Length="20" />
+                    <Field Name="TERRITORYID" Ordinal="1" IsPrimaryKey="true" DbType="24" Length="20" />
                     <Field Name="TERRITORYDESCRIPTION" Ordinal="2" DbType="20" Length="50" />
                     <Field Name="REGIONID" Ordinal="3" DbType="22" Precision="10" />
                   </Fields>
