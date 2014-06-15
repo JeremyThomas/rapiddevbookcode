@@ -7,9 +7,9 @@ namespace AW.LLBLGen.DataContextDriver
     public const string Author = "Jeremy Thomas";
     public const string AssemblyCompany = Author;
     /// <summary>
-    /// 4.1
+    /// 4.2
     /// </summary>
-    public const string LLBLVersion = "4.1";
+    public const string LLBLVersion = "4.2";
 
     private const string CopyrightYear = "2014";
     public const string LLBLGenNameVersion = "LLBLGen Pro v" + LLBLVersion;

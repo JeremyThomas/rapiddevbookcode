@@ -12,14 +12,14 @@ using System.Reflection;
 internal static class AssemblyInfoConstants
 {
   /// <summary>
-  ///   4.1
+  ///   4.2
   /// </summary>
-  public const string AssemblyInformationalVersion = "4.1";
+  public const string AssemblyInformationalVersion = "4.2";
 
   private const string AssemblyRevision = "0";
 
   /// <summary>
-  ///   4.1.0.0
+  ///   4.2.0.0
   /// </summary>
   public const string AssemblyVersion = AssemblyInformationalVersion + ".0." + AssemblyRevision;
 
