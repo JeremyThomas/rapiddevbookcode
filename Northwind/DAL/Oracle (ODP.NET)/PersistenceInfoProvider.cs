@@ -1,13 +1,14 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 4.0
+// Code is generated using LLBLGen Pro version: 4.1
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 //////////////////////////////////////////////////////////////
 using System;
 using System.Collections;
+using System.Data;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.Oracle
@@ -112,7 +113,7 @@ namespace Northwind.DAL.Oracle
 			this.AddElementFieldMapping("EmployeeEntity", "BirthDate", "BIRTHDATE", true, "Date", 0, 0, 0, false, "", null, typeof(System.DateTime), 1);
 			this.AddElementFieldMapping("EmployeeEntity", "City", "CITY", true, "NVarchar2", 15, 0, 0, false, "", null, typeof(System.String), 2);
 			this.AddElementFieldMapping("EmployeeEntity", "Country", "COUNTRY", true, "NVarchar2", 15, 0, 0, false, "", null, typeof(System.String), 3);
-			this.AddElementFieldMapping("EmployeeEntity", "EmployeeId", "EMPLOYEEID", false, "Decimal", 0, 10, 0, true, "DBO_NORTHWIND.EMPLOYEES_EMPLOYEEID_SEQ", new AW.Helper.TypeConverters.IntegerNonNullNumericConverter(), typeof(System.Int64), 4);
+			this.AddElementFieldMapping("EmployeeEntity", "EmployeeId", "EMPLOYEEID", false, "Decimal", 0, 10, 0, false, "DBO_NORTHWIND.EMPLOYEES_EMPLOYEEID_SEQ", new AW.Helper.TypeConverters.IntegerNonNullNumericConverter(), typeof(System.Int64), 4);
 			this.AddElementFieldMapping("EmployeeEntity", "Extension", "EXTENSION", true, "NVarchar2", 4, 0, 0, false, "", null, typeof(System.String), 5);
 			this.AddElementFieldMapping("EmployeeEntity", "FirstName", "FIRSTNAME", false, "NVarchar2", 10, 0, 0, false, "", null, typeof(System.String), 6);
 			this.AddElementFieldMapping("EmployeeEntity", "HireDate", "HIREDATE", true, "Date", 0, 0, 0, false, "", null, typeof(System.DateTime), 7);
@@ -144,7 +145,7 @@ namespace Northwind.DAL.Oracle
 			this.AddElementFieldMapping("OrderEntity", "EmployeeId", "EMPLOYEEID", true, "Decimal", 0, 10, 0, false, "", new AW.Helper.TypeConverters.IntegerNumericConverter(), typeof(System.Int64), 1);
 			this.AddElementFieldMapping("OrderEntity", "Freight", "FREIGHT", true, "Decimal", 0, 19, 4, false, "", null, typeof(System.Decimal), 2);
 			this.AddElementFieldMapping("OrderEntity", "OrderDate", "ORDERDATE", true, "Date", 0, 0, 0, false, "", null, typeof(System.DateTime), 3);
-			this.AddElementFieldMapping("OrderEntity", "OrderId", "ORDERID", false, "Decimal", 0, 10, 0, true, "DBO_NORTHWIND.ORDERS_ORDERID_SEQ", new AW.Helper.TypeConverters.IntegerNonNullNumericConverter(), typeof(System.Int64), 4);
+			this.AddElementFieldMapping("OrderEntity", "OrderId", "ORDERID", false, "Decimal", 0, 10, 0, false, "DBO_NORTHWIND.ORDERS_ORDERID_SEQ", new AW.Helper.TypeConverters.IntegerNonNullNumericConverter(), typeof(System.Int64), 4);
 			this.AddElementFieldMapping("OrderEntity", "RequiredDate", "REQUIREDDATE", true, "Date", 0, 0, 0, false, "", null, typeof(System.DateTime), 5);
 			this.AddElementFieldMapping("OrderEntity", "ShipAddress", "SHIPADDRESS", true, "NVarchar2", 60, 0, 0, false, "", null, typeof(System.String), 6);
 			this.AddElementFieldMapping("OrderEntity", "ShipCity", "SHIPCITY", true, "NVarchar2", 15, 0, 0, false, "", null, typeof(System.String), 7);
@@ -173,7 +174,7 @@ namespace Northwind.DAL.Oracle
 			this.AddElementMapping("ProductEntity", @"//localhost/xe", @"DBO_NORTHWIND", "PRODUCTS", 10);
 			this.AddElementFieldMapping("ProductEntity", "CategoryId", "CATEGORYID", true, "Decimal", 0, 10, 0, false, "", null, typeof(System.Int64), 0);
 			this.AddElementFieldMapping("ProductEntity", "Discontinued", "DISCONTINUED", false, "Decimal", 0, 1, 0, false, "", new SD.LLBLGen.Pro.ORMSupportClasses.BooleanNumericConverter(), typeof(System.Int16), 1);
-			this.AddElementFieldMapping("ProductEntity", "ProductId", "PRODUCTID", false, "Decimal", 0, 10, 0, true, "DBO_NORTHWIND.PRODUCTS_PRODUCTID_SEQ", new AW.Helper.TypeConverters.IntegerNonNullNumericConverter(), typeof(System.Int64), 2);
+			this.AddElementFieldMapping("ProductEntity", "ProductId", "PRODUCTID", false, "Decimal", 0, 10, 0, false, "DBO_NORTHWIND.PRODUCTS_PRODUCTID_SEQ", new AW.Helper.TypeConverters.IntegerNonNullNumericConverter(), typeof(System.Int64), 2);
 			this.AddElementFieldMapping("ProductEntity", "ProductName", "PRODUCTNAME", false, "NVarchar2", 40, 0, 0, false, "", null, typeof(System.String), 3);
 			this.AddElementFieldMapping("ProductEntity", "QuantityPerUnit", "QUANTITYPERUNIT", true, "NVarchar2", 20, 0, 0, false, "", null, typeof(System.String), 4);
 			this.AddElementFieldMapping("ProductEntity", "ReorderLevel", "REORDERLEVEL", true, "Decimal", 0, 5, 0, false, "", new AW.Helper.TypeConverters.SmallIntegerNumericConverter(), typeof(System.Int32), 5);
@@ -197,7 +198,7 @@ namespace Northwind.DAL.Oracle
 			this.AddElementMapping("ShipperEntity", @"//localhost/xe", @"DBO_NORTHWIND", "SHIPPERS", 3);
 			this.AddElementFieldMapping("ShipperEntity", "CompanyName", "COMPANYNAME", false, "NVarchar2", 40, 0, 0, false, "", null, typeof(System.String), 0);
 			this.AddElementFieldMapping("ShipperEntity", "Phone", "PHONE", true, "NVarchar2", 24, 0, 0, false, "", null, typeof(System.String), 1);
-			this.AddElementFieldMapping("ShipperEntity", "ShipperId", "SHIPPERID", false, "Decimal", 0, 10, 0, true, "DBO_NORTHWIND.SHIPPERS_SHIPPERID_SEQ", new AW.Helper.TypeConverters.IntegerNonNullNumericConverter(), typeof(System.Int64), 2);
+			this.AddElementFieldMapping("ShipperEntity", "ShipperId", "SHIPPERID", false, "Decimal", 0, 10, 0, false, "DBO_NORTHWIND.SHIPPERS_SHIPPERID_SEQ", new AW.Helper.TypeConverters.IntegerNonNullNumericConverter(), typeof(System.Int64), 2);
 		}
 
 		/// <summary>Inits SupplierEntity's mappings</summary>
@@ -215,7 +216,7 @@ namespace Northwind.DAL.Oracle
 			this.AddElementFieldMapping("SupplierEntity", "Phone", "PHONE", true, "NVarchar2", 24, 0, 0, false, "", null, typeof(System.String), 8);
 			this.AddElementFieldMapping("SupplierEntity", "PostalCode", "POSTALCODE", true, "NVarchar2", 10, 0, 0, false, "", null, typeof(System.String), 9);
 			this.AddElementFieldMapping("SupplierEntity", "Region", "REGION", true, "NVarchar2", 15, 0, 0, false, "", null, typeof(System.String), 10);
-			this.AddElementFieldMapping("SupplierEntity", "SupplierId", "SUPPLIERID", false, "Decimal", 0, 10, 0, true, "DBO_NORTHWIND.SUPPLIERS_SUPPLIERID_SEQ", new AW.Helper.TypeConverters.IntegerNonNullNumericConverter(), typeof(System.Int64), 11);
+			this.AddElementFieldMapping("SupplierEntity", "SupplierId", "SUPPLIERID", false, "Decimal", 0, 10, 0, false, "DBO_NORTHWIND.SUPPLIERS_SUPPLIERID_SEQ", new AW.Helper.TypeConverters.IntegerNonNullNumericConverter(), typeof(System.Int64), 11);
 		}
 
 		/// <summary>Inits TerritoryEntity's mappings</summary>

@@ -105,6 +105,7 @@
         <RootNamespace Value="AW.Data" />
         <TemplateGroup Value="SelfServicing" />
         <TemplateBindings>
+          <Binding Name="SD.TemplateBindings.SharedTemplates.NET40" />
           <Binding Name="SD.AdditionalTemplates.DbEditor.Net2.0 v3.x" />
           <Binding Name="SD.TemplateBindings.SqlServerSpecific" />
           <Binding Name="SD.TemplateBindings.SharedTemplates" />
