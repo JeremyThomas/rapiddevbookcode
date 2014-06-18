@@ -492,7 +492,7 @@
     <Compile Include="RelationClasses\CurrencyRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
-    <Compile Include="ViewModels\CustomerListLinqedTypedList.cs" />
+    <Compile Include="TypedListClasses\CustomerListLinqRowCustom.cs" />
     <Compile Include="DaoClasses\CommonDaoBase.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -1114,13 +1114,13 @@
     <Compile Include="DaoClasses\WorkOrderHistoryDAO.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
-    <None Include="ExcludeGenerated.codeclonesettings" />
     <Compile Include="TypedListClasses\CustomerListLinqRow.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="TypedViewClasses\CustomerViewLinqRow.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <None Include="ExcludeGenerated.codeclonesettings" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AW.Helper.LLBL\AW.Helper.LLBL.csproj">

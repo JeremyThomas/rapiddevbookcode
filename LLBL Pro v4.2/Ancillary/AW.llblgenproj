@@ -5121,7 +5121,7 @@
         <Field FieldAlias="AddressLine1" TargetField="Person.Address.AddressLine1" />
         <Field FieldAlias="AddressLine2" TargetField="Person.Address.AddressLine2" />
         <Field FieldAlias="City" TargetField="Person.Address.City" />
-        <Field FieldAlias="Name" TargetField="Person.AddressType.Name" />
+        <Field FieldAlias="AddressType" Caption="Name" TargetField="Person.AddressType.Name" />
         <Field FieldAlias="Title" TargetField="Person.Contact.Title" />
         <Field FieldAlias="FirstName" TargetField="Person.Contact.FirstName" />
         <Field FieldAlias="MiddleName" TargetField="Person.Contact.MiddleName" />
@@ -5158,7 +5158,7 @@
         <Field FieldAlias="AddressLine1" TargetField="Person.Address.AddressLine1" />
         <Field FieldAlias="AddressLine2" TargetField="Person.Address.AddressLine2" />
         <Field FieldAlias="City" TargetField="Person.Address.City" />
-        <Field FieldAlias="Name" TargetField="Person.AddressType.Name" />
+        <Field FieldAlias="AddressType" Caption="Name" TargetField="Person.AddressType.Name" />
         <Field FieldAlias="Title" TargetField="Person.Contact.Title" />
         <Field FieldAlias="FirstName" TargetField="Person.Contact.FirstName" />
         <Field FieldAlias="MiddleName" TargetField="Person.Contact.MiddleName" />
@@ -6163,7 +6163,7 @@
                         <CustomProperty Name="MS_Description" Value="E-mail address for the person." />
                       </CustomProperties>
                     </Field>
-                    <Field Name="EmailPromotion" Ordinal="9" TrackedChanges="20480" DbType="8" Precision="10">
+                    <Field Name="EmailPromotion" Ordinal="9" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="0 = Contact does not wish to receive e-mail promotions, 1 = Contact does wish to receive e-mail promotions from AdventureWorks, 2 = Contact does wish to receive e-mail promotions from AdventureWorks and selected partners. " />
                       </CustomProperties>
@@ -7581,7 +7581,7 @@
                         <CustomProperty Name="MS_Description" Value="Incremental number to track changes to the purchase order over time." />
                       </CustomProperties>
                     </Field>
-                    <Field Name="Status" Ordinal="3" TrackedChanges="20480" DbType="22" Precision="3">
+                    <Field Name="Status" Ordinal="3" DbType="22" Precision="3">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Nonclustered index." />
                       </CustomProperties>
@@ -8153,7 +8153,7 @@
                         <CustomProperty Name="MS_Description" Value="Nonclustered index." />
                       </CustomProperties>
                     </Field>
-                    <Field Name="Status" Ordinal="6" TrackedChanges="20480" DbType="22" Precision="3">
+                    <Field Name="Status" Ordinal="6" DbType="22" Precision="3">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled" />
                       </CustomProperties>
@@ -9196,7 +9196,7 @@
                 <FieldPair PkField="Sales:Customer:CustomerID" FkField="Sales:Individual:CustomerID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:SalesOrderDetail:FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID" TrackedChanges="16">
+            <ForeignKeyConstraint Name="Sales:SalesOrderDetail:FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID">
               <FieldPairs>
                 <FieldPair PkField="Sales:SalesOrderHeader:SalesOrderID" FkField="Sales:SalesOrderDetail:SalesOrderID" />
               </FieldPairs>
@@ -9252,7 +9252,7 @@
                 <FieldPair PkField="Purchasing:ShipMethod:ShipMethodID" FkField="Sales:SalesOrderHeader:ShipMethodID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:SalesOrderHeaderSalesReason:FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID" TrackedChanges="16">
+            <ForeignKeyConstraint Name="Sales:SalesOrderHeaderSalesReason:FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID">
               <FieldPairs>
                 <FieldPair PkField="Sales:SalesOrderHeader:SalesOrderID" FkField="Sales:SalesOrderHeaderSalesReason:SalesOrderID" />
               </FieldPairs>

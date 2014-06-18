@@ -2,6 +2,7 @@
 using System.Linq;
 using AW.Data.EntityClasses;
 using AW.Data.ViewModels;
+using AW.Data.TypedListClasses;
 
 namespace AW.Data.Linq.Filters
 {
@@ -67,7 +68,7 @@ namespace AW.Data.Linq.Filters
       return customerViewQuery;
     }
 
-    public static IQueryable<CustomerListLinqedTypedList> FilterByDateCustomerNameAddress(this IQueryable<CustomerListLinqedTypedList> customerViewQuery,
+    public static IQueryable<CustomerListLinqRow> FilterByDateCustomerNameAddress(this IQueryable<CustomerListLinqRow> customerViewQuery,
       OrderSearchCriteria orderSearchCriteria)
     {
       if (!string.IsNullOrEmpty(orderSearchCriteria.FirstName))

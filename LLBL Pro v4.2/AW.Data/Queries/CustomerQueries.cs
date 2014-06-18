@@ -267,16 +267,16 @@ namespace AW.Data.Queries
     /// ON [lpa_l8].[countryregioncode] = [lpa_l7].[countryregioncode])
     /// WHERE  (((([lpa_l1].[customerid] &gt; @CustomerID1))))
     /// </remarks>
-    public static IQueryable<CustomerListLinqedTypedList> GetCustomerListLinqedTypedList(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
+    public static IQueryable<CustomerListLinqRow> GetCustomerListLinqedTypedList(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
     {
       var individuals = MetaSingletons.MetaData.Individual;
-      return CustomerListLinqedTypedList.GetCustomerListQuery(individuals).FilterByDateCustomerNameAddress(orderSearchCriteria).Distinct().Take(maxNumberOfItemsToReturn);
+      return CustomerListLinqRow.GetCustomerListQuery(individuals).FilterByDateCustomerNameAddress(orderSearchCriteria).Distinct().Take(maxNumberOfItemsToReturn);
     }
 
-    public static IQueryable<CustomerListLinqedTypedList> GetCustomerListLinqedTypedListFilterFirst(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
+    public static IQueryable<CustomerListLinqRow> GetCustomerListLinqedTypedListFilterFirst(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
     {
       var individuals = MetaSingletons.MetaData.Individual.FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria);
-      return CustomerListLinqedTypedList.GetCustomerListQuery(individuals).Distinct().Take(maxNumberOfItemsToReturn);
+      return CustomerListLinqRow.GetCustomerListQuery(individuals).Distinct().Take(maxNumberOfItemsToReturn);
     }
 
     /// <summary>
