@@ -64,6 +64,8 @@ namespace AW.Win
       this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
       this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
+      this.toolStripButtonLinqTypedview = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonTypedListLinq = new System.Windows.Forms.ToolStripButton();
       ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceCustomerList)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorCustomerList)).BeginInit();
@@ -84,9 +86,9 @@ namespace AW.Win
             this.CountryRegionName});
       this.dgvResults.DataSource = this.bindingSourceCustomerList;
       this.dgvResults.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.dgvResults.Location = new System.Drawing.Point(0, 271);
+      this.dgvResults.Location = new System.Drawing.Point(0, 294);
       this.dgvResults.Name = "dgvResults";
-      this.dgvResults.Size = new System.Drawing.Size(876, 216);
+      this.dgvResults.Size = new System.Drawing.Size(876, 193);
       this.dgvResults.TabIndex = 0;
       this.dgvResults.Tag = "True";
       this.toolTip1.SetToolTip(this.dgvResults, "Double click to view");
@@ -168,6 +170,7 @@ namespace AW.Win
             this.bindingNavigatorMoveLastItem,
             this.bindingNavigatorSeparator2,
             this.toolStripButtonPlaintypedview,
+            this.toolStripButtonLinqTypedview,
             this.toolStripButtonTypedViewQuerySpec,
             this.toolStripSeparator1,
             this.toolStripButtonViewAsEntityLinq,
@@ -179,7 +182,8 @@ namespace AW.Win
             this.toolStripButtonTypedListQuerySpec,
             this.toolStripButtonLinqFilterFirst,
             this.toolStripButtonLinq,
-            this.toolStripButtonLinqAnonymous});
+            this.toolStripButtonLinqAnonymous,
+            this.toolStripButtonTypedListLinq});
       this.bindingNavigatorCustomerList.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
       this.bindingNavigatorCustomerList.Location = new System.Drawing.Point(0, 225);
       this.bindingNavigatorCustomerList.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
@@ -188,7 +192,7 @@ namespace AW.Win
       this.bindingNavigatorCustomerList.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
       this.bindingNavigatorCustomerList.Name = "bindingNavigatorCustomerList";
       this.bindingNavigatorCustomerList.PositionItem = this.bindingNavigatorPositionItem;
-      this.bindingNavigatorCustomerList.Size = new System.Drawing.Size(876, 46);
+      this.bindingNavigatorCustomerList.Size = new System.Drawing.Size(876, 69);
       this.bindingNavigatorCustomerList.TabIndex = 1;
       this.bindingNavigatorCustomerList.Text = "bindingNavigator1";
       // 
@@ -392,7 +396,7 @@ namespace AW.Win
             0,
             0,
             0});
-      this.numericUpDownNumRows.Location = new System.Drawing.Point(706, 251);
+      this.numericUpDownNumRows.Location = new System.Drawing.Point(260, 164);
       this.numericUpDownNumRows.Name = "numericUpDownNumRows";
       this.numericUpDownNumRows.Size = new System.Drawing.Size(42, 20);
       this.numericUpDownNumRows.TabIndex = 2;
@@ -406,6 +410,24 @@ namespace AW.Win
       this.orderSearchCriteria1.Name = "orderSearchCriteria1";
       this.orderSearchCriteria1.Size = new System.Drawing.Size(876, 225);
       this.orderSearchCriteria1.TabIndex = 3;
+      // 
+      // toolStripButtonLinqTypedview
+      // 
+      this.toolStripButtonLinqTypedview.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLinqTypedview.Image")));
+      this.toolStripButtonLinqTypedview.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonLinqTypedview.Name = "toolStripButtonLinqTypedview";
+      this.toolStripButtonLinqTypedview.Size = new System.Drawing.Size(117, 20);
+      this.toolStripButtonLinqTypedview.Text = "Typed View Linq ";
+      this.toolStripButtonLinqTypedview.Click += new System.EventHandler(this.toolStripButtonLinqTypedview_Click);
+      // 
+      // toolStripButtonTypedListLinq
+      // 
+      this.toolStripButtonTypedListLinq.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTypedListLinq.Image")));
+      this.toolStripButtonTypedListLinq.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonTypedListLinq.Name = "toolStripButtonTypedListLinq";
+      this.toolStripButtonTypedListLinq.Size = new System.Drawing.Size(107, 20);
+      this.toolStripButtonTypedListLinq.Text = "Typed List Linq";
+      this.toolStripButtonTypedListLinq.Click += new System.EventHandler(this.toolStripButtonTypedListLinq_Click);
       // 
       // FrmCustomers
       // 
@@ -471,6 +493,8 @@ namespace AW.Win
         private System.Windows.Forms.ToolStripButton toolStripButtonViewAsRelatedEntity;
         private System.Windows.Forms.ToolStripButton toolStripButtonViewAsEntityQuerySpec;
         private System.Windows.Forms.ToolStripButton toolStripButtonLinqFilterFirst;
+        private System.Windows.Forms.ToolStripButton toolStripButtonLinqTypedview;
+        private System.Windows.Forms.ToolStripButton toolStripButtonTypedListLinq;
 
     }
 }

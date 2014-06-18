@@ -1115,6 +1115,12 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <None Include="ExcludeGenerated.codeclonesettings" />
+    <Compile Include="TypedListClasses\CustomerListLinqRow.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="TypedViewClasses\CustomerViewLinqRow.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AW.Helper.LLBL\AW.Helper.LLBL.csproj">
@@ -1141,5 +1147,4 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-
 </Project>

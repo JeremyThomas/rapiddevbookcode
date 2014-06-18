@@ -49,7 +49,7 @@ namespace AW.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			this.InitClass( (74 + 1));
+			this.InitClass( (74 + 2));
 			InitAwbuildVersionEntityInfos();
 			InitDatabaseLogEntityInfos();
 			InitErrorLogEntityInfos();
@@ -125,6 +125,7 @@ namespace AW.Data.HelperClasses
 			InitStoreEntityInfos();
 			InitStoreContactEntityInfos();
 			InitCustomerViewTypedViewInfos();
+			InitCustomerViewLinqTypedViewInfos();
 			this.ConstructElementFieldStructures(InheritanceInfoProviderSingleton.GetInstance());
 		}
 
@@ -1014,6 +1015,28 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("CustomerViewTypedView", "PostalCode", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.PostalCode, 15, 0, 0);
 			this.AddElementFieldInfo("CustomerViewTypedView", "CountryRegionName", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.CountryRegionName, 50, 0, 0);
 			this.AddElementFieldInfo("CustomerViewTypedView", "Demographics", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.Demographics, 2147483647, 0, 0);
+		}
+		/// <summary>Inits View's FieldInfo objects</summary>
+		private void InitCustomerViewLinqTypedViewInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(CustomerViewLinqFieldIndex), "CustomerViewLinqTypedView");
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "CustomerId", typeof(System.Int32), false, false, true, false, (int)CustomerViewLinqFieldIndex.CustomerId, 0, 0, 10);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "Title", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.Title, 8, 0, 0);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "FirstName", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.FirstName, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "MiddleName", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.MiddleName, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "LastName", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.LastName, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "Suffix", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.Suffix, 10, 0, 0);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "Phone", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.Phone, 25, 0, 0);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "EmailAddress", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.EmailAddress, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "EmailPromotion", typeof(AW.Data.EmailPromotion), false, false, true, false, (int)CustomerViewLinqFieldIndex.EmailPromotion, 0, 0, 10);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "AddressType", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.AddressType, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "AddressLine1", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.AddressLine1, 60, 0, 0);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "AddressLine2", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.AddressLine2, 60, 0, 0);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "City", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.City, 30, 0, 0);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "StateProvinceName", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.StateProvinceName, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "PostalCode", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.PostalCode, 15, 0, 0);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "CountryRegionName", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.CountryRegionName, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewLinqTypedView", "Demographics", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.Demographics, 2147483647, 0, 0);
 		}		
 	}
 }

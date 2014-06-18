@@ -8,8 +8,11 @@
 // Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
+
+// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 using System.ComponentModel;
 using AW.Helper.TypeConverters;
+// __LLBLGENPRO_USER_CODE_REGION_END
 
 namespace AW.Data
 {
@@ -1590,9 +1593,83 @@ namespace AW.Data
 		/// <summary></summary>
 		AmountOfFields
 	}
+	/// <summary>Index enum to fast-access Typed View EntityFields in the IEntityFields collection for the typed view : CustomerViewLinq.</summary>
+	public enum CustomerViewLinqFieldIndex
+	{
+		///<summary>CustomerId</summary>
+		CustomerId,
+		///<summary>Title</summary>
+		Title,
+		///<summary>FirstName</summary>
+		FirstName,
+		///<summary>MiddleName</summary>
+		MiddleName,
+		///<summary>LastName</summary>
+		LastName,
+		///<summary>Suffix</summary>
+		Suffix,
+		///<summary>Phone</summary>
+		Phone,
+		///<summary>EmailAddress</summary>
+		EmailAddress,
+		///<summary>EmailPromotion</summary>
+		EmailPromotion,
+		///<summary>AddressType</summary>
+		AddressType,
+		///<summary>AddressLine1</summary>
+		AddressLine1,
+		///<summary>AddressLine2</summary>
+		AddressLine2,
+		///<summary>City</summary>
+		City,
+		///<summary>StateProvinceName</summary>
+		StateProvinceName,
+		///<summary>PostalCode</summary>
+		PostalCode,
+		///<summary>CountryRegionName</summary>
+		CountryRegionName,
+		///<summary>Demographics</summary>
+		Demographics,
+		/// <summary></summary>
+		AmountOfFields
+	}
 
 	/// <summary>Index enum to fast-access TypedList Fields in the Columns collection of the Typed List: CustomerList</summary>
 	public enum CustomerListTypedListFieldIndex
+	{
+		///<summary>AddressLine1</summary>
+		AddressLine1,
+		///<summary>AddressLine2</summary>
+		AddressLine2,
+		///<summary>City</summary>
+		City,
+		///<summary>Name</summary>
+		Name,
+		///<summary>Title</summary>
+		Title,
+		///<summary>FirstName</summary>
+		FirstName,
+		///<summary>MiddleName</summary>
+		MiddleName,
+		///<summary>LastName</summary>
+		LastName,
+		///<summary>Suffix</summary>
+		Suffix,
+		///<summary>EmailAddress</summary>
+		EmailAddress,
+		///<summary>EmailPromotion</summary>
+		EmailPromotion,
+		///<summary>CountryRegionName</summary>
+		CountryRegionName,
+		///<summary>StateProvinceName</summary>
+		StateProvinceName,
+		///<summary>CustomerId</summary>
+		CustomerId,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access TypedList Fields in the Columns collection of the Typed List: CustomerListLinq</summary>
+	public enum CustomerListLinqTypedListFieldIndex
 	{
 		///<summary>AddressLine1</summary>
 		AddressLine1,
@@ -1783,7 +1860,9 @@ namespace AW.Data
 	public enum TypedViewType
 	{
 		///<summary>CustomerView</summary>
-		CustomerViewTypedView
+		CustomerViewTypedView,
+		///<summary>CustomerViewLinq</summary>
+		CustomerViewLinqTypedView
 	}
 
 	#region Custom ConstantsEnums Code
