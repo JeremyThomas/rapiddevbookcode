@@ -673,6 +673,29 @@ namespace AW.Data.Linq
 			get { return new DataSource<StoreContactEntity>(_transactionToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
  
+		/// <summary>returns the datasource to use in a Linq query when targeting Sales.CustomerViewLinq instances in the database.</summary>
+		public DataSource<AW.Data.TypedViewClasses.CustomerViewLinqRow> CustomerViewLinq
+		{
+			get { return new DataSource<AW.Data.TypedViewClasses.CustomerViewLinqRow>(_transactionToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.CustomerViewLinqTypedView }; }
+		}
+
+		/// <summary>Gets the query to fetch the typed list Sales.CustomerListLinq</summary>
+		/// <returns>IQueryable</returns>
+		public IQueryable<AW.Data.TypedListClasses.CustomerListLinqRow> GetCustomerListLinqTypedList()
+		{
+			var current0 = this.Address;
+			var current1 = from person_Address in current0
+						   join person_StateProvince in this.StateProvince on person_Address.StateProvinceID equals person_StateProvince.StateProvinceID
+						   join sales_CustomerAddress in this.CustomerAddress on person_Address.AddressID equals sales_CustomerAddress.AddressID
+						   join person_CountryRegion in this.CountryRegion on person_StateProvince.CountryRegionCode equals person_CountryRegion.CountryRegionCode
+						   join person_AddressType in this.AddressType on sales_CustomerAddress.AddressTypeID equals person_AddressType.AddressTypeID
+						   join sales_Customer in this.Customer on sales_CustomerAddress.CustomerID equals sales_Customer.CustomerID
+						   join sales_Individual in this.Individual on sales_CustomerAddress.CustomerID equals sales_Individual.CustomerID
+						   join person_Contact in this.Contact on sales_Individual.ContactID equals person_Contact.ContactID
+						   select new {person_StateProvince, person_Address, sales_CustomerAddress, person_CountryRegion, person_AddressType, sales_Customer, sales_Individual, person_Contact };
+			return current1.Select(v=>new AW.Data.TypedListClasses.CustomerListLinqRow() { AddressLine1 = v.person_Address.AddressLine1, AddressLine2 = v.person_Address.AddressLine2, City = v.person_Address.City, Name = v.person_AddressType.Name, Title = v.person_Contact.Title, FirstName = v.person_Contact.FirstName, MiddleName = v.person_Contact.MiddleName, LastName = v.person_Contact.LastName, Suffix = v.person_Contact.Suffix, EmailAddress = v.person_Contact.EmailAddress, EmailPromotion = v.person_Contact.EmailPromotion, CountryRegionName = v.person_StateProvince.Name, StateProvinceName = v.person_CountryRegion.Name, CustomerId = v.sales_Customer.CustomerID });
+		}
+
 		#region Class Property Declarations
 		/// <summary> Gets / sets the ITransaction to use for the queries created with this meta data object.</summary>
 		/// <remarks> Be aware that the ITransaction object set via this property is kept alive by the LLBLGenProQuery objects created with this meta data

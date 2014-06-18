@@ -3220,4 +3220,110 @@ namespace AW.Data.HelperClasses
 			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.Demographics);}
 		}
 	}
+
+	/// <summary>Field Creation Class for typedview CustomerViewLinqTypedView</summary>
+	public partial class CustomerViewLinqFields
+	{
+		/// <summary>Creates a new CustomerViewLinqTypedView.CustomerId field instance</summary>
+		public static EntityField CustomerId
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.CustomerId);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.Title field instance</summary>
+		public static EntityField Title
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.Title);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.FirstName field instance</summary>
+		public static EntityField FirstName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.FirstName);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.MiddleName field instance</summary>
+		public static EntityField MiddleName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.MiddleName);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.LastName field instance</summary>
+		public static EntityField LastName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.LastName);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.Suffix field instance</summary>
+		public static EntityField Suffix
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.Suffix);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.Phone field instance</summary>
+		public static EntityField Phone
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.Phone);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.EmailAddress field instance</summary>
+		public static EntityField EmailAddress
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.EmailAddress);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.EmailPromotion field instance</summary>
+		public static EntityField EmailPromotion
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.EmailPromotion);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.AddressType field instance</summary>
+		public static EntityField AddressType
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.AddressType);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.AddressLine1 field instance</summary>
+		public static EntityField AddressLine1
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.AddressLine1);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.AddressLine2 field instance</summary>
+		public static EntityField AddressLine2
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.AddressLine2);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.City field instance</summary>
+		public static EntityField City
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.City);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.StateProvinceName field instance</summary>
+		public static EntityField StateProvinceName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.StateProvinceName);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.PostalCode field instance</summary>
+		public static EntityField PostalCode
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.PostalCode);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.CountryRegionName field instance</summary>
+		public static EntityField CountryRegionName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.CountryRegionName);}
+		}
+
+		/// <summary>Creates a new CustomerViewLinqTypedView.Demographics field instance</summary>
+		public static EntityField Demographics
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.Demographics);}
+		}
+	}
 }

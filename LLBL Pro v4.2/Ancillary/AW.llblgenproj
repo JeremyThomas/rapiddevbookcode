@@ -78,27 +78,27 @@
     <Property Name="UseCustomFieldOrderingOnNewElements" Value="false" />
   </Properties>
   <TypeShortcuts>
-    <TypeShortcut Shortcut="AddressType" Type="AW.Data.AddressType, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="ContactType" Type="AW.Data.ContactType, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="CreditRating" Type="AW.Data.CreditRating, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="Current" Type="AW.Data.Current, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="EmailPromotion" Type="AW.Data.EmailPromotion, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="Gender" Type="AW.Data.Gender, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="JobClassification" Type="AW.Data.JobClassification, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="MaritalStatus" Type="AW.Data.MaritalStatus, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="NameStyle" Type="AW.Data.NameStyle, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="OrderPlacesBy" Type="AW.Data.OrderPlacesBy, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="OrderStatus" Type="AW.Data.OrderStatus, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="PayFrequency" Type="AW.Data.PayFrequency, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="ProductClass" Type="AW.Data.ProductClass, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="ProductFinished" Type="AW.Data.ProductFinished, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="ProductLine" Type="AW.Data.ProductLine, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="ProductMaintenanceDocumentStatus" Type="AW.Data.ProductMaintenanceDocumentStatus, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="ProductMake" Type="AW.Data.ProductMake, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="ProductStyle" Type="AW.Data.ProductStyle, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="PurchaseOrderStatus" Type="AW.Data.PurchaseOrderStatus, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="StateProvinceCodeExistence" Type="AW.Data.StateProvinceCodeExistence, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="TaxApplication" Type="AW.Data.TaxApplication, AW.Data, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="AddressType" Type="AW.Data.AddressType, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ContactType" Type="AW.Data.ContactType, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="CreditRating" Type="AW.Data.CreditRating, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="Current" Type="AW.Data.Current, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="EmailPromotion" Type="AW.Data.EmailPromotion, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="Gender" Type="AW.Data.Gender, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="JobClassification" Type="AW.Data.JobClassification, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="MaritalStatus" Type="AW.Data.MaritalStatus, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="NameStyle" Type="AW.Data.NameStyle, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="OrderPlacesBy" Type="AW.Data.OrderPlacesBy, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="OrderStatus" Type="AW.Data.OrderStatus, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="PayFrequency" Type="AW.Data.PayFrequency, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductClass" Type="AW.Data.ProductClass, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductFinished" Type="AW.Data.ProductFinished, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductLine" Type="AW.Data.ProductLine, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductMaintenanceDocumentStatus" Type="AW.Data.ProductMaintenanceDocumentStatus, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductMake" Type="AW.Data.ProductMake, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductStyle" Type="AW.Data.ProductStyle, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="PurchaseOrderStatus" Type="AW.Data.PurchaseOrderStatus, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="StateProvinceCodeExistence" Type="AW.Data.StateProvinceCodeExistence, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="TaxApplication" Type="AW.Data.TaxApplication, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
   </TypeShortcuts>
   <IgnoredWarnings />
   <SavedSearchQueries />
@@ -5143,6 +5143,48 @@
         <Relationship Name="Sales.Individual.Contact-Person.Contact.Individuals" StartAlias="Person.Contact" EndAlias="Sales.Individual" JoinHint="1" />
       </Relationships>
     </TypedListDefinition>
+    <TypedListDefinition Name="CustomerListLinq" GroupName="Sales">
+      <EntityAliases>
+        <EntityAlias Entity="Person:Address" />
+        <EntityAlias Entity="Person:AddressType" />
+        <EntityAlias Entity="Person:Contact" />
+        <EntityAlias Entity="Person:CountryRegion" />
+        <EntityAlias Entity="Person:StateProvince" />
+        <EntityAlias Entity="Sales:Customer" />
+        <EntityAlias Entity="Sales:CustomerAddress" />
+        <EntityAlias Entity="Sales:Individual" />
+      </EntityAliases>
+      <Fields>
+        <Field FieldAlias="AddressLine1" TargetField="Person.Address.AddressLine1" />
+        <Field FieldAlias="AddressLine2" TargetField="Person.Address.AddressLine2" />
+        <Field FieldAlias="City" TargetField="Person.Address.City" />
+        <Field FieldAlias="Name" TargetField="Person.AddressType.Name" />
+        <Field FieldAlias="Title" TargetField="Person.Contact.Title" />
+        <Field FieldAlias="FirstName" TargetField="Person.Contact.FirstName" />
+        <Field FieldAlias="MiddleName" TargetField="Person.Contact.MiddleName" />
+        <Field FieldAlias="LastName" TargetField="Person.Contact.LastName" />
+        <Field FieldAlias="Suffix" TargetField="Person.Contact.Suffix" />
+        <Field FieldAlias="EmailAddress" TargetField="Person.Contact.EmailAddress" />
+        <Field FieldAlias="EmailPromotion" TargetField="Person.Contact.EmailPromotion" />
+        <Field FieldAlias="CountryRegionName" TargetField="Person.StateProvince.Name" />
+        <Field FieldAlias="StateProvinceName" TargetField="Person.CountryRegion.Name" />
+        <Field FieldAlias="CustomerId" TargetField="Sales.Customer.CustomerID" />
+      </Fields>
+      <Relationships>
+        <Relationship Name="Person.Address.StateProvince-Person.StateProvince.Addresses" StartAlias="Person.StateProvince" EndAlias="Person.Address" JoinHint="1" />
+        <Relationship Name="Person.StateProvince.CountryRegion-Person.CountryRegion.StateProvinces" StartAlias="Person.CountryRegion" EndAlias="Person.StateProvince" JoinHint="1" />
+        <Relationship Name="Sales.CustomerAddress.Address-Person.Address.CustomerAddresses" StartAlias="Sales.CustomerAddress" EndAlias="Person.Address" JoinHint="1" StartAliasIsStartVertex="true" />
+        <Relationship Name="Sales.CustomerAddress.AddressType-Person.AddressType.CustomerAddresses" StartAlias="Person.AddressType" EndAlias="Sales.CustomerAddress" JoinHint="1" />
+        <Relationship Name="Sales.CustomerAddress.Customer-Sales.Customer.CustomerAddresses" StartAlias="Sales.Customer" EndAlias="Sales.CustomerAddress" JoinHint="1" />
+        <Relationship Name="Sales.CustomerAddress.Customer-Sales.Customer.CustomerAddresses" StartAlias="Sales.Individual" EndAlias="Sales.CustomerAddress" JoinHint="1" />
+        <Relationship Name="Sales.Individual.Contact-Person.Contact.Individuals" StartAlias="Person.Contact" EndAlias="Sales.Individual" JoinHint="1" />
+      </Relationships>
+      <OutputSettingValues>
+        <SettingValues>
+          <SettingValue Name="8:OutputType" Value="PocoWithLinqQuery" Type="18" />
+        </SettingValues>
+      </OutputSettingValues>
+    </TypedListDefinition>
   </TypedListDefinitions>
   <TypedViewDefinitions>
     <TypedViewDefinition Name="CustomerView" GroupName="Sales" ObjectID="7b928ef0-35b4-45da-8f27-aa8f9a32045d">
@@ -5165,6 +5207,32 @@
         <Field Name="Suffix" Type="string" IsOptional="true" MaxLength="10" />
         <Field Name="Title" Type="string" IsOptional="true" MaxLength="8" />
       </Fields>
+    </TypedViewDefinition>
+    <TypedViewDefinition Name="CustomerViewLinq" GroupName="Sales" ObjectID="e8a48d5d-978d-4bee-a966-474929228e68">
+      <Fields>
+        <Field Name="AddressLine1" Type="string" MaxLength="60" />
+        <Field Name="AddressLine2" Type="string" IsOptional="true" MaxLength="60" />
+        <Field Name="AddressType" Type="string" MaxLength="50" />
+        <Field Name="City" Type="string" MaxLength="30" />
+        <Field Name="CountryRegionName" Type="string" MaxLength="50" />
+        <Field Name="CustomerId" Type="int" />
+        <Field Name="Demographics" Type="string" IsOptional="true" MaxLength="2147483647" />
+        <Field Name="EmailAddress" Type="string" IsOptional="true" MaxLength="50" />
+        <Field Name="EmailPromotion" Type="EmailPromotion" />
+        <Field Name="FirstName" Type="string" MaxLength="50" />
+        <Field Name="LastName" Type="string" MaxLength="50" />
+        <Field Name="MiddleName" Type="string" IsOptional="true" MaxLength="50" />
+        <Field Name="Phone" Type="string" IsOptional="true" MaxLength="25" />
+        <Field Name="PostalCode" Type="string" MaxLength="15" />
+        <Field Name="StateProvinceName" Type="string" MaxLength="50" />
+        <Field Name="Suffix" Type="string" IsOptional="true" MaxLength="10" />
+        <Field Name="Title" Type="string" IsOptional="true" MaxLength="8" />
+      </Fields>
+      <OutputSettingValues>
+        <SettingValues>
+          <SettingValue Name="16:OutputType" Value="PocoWithLinqQuery" Type="18" />
+        </SettingValues>
+      </OutputSettingValues>
     </TypedViewDefinition>
   </TypedViewDefinitions>
   <SPCallDefinitions>
@@ -10059,6 +10127,27 @@
       </EntityMappings>
       <TypedViewMappings>
         <TypedViewMapping TypedViewName="Sales:CustomerView" TargetName="AdventureWorks:Sales:vIndividualCustomer">
+          <FieldMappings>
+            <FieldMapping FieldName="AddressLine1" TargetFieldName="AddressLine1" />
+            <FieldMapping FieldName="AddressLine2" TargetFieldName="AddressLine2" />
+            <FieldMapping FieldName="AddressType" TargetFieldName="AddressType" />
+            <FieldMapping FieldName="City" TargetFieldName="City" />
+            <FieldMapping FieldName="CountryRegionName" TargetFieldName="CountryRegionName" />
+            <FieldMapping FieldName="CustomerId" TargetFieldName="CustomerID" />
+            <FieldMapping FieldName="Demographics" TargetFieldName="Demographics" />
+            <FieldMapping FieldName="EmailAddress" TargetFieldName="EmailAddress" />
+            <FieldMapping FieldName="EmailPromotion" TargetFieldName="EmailPromotion" />
+            <FieldMapping FieldName="FirstName" TargetFieldName="FirstName" />
+            <FieldMapping FieldName="LastName" TargetFieldName="LastName" />
+            <FieldMapping FieldName="MiddleName" TargetFieldName="MiddleName" />
+            <FieldMapping FieldName="Phone" TargetFieldName="Phone" />
+            <FieldMapping FieldName="PostalCode" TargetFieldName="PostalCode" />
+            <FieldMapping FieldName="StateProvinceName" TargetFieldName="StateProvinceName" />
+            <FieldMapping FieldName="Suffix" TargetFieldName="Suffix" />
+            <FieldMapping FieldName="Title" TargetFieldName="Title" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName="Sales:CustomerViewLinq" TargetName="AdventureWorks:Sales:vIndividualCustomer">
           <FieldMappings>
             <FieldMapping FieldName="AddressLine1" TargetFieldName="AddressLine1" />
             <FieldMapping FieldName="AddressLine2" TargetFieldName="AddressLine2" />

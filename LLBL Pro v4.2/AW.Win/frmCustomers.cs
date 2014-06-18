@@ -97,6 +97,16 @@ namespace AW.Win
       bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListLinqedTypedListFilterFirst(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
     }
 
+    private void toolStripButtonLinqTypedview_Click(object sender, EventArgs e)
+    {
+      bindingSourceCustomerList.DataSource = MetaSingletons.MetaData.CustomerViewLinq;
+    }
+
+    private void toolStripButtonTypedListLinq_Click(object sender, EventArgs e)
+    {
+      bindingSourceCustomerList.DataSource = MetaSingletons.MetaData.GetCustomerListLinqTypedList();
+    }
+
     /// <summary>
     ///   Handles the Click event of the toolStripButtonLinqBarf control.
     /// </summary>
@@ -128,5 +138,6 @@ namespace AW.Win
     {
       View();
     }
+
   }
 }
