@@ -8,11 +8,8 @@
 // Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
-
-// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 using System.ComponentModel;
 using AW.Helper.TypeConverters;
-// __LLBLGENPRO_USER_CODE_REGION_END
 
 namespace AW.Data
 {
@@ -1643,8 +1640,8 @@ namespace AW.Data
 		AddressLine2,
 		///<summary>City</summary>
 		City,
-		///<summary>Name</summary>
-		Name,
+		///<summary>AddressType</summary>
+		AddressType,
 		///<summary>Title</summary>
 		Title,
 		///<summary>FirstName</summary>
@@ -1677,8 +1674,8 @@ namespace AW.Data
 		AddressLine2,
 		///<summary>City</summary>
 		City,
-		///<summary>Name</summary>
-		Name,
+		///<summary>AddressType</summary>
+		AddressType,
 		///<summary>Title</summary>
 		Title,
 		///<summary>FirstName</summary>
@@ -1869,223 +1866,224 @@ namespace AW.Data
 	
   // __LLBLGENPRO_USER_CODE_REGION_START CustomUserConstants
 
-  public enum ContactType : byte
-  {
-    AccountingManager = 1,
-    AssistantSalesAgent = 2,
-    AssistantSalesRepresentative = 3,
-    CoordinatorForeignMarkets = 4,
-    ExportAdministrator = 5,
-    InternationalMarketingManager = 6,
-    MarketingAssistant = 7,
-    MarketingManager = 8,
-    MarketingRepresentative = 9,
-    OrderAdministrator = 10,
-    Owner = 11,
-    OwnerMarketingAssistant = 12,
-    ProductManager = 13,
-    PurchasingAgent = 14,
-    PurchasingManager = 15,
-    RegionalAccountRepresentative = 16,
-    SalesAgent = 17,
-    SalesAssociate = 18,
-    SalesManager = 19,
-    SalesRepresentative = 20,
-  }
+   
 
-  [TypeConverter(typeof (HumanizedEnumConverter))]
-  public enum AddressType : byte
-  {
-    Billing = 1,
-    Home = 2,
-    MainOffice = 3,
-    Primary = 4,
-    Shipping = 5,
-    Archive = 6
-  };
+    public enum ContactType : byte
+    {
+      AccountingManager = 1,
+      AssistantSalesAgent = 2,
+      AssistantSalesRepresentative = 3,
+      CoordinatorForeignMarkets = 4,
+      ExportAdministrator = 5,
+      InternationalMarketingManager = 6,
+      MarketingAssistant = 7,
+      MarketingManager = 8,
+      MarketingRepresentative = 9,
+      OrderAdministrator = 10,
+      Owner = 11,
+      OwnerMarketingAssistant = 12,
+      ProductManager = 13,
+      PurchasingAgent = 14,
+      PurchasingManager = 15,
+      RegionalAccountRepresentative = 16,
+      SalesAgent = 17,
+      SalesAssociate = 18,
+      SalesManager = 19,
+      SalesRepresentative = 20,
+    }
 
-  public enum OrderStatus : byte
-  {
-    InProcess = 1,
-    Approved,
-    Backordered,
-    Rejected,
-    Shipped,
-    Cancelled
-  }
+    [TypeConverter(typeof (HumanizedEnumConverter))]
+    public enum AddressType : byte
+    {
+      Billing = 1,
+      Home = 2,
+      MainOffice = 3,
+      Primary = 4,
+      Shipping = 5,
+      Archive = 6
+    };
 
-  public enum OrderPlacesBy : byte
-  {
-    SalesPerson,
-    Customer
-  }
+    public enum OrderStatus : byte
+    {
+      InProcess = 1,
+      Approved,
+      Backordered,
+      Rejected,
+      Shipped,
+      Cancelled
+    }
 
-  public enum MaritalStatus
-  {
-    [Description("Married")] M,
-    [Description("Single")] S
-  }
+    public enum OrderPlacesBy : byte
+    {
+      SalesPerson,
+      Customer
+    }
 
-  public class MaritalStatusDBConverter : BaseEnumConverter<MaritalStatus>
-  {
-  }
+    public enum MaritalStatus
+    {
+      [Description("Married")] M,
+      [Description("Single")] S
+    }
 
-  public enum Gender : byte
-  {
-    [Description("Male")] M,
-    [Description("Female")] F
-  }
+    public class MaritalStatusDBConverter : BaseEnumConverter<MaritalStatus>
+    {
+    }
 
-  public class GenderDBConverter : BaseEnumConverter<Gender>
-  {
-  }
+    public enum Gender : byte
+    {
+      [Description("Male")] M,
+      [Description("Female")] F
+    }
 
-  /// <summary>
-  /// For IsSalaried but not used
-  /// </summary>
-  public enum JobClassification : byte
-  {
-    Hourly,
-    Salaried
-  }
+    public class GenderDBConverter : BaseEnumConverter<Gender>
+    {
+    }
 
-  /// <summary>
-  /// For IsCurrent but not used
-  /// </summary>
-  public enum Current : byte
-  {
-    Inactive,
-    Active
-  }
+    /// <summary>
+    /// For IsSalaried but not used
+    /// </summary>
+    public enum JobClassification : byte
+    {
+      Hourly,
+      Salaried
+    }
 
-  public enum PayFrequency : byte
-  {
-    Monthly = 1,
-    BiWeekly
-  }
+    /// <summary>
+    /// For IsCurrent but not used
+    /// </summary>
+    public enum Current : byte
+    {
+      Inactive,
+      Active
+    }
 
-  public enum NameStyle : byte
-  {
-    FirstLast,
-    LastFirst
-  }
+    public enum PayFrequency : byte
+    {
+      Monthly = 1,
+      BiWeekly
+    }
 
-  /// <summary>
-  ///   0 = Contact does not wish to receive e-mail promotions,
-  ///   1 = Contact does wish to receive e-mail promotions from AdventureWorks,
-  ///   2 = Contact does wish to receive e-mail promotions from AdventureWorks and selected partners.
-  /// </summary>
-  public enum EmailPromotion : byte
-  {
-    None,
-    AWOnly,
-    AWAndPartners
-  }
+    public enum NameStyle : byte
+    {
+      FirstLast,
+      LastFirst
+    }
 
-  /// <summary>
-  ///   0 = StateProvinceCode exists. 1 = StateProvinceCode unavailable, using CountryRegionCode.
-  /// </summary>
-  public enum StateProvinceCodeExistence : byte
-  {
-    Exists,
-    Unavailable
-  }
+    /// <summary>
+    ///   0 = Contact does not wish to receive e-mail promotions,
+    ///   1 = Contact does wish to receive e-mail promotions from AdventureWorks,
+    ///   2 = Contact does wish to receive e-mail promotions from AdventureWorks and selected partners.
+    /// </summary>
+    public enum EmailPromotion : byte
+    {
+      None,
+      AWOnly,
+      AWAndPartners
+    }
 
-  /// <summary>
-  ///   1 = Pending approval, 2 = Approved, 3 = Obsolete
-  /// </summary>
-  public enum ProductMaintenanceDocumentStatus : byte
-  {
-    PendingApproval = 1,
-    Approved,
-    Obsolete
-  }
+    /// <summary>
+    ///   0 = StateProvinceCode exists. 1 = StateProvinceCode unavailable, using CountryRegionCode.
+    /// </summary>
+    public enum StateProvinceCodeExistence : byte
+    {
+      Exists,
+      Unavailable
+    }
 
-  /// <summary>
-  ///   0 = Product is purchased, 1 = Product is manufactured in-house.
-  /// </summary>
-  public enum ProductMake : byte
-  {
-    Purchased,
-    InHouse
-  }
+    /// <summary>
+    ///   1 = Pending approval, 2 = Approved, 3 = Obsolete
+    /// </summary>
+    public enum ProductMaintenanceDocumentStatus : byte
+    {
+      PendingApproval = 1,
+      Approved,
+      Obsolete
+    }
 
-  /// <summary>
-  ///   0 = Product is not a salable item. 1 = Product is salable.
-  /// </summary>
-  public enum ProductFinished : byte
-  {
-    Salable,
-    NotSalable
-  }
+    /// <summary>
+    ///   0 = Product is purchased, 1 = Product is manufactured in-house.
+    /// </summary>
+    public enum ProductMake : byte
+    {
+      Purchased,
+      InHouse
+    }
 
-  /// <summary>
-  ///   R = Road, M = Mountain, T = Touring, S = Standard
-  /// </summary>
-  public enum ProductLine : byte
-  {
-    [Description("Road")] R,
-    [Description("Mountain")] M,
-    [Description("Touring")]T,
-    [Description("Standard")]S
-  }
+    /// <summary>
+    ///   0 = Product is not a salable item. 1 = Product is salable.
+    /// </summary>
+    public enum ProductFinished : byte
+    {
+      Salable,
+      NotSalable
+    }
 
-  public class ProductLineDBConverter : BaseEnumConverter<ProductLine>
-  {
-  }
+    /// <summary>
+    ///   R = Road, M = Mountain, T = Touring, S = Standard
+    /// </summary>
+    public enum ProductLine : byte
+    {
+      [Description("Road")] R,
+      [Description("Mountain")] M,
+      [Description("Touring")] T,
+      [Description("Standard")] S
+    }
 
-  /// <summary>
-  ///   H = High, M = Medium, L = Low
-  /// </summary>
-  public enum ProductClass : byte
-  {
-    [Description("High")] H,
-    [Description("Medium")] M,
-    [Description("Low")]L
-  }
+    public class ProductLineDBConverter : BaseEnumConverter<ProductLine>
+    {
+    }
 
-  public class ProductClassDBConverter : BaseEnumConverter<ProductClass>
-  {
-  }
+    /// <summary>
+    ///   H = High, M = Medium, L = Low
+    /// </summary>
+    public enum ProductClass : byte
+    {
+      [Description("High")] H,
+      [Description("Medium")] M,
+      [Description("Low")] L
+    }
 
-  /// <summary>
-  ///   W = Womens, M = Mens, U = Universal
-  /// </summary>
-  public enum ProductStyle : byte
-  {
-    [Description("Womens")] W,
-    [Description("Mens")] M,
-    [Description("Universal")]
-    U
-  }
+    public class ProductClassDBConverter : BaseEnumConverter<ProductClass>
+    {
+    }
 
-  public class ProductStyleDBConverter : BaseEnumConverter<ProductStyle>
-  {
-  }
+    /// <summary>
+    ///   W = Womens, M = Mens, U = Universal
+    /// </summary>
+    public enum ProductStyle : byte
+    {
+      [Description("Womens")] W,
+      [Description("Mens")] M,
+      [Description("Universal")] U
+    }
 
-  public enum PurchaseOrderStatus : byte
-  {
-    Pending = 1,
-    Approved,
-    Rejected,
-    Complete,
-  }
+    public class ProductStyleDBConverter : BaseEnumConverter<ProductStyle>
+    {
+    }
 
-  public enum CreditRating : byte
-  {
-    Superior = 1,
-    Excellent,
-    AboveAverage,
-    Average,
-    BelowAverage,
-  }
+    public enum PurchaseOrderStatus : byte
+    {
+      Pending = 1,
+      Approved,
+      Rejected,
+      Complete,
+    }
 
-  public enum TaxApplication : byte
-  {
-    Retail = 1,
-    Wholesale,
-    All,
-  }
+    public enum CreditRating : byte
+    {
+      Superior = 1,
+      Excellent,
+      AboveAverage,
+      Average,
+      BelowAverage,
+    }
+
+    public enum TaxApplication : byte
+    {
+      Retail = 1,
+      Wholesale,
+      All,
+    }
 
   // __LLBLGENPRO_USER_CODE_REGION_END
 	#endregion

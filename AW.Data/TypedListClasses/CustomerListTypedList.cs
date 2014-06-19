@@ -36,7 +36,7 @@ namespace AW.Data.TypedListClasses
 		private DataColumn _columnAddressLine1;
 		private DataColumn _columnAddressLine2;
 		private DataColumn _columnCity;
-		private DataColumn _columnName;
+		private DataColumn _columnAddressType;
 		private DataColumn _columnTitle;
 		private DataColumn _columnFirstName;
 		private DataColumn _columnMiddleName;
@@ -144,7 +144,7 @@ namespace AW.Data.TypedListClasses
 			toReturn.DefineField(AddressFields.AddressLine1, 0, "AddressLine1", "", AggregateFunction.None);
 			toReturn.DefineField(AddressFields.AddressLine2, 1, "AddressLine2", "", AggregateFunction.None);
 			toReturn.DefineField(AddressFields.City, 2, "City", "", AggregateFunction.None);
-			toReturn.DefineField(AddressTypeFields.Name, 3, "Name", "", AggregateFunction.None);
+			toReturn.DefineField(AddressTypeFields.Name, 3, "AddressType", "", AggregateFunction.None);
 			toReturn.DefineField(ContactFields.Title, 4, "Title", "", AggregateFunction.None);
 			toReturn.DefineField(ContactFields.FirstName, 5, "FirstName", "", AggregateFunction.None);
 			toReturn.DefineField(ContactFields.MiddleName, 6, "MiddleName", "", AggregateFunction.None);
@@ -175,7 +175,7 @@ namespace AW.Data.TypedListClasses
 			fieldHashtable = new Hashtable();
 			_fieldsCustomProperties.Add("City", fieldHashtable);
 			fieldHashtable = new Hashtable();
-			_fieldsCustomProperties.Add("Name", fieldHashtable);
+			_fieldsCustomProperties.Add("AddressType", fieldHashtable);
 			fieldHashtable = new Hashtable();
 			_fieldsCustomProperties.Add("Title", fieldHashtable);
 			fieldHashtable = new Hashtable();
@@ -205,7 +205,7 @@ namespace AW.Data.TypedListClasses
 			_columnAddressLine1 = GeneralUtils.CreateTypedDataTableColumn("AddressLine1", @"AddressLine1", typeof(System.String), this.Columns);
 			_columnAddressLine2 = GeneralUtils.CreateTypedDataTableColumn("AddressLine2", @"AddressLine2", typeof(System.String), this.Columns);
 			_columnCity = GeneralUtils.CreateTypedDataTableColumn("City", @"City", typeof(System.String), this.Columns);
-			_columnName = GeneralUtils.CreateTypedDataTableColumn("Name", @"Name", typeof(System.String), this.Columns);
+			_columnAddressType = GeneralUtils.CreateTypedDataTableColumn("AddressType", @"Name", typeof(System.String), this.Columns);
 			_columnTitle = GeneralUtils.CreateTypedDataTableColumn("Title", @"Title", typeof(System.String), this.Columns);
 			_columnFirstName = GeneralUtils.CreateTypedDataTableColumn("FirstName", @"FirstName", typeof(System.String), this.Columns);
 			_columnMiddleName = GeneralUtils.CreateTypedDataTableColumn("MiddleName", @"MiddleName", typeof(System.String), this.Columns);
@@ -229,7 +229,7 @@ namespace AW.Data.TypedListClasses
 			_columnAddressLine1 = this.Columns["AddressLine1"];
 			_columnAddressLine2 = this.Columns["AddressLine2"];
 			_columnCity = this.Columns["City"];
-			_columnName = this.Columns["Name"];
+			_columnAddressType = this.Columns["AddressType"];
 			_columnTitle = this.Columns["Title"];
 			_columnFirstName = this.Columns["FirstName"];
 			_columnMiddleName = this.Columns["MiddleName"];
@@ -302,10 +302,10 @@ namespace AW.Data.TypedListClasses
 			get { return _columnCity; }
 		}
 
-		/// <summary>Returns the column object belonging to the TypedList field Name</summary>
-		internal DataColumn NameColumn 
+		/// <summary>Returns the column object belonging to the TypedList field AddressType</summary>
+		internal DataColumn AddressTypeColumn 
 		{
-			get { return _columnName; }
+			get { return _columnAddressType; }
 		}
 
 		/// <summary>Returns the column object belonging to the TypedList field Title</summary>
@@ -460,25 +460,25 @@ namespace AW.Data.TypedListClasses
 		{
 			this[_parent.CityColumn] = System.Convert.DBNull;
 		}
-		/// <summary>Gets / sets the value of the TypedList field Name<br/><br/>
+		/// <summary>Gets / sets the value of the TypedList field AddressType<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on: AddressType.Name</remarks>
-		public System.String Name 
+		public System.String AddressType 
 		{
-			get { return IsNameNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.NameColumn]; }
-			set { this[_parent.NameColumn] = value; }
+			get { return IsAddressTypeNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.AddressTypeColumn]; }
+			set { this[_parent.AddressTypeColumn] = value; }
 		}
 
-		/// <summary>Returns true if the TypedList field Name is NULL, false otherwise.</summary>
-		public bool IsNameNull() 
+		/// <summary>Returns true if the TypedList field AddressType is NULL, false otherwise.</summary>
+		public bool IsAddressTypeNull() 
 		{
-			return IsNull(_parent.NameColumn);
+			return IsNull(_parent.AddressTypeColumn);
 		}
 
-		/// <summary>Sets the TypedList field Name to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetNameNull() 
+		/// <summary>Sets the TypedList field AddressType to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetAddressTypeNull() 
 		{
-			this[_parent.NameColumn] = System.Convert.DBNull;
+			this[_parent.AddressTypeColumn] = System.Convert.DBNull;
 		}
 		/// <summary>Gets / sets the value of the TypedList field Title<br/><br/>
 		/// </summary>

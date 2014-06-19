@@ -44,8 +44,8 @@ namespace AW.Data.TypedListClasses
 		public System.String AddressLine2 { get; set; }
 		/// <summary>Gets the City field. Mapped onto 'Person.Address.City'</summary>
 		public System.String City { get; set; }
-		/// <summary>Gets the Name field. Mapped onto 'Person.AddressType.Name'</summary>
-		public System.String Name { get; set; }
+		/// <summary>Gets the AddressType field. Mapped onto 'Person.AddressType.Name'</summary>
+		public System.String AddressType { get; set; }
 		/// <summary>Gets the Title field. Mapped onto 'Person.Contact.Title'</summary>
 		public System.String Title { get; set; }
 		/// <summary>Gets the FirstName field. Mapped onto 'Person.Contact.FirstName'</summary>

@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using AW.Data.EntityClasses;
+using AW.Data.TypedViewClasses;
 
 namespace AW.Data.TypedListClasses
 {
-  public partial class CustomerListLinqRow 
+  public partial class CustomerListLinqRow : IIndividualCustomer
   {
-    public string AddressType { get; set; }
 
     public CustomerListLinqRow(string addressLine1, string addressLine2, string city, string addressType, string title,
                                        string firstName, string middleName, string lastName, string suffix, string emailAddress,
@@ -13,7 +13,7 @@ namespace AW.Data.TypedListClasses
     {
       AddressLine1 = addressLine1;
       AddressLine2 = addressLine2;
-     City = city;
+      City = city;
       AddressType = addressType;
       Title = title;
       FirstName = firstName;
@@ -26,8 +26,7 @@ namespace AW.Data.TypedListClasses
       StateProvinceName = stateProvinceName;
       CustomerId = customerID;
     }
-
-
+    
     public static IQueryable<CustomerListLinqRow> GetCustomerListQuery(IQueryable<IndividualEntity> individuals)
     {
       return (from individual in individuals

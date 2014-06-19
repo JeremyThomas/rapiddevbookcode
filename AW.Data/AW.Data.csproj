@@ -425,6 +425,7 @@
     <Compile Include="TypedViewClasses\CustomerViewTypedView.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="TypedViewClasses\IIndividualCustomer.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="AssemblyInfo.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
