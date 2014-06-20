@@ -4940,7 +4940,7 @@
           <FieldFieldRelationship FkField="ContactID" PkField="ContactID" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Sales.SalesOrderDetail.SalesOrderHeader-Sales.SalesOrderHeader.SalesOrderDetails" Start="Sales:SalesOrderDetail" End="Sales:SalesOrderHeader" StartNavigator="SalesOrderHeader" EndNavigator="SalesOrderDetails" Type="4">
+      <NormalRelationship Name="Sales.SalesOrderDetail.SalesOrderHeader-Sales.SalesOrderHeader.SalesOrderDetails" Start="Sales:SalesOrderDetail" End="Sales:SalesOrderHeader" StartNavigator="SalesOrderHeader" EndNavigator="SalesOrderDetails" Type="4" DeleteRuleAction="1">
         <FieldRelationships>
           <FieldFieldRelationship FkField="SalesOrderID" PkField="SalesOrderID" />
         </FieldRelationships>
@@ -5006,7 +5006,7 @@
           <FieldFieldRelationship FkField="ShipToAddressID" PkField="AddressID" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Sales.SalesOrderHeaderSalesReason.SalesOrderHeader-Sales.SalesOrderHeader.SalesOrderHeaderSalesReasons" Start="Sales:SalesOrderHeaderSalesReason" End="Sales:SalesOrderHeader" StartNavigator="SalesOrderHeader" EndNavigator="SalesOrderHeaderSalesReasons" Type="4">
+      <NormalRelationship Name="Sales.SalesOrderHeaderSalesReason.SalesOrderHeader-Sales.SalesOrderHeader.SalesOrderHeaderSalesReasons" Start="Sales:SalesOrderHeaderSalesReason" End="Sales:SalesOrderHeader" StartNavigator="SalesOrderHeader" EndNavigator="SalesOrderHeaderSalesReasons" Type="4" DeleteRuleAction="1">
         <FieldRelationships>
           <FieldFieldRelationship FkField="SalesOrderID" PkField="SalesOrderID" />
         </FieldRelationships>
@@ -6008,7 +6008,7 @@
                 </Table>
                 <Table Name="AddressType">
                   <Fields>
-                    <Field Name="AddressTypeID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_AddressType_AddressTypeID" DbType="8" Precision="10">
+                    <Field Name="AddressTypeID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_AddressType_AddressTypeID" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Clustered index created by a primary key constraint." />
                       </CustomProperties>
@@ -6117,7 +6117,7 @@
                 </Table>
                 <Table Name="ContactType">
                   <Fields>
-                    <Field Name="ContactTypeID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_ContactType_ContactTypeID" DbType="8" Precision="10">
+                    <Field Name="ContactTypeID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_ContactType_ContactTypeID" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Clustered index created by a primary key constraint." />
                       </CustomProperties>
@@ -9051,7 +9051,7 @@
                 <FieldPair PkField="Sales:Customer:CustomerID" FkField="Sales:Individual:CustomerID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:SalesOrderDetail:FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID">
+            <ForeignKeyConstraint Name="Sales:SalesOrderDetail:FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID" DeleteRuleAction="1">
               <FieldPairs>
                 <FieldPair PkField="Sales:SalesOrderHeader:SalesOrderID" FkField="Sales:SalesOrderDetail:SalesOrderID" />
               </FieldPairs>
@@ -9107,7 +9107,7 @@
                 <FieldPair PkField="Purchasing:ShipMethod:ShipMethodID" FkField="Sales:SalesOrderHeader:ShipMethodID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:SalesOrderHeaderSalesReason:FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID">
+            <ForeignKeyConstraint Name="Sales:SalesOrderHeaderSalesReason:FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID" DeleteRuleAction="1">
               <FieldPairs>
                 <FieldPair PkField="Sales:SalesOrderHeader:SalesOrderID" FkField="Sales:SalesOrderHeaderSalesReason:SalesOrderID" />
               </FieldPairs>
