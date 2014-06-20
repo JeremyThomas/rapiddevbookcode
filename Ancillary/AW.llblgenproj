@@ -9051,7 +9051,7 @@
                 <FieldPair PkField="Sales:Customer:CustomerID" FkField="Sales:Individual:CustomerID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:SalesOrderDetail:FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID" TrackedChanges="16">
+            <ForeignKeyConstraint Name="Sales:SalesOrderDetail:FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID">
               <FieldPairs>
                 <FieldPair PkField="Sales:SalesOrderHeader:SalesOrderID" FkField="Sales:SalesOrderDetail:SalesOrderID" />
               </FieldPairs>
@@ -9107,7 +9107,7 @@
                 <FieldPair PkField="Purchasing:ShipMethod:ShipMethodID" FkField="Sales:SalesOrderHeader:ShipMethodID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:SalesOrderHeaderSalesReason:FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID" TrackedChanges="16">
+            <ForeignKeyConstraint Name="Sales:SalesOrderHeaderSalesReason:FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID">
               <FieldPairs>
                 <FieldPair PkField="Sales:SalesOrderHeader:SalesOrderID" FkField="Sales:SalesOrderHeaderSalesReason:SalesOrderID" />
               </FieldPairs>
