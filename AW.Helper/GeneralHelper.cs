@@ -804,5 +804,22 @@ namespace AW.Helper
       var posA = value.IndexOf(delimiter, StringComparison.Ordinal);
       return posA == -1 ? "" : value.Substring(0, posA);
     }
+
+    /// <summary>
+    /// Surrounds the string with a char if not already.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="surroundingChar">The surrounding character.</param>
+    /// <returns></returns>
+    public static string SurroundWithIfNotAlready(this string value, char surroundingChar)
+    {
+      if (value.IsNullOrEmpty())
+        return value;
+      if (value.First() != surroundingChar)
+        value = surroundingChar + value;
+      if (value.Last() != surroundingChar)
+        value = value + surroundingChar;
+      return value;
+    }
   }
 }

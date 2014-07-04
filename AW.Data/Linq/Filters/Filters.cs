@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AW.Data.EntityClasses;
+using AW.Data.TypedViewClasses;
 using AW.Data.ViewModels;
 using AW.Data.TypedListClasses;
 
@@ -68,8 +69,8 @@ namespace AW.Data.Linq.Filters
       return customerViewQuery;
     }
 
-    public static IQueryable<CustomerListLinqRow> FilterByDateCustomerNameAddress(this IQueryable<CustomerListLinqRow> customerViewQuery,
-      OrderSearchCriteria orderSearchCriteria)
+    public static IQueryable<T> FilterByDateCustomerNameAddress<T>(this IQueryable<T> customerViewQuery,
+      OrderSearchCriteria orderSearchCriteria) where T : IIndividualCustomer
     {
       if (!string.IsNullOrEmpty(orderSearchCriteria.FirstName))
         customerViewQuery = customerViewQuery.Where(cv => cv.FirstName.Contains(orderSearchCriteria.FirstName));
