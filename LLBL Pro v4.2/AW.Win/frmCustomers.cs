@@ -99,12 +99,12 @@ namespace AW.Win
 
     private void toolStripButtonLinqTypedview_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = MetaSingletons.MetaData.CustomerViewLinq;
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerViewTypedViewLinq(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
     }
 
     private void toolStripButtonTypedListLinq_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = MetaSingletons.MetaData.GetCustomerListLinqTypedList();
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListLinqTypedList(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn); ;
     }
 
     /// <summary>

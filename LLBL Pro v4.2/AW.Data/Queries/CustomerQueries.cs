@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using AW.Data.CollectionClasses;
 using AW.Data.DaoClasses;
@@ -79,6 +80,11 @@ namespace AW.Data.Queries
       var customers = new CustomerViewTypedView();
       new TypedListDAO().FetchAsDataTable(q, customers);
       return customers;
+    }
+
+    public static List<CustomerViewLinqRow> GetCustomerViewTypedViewLinq(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
+    {
+      return MetaSingletons.MetaData.CustomerViewLinq.FilterByDateCustomerNameAddress(orderSearchCriteria).Take(maxNumberOfItemsToReturn).ToList();
     }
 
     public static CustomerViewRelatedCollection GetCustomerViewViaEntity(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
@@ -270,7 +276,12 @@ namespace AW.Data.Queries
     public static IQueryable<CustomerListLinqRow> GetCustomerListLinqedTypedList(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
     {
       var individuals = MetaSingletons.MetaData.Individual;
-      return CustomerListLinqRow.GetCustomerListQuery(individuals).FilterByDateCustomerNameAddress(orderSearchCriteria).Distinct().Take(maxNumberOfItemsToReturn);
+      return CustomerListLinqRow.GetCustomerListQuery(MetaSingletons.MetaData.Individual).FilterByDateCustomerNameAddress(orderSearchCriteria).Distinct().Take(maxNumberOfItemsToReturn);
+    }
+
+    public static IQueryable<CustomerListLinqRow> GetCustomerListLinqTypedList(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
+    {
+      return MetaSingletons.MetaData.GetCustomerListLinqTypedList().FilterByDateCustomerNameAddress(orderSearchCriteria).Distinct().Take(maxNumberOfItemsToReturn);
     }
 
     public static IQueryable<CustomerListLinqRow> GetCustomerListLinqedTypedListFilterFirst(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)

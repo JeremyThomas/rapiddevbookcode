@@ -60,6 +60,13 @@ namespace AW.Tests
       Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count);
     }
 
+    [TestMethod, Description("A test for GetCustomerViewTypedViewLinq.")]
+    public void GetCustomerViewTypedViewLinqTest()
+    {
+      var actual = CustomerQueries.GetCustomerViewTypedViewLinq(new OrderSearchCriteria(), MaxNumberOfItemsToReturn);
+      Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count);
+    }
+
     [TestMethod, Description("A test for GetCustomerViewRelatedCollection. Gets the related customer view of SalesOrder 46117. Example 5.27 pg63.")]
     public void GetCustomerViewRelatedCollectionTest()
     {
@@ -79,6 +86,20 @@ namespace AW.Tests
     {
       var actual = CustomerQueries.GetCustomerListLinqedTypedList(new OrderSearchCriteria(), MaxNumberOfItemsToReturn);
       Assert.AreEqual(MaxNumberOfItemsToReturn, actual.ToList().Count());
+      Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count());
+    }
+    
+    [TestMethod, Description("A test for GetCustomerListLinqedTypedList")]
+    public void GetCustomerListLinqedTypedListFilterFirstTest()
+    {
+      var actual = CustomerQueries.GetCustomerListLinqedTypedListFilterFirst(new OrderSearchCriteria(), MaxNumberOfItemsToReturn);
+      Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count());
+    }
+
+    [TestMethod, Description("A test for GetCustomerListLinqTypedList")]
+    public void GetCustomerListLinqTypedListTest()
+    {
+      var actual = CustomerQueries.GetCustomerListLinqTypedList(new OrderSearchCriteria(), MaxNumberOfItemsToReturn);
       Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count());
     }
 
