@@ -67,7 +67,6 @@ namespace AW.Data.RelationClasses
 			}
 		}
 
-
 		/// <summary>Returns a new IEntityRelation object, between IndividualEntity and ContactEntity over the m:1 relation they have, using the relation between the fields:
 		/// Individual.ContactID - Contact.ContactID
 		/// </summary>

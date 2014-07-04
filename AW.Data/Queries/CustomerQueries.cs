@@ -270,13 +270,13 @@ namespace AW.Data.Queries
     public static IQueryable<CustomerListLinqedTypedList> GetCustomerListLinqedTypedList(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
     {
       var individuals = MetaSingletons.MetaData.Individual;
-      return CustomerListLinqedTypedList.GetCustomerListQuery(individuals).FilterByDateCustomerNameAddress(orderSearchCriteria).Distinct().Take(maxNumberOfItemsToReturn);
+      return CustomerListLinqedTypedList.GetCustomerListQuery(individuals).FilterByDateCustomerNameAddress(orderSearchCriteria).Take(maxNumberOfItemsToReturn);
     }
 
     public static IQueryable<CustomerListLinqedTypedList> GetCustomerListLinqedTypedListFilterFirst(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
     {
       var individuals = MetaSingletons.MetaData.Individual.FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria);
-      return CustomerListLinqedTypedList.GetCustomerListQuery(individuals).Distinct().Take(maxNumberOfItemsToReturn);
+      return CustomerListLinqedTypedList.GetCustomerListQuery(individuals).Take(maxNumberOfItemsToReturn);
     }
 
     /// <summary>

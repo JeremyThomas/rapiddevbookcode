@@ -5,6 +5,24 @@ namespace AW.Data.ViewModels
 {
   public class CustomerListLinqedTypedList
   {
+    protected bool Equals(CustomerListLinqedTypedList other)
+    {
+      return _customerID == other._customerID;
+    }
+
+    public override bool Equals(object obj)
+    {
+      if (ReferenceEquals(null, obj)) return false;
+      if (ReferenceEquals(this, obj)) return true;
+      if (obj.GetType() != this.GetType()) return false;
+      return Equals((CustomerListLinqedTypedList) obj);
+    }
+
+    public override int GetHashCode()
+    {
+      return _customerID;
+    }
+
     private readonly string _addressLine1;
     private readonly string _addressLine2;
     private readonly string _city;
