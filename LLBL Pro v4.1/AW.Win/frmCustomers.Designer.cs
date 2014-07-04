@@ -30,7 +30,7 @@ namespace AW.Win
         {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCustomers));
-      this.dgvResults = new System.Windows.Forms.DataGridView();
+      this.dgvResults = new ADGV.AdvancedDataGridView();
       this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.FirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.LastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,8 +51,9 @@ namespace AW.Win
       this.toolStripButtonPlaintypedview = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonTypedViewQuerySpec = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-      this.toolStripButtonViewAsEntityLinq = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonViewAsRelatedEntity = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+      this.toolStripButtonViewAsEntityLinq = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonViewAsEntityQuerySpec = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonViewAsEntity = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -61,6 +62,9 @@ namespace AW.Win
       this.toolStripButtonLinqFilterFirst = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonLinq = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonLinqAnonymous = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+      this.toolStripButtonClearSort = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonClearFilters = new System.Windows.Forms.ToolStripButton();
       this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
       this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
@@ -74,6 +78,7 @@ namespace AW.Win
       // dgvResults
       // 
       this.dgvResults.AutoGenerateColumns = false;
+      this.dgvResults.AutoGenerateContextFilters = true;
       this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dgvResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -83,13 +88,17 @@ namespace AW.Win
             this.StateProvinceName,
             this.CountryRegionName});
       this.dgvResults.DataSource = this.bindingSourceCustomerList;
+      this.dgvResults.DateWithTime = false;
       this.dgvResults.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dgvResults.Location = new System.Drawing.Point(0, 271);
       this.dgvResults.Name = "dgvResults";
       this.dgvResults.Size = new System.Drawing.Size(876, 216);
       this.dgvResults.TabIndex = 0;
       this.dgvResults.Tag = "True";
+      this.dgvResults.TimeFilter = false;
       this.toolTip1.SetToolTip(this.dgvResults, "Double click to view");
+      this.dgvResults.SortStringChanged += new System.EventHandler(this.dgvResults_SortStringChanged);
+      this.dgvResults.FilterStringChanged += new System.EventHandler(this.dgvResults_FilterStringChanged);
       this.dgvResults.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResults_CellDoubleClick);
       this.dgvResults.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvResults_RowHeaderMouseClick);
       // 
@@ -98,8 +107,10 @@ namespace AW.Win
       this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
       this.Column1.DataPropertyName = "CustomerId";
       this.Column1.HeaderText = "ID";
+      this.Column1.MinimumWidth = 22;
       this.Column1.Name = "Column1";
       this.Column1.ReadOnly = true;
+      this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
       this.Column1.Width = 43;
       // 
       // FirstName
@@ -107,8 +118,10 @@ namespace AW.Win
       this.FirstName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
       this.FirstName.DataPropertyName = "FirstName";
       this.FirstName.HeaderText = "First";
+      this.FirstName.MinimumWidth = 22;
       this.FirstName.Name = "FirstName";
       this.FirstName.ReadOnly = true;
+      this.FirstName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
       this.FirstName.Width = 51;
       // 
       // LastName
@@ -116,8 +129,10 @@ namespace AW.Win
       this.LastName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
       this.LastName.DataPropertyName = "LastName";
       this.LastName.HeaderText = "Last";
+      this.LastName.MinimumWidth = 22;
       this.LastName.Name = "LastName";
       this.LastName.ReadOnly = true;
+      this.LastName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
       this.LastName.Width = 52;
       // 
       // EmailAddress
@@ -125,16 +140,20 @@ namespace AW.Win
       this.EmailAddress.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
       this.EmailAddress.DataPropertyName = "EmailAddress";
       this.EmailAddress.HeaderText = "Email";
+      this.EmailAddress.MinimumWidth = 22;
       this.EmailAddress.Name = "EmailAddress";
       this.EmailAddress.ReadOnly = true;
+      this.EmailAddress.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
       // 
       // StateProvinceName
       // 
       this.StateProvinceName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
       this.StateProvinceName.DataPropertyName = "StateProvinceName";
       this.StateProvinceName.HeaderText = "State";
+      this.StateProvinceName.MinimumWidth = 22;
       this.StateProvinceName.Name = "StateProvinceName";
       this.StateProvinceName.ReadOnly = true;
+      this.StateProvinceName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
       this.StateProvinceName.Width = 57;
       // 
       // CountryRegionName
@@ -142,8 +161,10 @@ namespace AW.Win
       this.CountryRegionName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
       this.CountryRegionName.DataPropertyName = "CountryRegionName";
       this.CountryRegionName.HeaderText = "Country";
+      this.CountryRegionName.MinimumWidth = 22;
       this.CountryRegionName.Name = "CountryRegionName";
       this.CountryRegionName.ReadOnly = true;
+      this.CountryRegionName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
       this.CountryRegionName.Width = 68;
       // 
       // bindingSourceCustomerList
@@ -170,8 +191,9 @@ namespace AW.Win
             this.toolStripButtonPlaintypedview,
             this.toolStripButtonTypedViewQuerySpec,
             this.toolStripSeparator1,
-            this.toolStripButtonViewAsEntityLinq,
             this.toolStripButtonViewAsRelatedEntity,
+            this.toolStripSeparator3,
+            this.toolStripButtonViewAsEntityLinq,
             this.toolStripButtonViewAsEntityQuerySpec,
             this.toolStripButtonViewAsEntity,
             this.toolStripSeparator2,
@@ -179,7 +201,10 @@ namespace AW.Win
             this.toolStripButtonTypedListQuerySpec,
             this.toolStripButtonLinqFilterFirst,
             this.toolStripButtonLinq,
-            this.toolStripButtonLinqAnonymous});
+            this.toolStripButtonLinqAnonymous,
+            this.toolStripSeparator4,
+            this.toolStripButtonClearSort,
+            this.toolStripButtonClearFilters});
       this.bindingNavigatorCustomerList.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
       this.bindingNavigatorCustomerList.Location = new System.Drawing.Point(0, 225);
       this.bindingNavigatorCustomerList.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
@@ -266,8 +291,8 @@ namespace AW.Win
       this.toolStripButtonPlaintypedview.Name = "toolStripButtonPlaintypedview";
       this.toolStripButtonPlaintypedview.Size = new System.Drawing.Size(88, 20);
       this.toolStripButtonPlaintypedview.Text = "Typed View";
-      this.toolStripButtonPlaintypedview.ToolTipText = "vIndividualCustomer exposed via Typed view CustomerViewTypedView. Example 5.18. p" +
-    "g59";
+      this.toolStripButtonPlaintypedview.ToolTipText = "vIndividualCustomer exposed via Typed view CustomerViewTypedView. \r\nExample 5.18." +
+    " pg59\r\nNote: sales order filters are ignored";
       this.toolStripButtonPlaintypedview.Click += new System.EventHandler(this.toolStripButtonPlaintypedview_Click);
       // 
       // toolStripButtonTypedViewQuerySpec
@@ -277,14 +302,30 @@ namespace AW.Win
       this.toolStripButtonTypedViewQuerySpec.Name = "toolStripButtonTypedViewQuerySpec";
       this.toolStripButtonTypedViewQuerySpec.Size = new System.Drawing.Size(148, 20);
       this.toolStripButtonTypedViewQuerySpec.Text = "Typed View QuerySpec";
-      this.toolStripButtonTypedViewQuerySpec.ToolTipText = "vIndividualCustomer exposed via Typed view CustomerViewTypedView. Example 5.18. p" +
-    "g59";
+      this.toolStripButtonTypedViewQuerySpec.ToolTipText = "vIndividualCustomer exposed via Typed view CustomerViewTypedView. \r\nExample 5.18." +
+    " pg59\r\nNote: sales order filters are ignored";
       this.toolStripButtonTypedViewQuerySpec.Click += new System.EventHandler(this.toolStripButtonTypedViewQuerySpec_Click);
       // 
       // toolStripSeparator1
       // 
       this.toolStripSeparator1.Name = "toolStripSeparator1";
       this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
+      // 
+      // toolStripButtonViewAsRelatedEntity
+      // 
+      this.toolStripButtonViewAsRelatedEntity.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonViewAsRelatedEntity.Image")));
+      this.toolStripButtonViewAsRelatedEntity.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonViewAsRelatedEntity.Name = "toolStripButtonViewAsRelatedEntity";
+      this.toolStripButtonViewAsRelatedEntity.Size = new System.Drawing.Size(138, 20);
+      this.toolStripButtonViewAsRelatedEntity.Text = "View as related entity";
+      this.toolStripButtonViewAsRelatedEntity.ToolTipText = "Gets the related customer view (CustomerViewRelated) of SalesOrder 46117 rather t" +
+    "han using filter criterea. \r\nExample 5.27 pg63";
+      this.toolStripButtonViewAsRelatedEntity.Click += new System.EventHandler(this.toolStripButtonViewAsEntity_Click);
+      // 
+      // toolStripSeparator3
+      // 
+      this.toolStripSeparator3.Name = "toolStripSeparator3";
+      this.toolStripSeparator3.Size = new System.Drawing.Size(6, 23);
       // 
       // toolStripButtonViewAsEntityLinq
       // 
@@ -295,17 +336,6 @@ namespace AW.Win
       this.toolStripButtonViewAsEntityLinq.Text = "View As Entity Linq";
       this.toolStripButtonViewAsEntityLinq.ToolTipText = "Gets all vIndividualCustomer exposed via entity CustomerViewRelated";
       this.toolStripButtonViewAsEntityLinq.Click += new System.EventHandler(this.toolStripButtonViewAsEntityLinq_Click);
-      // 
-      // toolStripButtonViewAsRelatedEntity
-      // 
-      this.toolStripButtonViewAsRelatedEntity.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonViewAsRelatedEntity.Image")));
-      this.toolStripButtonViewAsRelatedEntity.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonViewAsRelatedEntity.Name = "toolStripButtonViewAsRelatedEntity";
-      this.toolStripButtonViewAsRelatedEntity.Size = new System.Drawing.Size(138, 20);
-      this.toolStripButtonViewAsRelatedEntity.Text = "View as related entity";
-      this.toolStripButtonViewAsRelatedEntity.ToolTipText = "Gets the related customer view (CustomerViewRelated) of SalesOrder 46117. Example" +
-    " 5.27 pg63";
-      this.toolStripButtonViewAsRelatedEntity.Click += new System.EventHandler(this.toolStripButtonViewAsEntity_Click);
       // 
       // toolStripButtonViewAsEntityQuerySpec
       // 
@@ -337,8 +367,8 @@ namespace AW.Win
       this.toolStripButtonTypedList.Name = "toolStripButtonTypedList";
       this.toolStripButtonTypedList.Size = new System.Drawing.Size(81, 20);
       this.toolStripButtonTypedList.Text = "Typed List";
-      this.toolStripButtonTypedList.ToolTipText = "CustomerListTypedList -Recreation of vIndividualCustomer as a Typed List. Example" +
-    " 5.29. pg64.";
+      this.toolStripButtonTypedList.ToolTipText = "CustomerListTypedList -Recreation of vIndividualCustomer as a Typed List. \r\nExamp" +
+    "le 5.29. pg64.\r\nNote: sales order filters are ignored";
       this.toolStripButtonTypedList.Click += new System.EventHandler(this.toolStripButtonTypedList_Click);
       // 
       // toolStripButtonTypedListQuerySpec
@@ -348,8 +378,8 @@ namespace AW.Win
       this.toolStripButtonTypedListQuerySpec.Name = "toolStripButtonTypedListQuerySpec";
       this.toolStripButtonTypedListQuerySpec.Size = new System.Drawing.Size(141, 20);
       this.toolStripButtonTypedListQuerySpec.Text = "Typed List QuerySpec";
-      this.toolStripButtonTypedListQuerySpec.ToolTipText = "CustomerListTypedList -Recreation of vIndividualCustomer as a Typed List. Example" +
-    " 5.29. pg64.";
+      this.toolStripButtonTypedListQuerySpec.ToolTipText = "CustomerListTypedList -Recreation of vIndividualCustomer as a Typed List. \r\nExamp" +
+    "le 5.29. pg64.\r\nNote: sales order filters are ignored";
       this.toolStripButtonTypedListQuerySpec.Click += new System.EventHandler(this.toolStripButtonTypedListQuerySpec_Click);
       // 
       // toolStripButtonLinqFilterFirst
@@ -359,8 +389,8 @@ namespace AW.Win
       this.toolStripButtonLinqFilterFirst.Name = "toolStripButtonLinqFilterFirst";
       this.toolStripButtonLinqFilterFirst.Size = new System.Drawing.Size(104, 20);
       this.toolStripButtonLinqFilterFirst.Text = "Linq Filter First";
-      this.toolStripButtonLinqFilterFirst.ToolTipText = "Linq version of CustomerListTypedList projected on to  CustomerListLinqedTypedLis" +
-    "t with the Filtering done first";
+      this.toolStripButtonLinqFilterFirst.ToolTipText = "Linq version of CustomerListTypedList projected on to CustomerListLinqedTypedList" +
+    " \r\nwith the Filtering done first";
       this.toolStripButtonLinqFilterFirst.Click += new System.EventHandler(this.toolStripButtonLinqFilterFirst_Click);
       // 
       // toolStripButtonLinq
@@ -368,10 +398,10 @@ namespace AW.Win
       this.toolStripButtonLinq.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLinq.Image")));
       this.toolStripButtonLinq.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonLinq.Name = "toolStripButtonLinq";
-      this.toolStripButtonLinq.Size = new System.Drawing.Size(131, 20);
-      this.toolStripButtonLinq.Text = "Linq Concrete Class";
-      this.toolStripButtonLinq.ToolTipText = "Linq version of CustomerListTypedList projected on to  CustomerListLinqedTypedLis" +
-    "t";
+      this.toolStripButtonLinq.Size = new System.Drawing.Size(101, 20);
+      this.toolStripButtonLinq.Text = "Linq Concrete";
+      this.toolStripButtonLinq.ToolTipText = "Linq version of CustomerListTypedList projected on to CustomerListLinqedTypedList" +
+    " with the Filtering done afterwards\r\nNote: sales order filters are ignored";
       this.toolStripButtonLinq.Click += new System.EventHandler(this.toolStripButtonLinq_Click);
       // 
       // toolStripButtonLinqAnonymous
@@ -381,8 +411,34 @@ namespace AW.Win
       this.toolStripButtonLinqAnonymous.Name = "toolStripButtonLinqAnonymous";
       this.toolStripButtonLinqAnonymous.Size = new System.Drawing.Size(118, 20);
       this.toolStripButtonLinqAnonymous.Text = "Linq Anonymous";
-      this.toolStripButtonLinqAnonymous.ToolTipText = "Linq version of CustomerListTypedList projected on to an anonymous type";
+      this.toolStripButtonLinqAnonymous.ToolTipText = "Linq version of CustomerListTypedList projected on to an anonymous type \r\nwith th" +
+    "e Filtering done first";
       this.toolStripButtonLinqAnonymous.Click += new System.EventHandler(this.toolStripButtonLinqBarf_Click);
+      // 
+      // toolStripSeparator4
+      // 
+      this.toolStripSeparator4.Name = "toolStripSeparator4";
+      this.toolStripSeparator4.Size = new System.Drawing.Size(6, 23);
+      // 
+      // toolStripButtonClearSort
+      // 
+      this.toolStripButtonClearSort.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonClearSort.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonClearSort.Image")));
+      this.toolStripButtonClearSort.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonClearSort.Name = "toolStripButtonClearSort";
+      this.toolStripButtonClearSort.Size = new System.Drawing.Size(62, 19);
+      this.toolStripButtonClearSort.Text = "Clear Sort";
+      this.toolStripButtonClearSort.Click += new System.EventHandler(this.toolStripButtonClearSort_Click);
+      // 
+      // toolStripButtonClearFilters
+      // 
+      this.toolStripButtonClearFilters.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonClearFilters.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonClearFilters.Image")));
+      this.toolStripButtonClearFilters.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonClearFilters.Name = "toolStripButtonClearFilters";
+      this.toolStripButtonClearFilters.Size = new System.Drawing.Size(72, 19);
+      this.toolStripButtonClearFilters.Text = "Clear Filters";
+      this.toolStripButtonClearFilters.Click += new System.EventHandler(this.toolStripButtonClearFilters_Click);
       // 
       // numericUpDownNumRows
       // 
@@ -392,7 +448,7 @@ namespace AW.Win
             0,
             0,
             0});
-      this.numericUpDownNumRows.Location = new System.Drawing.Point(706, 251);
+      this.numericUpDownNumRows.Location = new System.Drawing.Point(812, 251);
       this.numericUpDownNumRows.Name = "numericUpDownNumRows";
       this.numericUpDownNumRows.Size = new System.Drawing.Size(42, 20);
       this.numericUpDownNumRows.TabIndex = 2;
@@ -437,7 +493,7 @@ namespace AW.Win
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dgvResults;
+        private ADGV.AdvancedDataGridView dgvResults;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn FirstName;
         private System.Windows.Forms.DataGridViewTextBoxColumn LastName;
@@ -471,6 +527,10 @@ namespace AW.Win
         private System.Windows.Forms.ToolStripButton toolStripButtonViewAsRelatedEntity;
         private System.Windows.Forms.ToolStripButton toolStripButtonViewAsEntityQuerySpec;
         private System.Windows.Forms.ToolStripButton toolStripButtonLinqFilterFirst;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton toolStripButtonClearSort;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton toolStripButtonClearFilters;
 
     }
 }

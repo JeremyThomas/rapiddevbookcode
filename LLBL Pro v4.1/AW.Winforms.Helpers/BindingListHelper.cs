@@ -279,7 +279,7 @@ namespace AW.Winforms.Helpers
       return showenEnumerable;
     }
 
-    private static bool BindEnumerable<T>(BindingSource bindingSource, IEnumerable<T> enumerable)
+    public static bool BindEnumerable<T>(BindingSource bindingSource, IEnumerable<T> enumerable)
     {
       bool showenEnumerable;
       try

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AW.Data.HelperClasses;
+using AW.Helper;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.ViewModels
@@ -68,9 +69,9 @@ namespace AW.Data.ViewModels
       if (includeSalesOrderHeader)
         AddSalesOrderHeaderFieldsPredicateExpressions(predicate);
       if (!String.IsNullOrEmpty(FirstName))
-        predicate.Add(CustomerViewRelatedFields.FirstName%FirstName);
+        predicate.Add(CustomerViewRelatedFields.FirstName%FirstName.SurroundWithIfNotAlready('%'));
       if (!String.IsNullOrEmpty(LastName))
-        predicate.Add(CustomerViewRelatedFields.LastName%LastName);
+        predicate.Add(CustomerViewRelatedFields.LastName%LastName.SurroundWithIfNotAlready('%'));
       if (!String.IsNullOrEmpty(CityName))
         predicate.Add(CustomerViewRelatedFields.City%CityName);
       if (!String.IsNullOrEmpty(StateName))
@@ -104,11 +105,11 @@ namespace AW.Data.ViewModels
       if (includeSalesOrderHeader)
         AddSalesOrderHeaderFieldsPredicateExpressions(predicate);
       if (!String.IsNullOrEmpty(FirstName))
-        predicate.Add(ContactFields.FirstName%FirstName);
+        predicate.Add(ContactFields.FirstName % FirstName.SurroundWithIfNotAlready('%'));
       if (!String.IsNullOrEmpty(LastName))
-        predicate.Add(ContactFields.LastName%LastName);
+        predicate.Add(ContactFields.LastName % LastName.SurroundWithIfNotAlready('%'));
       if (!String.IsNullOrEmpty(CityName))
-        predicate.Add(AddressFields.City%CityName);
+        predicate.Add(AddressFields.City % CityName.SurroundWithIfNotAlready('%'));
       if (!String.IsNullOrEmpty(StateName))
         predicate.Add(StateProvinceFields.Name == StateName);
       if (!String.IsNullOrEmpty(CountryName))

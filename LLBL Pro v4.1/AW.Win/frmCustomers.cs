@@ -79,7 +79,7 @@ namespace AW.Win
 
     private void toolStripButtonTypedListQuerySpec_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListTypedListQuerySpec(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
+      bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListTypedListQuerySpec(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn),true,true);
     }
 
     /// <summary>
@@ -89,12 +89,12 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
     private void toolStripButtonLinq_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListLinqedTypedList(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
+      BindingListHelper.BindEnumerable(bindingSourceCustomerList,CustomerQueries.GetCustomerListLinqedTypedList(orderSearchCriteria1.GetCriteria(), 0).ToList().Distinct().Take(MaxNumberOfItemsToReturn));
     }
 
     private void toolStripButtonLinqFilterFirst_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListLinqedTypedListFilterFirst(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
+      bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListLinqedTypedListFilterFirst(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn),true,true);
     }
 
     /// <summary>
@@ -104,7 +104,7 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
     private void toolStripButtonLinqBarf_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListAnonymousLinq(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
+      bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListAnonymousLinq(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn),true,true);
     }
 
     private void toolStripButtonViewAsEntityLinq_Click(object sender, EventArgs e)
@@ -127,6 +127,31 @@ namespace AW.Win
     private void dgvResults_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
     {
       View();
+    }
+
+    private void dgvResults_SortStringChanged(object sender, EventArgs e)
+    {
+      bindingSourceCustomerList.Sort = dgvResults.SortString;
+    }
+
+    private void dgvResults_FilterStringChanged(object sender, EventArgs e)
+    {
+      if (bindingSourceCustomerList.SupportsFiltering)
+        bindingSourceCustomerList.Filter = dgvResults.FilterString;
+    }
+
+    private void toolStripButtonClearSort_Click(object sender, EventArgs e)
+    {
+      dgvResults.ClearSort(true);
+      if (bindingSourceCustomerList.SupportsSorting)
+        bindingSourceCustomerList.RemoveSort();
+    }
+
+    private void toolStripButtonClearFilters_Click(object sender, EventArgs e)
+    {
+      dgvResults.ClearFilter(true);
+      if (bindingSourceCustomerList.SupportsFiltering)
+        bindingSourceCustomerList.RemoveFilter();
     }
   }
 }
