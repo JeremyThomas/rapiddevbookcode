@@ -26,7 +26,7 @@
     System.Int32 CustomerId { get; set; }
 
     /// <summary>Gets the Demographics field.</summary>
-//    System.String Demographics { get; set; }
+    System.String Demographics { get; set; }
 
     /// <summary>Gets the EmailAddress field.</summary>
     System.String EmailAddress { get; set; }
@@ -44,10 +44,10 @@
     System.String MiddleName { get; set; }
 
     /// <summary>Gets the Phone field.</summary>
-  //  System.String Phone { get; set; }
+    System.String Phone { get; set; }
 
     /// <summary>Gets the PostalCode field.</summary>
- //   System.String PostalCode { get; set; }
+    System.String PostalCode { get; set; }
 
     /// <summary>Gets the StateProvinceName field.</summary>
     System.String StateProvinceName { get; set; }

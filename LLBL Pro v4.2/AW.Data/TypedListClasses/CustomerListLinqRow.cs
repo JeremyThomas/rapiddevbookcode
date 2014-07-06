@@ -25,7 +25,7 @@ namespace AW.Data.TypedListClasses
 	/// Custom Properties: <br/>
 	/// </remarks>
 	[Serializable]
-	public partial class CustomerListLinqRow 
+	public partial class CustomerListLinqRow : PocoBase
 	{
 		#region Extensibility Method Definitions
 		partial void OnCreated();
@@ -42,30 +42,36 @@ namespace AW.Data.TypedListClasses
 		public System.String AddressLine1 { get; set; }
 		/// <summary>Gets the AddressLine2 field. Mapped onto 'Person.Address.AddressLine2'</summary>
 		public System.String AddressLine2 { get; set; }
-		/// <summary>Gets the City field. Mapped onto 'Person.Address.City'</summary>
-		public System.String City { get; set; }
 		/// <summary>Gets the AddressType field. Mapped onto 'Person.AddressType.Name'</summary>
 		public System.String AddressType { get; set; }
-		/// <summary>Gets the Title field. Mapped onto 'Person.Contact.Title'</summary>
-		public System.String Title { get; set; }
-		/// <summary>Gets the FirstName field. Mapped onto 'Person.Contact.FirstName'</summary>
-		public System.String FirstName { get; set; }
-		/// <summary>Gets the MiddleName field. Mapped onto 'Person.Contact.MiddleName'</summary>
-		public System.String MiddleName { get; set; }
-		/// <summary>Gets the LastName field. Mapped onto 'Person.Contact.LastName'</summary>
-		public System.String LastName { get; set; }
-		/// <summary>Gets the Suffix field. Mapped onto 'Person.Contact.Suffix'</summary>
-		public System.String Suffix { get; set; }
+		/// <summary>Gets the City field. Mapped onto 'Person.Address.City'</summary>
+		public System.String City { get; set; }
+		/// <summary>Gets the CountryRegionName field. Mapped onto 'Person.StateProvince.Name'</summary>
+		public System.String CountryRegionName { get; set; }
+		/// <summary>Gets the CustomerId field. Mapped onto 'Sales.Customer.CustomerID'</summary>
+		public System.Int32 CustomerId { get; set; }
+		/// <summary>Gets the Demographics field. Mapped onto 'Sales.Individual.Demographics'</summary>
+		public System.String Demographics { get; set; }
 		/// <summary>Gets the EmailAddress field. Mapped onto 'Person.Contact.EmailAddress'</summary>
 		public System.String EmailAddress { get; set; }
 		/// <summary>Gets the EmailPromotion field. Mapped onto 'Person.Contact.EmailPromotion'</summary>
 		public AW.Data.EmailPromotion EmailPromotion { get; set; }
-		/// <summary>Gets the CountryRegionName field. Mapped onto 'Person.StateProvince.Name'</summary>
-		public System.String CountryRegionName { get; set; }
+		/// <summary>Gets the FirstName field. Mapped onto 'Person.Contact.FirstName'</summary>
+		public System.String FirstName { get; set; }
+		/// <summary>Gets the LastName field. Mapped onto 'Person.Contact.LastName'</summary>
+		public System.String LastName { get; set; }
+		/// <summary>Gets the MiddleName field. Mapped onto 'Person.Contact.MiddleName'</summary>
+		public System.String MiddleName { get; set; }
+		/// <summary>Gets the Phone field. Mapped onto 'Person.Contact.Phone'</summary>
+		public System.String Phone { get; set; }
+		/// <summary>Gets the PostalCode field. Mapped onto 'Person.Address.PostalCode'</summary>
+		public System.String PostalCode { get; set; }
 		/// <summary>Gets the StateProvinceName field. Mapped onto 'Person.CountryRegion.Name'</summary>
 		public System.String StateProvinceName { get; set; }
-		/// <summary>Gets the CustomerId field. Mapped onto 'Sales.Customer.CustomerID'</summary>
-		public System.Int32 CustomerId { get; set; }
+		/// <summary>Gets the Suffix field. Mapped onto 'Person.Contact.Suffix'</summary>
+		public System.String Suffix { get; set; }
+		/// <summary>Gets the Title field. Mapped onto 'Person.Contact.Title'</summary>
+		public System.String Title { get; set; }
 		#endregion
 	}
 }
