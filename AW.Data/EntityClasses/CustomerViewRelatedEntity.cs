@@ -29,6 +29,7 @@ namespace AW.Data.EntityClasses
 {
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
+  using AW.Data.TypedViewClasses;
 	// __LLBLGENPRO_USER_CODE_REGION_END
 
 	/// <summary>Entity class which represents the entity 'CustomerViewRelated'. <br/><br/>
@@ -38,6 +39,7 @@ namespace AW.Data.EntityClasses
 	[Serializable]
 	public partial class CustomerViewRelatedEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
+    ,IIndividualCustomer
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations

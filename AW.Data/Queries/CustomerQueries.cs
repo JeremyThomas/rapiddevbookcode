@@ -275,8 +275,7 @@ namespace AW.Data.Queries
     /// </remarks>
     public static IQueryable<CustomerListLinqRow> GetCustomerListLinqedTypedList(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
     {
-      var individuals = MetaSingletons.MetaData.Individual;
-      return CustomerListLinqRow.GetCustomerListQuery(MetaSingletons.MetaData.Individual).FilterByDateCustomerNameAddress(orderSearchCriteria).Distinct().Take(maxNumberOfItemsToReturn);
+      return CustomerListLinqRow.GetCustomerListQuery(MetaSingletons.MetaData.Individual).FilterByDateCustomerNameAddress(orderSearchCriteria).Take(maxNumberOfItemsToReturn);
     }
 
     public static IQueryable<CustomerListLinqRow> GetCustomerListLinqTypedList(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
@@ -287,7 +286,7 @@ namespace AW.Data.Queries
     public static IQueryable<CustomerListLinqRow> GetCustomerListLinqedTypedListFilterFirst(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
     {
       var individuals = MetaSingletons.MetaData.Individual.FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria);
-      return CustomerListLinqRow.GetCustomerListQuery(individuals).Distinct().Take(maxNumberOfItemsToReturn);
+      return CustomerListLinqRow.GetCustomerListQuery(individuals).Take(maxNumberOfItemsToReturn);
     }
 
     /// <summary>
@@ -347,7 +346,10 @@ namespace AW.Data.Queries
           individual.Contact.EmailPromotion,
           CountryRegionName = customerAddress.Address.StateProvince.CountryRegion.Name,
           StateProvinceName = customerAddress.Address.StateProvince.Name,
-          individual.CustomerID
+          individual.CustomerID,
+          individual.Contact.Phone,
+          individual.Demographics,
+          customerAddress.Address.PostalCode
         };
       return customerlist.Distinct().Take(maxNumberOfItemsToReturn);
     }

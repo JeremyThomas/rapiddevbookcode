@@ -4947,7 +4947,7 @@
           <FieldFieldRelationship FkField="ContactID" PkField="ContactID" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Sales.SalesOrderDetail.SalesOrderHeader-Sales.SalesOrderHeader.SalesOrderDetails" Start="Sales:SalesOrderDetail" End="Sales:SalesOrderHeader" StartNavigator="SalesOrderHeader" EndNavigator="SalesOrderDetails" Type="4">
+      <NormalRelationship Name="Sales.SalesOrderDetail.SalesOrderHeader-Sales.SalesOrderHeader.SalesOrderDetails" Start="Sales:SalesOrderDetail" End="Sales:SalesOrderHeader" StartNavigator="SalesOrderHeader" EndNavigator="SalesOrderDetails" Type="4" DeleteRuleAction="1">
         <FieldRelationships>
           <FieldFieldRelationship FkField="SalesOrderID" PkField="SalesOrderID" />
         </FieldRelationships>
@@ -5013,7 +5013,7 @@
           <FieldFieldRelationship FkField="ShipToAddressID" PkField="AddressID" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Sales.SalesOrderHeaderSalesReason.SalesOrderHeader-Sales.SalesOrderHeader.SalesOrderHeaderSalesReasons" Start="Sales:SalesOrderHeaderSalesReason" End="Sales:SalesOrderHeader" StartNavigator="SalesOrderHeader" EndNavigator="SalesOrderHeaderSalesReasons" Type="4">
+      <NormalRelationship Name="Sales.SalesOrderHeaderSalesReason.SalesOrderHeader-Sales.SalesOrderHeader.SalesOrderHeaderSalesReasons" Start="Sales:SalesOrderHeaderSalesReason" End="Sales:SalesOrderHeader" StartNavigator="SalesOrderHeader" EndNavigator="SalesOrderHeaderSalesReasons" Type="4" DeleteRuleAction="1">
         <FieldRelationships>
           <FieldFieldRelationship FkField="SalesOrderID" PkField="SalesOrderID" />
         </FieldRelationships>
@@ -5120,18 +5120,21 @@
       <Fields>
         <Field FieldAlias="AddressLine1" TargetField="Person.Address.AddressLine1" />
         <Field FieldAlias="AddressLine2" TargetField="Person.Address.AddressLine2" />
-        <Field FieldAlias="City" TargetField="Person.Address.City" />
         <Field FieldAlias="AddressType" Caption="Name" TargetField="Person.AddressType.Name" />
-        <Field FieldAlias="Title" TargetField="Person.Contact.Title" />
-        <Field FieldAlias="FirstName" TargetField="Person.Contact.FirstName" />
-        <Field FieldAlias="MiddleName" TargetField="Person.Contact.MiddleName" />
-        <Field FieldAlias="LastName" TargetField="Person.Contact.LastName" />
-        <Field FieldAlias="Suffix" TargetField="Person.Contact.Suffix" />
+        <Field FieldAlias="City" TargetField="Person.Address.City" />
+        <Field FieldAlias="CountryRegionName" TargetField="Person.StateProvince.Name" />
+        <Field FieldAlias="CustomerId" TargetField="Sales.Customer.CustomerID" />
+        <Field FieldAlias="Demographics" TargetField="Sales.Individual.Demographics" />
         <Field FieldAlias="EmailAddress" TargetField="Person.Contact.EmailAddress" />
         <Field FieldAlias="EmailPromotion" TargetField="Person.Contact.EmailPromotion" />
-        <Field FieldAlias="CountryRegionName" TargetField="Person.StateProvince.Name" />
+        <Field FieldAlias="FirstName" TargetField="Person.Contact.FirstName" />
+        <Field FieldAlias="LastName" TargetField="Person.Contact.LastName" />
+        <Field FieldAlias="MiddleName" TargetField="Person.Contact.MiddleName" />
+        <Field FieldAlias="Phone" TargetField="Person.Contact.Phone" />
+        <Field FieldAlias="PostalCode" TargetField="Person.Address.PostalCode" />
         <Field FieldAlias="StateProvinceName" TargetField="Person.CountryRegion.Name" />
-        <Field FieldAlias="CustomerId" TargetField="Sales.Customer.CustomerID" />
+        <Field FieldAlias="Suffix" TargetField="Person.Contact.Suffix" />
+        <Field FieldAlias="Title" TargetField="Person.Contact.Title" />
       </Fields>
       <Relationships>
         <Relationship Name="Person.Address.StateProvince-Person.StateProvince.Addresses" StartAlias="Person.StateProvince" EndAlias="Person.Address" JoinHint="1" />
@@ -5157,18 +5160,21 @@
       <Fields>
         <Field FieldAlias="AddressLine1" TargetField="Person.Address.AddressLine1" />
         <Field FieldAlias="AddressLine2" TargetField="Person.Address.AddressLine2" />
-        <Field FieldAlias="City" TargetField="Person.Address.City" />
         <Field FieldAlias="AddressType" Caption="Name" TargetField="Person.AddressType.Name" />
-        <Field FieldAlias="Title" TargetField="Person.Contact.Title" />
-        <Field FieldAlias="FirstName" TargetField="Person.Contact.FirstName" />
-        <Field FieldAlias="MiddleName" TargetField="Person.Contact.MiddleName" />
-        <Field FieldAlias="LastName" TargetField="Person.Contact.LastName" />
-        <Field FieldAlias="Suffix" TargetField="Person.Contact.Suffix" />
+        <Field FieldAlias="City" TargetField="Person.Address.City" />
+        <Field FieldAlias="CountryRegionName" TargetField="Person.StateProvince.Name" />
+        <Field FieldAlias="CustomerId" TargetField="Sales.Customer.CustomerID" />
+        <Field FieldAlias="Demographics" TargetField="Sales.Individual.Demographics" />
         <Field FieldAlias="EmailAddress" TargetField="Person.Contact.EmailAddress" />
         <Field FieldAlias="EmailPromotion" TargetField="Person.Contact.EmailPromotion" />
-        <Field FieldAlias="CountryRegionName" TargetField="Person.StateProvince.Name" />
+        <Field FieldAlias="FirstName" TargetField="Person.Contact.FirstName" />
+        <Field FieldAlias="LastName" TargetField="Person.Contact.LastName" />
+        <Field FieldAlias="MiddleName" TargetField="Person.Contact.MiddleName" />
+        <Field FieldAlias="Phone" TargetField="Person.Contact.Phone" />
+        <Field FieldAlias="PostalCode" TargetField="Person.Address.PostalCode" />
         <Field FieldAlias="StateProvinceName" TargetField="Person.CountryRegion.Name" />
-        <Field FieldAlias="CustomerId" TargetField="Sales.Customer.CustomerID" />
+        <Field FieldAlias="Suffix" TargetField="Person.Contact.Suffix" />
+        <Field FieldAlias="Title" TargetField="Person.Contact.Title" />
       </Fields>
       <Relationships>
         <Relationship Name="Person.Address.StateProvince-Person.StateProvince.Addresses" StartAlias="Person.StateProvince" EndAlias="Person.Address" JoinHint="1" />
@@ -5182,6 +5188,7 @@
       <OutputSettingValues>
         <SettingValues>
           <SettingValue Name="8:OutputType" Value="PocoWithLinqQuery" Type="18" />
+          <SettingValue Name="8:TypedListRowBaseClassName" Value="PocoBase" Type="18" />
         </SettingValues>
       </OutputSettingValues>
     </TypedListDefinition>
@@ -5231,6 +5238,7 @@
       <OutputSettingValues>
         <SettingValues>
           <SettingValue Name="16:OutputType" Value="PocoWithLinqQuery" Type="18" />
+          <SettingValue Name="16:TypedViewRowBaseClassName" Value="PocoBase" Type="18" />
         </SettingValues>
       </OutputSettingValues>
     </TypedViewDefinition>
@@ -9196,7 +9204,7 @@
                 <FieldPair PkField="Sales:Customer:CustomerID" FkField="Sales:Individual:CustomerID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:SalesOrderDetail:FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID">
+            <ForeignKeyConstraint Name="Sales:SalesOrderDetail:FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID" DeleteRuleAction="1">
               <FieldPairs>
                 <FieldPair PkField="Sales:SalesOrderHeader:SalesOrderID" FkField="Sales:SalesOrderDetail:SalesOrderID" />
               </FieldPairs>
@@ -9252,7 +9260,7 @@
                 <FieldPair PkField="Purchasing:ShipMethod:ShipMethodID" FkField="Sales:SalesOrderHeader:ShipMethodID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:SalesOrderHeaderSalesReason:FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID">
+            <ForeignKeyConstraint Name="Sales:SalesOrderHeaderSalesReason:FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID" DeleteRuleAction="1">
               <FieldPairs>
                 <FieldPair PkField="Sales:SalesOrderHeader:SalesOrderID" FkField="Sales:SalesOrderHeaderSalesReason:SalesOrderID" />
               </FieldPairs>

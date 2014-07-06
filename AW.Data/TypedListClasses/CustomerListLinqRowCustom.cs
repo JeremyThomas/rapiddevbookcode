@@ -6,11 +6,29 @@ namespace AW.Data.TypedListClasses
 {
   public partial class CustomerListLinqRow : IIndividualCustomer
   {
-
-    public CustomerListLinqRow(string addressLine1, string addressLine2, string city, string addressType, string title,
-                                       string firstName, string middleName, string lastName, string suffix, string emailAddress,
-                                       EmailPromotion emailPromotion, string countryRegionName, string stateProvinceName, int customerID)
+    private bool Equals(IIndividualCustomer other)
     {
+      return CustomerId == other.CustomerId;
+    }
+
+    public override bool Equals(object obj)
+    {
+      if (ReferenceEquals(null, obj)) return false;
+      if (ReferenceEquals(this, obj)) return true;
+      return obj.GetType() == GetType() && Equals((CustomerListLinqRow)obj);
+    }
+
+    public override int GetHashCode()
+    {
+      return CustomerId;
+    }
+
+    private CustomerListLinqRow(string addressLine1, string addressLine2, string city, string addressType, string title, string firstName, string middleName, string lastName, 
+      string suffix, string emailAddress, EmailPromotion emailPromotion, string countryRegionName, string stateProvinceName, int customerID, string phone, string demographics, string postalCode)
+    {
+      PostalCode = postalCode;
+      Demographics = demographics;
+      Phone = phone;
       AddressLine1 = addressLine1;
       AddressLine2 = addressLine2;
       City = city;
@@ -26,7 +44,7 @@ namespace AW.Data.TypedListClasses
       StateProvinceName = stateProvinceName;
       CustomerId = customerID;
     }
-    
+
     public static IQueryable<CustomerListLinqRow> GetCustomerListQuery(IQueryable<IndividualEntity> individuals)
     {
       return (from individual in individuals
@@ -39,7 +57,8 @@ namespace AW.Data.TypedListClasses
                                                 individual.Contact.Suffix, individual.Contact.EmailAddress,
                                                 individual.Contact.EmailPromotion,
                                                 customerAddress.Address.StateProvince.CountryRegion.Name,
-                                                customerAddress.Address.StateProvince.Name, individual.CustomerID));
+                                                customerAddress.Address.StateProvince.Name, individual.CustomerID,
+                                                individual.Contact.Phone, individual.Demographics, customerAddress.Address.PostalCode));
     }
   }
 }

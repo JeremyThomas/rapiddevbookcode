@@ -1638,30 +1638,36 @@ namespace AW.Data
 		AddressLine1,
 		///<summary>AddressLine2</summary>
 		AddressLine2,
-		///<summary>City</summary>
-		City,
 		///<summary>AddressType</summary>
 		AddressType,
-		///<summary>Title</summary>
-		Title,
-		///<summary>FirstName</summary>
-		FirstName,
-		///<summary>MiddleName</summary>
-		MiddleName,
-		///<summary>LastName</summary>
-		LastName,
-		///<summary>Suffix</summary>
-		Suffix,
+		///<summary>City</summary>
+		City,
+		///<summary>CountryRegionName</summary>
+		CountryRegionName,
+		///<summary>CustomerId</summary>
+		CustomerId,
+		///<summary>Demographics</summary>
+		Demographics,
 		///<summary>EmailAddress</summary>
 		EmailAddress,
 		///<summary>EmailPromotion</summary>
 		EmailPromotion,
-		///<summary>CountryRegionName</summary>
-		CountryRegionName,
+		///<summary>FirstName</summary>
+		FirstName,
+		///<summary>LastName</summary>
+		LastName,
+		///<summary>MiddleName</summary>
+		MiddleName,
+		///<summary>Phone</summary>
+		Phone,
+		///<summary>PostalCode</summary>
+		PostalCode,
 		///<summary>StateProvinceName</summary>
 		StateProvinceName,
-		///<summary>CustomerId</summary>
-		CustomerId,
+		///<summary>Suffix</summary>
+		Suffix,
+		///<summary>Title</summary>
+		Title,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -1672,30 +1678,36 @@ namespace AW.Data
 		AddressLine1,
 		///<summary>AddressLine2</summary>
 		AddressLine2,
-		///<summary>City</summary>
-		City,
 		///<summary>AddressType</summary>
 		AddressType,
-		///<summary>Title</summary>
-		Title,
-		///<summary>FirstName</summary>
-		FirstName,
-		///<summary>MiddleName</summary>
-		MiddleName,
-		///<summary>LastName</summary>
-		LastName,
-		///<summary>Suffix</summary>
-		Suffix,
+		///<summary>City</summary>
+		City,
+		///<summary>CountryRegionName</summary>
+		CountryRegionName,
+		///<summary>CustomerId</summary>
+		CustomerId,
+		///<summary>Demographics</summary>
+		Demographics,
 		///<summary>EmailAddress</summary>
 		EmailAddress,
 		///<summary>EmailPromotion</summary>
 		EmailPromotion,
-		///<summary>CountryRegionName</summary>
-		CountryRegionName,
+		///<summary>FirstName</summary>
+		FirstName,
+		///<summary>LastName</summary>
+		LastName,
+		///<summary>MiddleName</summary>
+		MiddleName,
+		///<summary>Phone</summary>
+		Phone,
+		///<summary>PostalCode</summary>
+		PostalCode,
 		///<summary>StateProvinceName</summary>
 		StateProvinceName,
-		///<summary>CustomerId</summary>
-		CustomerId,
+		///<summary>Suffix</summary>
+		Suffix,
+		///<summary>Title</summary>
+		Title,
 		/// <summary></summary>
 		AmountOfFields
 	}

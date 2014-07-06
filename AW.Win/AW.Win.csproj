@@ -69,6 +69,9 @@
     <ApplicationIcon>Adventure Works Cycle Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdvancedDataGridView">
+      <HintPath>..\packages\ADGV.0.1.0.10\lib\net40\AdvancedDataGridView.dll</HintPath>
+    </Reference>
     <Reference Include="Korzh.EasyQuery.Db.NET45">
       <HintPath>..\Lib\KorzhEasyQuery\Korzh.EasyQuery.Db.NET45.dll</HintPath>
     </Reference>

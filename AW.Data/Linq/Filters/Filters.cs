@@ -27,21 +27,7 @@ namespace AW.Data.Linq.Filters
     public static IQueryable<CustomerViewRelatedEntity> FilterByDateOrderIDOrderNumberCustomerNameAddress(this IQueryable<CustomerViewRelatedEntity> customerViewQuery,
       OrderSearchCriteria orderSearchCriteria)
     {
-      if (!string.IsNullOrEmpty(orderSearchCriteria.FirstName))
-        //predicate = predicate.Where(System.Data.Linq.SqlClient.SqlMethods.Like("FirstName"", "L_n%"));
-        customerViewQuery = customerViewQuery.Where(cv => cv.FirstName.Contains(orderSearchCriteria.FirstName));
-      if (!string.IsNullOrEmpty(orderSearchCriteria.LastName))
-        customerViewQuery = customerViewQuery.Where(cv => cv.LastName.Contains(orderSearchCriteria.LastName));
-      if (!string.IsNullOrEmpty(orderSearchCriteria.CityName))
-        customerViewQuery = customerViewQuery.Where(cv => cv.City == orderSearchCriteria.CityName);
-      if (!string.IsNullOrEmpty(orderSearchCriteria.StateName))
-        customerViewQuery = customerViewQuery.Where(cv => cv.StateProvinceName == orderSearchCriteria.StateName);
-      if (!string.IsNullOrEmpty(orderSearchCriteria.CountryName))
-        customerViewQuery = customerViewQuery.Where(cv => cv.CountryRegionName == orderSearchCriteria.CountryName);
-      if (orderSearchCriteria.Countries.Any())
-        customerViewQuery = from soh in customerViewQuery
-          where orderSearchCriteria.Countries.Contains(soh.CountryRegionName)
-          select soh;
+      customerViewQuery = customerViewQuery.FilterCustomerViewRelatedEntityByDateCustomerNameAddress(orderSearchCriteria);
       if (orderSearchCriteria.OrderID != 0)
         customerViewQuery = from cv in customerViewQuery
           from soh in cv.SalesOrderHeader
@@ -69,8 +55,28 @@ namespace AW.Data.Linq.Filters
       return customerViewQuery;
     }
 
+    public static IQueryable<T> FilterCustomerViewRelatedEntityByDateCustomerNameAddress<T>(this IQueryable<T> customerViewQuery,
+  OrderSearchCriteria orderSearchCriteria) where T : CommonEntityBase, IIndividualCustomer
+    {
+      if (!string.IsNullOrEmpty(orderSearchCriteria.FirstName))
+        customerViewQuery = customerViewQuery.Where(cv => cv.FirstName.Contains(orderSearchCriteria.FirstName));
+      if (!string.IsNullOrEmpty(orderSearchCriteria.LastName))
+        customerViewQuery = customerViewQuery.Where(cv => cv.LastName.Contains(orderSearchCriteria.LastName));
+      if (!string.IsNullOrEmpty(orderSearchCriteria.CityName))
+        customerViewQuery = customerViewQuery.Where(cv => cv.City == orderSearchCriteria.CityName);
+      if (!string.IsNullOrEmpty(orderSearchCriteria.StateName))
+        customerViewQuery = customerViewQuery.Where(cv => cv.StateProvinceName == orderSearchCriteria.StateName);
+      if (!string.IsNullOrEmpty(orderSearchCriteria.CountryName))
+        customerViewQuery = customerViewQuery.Where(cv => cv.CountryRegionName == orderSearchCriteria.CountryName);
+      if (orderSearchCriteria.Countries.Any())
+        customerViewQuery = from soh in customerViewQuery
+                            where orderSearchCriteria.Countries.Contains(soh.CountryRegionName)
+                            select soh;
+      return customerViewQuery;
+    }
+
     public static IQueryable<T> FilterByDateCustomerNameAddress<T>(this IQueryable<T> customerViewQuery,
-      OrderSearchCriteria orderSearchCriteria) where T : IIndividualCustomer
+      OrderSearchCriteria orderSearchCriteria) where T : PocoBase, IIndividualCustomer
     {
       if (!string.IsNullOrEmpty(orderSearchCriteria.FirstName))
         customerViewQuery = customerViewQuery.Where(cv => cv.FirstName.Contains(orderSearchCriteria.FirstName));
