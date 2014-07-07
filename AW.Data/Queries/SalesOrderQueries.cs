@@ -27,9 +27,12 @@ namespace AW.Data.Queries
       var relations = new RelationCollection();
       if (orderSearchCriteria.HasCustomerViewRelatedCriteria())
       {
-        relations.Add(SalesOrderHeaderEntity.Relations.IndividualEntityUsingCustomerID);
+        relations.Add(SalesOrderHeaderEntity.IndividualEntityUsingCustomerID);
         relations.Add(IndividualEntity.Relations.ContactEntityUsingContactID);
         relations.Add(IndividualEntity.Relations.CustomerAddressEntityUsingCustomerID);
+        relations.Add(CustomerAddressEntity.Relations.AddressEntityUsingAddressID);
+        relations.Add(AddressEntity.Relations.StateProvinceEntityUsingStateProvinceID);
+        relations.Add(StateProvinceEntity.Relations.CountryRegionEntityUsingCountryRegionCode);
       }
       var orders = new SalesOrderHeaderCollection();
       var filter = orderSearchCriteria.GetPredicateExpression();
@@ -69,8 +72,13 @@ namespace AW.Data.Queries
       var q = qf.SalesOrderHeader.Where(filter);
       q.OrderBy(SalesOrderHeaderFields.OrderDate | SortOperator.Ascending).Page(1, maxNumberOfItemsToReturn);
       if (orderSearchCriteria.HasCustomerViewRelatedCriteria())
-        q.From(QueryTarget.InnerJoin(SalesOrderHeaderEntity.Relations.IndividualEntityUsingCustomerID)
-          .InnerJoin(IndividualEntity.Relations.ContactEntityUsingContactID).InnerJoin(IndividualEntity.Relations.CustomerAddressEntityUsingCustomerID));
+        q.From(QueryTarget.InnerJoin(SalesOrderHeaderEntity.IndividualEntityUsingCustomerID)
+          .InnerJoin(IndividualEntity.Relations.ContactEntityUsingContactID)
+          .InnerJoin(IndividualEntity.Relations.CustomerAddressEntityUsingCustomerID)
+          .InnerJoin(CustomerAddressEntity.Relations.AddressEntityUsingAddressID)
+          .InnerJoin(AddressEntity.Relations.StateProvinceEntityUsingStateProvinceID)
+          .InnerJoin(StateProvinceEntity.Relations.CountryRegionEntityUsingCountryRegionCode)
+          );
       if (prefetch)
         q.WithPath(SalesOrderHeaderEntity.PrefetchPathCustomerViewRelated);
       var orders = new SalesOrderHeaderCollection();

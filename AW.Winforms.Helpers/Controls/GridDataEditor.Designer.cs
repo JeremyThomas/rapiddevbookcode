@@ -417,7 +417,7 @@ namespace AW.Winforms.Helpers.Controls
       this.dataGridViewEnumerable.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridViewEnumerable.Location = new System.Drawing.Point(3, 3);
       this.dataGridViewEnumerable.Name = "dataGridViewEnumerable";
-      this.dataGridViewEnumerable.Size = new System.Drawing.Size(1321, 489);
+      this.dataGridViewEnumerable.Size = new System.Drawing.Size(1321, 516);
       this.dataGridViewEnumerable.TabIndex = 4;
       this.dataGridViewEnumerable.TimeFilter = false;
       this.dataGridViewEnumerable.SortStringChanged += new System.EventHandler(this.dataGridViewEnumerable_SortStringChanged);
@@ -637,7 +637,7 @@ namespace AW.Winforms.Helpers.Controls
       this.tabPageDataGridView.Location = new System.Drawing.Point(4, 22);
       this.tabPageDataGridView.Name = "tabPageDataGridView";
       this.tabPageDataGridView.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageDataGridView.Size = new System.Drawing.Size(1327, 495);
+      this.tabPageDataGridView.Size = new System.Drawing.Size(1327, 522);
       this.tabPageDataGridView.TabIndex = 1;
       this.tabPageDataGridView.Text = "DataGridView";
       this.tabPageDataGridView.UseVisualStyleBackColor = true;

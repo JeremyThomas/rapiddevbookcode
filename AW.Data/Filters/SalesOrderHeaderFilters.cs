@@ -61,9 +61,9 @@ namespace AW.Data.Filters
       OrderSearchCriteria orderSearchCriteria)
     {
       if (!string.IsNullOrEmpty(orderSearchCriteria.FirstName))
-        salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.Individual.Contact.FirstName.Contains(orderSearchCriteria.FirstName));
+        salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => ((IndividualEntity)soh.Customer).Contact.FirstName.Contains(orderSearchCriteria.FirstName));
       if (!string.IsNullOrEmpty(orderSearchCriteria.LastName))
-        salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.Individual.Contact.LastName.Contains(orderSearchCriteria.LastName));
+        salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => ((IndividualEntity)soh.Customer).Contact.LastName.Contains(orderSearchCriteria.LastName));
       if (!string.IsNullOrEmpty(orderSearchCriteria.CityName))
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.City == orderSearchCriteria.CityName));
       if (!string.IsNullOrEmpty(orderSearchCriteria.StateName))
