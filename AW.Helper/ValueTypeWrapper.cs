@@ -10,6 +10,7 @@ namespace AW.Helper
   public class ValueTypeWrapper<T> : IEquatable<ValueTypeWrapper<T>>, INotifyPropertyChanged
   {
     private T _value;
+
     public T Value
     {
       get { return _value; }
@@ -23,7 +24,7 @@ namespace AW.Helper
 
     public static IEnumerable<ValueTypeWrapper<T>> CreateWrapperForBinding(IEnumerable<T> values)
     {
-      return values == null ? Enumerable.Empty<ValueTypeWrapper<T>>() : values.Select(data => new ValueTypeWrapper<T> { Value = data });
+      return values == null ? Enumerable.Empty<ValueTypeWrapper<T>>() : values.Select(data => new ValueTypeWrapper<T> {Value = data});
     }
 
     public static IEnumerable<T> UnWrap(IEnumerable<ValueTypeWrapper<T>> wrappedValues)
@@ -59,13 +60,14 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Indicates whether the current object is equal to another object of the same type.
+    ///   Indicates whether the current object is equal to another object of the same type.
     /// </summary>
     /// <returns>
-    /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+    ///   true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.
     /// </returns>
-    /// <param name="other">An object to compare with this object.
-    ///                 </param>
+    /// <param name="other">
+    ///   An object to compare with this object.
+    /// </param>
     public bool Equals(ValueTypeWrapper<T> other)
     {
       if (ReferenceEquals(null, other)) return false;
@@ -74,14 +76,20 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
+    ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current
+    ///   <see cref="T:System.Object" />.
     /// </summary>
     /// <returns>
-    /// true if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, false.
+    ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />;
+    ///   otherwise, false.
     /// </returns>
-    /// <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>. 
-    ///                 </param><exception cref="T:System.NullReferenceException">The <paramref name="obj"/> parameter is null.
-    ///                 </exception><filterpriority>2</filterpriority>
+    /// <param name="obj">
+    ///   The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.
+    /// </param>
+    /// <exception cref="T:System.NullReferenceException">
+    ///   The <paramref name="obj" /> parameter is null.
+    /// </exception>
+    /// <filterpriority>2</filterpriority>
     public override bool Equals(object obj)
     {
       if (ReferenceEquals(null, obj)) return false;
@@ -91,16 +99,16 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Serves as a hash function for a particular type. 
+    ///   Serves as a hash function for a particular type.
     /// </summary>
     /// <returns>
-    /// A hash code for the current <see cref="T:System.Object"/>.
+    ///   A hash code for the current <see cref="T:System.Object" />.
     /// </returns>
     /// <filterpriority>2</filterpriority>
     public override int GetHashCode()
     {
 // ReSharper disable CompareNonConstrainedGenericWithNull
-      return Value == null ? 0: Value.GetHashCode();
+      return Value == null ? 0 : Value.GetHashCode();
 // ReSharper restore CompareNonConstrainedGenericWithNull
     }
 
@@ -115,13 +123,13 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// True if the type the needs wrapping for databinding.
+    ///   True if the type the needs wrapping for databinding.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static bool TypeNeedsWrappingForBinding()
     {
-      return ValueTypeWrapper.TypeNeedsWrappingForBinding(typeof(T));
+      return ValueTypeWrapper.TypeNeedsWrappingForBinding(typeof (T));
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
@@ -137,7 +145,7 @@ namespace AW.Helper
   public class ReadonlyValueTypeWrapper<T>
   {
     /// <summary>
-    /// Initializes a new instance of the <see cref="T:System.Object"/> class.
+    ///   Initializes a new instance of the <see cref="T:System.Object" /> class.
     /// </summary>
     public ReadonlyValueTypeWrapper(T value)
     {
@@ -155,7 +163,7 @@ namespace AW.Helper
   public class ValueTypeWrapper
   {
     /// <summary>
-    /// Initializes a new instance of the <see cref="T:System.Object"/> class.
+    ///   Initializes a new instance of the <see cref="T:System.Object" /> class.
     /// </summary>
     public ValueTypeWrapper(object value)
     {
@@ -170,7 +178,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// True if the type the needs wrapping for databinding.
+    ///   True if the type the needs wrapping for databinding.
     /// </summary>
     /// <param name="type">The type.</param>
     /// <returns></returns>

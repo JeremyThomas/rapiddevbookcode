@@ -144,7 +144,7 @@ namespace AW.Helper
         }
         catch (Exception e)
         {
-          GeneralHelper.TraceOut(e);
+          e.TraceOut();
         }
 
       // Return the property and field values of the instance.

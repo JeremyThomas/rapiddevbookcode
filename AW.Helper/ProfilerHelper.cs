@@ -88,7 +88,7 @@ namespace AW.Helper
       catch (Exception e)
       {
         OrmProfilerStatus = "Error Initializing OrmProfiler " + e.Message;
-        GeneralHelper.TraceOut(e);
+        e.TraceOut();
         return false;
       }
     }
@@ -112,7 +112,7 @@ namespace AW.Helper
     /// <returns></returns>
     public static bool DbProviderFactoryIsWrappedByOrmProfiler(Type systemDataType)
     {
-      return systemDataType.Namespace.Equals(OrmProfilerAssemblyString);
+      return systemDataType.Namespace != null && systemDataType.Namespace.Equals(OrmProfilerAssemblyString);
     }
 
     private static Type GetInterceptorType()
@@ -177,7 +177,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Gets the orm profiler path.
+    ///   Gets the orm profiler path.
     /// </summary>
     /// <remarks>From https://llblgenlinqpad.codeplex.com</remarks>
     /// <returns></returns>
@@ -194,7 +194,7 @@ namespace AW.Helper
         return null;
       iconPath = iconPath.Substring(0, iconPath.Length - 2);
       var ormProfilerPath = Path.GetDirectoryName(iconPath);
-      return Directory.Exists(ormProfilerPath) ? ormProfilerPath : null;
+      return ormProfilerPath != null && Directory.Exists(ormProfilerPath) ? ormProfilerPath : null;
     }
   }
 }

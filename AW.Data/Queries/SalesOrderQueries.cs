@@ -30,6 +30,9 @@ namespace AW.Data.Queries
         relations.Add(SalesOrderHeaderEntity.Relations.IndividualEntityUsingCustomerID);
         relations.Add(IndividualEntity.Relations.ContactEntityUsingContactID);
         relations.Add(IndividualEntity.Relations.CustomerAddressEntityUsingCustomerID);
+        relations.Add(CustomerAddressEntity.Relations.AddressEntityUsingAddressID);
+        relations.Add(AddressEntity.Relations.StateProvinceEntityUsingStateProvinceID);
+        relations.Add(StateProvinceEntity.Relations.CountryRegionEntityUsingCountryRegionCode);
       }
       var orders = new SalesOrderHeaderCollection();
       var filter = orderSearchCriteria.GetPredicateExpression();
@@ -70,7 +73,12 @@ namespace AW.Data.Queries
       q.OrderBy(SalesOrderHeaderFields.OrderDate | SortOperator.Ascending).Page(1, maxNumberOfItemsToReturn);
       if (orderSearchCriteria.HasCustomerViewRelatedCriteria())
         q.From(QueryTarget.InnerJoin(SalesOrderHeaderEntity.Relations.IndividualEntityUsingCustomerID)
-          .InnerJoin(IndividualEntity.Relations.ContactEntityUsingContactID).InnerJoin(IndividualEntity.Relations.CustomerAddressEntityUsingCustomerID));
+          .InnerJoin(IndividualEntity.Relations.ContactEntityUsingContactID)
+          .InnerJoin(IndividualEntity.Relations.CustomerAddressEntityUsingCustomerID)
+          .InnerJoin(CustomerAddressEntity.Relations.AddressEntityUsingAddressID)
+          .InnerJoin(AddressEntity.Relations.StateProvinceEntityUsingStateProvinceID)
+          .InnerJoin(StateProvinceEntity.Relations.CountryRegionEntityUsingCountryRegionCode)
+          );
       if (prefetch)
         q.WithPath(SalesOrderHeaderEntity.PrefetchPathCustomerViewRelated);
       var orders = new SalesOrderHeaderCollection();

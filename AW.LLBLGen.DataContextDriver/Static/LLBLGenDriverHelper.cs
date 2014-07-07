@@ -454,7 +454,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       var hyperlinkTarget = explorerItems.SingleOrDefault();
       if (hyperlinkTarget == null)
       {
-        GeneralHelper.TraceOut(GeneralHelper.Join(GeneralHelper.StringJoinSeperator, entity.LLBLGenProEntityName, navigatorProperty.Name, navigatorProperty.DisplayName, navigatorProperty.Description));
+        GeneralHelper.TraceOut(GeneralHelper.Join(GeneralHelper.StringJoinSeparator, entity.LLBLGenProEntityName, navigatorProperty.Name, navigatorProperty.DisplayName, navigatorProperty.Description));
         return null;
       }
       var explorerIcon = GetExplorerIcon(entity, navigatorProperty.Name);

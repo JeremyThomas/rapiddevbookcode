@@ -14,6 +14,7 @@ namespace AW.Helper
   /// </summary>
   public enum VisualStudioVersion
   {
+// ReSharper disable InconsistentNaming
     VS2013 = 120,
     VS2012 = 110,
     VS2010 = 100,
@@ -23,6 +24,8 @@ namespace AW.Helper
     VSNet2002 = 70,
     Other = 0
   };
+
+// ReSharper restore InconsistentNaming
 
   /// <summary>
   ///   Gets the installation path of a given VS version.
