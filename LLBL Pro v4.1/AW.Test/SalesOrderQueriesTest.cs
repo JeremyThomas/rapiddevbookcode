@@ -20,7 +20,7 @@ namespace AW.Tests
 
     #region Additional test attributes      
 
-    private static readonly OrderSearchCriteria OrderSearchCriteria = new OrderSearchCriteria();
+    private static readonly OrderSearchCriteria OrderSearchCriteria = new OrderSearchCriteria {StateName = "California", FirstName = "Jon"};
     private const int MaxNumberOfItemsToReturn = 5;
     private const bool Prefetch = true;
 
@@ -72,6 +72,17 @@ namespace AW.Tests
     public void GetSalesOrderHeaderCollectionTest()
     {
       var actual = SalesOrderQueries.GetSalesOrderHeaderCollection(OrderSearchCriteria, MaxNumberOfItemsToReturn, Prefetch);
+      Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count);
+      //Assert.IsNotNull(actual[0].CustomerViewRelated);
+    }
+
+    /// <summary>
+    ///   A test for GetSalesOrderHeaderCollectionQuerySpec
+    /// </summary>
+    [TestMethod]
+    public void GetSalesOrderHeaderCollectionQuerySpecTest()
+    {
+      var actual = SalesOrderQueries.GetSalesOrderHeaderCollectionQuerySpec(OrderSearchCriteria, MaxNumberOfItemsToReturn, Prefetch);
       Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count);
       //Assert.IsNotNull(actual[0].CustomerViewRelated);
     }

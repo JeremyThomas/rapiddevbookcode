@@ -41,7 +41,6 @@ namespace AW.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-
 		private ContactEntity _contact;
 		private bool	_alwaysFetchContact, _alreadyFetchedContact, _contactReturnsNewIfNotFound;
 
@@ -64,7 +63,6 @@ namespace AW.Data.EntityClasses
 			public static readonly string CustomerAddresses = "CustomerAddresses";
 			/// <summary>Member name SalesOrderHeaders</summary>
 			public static readonly string SalesOrderHeaders = "SalesOrderHeaders";
-
 			/// <summary>Member name AddressCollectionViaCustomerAddress</summary>
 			public static readonly string AddressCollectionViaCustomerAddress = "AddressCollectionViaCustomerAddress";
 		}

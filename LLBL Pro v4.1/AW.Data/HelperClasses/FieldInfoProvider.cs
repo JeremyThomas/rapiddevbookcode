@@ -839,7 +839,7 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("SalesOrderHeaderEntity", "CreditCardApprovalCode", typeof(System.String), false, false, false, true,  (int)SalesOrderHeaderFieldIndex.CreditCardApprovalCode, 15, 0, 0);
 			this.AddElementFieldInfo("SalesOrderHeaderEntity", "CreditCardID", typeof(Nullable<System.Int32>), false, true, false, true,  (int)SalesOrderHeaderFieldIndex.CreditCardID, 0, 0, 10);
 			this.AddElementFieldInfo("SalesOrderHeaderEntity", "CurrencyRateID", typeof(Nullable<System.Int32>), false, true, false, true,  (int)SalesOrderHeaderFieldIndex.CurrencyRateID, 0, 0, 10);
-			this.AddElementFieldInfo("SalesOrderHeaderEntity", "CustomerID", typeof(Nullable<System.Int32>), false, true, false, true,  (int)SalesOrderHeaderFieldIndex.CustomerID, 0, 0, 10);
+			this.AddElementFieldInfo("SalesOrderHeaderEntity", "CustomerID", typeof(System.Int32), false, true, false, false,  (int)SalesOrderHeaderFieldIndex.CustomerID, 0, 0, 10);
 			this.AddElementFieldInfo("SalesOrderHeaderEntity", "DueDate", typeof(System.DateTime), false, false, false, false,  (int)SalesOrderHeaderFieldIndex.DueDate, 0, 0, 0);
 			this.AddElementFieldInfo("SalesOrderHeaderEntity", "Freight", typeof(System.Decimal), false, false, false, false,  (int)SalesOrderHeaderFieldIndex.Freight, 0, 4, 19);
 			this.AddElementFieldInfo("SalesOrderHeaderEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)SalesOrderHeaderFieldIndex.ModifiedDate, 0, 0, 0);
