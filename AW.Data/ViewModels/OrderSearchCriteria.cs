@@ -39,7 +39,7 @@ namespace AW.Data.ViewModels
     public string StateName { get; set; }
     public IEnumerable<string> Countries { get; set; }
     public string Zip { get; set; }
-    public string CountryName { get; set; }
+    public string CountryName { get { return Countries.FirstOrDefault(); } }
     public OrderStatus? OrderStatus { get; set; }
     public bool? IsOnlineOrder { get; set; }
 

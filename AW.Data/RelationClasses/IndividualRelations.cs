@@ -30,7 +30,6 @@ namespace AW.Data.RelationClasses
 		public override List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = base.GetAllRelations();
-			toReturn.Add(this.SalesOrderHeaderEntityUsingCustomerID);
 			toReturn.Add(this.ContactEntityUsingContactID);
 			return toReturn;
 		}
@@ -66,6 +65,7 @@ namespace AW.Data.RelationClasses
 				return relation;
 			}
 		}
+
 
 		/// <summary>Returns a new IEntityRelation object, between IndividualEntity and ContactEntity over the m:1 relation they have, using the relation between the fields:
 		/// Individual.ContactID - Contact.ContactID

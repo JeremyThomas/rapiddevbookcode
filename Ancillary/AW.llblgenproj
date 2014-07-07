@@ -3782,7 +3782,7 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="CustomerID" Type="int" IsOptional="true" IsAutoCreated="true">
+          <Field Name="CustomerID" Type="int" IsAutoCreated="true">
             <Description><![CDATA[Customer identification number. Foreign key to Customer.CustomerID.]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -4978,19 +4978,14 @@
           <FieldFieldRelationship FkField="CurrencyRateID" PkField="CurrencyRateID" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Sales.SalesOrderHeader.Customer-Sales.Customer.SalesOrderHeaders" Start="Sales:SalesOrderHeader" End="Sales:Customer" StartNavigator="Customer" EndNavigator="SalesOrderHeaders" Type="4" EndIsOptional="true">
+      <NormalRelationship Name="Sales.SalesOrderHeader.Customer-Sales.Customer.SalesOrderHeaders" Start="Sales:SalesOrderHeader" End="Sales:Customer" StartNavigator="Customer" EndNavigator="SalesOrderHeaders" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="CustomerID" PkField="CustomerID" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Sales.SalesOrderHeader.CustomerViewRelated-Sales.CustomerViewRelated.SalesOrderHeader" Start="Sales:SalesOrderHeader" End="Sales:CustomerViewRelated" StartNavigator="CustomerViewRelated" EndNavigator="SalesOrderHeader" Type="4" EndIsOptional="true">
+      <NormalRelationship Name="Sales.SalesOrderHeader.CustomerViewRelated-Sales.CustomerViewRelated.SalesOrderHeader" Start="Sales:SalesOrderHeader" End="Sales:CustomerViewRelated" StartNavigator="CustomerViewRelated" EndNavigator="SalesOrderHeader" Type="4" ModelOnly="true">
         <FieldRelationships>
           <FieldFieldRelationship FkField="CustomerID" PkField="CustomerId" />
-        </FieldRelationships>
-      </NormalRelationship>
-      <NormalRelationship Name="Sales.SalesOrderHeader.Individual-Sales.Individual." Start="Sales:SalesOrderHeader" End="Sales:Individual" StartNavigator="Individual" Type="4" EndIsOptional="true" ModelOnly="true" DeleteRuleAction="1">
-        <FieldRelationships>
-          <FieldFieldRelationship FkField="CustomerID" PkField="CustomerID" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="Sales.SalesOrderHeader.SalesPerson-Sales.SalesPerson.SalesOrderHeaders" Start="Sales:SalesOrderHeader" End="Sales:SalesPerson" StartNavigator="SalesPerson" EndNavigator="SalesOrderHeaders" Type="4">

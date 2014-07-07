@@ -51,16 +51,15 @@ namespace AW.Data.DaoClasses
 		/// <param name="currencyRateInstance">CurrencyRateEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="customerInstance">CustomerEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
-		/// <param name="individualInstance">IndividualEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="salesPersonInstance">SalesPersonEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		public bool GetMulti(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IPredicateExpression filter, IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity shipMethodInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity individualInstance, IEntity salesPersonInstance, IEntity salesTerritoryInstance, int pageNumber, int pageSize)
+		public bool GetMulti(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IPredicateExpression filter, IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity shipMethodInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesPersonInstance, IEntity salesTerritoryInstance, int pageNumber, int pageSize)
 		{
 			this.EntityFactoryToUse = entityFactoryToUse;
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.SalesOrderHeaderEntity);
-			IPredicateExpression selectFilter = CreateFilterUsingForeignKeys(billingAddressInstance, shippingAddressInstance, contactInstance, shipMethodInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, individualInstance, salesPersonInstance, salesTerritoryInstance, fieldsToReturn);
+			IPredicateExpression selectFilter = CreateFilterUsingForeignKeys(billingAddressInstance, shippingAddressInstance, contactInstance, shipMethodInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, salesPersonInstance, salesTerritoryInstance, fieldsToReturn);
 			if(filter!=null)
 			{
 				selectFilter.AddWithAnd(filter);
@@ -123,14 +122,13 @@ selectFilter.Add(new FieldCompareValuePredicate(specialOfferProductInstance.Fiel
 		/// <param name="currencyRateInstance">CurrencyRateEntity instance to use as a filter for the SalesOrderHeaderEntity objects to delete</param>
 		/// <param name="customerInstance">CustomerEntity instance to use as a filter for the SalesOrderHeaderEntity objects to delete</param>
 		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects to delete</param>
-		/// <param name="individualInstance">IndividualEntity instance to use as a filter for the SalesOrderHeaderEntity objects to delete</param>
 		/// <param name="salesPersonInstance">SalesPersonEntity instance to use as a filter for the SalesOrderHeaderEntity objects to delete</param>
 		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the SalesOrderHeaderEntity objects to delete</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int DeleteMulti(ITransaction containingTransaction, IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity shipMethodInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity individualInstance, IEntity salesPersonInstance, IEntity salesTerritoryInstance)
+		public int DeleteMulti(ITransaction containingTransaction, IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity shipMethodInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesPersonInstance, IEntity salesTerritoryInstance)
 		{
 			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.SalesOrderHeaderEntity);
-			IPredicateExpression deleteFilter = CreateFilterUsingForeignKeys(billingAddressInstance, shippingAddressInstance, contactInstance, shipMethodInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, individualInstance, salesPersonInstance, salesTerritoryInstance, fields);
+			IPredicateExpression deleteFilter = CreateFilterUsingForeignKeys(billingAddressInstance, shippingAddressInstance, contactInstance, shipMethodInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, salesPersonInstance, salesTerritoryInstance, fields);
 			return this.DeleteMulti(containingTransaction, deleteFilter);
 		}
 
@@ -147,14 +145,13 @@ selectFilter.Add(new FieldCompareValuePredicate(specialOfferProductInstance.Fiel
 		/// <param name="currencyRateInstance">CurrencyRateEntity instance to use as a filter for the SalesOrderHeaderEntity objects to update</param>
 		/// <param name="customerInstance">CustomerEntity instance to use as a filter for the SalesOrderHeaderEntity objects to update</param>
 		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects to update</param>
-		/// <param name="individualInstance">IndividualEntity instance to use as a filter for the SalesOrderHeaderEntity objects to update</param>
 		/// <param name="salesPersonInstance">SalesPersonEntity instance to use as a filter for the SalesOrderHeaderEntity objects to update</param>
 		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the SalesOrderHeaderEntity objects to update</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int UpdateMulti(IEntity entityWithNewValues, ITransaction containingTransaction, IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity shipMethodInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity individualInstance, IEntity salesPersonInstance, IEntity salesTerritoryInstance)
+		public int UpdateMulti(IEntity entityWithNewValues, ITransaction containingTransaction, IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity shipMethodInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesPersonInstance, IEntity salesTerritoryInstance)
 		{
 			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.SalesOrderHeaderEntity);
-			IPredicateExpression updateFilter = CreateFilterUsingForeignKeys(billingAddressInstance, shippingAddressInstance, contactInstance, shipMethodInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, individualInstance, salesPersonInstance, salesTerritoryInstance, fields);
+			IPredicateExpression updateFilter = CreateFilterUsingForeignKeys(billingAddressInstance, shippingAddressInstance, contactInstance, shipMethodInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, salesPersonInstance, salesTerritoryInstance, fields);
 			return this.UpdateMulti(entityWithNewValues, containingTransaction, updateFilter);
 		}
 
@@ -167,12 +164,11 @@ selectFilter.Add(new FieldCompareValuePredicate(specialOfferProductInstance.Fiel
 		/// <param name="currencyRateInstance">CurrencyRateEntity instance to use as a filter for the SalesOrderHeaderEntity objects</param>
 		/// <param name="customerInstance">CustomerEntity instance to use as a filter for the SalesOrderHeaderEntity objects</param>
 		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects</param>
-		/// <param name="individualInstance">IndividualEntity instance to use as a filter for the SalesOrderHeaderEntity objects</param>
 		/// <param name="salesPersonInstance">SalesPersonEntity instance to use as a filter for the SalesOrderHeaderEntity objects</param>
 		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the SalesOrderHeaderEntity objects</param>
 		/// <param name="fieldsToReturn">IEntityFields implementation which forms the definition of the fieldset of the target entity.</param>
 		/// <returns>A ready to use PredicateExpression based on the passed in foreign key value holders.</returns>
-		private IPredicateExpression CreateFilterUsingForeignKeys(IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity shipMethodInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity individualInstance, IEntity salesPersonInstance, IEntity salesTerritoryInstance, IEntityFields fieldsToReturn)
+		private IPredicateExpression CreateFilterUsingForeignKeys(IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity shipMethodInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesPersonInstance, IEntity salesTerritoryInstance, IEntityFields fieldsToReturn)
 		{
 			IPredicateExpression selectFilter = new PredicateExpression();
 			
@@ -207,10 +203,6 @@ selectFilter.Add(new FieldCompareValuePredicate(specialOfferProductInstance.Fiel
 			if(customerViewRelatedInstance != null)
 			{
 				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderHeaderFieldIndex.CustomerID], ComparisonOperator.Equal, ((CustomerViewRelatedEntity)customerViewRelatedInstance).CustomerId));
-			}
-			if(individualInstance != null)
-			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderHeaderFieldIndex.CustomerID], ComparisonOperator.Equal, ((IndividualEntity)individualInstance).CustomerID));
 			}
 			if(salesPersonInstance != null)
 			{
