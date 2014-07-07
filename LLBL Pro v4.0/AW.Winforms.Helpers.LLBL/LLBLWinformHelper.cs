@@ -370,7 +370,7 @@ namespace AW.Winforms.Helpers.LLBL
         GeneralHelper.TraceOut(e);
       }
       displayName = displayName == propertyDescriptor.Name ? "" : displayName;
-      var toolTipText = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, displayName, propertyDescriptor.Description);
+      var toolTipText = GeneralHelper.Join(GeneralHelper.StringJoinSeparator, displayName, propertyDescriptor.Description);
       return toolTipText;
     }
 
@@ -409,7 +409,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     public static string CreateFieldText(IFieldInfo field)
     {
-      var extra = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, field.IsPrimaryKey
+      var extra = GeneralHelper.Join(GeneralHelper.StringJoinSeparator, field.IsPrimaryKey
         ? "PK"
         : "", field.IsForeignKey
           ? "FK"
@@ -424,10 +424,10 @@ namespace AW.Winforms.Helpers.LLBL
         {
           var scalePrecision = String.Empty;
           if (field.Scale > 0)
-            scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, field.Scale.ToString());
+            scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeparator, scalePrecision, field.Scale.ToString());
           var precision = field.Precision;
           if (precision > 0 && IsNonNormalPrecision(typeCode, precision))
-            scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, precision.ToString());
+            scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeparator, scalePrecision, precision.ToString());
           if (!String.IsNullOrEmpty(scalePrecision))
             typeName += "{" + scalePrecision + "}";
         }
@@ -454,7 +454,7 @@ namespace AW.Winforms.Helpers.LLBL
           sizeAndPrecision = String.Format("({0})", fieldPersistenceInfo.SourceColumnMaxLength + fieldPersistenceInfo.SourceColumnPrecision);
         var dbInfo = String.Format("Column: {0} ({1}{2}, {3} null)", fieldPersistenceInfo.SourceColumnName, fieldPersistenceInfo.SourceColumnDbType,
           sizeAndPrecision, sourceColumnIsNullable);
-        toolTipText += Environment.NewLine + GeneralHelper.Join(GeneralHelper.StringJoinSeperator, dbInfo, fieldPersistenceInfo.IdentityValueSequenceName);
+        toolTipText += Environment.NewLine + GeneralHelper.Join(GeneralHelper.StringJoinSeparator, dbInfo, fieldPersistenceInfo.IdentityValueSequenceName);
       }
       return toolTipText.Trim();
     }

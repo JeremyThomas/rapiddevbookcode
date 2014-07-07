@@ -25,7 +25,7 @@ namespace AW.Helper
         Trace.Listeners.Add(new DefaultTraceListener());
     }
 
-    public const string StringJoinSeperator = ", ";
+    public const string StringJoinSeparator = ", ";
 
     #region Debuging
 
@@ -119,11 +119,12 @@ namespace AW.Helper
     public static void CheckIsEnum(Type enumType)
     {
       if (enumType == typeof (Enum))
-        throw new ArgumentException("typeof(TEnum) == System.Enum", "TEnum");
+        throw new ArgumentException("typeof(TEnum) == System.Enum", "enumType");
       if (!(enumType.IsEnum))
-        throw new ArgumentException(String.Format("typeof({0}).IsEnum == false", enumType), "TEnum");
+        throw new ArgumentException(String.Format("typeof({0}).IsEnum == false", enumType), "enumType");
     }
 
+    #pragma warning disable 1584,1711,1572,1581,1580
     /// <summary>
     ///   Turns an enum member into a human readable string using humanizer; e.g. AnonymousUser -&gt; Anonymous user.
     ///   It also honors DescriptionAttribute data annotation
@@ -135,13 +136,17 @@ namespace AW.Helper
     /// <remarks>
     ///   Because humanizer is a PCL assembly it can have trouble loading at times, in which case there is a full back
     ///   code to do a simpler version.
-    ///   One example is using LINQPad with shadow assemblies on, the workaround is to have humanizer in the LINQPad Plugins directory
+    ///   One example is using LINQPad with shadow assemblies on, the workaround is to have humanizer in the LINQPad Plugins
+    ///   directory
     /// </remarks>
     /// <see cref="https://github.com/AutoMapper/AutoMapper/issues/383" />
-    /// <see cref="https://connect.microsoft.com/VisualStudio/feedback/details/779370/vs2012-incorrectly-resolves-mscorlib-version-when-referencing-pcl-assembly" />
+    /// <see
+    ///   cref="https://connect.microsoft.com/VisualStudio/feedback/details/779370/vs2012-incorrectly-resolves-mscorlib-version-when-referencing-pcl-assembly" />
     /// <see cref="http://stackoverflow.com/questions/13871267/unable-to-resolve-assemblies-that-use-portable-class-libraries" />
-    /// <see cref="http://stackoverflow.com/questions/18277499/could-not-load-file-or-assembly-system-core-version-2-0-5-0-exception-wh?lq=1" />
+    /// <see
+    ///   cref="http://stackoverflow.com/questions/18277499/could-not-load-file-or-assembly-system-core-version-2-0-5-0-exception-wh?lq=1" />
     /// <see cref="https://github.com/Fody/Costura/issues/30" />
+#pragma warning restore 1584,1711,1572,1581,1580
     public static string EnumToString(this Enum value)
     {
       if (value == null) return null;
@@ -206,7 +211,7 @@ namespace AW.Helper
       {
         if (maxValue == 0)
           return 0; //Should never happen
-        maxValue = maxValue--;
+        maxValue = maxValue - 1;
       }
       var undefinedEnum = Enum.ToObject(enumType, maxValue);
       return undefinedEnum;
@@ -281,7 +286,7 @@ namespace AW.Helper
 
     public static string JoinAsString<T>(this IEnumerable<T> input)
     {
-      return JoinAsString(input, StringJoinSeperator);
+      return JoinAsString(input, StringJoinSeparator);
     }
 
     public static string JoinAsString<T>(this IEnumerable<T> input, string separator)
@@ -363,8 +368,11 @@ namespace AW.Helper
     public static DataTable StripNonSerializables(this DataTable source)
     {
       foreach (var dataColumn in source.Columns.OfType<DataColumn>().Where(dc => dc.DataType == typeof (object)))
-        foreach (var row in source.Rows.OfType<DataRow>().Where(row => row[dataColumn] != null && !row[dataColumn].GetType().IsSerializable))
+      {
+        var column = dataColumn;
+        foreach (var row in source.Rows.OfType<DataRow>().Where(row => row[column] != null && !row[column].GetType().IsSerializable))
           row[dataColumn] = null;
+      }
       return source;
     }
 
@@ -694,7 +702,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Gets the exception followed by all the inner exceptions.
+    ///   Gets the exception followed by all the inner exceptions.
     /// </summary>
     /// <param name="exception">The exception.</param>
     /// <returns></returns>
@@ -795,6 +803,23 @@ namespace AW.Helper
     {
       var posA = value.IndexOf(delimiter, StringComparison.Ordinal);
       return posA == -1 ? "" : value.Substring(0, posA);
+    }
+
+    /// <summary>
+    /// Surrounds the string with a char if not already.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="surroundingChar">The surrounding character.</param>
+    /// <returns></returns>
+    public static string SurroundWithIfNotAlready(this string value, char surroundingChar)
+    {
+      if (value.IsNullOrEmpty())
+        return value;
+      if (value.First() != surroundingChar)
+        value = surroundingChar + value;
+      if (value.Last() != surroundingChar)
+        value = value + surroundingChar;
+      return value;
     }
   }
 }
