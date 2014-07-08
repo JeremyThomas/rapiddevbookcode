@@ -60,6 +60,9 @@ namespace AW.Data.FactoryClasses
 				case TypedViewType.CustomerViewLinqTypedView:
 					fieldsToReturn = CreateCustomerViewLinqTypedViewEntityFields();
 					break;
+				case TypedViewType.CustomerViewQuerySpecTypedView:
+					fieldsToReturn = CreateCustomerViewQuerySpecTypedViewEntityFields();
+					break;
 			}
 			return fieldsToReturn;
 		}
@@ -84,6 +87,18 @@ namespace AW.Data.FactoryClasses
 			for(int i=0;i<(int)CustomerViewLinqFieldIndex.AmountOfFields;i++)
 			{
 				fieldsToReturn[i] = EntityFieldFactory.Create((CustomerViewLinqFieldIndex)i);
+			}
+			return fieldsToReturn;
+		}
+
+		/// <summary>Creates a complete EntityFields instance for the CustomerViewQuerySpecEntity.</summary>
+		/// <returns></returns>
+		private static IEntityFields CreateCustomerViewQuerySpecTypedViewEntityFields()
+		{
+			IEntityFields fieldsToReturn = new EntityFields((int)CustomerViewQuerySpecFieldIndex.AmountOfFields, null, FieldInfoProviderSingleton.GetInstance().GetFieldIndexes("CustomerViewQuerySpecTypedView"));
+			for(int i=0;i<(int)CustomerViewQuerySpecFieldIndex.AmountOfFields;i++)
+			{
+				fieldsToReturn[i] = EntityFieldFactory.Create((CustomerViewQuerySpecFieldIndex)i);
 			}
 			return fieldsToReturn;
 		}

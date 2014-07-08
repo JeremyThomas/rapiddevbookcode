@@ -50,6 +50,7 @@ namespace AW.Win
       this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonPlaintypedview = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonLinqTypedview = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonTypedViewQuerySpecPoco = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonTypedViewQuerySpec = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonViewAsRelatedEntity = new System.Windows.Forms.ToolStripButton();
@@ -60,16 +61,17 @@ namespace AW.Win
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonTypedList = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonTypedListQuerySpec = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonTypedListLinq = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonLinqFilterFirst = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonLinq = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonLinqAnonymous = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonClearSort = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonClearFilters = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButtonTypedListLinq = new System.Windows.Forms.ToolStripButton();
       this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
       this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
+      this.toolStripButtonTypedListQuerySpecPoco = new System.Windows.Forms.ToolStripButton();
       ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceCustomerList)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorCustomerList)).BeginInit();
@@ -92,9 +94,9 @@ namespace AW.Win
       this.dgvResults.DataSource = this.bindingSourceCustomerList;
       this.dgvResults.DateWithTime = false;
       this.dgvResults.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.dgvResults.Location = new System.Drawing.Point(0, 271);
+      this.dgvResults.Location = new System.Drawing.Point(0, 294);
       this.dgvResults.Name = "dgvResults";
-      this.dgvResults.Size = new System.Drawing.Size(1040, 216);
+      this.dgvResults.Size = new System.Drawing.Size(1040, 193);
       this.dgvResults.TabIndex = 0;
       this.dgvResults.Tag = "True";
       this.dgvResults.TimeFilter = false;
@@ -192,6 +194,7 @@ namespace AW.Win
             this.bindingNavigatorSeparator2,
             this.toolStripButtonPlaintypedview,
             this.toolStripButtonLinqTypedview,
+            this.toolStripButtonTypedViewQuerySpecPoco,
             this.toolStripButtonTypedViewQuerySpec,
             this.toolStripSeparator1,
             this.toolStripButtonViewAsRelatedEntity,
@@ -201,6 +204,7 @@ namespace AW.Win
             this.toolStripButtonViewAsEntity,
             this.toolStripSeparator2,
             this.toolStripButtonTypedList,
+            this.toolStripButtonTypedListQuerySpecPoco,
             this.toolStripButtonTypedListQuerySpec,
             this.toolStripButtonTypedListLinq,
             this.toolStripButtonLinqFilterFirst,
@@ -217,7 +221,7 @@ namespace AW.Win
       this.bindingNavigatorCustomerList.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
       this.bindingNavigatorCustomerList.Name = "bindingNavigatorCustomerList";
       this.bindingNavigatorCustomerList.PositionItem = this.bindingNavigatorPositionItem;
-      this.bindingNavigatorCustomerList.Size = new System.Drawing.Size(1040, 46);
+      this.bindingNavigatorCustomerList.Size = new System.Drawing.Size(1040, 69);
       this.bindingNavigatorCustomerList.TabIndex = 1;
       this.bindingNavigatorCustomerList.Text = "bindingNavigator1";
       // 
@@ -308,6 +312,17 @@ namespace AW.Win
       this.toolStripButtonLinqTypedview.Text = "Typed View Linq ";
       this.toolStripButtonLinqTypedview.Click += new System.EventHandler(this.toolStripButtonLinqTypedview_Click);
       // 
+      // toolStripButtonTypedViewQuerySpecPoco
+      // 
+      this.toolStripButtonTypedViewQuerySpecPoco.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTypedViewQuerySpecPoco.Image")));
+      this.toolStripButtonTypedViewQuerySpecPoco.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonTypedViewQuerySpecPoco.Name = "toolStripButtonTypedViewQuerySpecPoco";
+      this.toolStripButtonTypedViewQuerySpecPoco.Size = new System.Drawing.Size(178, 20);
+      this.toolStripButtonTypedViewQuerySpecPoco.Text = "Typed View QuerySpec Poco";
+      this.toolStripButtonTypedViewQuerySpecPoco.ToolTipText = "vIndividualCustomer exposed via Typed view CustomerViewTypedView. \r\nExample 5.18." +
+    " pg59\r\nNote: sales order filters are ignored";
+      this.toolStripButtonTypedViewQuerySpecPoco.Click += new System.EventHandler(this.toolStripButtonTypedViewQuerySpecPoco_Click);
+      // 
       // toolStripButtonTypedViewQuerySpec
       // 
       this.toolStripButtonTypedViewQuerySpec.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTypedViewQuerySpec.Image")));
@@ -395,6 +410,15 @@ namespace AW.Win
     "le 5.29. pg64.\r\nNote: sales order filters are ignored";
       this.toolStripButtonTypedListQuerySpec.Click += new System.EventHandler(this.toolStripButtonTypedListQuerySpec_Click);
       // 
+      // toolStripButtonTypedListLinq
+      // 
+      this.toolStripButtonTypedListLinq.Image = global::AW.Win.Properties.Resources.AdventureWorksCycleIcon;
+      this.toolStripButtonTypedListLinq.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonTypedListLinq.Name = "toolStripButtonTypedListLinq";
+      this.toolStripButtonTypedListLinq.Size = new System.Drawing.Size(107, 20);
+      this.toolStripButtonTypedListLinq.Text = "Typed List Linq";
+      this.toolStripButtonTypedListLinq.Click += new System.EventHandler(this.toolStripButtonTypedListLinq_Click);
+      // 
       // toolStripButtonLinqFilterFirst
       // 
       this.toolStripButtonLinqFilterFirst.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLinqFilterFirst.Image")));
@@ -453,15 +477,6 @@ namespace AW.Win
       this.toolStripButtonClearFilters.Text = "Clear Filters";
       this.toolStripButtonClearFilters.Click += new System.EventHandler(this.toolStripButtonClearFilters_Click);
       // 
-      // toolStripButtonTypedListLinq
-      // 
-      this.toolStripButtonTypedListLinq.Image = global::AW.Win.Properties.Resources.AdventureWorksCycleIcon;
-      this.toolStripButtonTypedListLinq.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonTypedListLinq.Name = "toolStripButtonTypedListLinq";
-      this.toolStripButtonTypedListLinq.Size = new System.Drawing.Size(107, 20);
-      this.toolStripButtonTypedListLinq.Text = "Typed List Linq";
-      this.toolStripButtonTypedListLinq.Click += new System.EventHandler(this.toolStripButtonTypedListLinq_Click);
-      // 
       // numericUpDownNumRows
       // 
       this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
@@ -484,6 +499,17 @@ namespace AW.Win
       this.orderSearchCriteria1.Name = "orderSearchCriteria1";
       this.orderSearchCriteria1.Size = new System.Drawing.Size(1040, 225);
       this.orderSearchCriteria1.TabIndex = 3;
+      // 
+      // toolStripButtonTypedListQuerySpecPoco
+      // 
+      this.toolStripButtonTypedListQuerySpecPoco.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTypedListQuerySpecPoco.Image")));
+      this.toolStripButtonTypedListQuerySpecPoco.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonTypedListQuerySpecPoco.Name = "toolStripButtonTypedListQuerySpecPoco";
+      this.toolStripButtonTypedListQuerySpecPoco.Size = new System.Drawing.Size(171, 20);
+      this.toolStripButtonTypedListQuerySpecPoco.Text = "Typed List QuerySpec Poco";
+      this.toolStripButtonTypedListQuerySpecPoco.ToolTipText = "CustomerListTypedList -Recreation of vIndividualCustomer as a Typed List. \r\nExamp" +
+    "le 5.29. pg64.\r\nNote: sales order filters are ignored";
+      this.toolStripButtonTypedListQuerySpecPoco.Click += new System.EventHandler(this.toolStripButtonTypedListQuerySpecPoco_Click);
       // 
       // FrmCustomers
       // 
@@ -555,6 +581,8 @@ namespace AW.Win
         private System.Windows.Forms.ToolStripButton toolStripButtonClearFilters;
         private System.Windows.Forms.ToolStripButton toolStripButtonLinqTypedview;
         private System.Windows.Forms.ToolStripButton toolStripButtonTypedListLinq;
+        private System.Windows.Forms.ToolStripButton toolStripButtonTypedViewQuerySpecPoco;
+        private System.Windows.Forms.ToolStripButton toolStripButtonTypedListQuerySpecPoco;
 
     }
 }

@@ -51,11 +51,19 @@ namespace AW.Data.Queries
       return customers;
     }
 
+    public static List<CustomerViewQuerySpecRow> GetCustomerViewTypedViewQuerySpecPoco(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
+    {
+      var filter = orderSearchCriteria.GetPredicateExpressionCustomerViewQuerySpecFields(false);
+      var qf = new QueryFactory();
+      var q = qf.CustomerViewQuerySpec;
+      return new TypedListDAO().FetchQuery(q.Where(filter).Page(1, maxNumberOfItemsToReturn));
+    }
+
     public static CustomerViewTypedView GetCustomerViewTypedViewQuerySpec(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
     {
       var qf = new QueryFactory();
       var filter = orderSearchCriteria.GetPredicateExpressionCustomerView(false);
-      var q = qf.Create()
+      var q = qf.Create() //.Select<CustomerViewTypedView, AW.Data.HelperClasses.CustomerViewQuerySpecFields>()
         .Select(CustomerViewFields.AddressLine1,
           CustomerViewFields.AddressLine2,
           CustomerViewFields.AddressType,
@@ -233,8 +241,16 @@ namespace AW.Data.Queries
       return customers;
     }
 
+    public static List<CustomerListQuerySpecRow> GetCustomerListTypedListQuerySpecPoco(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
+    {
+      var filter = orderSearchCriteria.GetPredicateExpression(false);
+      var qf = new QueryFactory();
+      var q = qf.GetCustomerListQuerySpecTypedList();
+      return new TypedListDAO().FetchQuery(q.Where(filter).Page(1, maxNumberOfItemsToReturn));
+    }
+
     /// <summary>
-    /// Gets the customer list with a linq version of CustomerListTypedList.
+    /// Gets the customer list with a linq version of CustomerListTypedList. Filtering afterwards.
     /// </summary>
     /// <param name="orderSearchCriteria">The order search criteria.</param>
     /// <param name="maxNumberOfItemsToReturn">The max number of items to return.</param>
@@ -278,7 +294,7 @@ namespace AW.Data.Queries
       return CustomerListLinqRow.GetCustomerListQuery(MetaSingletons.MetaData.Individual).FilterByDateCustomerNameAddress(orderSearchCriteria).Take(maxNumberOfItemsToReturn);
     }
 
-    public static IQueryable<CustomerListLinqRow> GetCustomerListLinqTypedList(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
+    public static IQueryable<CustomerListLinqRow> GetCustomerListGeneratedLinqTypedList(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
     {
       return MetaSingletons.MetaData.GetCustomerListLinqTypedList().FilterByDateCustomerNameAddress(orderSearchCriteria).Distinct().Take(maxNumberOfItemsToReturn);
     }

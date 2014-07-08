@@ -3326,4 +3326,110 @@ namespace AW.Data.HelperClasses
 			get { return (EntityField)EntityFieldFactory.Create(CustomerViewLinqFieldIndex.Demographics);}
 		}
 	}
+
+	/// <summary>Field Creation Class for typedview CustomerViewQuerySpecTypedView</summary>
+	public partial class CustomerViewQuerySpecFields
+	{
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.CustomerId field instance</summary>
+		public static EntityField CustomerId
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.CustomerId);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.Title field instance</summary>
+		public static EntityField Title
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.Title);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.FirstName field instance</summary>
+		public static EntityField FirstName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.FirstName);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.MiddleName field instance</summary>
+		public static EntityField MiddleName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.MiddleName);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.LastName field instance</summary>
+		public static EntityField LastName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.LastName);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.Suffix field instance</summary>
+		public static EntityField Suffix
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.Suffix);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.Phone field instance</summary>
+		public static EntityField Phone
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.Phone);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.EmailAddress field instance</summary>
+		public static EntityField EmailAddress
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.EmailAddress);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.EmailPromotion field instance</summary>
+		public static EntityField EmailPromotion
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.EmailPromotion);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.AddressType field instance</summary>
+		public static EntityField AddressType
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.AddressType);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.AddressLine1 field instance</summary>
+		public static EntityField AddressLine1
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.AddressLine1);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.AddressLine2 field instance</summary>
+		public static EntityField AddressLine2
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.AddressLine2);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.City field instance</summary>
+		public static EntityField City
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.City);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.StateProvinceName field instance</summary>
+		public static EntityField StateProvinceName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.StateProvinceName);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.PostalCode field instance</summary>
+		public static EntityField PostalCode
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.PostalCode);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.CountryRegionName field instance</summary>
+		public static EntityField CountryRegionName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.CountryRegionName);}
+		}
+
+		/// <summary>Creates a new CustomerViewQuerySpecTypedView.Demographics field instance</summary>
+		public static EntityField Demographics
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewQuerySpecFieldIndex.Demographics);}
+		}
+	}
 }

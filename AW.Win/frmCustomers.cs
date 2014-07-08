@@ -47,6 +47,11 @@ namespace AW.Win
       bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerViewTypedViewQuerySpec(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
     }
 
+    private void toolStripButtonTypedViewQuerySpecPoco_Click(object sender, EventArgs e)
+    {
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerViewTypedViewQuerySpecPoco(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
+    }
+
     /// <summary>
     ///   Handles the Click event of the toolStripButtonViewAsEntity control. Example 5.27 pg63.
     /// </summary>
@@ -82,6 +87,11 @@ namespace AW.Win
       bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListTypedListQuerySpec(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn),true,true);
     }
 
+    private void toolStripButtonTypedListQuerySpecPoco_Click(object sender, EventArgs e)
+    {
+      bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListTypedListQuerySpecPoco(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
+    }
+
     /// <summary>
     ///   Handles the Click event of the toolStripButtonLinq control.
     /// </summary>
@@ -104,7 +114,7 @@ namespace AW.Win
 
     private void toolStripButtonTypedListLinq_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListLinqTypedList(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn); ;
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListGeneratedLinqTypedList(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn); ;
     }
 
     /// <summary>
@@ -163,5 +173,9 @@ namespace AW.Win
       if (bindingSourceCustomerList.SupportsFiltering)
         bindingSourceCustomerList.RemoveFilter();
     }
+
+
+
+
   }
 }

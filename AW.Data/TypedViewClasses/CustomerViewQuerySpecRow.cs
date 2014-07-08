@@ -11,19 +11,19 @@ using System.ComponentModel;
 
 namespace AW.Data.TypedViewClasses
 {
-	/// <summary>Class which represents a row in the typed view 'Sales.CustomerViewLinq'.</summary>
-	/// <remarks>This class is a result class for a query, which is produced with the method <see cref="AW.Data.Linq.LinqMetaData.GetCustomerViewLinqTypedView"/>.
+	/// <summary>Class which represents a row in the typed view 'Sales.CustomerViewQuerySpec'.</summary>
+	/// <remarks>This class is a result class for a query, which is produced with the method <see cref="AW.Data.FactoryClasses.QueryFactory.GetCustomerViewQuerySpecTypedView"/>.
 	/// Custom Properties: <br/>
 	/// </remarks>
 	[Serializable]
-	public partial class CustomerViewLinqRow : PocoBase, IIndividualCustomer
+	public partial class CustomerViewQuerySpecRow : PocoBase, IIndividualCustomer
 	{
 		#region Extensibility Method Definitions
 		partial void OnCreated();
 		#endregion
 		
-		/// <summary>Initializes a new instance of the <see cref="CustomerViewLinqRow"/> class.</summary>
-		public CustomerViewLinqRow()
+		/// <summary>Initializes a new instance of the <see cref="CustomerViewQuerySpecRow"/> class.</summary>
+		public CustomerViewQuerySpecRow()
 		{
 			OnCreated();
 		}

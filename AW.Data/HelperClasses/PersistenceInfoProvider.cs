@@ -46,7 +46,7 @@ namespace AW.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			this.InitClass(76);
+			this.InitClass(77);
 			InitAwbuildVersionEntityMappings();
 			InitDatabaseLogEntityMappings();
 			InitErrorLogEntityMappings();
@@ -123,6 +123,7 @@ namespace AW.Data.HelperClasses
 			InitStoreContactEntityMappings();
 			InitCustomerViewTypedViewMappings();
 			InitCustomerViewLinqTypedViewMappings();
+			InitCustomerViewQuerySpecTypedViewMappings();
 		}
 
 		/// <summary>Inits AwbuildVersionEntity's mappings</summary>
@@ -1106,6 +1107,30 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldMapping("CustomerViewLinqTypedView", "PostalCode", "PostalCode", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 14);
 			this.AddElementFieldMapping("CustomerViewLinqTypedView", "CountryRegionName", "CountryRegionName", false, "NVarChar", 50, 0, 0, false, string.Empty, null, typeof(System.String), 15);
 			this.AddElementFieldMapping("CustomerViewLinqTypedView", "Demographics", "Demographics", false, "Xml", 2147483647, 0, 0, false, string.Empty, null, typeof(System.String), 16);
+		}
+
+
+		/// <summary>Inits CustomerViewQuerySpecView's mappings</summary>
+		private void InitCustomerViewQuerySpecTypedViewMappings()
+		{
+			this.AddElementMapping("CustomerViewQuerySpecTypedView", @"AdventureWorks", @"Sales", "vIndividualCustomer", 17);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "CustomerId", "CustomerID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "Title", "Title", false, "NVarChar", 8, 0, 0, false, string.Empty, null, typeof(System.String), 1);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "FirstName", "FirstName", false, "NVarChar", 50, 0, 0, false, string.Empty, null, typeof(System.String), 2);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "MiddleName", "MiddleName", false, "NVarChar", 50, 0, 0, false, string.Empty, null, typeof(System.String), 3);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "LastName", "LastName", false, "NVarChar", 50, 0, 0, false, string.Empty, null, typeof(System.String), 4);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "Suffix", "Suffix", false, "NVarChar", 10, 0, 0, false, string.Empty, null, typeof(System.String), 5);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "Phone", "Phone", false, "NVarChar", 25, 0, 0, false, string.Empty, null, typeof(System.String), 6);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "EmailAddress", "EmailAddress", false, "NVarChar", 50, 0, 0, false, string.Empty, null, typeof(System.String), 7);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "EmailPromotion", "EmailPromotion", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 8);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "AddressType", "AddressType", false, "NVarChar", 50, 0, 0, false, string.Empty, null, typeof(System.String), 9);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "AddressLine1", "AddressLine1", false, "NVarChar", 60, 0, 0, false, string.Empty, null, typeof(System.String), 10);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "AddressLine2", "AddressLine2", false, "NVarChar", 60, 0, 0, false, string.Empty, null, typeof(System.String), 11);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "City", "City", false, "NVarChar", 30, 0, 0, false, string.Empty, null, typeof(System.String), 12);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "StateProvinceName", "StateProvinceName", false, "NVarChar", 50, 0, 0, false, string.Empty, null, typeof(System.String), 13);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "PostalCode", "PostalCode", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 14);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "CountryRegionName", "CountryRegionName", false, "NVarChar", 50, 0, 0, false, string.Empty, null, typeof(System.String), 15);
+			this.AddElementFieldMapping("CustomerViewQuerySpecTypedView", "Demographics", "Demographics", false, "Xml", 2147483647, 0, 0, false, string.Empty, null, typeof(System.String), 16);
 		}
 
 	}

@@ -4,7 +4,7 @@ using AW.Data.TypedViewClasses;
 
 namespace AW.Data.TypedListClasses
 {
-  public partial class CustomerListLinqRow : IIndividualCustomer
+  public partial class CustomerListLinqRow
   {
     private bool Equals(IIndividualCustomer other)
     {
