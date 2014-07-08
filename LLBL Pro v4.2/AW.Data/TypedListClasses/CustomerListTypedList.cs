@@ -149,7 +149,7 @@ namespace AW.Data.TypedListClasses
 			toReturn.DefineField(AddressTypeFields.Name, 2, "AddressType", "", AggregateFunction.None);
 			toReturn.DefineField(AddressFields.City, 3, "City", "", AggregateFunction.None);
 			toReturn.DefineField(StateProvinceFields.Name, 4, "CountryRegionName", "", AggregateFunction.None);
-			toReturn.DefineField(CustomerFields.CustomerID, 5, "CustomerId", "", AggregateFunction.None);
+			toReturn.DefineField(IndividualFields.CustomerID, 5, "CustomerId", "", AggregateFunction.None);
 			toReturn.DefineField(IndividualFields.Demographics, 6, "Demographics", "", AggregateFunction.None);
 			toReturn.DefineField(ContactFields.EmailAddress, 7, "EmailAddress", "", AggregateFunction.None);
 			toReturn.DefineField(ContactFields.EmailPromotion, 8, "EmailPromotion", "", AggregateFunction.None);
@@ -219,7 +219,7 @@ namespace AW.Data.TypedListClasses
 			_columnAddressType = GeneralUtils.CreateTypedDataTableColumn("AddressType", @"Name", typeof(System.String), this.Columns);
 			_columnCity = GeneralUtils.CreateTypedDataTableColumn("City", @"City", typeof(System.String), this.Columns);
 			_columnCountryRegionName = GeneralUtils.CreateTypedDataTableColumn("CountryRegionName", @"CountryRegionName", typeof(System.String), this.Columns);
-			_columnCustomerId = GeneralUtils.CreateTypedDataTableColumn("CustomerId", @"CustomerId", typeof(System.Int32), this.Columns);
+			_columnCustomerId = GeneralUtils.CreateTypedDataTableColumn("CustomerId", @"CustomerID", typeof(System.Int32), this.Columns);
 			_columnDemographics = GeneralUtils.CreateTypedDataTableColumn("Demographics", @"Demographics", typeof(System.String), this.Columns);
 			_columnEmailAddress = GeneralUtils.CreateTypedDataTableColumn("EmailAddress", @"EmailAddress", typeof(System.String), this.Columns);
 			_columnEmailPromotion = GeneralUtils.CreateTypedDataTableColumn("EmailPromotion", @"EmailPromotion", typeof(AW.Data.EmailPromotion), this.Columns);

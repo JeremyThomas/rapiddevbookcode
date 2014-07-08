@@ -569,7 +569,7 @@ namespace AW.Data.FactoryClasses
 									AddressType = AddressTypeFields.Name.As("AddressType").ToValue<System.String>(),
 									City = AddressFields.City.ToValue<System.String>(),
 									CountryRegionName = StateProvinceFields.Name.As("CountryRegionName").ToValue<System.String>(),
-									CustomerId = CustomerFields.CustomerID.As("CustomerId").ToValue<System.Int32>(),
+									CustomerId = IndividualFields.CustomerID.As("CustomerId").ToValue<System.Int32>(),
 									Demographics = IndividualFields.Demographics.ToValue<System.String>(),
 									EmailAddress = ContactFields.EmailAddress.ToValue<System.String>(),
 									EmailPromotion = ContactFields.EmailPromotion.ToValue<AW.Data.EmailPromotion>(),
@@ -587,7 +587,6 @@ namespace AW.Data.FactoryClasses
 								.InnerJoin(this.CustomerAddress).On(AddressFields.AddressID.Equal(CustomerAddressFields.AddressID))
 								.InnerJoin(this.CountryRegion).On(StateProvinceFields.CountryRegionCode.Equal(CountryRegionFields.CountryRegionCode))
 								.InnerJoin(this.AddressType).On(CustomerAddressFields.AddressTypeID.Equal(AddressTypeFields.AddressTypeID))
-								.InnerJoin(this.Customer).On(CustomerAddressFields.CustomerID.Equal(CustomerFields.CustomerID))
 								.InnerJoin(this.Individual).On(CustomerAddressFields.CustomerID.Equal(IndividualFields.CustomerID))
 								.InnerJoin(this.Contact).On(IndividualFields.ContactID.Equal(ContactFields.ContactID)));
 		}

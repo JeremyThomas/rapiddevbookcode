@@ -689,11 +689,10 @@ namespace AW.Data.Linq
 						   join sales_CustomerAddress in this.CustomerAddress on person_Address.AddressID equals sales_CustomerAddress.AddressID
 						   join person_CountryRegion in this.CountryRegion on person_StateProvince.CountryRegionCode equals person_CountryRegion.CountryRegionCode
 						   join person_AddressType in this.AddressType on sales_CustomerAddress.AddressTypeID equals person_AddressType.AddressTypeID
-						   join sales_Customer in this.Customer on sales_CustomerAddress.CustomerID equals sales_Customer.CustomerID
 						   join sales_Individual in this.Individual on sales_CustomerAddress.CustomerID equals sales_Individual.CustomerID
 						   join person_Contact in this.Contact on sales_Individual.ContactID equals person_Contact.ContactID
-						   select new {person_StateProvince, person_Address, sales_CustomerAddress, person_CountryRegion, person_AddressType, sales_Customer, sales_Individual, person_Contact };
-			return current1.Select(v=>new AW.Data.TypedListClasses.CustomerListLinqRow() { AddressLine1 = v.person_Address.AddressLine1, AddressLine2 = v.person_Address.AddressLine2, AddressType = v.person_AddressType.Name, City = v.person_Address.City, CountryRegionName = v.person_StateProvince.Name, CustomerId = v.sales_Customer.CustomerID, Demographics = v.sales_Individual.Demographics, EmailAddress = v.person_Contact.EmailAddress, EmailPromotion = v.person_Contact.EmailPromotion, FirstName = v.person_Contact.FirstName, LastName = v.person_Contact.LastName, MiddleName = v.person_Contact.MiddleName, Phone = v.person_Contact.Phone, PostalCode = v.person_Address.PostalCode, StateProvinceName = v.person_CountryRegion.Name, Suffix = v.person_Contact.Suffix, Title = v.person_Contact.Title });
+						   select new {person_StateProvince, person_Address, sales_CustomerAddress, person_CountryRegion, person_AddressType, sales_Individual, person_Contact };
+			return current1.Select(v=>new AW.Data.TypedListClasses.CustomerListLinqRow() { AddressLine1 = v.person_Address.AddressLine1, AddressLine2 = v.person_Address.AddressLine2, AddressType = v.person_AddressType.Name, City = v.person_Address.City, CountryRegionName = v.person_StateProvince.Name, CustomerId = v.sales_Individual.CustomerID, Demographics = v.sales_Individual.Demographics, EmailAddress = v.person_Contact.EmailAddress, EmailPromotion = v.person_Contact.EmailPromotion, FirstName = v.person_Contact.FirstName, LastName = v.person_Contact.LastName, MiddleName = v.person_Contact.MiddleName, Phone = v.person_Contact.Phone, PostalCode = v.person_Address.PostalCode, StateProvinceName = v.person_CountryRegion.Name, Suffix = v.person_Contact.Suffix, Title = v.person_Contact.Title });
 		}
 
 		#region Class Property Declarations

@@ -296,7 +296,7 @@ namespace AW.Data.Queries
 
     public static IQueryable<CustomerListLinqRow> GetCustomerListGeneratedLinqTypedList(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
     {
-      return MetaSingletons.MetaData.GetCustomerListLinqTypedList().FilterByDateCustomerNameAddress(orderSearchCriteria).Distinct().Take(maxNumberOfItemsToReturn);
+      return MetaSingletons.MetaData.GetCustomerListLinqTypedList().FilterByDateCustomerNameAddress(orderSearchCriteria).Take(maxNumberOfItemsToReturn);
     }
 
     public static IQueryable<CustomerListLinqRow> GetCustomerListLinqedTypedListFilterFirst(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
@@ -367,7 +367,7 @@ namespace AW.Data.Queries
           individual.Demographics,
           customerAddress.Address.PostalCode
         };
-      return customerlist.Distinct().Take(maxNumberOfItemsToReturn);
+      return customerlist.Take(maxNumberOfItemsToReturn);
     }
   }
 }
