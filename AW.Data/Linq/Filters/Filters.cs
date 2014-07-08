@@ -27,7 +27,7 @@ namespace AW.Data.Linq.Filters
     public static IQueryable<CustomerViewRelatedEntity> FilterByDateOrderIDOrderNumberCustomerNameAddress(this IQueryable<CustomerViewRelatedEntity> customerViewQuery,
       OrderSearchCriteria orderSearchCriteria)
     {
-      customerViewQuery = customerViewQuery.FilterCustomerViewRelatedEntityByDateCustomerNameAddress(orderSearchCriteria);
+      customerViewQuery = customerViewQuery.FilterIndividualCustomerEntityEntityByDateCustomerNameAddress(orderSearchCriteria);
       if (orderSearchCriteria.OrderID != 0)
         customerViewQuery = from cv in customerViewQuery
           from soh in cv.SalesOrderHeader
@@ -55,7 +55,7 @@ namespace AW.Data.Linq.Filters
       return customerViewQuery;
     }
 
-    public static IQueryable<T> FilterCustomerViewRelatedEntityByDateCustomerNameAddress<T>(this IQueryable<T> customerViewQuery,
+    public static IQueryable<T> FilterIndividualCustomerEntityEntityByDateCustomerNameAddress<T>(this IQueryable<T> customerViewQuery,
   OrderSearchCriteria orderSearchCriteria) where T : CommonEntityBase, IIndividualCustomer
     {
       if (!string.IsNullOrEmpty(orderSearchCriteria.FirstName))
@@ -66,8 +66,6 @@ namespace AW.Data.Linq.Filters
         customerViewQuery = customerViewQuery.Where(cv => cv.City == orderSearchCriteria.CityName);
       if (!string.IsNullOrEmpty(orderSearchCriteria.StateName))
         customerViewQuery = customerViewQuery.Where(cv => cv.StateProvinceName == orderSearchCriteria.StateName);
-      if (!string.IsNullOrEmpty(orderSearchCriteria.CountryName))
-        customerViewQuery = customerViewQuery.Where(cv => cv.CountryRegionName == orderSearchCriteria.CountryName);
       if (orderSearchCriteria.Countries.Any())
         customerViewQuery = from soh in customerViewQuery
                             where orderSearchCriteria.Countries.Contains(soh.CountryRegionName)
@@ -86,8 +84,6 @@ namespace AW.Data.Linq.Filters
         customerViewQuery = customerViewQuery.Where(cv => cv.City == orderSearchCriteria.CityName);
       if (!string.IsNullOrEmpty(orderSearchCriteria.StateName))
         customerViewQuery = customerViewQuery.Where(cv => cv.StateProvinceName == orderSearchCriteria.StateName);
-      if (!string.IsNullOrEmpty(orderSearchCriteria.CountryName))
-        customerViewQuery = customerViewQuery.Where(cv => cv.CountryRegionName == orderSearchCriteria.CountryName);
       if (orderSearchCriteria.Countries.Any())
         customerViewQuery = from soh in customerViewQuery
           where orderSearchCriteria.Countries.Contains(soh.CountryRegionName)

@@ -5118,7 +5118,7 @@
         <Field FieldAlias="AddressType" Caption="Name" TargetField="Person.AddressType.Name" />
         <Field FieldAlias="City" TargetField="Person.Address.City" />
         <Field FieldAlias="CountryRegionName" TargetField="Person.StateProvince.Name" />
-        <Field FieldAlias="CustomerId" TargetField="Sales.Customer.CustomerID" />
+        <Field FieldAlias="CustomerId" Caption="CustomerID" TargetField="Sales.Individual.CustomerID" />
         <Field FieldAlias="Demographics" TargetField="Sales.Individual.Demographics" />
         <Field FieldAlias="EmailAddress" TargetField="Person.Contact.EmailAddress" />
         <Field FieldAlias="EmailPromotion" TargetField="Person.Contact.EmailPromotion" />
@@ -5148,7 +5148,6 @@
         <EntityAlias Entity="Person:Contact" />
         <EntityAlias Entity="Person:CountryRegion" />
         <EntityAlias Entity="Person:StateProvince" />
-        <EntityAlias Entity="Sales:Customer" />
         <EntityAlias Entity="Sales:CustomerAddress" />
         <EntityAlias Entity="Sales:Individual" />
       </EntityAliases>
@@ -5158,7 +5157,7 @@
         <Field FieldAlias="AddressType" Caption="Name" TargetField="Person.AddressType.Name" />
         <Field FieldAlias="City" TargetField="Person.Address.City" />
         <Field FieldAlias="CountryRegionName" TargetField="Person.StateProvince.Name" />
-        <Field FieldAlias="CustomerId" TargetField="Sales.Customer.CustomerID" />
+        <Field FieldAlias="CustomerId" Caption="CustomerID" TargetField="Sales.Individual.CustomerID" />
         <Field FieldAlias="Demographics" TargetField="Sales.Individual.Demographics" />
         <Field FieldAlias="EmailAddress" TargetField="Person.Contact.EmailAddress" />
         <Field FieldAlias="EmailPromotion" TargetField="Person.Contact.EmailPromotion" />
@@ -5176,7 +5175,6 @@
         <Relationship Name="Person.StateProvince.CountryRegion-Person.CountryRegion.StateProvinces" StartAlias="Person.CountryRegion" EndAlias="Person.StateProvince" JoinHint="1" />
         <Relationship Name="Sales.CustomerAddress.Address-Person.Address.CustomerAddresses" StartAlias="Sales.CustomerAddress" EndAlias="Person.Address" JoinHint="1" StartAliasIsStartVertex="true" />
         <Relationship Name="Sales.CustomerAddress.AddressType-Person.AddressType.CustomerAddresses" StartAlias="Person.AddressType" EndAlias="Sales.CustomerAddress" JoinHint="1" />
-        <Relationship Name="Sales.CustomerAddress.Customer-Sales.Customer.CustomerAddresses" StartAlias="Sales.Customer" EndAlias="Sales.CustomerAddress" JoinHint="1" />
         <Relationship Name="Sales.CustomerAddress.Customer-Sales.Customer.CustomerAddresses" StartAlias="Sales.Individual" EndAlias="Sales.CustomerAddress" JoinHint="1" />
         <Relationship Name="Sales.Individual.Contact-Person.Contact.Individuals" StartAlias="Person.Contact" EndAlias="Sales.Individual" JoinHint="1" />
       </Relationships>
@@ -5197,7 +5195,6 @@
         <EntityAlias Entity="Person:Contact" />
         <EntityAlias Entity="Person:CountryRegion" />
         <EntityAlias Entity="Person:StateProvince" />
-        <EntityAlias Entity="Sales:Customer" />
         <EntityAlias Entity="Sales:CustomerAddress" />
         <EntityAlias Entity="Sales:Individual" />
       </EntityAliases>
@@ -5207,7 +5204,7 @@
         <Field FieldAlias="AddressType" Caption="Name" TargetField="Person.AddressType.Name" />
         <Field FieldAlias="City" TargetField="Person.Address.City" />
         <Field FieldAlias="CountryRegionName" TargetField="Person.StateProvince.Name" />
-        <Field FieldAlias="CustomerId" TargetField="Sales.Customer.CustomerID" />
+        <Field FieldAlias="CustomerId" Caption="CustomerID" TargetField="Sales.Individual.CustomerID" />
         <Field FieldAlias="Demographics" TargetField="Sales.Individual.Demographics" />
         <Field FieldAlias="EmailAddress" TargetField="Person.Contact.EmailAddress" />
         <Field FieldAlias="EmailPromotion" TargetField="Person.Contact.EmailPromotion" />
@@ -5225,7 +5222,6 @@
         <Relationship Name="Person.StateProvince.CountryRegion-Person.CountryRegion.StateProvinces" StartAlias="Person.CountryRegion" EndAlias="Person.StateProvince" JoinHint="1" />
         <Relationship Name="Sales.CustomerAddress.Address-Person.Address.CustomerAddresses" StartAlias="Sales.CustomerAddress" EndAlias="Person.Address" JoinHint="1" StartAliasIsStartVertex="true" />
         <Relationship Name="Sales.CustomerAddress.AddressType-Person.AddressType.CustomerAddresses" StartAlias="Person.AddressType" EndAlias="Sales.CustomerAddress" JoinHint="1" />
-        <Relationship Name="Sales.CustomerAddress.Customer-Sales.Customer.CustomerAddresses" StartAlias="Sales.Customer" EndAlias="Sales.CustomerAddress" JoinHint="1" />
         <Relationship Name="Sales.CustomerAddress.Customer-Sales.Customer.CustomerAddresses" StartAlias="Sales.Individual" EndAlias="Sales.CustomerAddress" JoinHint="1" />
         <Relationship Name="Sales.Individual.Contact-Person.Contact.Individuals" StartAlias="Person.Contact" EndAlias="Sales.Individual" JoinHint="1" />
       </Relationships>

@@ -19,7 +19,6 @@ namespace AW.Data.TypedListClasses
 	/// Entity: Person.Contact. <br/>
 	/// Entity: Person.CountryRegion. <br/>
 	/// Entity: Person.StateProvince. <br/>
-	/// Entity: Sales.Customer. <br/>
 	/// Entity: Sales.CustomerAddress. <br/>
 	/// Entity: Sales.Individual. <br/>
 	/// Custom Properties: <br/>
@@ -48,7 +47,7 @@ namespace AW.Data.TypedListClasses
 		public System.String City { get; set; }
 		/// <summary>Gets the CountryRegionName field. Mapped onto 'Person.StateProvince.Name'</summary>
 		public System.String CountryRegionName { get; set; }
-		/// <summary>Gets the CustomerId field. Mapped onto 'Sales.Customer.CustomerID'</summary>
+		/// <summary>Gets the CustomerId field. Mapped onto 'Sales.Individual.CustomerID'</summary>
 		public System.Int32 CustomerId { get; set; }
 		/// <summary>Gets the Demographics field. Mapped onto 'Sales.Individual.Demographics'</summary>
 		public System.String Demographics { get; set; }
