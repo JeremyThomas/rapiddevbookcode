@@ -1123,6 +1123,12 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <None Include="ExcludeGenerated.codeclonesettings" />
+    <Compile Include="TypedListClasses\CustomerListQuerySpecRow.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="TypedViewClasses\CustomerViewQuerySpecRow.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AW.Helper.LLBL\AW.Helper.LLBL.csproj">

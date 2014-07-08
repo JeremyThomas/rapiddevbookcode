@@ -39,7 +39,12 @@ namespace AW.Data.ViewModels
     public string StateName { get; set; }
     public IEnumerable<string> Countries { get; set; }
     public string Zip { get; set; }
-    public string CountryName { get { return Countries.FirstOrDefault(); } }
+
+    public string CountryName
+    {
+      get { return Countries.FirstOrDefault(); }
+    }
+
     public OrderStatus? OrderStatus { get; set; }
     public bool? IsOnlineOrder { get; set; }
 
@@ -63,26 +68,6 @@ namespace AW.Data.ViewModels
         );
     }
 
-    public IPredicateExpression GetPredicateExpressionCustomerView(bool includeSalesOrderHeader = true)
-    {
-      var predicate = new PredicateExpression();
-      if (includeSalesOrderHeader)
-        AddSalesOrderHeaderFieldsPredicateExpressions(predicate);
-      if (!String.IsNullOrEmpty(FirstName))
-        predicate.Add(CustomerViewRelatedFields.FirstName%FirstName.SurroundWithIfNotAlready('%'));
-      if (!String.IsNullOrEmpty(LastName))
-        predicate.Add(CustomerViewRelatedFields.LastName%LastName.SurroundWithIfNotAlready('%'));
-      if (!String.IsNullOrEmpty(CityName))
-        predicate.Add(CustomerViewRelatedFields.City%CityName);
-      if (!String.IsNullOrEmpty(StateName))
-        predicate.Add(CustomerViewRelatedFields.StateProvinceName == StateName);
-      if (!String.IsNullOrEmpty(CountryName))
-        predicate.Add(CustomerViewRelatedFields.CountryRegionName == CountryName);
-      if (!String.IsNullOrEmpty(Zip))
-        predicate.Add(CustomerViewRelatedFields.PostalCode == Zip);
-      return predicate;
-    }
-
     private void AddSalesOrderHeaderFieldsPredicateExpressions(IPredicateExpression predicate)
     {
       if (FromDate != DateTime.MinValue)
@@ -99,17 +84,57 @@ namespace AW.Data.ViewModels
         predicate.Add(SalesOrderHeaderFields.OnlineOrderFlag == IsOnlineOrder);
     }
 
+    public IPredicateExpression GetPredicateExpressionCustomerView(bool includeSalesOrderHeader = true)
+    {
+      var predicate = new PredicateExpression();
+      if (includeSalesOrderHeader)
+        AddSalesOrderHeaderFieldsPredicateExpressions(predicate);
+      if (!String.IsNullOrEmpty(FirstName))
+        predicate.Add(CustomerViewRelatedFields.FirstName % FirstName.SurroundWithIfNotAlready('%'));
+      if (!String.IsNullOrEmpty(LastName))
+        predicate.Add(CustomerViewRelatedFields.LastName % LastName.SurroundWithIfNotAlready('%'));
+      if (!String.IsNullOrEmpty(CityName))
+        predicate.Add(CustomerViewRelatedFields.City%CityName);
+      if (!String.IsNullOrEmpty(StateName))
+        predicate.Add(CustomerViewRelatedFields.StateProvinceName == StateName);
+      if (!String.IsNullOrEmpty(CountryName))
+        predicate.Add(CustomerViewRelatedFields.CountryRegionName == CountryName);
+      if (!String.IsNullOrEmpty(Zip))
+        predicate.Add(CustomerViewRelatedFields.PostalCode == Zip);
+      return predicate;
+    }
+
+    public IPredicateExpression GetPredicateExpressionCustomerViewQuerySpecFields(bool includeSalesOrderHeader = true)
+    {
+      var predicate = new PredicateExpression();
+      if (includeSalesOrderHeader)
+        AddSalesOrderHeaderFieldsPredicateExpressions(predicate);
+      if (!String.IsNullOrEmpty(FirstName))
+        predicate.Add(CustomerViewQuerySpecFields.FirstName % FirstName.SurroundWithIfNotAlready('%'));
+      if (!String.IsNullOrEmpty(LastName))
+        predicate.Add(CustomerViewQuerySpecFields.LastName % LastName.SurroundWithIfNotAlready('%'));
+      if (!String.IsNullOrEmpty(CityName))
+        predicate.Add(CustomerViewQuerySpecFields.City % CityName);
+      if (!String.IsNullOrEmpty(StateName))
+        predicate.Add(CustomerViewQuerySpecFields.StateProvinceName == StateName);
+      if (!String.IsNullOrEmpty(CountryName))
+        predicate.Add(CustomerViewQuerySpecFields.CountryRegionName == CountryName);
+      if (!String.IsNullOrEmpty(Zip))
+        predicate.Add(CustomerViewQuerySpecFields.PostalCode == Zip);
+      return predicate;
+    }
+
     public IPredicateExpression GetPredicateExpression(bool includeSalesOrderHeader = true)
     {
       var predicate = new PredicateExpression();
       if (includeSalesOrderHeader)
         AddSalesOrderHeaderFieldsPredicateExpressions(predicate);
       if (!String.IsNullOrEmpty(FirstName))
-        predicate.Add(ContactFields.FirstName % FirstName.SurroundWithIfNotAlready('%'));
+        predicate.Add(ContactFields.FirstName%FirstName.SurroundWithIfNotAlready('%'));
       if (!String.IsNullOrEmpty(LastName))
-        predicate.Add(ContactFields.LastName % LastName.SurroundWithIfNotAlready('%'));
+        predicate.Add(ContactFields.LastName%LastName.SurroundWithIfNotAlready('%'));
       if (!String.IsNullOrEmpty(CityName))
-        predicate.Add(AddressFields.City % CityName.SurroundWithIfNotAlready('%'));
+        predicate.Add(AddressFields.City%CityName.SurroundWithIfNotAlready('%'));
       if (!String.IsNullOrEmpty(StateName))
         predicate.Add(StateProvinceFields.Name == StateName);
       if (!String.IsNullOrEmpty(CountryName))

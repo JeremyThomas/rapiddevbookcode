@@ -551,6 +551,47 @@ namespace AW.Data.FactoryClasses
 		}
 
  
+		/// <summary>Creates and returns the query to fetch the typed view Sales.CustomerViewQuerySpec</summary>
+		public DynamicQuery<AW.Data.TypedViewClasses.CustomerViewQuerySpecRow> CustomerViewQuerySpec
+		{
+			get { return this.Create().Select<AW.Data.TypedViewClasses.CustomerViewQuerySpecRow, AW.Data.HelperClasses.CustomerViewQuerySpecFields>(); }
+		}
+
+		/// <summary>Gets the query to fetch the typed list Sales.CustomerListQuerySpec</summary>
+		/// <returns>Dynamic Query which fetches <see cref="AW.Data.TypedListClasses.CustomerListQuerySpecRow"/> instances </returns>
+		public DynamicQuery<AW.Data.TypedListClasses.CustomerListQuerySpecRow> GetCustomerListQuerySpecTypedList()
+		{
+			return this.Create()
+						.Select(() => new AW.Data.TypedListClasses.CustomerListQuerySpecRow()
+								{
+									AddressLine1 = AddressFields.AddressLine1.ToValue<System.String>(),
+									AddressLine2 = AddressFields.AddressLine2.ToValue<System.String>(),
+									AddressType = AddressTypeFields.Name.As("AddressType").ToValue<System.String>(),
+									City = AddressFields.City.ToValue<System.String>(),
+									CountryRegionName = StateProvinceFields.Name.As("CountryRegionName").ToValue<System.String>(),
+									CustomerId = CustomerFields.CustomerID.As("CustomerId").ToValue<System.Int32>(),
+									Demographics = IndividualFields.Demographics.ToValue<System.String>(),
+									EmailAddress = ContactFields.EmailAddress.ToValue<System.String>(),
+									EmailPromotion = ContactFields.EmailPromotion.ToValue<AW.Data.EmailPromotion>(),
+									FirstName = ContactFields.FirstName.ToValue<System.String>(),
+									LastName = ContactFields.LastName.ToValue<System.String>(),
+									MiddleName = ContactFields.MiddleName.ToValue<System.String>(),
+									Phone = ContactFields.Phone.ToValue<System.String>(),
+									PostalCode = AddressFields.PostalCode.ToValue<System.String>(),
+									StateProvinceName = CountryRegionFields.Name.As("StateProvinceName").ToValue<System.String>(),
+									Suffix = ContactFields.Suffix.ToValue<System.String>(),
+									Title = ContactFields.Title.ToValue<System.String>()
+								})
+						.From(this.Address
+								.InnerJoin(this.StateProvince).On(AddressFields.StateProvinceID.Equal(StateProvinceFields.StateProvinceID))
+								.InnerJoin(this.CustomerAddress).On(AddressFields.AddressID.Equal(CustomerAddressFields.AddressID))
+								.InnerJoin(this.CountryRegion).On(StateProvinceFields.CountryRegionCode.Equal(CountryRegionFields.CountryRegionCode))
+								.InnerJoin(this.AddressType).On(CustomerAddressFields.AddressTypeID.Equal(AddressTypeFields.AddressTypeID))
+								.InnerJoin(this.Customer).On(CustomerAddressFields.CustomerID.Equal(CustomerFields.CustomerID))
+								.InnerJoin(this.Individual).On(CustomerAddressFields.CustomerID.Equal(IndividualFields.CustomerID))
+								.InnerJoin(this.Contact).On(IndividualFields.ContactID.Equal(ContactFields.ContactID)));
+		}
+
 
 	}
 }

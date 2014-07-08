@@ -49,7 +49,7 @@ namespace AW.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			this.InitClass( (74 + 2));
+			this.InitClass( (74 + 3));
 			InitAwbuildVersionEntityInfos();
 			InitDatabaseLogEntityInfos();
 			InitErrorLogEntityInfos();
@@ -126,6 +126,7 @@ namespace AW.Data.HelperClasses
 			InitStoreContactEntityInfos();
 			InitCustomerViewTypedViewInfos();
 			InitCustomerViewLinqTypedViewInfos();
+			InitCustomerViewQuerySpecTypedViewInfos();
 			this.ConstructElementFieldStructures(InheritanceInfoProviderSingleton.GetInstance());
 		}
 
@@ -1037,6 +1038,28 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("CustomerViewLinqTypedView", "PostalCode", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.PostalCode, 15, 0, 0);
 			this.AddElementFieldInfo("CustomerViewLinqTypedView", "CountryRegionName", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.CountryRegionName, 50, 0, 0);
 			this.AddElementFieldInfo("CustomerViewLinqTypedView", "Demographics", typeof(System.String), false, false, true, false, (int)CustomerViewLinqFieldIndex.Demographics, 2147483647, 0, 0);
+		}
+		/// <summary>Inits View's FieldInfo objects</summary>
+		private void InitCustomerViewQuerySpecTypedViewInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(CustomerViewQuerySpecFieldIndex), "CustomerViewQuerySpecTypedView");
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "CustomerId", typeof(System.Int32), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.CustomerId, 0, 0, 10);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "Title", typeof(System.String), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.Title, 8, 0, 0);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "FirstName", typeof(System.String), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.FirstName, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "MiddleName", typeof(System.String), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.MiddleName, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "LastName", typeof(System.String), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.LastName, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "Suffix", typeof(System.String), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.Suffix, 10, 0, 0);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "Phone", typeof(System.String), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.Phone, 25, 0, 0);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "EmailAddress", typeof(System.String), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.EmailAddress, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "EmailPromotion", typeof(AW.Data.EmailPromotion), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.EmailPromotion, 0, 0, 10);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "AddressType", typeof(System.String), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.AddressType, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "AddressLine1", typeof(System.String), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.AddressLine1, 60, 0, 0);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "AddressLine2", typeof(System.String), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.AddressLine2, 60, 0, 0);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "City", typeof(System.String), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.City, 30, 0, 0);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "StateProvinceName", typeof(System.String), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.StateProvinceName, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "PostalCode", typeof(System.String), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.PostalCode, 15, 0, 0);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "CountryRegionName", typeof(System.String), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.CountryRegionName, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewQuerySpecTypedView", "Demographics", typeof(System.String), false, false, true, false, (int)CustomerViewQuerySpecFieldIndex.Demographics, 2147483647, 0, 0);
 		}		
 	}
 }

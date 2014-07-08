@@ -11,8 +11,8 @@ using System.ComponentModel;
 
 namespace AW.Data.TypedListClasses
 {
-	/// <summary>Class which represents a row in the typed list 'Sales.CustomerListLinq'.</summary>
-	/// <remarks>This class is a result class for a query, which is produced with the method <see cref="AW.Data.Linq.LinqMetaData.GetCustomerListLinqTypedList"/>.
+	/// <summary>Class which represents a row in the typed list 'Sales.CustomerListQuerySpec'.</summary>
+	/// <remarks>This class is a result class for a query, which is produced with the method <see cref="AW.Data.FactoryClasses.QueryFactory.GetCustomerListQuerySpecTypedList"/>.
 	/// Contains the following entity definition(s):
 	/// Entity: Person.Address. <br/>
 	/// Entity: Person.AddressType. <br/>
@@ -25,14 +25,14 @@ namespace AW.Data.TypedListClasses
 	/// Custom Properties: <br/>
 	/// </remarks>
 	[Serializable]
-	public partial class CustomerListLinqRow : PocoBase, TypedViewClasses.IIndividualCustomer
+	public partial class CustomerListQuerySpecRow : PocoBase, TypedViewClasses.IIndividualCustomer
 	{
 		#region Extensibility Method Definitions
 		partial void OnCreated();
 		#endregion
 		
-		/// <summary>Initializes a new instance of the <see cref="CustomerListLinqRow"/> class.</summary>
-		public CustomerListLinqRow()
+		/// <summary>Initializes a new instance of the <see cref="CustomerListQuerySpecRow"/> class.</summary>
+		public CustomerListQuerySpecRow()
 		{
 			OnCreated();
 		}
