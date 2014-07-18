@@ -53,6 +53,8 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonEnableFilter = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonClearFilters = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+      this.toolStripButtonMultiLine = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
       this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
@@ -64,6 +66,7 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonShowDatagrid = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonObjectBrowser = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonObjectListViewVisualizer = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
       this.dataGridViewEnumerable = new ADGV.AdvancedDataGridView();
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingSourcePaging = new System.Windows.Forms.BindingSource(this.components);
@@ -137,6 +140,8 @@ namespace AW.Winforms.Helpers.Controls
             this.toolStripButtonEnableFilter,
             this.toolStripButtonClearFilters,
             this.toolStripButtonSearch,
+            this.toolStripSeparator6,
+            this.toolStripButtonMultiLine,
             this.toolStripSeparator4,
             this.printToolStripButton,
             this.toolStripSeparator,
@@ -147,7 +152,8 @@ namespace AW.Winforms.Helpers.Controls
             this.toolStripSeparator3,
             this.toolStripButtonShowDatagrid,
             this.toolStripButtonObjectBrowser,
-            this.toolStripButtonObjectListViewVisualizer});
+            this.toolStripButtonObjectListViewVisualizer,
+            this.toolStripSeparator5});
       this.bindingNavigatorData.Location = new System.Drawing.Point(0, 0);
       this.bindingNavigatorData.MoveFirstItem = this.bindingNavigatorMoveFirstItem1;
       this.bindingNavigatorData.MoveLastItem = this.bindingNavigatorMoveLastItem1;
@@ -320,6 +326,21 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonSearch.Text = "Search";
       this.toolStripButtonSearch.Click += new System.EventHandler(this.toolStripButtonSearch_Click);
       // 
+      // toolStripSeparator6
+      // 
+      this.toolStripSeparator6.Name = "toolStripSeparator6";
+      this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+      // 
+      // toolStripButtonMultiLine
+      // 
+      this.toolStripButtonMultiLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonMultiLine.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonMultiLine.Image")));
+      this.toolStripButtonMultiLine.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonMultiLine.Name = "toolStripButtonMultiLine";
+      this.toolStripButtonMultiLine.Size = new System.Drawing.Size(61, 22);
+      this.toolStripButtonMultiLine.Text = "MultiLine";
+      this.toolStripButtonMultiLine.Click += new System.EventHandler(this.toolStripButtonMultiLine_Click);
+      // 
       // toolStripSeparator4
       // 
       this.toolStripSeparator4.Name = "toolStripSeparator4";
@@ -377,10 +398,11 @@ namespace AW.Winforms.Helpers.Controls
       // toolStripButtonShowDatagrid
       // 
       this.toolStripButtonShowDatagrid.CheckOnClick = true;
+      this.toolStripButtonShowDatagrid.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
       this.toolStripButtonShowDatagrid.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonShowDatagrid.Image")));
       this.toolStripButtonShowDatagrid.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonShowDatagrid.Name = "toolStripButtonShowDatagrid";
-      this.toolStripButtonShowDatagrid.Size = new System.Drawing.Size(203, 22);
+      this.toolStripButtonShowDatagrid.Size = new System.Drawing.Size(187, 22);
       this.toolStripButtonShowDatagrid.Text = "Enable Related Object Navigation";
       this.toolStripButtonShowDatagrid.Click += new System.EventHandler(this.toolStripButtonShowDatagrid_Click);
       // 
@@ -406,6 +428,11 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonObjectListViewVisualizer.Text = "ObjectListView Visualizer";
       this.toolStripButtonObjectListViewVisualizer.Click += new System.EventHandler(this.toolStripButtonObjectListViewVisualizer_Click);
       // 
+      // toolStripSeparator5
+      // 
+      this.toolStripSeparator5.Name = "toolStripSeparator5";
+      this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+      // 
       // dataGridViewEnumerable
       // 
       this.dataGridViewEnumerable.AllowUserToOrderColumns = true;
@@ -426,6 +453,7 @@ namespace AW.Winforms.Helpers.Controls
       this.dataGridViewEnumerable.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridViewEnumerable_ColumnAdded);
       this.dataGridViewEnumerable.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridViewEnumerable_DataBindingComplete);
       this.dataGridViewEnumerable.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewEnumerable_DataError);
+      this.dataGridViewEnumerable.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewEnumerable_EditingControlShowing);
       // 
       // bindingNavigatorPaging
       // 
@@ -590,7 +618,7 @@ namespace AW.Winforms.Helpers.Controls
       // 
       this.toolStripLabel4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
       this.toolStripLabel4.Name = "toolStripLabel4";
-      this.toolStripLabel4.Size = new System.Drawing.Size(70, 22);
+      this.toolStripLabel4.Size = new System.Drawing.Size(71, 22);
       this.toolStripLabel4.Text = "Total Count";
       // 
       // toolStripLabelSuperSetCount
@@ -747,5 +775,8 @@ namespace AW.Winforms.Helpers.Controls
     private System.Windows.Forms.ToolStripButton toolStripButtonShowDatagrid;
     private System.Windows.Forms.ToolStripLabel toolStripLabel4;
     private System.Windows.Forms.ToolStripLabel toolStripLabelSuperSetCount;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+    private System.Windows.Forms.ToolStripButton toolStripButtonMultiLine;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
   }
 }
