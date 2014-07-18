@@ -780,5 +780,41 @@ namespace AW.Winforms.Helpers.Controls
         tabControlGrids.Appearance = TabAppearance.FlatButtons;
       }
     }
+
+    private void toolStripButtonMultiLine_Click(object sender, EventArgs e)
+    {
+      var selectedColumns = dataGridViewEnumerable.SelectedColumns.OfType<DataGridViewTextBoxColumn>().ToList();
+      if (selectedColumns.Any())
+      foreach (var selectedColumn in selectedColumns)
+      {
+        selectedColumn.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+      }
+      else
+      {
+        foreach (var dataGridTextBoxColumn in dataGridViewEnumerable.SelectedCells.OfType<DataGridViewTextBoxCell>())
+        {
+          dataGridTextBoxColumn.Style.WrapMode = DataGridViewTriState.True;
+        }
+     //         var currentDataGridTextBoxColumn = dataGridViewEnumerable.CurrentCell as ;
+     // if (currentDataGridTextBoxColumn != null)
+     // {
+     ////   currentDataGridTextBoxColumn.WrapMode = DataGridViewTriState.True;
+     //   dataGridViewEnumerable.CurrentCell.Style.WrapMode = DataGridViewTriState.True;
+     //  // dataGridViewEnumerable.CurrentCell.
+     // }
+      }
+
+      dataGridViewEnumerable.AutoSizeRowsMode=DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+    }
+
+    private void dataGridViewEnumerable_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+    {
+      var textBox = e.Control as TextBox;
+      if (textBox != null)
+      {
+        //textBox.Multiline = true;
+        textBox.ScrollBars = ScrollBars.Both;
+      }
+    }
   }
 }
