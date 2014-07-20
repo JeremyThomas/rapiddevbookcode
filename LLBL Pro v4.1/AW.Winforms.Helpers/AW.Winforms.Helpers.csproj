@@ -74,7 +74,7 @@
       <HintPath>..\packages\DynamicQuery.1.0\lib\35\Dynamic.dll</HintPath>
     </Reference>
     <Reference Include="FastColoredTextBox">
-      <HintPath>..\packages\FastColoredTextBox.1.0.0\lib\net40\FastColoredTextBox.dll</HintPath>
+      <HintPath>..\packages\FastColoredTextBox.2.15.2.0\lib\net40\FastColoredTextBox.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.ConnectionUI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f4ca07f51760da93, processorArchitecture=MSIL">
@@ -162,7 +162,7 @@
       <DependentUpon>GridDataEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\CSharpEditor.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\CSharpEditor.Designer.cs">
       <DependentUpon>CSharpEditor.cs</DependentUpon>
