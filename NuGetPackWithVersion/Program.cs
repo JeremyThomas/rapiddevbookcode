@@ -32,7 +32,7 @@ namespace NuGetPackWithVersion
       //                    startInfo.RedirectStandardInput = true;
 
       //Process proc = Process.Start(startInfo);
-
+      //..\..\..\.nuGet\nuget.exe
       return ConsoleApp.Run(@"C:\Program Files (x86)\NuGet\nuget.exe",
         string.Format("Pack \"{0}\" -version {1} -OutputDirectory \"{2}\"", nuspecFile, fileVersion, nuspecDir))
         .Output.Trim();
