@@ -22,7 +22,7 @@ namespace AW.Winforms.Helpers.Controls
 {
   public partial class GridDataEditor : UserControl
   {
-    public string[] MembersToExclude { private get; set; }
+    public string[] MembersToExclude { get; set; }
 
     /// <summary>
     ///   The maximum automatic generate column width - 300
@@ -90,7 +90,7 @@ namespace AW.Winforms.Helpers.Controls
      Description("Size of the page")]
     public ushort PageSize
     {
-      protected get { return _pageSize; }
+      get { return _pageSize; }
       set
       {
         _pageSize = value;
@@ -149,7 +149,7 @@ namespace AW.Winforms.Helpers.Controls
     /// </value>
     public bool Readonly
     {
-      private get { return dataGridViewEnumerable.ReadOnly; }
+      get { return dataGridViewEnumerable.ReadOnly; }
       set { dataGridViewEnumerable.ReadOnly = value; }
     }
 
@@ -702,7 +702,7 @@ namespace AW.Winforms.Helpers.Controls
       get { return _superset ?? bindingSourceEnumerable.GetDataSource(); }
     }
 
-    public bool EnsureFilteringEnabled { protected get; set; }
+    public bool EnsureFilteringEnabled { get; set; }
 
     private void toolStripButtonClearFilters_Click(object sender, EventArgs e)
     {

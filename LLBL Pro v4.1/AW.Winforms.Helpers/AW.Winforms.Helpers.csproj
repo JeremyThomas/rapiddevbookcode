@@ -73,6 +73,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DynamicQuery.1.0\lib\35\Dynamic.dll</HintPath>
     </Reference>
+    <Reference Include="FastColoredTextBox">
+      <HintPath>..\packages\FastColoredTextBox.1.0.0\lib\net40\FastColoredTextBox.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.ConnectionUI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f4ca07f51760da93, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -107,6 +110,9 @@
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="TabStrip">
+      <HintPath>..\Lib\TabStrip.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +160,12 @@
     </Compile>
     <Compile Include="Controls\GridDataEditor.Designer.cs">
       <DependentUpon>GridDataEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CSharpEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\CSharpEditor.Designer.cs">
+      <DependentUpon>CSharpEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="DataEditor\DataEditorExtensions.cs" />
     <Compile Include="DataEditor\FrmDataEditor.cs">
@@ -283,6 +295,9 @@
     <EmbeddedResource Include="Controls\GridDataEditor.resx">
       <DependentUpon>GridDataEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CSharpEditor.resx">
+      <DependentUpon>CSharpEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DataEditor\FrmDataEditor.resx">
       <DependentUpon>FrmDataEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -389,6 +404,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MostRecentlyUsedHandler\MRUHandler.bmp" />
+    <None Include="Resources\unsure.gif" />
+    <None Include="Resources\undo_16x16.png" />
+    <None Include="Resources\smile_16x16.png" />
+    <None Include="Resources\sad_16x16.png" />
+    <None Include="Resources\rolleyes.gif" />
+    <None Include="Resources\redo_16x16.png" />
+    <None Include="Resources\property.png" />
+    <None Include="Resources\backward0_16x16.png" />
+    <None Include="Resources\bookmark--plus.png" />
+    <None Include="Resources\box.png" />
+    <None Include="Resources\bye.gif" />
+    <None Include="Resources\class_libraries.png" />
+    <None Include="Resources\edit-padding-top.png" />
+    <None Include="Resources\forward_16x16.png" />
+    <None Include="Resources\layer--minus.png" />
+    <None Include="Resources\layer--plus.png" />
+    <None Include="Resources\lightning.png" />
+    <None Include="Resources\lol.gif" />
     <Content Include="Resources\Members.png" />
   </ItemGroup>
   <ItemGroup />
