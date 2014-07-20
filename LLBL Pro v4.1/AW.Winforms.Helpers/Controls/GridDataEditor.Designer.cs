@@ -93,6 +93,7 @@ namespace AW.Winforms.Helpers.Controls
       this.tabPageDataGrid = new System.Windows.Forms.TabPage();
       this.tabPageDataGridView = new System.Windows.Forms.TabPage();
       this.searchToolBar = new ADGV.SearchToolBar();
+      this.toolStripButtonCellPopOut = new System.Windows.Forms.ToolStripButton();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
       this.bindingNavigatorData.SuspendLayout();
@@ -141,6 +142,7 @@ namespace AW.Winforms.Helpers.Controls
             this.toolStripButtonClearFilters,
             this.toolStripButtonSearch,
             this.toolStripSeparator6,
+            this.toolStripButtonCellPopOut,
             this.toolStripButtonMultiLine,
             this.toolStripSeparator4,
             this.printToolStripButton,
@@ -424,7 +426,7 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonObjectListViewVisualizer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonObjectListViewVisualizer.Image")));
       this.toolStripButtonObjectListViewVisualizer.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonObjectListViewVisualizer.Name = "toolStripButtonObjectListViewVisualizer";
-      this.toolStripButtonObjectListViewVisualizer.Size = new System.Drawing.Size(141, 22);
+      this.toolStripButtonObjectListViewVisualizer.Size = new System.Drawing.Size(141, 19);
       this.toolStripButtonObjectListViewVisualizer.Text = "ObjectListView Visualizer";
       this.toolStripButtonObjectListViewVisualizer.Click += new System.EventHandler(this.toolStripButtonObjectListViewVisualizer_Click);
       // 
@@ -618,7 +620,7 @@ namespace AW.Winforms.Helpers.Controls
       // 
       this.toolStripLabel4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
       this.toolStripLabel4.Name = "toolStripLabel4";
-      this.toolStripLabel4.Size = new System.Drawing.Size(71, 22);
+      this.toolStripLabel4.Size = new System.Drawing.Size(70, 22);
       this.toolStripLabel4.Text = "Total Count";
       // 
       // toolStripLabelSuperSetCount
@@ -685,6 +687,16 @@ namespace AW.Winforms.Helpers.Controls
       this.searchToolBar.Visible = false;
       this.searchToolBar.Search += new ADGV.SearchToolBarSearchEventHandler(this.searchToolBar_Search);
       this.searchToolBar.VisibleChanged += new System.EventHandler(this.searchToolBar_VisibleChanged);
+      // 
+      // toolStripButtonCellPopOut
+      // 
+      this.toolStripButtonCellPopOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonCellPopOut.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCellPopOut.Image")));
+      this.toolStripButtonCellPopOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonCellPopOut.Name = "toolStripButtonCellPopOut";
+      this.toolStripButtonCellPopOut.Size = new System.Drawing.Size(75, 22);
+      this.toolStripButtonCellPopOut.Text = "PopOut Cell";
+      this.toolStripButtonCellPopOut.Click += new System.EventHandler(this.toolStripButtonCellPopOut_Click);
       // 
       // GridDataEditor
       // 
@@ -778,5 +790,6 @@ namespace AW.Winforms.Helpers.Controls
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     private System.Windows.Forms.ToolStripButton toolStripButtonMultiLine;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+    private System.Windows.Forms.ToolStripButton toolStripButtonCellPopOut;
   }
 }
