@@ -15,6 +15,7 @@ using AW.Helper;
 using AW.Helper.TypeConverters;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.EntityViewer;
+using AW.Winforms.Helpers.Forms;
 using AW.Winforms.Helpers.Reporting;
 using JesseJohnston;
 
@@ -814,6 +815,18 @@ namespace AW.Winforms.Helpers.Controls
       {
         //textBox.Multiline = true;
         textBox.ScrollBars = ScrollBars.Both;
+      }
+    }
+
+    private void toolStripButtonCellPopOut_Click(object sender, EventArgs e)
+    {
+      var dataGridViewTextBoxCell = dataGridViewEnumerable.CurrentCell as DataGridViewTextBoxCell;
+      if (dataGridViewTextBoxCell != null)
+      {
+        var text = Convert.ToString(dataGridViewTextBoxCell.Value);
+        var editedText = TextEditor.ShowTextEditorDialog(text);
+        if (editedText != null)
+          dataGridViewTextBoxCell.Value = editedText;
       }
     }
   }

@@ -163,13 +163,7 @@
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(121, 6);
-            // 
-            // quitToolStripMenuItem
-            // 
-            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.quitToolStripMenuItem.Text = "Quit";
-            this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
+
             // 
             // ssMain
             // 
@@ -746,11 +740,8 @@
             this.Controls.Add(this.tsMain);
             this.Controls.Add(this.msMain);
             this.Controls.Add(this.ssMain);
-            this.MainMenuStrip = this.msMain;
             this.Name = "CSharpEditor";
             this.Text = "CSharpEditor";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PowerfulCSharpEditor_FormClosing);
             this.msMain.ResumeLayout(false);
             this.msMain.PerformLayout();
             this.ssMain.ResumeLayout(false);

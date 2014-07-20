@@ -1,4 +1,6 @@
-﻿namespace AW.Winforms.Helpers.QueryRunner
+﻿using AW.Winforms.Helpers.Controls;
+
+namespace AW.Winforms.Helpers.QueryRunner
 {
   partial class QueryRunner
   {
@@ -31,7 +33,7 @@
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QueryRunner));
       this.splitContainerScript = new System.Windows.Forms.SplitContainer();
-      this.textBoxScript = new System.Windows.Forms.RichTextBox();
+      this.textBoxScript = new CSharpEditor();
       this.contextMenuStripGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.viewObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.browseObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,13 +70,13 @@
       // 
       this.textBoxScript.AllowDrop = true;
       this.textBoxScript.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.textBoxScript.EnableAutoDragDrop = true;
+
       this.textBoxScript.Location = new System.Drawing.Point(0, 0);
       this.textBoxScript.Name = "textBoxScript";
       this.textBoxScript.Size = new System.Drawing.Size(913, 200);
       this.textBoxScript.TabIndex = 0;
       this.textBoxScript.Text = resources.GetString("textBoxScript.Text");
-      this.textBoxScript.WordWrap = false;
+
       this.textBoxScript.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragDrop);
       this.textBoxScript.DragEnter += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragEnter);
       this.textBoxScript.DragOver += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragOver);
@@ -166,7 +168,7 @@
     #endregion
 
     internal System.Windows.Forms.SplitContainer splitContainerScript;
-    private System.Windows.Forms.RichTextBox textBoxScript;
+    private CSharpEditor textBoxScript;
     private System.Windows.Forms.ContextMenuStrip contextMenuStripBlank;
     private System.Windows.Forms.ContextMenuStrip contextMenuStripGrid;
     private System.Windows.Forms.ToolStripMenuItem viewObjectToolStripMenuItem;
