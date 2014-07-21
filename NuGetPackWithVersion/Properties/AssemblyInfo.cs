@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("NuGetPackWithVersion")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Given a nuspec manifest file path it creates a nuget package with the version coming from the FileVersion (not assembly version)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("NuGetPackWithVersion")]
