@@ -1,5 +1,4 @@
 //css_ref SD.LLBLGen.Pro.ORMSupportClasses.dll;
-//css_ref SD.LLBLGen.Pro.LinqSupportClasses.NET35;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,25 +12,26 @@ public class Script : MarshalByRefObject, IQueryScript
   public IEnumerable Query()
   {
     //Copy of CustomerQueries.GetCustomerListAnonymousLinq
-    var customerlist = from customer in MetaSingletons.MetaData.Customer
-                       from customerAddress in customer.CustomerAddresses
-                       select new
-                                {
-                                  customerAddress.Address.AddressLine1,
-                                  customerAddress.Address.AddressLine2,
-                                  customerAddress.Address.City,
-                                  AddressType = customerAddress.AddressType.Name,
-                                  customer.Individual.Contact.Title,
-                                  customer.Individual.Contact.FirstName,
-                                  customer.Individual.Contact.MiddleName,
-                                  customer.Individual.Contact.LastName,
-                                  customer.Individual.Contact.Suffix,
-                                  customer.Individual.Contact.EmailAddress,
-                                  customer.Individual.Contact.EmailPromotion,
-                                  CountryRegionName = customerAddress.Address.StateProvince.CountryRegion.Name,
-                                  StateProvinceName = customerAddress.Address.StateProvince.Name,
-                                  customer.CustomerID
-                                };
+var customerlist = from individual in MetaSingletons.MetaData.Individual
+from customerAddress in individual.CustomerAddresses
+select new
+                                  {
+                                    customerAddress.Address.AddressLine1,
+                                    customerAddress.Address.AddressLine2,
+                                    customerAddress.Address.City,
+                                    AddressType = customerAddress.AddressType.Name,
+                                    individual.Contact.Title,
+                                    individual.Contact.FirstName,
+                                    individual.Contact.MiddleName,
+                                    individual.Contact.LastName,
+                                    individual.Contact.Suffix,
+                                    individual.Contact.EmailAddress,
+                                    individual.Contact.EmailPromotion,
+                                    CountryRegionName = customerAddress.Address.StateProvince.CountryRegion.Name,
+                                    StateProvinceName = customerAddress.Address.StateProvince.Name,
+                                    individual.CustomerID
+                                  };
+                
     return customerlist.Take(5);
   }
 

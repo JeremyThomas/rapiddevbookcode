@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>FastColoredTextBox</id>
+        <version>1.0.0</version>
+        <title>Fast Colored TextBox for Syntax Highlighting</title>
+        <authors>Elder Santos</authors>
+        <owners>Pavel Torgashov</owners>
+        <licenseUrl>http://www.opensource.org/licenses/lgpl-3.0.html</licenseUrl>
+        <projectUrl>http://www.codeproject.com/Articles/161871/Fast-Colored-TextBox-for-syntax-highlighting</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Fast Colored TextBox for Syntax Highlighting
+It is a project owned by http://www.codeproject.com/Members/PavelTorgashov I just create a nuget package for it</description>
+        <tags>textbox color highlight</tags>
+    </metadata>
+    <files>
+        <file src="lib\net40\FastColoredTextBox.dll" target="lib\net40\FastColoredTextBox.dll" />
+    </files>
+</package>

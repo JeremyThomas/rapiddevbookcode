@@ -30,13 +30,13 @@ namespace AW.Winforms.Helpers.QueryRunner
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
     private void toolStripButtonViewRunQuery_Click(object sender, EventArgs e)
     {
-      var helper = new AsmHelper(CSScript.LoadCode(textBoxScript.Text, null, true));
+      var helper = new AsmHelper(CSScript.LoadCode(textBoxScript.CurrentTB.Text, null, true));
       using (helper)
       {
         gridDataEditorScript.BindEnumerable(((IQueryScript) helper.CreateObject("Script")).Query());
       }
       if (gridDataEditorScript.BindingSource.Count > 0)
-        if (gridDataEditorScript.Height < 30)
+        if (gridDataEditorScript.Height < 50)
         {
           splitContainerScript.SplitterDistance = Height/2;
           toolStripButtonBrowse.Enabled = true;
@@ -57,7 +57,7 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     internal void LoadFile(string fileName)
     {
-      textBoxScript.Text = File.ReadAllText(fileName);
+      textBoxScript.CreateTab(fileName);
     }
 
     internal void Save(StreamWriter streamWriter)
@@ -94,7 +94,7 @@ namespace AW.Winforms.Helpers.QueryRunner
         return;
       var node = (TreeNode) e.Data.GetData(typeof (TreeNode));
 
-      textBoxScript.SelectedText = node.Text;
+    //  textBoxScript.SelectedText = node.Text;
 
       //try
       //{

@@ -15,6 +15,7 @@ using AW.Helper;
 using AW.Helper.TypeConverters;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.EntityViewer;
+using AW.Winforms.Helpers.Forms;
 using AW.Winforms.Helpers.Reporting;
 using JesseJohnston;
 
@@ -22,7 +23,7 @@ namespace AW.Winforms.Helpers.Controls
 {
   public partial class GridDataEditor : UserControl
   {
-    public string[] MembersToExclude { private get; set; }
+    public string[] MembersToExclude { get; set; }
 
     /// <summary>
     ///   The maximum automatic generate column width - 300
@@ -90,7 +91,7 @@ namespace AW.Winforms.Helpers.Controls
      Description("Size of the page")]
     public ushort PageSize
     {
-      protected get { return _pageSize; }
+      get { return _pageSize; }
       set
       {
         _pageSize = value;
@@ -149,7 +150,7 @@ namespace AW.Winforms.Helpers.Controls
     /// </value>
     public bool Readonly
     {
-      private get { return dataGridViewEnumerable.ReadOnly; }
+      get { return dataGridViewEnumerable.ReadOnly; }
       set { dataGridViewEnumerable.ReadOnly = value; }
     }
 
@@ -702,7 +703,7 @@ namespace AW.Winforms.Helpers.Controls
       get { return _superset ?? bindingSourceEnumerable.GetDataSource(); }
     }
 
-    public bool EnsureFilteringEnabled { protected get; set; }
+    public bool EnsureFilteringEnabled { get; set; }
 
     private void toolStripButtonClearFilters_Click(object sender, EventArgs e)
     {
@@ -778,6 +779,54 @@ namespace AW.Winforms.Helpers.Controls
         tabControlGrids.ItemSize = new Size(0, 1);
         tabControlGrids.SizeMode = TabSizeMode.Fixed;
         tabControlGrids.Appearance = TabAppearance.FlatButtons;
+      }
+    }
+
+    private void toolStripButtonMultiLine_Click(object sender, EventArgs e)
+    {
+      var selectedColumns = dataGridViewEnumerable.SelectedColumns.OfType<DataGridViewTextBoxColumn>().ToList();
+      if (selectedColumns.Any())
+      foreach (var selectedColumn in selectedColumns)
+      {
+        selectedColumn.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+      }
+      else
+      {
+        foreach (var dataGridTextBoxColumn in dataGridViewEnumerable.SelectedCells.OfType<DataGridViewTextBoxCell>())
+        {
+          dataGridTextBoxColumn.Style.WrapMode = DataGridViewTriState.True;
+        }
+     //         var currentDataGridTextBoxColumn = dataGridViewEnumerable.CurrentCell as ;
+     // if (currentDataGridTextBoxColumn != null)
+     // {
+     ////   currentDataGridTextBoxColumn.WrapMode = DataGridViewTriState.True;
+     //   dataGridViewEnumerable.CurrentCell.Style.WrapMode = DataGridViewTriState.True;
+     //  // dataGridViewEnumerable.CurrentCell.
+     // }
+      }
+
+      dataGridViewEnumerable.AutoSizeRowsMode=DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+    }
+
+    private void dataGridViewEnumerable_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+    {
+      var textBox = e.Control as TextBox;
+      if (textBox != null)
+      {
+        //textBox.Multiline = true;
+        textBox.ScrollBars = ScrollBars.Both;
+      }
+    }
+
+    private void toolStripButtonCellPopOut_Click(object sender, EventArgs e)
+    {
+      var dataGridViewTextBoxCell = dataGridViewEnumerable.CurrentCell as DataGridViewTextBoxCell;
+      if (dataGridViewTextBoxCell != null)
+      {
+        var text = Convert.ToString(dataGridViewTextBoxCell.Value);
+        var editedText = TextEditor.ShowTextEditorDialog(text);
+        if (editedText != null)
+          dataGridViewTextBoxCell.Value = editedText;
       }
     }
   }
