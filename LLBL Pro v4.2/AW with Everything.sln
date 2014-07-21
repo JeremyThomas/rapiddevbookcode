@@ -204,9 +204,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Test.Helpers", "AW.Test.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackWithVersion", "NuGetPackWithVersion\NuGetPackWithVersion.csproj", "{AE12F25F-02C9-498D-9420-1C6B32913D22}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LLBLGen.Plugins", "AW.LLBLGen.Plugins\AW.LLBLGen.Plugins.csproj", "{0455FCEB-846A-42C7-AECB-47A895213FF2}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 29
+		SccNumberOfProjects = 30
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
@@ -319,6 +321,10 @@ Global
 		SccProjectTopLevelParentUniqueName28 = AW\u0020with\u0020Everything.sln
 		SccProjectName28 = NuGetPackWithVersion
 		SccLocalPath28 = NuGetPackWithVersion
+		SccProjectUniqueName29 = AW.LLBLGen.Plugins\\AW.LLBLGen.Plugins.csproj
+		SccProjectTopLevelParentUniqueName29 = AW\u0020with\u0020Everything.sln
+		SccProjectName29 = AW.LLBLGen.Plugins
+		SccLocalPath29 = AW.LLBLGen.Plugins
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug no unit tests|Any CPU = Debug no unit tests|Any CPU
@@ -667,6 +673,18 @@ Global
 		{AE12F25F-02C9-498D-9420-1C6B32913D22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE12F25F-02C9-498D-9420-1C6B32913D22}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AE12F25F-02C9-498D-9420-1C6B32913D22}.Release|x86.ActiveCfg = Release|Any CPU
+		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
+		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Release - Test|x86.ActiveCfg = Release|Any CPU
+		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -698,6 +716,7 @@ Global
 		{3FC1967C-B85A-4455-8850-F1659B8EC163} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
 		{0D78311F-EF3D-442D-BB6F-17225EC0892C} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
 		{AE12F25F-02C9-498D-9420-1C6B32913D22} = {79351B3D-6F22-43FC-B6E3-84403C789513}
+		{0455FCEB-846A-42C7-AECB-47A895213FF2} = {79351B3D-6F22-43FC-B6E3-84403C789513}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW with Everything.vsmdi
