@@ -8,17 +8,18 @@ using SlavaGu.ConsoleAppLauncher;
 namespace NuGetPackWithVersion
 {
   /// <summary>
-  /// Given a nuspec manifest file path it creates a nuget package with the version coming from the FileVersion (not assembly version) 
-  /// of the assembly with the highest version number in the files section of the .nuspec manifest.
-  /// Uses nuget.exe.
-  /// This might be better as a powershell script.
-  /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=22095
+  ///   Given a nuspec manifest file path it creates a nuget package with the version coming from the FileVersion (not
+  ///   assembly version)
+  ///   of the assembly with the highest version number in the files section of the .nuspec manifest.
+  ///   Uses nuget.exe.
+  ///   This might be better as a powershell script.
+  ///   http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=22095
   /// </summary>
-  /// <remarks>Similarish tools but mainly around project files rather than already built DLLs
-  /// https://nugetversioner.codeplex.com/
-  /// https://newnugetpackage.codeplex.com/documentation
-  /// https://github.com/BenPhegan/NuGet.Extensions
-  /// 
+  /// <remarks>
+  ///   Similarish tools but mainly around project files rather than already built DLLs
+  ///   https://nugetversioner.codeplex.com/
+  ///   https://newnugetpackage.codeplex.com/documentation
+  ///   https://github.com/BenPhegan/NuGet.Extensions
   /// </remarks>
   internal class Program
   {
@@ -30,9 +31,14 @@ namespace NuGetPackWithVersion
       var nuspecDir = Path.GetDirectoryName(nuspecFile);
       var doc = XDocument.Load(nuspecFile);
       var fileVersion = GetFileVersion(doc, nuspecDir);
-      return ConsoleApp.Run(GetNugetExePath(),
-        string.Format("Pack \"{0}\" -version {1} -OutputDirectory \"{2}\"", nuspecFile, fileVersion, nuspecDir))
-        .Output.Trim();
+      Console.WriteLine(fileVersion);
+      var nugetExePath = GetNugetExePath();
+      var cmdLineFormatString = "Pack \"{0}\" -version {1}";
+      if (!string.IsNullOrWhiteSpace(nuspecDir))
+        cmdLineFormatString = cmdLineFormatString + " -OutputDirectory \"{2}\"";
+      var cmdLine = string.Format(cmdLineFormatString, nuspecFile, fileVersion, nuspecDir);
+      Console.WriteLine(nugetExePath + " " + cmdLine);
+      return ConsoleApp.Run(nugetExePath, cmdLine).Output.Trim();
     }
 
     private static string GetFileVersion(XContainer doc, string nuspecDir)
