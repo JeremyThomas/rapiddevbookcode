@@ -85,7 +85,7 @@ namespace AW.Tests
       Bugs.SalesOrderHeader();
     }
 
-    [TestProperty("Bug", "UnFixed"), Ignore, TestMethod,
+    [TestProperty("Bug", "UnFixed"), TestMethod,
      Description("Fails with: SD.LLBLGen.Pro.ORMSupportClasses.ORMQueryConstructionException: A nested query relies on a correlation filter which refers to the field 'EmployeeID', however this field wasn't found in the projection of the entity..	")]
     public void EmployeeAddressesEmployeeContactIndividualsTest()
     {
@@ -106,7 +106,7 @@ namespace AW.Tests
       query.ToList();
     }
 
-    [TestProperty("Bug", "UnFixed"), Ignore, TestMethod, Description("The multi-part identifier LPLA_2.ContactID could not be bound.")]
+    [TestProperty("Bug", "UnFixed"), TestMethod, Description("The multi-part identifier LPLA_2.ContactID could not be bound.")]
     public void EmployeeIndividualOuterJoinTest()
     {
       var queryableWithInnerJoin = from e in MetaSingletons.MetaData.Employee
@@ -128,7 +128,7 @@ namespace AW.Tests
     }
 
     /// http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=18176
-    [TestProperty("Bug", "UnFixed"), Ignore, TestMethod, Description("SQL exception on last line")]
+    [TestProperty("Bug", "UnFixed"), TestMethod, Description("SQL exception on last line")]
     public void NestedQueryOnTotheSameEntityTwiceTest()
     {
       var q = (from soh in MetaSingletons.MetaData.SalesOrderHeader
@@ -200,7 +200,7 @@ namespace AW.Tests
       q.ToList(); //System.NullReferenceException: Object reference not set to an instance of an object.
     }
 
-    [TestProperty("Bug", "UnFixed"), Ignore, TestMethod, Description("The multi-part identifier LPLA_4.ContactID could not be bound when doing a nested query with a predicate involving an entity hop")]
+    [TestProperty("Bug", "UnFixed"), TestMethod, Description("The multi-part identifier LPLA_4.ContactID could not be bound when doing a nested query with a predicate involving an entity hop")]
     public void NestedQueryUsingFirst()
     {
       var k = from employeeAddress in MetaSingletons.MetaData.EmployeeAddress
@@ -283,7 +283,7 @@ namespace AW.Tests
     /// <summary>
     ///   http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=21371
     /// </summary>
-    [TestMethod, TestProperty("Bug", "UnFixed"), Ignore, Description("LINQ - Invalid SQL when prefetch comes before criteria")]
+    [TestMethod, TestProperty("Bug", "Fixed"), Description("LINQ - Invalid SQL when prefetch comes before criteria")]
     public void TestPrefetchBeforeCriterea()
     {
       MetaSingletons.MetaData.Customer.FilterBySalesPersonID(275).PrefetchCustomerAddresses().EmptySelect().ToEntityCollection(); //OK with prefetch
@@ -291,7 +291,7 @@ namespace AW.Tests
       MetaSingletons.MetaData.Customer.EmptySelect().PrefetchCustomerAddresses().FilterBySalesPersonID(275).ToEntityCollection(); //This one fails
     }
 
-    [TestMethod, TestProperty("Bug", "UnFixed"), Ignore, Description("LINQ -  let followed by a projection followed by an ordering")]
+    [TestMethod, TestProperty("Bug", "UnFixed"), Description("LINQ -  let followed by a projection followed by an ordering")]
     public void TestLetProjectionOrdering()
     {
       var transactionHistoryEntities = MetaSingletons.MetaData.TransactionHistory.FilterByProductIDWithLet(1);

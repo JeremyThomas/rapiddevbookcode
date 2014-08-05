@@ -32,6 +32,8 @@ namespace AW.Winforms.Helpers.Controls
     {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GridDataEditor));
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
       this.bindingSourceEnumerable = new System.Windows.Forms.BindingSource(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorAddNewItem1 = new System.Windows.Forms.ToolStripButton();
@@ -54,6 +56,7 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonClearFilters = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+      this.toolStripButtonCellPopOut = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonMultiLine = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
       this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -93,7 +96,6 @@ namespace AW.Winforms.Helpers.Controls
       this.tabPageDataGrid = new System.Windows.Forms.TabPage();
       this.tabPageDataGridView = new System.Windows.Forms.TabPage();
       this.searchToolBar = new ADGV.SearchToolBar();
-      this.toolStripButtonCellPopOut = new System.Windows.Forms.ToolStripButton();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
       this.bindingNavigatorData.SuspendLayout();
@@ -333,6 +335,16 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripSeparator6.Name = "toolStripSeparator6";
       this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
       // 
+      // toolStripButtonCellPopOut
+      // 
+      this.toolStripButtonCellPopOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonCellPopOut.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCellPopOut.Image")));
+      this.toolStripButtonCellPopOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonCellPopOut.Name = "toolStripButtonCellPopOut";
+      this.toolStripButtonCellPopOut.Size = new System.Drawing.Size(75, 22);
+      this.toolStripButtonCellPopOut.Text = "PopOut Cell";
+      this.toolStripButtonCellPopOut.Click += new System.EventHandler(this.toolStripButtonCellPopOut_Click);
+      // 
       // toolStripButtonMultiLine
       // 
       this.toolStripButtonMultiLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -426,7 +438,7 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonObjectListViewVisualizer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonObjectListViewVisualizer.Image")));
       this.toolStripButtonObjectListViewVisualizer.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonObjectListViewVisualizer.Name = "toolStripButtonObjectListViewVisualizer";
-      this.toolStripButtonObjectListViewVisualizer.Size = new System.Drawing.Size(141, 19);
+      this.toolStripButtonObjectListViewVisualizer.Size = new System.Drawing.Size(141, 22);
       this.toolStripButtonObjectListViewVisualizer.Text = "ObjectListView Visualizer";
       this.toolStripButtonObjectListViewVisualizer.Click += new System.EventHandler(this.toolStripButtonObjectListViewVisualizer_Click);
       // 
@@ -440,9 +452,25 @@ namespace AW.Winforms.Helpers.Controls
       this.dataGridViewEnumerable.AllowUserToOrderColumns = true;
       this.dataGridViewEnumerable.AutoGenerateColumns = false;
       this.dataGridViewEnumerable.AutoGenerateContextFilters = true;
+      dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+      dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+      dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+      dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+      dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+      this.dataGridViewEnumerable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
       this.dataGridViewEnumerable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dataGridViewEnumerable.DataSource = this.bindingSourceEnumerable;
       this.dataGridViewEnumerable.DateWithTime = false;
+      dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+      dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+      dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+      dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+      dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+      this.dataGridViewEnumerable.DefaultCellStyle = dataGridViewCellStyle2;
       this.dataGridViewEnumerable.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridViewEnumerable.Location = new System.Drawing.Point(3, 3);
       this.dataGridViewEnumerable.Name = "dataGridViewEnumerable";
@@ -620,7 +648,7 @@ namespace AW.Winforms.Helpers.Controls
       // 
       this.toolStripLabel4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
       this.toolStripLabel4.Name = "toolStripLabel4";
-      this.toolStripLabel4.Size = new System.Drawing.Size(70, 22);
+      this.toolStripLabel4.Size = new System.Drawing.Size(71, 22);
       this.toolStripLabel4.Text = "Total Count";
       // 
       // toolStripLabelSuperSetCount
@@ -687,16 +715,6 @@ namespace AW.Winforms.Helpers.Controls
       this.searchToolBar.Visible = false;
       this.searchToolBar.Search += new ADGV.SearchToolBarSearchEventHandler(this.searchToolBar_Search);
       this.searchToolBar.VisibleChanged += new System.EventHandler(this.searchToolBar_VisibleChanged);
-      // 
-      // toolStripButtonCellPopOut
-      // 
-      this.toolStripButtonCellPopOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-      this.toolStripButtonCellPopOut.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCellPopOut.Image")));
-      this.toolStripButtonCellPopOut.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonCellPopOut.Name = "toolStripButtonCellPopOut";
-      this.toolStripButtonCellPopOut.Size = new System.Drawing.Size(75, 22);
-      this.toolStripButtonCellPopOut.Text = "PopOut Cell";
-      this.toolStripButtonCellPopOut.Click += new System.EventHandler(this.toolStripButtonCellPopOut_Click);
       // 
       // GridDataEditor
       // 

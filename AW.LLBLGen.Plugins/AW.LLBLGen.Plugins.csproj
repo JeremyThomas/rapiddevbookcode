@@ -58,12 +58,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdvancedDataGridView">
+      <HintPath>..\packages\ADGV.0.1.0.10\lib\net40\AdvancedDataGridView.dll</HintPath>
+    </Reference>
+    <Reference Include="AW.Winforms.Helpers">
+      <HintPath>..\AW.Winforms.Helpers\obj\Debug\AW.Winforms.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="AW.Winforms.Helpers.LLBL">
+      <HintPath>..\AW.Winforms.Helpers.LLBL\obj\Debug\AW.Winforms.Helpers.LLBL.dll</HintPath>
+    </Reference>
+    <Reference Include="Dynamic">
+      <HintPath>..\packages\DynamicQuery.1.0\lib\35\Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Humanizer, Version=1.26.1.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Humanizer.1.26.1\lib\portable-win+net40+sl50+wp8\Humanizer.dll</HintPath>
+    </Reference>
     <Reference Include="SD.LLBLGen.Pro.ApplicationCore">
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Solutions Design\LLBLGen Pro v4.2\SD.LLBLGen.Pro.ApplicationCore.dll</HintPath>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.Core">
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Solutions Design\LLBLGen Pro v4.2\SD.LLBLGen.Pro.Core.dll</HintPath>
     </Reference>
+    <Reference Include="SD.LLBLGen.Pro.DBDriverCore, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Solutions Design\LLBLGen Pro v4.2\SD.LLBLGen.Pro.DBDriverCore.dll</HintPath>
+    </Reference>
+    <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27" />
     <Reference Include="SD.Tools.Algorithmia">
       <HintPath>..\packages\SD.Tools.Algorithmia.1.1.0\lib\SD.Tools.Algorithmia.dll</HintPath>
     </Reference>
@@ -118,7 +139,20 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AW.Helper\AW.Helper.csproj">
+      <Project>{ffc5b55e-9157-4ce6-81bd-e593e4c08422}</Project>
+      <Name>AW.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ObjectListView\ObjectListView.csproj">
+      <Project>{3a62f36d-4e53-4532-b9ef-3b303a578b5e}</Project>
+      <Name>ObjectListView</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetDir)$(TargetFileName)" "C:\Program Files (x86)\Solutions Design\LLBLGen Pro v4.2\Plugins" /y</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

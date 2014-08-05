@@ -6,12 +6,12 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.Linq.Filters
 {
-	public static class Filters
-	{
-		public static IQueryable<CustomerEntity> FilterByCountry(this IQueryable<CustomerEntity> customerQuery, string country = null)
-		{
+  public static class Filters
+  {
+    public static IQueryable<CustomerEntity> FilterByCountry(this IQueryable<CustomerEntity> customerQuery, string country = null)
+    {
       return string.IsNullOrEmpty(country) ? customerQuery : customerQuery.Where(c => c.Country.EqualsIgnoreCase(country));
-		}
+    }
 
     public static IQueryable<CustomerEntity> FilterByEmployeeId(this IQueryable<CustomerEntity> customerQuery, params int[] employees)
     {
@@ -23,20 +23,38 @@ namespace Northwind.DAL.Linq.Filters
       return customerQuery;
     }
 
-    public static IQueryable<T> FilterByDiscontinuedG<T>(this IQueryable<T> products, bool? discontinued) where T : CommonEntityBase, IProduct
+    /// <summary>
+    /// Filters the ProductEntity Query by wether the product is discontinued. Generic on IProduct
+    /// </summary>
+    /// <param name="products">The product query.</param>
+    /// <param name="discontinued">The discontinued flag to filter by.</param>
+    /// <returns></returns>
+    public static IQueryable<T> FilterByDiscontinuedI<T>(this IQueryable<T> products, bool? discontinued) where T : IProduct
     {
       if (discontinued.HasValue)
         return discontinued.Value ? products.Where(r => r.Discontinued) : products.Where(r => r.Discontinued);
       return products;
     }
 
-    public static IQueryable<T> FilterByDiscontinuedP<T>(this IQueryable<T> products, bool? discontinued) where T : ProductEntity
+    /// <summary>
+    /// Filters the ProductEntity Query by wether the product is discontinued. Generic on EntityBase2, IProduct
+    /// </summary>
+    /// <param name="products">The product query.</param>
+    /// <param name="discontinued">The discontinued flag to filter by.</param>
+    /// <returns></returns>
+    public static IQueryable<T> FilterByDiscontinuedG<T>(this IQueryable<T> products, bool? discontinued) where T : EntityBase2, IProduct
     {
       if (discontinued.HasValue)
         return discontinued.Value ? products.Where(r => r.Discontinued) : products.Where(r => r.Discontinued);
       return products;
     }
 
+    /// <summary>
+    /// Filters the ProductEntity Query by wether the product is discontinued.
+    /// </summary>
+    /// <param name="products">The product query.</param>
+    /// <param name="discontinued">The discontinued flag to filter by.</param>
+    /// <returns></returns>
     public static IQueryable<ProductEntity> FilterByDiscontinued(this IQueryable<ProductEntity> products, bool? discontinued)
     {
       if (discontinued.HasValue)
@@ -83,5 +101,5 @@ namespace Northwind.DAL.Linq.Filters
              select e;
     }
 
-	}
+  }
 }
