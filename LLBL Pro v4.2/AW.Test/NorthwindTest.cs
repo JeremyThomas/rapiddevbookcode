@@ -107,7 +107,7 @@ namespace AW.Tests
     /// <summary>
     ///   <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
     /// </summary>
-    [TestProperty("Bug", "UnFixed"), TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+    [TestProperty("Bug", "Fixed"), TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
     public void CustomerLeftJoinCustomerDemographic()
     {
       var queryable = from c in GetNorthwindLinqMetaData().Customer
@@ -135,7 +135,7 @@ namespace AW.Tests
     /// <summary>
     ///   <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
     /// </summary>
-    [TestProperty("Bug", "UnFixed"), TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+    [TestProperty("Bug", "Fixed"), TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
     public void CustomerLeftJoinCustomerDemographicViaMany()
     {
       var queryable = from c in GetNorthwindLinqMetaData().Customer
@@ -238,7 +238,7 @@ namespace AW.Tests
     /// <summary>
     ///   http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19954
     /// </summary>
-    [TestProperty("Bug", "UnFixed"), TestMethod, Ignore, Description("After a prefetch of a ManyToMany relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
+    [TestProperty("Bug", "ByDesign"), TestMethod, Description("After a prefetch of a ManyToMany relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
     public void BiDirectionalManyToMany()
     {
       var metaData = GetNorthwindLinqMetaData();
@@ -305,7 +305,7 @@ namespace AW.Tests
       Assert.AreEqual(expected, employees.CountColumn(e => e.EmployeeId, true));
     }
 
-    [TestMethod, TestProperty("Bug", "UnFixed"), Ignore]
+    [TestMethod, TestProperty("Bug", "Fixed")]
     public void PrefetchBeforeCriterea()
     {
       var metaData = GetNorthwindLinqMetaData();
@@ -323,13 +323,19 @@ namespace AW.Tests
       var metaData = GetNorthwindLinqMetaData();
       metaData.Product.FilterByDiscontinued(true).ToEntityCollection2();
       metaData.Product.FilterByDiscontinued(false).ToEntityCollection2();
-      metaData.Product.FilterByDiscontinuedP(true).ToEntityCollection2();
-      metaData.Product.FilterByDiscontinuedP(false).ToEntityCollection2();
       metaData.Product.FilterByDiscontinuedG(true).ToEntityCollection2();
       metaData.Product.FilterByDiscontinuedG(false).ToEntityCollection2();
     }
 
-    [TestMethod, TestProperty("Bug", "UnFixed"), Ignore]
+    [TestMethod, TestCategory("Failing"),Description("http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=22914")]
+    public void TestFilterByDiscontinuedInterface()
+    {
+      var metaData = GetNorthwindLinqMetaData();
+      metaData.Product.FilterByDiscontinuedI(true).ToEntityCollection2();
+      metaData.Product.FilterByDiscontinuedI(false).ToEntityCollection2();
+    }
+
+    [TestMethod, TestProperty("Bug", "Fixed")]
     public void TestFilterByProductName()
     {
       var metaData = GetNorthwindLinqMetaData();

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Reflection;
 using System.Text;
+using AW.Helper.TypeConverters;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -230,9 +231,9 @@ namespace AW.Helper.LLBL
         try
         {
           var value = browseableProperty.GetValue(entity);
-          if (value is Enum)
+          if (value is Enum) //Can't remember what this is for
           {
-            var enumConverter = new EnumConverter(browseableProperty.PropertyType);
+            var enumConverter = new HumanizedEnumConverter(browseableProperty.PropertyType);
             enumConverter.ConvertTo(value, typeof (string));
           }
         }

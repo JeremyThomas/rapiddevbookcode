@@ -23,7 +23,7 @@ namespace AW.LLBLGen.Plugins
     public override void Execute()
     {
       ProgressTaskInit(Entities.Count);
-      foreach (EntityDefinition entity in Entities)
+      foreach (var entity in Entities)
       {
         ProgressTaskStart("Processing entity: " + entity.Name);
         // To be upgraded
