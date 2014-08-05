@@ -29,7 +29,7 @@ namespace Northwind.DAL.EntityClasses
 	[Serializable]
 	public partial class ProductEntity : CommonEntityBase
  // __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-    , IProduct
+    , IProductFull
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations

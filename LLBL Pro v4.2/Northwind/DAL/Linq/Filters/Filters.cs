@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using AW.Helper;
+using Northwind.DAL.DTO;
 using Northwind.DAL.EntityClasses;
 using Northwind.DAL.HelperClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -43,6 +44,13 @@ namespace Northwind.DAL.Linq.Filters
     /// <param name="discontinued">The discontinued flag to filter by.</param>
     /// <returns></returns>
     public static IQueryable<T> FilterByDiscontinuedG<T>(this IQueryable<T> products, bool? discontinued) where T : EntityBase2, IProduct
+    {
+      if (discontinued.HasValue)
+        return discontinued.Value ? products.Where(r => r.Discontinued) : products.Where(r => r.Discontinued);
+      return products;
+    }
+
+    public static IQueryable<T> FilterByDiscontinuedP<T>(this IQueryable<T> products, bool? discontinued) where T : PocoBase, IProduct
     {
       if (discontinued.HasValue)
         return discontinued.Value ? products.Where(r => r.Discontinued) : products.Where(r => r.Discontinued);

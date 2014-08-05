@@ -6,7 +6,7 @@ using Northwind.DAL.HelperClasses;
 
 namespace Northwind.DAL.DTO
 {
-  public class ProductViewDto
+  public class ProductViewDto : PocoBase, IProduct
   {
     public Category? CategoryId { get; set; }
     public bool Discontinued { get; set; }
@@ -67,7 +67,7 @@ namespace Northwind.DAL.DTO
       return (-1521134295*num) + EqualityComparer<short?>.Default.GetHashCode(UnitsOnOrder);
     }
 
-    public ProductViewDto(IProduct p)
+    public ProductViewDto(IProductFull p)
       : this(
         p.CategoryId,
         p.Discontinued,
@@ -102,11 +102,22 @@ namespace Northwind.DAL.DTO
       UnitsOnOrder = unitsOnOrder;
     }
 
-    public static IQueryable<ProductViewDto> ProductViewDtoFactoryEntityInstance(IQueryable<ProductEntity> productEntities)
+    /// <summary>
+    /// Factory to produce ProductViewDtos via a constructor that takes a Product entity. 
+    /// Note: ordering on the ProductViewDto fields will only work if the names match up with Product entity fields
+    /// </summary>
+    /// <param name="productEntities">The product entities.</param>
+    /// <returns></returns>
+    public static IQueryable<ProductViewDto> ProductViewDtoFactoryEntityConstructor(IQueryable<ProductEntity> productEntities)
     {
-      return from c in productEntities select new ProductViewDto(c);
+      return productEntities.Select(c => new ProductViewDto(c));
     }
 
+    /// <summary>
+    /// Factory to produce ProductViewDtos via a constructor that takes a Product entity. 
+    /// </summary>
+    /// <param name="productEntities">The product entities.</param>
+    /// <returns></returns>
     public static IQueryable<ProductViewDto> ProductViewDtoFactoryPropertyProjection(IQueryable<ProductEntity> productEntities)
     {
       return from p in productEntities
@@ -118,6 +129,12 @@ namespace Northwind.DAL.DTO
                };
     }
 
+    /// <summary>
+    /// Factory to produce ProductViewDtos via a constructor that takes Product entity fields
+    /// Note: ordering on the ProductViewDto fields will only work if the names match up with constructor param names
+    /// </summary>
+    /// <param name="productEntities">The product entities.</param>
+    /// <returns></returns>
     public static IQueryable<ProductViewDto> ProductViewDtoFactoryPropertiesViaConstructor(IQueryable<ProductEntity> productEntities)
     {
       return from p in productEntities

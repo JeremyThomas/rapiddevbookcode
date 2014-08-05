@@ -5,7 +5,8 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.HelperClasses
 {
-  public interface IProduct : IEntity2
+
+  public interface IProduct
   {
     /// <summary> The CategoryId property of the Entity Product<br/><br/>
     /// MS_Description: Same entry as in Categories table.<br/></summary>
@@ -41,13 +42,6 @@ namespace Northwind.DAL.HelperClasses
     /// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
     System.String QuantityPerUnit { get; set; }
 
-    /// <summary> The ReorderLevel property of the Entity Product<br/><br/>
-    /// MS_Description: Minimum units to maintain in stock.<br/></summary>
-    /// <remarks>Mapped on  table field: "Products"."ReorderLevel"<br/>
-    /// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
-    /// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-    Nullable<System.Int16> ReorderLevel { get; set; }
-
     /// <summary> The SupplierId property of the Entity Product<br/><br/>
     /// MS_Description: Same entry as in Suppliers table.<br/></summary>
     /// <remarks>Mapped on  table field: "Products"."SupplierID"<br/>
@@ -71,7 +65,16 @@ namespace Northwind.DAL.HelperClasses
     /// <remarks>Mapped on  table field: "Products"."UnitsOnOrder"<br/>
     /// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
     /// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-    Nullable<System.Int16> UnitsOnOrder { get; set; }
+    Nullable<System.Int16> UnitsOnOrder { get; set; }    
+  }
+  public interface IProductFull : IProduct
+  {
+    /// <summary> The ReorderLevel property of the Entity Product<br/><br/>
+    /// MS_Description: Minimum units to maintain in stock.<br/></summary>
+    /// <remarks>Mapped on  table field: "Products"."ReorderLevel"<br/>
+    /// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
+    /// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+    Nullable<System.Int16> ReorderLevel { get; set; }
 
     /// <summary> Gets the EntityCollection with the related entities of type 'OrderDetailEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
     [TypeContained(typeof (OrderDetailEntity))]

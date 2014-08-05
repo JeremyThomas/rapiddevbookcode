@@ -345,13 +345,13 @@ namespace AW.Tests
     [TestMethod, Description("tests whether you can OrderBy after a projection when the field has a different name")]
     public void TestProductViewDto()
     {
-      var queryable = ProductViewDto.ProductViewDtoFactoryPropertyProjection(GetNorthwindLinqMetaData().Product).OrderBy(p => p.ReorderLevelZzz);
+      var queryable = ProductViewDto.ProductViewDtoFactoryPropertyProjection(GetNorthwindLinqMetaData().Product).FilterByDiscontinuedP(true).OrderBy(p => p.ReorderLevelZzz);
       Assert.IsNotNull(queryable.ToList());
 
-      queryable = ProductViewDto.ProductViewDtoFactoryPropertiesViaConstructor(GetNorthwindLinqMetaData().Product).OrderBy(p => p.ReorderLevelZzz);
+      queryable = ProductViewDto.ProductViewDtoFactoryPropertiesViaConstructor(GetNorthwindLinqMetaData().Product).FilterByDiscontinuedP(true).OrderBy(p => p.ReorderLevelZzz);
       Assert.IsNotNull(queryable.ToList());
 
-      var pagedQueryable = ProductViewDto.ProductViewDtoFactoryEntityInstance(GetNorthwindLinqMetaData().Product).OrderBy(p => p.UnitPrice).TakePage(2, 10);
+      var pagedQueryable = ProductViewDto.ProductViewDtoFactoryEntityConstructor(GetNorthwindLinqMetaData().Product).FilterByDiscontinuedP(true).OrderBy(p => p.UnitPrice).TakePage(2, 10);
       Assert.IsNotNull(pagedQueryable.ToList());
     }
 
