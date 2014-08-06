@@ -238,7 +238,8 @@ namespace AW.Tests
     /// <summary>
     ///   http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19954
     /// </summary>
-    [TestProperty("Bug", "ByDesign"), TestMethod, Description("After a prefetch of a ManyToMany relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
+    [TestProperty("Bug", "ByDesign"), TestCategory("Failing"), TestMethod, 
+    Description("After a prefetch of a ManyToMany relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
     public void BiDirectionalManyToMany()
     {
       var metaData = GetNorthwindLinqMetaData();
@@ -306,7 +307,7 @@ namespace AW.Tests
     }
 
     [TestMethod, TestProperty("Bug", "Fixed")]
-    public void PrefetchBeforeCriterea()
+    public void PrefetchBeforeCriteria()
     {
       var metaData = GetNorthwindLinqMetaData();
       //var productEntities = (from c in metaData.Product.PrefetchOrderDetailOrderCustomer()
@@ -317,22 +318,12 @@ namespace AW.Tests
       metaData.Customer.EmptySelect().PrefetchCustomerDemographics().FilterByEmployeeId(100).FilterByCountry("NZ").ToEntityCollection2();
     }
 
-    [TestMethod]
+    [TestMethod, Description("http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=22914")]
     public void TestFilterByDiscontinued()
     {
       var metaData = GetNorthwindLinqMetaData();
       metaData.Product.FilterByDiscontinued(true).ToEntityCollection2();
       metaData.Product.FilterByDiscontinued(false).ToEntityCollection2();
-      metaData.Product.FilterByDiscontinuedG(true).ToEntityCollection2();
-      metaData.Product.FilterByDiscontinuedG(false).ToEntityCollection2();
-    }
-
-    [TestMethod, TestCategory("Failing"),Description("http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=22914")]
-    public void TestFilterByDiscontinuedInterface()
-    {
-      var metaData = GetNorthwindLinqMetaData();
-      metaData.Product.FilterByDiscontinuedI(true).ToEntityCollection2();
-      metaData.Product.FilterByDiscontinuedI(false).ToEntityCollection2();
     }
 
     [TestMethod, TestProperty("Bug", "Fixed")]
@@ -345,13 +336,14 @@ namespace AW.Tests
     [TestMethod, Description("tests whether you can OrderBy after a projection when the field has a different name")]
     public void TestProductViewDto()
     {
-      var queryable = ProductViewDto.ProductViewDtoFactoryPropertyProjection(GetNorthwindLinqMetaData().Product).FilterByDiscontinuedP(true).OrderBy(p => p.ReorderLevelZzz);
+      var productEntities = GetNorthwindLinqMetaData().Product;
+      var queryable = ProductViewDto.ProductViewDtoFactoryPropertyProjection(productEntities).FilterByDiscontinued(true).OrderBy(p => p.ReorderLevelZzz);
       Assert.IsNotNull(queryable.ToList());
 
-      queryable = ProductViewDto.ProductViewDtoFactoryPropertiesViaConstructor(GetNorthwindLinqMetaData().Product).FilterByDiscontinuedP(true).OrderBy(p => p.ReorderLevelZzz);
+      queryable = ProductViewDto.ProductViewDtoFactoryPropertiesViaConstructor(productEntities).FilterByDiscontinued(true).OrderBy(p => p.ReorderLevelZzz);
       Assert.IsNotNull(queryable.ToList());
 
-      var pagedQueryable = ProductViewDto.ProductViewDtoFactoryEntityConstructor(GetNorthwindLinqMetaData().Product).FilterByDiscontinuedP(true).OrderBy(p => p.UnitPrice).TakePage(2, 10);
+      var pagedQueryable = ProductViewDto.ProductViewDtoFactoryEntityConstructor(productEntities).FilterByDiscontinued(true).OrderBy(p => p.UnitPrice).TakePage(2, 10);
       Assert.IsNotNull(pagedQueryable.ToList());
     }
 

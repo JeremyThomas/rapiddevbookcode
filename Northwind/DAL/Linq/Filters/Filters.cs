@@ -30,40 +30,7 @@ namespace Northwind.DAL.Linq.Filters
     /// <param name="products">The product query.</param>
     /// <param name="discontinued">The discontinued flag to filter by.</param>
     /// <returns></returns>
-    public static IQueryable<T> FilterByDiscontinuedI<T>(this IQueryable<T> products, bool? discontinued) where T : IProduct
-    {
-      if (discontinued.HasValue)
-        return discontinued.Value ? products.Where(r => r.Discontinued) : products.Where(r => r.Discontinued);
-      return products;
-    }
-
-    /// <summary>
-    /// Filters the ProductEntity Query by wether the product is discontinued. Generic on EntityBase2, IProduct
-    /// </summary>
-    /// <param name="products">The product query.</param>
-    /// <param name="discontinued">The discontinued flag to filter by.</param>
-    /// <returns></returns>
-    public static IQueryable<T> FilterByDiscontinuedG<T>(this IQueryable<T> products, bool? discontinued) where T : EntityBase2, IProduct
-    {
-      if (discontinued.HasValue)
-        return discontinued.Value ? products.Where(r => r.Discontinued) : products.Where(r => r.Discontinued);
-      return products;
-    }
-
-    public static IQueryable<T> FilterByDiscontinuedP<T>(this IQueryable<T> products, bool? discontinued) where T : PocoBase, IProduct
-    {
-      if (discontinued.HasValue)
-        return discontinued.Value ? products.Where(r => r.Discontinued) : products.Where(r => r.Discontinued);
-      return products;
-    }
-
-    /// <summary>
-    /// Filters the ProductEntity Query by wether the product is discontinued.
-    /// </summary>
-    /// <param name="products">The product query.</param>
-    /// <param name="discontinued">The discontinued flag to filter by.</param>
-    /// <returns></returns>
-    public static IQueryable<ProductEntity> FilterByDiscontinued(this IQueryable<ProductEntity> products, bool? discontinued)
+    public static IQueryable<T> FilterByDiscontinued<T>(this IQueryable<T> products, bool? discontinued) where T : class, IProduct
     {
       if (discontinued.HasValue)
         return discontinued.Value ? products.Where(r => r.Discontinued) : products.Where(r => r.Discontinued);

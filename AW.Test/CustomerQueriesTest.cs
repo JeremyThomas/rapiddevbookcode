@@ -96,7 +96,7 @@ namespace AW.Tests
       Assert.AreEqual(MaxNumberOfItemsToReturn, customerListAnonymousLinq.Count());
     }
 
-    [TestMethod, Description("A test for GetCustomerListLinqedTypedList"), TestCategory("Failing")]
+    [TestMethod, Description("A test for GetCustomerListLinqedTypedList")]
     public void GetCustomerListLinqedTypedListTest()
     {
       var actual = CustomerQueries.GetCustomerListLinqedTypedList(OrderSearchCriteria, MaxNumberOfItemsToReturn);
