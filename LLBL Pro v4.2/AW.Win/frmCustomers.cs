@@ -84,7 +84,7 @@ namespace AW.Win
 
     private void toolStripButtonTypedListQuerySpec_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListTypedListQuerySpec(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn),true,true);
+      bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListTypedListQuerySpec(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
     }
 
     private void toolStripButtonTypedListQuerySpecPoco_Click(object sender, EventArgs e)
@@ -99,12 +99,12 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
     private void toolStripButtonLinq_Click(object sender, EventArgs e)
     {
-      BindingListHelper.BindEnumerable(bindingSourceCustomerList,CustomerQueries.GetCustomerListLinqedTypedList(orderSearchCriteria1.GetCriteria(), 0).ToList().Distinct().Take(MaxNumberOfItemsToReturn));
+      BindingListHelper.BindEnumerable(bindingSourceCustomerList, CustomerQueries.GetCustomerListLinqedTypedList(orderSearchCriteria1.GetCriteria(), 0).ToList().Distinct().Take(MaxNumberOfItemsToReturn));
     }
 
     private void toolStripButtonLinqFilterFirst_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListLinqedTypedListFilterFirst(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn),true,true);
+      bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListLinqedTypedListFilterFirst(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
     }
 
     private void toolStripButtonLinqTypedview_Click(object sender, EventArgs e)
@@ -114,7 +114,8 @@ namespace AW.Win
 
     private void toolStripButtonTypedListLinq_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListGeneratedLinqTypedList(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn); ;
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListGeneratedLinqTypedList(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
+      ;
     }
 
     /// <summary>
@@ -124,7 +125,7 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
     private void toolStripButtonLinqBarf_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListAnonymousLinq(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn),true,true);
+      bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListAnonymousLinq(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
     }
 
     private void toolStripButtonViewAsEntityLinq_Click(object sender, EventArgs e)
@@ -173,9 +174,5 @@ namespace AW.Win
       if (bindingSourceCustomerList.SupportsFiltering)
         bindingSourceCustomerList.RemoveFilter();
     }
-
-
-
-
   }
 }

@@ -27,7 +27,7 @@ namespace AW.Data.Linq.Filters
     public static IQueryable<CustomerViewRelatedEntity> FilterByDateOrderIDOrderNumberCustomerNameAddress(this IQueryable<CustomerViewRelatedEntity> customerViewQuery,
       OrderSearchCriteria orderSearchCriteria)
     {
-      customerViewQuery = customerViewQuery.FilterIndividualCustomerEntityEntityByDateCustomerNameAddress(orderSearchCriteria);
+      customerViewQuery = customerViewQuery.FilterByDateCustomerNameAddress(orderSearchCriteria);
       if (orderSearchCriteria.OrderID != 0)
         customerViewQuery = from cv in customerViewQuery
           from soh in cv.SalesOrderHeader
@@ -56,7 +56,7 @@ namespace AW.Data.Linq.Filters
     }
 
     public static IQueryable<T> FilterIndividualCustomerEntityEntityByDateCustomerNameAddress<T>(this IQueryable<T> customerViewQuery,
-  OrderSearchCriteria orderSearchCriteria) where T : CommonEntityBase, IIndividualCustomer
+  OrderSearchCriteria orderSearchCriteria) where T : class, IIndividualCustomer
     {
       if (!string.IsNullOrEmpty(orderSearchCriteria.FirstName))
         customerViewQuery = customerViewQuery.Where(cv => cv.FirstName.Contains(orderSearchCriteria.FirstName));
@@ -74,7 +74,7 @@ namespace AW.Data.Linq.Filters
     }
 
     public static IQueryable<T> FilterByDateCustomerNameAddress<T>(this IQueryable<T> customerViewQuery,
-      OrderSearchCriteria orderSearchCriteria) where T : PocoBase, IIndividualCustomer
+      OrderSearchCriteria orderSearchCriteria) where T : class, IIndividualCustomer
     {
       if (!string.IsNullOrEmpty(orderSearchCriteria.FirstName))
         customerViewQuery = customerViewQuery.Where(cv => cv.FirstName.Contains(orderSearchCriteria.FirstName));
