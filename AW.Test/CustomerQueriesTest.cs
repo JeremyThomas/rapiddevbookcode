@@ -96,7 +96,8 @@ namespace AW.Tests
       Assert.AreEqual(MaxNumberOfItemsToReturn, customerListAnonymousLinq.Count());
     }
 
-    [TestMethod, Description("A test for GetCustomerListLinqedTypedList")]
+    [TestMethod, Description("A test for GetCustomerListLinqedTypedList. where clause fails on case-sensitive collation " +
+                             "- Invalid column name 'FirstName'. e.g. when using Latin1_General_CS_AS instead of Latin1_General_CI_AS")]
     public void GetCustomerListLinqedTypedListTest()
     {
       var actual = CustomerQueries.GetCustomerListLinqedTypedList(OrderSearchCriteria, MaxNumberOfItemsToReturn);
