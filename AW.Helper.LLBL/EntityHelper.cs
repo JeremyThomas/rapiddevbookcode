@@ -521,7 +521,7 @@ namespace AW.Helper.LLBL
 
     public static void Undo(object modifiedData)
     {
-      var listItemType = ListBindingHelper.GetListItemType(modifiedData);
+      var listItemType = GetListItemType(modifiedData);
       if (IsEntityCore(listItemType))
       {
         var enumerable = modifiedData as IEnumerable;
@@ -537,7 +537,12 @@ namespace AW.Helper.LLBL
           RevertChangesToDBValue(enumerable);
       }
     }
-    
+
+    private static Type GetListItemType(object modifiedData)
+    {
+      return ListBindingHelper.GetListItemType(modifiedData);
+    }
+
     /// <summary>
     ///   Gets the factory of the entity with the .NET type specified
     /// </summary>
@@ -562,7 +567,7 @@ namespace AW.Helper.LLBL
     /// <returns></returns>
     public static int Delete(object dataToDelete)
     {
-      var listItemType = ListBindingHelper.GetListItemType(dataToDelete);
+      var listItemType = GetListItemType(dataToDelete);
       if (typeof (IEntity).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToDelete as IEnumerable;
@@ -599,7 +604,7 @@ namespace AW.Helper.LLBL
     /// <returns>The number of persisted entities.</returns>
     public static int Save(object dataToSave)
     {
-      var listItemType = ListBindingHelper.GetListItemType(dataToSave);
+      var listItemType = GetListItemType(dataToSave);
       if (typeof (IEntity).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToSave as IEnumerable;
@@ -653,7 +658,7 @@ namespace AW.Helper.LLBL
     /// <returns>The number of persisted entities.</returns>
     public static int Save(object dataToSave, IDataAccessAdapter dataAccessAdapter)
     {
-      var listItemType = ListBindingHelper.GetListItemType(dataToSave);
+      var listItemType = GetListItemType(dataToSave);
       if (typeof (IEntity2).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToSave as IEnumerable;
@@ -689,7 +694,7 @@ namespace AW.Helper.LLBL
 
     public static int Delete(object dataToDelete, IDataAccessAdapter dataAccessAdapter)
     {
-      var listItemType = ListBindingHelper.GetListItemType(dataToDelete);
+      var listItemType = GetListItemType(dataToDelete);
       if (typeof (IEntity2).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToDelete as IEnumerable;
