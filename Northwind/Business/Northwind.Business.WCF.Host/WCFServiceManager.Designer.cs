@@ -1,4 +1,4 @@
-namespace SD.LLBLGen.Pro.Examples.WCF.Host
+namespace Northwind.Business.WCF.Host
 {
     partial class WCFServiceManager
     {
