@@ -1,8 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace SD.LLBLGen.Pro.Examples.WCF.Host
+namespace Northwind.Business.WCF.Host
 {
     static class Program
     {
