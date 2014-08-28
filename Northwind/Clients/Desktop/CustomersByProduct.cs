@@ -190,7 +190,7 @@ namespace Northwind.Client.Winforms
 
       // bind them
       customersDataGrid.DataSource = customers;
-      _amountUnitsSoldTextBox.Text = _dalService.GetNumerOfTimesProductWasSold(selectedProduct.ProductId).ToString();
+      _amountUnitsSoldTextBox.Text = _dalService.GetNumberOfTimesProductWasSold(selectedProduct.ProductId).ToString();
     }
 
     private void closeButton_Click(object sender, EventArgs e)
