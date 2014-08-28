@@ -7,56 +7,60 @@ using Northwind.DAL.Interfaces;
 namespace Northwind.Client.Winforms
 {
   /// <summary>
-  /// The customer manager. It allows you to manage a customer's data and its orders and that orders' orderdetails.
-  /// It illustrates complex databinding (master-detail), events, sorting, fields mapped on relations (Customer.Orders ..), 
-  /// transactions and validation.
+  ///   The customer manager. It allows you to manage a customer's data and its orders and that orders' orderdetails.
+  ///   It illustrates complex databinding (master-detail), events, sorting, fields mapped on relations (Customer.Orders ..),
+  ///   transactions and validation.
   /// </summary>
-  public class CustomerManager : System.Windows.Forms.Form
+  public class CustomerManager : Form
   {
     #region Components
-    private System.Windows.Forms.GroupBox groupBox1;
-    private System.Windows.Forms.TextBox customerIDTextBox;
-    private System.Windows.Forms.Label label1;
-    private System.Windows.Forms.TextBox companyNameTextBox;
-    private System.Windows.Forms.Label label2;
-    private System.Windows.Forms.TextBox contactNameTextBox;
-    private System.Windows.Forms.Label label3;
-    private System.Windows.Forms.TextBox contactTitleTextBox;
-    private System.Windows.Forms.Label label4;
-    private System.Windows.Forms.Label label5;
-    private System.Windows.Forms.Label label6;
-    private System.Windows.Forms.Label label7;
-    private System.Windows.Forms.Label label8;
-    private System.Windows.Forms.Label label9;
-    private System.Windows.Forms.Label label10;
-    private System.Windows.Forms.Button selectCustomerButton;
-    private System.Windows.Forms.Button _saveCustomerButton;
-    private System.Windows.Forms.TextBox postalCodeTextBox;
-    private System.Windows.Forms.TextBox regionTextBox;
-    private System.Windows.Forms.TextBox addressTextBox;
-    private System.Windows.Forms.GroupBox groupBox2;
-    private System.Windows.Forms.DataGrid ordersDataGrid;
-    private System.Windows.Forms.GroupBox groupBox3;
-    private System.Windows.Forms.DataGrid orderDetailsDataGrid;
-    private System.Windows.Forms.Splitter splitter1;
-    private System.Windows.Forms.TextBox faxTextBox;
-    private System.Windows.Forms.TextBox phoneTextBox;
-    private System.Windows.Forms.TextBox countryTextBox;
+
+    private GroupBox groupBox1;
+    private TextBox customerIDTextBox;
+    private Label label1;
+    private TextBox companyNameTextBox;
+    private Label label2;
+    private TextBox contactNameTextBox;
+    private Label label3;
+    private TextBox contactTitleTextBox;
+    private Label label4;
+    private Label label5;
+    private Label label6;
+    private Label label7;
+    private Label label8;
+    private Label label9;
+    private Label label10;
+    private Button selectCustomerButton;
+    private Button _saveCustomerButton;
+    private TextBox postalCodeTextBox;
+    private TextBox regionTextBox;
+    private TextBox addressTextBox;
+    private GroupBox groupBox2;
+    private DataGrid ordersDataGrid;
+    private GroupBox groupBox3;
+    private DataGrid orderDetailsDataGrid;
+    private Splitter splitter1;
+    private TextBox faxTextBox;
+    private TextBox phoneTextBox;
+    private TextBox countryTextBox;
     private IContainer components;
-    private System.Windows.Forms.TextBox cityTextBox;
-    private System.Windows.Forms.Label label32;
+    private TextBox cityTextBox;
+    private Label label32;
     private BindingSource _customerBindingSource;
     private BindingSource _ordersBindingSource;
     private BindingSource _orderDetailsBindingSource;
+
     #endregion
 
     #region Class Member Declarations
-    private CustomerWithOrdersDataScope _customerScope;
-    private INorthwindService _dalService;
+
+    private readonly CustomerWithOrdersDataScope _customerScope;
+    private readonly INorthwindService _dalService;
+
     #endregion
 
     /// <summary>
-    /// CTor
+    ///   CTor
     /// </summary>
     public CustomerManager(INorthwindService service)
       : this(service, string.Empty)
@@ -65,7 +69,7 @@ namespace Northwind.Client.Winforms
 
 
     /// <summary>
-    /// CTor
+    ///   CTor
     /// </summary>
     /// <param name="customer">the customer to manage</param>
     public CustomerManager(INorthwindService service, string customerId)
@@ -75,9 +79,9 @@ namespace Northwind.Client.Winforms
 
       _customerScope = new CustomerWithOrdersDataScope(_dalService);
       _customerScope.ContainedDataChanged += new EventHandler(_customerScope_ScopedDataChanged);
-      this.MinimumSize = this.Size;
+      MinimumSize = Size;
 
-      if(!string.IsNullOrEmpty(customerId))
+      if (!string.IsNullOrEmpty(customerId))
       {
         // load customer and set as active.
         SetCustomerAsCurrent(customerId);
@@ -86,22 +90,23 @@ namespace Northwind.Client.Winforms
 
 
     /// <summary>
-    /// Binds the current set customer (in _currentCustomer) to the gui's controls so data entered is validated directly.
+    ///   Binds the current set customer (in _currentCustomer) to the gui's controls so data entered is validated directly.
     /// </summary>
     private void BindCustomerToGui()
     {
-      if(_customerScope==null)
+      if (_customerScope == null)
       {
         return;
       }
       _customerBindingSource.DataSource = _customerScope.Customer;
-      _saveCustomerButton.Enabled = false; 
+      _saveCustomerButton.Enabled = false;
     }
 
 
     /// <summary>
-    /// Sets the given customer as the current customer, adding values of the customer to the controls on the form and setting
-    /// up eventhandlers so the gui is aware of changes of the customer or its contents.
+    ///   Sets the given customer as the current customer, adding values of the customer to the controls on the form and
+    ///   setting
+    ///   up eventhandlers so the gui is aware of changes of the customer or its contents.
     /// </summary>
     /// <param name="customer"></param>
     private void SetCustomerAsCurrent(string customerId)
@@ -110,26 +115,26 @@ namespace Northwind.Client.Winforms
       BindCustomerToGui();
     }
 
-
     #region Windows Form Designer generated code
+
     /// <summary>
-    /// Clean up any resources being used.
+    ///   Clean up any resources being used.
     /// </summary>
-    protected override void Dispose( bool disposing )
+    protected override void Dispose(bool disposing)
     {
-      if( disposing )
+      if (disposing)
       {
-        if(components != null)
+        if (components != null)
         {
           components.Dispose();
         }
       }
-      base.Dispose( disposing );
+      base.Dispose(disposing);
     }
 
     /// <summary>
-    /// Required method for Designer support - do not modify
-    /// the contents of this method with the code editor.
+    ///   Required method for Designer support - do not modify
+    ///   the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent()
     {
@@ -168,19 +173,19 @@ namespace Northwind.Client.Winforms
       this.orderDetailsDataGrid = new System.Windows.Forms.DataGrid();
       this._orderDetailsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.groupBox1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this._customerBindingSource)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize) (this._customerBindingSource)).BeginInit();
       this.groupBox2.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.ordersDataGrid)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this._ordersBindingSource)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize) (this.ordersDataGrid)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize) (this._ordersBindingSource)).BeginInit();
       this.groupBox3.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.orderDetailsDataGrid)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this._orderDetailsBindingSource)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize) (this.orderDetailsDataGrid)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize) (this._orderDetailsBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
       // groupBox1
       // 
-      this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+      this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                     | System.Windows.Forms.AnchorStyles.Right)));
       this.groupBox1.Controls.Add(this.cityTextBox);
       this.groupBox1.Controls.Add(this.label32);
       this.groupBox1.Controls.Add(this._saveCustomerButton);
@@ -214,8 +219,8 @@ namespace Northwind.Client.Winforms
       // 
       // cityTextBox
       // 
-      this.cityTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+      this.cityTextBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                       | System.Windows.Forms.AnchorStyles.Right)));
       this.cityTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this._customerBindingSource, "City", true));
       this.cityTextBox.Location = new System.Drawing.Point(108, 129);
       this.cityTextBox.Name = "cityTextBox";
@@ -224,7 +229,7 @@ namespace Northwind.Client.Winforms
       // 
       // _customerBindingSource
       // 
-      this._customerBindingSource.DataSource = typeof(CustomerEntity);
+      this._customerBindingSource.DataSource = typeof (CustomerEntity);
       // 
       // label32
       // 
@@ -236,7 +241,7 @@ namespace Northwind.Client.Winforms
       // 
       // _saveCustomerButton
       // 
-      this._saveCustomerButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this._saveCustomerButton.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this._saveCustomerButton.Enabled = false;
       this._saveCustomerButton.Location = new System.Drawing.Point(561, 180);
       this._saveCustomerButton.Name = "_saveCustomerButton";
@@ -304,7 +309,7 @@ namespace Northwind.Client.Winforms
       // 
       // postalCodeTextBox
       // 
-      this.postalCodeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.postalCodeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.postalCodeTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this._customerBindingSource, "PostalCode", true));
       this.postalCodeTextBox.Location = new System.Drawing.Point(570, 129);
       this.postalCodeTextBox.Name = "postalCodeTextBox";
@@ -313,7 +318,7 @@ namespace Northwind.Client.Winforms
       // 
       // label7
       // 
-      this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.label7.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.label7.Location = new System.Drawing.Point(474, 132);
       this.label7.Name = "label7";
       this.label7.Size = new System.Drawing.Size(93, 18);
@@ -338,8 +343,8 @@ namespace Northwind.Client.Winforms
       // 
       // addressTextBox
       // 
-      this.addressTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+      this.addressTextBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                          | System.Windows.Forms.AnchorStyles.Right)));
       this.addressTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this._customerBindingSource, "Address", true));
       this.addressTextBox.Location = new System.Drawing.Point(108, 105);
       this.addressTextBox.Name = "addressTextBox";
@@ -372,8 +377,8 @@ namespace Northwind.Client.Winforms
       // 
       // contactNameTextBox
       // 
-      this.contactNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+      this.contactNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                                                                              | System.Windows.Forms.AnchorStyles.Right)));
       this.contactNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this._customerBindingSource, "ContactName", true));
       this.contactNameTextBox.Location = new System.Drawing.Point(330, 75);
       this.contactNameTextBox.Name = "contactNameTextBox";
@@ -422,9 +427,9 @@ namespace Northwind.Client.Winforms
       // 
       // groupBox2
       // 
-      this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+      this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                                                                      | System.Windows.Forms.AnchorStyles.Left)
+                                                                     | System.Windows.Forms.AnchorStyles.Right)));
       this.groupBox2.Controls.Add(this.ordersDataGrid);
       this.groupBox2.Controls.Add(this.splitter1);
       this.groupBox2.Controls.Add(this.groupBox3);
@@ -502,35 +507,36 @@ namespace Northwind.Client.Winforms
       this.Text = "Northwind Customer manager form";
       this.groupBox1.ResumeLayout(false);
       this.groupBox1.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this._customerBindingSource)).EndInit();
+      ((System.ComponentModel.ISupportInitialize) (this._customerBindingSource)).EndInit();
       this.groupBox2.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.ordersDataGrid)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this._ordersBindingSource)).EndInit();
+      ((System.ComponentModel.ISupportInitialize) (this.ordersDataGrid)).EndInit();
+      ((System.ComponentModel.ISupportInitialize) (this._ordersBindingSource)).EndInit();
       this.groupBox3.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.orderDetailsDataGrid)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this._orderDetailsBindingSource)).EndInit();
+      ((System.ComponentModel.ISupportInitialize) (this.orderDetailsDataGrid)).EndInit();
+      ((System.ComponentModel.ISupportInitialize) (this._orderDetailsBindingSource)).EndInit();
       this.ResumeLayout(false);
-
     }
+
     #endregion
-    
+
     #region Event Handlers
+
     private void selectCustomerButton_Click(object sender, EventArgs e)
     {
-      CustomerSelector selector = new CustomerSelector(_dalService);
+      var selector = new CustomerSelector(_dalService);
       selector.ShowDialog(this);
 
-      if(selector.DialogResult!=System.Windows.Forms.DialogResult.OK)
+      if (selector.DialogResult != DialogResult.OK)
       {
         return;
       }
       SetCustomerAsCurrent(selector.SelectedCustomer.CustomerId);
     }
 
-    private void saveCustomerButton_Click(object sender, System.EventArgs e)
+    private void saveCustomerButton_Click(object sender, EventArgs e)
     {
-      bool result = _customerScope.SaveChanges();
-      if(result)
+      var result = _customerScope.SaveChanges();
+      if (result)
       {
         MessageBox.Show("Save was succesful!", "Save result", MessageBoxButtons.OK, MessageBoxIcon.Information);
         _saveCustomerButton.Enabled = false;
@@ -546,6 +552,7 @@ namespace Northwind.Client.Winforms
     {
       _saveCustomerButton.Enabled = true;
     }
+
     #endregion
   }
 }
