@@ -89,32 +89,34 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Business.WCF.Host
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Client.Winforms", "Northwind\Clients\Desktop\Northwind.Client.Winforms.csproj", "{D0DF14DC-8B34-46A7-81BC-FA92B93B828F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.WCF.Host", "Northwind\DAL\Services.WCF.Host\Services.WCF.Host.csproj", "{A523BD8B-5538-4B20-A9D9-C2DCAB1637C5}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 15
+		SccNumberOfProjects = 16
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
-		SccProjectUniqueName0 = AW.Helper\\AW.Helper.csproj
-		SccProjectTopLevelParentUniqueName0 = Northwind.sln
-		SccProjectName0 = AW.Helper
-		SccLocalPath0 = AW.Helper
-		SccProjectUniqueName1 = AW.Winforms.Helpers\\AW.Winforms.Helpers.csproj
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = AW.Helper\\AW.Helper.csproj
 		SccProjectTopLevelParentUniqueName1 = Northwind.sln
-		SccProjectName1 = AW.Winforms.Helpers
-		SccLocalPath1 = AW.Winforms.Helpers
-		SccProjectUniqueName2 = AW.Winforms.Helpers.LLBL\\AW.Winforms.Helpers.LLBL.csproj
+		SccProjectName1 = AW.Helper
+		SccLocalPath1 = AW.Helper
+		SccProjectUniqueName2 = AW.Winforms.Helpers\\AW.Winforms.Helpers.csproj
 		SccProjectTopLevelParentUniqueName2 = Northwind.sln
-		SccProjectName2 = AW.Winforms.Helpers.LLBL
-		SccLocalPath2 = AW.Winforms.Helpers.LLBL
-		SccProjectUniqueName3 = AW.Helper.LLBL\\AW.Helper.LLBL.csproj
+		SccProjectName2 = AW.Winforms.Helpers
+		SccLocalPath2 = AW.Winforms.Helpers
+		SccProjectUniqueName3 = AW.Winforms.Helpers.LLBL\\AW.Winforms.Helpers.LLBL.csproj
 		SccProjectTopLevelParentUniqueName3 = Northwind.sln
-		SccProjectName3 = AW.Helper.LLBL
-		SccLocalPath3 = AW.Helper.LLBL
-		SccProjectUniqueName4 = ObjectListView\\ObjectListView.csproj
+		SccProjectName3 = AW.Winforms.Helpers.LLBL
+		SccLocalPath3 = AW.Winforms.Helpers.LLBL
+		SccProjectUniqueName4 = AW.Helper.LLBL\\AW.Helper.LLBL.csproj
 		SccProjectTopLevelParentUniqueName4 = Northwind.sln
-		SccProjectName4 = ObjectListView
-		SccLocalPath4 = ObjectListView
-		SccLocalPath5 = .
+		SccProjectName4 = AW.Helper.LLBL
+		SccLocalPath4 = AW.Helper.LLBL
+		SccProjectUniqueName5 = ObjectListView\\ObjectListView.csproj
+		SccProjectTopLevelParentUniqueName5 = Northwind.sln
+		SccProjectName5 = ObjectListView
+		SccLocalPath5 = ObjectListView
 		SccProjectUniqueName6 = Northwind\\DAL\\Northwind.DAL.csproj
 		SccProjectTopLevelParentUniqueName6 = Northwind.sln
 		SccProjectName6 = Northwind/DAL
@@ -151,6 +153,10 @@ Global
 		SccProjectTopLevelParentUniqueName14 = Northwind.sln
 		SccProjectName14 = Northwind/Clients/Desktop
 		SccLocalPath14 = Northwind\\Clients\\Desktop
+		SccProjectUniqueName15 = Northwind\\DAL\\Services.WCF.Host\\Services.WCF.Host.csproj
+		SccProjectTopLevelParentUniqueName15 = Northwind.sln
+		SccProjectName15 = Northwind/DAL/Services.WCF.Host
+		SccLocalPath15 = Northwind\\DAL\\Services.WCF.Host
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -242,6 +248,12 @@ Global
 		{D0DF14DC-8B34-46A7-81BC-FA92B93B828F}.Release - Test|Any CPU.Build.0 = Release|Any CPU
 		{D0DF14DC-8B34-46A7-81BC-FA92B93B828F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0DF14DC-8B34-46A7-81BC-FA92B93B828F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A523BD8B-5538-4B20-A9D9-C2DCAB1637C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A523BD8B-5538-4B20-A9D9-C2DCAB1637C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A523BD8B-5538-4B20-A9D9-C2DCAB1637C5}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{A523BD8B-5538-4B20-A9D9-C2DCAB1637C5}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{A523BD8B-5538-4B20-A9D9-C2DCAB1637C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A523BD8B-5538-4B20-A9D9-C2DCAB1637C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -263,6 +275,7 @@ Global
 		{5A32C657-AC4C-4425-8A36-324D2B062926} = {B8FC84A7-BEC4-4F62-9B07-868B646450A1}
 		{B06CBF47-D6A5-401D-8EEE-A99823376D67} = {B8FC84A7-BEC4-4F62-9B07-868B646450A1}
 		{D0DF14DC-8B34-46A7-81BC-FA92B93B828F} = {EC440979-BF2B-423B-95EF-C83ADA94244C}
+		{A523BD8B-5538-4B20-A9D9-C2DCAB1637C5} = {0722ECB9-BD53-4FAC-AAAA-AA7B8F39C30A}
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
 		SpecExplorer.ActivityCompletionStatus = 

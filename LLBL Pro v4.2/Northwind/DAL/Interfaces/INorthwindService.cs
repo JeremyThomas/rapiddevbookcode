@@ -52,12 +52,12 @@ namespace Northwind.DAL.Interfaces
         [OperationContract]
         IEntityCollection2 GetProductsSortedBy(EntityField2 sortField, SortOperator direction);
         /// <summary>
-        /// Gets the numer of times product was sold.
+        /// Gets the number of times product was sold.
         /// </summary>
         /// <param name="productId">The product id.</param>
         /// <returns>the number of times the product was sold.</returns>
         [OperationContract]
-        int GetNumerOfTimesProductWasSold(int productId);
+        int GetNumberOfTimesProductWasSold(int productId);
         /// <summary>
         /// Gets the customer entity + orders + order details for the customer of the customer id passed in.
         /// </summary>
