@@ -76,12 +76,14 @@
       <HintPath>..\..\..\packages\Microsoft.Data.Services.Client.5.6.1\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
     <Reference Include="System.Spatial, Version=5.6.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -144,6 +146,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\AW.Helper\AW.Helper.csproj">
+      <Project>{ffc5b55e-9157-4ce6-81bd-e593e4c08422}</Project>
+      <Name>AW.Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DAL\Northwind.DAL.csproj">
       <Project>{24fa312c-06e0-462d-97fa-709ac20d09ef}</Project>
       <Name>Northwind.DAL</Name>

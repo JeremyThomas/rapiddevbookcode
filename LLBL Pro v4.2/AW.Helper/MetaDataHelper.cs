@@ -694,7 +694,7 @@ namespace AW.Helper
 
     public static IEnumerable<DisplayNameAttribute> GetDisplayNameAttributes(Type type)
     {
-      return GetTypesAttributes<DisplayNameAttribute>(type);
+      return GetCustomAttributes<DisplayNameAttribute>(type);
     }
 
     public static IEnumerable<DescriptionAttribute> GetDescriptionAttributes(Type type, string fieldName)
@@ -704,12 +704,12 @@ namespace AW.Helper
 
     public static IEnumerable<DescriptionAttribute> GetDescriptionAttributes(Type type)
     {
-      return GetTypesAttributes<DescriptionAttribute>(type);
+      return GetCustomAttributes<DescriptionAttribute>(type);
     }
 
-    private static IEnumerable<T> GetTypesAttributes<T>(Type type) where T : Attribute
+    public static T[] GetCustomAttributes<T>(Type type, bool inherit = true) where T : Attribute
     {
-      return type.GetCustomAttributes(typeof (T), true).Cast<T>();
+      return ((T[])type.GetCustomAttributes(typeof(T), inherit));
     }
 
     public static string GetVersion(this Assembly assembly)

@@ -65,6 +65,8 @@
       <HintPath>..\packages\System.Data.SqlLocalDb.1.9.0.0\lib\net20\System.Data.SqlLocalDb.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -86,6 +88,7 @@
     <Compile Include="AssemblyFileInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ChannelFactory2.cs" />
     <Compile Include="CommandToExecutableSQL.cs" />
     <Compile Include="DataHelper.cs" />
     <Compile Include="DataSetSurrogate.cs" />
@@ -105,6 +108,7 @@
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="ValueTypeWrapper.cs" />
     <Compile Include="VisualStudioHelper.cs" />
+    <Compile Include="WcfUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Ancillary\AdventureWorks.snk">

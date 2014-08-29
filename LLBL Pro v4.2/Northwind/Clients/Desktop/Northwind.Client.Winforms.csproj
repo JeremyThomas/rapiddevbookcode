@@ -155,6 +155,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\AW.Helper\AW.Helper.csproj">
+      <Project>{ffc5b55e-9157-4ce6-81bd-e593e4c08422}</Project>
+      <Name>AW.Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DAL\Northwind.DAL.csproj">
       <Project>{24fa312c-06e0-462d-97fa-709ac20d09ef}</Project>
       <Name>Northwind.DAL</Name>
