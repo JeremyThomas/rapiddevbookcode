@@ -3,6 +3,7 @@ using System.Configuration;
 using System.IO;
 using System.ServiceModel;
 using System.Windows.Forms;
+using AW.Helper;
 using Northwind.DAL.Interfaces;
 
 namespace Northwind.Client.Winforms
@@ -24,7 +25,8 @@ namespace Northwind.Client.Winforms
       if (ConfigurationSettings.AppSettings["N-Tier"] == "true" || !BusinessPresent())
       {
         // Open a channel with the WCF service endpoint, and keep it alive till the end of the program.
-        channelFactory = new ChannelFactory<INorthwindService>("WCFServer");
+        //channelFactory = new ChannelFactory<INorthwindService>("WCFServer");
+        channelFactory = WcfUtility.GetChannelFactory<INorthwindService>();
         service = channelFactory.CreateChannel();
       }
       else

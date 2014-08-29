@@ -32,6 +32,8 @@ namespace Northwind.Business.WCF.Host
       this.stop = new System.Windows.Forms.Button();
       this.label1 = new System.Windows.Forms.Label();
       this._serviceState = new System.Windows.Forms.Label();
+      this.linkLabelWsdl = new System.Windows.Forms.LinkLabel();
+      this.label2 = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // start
@@ -73,11 +75,33 @@ namespace Northwind.Business.WCF.Host
       this._serviceState.Size = new System.Drawing.Size(0, 13);
       this._serviceState.TabIndex = 3;
       // 
+      // linkLabelWsdl
+      // 
+      this.linkLabelWsdl.AutoSize = true;
+      this.linkLabelWsdl.Location = new System.Drawing.Point(261, 13);
+      this.linkLabelWsdl.Name = "linkLabelWsdl";
+      this.linkLabelWsdl.Size = new System.Drawing.Size(61, 13);
+      this.linkLabelWsdl.TabIndex = 4;
+      this.linkLabelWsdl.TabStop = true;
+      this.linkLabelWsdl.Text = "WSDL URI";
+      this.linkLabelWsdl.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelWsdl_LinkClicked);
+      // 
+      // label2
+      // 
+      this.label2.AutoSize = true;
+      this.label2.Location = new System.Drawing.Point(125, 13);
+      this.label2.Name = "label2";
+      this.label2.Size = new System.Drawing.Size(130, 13);
+      this.label2.TabIndex = 5;
+      this.label2.Text = "Click to view MEX/WSDL";
+      // 
       // WcfServiceManager
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(590, 172);
+      this.Controls.Add(this.label2);
+      this.Controls.Add(this.linkLabelWsdl);
       this.Controls.Add(this._serviceState);
       this.Controls.Add(this.label1);
       this.Controls.Add(this.stop);
@@ -96,6 +120,8 @@ namespace Northwind.Business.WCF.Host
         private System.Windows.Forms.Button stop;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label _serviceState;
+        private System.Windows.Forms.LinkLabel linkLabelWsdl;
+        private System.Windows.Forms.Label label2;
     }
 }
 

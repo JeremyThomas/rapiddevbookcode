@@ -1,5 +1,7 @@
+using System.Configuration;
 using System.ServiceModel;
 using System.ServiceModel.Description;
+using AW.Helper;
 
 namespace Northwind.Business.WCF.Host
 {
@@ -19,28 +21,17 @@ namespace Northwind.Business.WCF.Host
     ///   Starts the service.
     /// </summary>
     /// <returns>true if service was successfully opened, false otherwise</returns>
-    internal static bool StartService()
+    internal static ServiceHost StartService()
     {
+      var baseAddress = ConfigurationManager.AppSettings["WCFUrl"];
       if (_serviceHost == null)
       {
         //Instantiate new ServiceHost 
-        _serviceHost = new ServiceHost(new NorthwindService());
-        var debug = _serviceHost.Description.Behaviors.Find<ServiceDebugBehavior>();
+        //_serviceHost = new ServiceHost(new NorthwindService());
+                    var binding = new BasicHttpBinding {MaxReceivedMessageSize = 1000000, ReaderQuotas = {MaxDepth = 200}};
+            var metaDataBehavior = new ServiceMetadataBehavior {HttpGetEnabled = true};
 
-        // if not found - add behavior with setting turned on 
-        if (debug == null)
-        {
-          _serviceHost.Description.Behaviors.Add(
-            new ServiceDebugBehavior {IncludeExceptionDetailInFaults = true});
-        }
-        else
-        {
-          // make sure setting is turned ON
-          if (!debug.IncludeExceptionDetailInFaults)
-          {
-            debug.IncludeExceptionDetailInFaults = true;
-          }
-        }
+       _serviceHost =  WcfUtility.CreateHost(typeof (NorthwindService), baseAddress, binding, metaDataBehavior);
       }
 
       if (_serviceHost.State != CommunicationState.Opened && _serviceHost.State != CommunicationState.Opening)
@@ -49,7 +40,7 @@ namespace Northwind.Business.WCF.Host
         _serviceHost.Open();
       }
 
-      return (_serviceHost.State == CommunicationState.Opened);
+      return _serviceHost;
     }
 
 

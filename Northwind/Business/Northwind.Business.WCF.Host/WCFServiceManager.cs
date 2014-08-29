@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.ServiceModel;
 using System.Windows.Forms;
 
 namespace Northwind.Business.WCF.Host
@@ -16,8 +18,11 @@ namespace Northwind.Business.WCF.Host
 
     private void start_Click(object sender, EventArgs e)
     {
-      if (WcfServiceHost.StartService())
+      var serviceHost = WcfServiceHost.StartService();
+      if (serviceHost.State==CommunicationState.Opened)
       {
+        linkLabelWsdl.Text = serviceHost.BaseAddresses.First().ToString();
+        linkLabelWsdl.Links.Add(0, linkLabelWsdl.Text.Length, linkLabelWsdl.Text);
         _serviceState.Text = "Opened";
       }
     }
@@ -33,6 +38,12 @@ namespace Northwind.Business.WCF.Host
     private void Form1_FormClosing(object sender, FormClosingEventArgs e)
     {
       WcfServiceHost.StopService();
+    }
+
+    private void linkLabelWsdl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+      System.Diagnostics.Process.Start(linkLabelWsdl.Links[0].LinkData.ToString());
+      linkLabelWsdl.LinkVisited = true;
     }
   }
 }
