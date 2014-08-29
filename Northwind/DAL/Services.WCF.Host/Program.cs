@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Services.WCF.Host
+namespace Northwind.DAL.Services.WCF.Host
 {
   internal static class Program
   {
@@ -14,7 +14,7 @@ namespace Services.WCF.Host
     {
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
-      Application.Run(new WcfServiceManager());
+      Application.Run(new WcfDataServiceManager());
     }
   }
 }

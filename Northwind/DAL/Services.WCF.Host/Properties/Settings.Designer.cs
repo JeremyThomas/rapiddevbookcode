@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Services.WCF.Host.Properties {
+namespace Northwind.DAL.Services.WCF.Host.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

@@ -1,6 +1,6 @@
-namespace Services.WCF.Host
+namespace Northwind.DAL.Services.WCF.Host
 {
-    partial class WcfServiceManager
+    partial class WcfDataServiceManager
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,13 @@ namespace Services.WCF.Host
         /// </summary>
         private void InitializeComponent()
         {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WcfDataServiceManager));
       this.start = new System.Windows.Forms.Button();
       this.stop = new System.Windows.Forms.Button();
       this.label1 = new System.Windows.Forms.Label();
       this._serviceState = new System.Windows.Forms.Label();
+      this.label2 = new System.Windows.Forms.Label();
+      this.linkLabelWsdl = new System.Windows.Forms.LinkLabel();
       this.SuspendLayout();
       // 
       // start
@@ -73,17 +76,40 @@ namespace Services.WCF.Host
       this._serviceState.Size = new System.Drawing.Size(0, 13);
       this._serviceState.TabIndex = 3;
       // 
-      // WcfServiceManager
+      // label2
+      // 
+      this.label2.AutoSize = true;
+      this.label2.Location = new System.Drawing.Point(125, 21);
+      this.label2.Name = "label2";
+      this.label2.Size = new System.Drawing.Size(130, 13);
+      this.label2.TabIndex = 7;
+      this.label2.Text = "Click to view MEX/WSDL";
+      // 
+      // linkLabelWsdl
+      // 
+      this.linkLabelWsdl.AutoSize = true;
+      this.linkLabelWsdl.Location = new System.Drawing.Point(261, 21);
+      this.linkLabelWsdl.Name = "linkLabelWsdl";
+      this.linkLabelWsdl.Size = new System.Drawing.Size(61, 13);
+      this.linkLabelWsdl.TabIndex = 6;
+      this.linkLabelWsdl.TabStop = true;
+      this.linkLabelWsdl.Text = "WSDL URI";
+      this.linkLabelWsdl.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelWsdl_LinkClicked);
+      // 
+      // WcfDataServiceManager
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(590, 172);
+      this.Controls.Add(this.label2);
+      this.Controls.Add(this.linkLabelWsdl);
       this.Controls.Add(this._serviceState);
       this.Controls.Add(this.label1);
       this.Controls.Add(this.stop);
       this.Controls.Add(this.start);
-      this.Name = "WcfServiceManager";
-      this.Text = "WCF Service Manager";
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+      this.Name = "WcfDataServiceManager";
+      this.Text = "WCF Data Service Manager";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
       this.ResumeLayout(false);
       this.PerformLayout();
@@ -96,6 +122,8 @@ namespace Services.WCF.Host
         private System.Windows.Forms.Button stop;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label _serviceState;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.LinkLabel linkLabelWsdl;
     }
 }
 

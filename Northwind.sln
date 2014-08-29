@@ -89,7 +89,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Business.WCF.Host
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Client.Winforms", "Northwind\Clients\Desktop\Northwind.Client.Winforms.csproj", "{D0DF14DC-8B34-46A7-81BC-FA92B93B828F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.WCF.Host", "Northwind\DAL\Services.WCF.Host\Services.WCF.Host.csproj", "{A523BD8B-5538-4B20-A9D9-C2DCAB1637C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.Services.WCF.Host", "Northwind\DAL\Services.WCF.Host\Northwind.DAL.Services.WCF.Host.csproj", "{A523BD8B-5538-4B20-A9D9-C2DCAB1637C5}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -153,7 +153,7 @@ Global
 		SccProjectTopLevelParentUniqueName14 = Northwind.sln
 		SccProjectName14 = Northwind/Clients/Desktop
 		SccLocalPath14 = Northwind\\Clients\\Desktop
-		SccProjectUniqueName15 = Northwind\\DAL\\Services.WCF.Host\\Services.WCF.Host.csproj
+		SccProjectUniqueName15 = Northwind\\DAL\\Services.WCF.Host\\Northwind.DAL.Services.WCF.Host.csproj
 		SccProjectTopLevelParentUniqueName15 = Northwind.sln
 		SccProjectName15 = Northwind/DAL/Services.WCF.Host
 		SccLocalPath15 = Northwind\\DAL\\Services.WCF.Host

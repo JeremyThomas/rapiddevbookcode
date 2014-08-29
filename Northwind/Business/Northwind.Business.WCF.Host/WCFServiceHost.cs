@@ -27,11 +27,8 @@ namespace Northwind.Business.WCF.Host
       if (_serviceHost == null)
       {
         //Instantiate new ServiceHost 
-        //_serviceHost = new ServiceHost(new NorthwindService());
-                    var binding = new BasicHttpBinding {MaxReceivedMessageSize = 1000000, ReaderQuotas = {MaxDepth = 200}};
-            var metaDataBehavior = new ServiceMetadataBehavior {HttpGetEnabled = true};
-
-       _serviceHost =  WcfUtility.CreateHost(typeof (NorthwindService), baseAddress, binding, metaDataBehavior);
+        _serviceHost = WcfUtility.CreateHost(typeof (NorthwindService), baseAddress, null,  new ServiceMetadataBehavior {HttpGetEnabled = true});
+        _serviceHost.Open();
       }
 
       if (_serviceHost.State != CommunicationState.Opened && _serviceHost.State != CommunicationState.Opening)

@@ -283,22 +283,18 @@ namespace AW.Helper
           debug.IncludeExceptionDetailInFaults = true;
     }
 
-    public static ServiceHost CreateHost(Type serviceType, string baseAddress, Binding binding, params IServiceBehavior[] serviceBehaviors)
+    public static ServiceHost CreateHost(Type serviceType, string baseAddress, Binding binding = null, params IServiceBehavior[] serviceBehaviors)
     {
-      var contractType = GetServiceContractType(serviceType);
-
       var fullBaseAddress = string.Concat(baseAddress, serviceType.Name);
-
       var host = new ServiceHost(serviceType, new Uri(fullBaseAddress));
-
+      if (binding == null)
+        binding = new BasicHttpBinding {MaxReceivedMessageSize = 1000000, ReaderQuotas = {MaxDepth = 200}};
+      var contractType = GetServiceContractType(serviceType);
       host.AddServiceEndpoint(contractType, binding, "");
       DoIncludeExceptionDetailInFaults(host);
       foreach (var serviceBehavior in serviceBehaviors)
         host.Description.Behaviors.Add(serviceBehavior);
-
       host.AddServiceEndpoint(typeof (IMetadataExchange), binding, "MEX");
-      host.Open();
-      Console.WriteLine("{0}: Host for {1} is open", serviceType.Name, DateTime.Now);
       return host;
     }
   }

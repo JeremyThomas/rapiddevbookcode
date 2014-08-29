@@ -15,14 +15,16 @@ namespace Northwind.DAL.Services
       // TODO: set rules to indicate which entity sets and service operations 
       // are visible, updatable, etc.
       // Examples:
-      // config.SetEntitySetAccessRule("MyEntityset", EntitySetRights.AllRead);
-      // config.SetServiceOperationAccessRule("MyServiceOperation", ServiceOperationRights.All);
+      config.SetEntitySetAccessRule("*", EntitySetRights.AllRead);
+      //config.SetServiceOperationAccessRule("MyServiceOperation", ServiceOperationRights.All);
       config.DataServiceBehavior.MaxProtocolVersion = DataServiceProtocolVersion.V3;
+      config.UseVerboseErrors = true;
     }
 
     protected override LinqMetaData CreateLinqMetaDataInstance()
     {
-      return new LinqMetaData(new DataAccessAdapter());
+      var linqMetaDataInstance = new LinqMetaData(new DataAccessAdapter());
+      return linqMetaDataInstance;
     }
 
     protected override ITransactionController CreateTransactionControllerInstance()

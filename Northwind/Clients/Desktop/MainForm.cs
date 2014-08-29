@@ -102,6 +102,7 @@ namespace Northwind.Client.Winforms
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
       this.label1 = new System.Windows.Forms.Label();
       this.openCustomerManagerButton = new System.Windows.Forms.Button();
       this.exitButton = new System.Windows.Forms.Button();
@@ -143,10 +144,11 @@ namespace Northwind.Client.Winforms
       // 
       // exitButton
       // 
-      this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.exitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
       this.exitButton.Location = new System.Drawing.Point(513, 249);
       this.exitButton.Name = "exitButton";
+      this.exitButton.Size = new System.Drawing.Size(75, 23);
       this.exitButton.TabIndex = 2;
       this.exitButton.Text = "Exit";
       this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
@@ -162,9 +164,9 @@ namespace Northwind.Client.Winforms
       // 
       // groupBox1
       // 
-      this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                                                                      | System.Windows.Forms.AnchorStyles.Left)
-                                                                     | System.Windows.Forms.AnchorStyles.Right)));
+      this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.groupBox1.Controls.Add(this._mostOrdersCustomerTextBox);
       this.groupBox1.Controls.Add(this.label7);
       this.groupBox1.Controls.Add(this._editMostOrdersCustomerButton);
@@ -188,14 +190,13 @@ namespace Northwind.Client.Winforms
       // 
       // _mostOrdersCustomerTextBox
       // 
-      this._mostOrdersCustomerTextBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                                                                                      | System.Windows.Forms.AnchorStyles.Right)));
+      this._mostOrdersCustomerTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this._mostOrdersCustomerTextBox.Location = new System.Drawing.Point(366, 99);
       this._mostOrdersCustomerTextBox.Name = "_mostOrdersCustomerTextBox";
       this._mostOrdersCustomerTextBox.ReadOnly = true;
       this._mostOrdersCustomerTextBox.Size = new System.Drawing.Size(159, 20);
       this._mostOrdersCustomerTextBox.TabIndex = 12;
-      this._mostOrdersCustomerTextBox.Text = "";
       // 
       // label7
       // 
@@ -207,7 +208,7 @@ namespace Northwind.Client.Winforms
       // 
       // _editMostOrdersCustomerButton
       // 
-      this._editMostOrdersCustomerButton.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this._editMostOrdersCustomerButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this._editMostOrdersCustomerButton.Location = new System.Drawing.Point(531, 99);
       this._editMostOrdersCustomerButton.Name = "_editMostOrdersCustomerButton";
       this._editMostOrdersCustomerButton.Size = new System.Drawing.Size(36, 21);
@@ -222,7 +223,6 @@ namespace Northwind.Client.Winforms
       this._mostOrdersPerCustomerTextBox.ReadOnly = true;
       this._mostOrdersPerCustomerTextBox.Size = new System.Drawing.Size(87, 20);
       this._mostOrdersPerCustomerTextBox.TabIndex = 9;
-      this._mostOrdersPerCustomerTextBox.Text = "";
       this._mostOrdersPerCustomerTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
       // 
       // label6
@@ -235,14 +235,13 @@ namespace Northwind.Client.Winforms
       // 
       // _highestOrderCustomerTextBox
       // 
-      this._highestOrderCustomerTextBox.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                                                                                        | System.Windows.Forms.AnchorStyles.Right)));
+      this._highestOrderCustomerTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this._highestOrderCustomerTextBox.Location = new System.Drawing.Point(366, 75);
       this._highestOrderCustomerTextBox.Name = "_highestOrderCustomerTextBox";
       this._highestOrderCustomerTextBox.ReadOnly = true;
       this._highestOrderCustomerTextBox.Size = new System.Drawing.Size(159, 20);
       this._highestOrderCustomerTextBox.TabIndex = 6;
-      this._highestOrderCustomerTextBox.Text = "";
       // 
       // _averageOrderPriceTextBox
       // 
@@ -251,7 +250,6 @@ namespace Northwind.Client.Winforms
       this._averageOrderPriceTextBox.ReadOnly = true;
       this._averageOrderPriceTextBox.Size = new System.Drawing.Size(87, 20);
       this._averageOrderPriceTextBox.TabIndex = 5;
-      this._averageOrderPriceTextBox.Text = "";
       this._averageOrderPriceTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
       // 
       // label4
@@ -269,7 +267,6 @@ namespace Northwind.Client.Winforms
       this._highestOrderPriceTextBox.ReadOnly = true;
       this._highestOrderPriceTextBox.Size = new System.Drawing.Size(87, 20);
       this._highestOrderPriceTextBox.TabIndex = 3;
-      this._highestOrderPriceTextBox.Text = "";
       this._highestOrderPriceTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
       // 
       // label3
@@ -287,7 +284,6 @@ namespace Northwind.Client.Winforms
       this._amountCustomersTextBox.ReadOnly = true;
       this._amountCustomersTextBox.Size = new System.Drawing.Size(87, 20);
       this._amountCustomersTextBox.TabIndex = 1;
-      this._amountCustomersTextBox.Text = "";
       this._amountCustomersTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
       // 
       // label2
@@ -308,7 +304,7 @@ namespace Northwind.Client.Winforms
       // 
       // _editHighestOrderCustomerButton
       // 
-      this._editHighestOrderCustomerButton.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this._editHighestOrderCustomerButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this._editHighestOrderCustomerButton.Location = new System.Drawing.Point(531, 75);
       this._editHighestOrderCustomerButton.Name = "_editHighestOrderCustomerButton";
       this._editHighestOrderCustomerButton.Size = new System.Drawing.Size(36, 21);
@@ -326,10 +322,13 @@ namespace Northwind.Client.Winforms
       this.Controls.Add(this.exitButton);
       this.Controls.Add(this.openCustomerManagerButton);
       this.Controls.Add(this.label1);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "MainForm";
       this.Text = "Northwind C# Example Main window";
       this.groupBox1.ResumeLayout(false);
+      this.groupBox1.PerformLayout();
       this.ResumeLayout(false);
+
     }
 
     #endregion
