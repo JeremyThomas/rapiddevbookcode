@@ -28,6 +28,7 @@ namespace Northwind.Business.WCF.Host
         /// </summary>
         private void InitializeComponent()
         {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WcfServiceManager));
       this.start = new System.Windows.Forms.Button();
       this.stop = new System.Windows.Forms.Button();
       this.label1 = new System.Windows.Forms.Label();
@@ -106,6 +107,7 @@ namespace Northwind.Business.WCF.Host
       this.Controls.Add(this.label1);
       this.Controls.Add(this.stop);
       this.Controls.Add(this.start);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "WcfServiceManager";
       this.Text = "WCF Service Manager";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);

@@ -8,8 +8,8 @@
     <ProjectGuid>{A523BD8B-5538-4B20-A9D9-C2DCAB1637C5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Services.WCF.Host</RootNamespace>
-    <AssemblyName>Services.WCF.Host</AssemblyName>
+    <RootNamespace>Northwind.DAL.Services.WCF.Host</RootNamespace>
+    <AssemblyName>Northwind.DAL.Services.WCF.Host</AssemblyName>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -77,12 +77,14 @@
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.ODataSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Spatial, Version=5.6.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -93,17 +95,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WCFServiceManager.cs">
+    <Compile Include="WCFDataServiceManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WCFServiceManager.Designer.cs">
-      <DependentUpon>WCFServiceManager.cs</DependentUpon>
+    <Compile Include="WCFDataServiceManager.Designer.cs">
+      <DependentUpon>WCFDataServiceManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="WCFServiceManager.resx">
+    <EmbeddedResource Include="WCFDataServiceManager.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>WCFServiceManager.cs</DependentUpon>
+      <DependentUpon>WCFDataServiceManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -146,6 +148,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\AW.Helper\AW.Helper.csproj">
+      <Project>{ffc5b55e-9157-4ce6-81bd-e593e4c08422}</Project>
+      <Name>AW.Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DAL\Northwind.DAL.csproj">
       <Project>{24fa312c-06e0-462d-97fa-709ac20d09ef}</Project>
       <Name>Northwind.DAL</Name>

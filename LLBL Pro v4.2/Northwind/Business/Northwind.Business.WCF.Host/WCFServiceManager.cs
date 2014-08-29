@@ -45,5 +45,6 @@ namespace Northwind.Business.WCF.Host
       System.Diagnostics.Process.Start(linkLabelWsdl.Links[0].LinkData.ToString());
       linkLabelWsdl.LinkVisited = true;
     }
+
   }
 }

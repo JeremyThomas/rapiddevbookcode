@@ -1,10 +1,11 @@
 using System;
+using System.Configuration;
 using System.Data.Services;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using Northwind.DAL.Services;
+using AW.Helper;
 
-namespace Services.WCF.Host
+namespace Northwind.DAL.Services.WCF.Host
 {
   /// <summary>
   ///   The class which represents the WCF service to our application.
@@ -16,36 +17,28 @@ namespace Services.WCF.Host
     ///   a static global
     ///   variable. In webapplication, you're working multi-threaded and you can't use this method.
     /// </summary>
-    private static DataServiceHost _serviceHost;
+    private static ServiceHost _serviceHost;
+
+    public static ServiceHost CreateDataServiceHost(Type serviceType, string baseAddress)
+    {
+      var fullBaseAddress = string.Concat(baseAddress, serviceType.Name);
+      var host = new DataServiceHost(serviceType, new[] {new Uri(fullBaseAddress)});
+      WcfUtility.DoIncludeExceptionDetailInFaults(host);
+      return host;
+    }
 
     /// <summary>
     ///   Starts the service.
     /// </summary>
     /// <returns>true if service was successfully opened, false otherwise</returns>
-    internal static bool StartService()
+    internal static ServiceHost StartService()
     {
       if (_serviceHost == null)
       {
-        var baseAddress = new Uri("http://localhost:6000/");
-        var baseAddresses = new[] {baseAddress};
+        var baseAddress = ConfigurationManager.AppSettings["WCFUrl"];
         //Instantiate new ServiceHost 
-        _serviceHost = new DataServiceHost(typeof (NorthwindODataService), baseAddresses);
-        var debug = _serviceHost.Description.Behaviors.Find<ServiceDebugBehavior>();
-
-        // if not found - add behavior with setting turned on 
-        if (debug == null)
-        {
-          _serviceHost.Description.Behaviors.Add(
-            new ServiceDebugBehavior {IncludeExceptionDetailInFaults = true});
-        }
-        else
-        {
-          // make sure setting is turned ON
-          if (!debug.IncludeExceptionDetailInFaults)
-          {
-            debug.IncludeExceptionDetailInFaults = true;
-          }
-        }
+        _serviceHost = CreateDataServiceHost(typeof(NorthwindODataService), baseAddress);
+        _serviceHost.Open();
       }
 
       if (_serviceHost.State != CommunicationState.Opened && _serviceHost.State != CommunicationState.Opening)
@@ -54,7 +47,7 @@ namespace Services.WCF.Host
         _serviceHost.Open();
       }
 
-      return (_serviceHost.State == CommunicationState.Opened);
+      return _serviceHost;
     }
 
 
