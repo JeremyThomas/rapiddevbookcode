@@ -75,7 +75,7 @@
     <Property Name="UseCustomFieldOrderingOnNewElements" Value="false" />
   </Properties>
   <TypeShortcuts>
-    <TypeShortcut Shortcut="Category" Type="Northwind.DAL.Category, Northwind.DAL, Version=4.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="Category" Type="Northwind.DAL.Category, Northwind.DAL, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
   </TypeShortcuts>
   <IgnoredWarnings />
   <SavedSearchQueries />
@@ -139,7 +139,7 @@
     <EntityDefinitions>
       <EntityDefinition Name="Category" ObjectID="521174a7-8359-49ea-a6ac-6f946d386550">
         <Fields>
-          <Field Name="CategoryId" Type="Category" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
+          <Field Name="CategoryId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
             <OutputSettingValues>
               <CustomProperties>
                 <CustomProperty Name="MS_Description" Value="Number automatically assigned to a new category." />
@@ -421,7 +421,7 @@
       </EntityDefinition>
       <EntityDefinition Name="Product" ObjectID="e39d7cca-2607-4390-8d80-ac18baaa8df6">
         <Fields>
-          <Field Name="CategoryId" Type="Category" IsOptional="true" Precision="10">
+          <Field Name="CategoryId" Type="int" IsOptional="true" Precision="10">
             <OutputSettingValues>
               <CustomProperties>
                 <CustomProperty Name="MS_Description" Value="Same entry as in Categories table." />
@@ -1455,7 +1455,7 @@
       <EntityMappings>
         <EntityMapping EntityName=":Category" TargetName="//localhost/xe:DBO_NORTHWIND:CATEGORIES">
           <FieldMappings>
-            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" />
+            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNumericConverter" />
             <FieldMapping FieldName="CategoryName" TargetFieldName="CATEGORYNAME" />
             <FieldMapping FieldName="Description" TargetFieldName="DESCRIPTION" />
             <FieldMapping FieldName="Picture" TargetFieldName="PICTURE" />
@@ -1545,7 +1545,7 @@
         </EntityMapping>
         <EntityMapping EntityName=":Product" TargetName="//localhost/xe:DBO_NORTHWIND:PRODUCTS">
           <FieldMappings>
-            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" />
+            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNumericConverter" />
             <FieldMapping FieldName="Discontinued" TargetFieldName="DISCONTINUED" TypeConverterToUse="SD.LLBLGen.Pro.TypeConverters.BooleanNumericConverter" />
             <FieldMapping FieldName="ProductId" TargetFieldName="PRODUCTID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:PRODUCTS_PRODUCTID_SEQ" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNonNullNumericConverter" />
             <FieldMapping FieldName="ProductName" TargetFieldName="PRODUCTNAME" />

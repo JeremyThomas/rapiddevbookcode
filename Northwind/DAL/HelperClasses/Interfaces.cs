@@ -13,7 +13,7 @@ namespace Northwind.DAL.HelperClasses
     /// <remarks>Mapped on  table field: "Products"."CategoryID"<br/>
     /// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
     /// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-    Nullable<Northwind.DAL.Category> CategoryId { get; set; }
+    Nullable<int> CategoryId { get; set; }
 
     /// <summary> The Discontinued property of the Entity Product<br/><br/>
     /// MS_Description: Yes means item is no longer available.<br/></summary>
