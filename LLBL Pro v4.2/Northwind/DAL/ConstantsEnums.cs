@@ -302,8 +302,8 @@ namespace Northwind.DAL
 
 	#region Custom ConstantsEnums Code
 	
-	// __LLBLGENPRO_USER_CODE_REGION_START CustomUserConstants
-
+  // __LLBLGENPRO_USER_CODE_REGION_START CustomUserConstants
+ // [DataContract]
   public enum Category
   {
     Beverages = 1,
@@ -316,7 +316,7 @@ namespace Northwind.DAL
     Seafood
   }
 
-	// __LLBLGENPRO_USER_CODE_REGION_END
+  // __LLBLGENPRO_USER_CODE_REGION_END
 	#endregion
 
 	#region Included code

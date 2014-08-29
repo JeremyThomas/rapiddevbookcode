@@ -8,7 +8,7 @@ namespace Northwind.DAL.DTO
 {
   public class ProductViewDto : PocoBase, IProduct
   {
-    public Category? CategoryId { get; set; }
+    public int? CategoryId { get; set; }
     public bool Discontinued { get; set; }
     public int ProductId { get; set; }
     public string ProductName { get; set; }
@@ -49,13 +49,13 @@ namespace Northwind.DAL.DTO
     public override bool Equals(object value)
     {
       var type = value as ProductViewDto;
-      return (type != null) && EqualityComparer<Category?>.Default.Equals(type.CategoryId, CategoryId) && EqualityComparer<bool>.Default.Equals(type.Discontinued, Discontinued) && EqualityComparer<int>.Default.Equals(type.ProductId, ProductId) && EqualityComparer<string>.Default.Equals(type.ProductName, ProductName) && EqualityComparer<string>.Default.Equals(type.QuantityPerUnit, QuantityPerUnit) && EqualityComparer<short?>.Default.Equals(type.ReorderLevelZzz, ReorderLevelZzz) && EqualityComparer<int?>.Default.Equals(type.SupplierId, SupplierId) && EqualityComparer<decimal?>.Default.Equals(type.UnitPrice, UnitPrice) && EqualityComparer<short?>.Default.Equals(type.UnitsInStock, UnitsInStock) && EqualityComparer<short?>.Default.Equals(type.UnitsOnOrder, UnitsOnOrder);
+      return (type != null) && EqualityComparer<int?>.Default.Equals(type.CategoryId, CategoryId) && EqualityComparer<bool>.Default.Equals(type.Discontinued, Discontinued) && EqualityComparer<int>.Default.Equals(type.ProductId, ProductId) && EqualityComparer<string>.Default.Equals(type.ProductName, ProductName) && EqualityComparer<string>.Default.Equals(type.QuantityPerUnit, QuantityPerUnit) && EqualityComparer<short?>.Default.Equals(type.ReorderLevelZzz, ReorderLevelZzz) && EqualityComparer<int?>.Default.Equals(type.SupplierId, SupplierId) && EqualityComparer<decimal?>.Default.Equals(type.UnitPrice, UnitPrice) && EqualityComparer<short?>.Default.Equals(type.UnitsInStock, UnitsInStock) && EqualityComparer<short?>.Default.Equals(type.UnitsOnOrder, UnitsOnOrder);
     }
 
     public override int GetHashCode()
     {
       var num = 0x7a2f0b42;
-      num = (-1521134295*num) + EqualityComparer<Category?>.Default.GetHashCode(CategoryId);
+      num = (-1521134295 * num) + EqualityComparer<int?>.Default.GetHashCode(CategoryId);
       num = (-1521134295*num) + EqualityComparer<bool>.Default.GetHashCode(Discontinued);
       num = (-1521134295*num) + EqualityComparer<int>.Default.GetHashCode(ProductId);
       num = (-1521134295*num) + EqualityComparer<string>.Default.GetHashCode(ProductName);
@@ -87,7 +87,7 @@ namespace Northwind.DAL.DTO
     {
     }
 
-    private ProductViewDto(Category? categoryId, bool discontinued, int productId, string productName, string quantityPerUnit, short? reorderLevelZzz, 
+    private ProductViewDto(int? categoryId, bool discontinued, int productId, string productName, string quantityPerUnit, short? reorderLevelZzz, 
       int? supplierId, decimal? unitPrice, short? unitsInStock, short? unitsOnOrder)
     {
       CategoryId = categoryId;

@@ -106,6 +106,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
@@ -280,9 +281,6 @@
   <ItemGroup>
     <None Include="..\..\Ancillary\AdventureWorks.snk">
       <Link>AdventureWorks.snk</Link>
-    </None>
-    <None Include="..\..\Ancillary\AW.llblgenproj">
-      <Link>AW.llblgenproj</Link>
     </None>
     <None Include="Enums.typeimports">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
