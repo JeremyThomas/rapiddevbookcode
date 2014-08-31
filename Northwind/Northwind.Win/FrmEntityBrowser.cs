@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Net;
+using System.Windows.Forms;
 using AW.Helper;
 using AW.Winforms.Helpers;
 using Northwind.DAL.Linq;
@@ -15,6 +16,8 @@ namespace Northwind.Win
     public FrmEntityBrowser()
     {
       InitializeComponent();
+      try
+      {
       var baseAddress = ConfigurationManager.AppSettings["WcfDataServiceUrl"];
       var uri = new Uri(baseAddress);// + typeof(LLBLGenProODataService).Name);
       var llblGenProODataService = new LLBLGenProODataService(uri);
@@ -27,6 +30,12 @@ namespace Northwind.Win
       var employee = llblGenProODataService.CreateQuery<object>("Employee");
       var employeeEntities = employee.Execute();
       //  var categoryEntities = llblGenProODataService.Category.Execute();
+      }
+      catch (Exception e)
+      {
+        Application.OnThreadException(e);
+      }
+
       var dataAccessAdapter = new DataAccessAdapter();
       usrCntrlEntityBrowser1.Initialize(new LinqMetaData(dataAccessAdapter));
       //Done in CommonEntityBase  CacheController.RegisterCache(dataAccessAdapter.ConnectionString, new ResultsetCache()); 
