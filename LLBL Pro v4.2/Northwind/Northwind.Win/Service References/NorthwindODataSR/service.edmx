@@ -1,0 +1,361 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices m:DataServiceVersion="1.0" m:MaxDataServiceVersion="3.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+    <Schema Namespace="Northwind.DAL.Linq" xmlns="http://schemas.microsoft.com/ado/2007/05/edm">
+      <EntityType Name="CategoryEntity">
+        <Key>
+          <PropertyRef Name="CategoryId" />
+        </Key>
+        <Property Name="CategoryId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CategoryName" Type="Edm.String" />
+        <Property Name="Description" Type="Edm.String" />
+        <Property Name="Picture" Type="Edm.Binary" />
+        <NavigationProperty Name="Products" Relationship="Northwind.DAL.Linq.CategoryEntity_Products_ProductEntity_Category" ToRole="ProductEntity_Category" FromRole="CategoryEntity_Products" />
+      </EntityType>
+      <EntityType Name="CustomerEntity">
+        <Key>
+          <PropertyRef Name="CustomerId" />
+        </Key>
+        <Property Name="Address" Type="Edm.String" />
+        <Property Name="City" Type="Edm.String" />
+        <Property Name="CompanyName" Type="Edm.String" />
+        <Property Name="ContactName" Type="Edm.String" />
+        <Property Name="ContactTitle" Type="Edm.String" />
+        <Property Name="Country" Type="Edm.String" />
+        <Property Name="CustomerId" Type="Edm.String" Nullable="false" />
+        <Property Name="Fax" Type="Edm.String" />
+        <Property Name="Phone" Type="Edm.String" />
+        <Property Name="PostalCode" Type="Edm.String" />
+        <Property Name="Region" Type="Edm.String" />
+        <NavigationProperty Name="CustomerCustomerDemos" Relationship="Northwind.DAL.Linq.CustomerEntity_CustomerCustomerDemos_CustomerCustomerDemoEntity_Customer" ToRole="CustomerCustomerDemoEntity_Customer" FromRole="CustomerEntity_CustomerCustomerDemos" />
+        <NavigationProperty Name="Orders" Relationship="Northwind.DAL.Linq.CustomerEntity_Orders_OrderEntity_Customer" ToRole="OrderEntity_Customer" FromRole="CustomerEntity_Orders" />
+        <NavigationProperty Name="CustomerDemographics" Relationship="Northwind.DAL.Linq.CustomerEntity_CustomerDemographics" ToRole="CustomerDemographics" FromRole="CustomerEntity" />
+        <NavigationProperty Name="EmployeesViaOrders" Relationship="Northwind.DAL.Linq.CustomerEntity_EmployeesViaOrders" ToRole="EmployeesViaOrders" FromRole="CustomerEntity" />
+      </EntityType>
+      <EntityType Name="CustomerCustomerDemoEntity">
+        <Key>
+          <PropertyRef Name="CustomerId" />
+          <PropertyRef Name="CustomerTypeId" />
+        </Key>
+        <Property Name="CustomerId" Type="Edm.String" Nullable="false" />
+        <Property Name="CustomerTypeId" Type="Edm.String" Nullable="false" />
+        <NavigationProperty Name="Customer" Relationship="Northwind.DAL.Linq.CustomerEntity_CustomerCustomerDemos_CustomerCustomerDemoEntity_Customer" ToRole="CustomerEntity_CustomerCustomerDemos" FromRole="CustomerCustomerDemoEntity_Customer" />
+        <NavigationProperty Name="CustomerDemographic" Relationship="Northwind.DAL.Linq.CustomerCustomerDemoEntity_CustomerDemographic_CustomerDemographicEntity_CustomerCustomerDemos" ToRole="CustomerDemographicEntity_CustomerCustomerDemos" FromRole="CustomerCustomerDemoEntity_CustomerDemographic" />
+      </EntityType>
+      <EntityType Name="CustomerDemographicEntity">
+        <Key>
+          <PropertyRef Name="CustomerTypeId" />
+        </Key>
+        <Property Name="CustomerDesc" Type="Edm.String" />
+        <Property Name="CustomerTypeId" Type="Edm.String" Nullable="false" />
+        <NavigationProperty Name="CustomerCustomerDemos" Relationship="Northwind.DAL.Linq.CustomerCustomerDemoEntity_CustomerDemographic_CustomerDemographicEntity_CustomerCustomerDemos" ToRole="CustomerCustomerDemoEntity_CustomerDemographic" FromRole="CustomerDemographicEntity_CustomerCustomerDemos" />
+        <NavigationProperty Name="Customers" Relationship="Northwind.DAL.Linq.CustomerDemographicEntity_Customers" ToRole="Customers" FromRole="CustomerDemographicEntity" />
+      </EntityType>
+      <EntityType Name="EmployeeEntity">
+        <Key>
+          <PropertyRef Name="EmployeeId" />
+        </Key>
+        <Property Name="Address" Type="Edm.String" />
+        <Property Name="BirthDate" Type="Edm.DateTime" />
+        <Property Name="City" Type="Edm.String" />
+        <Property Name="Country" Type="Edm.String" />
+        <Property Name="EmployeeId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Extension" Type="Edm.String" />
+        <Property Name="FirstName" Type="Edm.String" />
+        <Property Name="HireDate" Type="Edm.DateTime" />
+        <Property Name="HomePhone" Type="Edm.String" />
+        <Property Name="LastName" Type="Edm.String" />
+        <Property Name="Notes" Type="Edm.String" />
+        <Property Name="Photo" Type="Edm.Binary" />
+        <Property Name="PhotoPath" Type="Edm.String" />
+        <Property Name="PostalCode" Type="Edm.String" />
+        <Property Name="Region" Type="Edm.String" />
+        <Property Name="ReportsTo" Type="Edm.Int32" />
+        <Property Name="Title" Type="Edm.String" />
+        <Property Name="TitleOfCourtesy" Type="Edm.String" />
+        <NavigationProperty Name="Staff" Relationship="Northwind.DAL.Linq.EmployeeEntity_Staff_EmployeeEntity_Manager" ToRole="EmployeeEntity_Manager" FromRole="EmployeeEntity_Staff" />
+        <NavigationProperty Name="EmployeeTerritories" Relationship="Northwind.DAL.Linq.EmployeeEntity_EmployeeTerritories_EmployeeTerritoryEntity_Employee" ToRole="EmployeeTerritoryEntity_Employee" FromRole="EmployeeEntity_EmployeeTerritories" />
+        <NavigationProperty Name="Orders" Relationship="Northwind.DAL.Linq.EmployeeEntity_Orders_OrderEntity_Employee" ToRole="OrderEntity_Employee" FromRole="EmployeeEntity_Orders" />
+        <NavigationProperty Name="CustomersViaOrders" Relationship="Northwind.DAL.Linq.EmployeeEntity_CustomersViaOrders" ToRole="CustomersViaOrders" FromRole="EmployeeEntity" />
+        <NavigationProperty Name="Territories" Relationship="Northwind.DAL.Linq.EmployeeEntity_Territories" ToRole="Territories" FromRole="EmployeeEntity" />
+        <NavigationProperty Name="Manager" Relationship="Northwind.DAL.Linq.EmployeeEntity_Staff_EmployeeEntity_Manager" ToRole="EmployeeEntity_Staff" FromRole="EmployeeEntity_Manager" />
+      </EntityType>
+      <EntityType Name="EmployeeTerritoryEntity">
+        <Key>
+          <PropertyRef Name="EmployeeId" />
+          <PropertyRef Name="TerritoryId" />
+        </Key>
+        <Property Name="EmployeeId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TerritoryId" Type="Edm.String" Nullable="false" />
+        <NavigationProperty Name="Employee" Relationship="Northwind.DAL.Linq.EmployeeEntity_EmployeeTerritories_EmployeeTerritoryEntity_Employee" ToRole="EmployeeEntity_EmployeeTerritories" FromRole="EmployeeTerritoryEntity_Employee" />
+        <NavigationProperty Name="Territory" Relationship="Northwind.DAL.Linq.EmployeeTerritoryEntity_Territory_TerritoryEntity_EmployeeTerritories" ToRole="TerritoryEntity_EmployeeTerritories" FromRole="EmployeeTerritoryEntity_Territory" />
+      </EntityType>
+      <EntityType Name="OrderEntity">
+        <Key>
+          <PropertyRef Name="OrderId" />
+        </Key>
+        <Property Name="CustomerId" Type="Edm.String" />
+        <Property Name="EmployeeId" Type="Edm.Int32" />
+        <Property Name="Freight" Type="Edm.Decimal" />
+        <Property Name="OrderDate" Type="Edm.DateTime" />
+        <Property Name="OrderId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="RequiredDate" Type="Edm.DateTime" />
+        <Property Name="ShipAddress" Type="Edm.String" />
+        <Property Name="ShipCity" Type="Edm.String" />
+        <Property Name="ShipCountry" Type="Edm.String" />
+        <Property Name="ShipName" Type="Edm.String" />
+        <Property Name="ShippedDate" Type="Edm.DateTime" />
+        <Property Name="ShipPostalCode" Type="Edm.String" />
+        <Property Name="ShipRegion" Type="Edm.String" />
+        <Property Name="ShipVia" Type="Edm.Int32" />
+        <NavigationProperty Name="OrderDetails" Relationship="Northwind.DAL.Linq.OrderEntity_OrderDetails_OrderDetailEntity_Order" ToRole="OrderDetailEntity_Order" FromRole="OrderEntity_OrderDetails" />
+        <NavigationProperty Name="Customer" Relationship="Northwind.DAL.Linq.CustomerEntity_Orders_OrderEntity_Customer" ToRole="CustomerEntity_Orders" FromRole="OrderEntity_Customer" />
+        <NavigationProperty Name="Employee" Relationship="Northwind.DAL.Linq.EmployeeEntity_Orders_OrderEntity_Employee" ToRole="EmployeeEntity_Orders" FromRole="OrderEntity_Employee" />
+        <NavigationProperty Name="Shipper" Relationship="Northwind.DAL.Linq.OrderEntity_Shipper_ShipperEntity_Orders" ToRole="ShipperEntity_Orders" FromRole="OrderEntity_Shipper" />
+      </EntityType>
+      <EntityType Name="OrderDetailEntity">
+        <Key>
+          <PropertyRef Name="OrderId" />
+          <PropertyRef Name="ProductId" />
+        </Key>
+        <Property Name="Discount" Type="Edm.Single" Nullable="false" />
+        <Property Name="OrderId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ProductId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Quantity" Type="Edm.Int16" Nullable="false" />
+        <Property Name="UnitPrice" Type="Edm.Decimal" Nullable="false" />
+        <NavigationProperty Name="Order" Relationship="Northwind.DAL.Linq.OrderEntity_OrderDetails_OrderDetailEntity_Order" ToRole="OrderEntity_OrderDetails" FromRole="OrderDetailEntity_Order" />
+        <NavigationProperty Name="Product" Relationship="Northwind.DAL.Linq.OrderDetailEntity_Product_ProductEntity_OrderDetails" ToRole="ProductEntity_OrderDetails" FromRole="OrderDetailEntity_Product" />
+      </EntityType>
+      <EntityType Name="ProductEntity">
+        <Key>
+          <PropertyRef Name="ProductId" />
+        </Key>
+        <Property Name="CategoryId" Type="Edm.Int32" />
+        <Property Name="Discontinued" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="ProductId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ProductName" Type="Edm.String" />
+        <Property Name="QuantityPerUnit" Type="Edm.String" />
+        <Property Name="ReorderLevel" Type="Edm.Int16" />
+        <Property Name="SupplierId" Type="Edm.Int32" />
+        <Property Name="UnitPrice" Type="Edm.Decimal" />
+        <Property Name="UnitsInStock" Type="Edm.Int16" />
+        <Property Name="UnitsOnOrder" Type="Edm.Int16" />
+        <NavigationProperty Name="OrderDetails" Relationship="Northwind.DAL.Linq.OrderDetailEntity_Product_ProductEntity_OrderDetails" ToRole="OrderDetailEntity_Product" FromRole="ProductEntity_OrderDetails" />
+        <NavigationProperty Name="Category" Relationship="Northwind.DAL.Linq.CategoryEntity_Products_ProductEntity_Category" ToRole="CategoryEntity_Products" FromRole="ProductEntity_Category" />
+        <NavigationProperty Name="Supplier" Relationship="Northwind.DAL.Linq.ProductEntity_Supplier_SupplierEntity_Products" ToRole="SupplierEntity_Products" FromRole="ProductEntity_Supplier" />
+      </EntityType>
+      <EntityType Name="RegionEntity">
+        <Key>
+          <PropertyRef Name="RegionId" />
+        </Key>
+        <Property Name="RegionDescription" Type="Edm.String" />
+        <Property Name="RegionId" Type="Edm.Int32" Nullable="false" />
+        <NavigationProperty Name="Territories" Relationship="Northwind.DAL.Linq.RegionEntity_Territories_TerritoryEntity_Region" ToRole="TerritoryEntity_Region" FromRole="RegionEntity_Territories" />
+      </EntityType>
+      <EntityType Name="ShipperEntity">
+        <Key>
+          <PropertyRef Name="ShipperId" />
+        </Key>
+        <Property Name="CompanyName" Type="Edm.String" />
+        <Property Name="Phone" Type="Edm.String" />
+        <Property Name="ShipperId" Type="Edm.Int32" Nullable="false" />
+        <NavigationProperty Name="Orders" Relationship="Northwind.DAL.Linq.OrderEntity_Shipper_ShipperEntity_Orders" ToRole="OrderEntity_Shipper" FromRole="ShipperEntity_Orders" />
+      </EntityType>
+      <EntityType Name="SupplierEntity">
+        <Key>
+          <PropertyRef Name="SupplierId" />
+        </Key>
+        <Property Name="Address" Type="Edm.String" />
+        <Property Name="City" Type="Edm.String" />
+        <Property Name="CompanyName" Type="Edm.String" />
+        <Property Name="ContactName" Type="Edm.String" />
+        <Property Name="ContactTitle" Type="Edm.String" />
+        <Property Name="Country" Type="Edm.String" />
+        <Property Name="Fax" Type="Edm.String" />
+        <Property Name="HomePage" Type="Edm.String" />
+        <Property Name="Phone" Type="Edm.String" />
+        <Property Name="PostalCode" Type="Edm.String" />
+        <Property Name="Region" Type="Edm.String" />
+        <Property Name="SupplierId" Type="Edm.Int32" Nullable="false" />
+        <NavigationProperty Name="Products" Relationship="Northwind.DAL.Linq.ProductEntity_Supplier_SupplierEntity_Products" ToRole="ProductEntity_Supplier" FromRole="SupplierEntity_Products" />
+      </EntityType>
+      <EntityType Name="TerritoryEntity">
+        <Key>
+          <PropertyRef Name="TerritoryId" />
+        </Key>
+        <Property Name="RegionId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TerritoryDescription" Type="Edm.String" />
+        <Property Name="TerritoryId" Type="Edm.String" Nullable="false" />
+        <NavigationProperty Name="EmployeeTerritories" Relationship="Northwind.DAL.Linq.EmployeeTerritoryEntity_Territory_TerritoryEntity_EmployeeTerritories" ToRole="EmployeeTerritoryEntity_Territory" FromRole="TerritoryEntity_EmployeeTerritories" />
+        <NavigationProperty Name="Employees" Relationship="Northwind.DAL.Linq.TerritoryEntity_Employees" ToRole="Employees" FromRole="TerritoryEntity" />
+        <NavigationProperty Name="Region" Relationship="Northwind.DAL.Linq.RegionEntity_Territories_TerritoryEntity_Region" ToRole="RegionEntity_Territories" FromRole="TerritoryEntity_Region" />
+      </EntityType>
+      <Association Name="CategoryEntity_Products_ProductEntity_Category">
+        <End Type="Northwind.DAL.Linq.ProductEntity" Role="ProductEntity_Category" Multiplicity="*" />
+        <End Type="Northwind.DAL.Linq.CategoryEntity" Role="CategoryEntity_Products" Multiplicity="0..1" />
+      </Association>
+      <Association Name="CustomerEntity_CustomerCustomerDemos_CustomerCustomerDemoEntity_Customer">
+        <End Type="Northwind.DAL.Linq.CustomerCustomerDemoEntity" Role="CustomerCustomerDemoEntity_Customer" Multiplicity="*" />
+        <End Type="Northwind.DAL.Linq.CustomerEntity" Role="CustomerEntity_CustomerCustomerDemos" Multiplicity="0..1" />
+      </Association>
+      <Association Name="CustomerEntity_Orders_OrderEntity_Customer">
+        <End Type="Northwind.DAL.Linq.OrderEntity" Role="OrderEntity_Customer" Multiplicity="*" />
+        <End Type="Northwind.DAL.Linq.CustomerEntity" Role="CustomerEntity_Orders" Multiplicity="0..1" />
+      </Association>
+      <Association Name="CustomerEntity_CustomerDemographics">
+        <End Type="Northwind.DAL.Linq.CustomerEntity" Role="CustomerEntity" Multiplicity="*" />
+        <End Type="Northwind.DAL.Linq.CustomerDemographicEntity" Role="CustomerDemographics" Multiplicity="*" />
+      </Association>
+      <Association Name="CustomerEntity_EmployeesViaOrders">
+        <End Type="Northwind.DAL.Linq.EmployeeEntity" Role="EmployeesViaOrders" Multiplicity="*" />
+        <End Type="Northwind.DAL.Linq.CustomerEntity" Role="CustomerEntity" Multiplicity="*" />
+      </Association>
+      <Association Name="CustomerCustomerDemoEntity_CustomerDemographic_CustomerDemographicEntity_CustomerCustomerDemos">
+        <End Type="Northwind.DAL.Linq.CustomerDemographicEntity" Role="CustomerDemographicEntity_CustomerCustomerDemos" Multiplicity="0..1" />
+        <End Type="Northwind.DAL.Linq.CustomerCustomerDemoEntity" Role="CustomerCustomerDemoEntity_CustomerDemographic" Multiplicity="*" />
+      </Association>
+      <Association Name="CustomerDemographicEntity_Customers">
+        <End Type="Northwind.DAL.Linq.CustomerEntity" Role="Customers" Multiplicity="*" />
+        <End Type="Northwind.DAL.Linq.CustomerDemographicEntity" Role="CustomerDemographicEntity" Multiplicity="*" />
+      </Association>
+      <Association Name="EmployeeEntity_Staff_EmployeeEntity_Manager">
+        <End Type="Northwind.DAL.Linq.EmployeeEntity" Role="EmployeeEntity_Manager" Multiplicity="*" />
+        <End Type="Northwind.DAL.Linq.EmployeeEntity" Role="EmployeeEntity_Staff" Multiplicity="0..1" />
+      </Association>
+      <Association Name="EmployeeEntity_EmployeeTerritories_EmployeeTerritoryEntity_Employee">
+        <End Type="Northwind.DAL.Linq.EmployeeTerritoryEntity" Role="EmployeeTerritoryEntity_Employee" Multiplicity="*" />
+        <End Type="Northwind.DAL.Linq.EmployeeEntity" Role="EmployeeEntity_EmployeeTerritories" Multiplicity="0..1" />
+      </Association>
+      <Association Name="EmployeeEntity_Orders_OrderEntity_Employee">
+        <End Type="Northwind.DAL.Linq.OrderEntity" Role="OrderEntity_Employee" Multiplicity="*" />
+        <End Type="Northwind.DAL.Linq.EmployeeEntity" Role="EmployeeEntity_Orders" Multiplicity="0..1" />
+      </Association>
+      <Association Name="EmployeeEntity_CustomersViaOrders">
+        <End Type="Northwind.DAL.Linq.EmployeeEntity" Role="EmployeeEntity" Multiplicity="*" />
+        <End Type="Northwind.DAL.Linq.CustomerEntity" Role="CustomersViaOrders" Multiplicity="*" />
+      </Association>
+      <Association Name="EmployeeEntity_Territories">
+        <End Type="Northwind.DAL.Linq.TerritoryEntity" Role="Territories" Multiplicity="*" />
+        <End Type="Northwind.DAL.Linq.EmployeeEntity" Role="EmployeeEntity" Multiplicity="*" />
+      </Association>
+      <Association Name="EmployeeTerritoryEntity_Territory_TerritoryEntity_EmployeeTerritories">
+        <End Type="Northwind.DAL.Linq.TerritoryEntity" Role="TerritoryEntity_EmployeeTerritories" Multiplicity="0..1" />
+        <End Type="Northwind.DAL.Linq.EmployeeTerritoryEntity" Role="EmployeeTerritoryEntity_Territory" Multiplicity="*" />
+      </Association>
+      <Association Name="OrderEntity_OrderDetails_OrderDetailEntity_Order">
+        <End Type="Northwind.DAL.Linq.OrderDetailEntity" Role="OrderDetailEntity_Order" Multiplicity="*" />
+        <End Type="Northwind.DAL.Linq.OrderEntity" Role="OrderEntity_OrderDetails" Multiplicity="0..1" />
+      </Association>
+      <Association Name="OrderEntity_Shipper_ShipperEntity_Orders">
+        <End Type="Northwind.DAL.Linq.ShipperEntity" Role="ShipperEntity_Orders" Multiplicity="0..1" />
+        <End Type="Northwind.DAL.Linq.OrderEntity" Role="OrderEntity_Shipper" Multiplicity="*" />
+      </Association>
+      <Association Name="OrderDetailEntity_Product_ProductEntity_OrderDetails">
+        <End Type="Northwind.DAL.Linq.ProductEntity" Role="ProductEntity_OrderDetails" Multiplicity="0..1" />
+        <End Type="Northwind.DAL.Linq.OrderDetailEntity" Role="OrderDetailEntity_Product" Multiplicity="*" />
+      </Association>
+      <Association Name="ProductEntity_Supplier_SupplierEntity_Products">
+        <End Type="Northwind.DAL.Linq.SupplierEntity" Role="SupplierEntity_Products" Multiplicity="0..1" />
+        <End Type="Northwind.DAL.Linq.ProductEntity" Role="ProductEntity_Supplier" Multiplicity="*" />
+      </Association>
+      <Association Name="RegionEntity_Territories_TerritoryEntity_Region">
+        <End Type="Northwind.DAL.Linq.TerritoryEntity" Role="TerritoryEntity_Region" Multiplicity="*" />
+        <End Type="Northwind.DAL.Linq.RegionEntity" Role="RegionEntity_Territories" Multiplicity="0..1" />
+      </Association>
+      <Association Name="TerritoryEntity_Employees">
+        <End Type="Northwind.DAL.Linq.TerritoryEntity" Role="TerritoryEntity" Multiplicity="*" />
+        <End Type="Northwind.DAL.Linq.EmployeeEntity" Role="Employees" Multiplicity="*" />
+      </Association>
+      <EntityContainer Name="LLBLGenProODataService" m:IsDefaultEntityContainer="true">
+        <EntitySet Name="Category" EntityType="Northwind.DAL.Linq.CategoryEntity" />
+        <EntitySet Name="Customer" EntityType="Northwind.DAL.Linq.CustomerEntity" />
+        <EntitySet Name="CustomerCustomerDemo" EntityType="Northwind.DAL.Linq.CustomerCustomerDemoEntity" />
+        <EntitySet Name="CustomerDemographic" EntityType="Northwind.DAL.Linq.CustomerDemographicEntity" />
+        <EntitySet Name="Employee" EntityType="Northwind.DAL.Linq.EmployeeEntity" />
+        <EntitySet Name="EmployeeTerritory" EntityType="Northwind.DAL.Linq.EmployeeTerritoryEntity" />
+        <EntitySet Name="Order" EntityType="Northwind.DAL.Linq.OrderEntity" />
+        <EntitySet Name="OrderDetail" EntityType="Northwind.DAL.Linq.OrderDetailEntity" />
+        <EntitySet Name="Product" EntityType="Northwind.DAL.Linq.ProductEntity" />
+        <EntitySet Name="Region" EntityType="Northwind.DAL.Linq.RegionEntity" />
+        <EntitySet Name="Shipper" EntityType="Northwind.DAL.Linq.ShipperEntity" />
+        <EntitySet Name="Supplier" EntityType="Northwind.DAL.Linq.SupplierEntity" />
+        <EntitySet Name="Territory" EntityType="Northwind.DAL.Linq.TerritoryEntity" />
+        <AssociationSet Name="CategoryEntityProductEntityCategoryId" Association="Northwind.DAL.Linq.CategoryEntity_Products_ProductEntity_Category">
+          <End Role="CategoryEntity_Products" EntitySet="Category" />
+          <End Role="ProductEntity_Category" EntitySet="Product" />
+        </AssociationSet>
+        <AssociationSet Name="CustomerEntityCustomerCustomerDemoEntityCustomerId" Association="Northwind.DAL.Linq.CustomerEntity_CustomerCustomerDemos_CustomerCustomerDemoEntity_Customer">
+          <End Role="CustomerEntity_CustomerCustomerDemos" EntitySet="Customer" />
+          <End Role="CustomerCustomerDemoEntity_Customer" EntitySet="CustomerCustomerDemo" />
+        </AssociationSet>
+        <AssociationSet Name="CustomerEntityOrderEntityCustomerId" Association="Northwind.DAL.Linq.CustomerEntity_Orders_OrderEntity_Customer">
+          <End Role="CustomerEntity_Orders" EntitySet="Customer" />
+          <End Role="OrderEntity_Customer" EntitySet="Order" />
+        </AssociationSet>
+        <AssociationSet Name="CustomerEntity_CustomerDemographics" Association="Northwind.DAL.Linq.CustomerEntity_CustomerDemographics">
+          <End Role="CustomerEntity" EntitySet="Customer" />
+          <End Role="CustomerDemographics" EntitySet="CustomerDemographic" />
+        </AssociationSet>
+        <AssociationSet Name="CustomerEntity_EmployeesViaOrders" Association="Northwind.DAL.Linq.CustomerEntity_EmployeesViaOrders">
+          <End Role="CustomerEntity" EntitySet="Customer" />
+          <End Role="EmployeesViaOrders" EntitySet="Employee" />
+        </AssociationSet>
+        <AssociationSet Name="CustomerDemographicEntityCustomerCustomerDemoEntityCustomerTypeId" Association="Northwind.DAL.Linq.CustomerCustomerDemoEntity_CustomerDemographic_CustomerDemographicEntity_CustomerCustomerDemos">
+          <End Role="CustomerCustomerDemoEntity_CustomerDemographic" EntitySet="CustomerCustomerDemo" />
+          <End Role="CustomerDemographicEntity_CustomerCustomerDemos" EntitySet="CustomerDemographic" />
+        </AssociationSet>
+        <AssociationSet Name="CustomerDemographicEntity_Customers" Association="Northwind.DAL.Linq.CustomerDemographicEntity_Customers">
+          <End Role="CustomerDemographicEntity" EntitySet="CustomerDemographic" />
+          <End Role="Customers" EntitySet="Customer" />
+        </AssociationSet>
+        <AssociationSet Name="EmployeeEntityEmployeeEntityReportsTo" Association="Northwind.DAL.Linq.EmployeeEntity_Staff_EmployeeEntity_Manager">
+          <End Role="EmployeeEntity_Staff" EntitySet="Employee" />
+          <End Role="EmployeeEntity_Manager" EntitySet="Employee" />
+        </AssociationSet>
+        <AssociationSet Name="EmployeeEntityEmployeeTerritoryEntityEmployeeId" Association="Northwind.DAL.Linq.EmployeeEntity_EmployeeTerritories_EmployeeTerritoryEntity_Employee">
+          <End Role="EmployeeEntity_EmployeeTerritories" EntitySet="Employee" />
+          <End Role="EmployeeTerritoryEntity_Employee" EntitySet="EmployeeTerritory" />
+        </AssociationSet>
+        <AssociationSet Name="EmployeeEntityOrderEntityEmployeeId" Association="Northwind.DAL.Linq.EmployeeEntity_Orders_OrderEntity_Employee">
+          <End Role="EmployeeEntity_Orders" EntitySet="Employee" />
+          <End Role="OrderEntity_Employee" EntitySet="Order" />
+        </AssociationSet>
+        <AssociationSet Name="EmployeeEntity_CustomersViaOrders" Association="Northwind.DAL.Linq.EmployeeEntity_CustomersViaOrders">
+          <End Role="EmployeeEntity" EntitySet="Employee" />
+          <End Role="CustomersViaOrders" EntitySet="Customer" />
+        </AssociationSet>
+        <AssociationSet Name="EmployeeEntity_Territories" Association="Northwind.DAL.Linq.EmployeeEntity_Territories">
+          <End Role="EmployeeEntity" EntitySet="Employee" />
+          <End Role="Territories" EntitySet="Territory" />
+        </AssociationSet>
+        <AssociationSet Name="TerritoryEntityEmployeeTerritoryEntityTerritoryId" Association="Northwind.DAL.Linq.EmployeeTerritoryEntity_Territory_TerritoryEntity_EmployeeTerritories">
+          <End Role="EmployeeTerritoryEntity_Territory" EntitySet="EmployeeTerritory" />
+          <End Role="TerritoryEntity_EmployeeTerritories" EntitySet="Territory" />
+        </AssociationSet>
+        <AssociationSet Name="OrderEntityOrderDetailEntityOrderId" Association="Northwind.DAL.Linq.OrderEntity_OrderDetails_OrderDetailEntity_Order">
+          <End Role="OrderEntity_OrderDetails" EntitySet="Order" />
+          <End Role="OrderDetailEntity_Order" EntitySet="OrderDetail" />
+        </AssociationSet>
+        <AssociationSet Name="ShipperEntityOrderEntityShipVia" Association="Northwind.DAL.Linq.OrderEntity_Shipper_ShipperEntity_Orders">
+          <End Role="OrderEntity_Shipper" EntitySet="Order" />
+          <End Role="ShipperEntity_Orders" EntitySet="Shipper" />
+        </AssociationSet>
+        <AssociationSet Name="ProductEntityOrderDetailEntityProductId" Association="Northwind.DAL.Linq.OrderDetailEntity_Product_ProductEntity_OrderDetails">
+          <End Role="OrderDetailEntity_Product" EntitySet="OrderDetail" />
+          <End Role="ProductEntity_OrderDetails" EntitySet="Product" />
+        </AssociationSet>
+        <AssociationSet Name="SupplierEntityProductEntitySupplierId" Association="Northwind.DAL.Linq.ProductEntity_Supplier_SupplierEntity_Products">
+          <End Role="ProductEntity_Supplier" EntitySet="Product" />
+          <End Role="SupplierEntity_Products" EntitySet="Supplier" />
+        </AssociationSet>
+        <AssociationSet Name="RegionEntityTerritoryEntityRegionId" Association="Northwind.DAL.Linq.RegionEntity_Territories_TerritoryEntity_Region">
+          <End Role="RegionEntity_Territories" EntitySet="Region" />
+          <End Role="TerritoryEntity_Region" EntitySet="Territory" />
+        </AssociationSet>
+        <AssociationSet Name="TerritoryEntity_Employees" Association="Northwind.DAL.Linq.TerritoryEntity_Employees">
+          <End Role="TerritoryEntity" EntitySet="Territory" />
+          <End Role="Employees" EntitySet="Employee" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
