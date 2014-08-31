@@ -285,12 +285,17 @@ namespace AW.Helper
 
     public static bool ServerNotFoundError(SqlException e)
     {
-      return e.Number == -1 && e.State == 0 && string.IsNullOrWhiteSpace(e.Server);
+      return (e.Number == -1 || e.Number == 2) && e.State == 0 && string.IsNullOrWhiteSpace(e.Server);
     }
 
     public static bool DbNotFoundError(SqlException e)
     {
       return e.Number == 4060 && e.State == 1;
+    }
+
+    public static bool LogonError(SqlException e)
+    {
+      return e.Number == 233 && e.State == 0;
     }
 
     public static IEnumerable<string> GetSqlLocalDBAndLocalInstanceNames()
