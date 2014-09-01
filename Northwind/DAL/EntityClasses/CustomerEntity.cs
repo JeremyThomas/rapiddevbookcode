@@ -30,6 +30,7 @@ namespace Northwind.DAL.EntityClasses
 	[Serializable]
 	[Description("Customer test description attribute")]
 	[DisplayName("CustomerEntityDisplayName")]
+	[System.Data.Services.Common.DataServiceKeyAttribute("CategoryId")]
 	public partial class CustomerEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	

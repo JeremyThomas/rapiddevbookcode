@@ -27,6 +27,7 @@ namespace Northwind.DAL.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity class which represents the entity 'CustomerCustomerDemo'.<br/><br/></summary>
 	[Serializable]
+	[System.Data.Services.Common.DataServiceKeyAttribute("CustomerId")]
 	public partial class CustomerCustomerDemoEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	

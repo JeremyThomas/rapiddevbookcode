@@ -30,6 +30,7 @@ namespace Northwind.DAL.EntityClasses
 	[Serializable]
 	[Description("Employee test description attribute")]
 	[DisplayName("EmployeeEntityDisplayName")]
+	[System.Data.Services.Common.DataServiceKeyAttribute("EmployeeId")]
 	public partial class EmployeeEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	

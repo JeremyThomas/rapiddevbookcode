@@ -27,6 +27,7 @@ namespace Northwind.DAL.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity class which represents the entity 'Product'.<br/><br/></summary>
 	[Serializable]
+	[System.Data.Services.Common.DataServiceKeyAttribute("ProductId")]
 	public partial class ProductEntity : CommonEntityBase
  // __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
     , IProductFull
