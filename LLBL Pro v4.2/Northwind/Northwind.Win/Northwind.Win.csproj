@@ -74,6 +74,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\NorthwindODataSRSharedTypes\LLBLGenProODataService.cs" />
     <Compile Include="Service References\NorthwindODataSRSharedTypes\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
