@@ -16,6 +16,7 @@ namespace Northwind.Win.NorthwindODataSRSharedTypes
   {
     private readonly ILinqMetaData _linqMetaData;
     private IEnumerable<PropertyInfo> _queryables;
+    private static Dictionary<Type, MemberGetter> _memberGetters;
 
     public LLBLGenProODataService(Uri serviceRoot, ILinqMetaData linqMetaData) :
       this(serviceRoot)
@@ -59,19 +60,27 @@ namespace Northwind.Win.NorthwindODataSRSharedTypes
       return EntityFactoryFactory.GetFactory((EntityType) typeOfEntity);
     }
 
-    public IQueryable GetDataServiceQueryableForEntity(ILinqMetaData linqmetadata, Type typeofentity)
+    public IQueryable GetDataServiceQueryableForEntity(ILinqMetaData linqMetaData, Type typeOfEntity)
     {
-      var queryable = EntityHelper.GetQueryableForEntityIgnoreIfNull(linqmetadata, typeofentity);
-      var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(queryable.GetType());
-      if (_queryables==null)
-      _queryables = GetType().Properties().Where(m => m.IsReadable() && m.Type().Implements<IQueryable>());
-      var x = _queryables.FirstOrDefault(q => MetaDataHelper.GetTypeParameterOfGenericType(q.PropertyType) == typeParameterOfGenericType);
-      if (x != null)
+      if (_memberGetters == null)
+        _memberGetters = new Dictionary<Type, MemberGetter>();
+      var nameGetter = _memberGetters.GetValue(typeOfEntity);
+      if (nameGetter == null)
       {
-        MemberGetter nameGetter = this.GetType().DelegateForGetPropertyValue(x.Name);
-        return (IQueryable) nameGetter(this);
+        var queryable = EntityHelper.GetQueryableForEntityIgnoreIfNull(linqMetaData, typeOfEntity);
+        var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(queryable.GetType());
+        if (_queryables == null)
+          _queryables = GetType().Properties().Where(m => m.IsReadable() && m.Type().Implements<IQueryable>());
+        var x = _queryables.FirstOrDefault(q => MetaDataHelper.GetTypeParameterOfGenericType(q.PropertyType) == typeParameterOfGenericType);
+        if (x != null)
+        {
+          nameGetter = GetType().DelegateForGetPropertyValue(x.Name);
+          _memberGetters.Add(typeOfEntity,nameGetter);
+          return (IQueryable) nameGetter(this);
+        }
+        return null;
       }
-      return null;
+      return (IQueryable) nameGetter(this);
     }
   }
 }
