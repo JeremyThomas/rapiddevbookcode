@@ -78,7 +78,15 @@
     <TypeShortcut Shortcut="Category" Type="Northwind.DAL.Category, Northwind.DAL, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
   </TypeShortcuts>
   <IgnoredWarnings />
-  <SavedSearchQueries />
+  <SavedSearchQueries>
+    <SavedQuery ElementType="1" Language="C#" Name="SetDataServiceKeyAttribute"><![CDATA[foreach (EntityDefinition e in p.EntityModel.Vertices)
+{
+	e.OutputSettingValues.AttributesWithRules.Add(new Pair<string,SD.LLBLGen.Pro.ApplicationCore.Configuration.SettingRule>("[System.Data.Services.Common.DataServiceKeyAttribute()]",null));
+//	foreach (var a in e.OutputSettingValues.AttributesWithRules)
+
+}
+return p.EntityModel.Vertices;]]></SavedQuery>
+  </SavedSearchQueries>
   <CodeGenerationCyclePreferences>
     <OutputType Value="3">
       <LastUsedPreferences>
@@ -162,6 +170,11 @@
             </OutputSettingValues>
           </Field>
         </Fields>
+        <OutputSettingValues>
+          <Attributes>
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;CategoryId&quot;)" />
+          </Attributes>
+        </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="Customer" ObjectID="cf221169-443c-4089-8a60-527f760f323f">
         <Fields>
@@ -221,6 +234,7 @@
           <Attributes>
             <Attribute Value="Description(&quot;Customer test description attribute&quot;)" />
             <Attribute Value="DisplayName(&quot;CustomerEntityDisplayName&quot;)" />
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;CategoryId&quot;)" />
           </Attributes>
         </OutputSettingValues>
       </EntityDefinition>
@@ -229,6 +243,11 @@
           <Field Name="CustomerId" Type="string" MaxLength="5" IsPrimaryKey="true" />
           <Field Name="CustomerTypeId" Type="string" MaxLength="10" IsPrimaryKey="true" />
         </Fields>
+        <OutputSettingValues>
+          <Attributes>
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;CustomerId&quot;)" />
+          </Attributes>
+        </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="CustomerDemographic" ObjectID="cfabaf8b-0930-4bee-b443-20b5c3354bf6">
         <Fields>
@@ -321,6 +340,7 @@
           <Attributes>
             <Attribute Value="Description(&quot;Employee test description attribute&quot;)" />
             <Attribute Value="DisplayName(&quot;EmployeeEntityDisplayName&quot;)" />
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;EmployeeId&quot;)" />
           </Attributes>
         </OutputSettingValues>
       </EntityDefinition>
@@ -329,6 +349,11 @@
           <Field Name="EmployeeId" Type="int" Precision="10" IsPrimaryKey="true" />
           <Field Name="TerritoryId" Type="string" MaxLength="20" IsPrimaryKey="true" />
         </Fields>
+        <OutputSettingValues>
+          <Attributes>
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;EmployeeId,TerritoryId&quot;)" />
+          </Attributes>
+        </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="Order" ObjectID="4ea8daaf-dcc9-4e40-864f-f5190a70dec9">
         <Fields>
@@ -389,6 +414,11 @@
             </OutputSettingValues>
           </Field>
         </Fields>
+        <OutputSettingValues>
+          <Attributes>
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;OrderId&quot;)" />
+          </Attributes>
+        </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="OrderDetail" ObjectID="3f3cdc74-87ef-41b1-8fa0-9b1fa874a55f">
         <Fields>
@@ -415,6 +445,7 @@
             <Namespace Name="System.ComponentModel.DataAnnotations" />
           </Namespaces>
           <Attributes>
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;OrderId&quot;)" />
             <Attribute Value="MetadataType(typeof(IOrderDetailMetadata))" />
           </Attributes>
         </OutputSettingValues>
@@ -468,12 +499,22 @@
           <Field Name="UnitsInStock" Type="short" IsOptional="true" Precision="5" />
           <Field Name="UnitsOnOrder" Type="short" IsOptional="true" Precision="5" />
         </Fields>
+        <OutputSettingValues>
+          <Attributes>
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;ProductId&quot;)" />
+          </Attributes>
+        </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="Region" ObjectID="e1fde13d-30b6-40b0-a8d5-84ec2fa3a511">
         <Fields>
           <Field Name="RegionDescription" Type="string" MaxLength="50" />
           <Field Name="RegionId" Type="int" Precision="10" IsPrimaryKey="true" />
         </Fields>
+        <OutputSettingValues>
+          <Attributes>
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;RegionId&quot;)" />
+          </Attributes>
+        </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="Shipper" ObjectID="21aa003e-1f96-4d25-a7f7-676b6bed9cc3">
         <Fields>
@@ -499,6 +540,11 @@
             </OutputSettingValues>
           </Field>
         </Fields>
+        <OutputSettingValues>
+          <Attributes>
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;ShipperId&quot;)" />
+          </Attributes>
+        </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="Supplier" ObjectID="c37ee84f-dd50-4457-ab04-a89fdd335b4a">
         <Fields>
@@ -551,6 +597,11 @@
             </OutputSettingValues>
           </Field>
         </Fields>
+        <OutputSettingValues>
+          <Attributes>
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;SupplierId&quot;)" />
+          </Attributes>
+        </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="Territory" ObjectID="8d489591-f1d9-42f0-9fd1-7fdb6d090e81">
         <Fields>
@@ -558,6 +609,11 @@
           <Field Name="TerritoryDescription" Type="string" MaxLength="50" />
           <Field Name="TerritoryId" Type="string" MaxLength="20" IsPrimaryKey="true" />
         </Fields>
+        <OutputSettingValues>
+          <Attributes>
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;TerritoryId&quot;)" />
+          </Attributes>
+        </OutputSettingValues>
       </EntityDefinition>
     </EntityDefinitions>
     <Relationships>

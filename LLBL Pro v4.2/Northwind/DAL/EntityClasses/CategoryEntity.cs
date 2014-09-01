@@ -27,6 +27,7 @@ namespace Northwind.DAL.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity class which represents the entity 'Category'.<br/><br/></summary>
 	[Serializable]
+	[System.Data.Services.Common.DataServiceKeyAttribute("CategoryId")]
 	public partial class CategoryEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	

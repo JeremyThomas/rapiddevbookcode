@@ -37,5 +37,17 @@ namespace Northwind.DAL.Services
       // adapter
       return new UnitOfWork2();
     }
+
+    #region Overrides of LLBLGenProODataServiceBase<LinqMetaData>
+
+    /// <summary>
+    /// Gets the container namespace. This is used in the $metadata response. By default it returns the namespace of the TLinqMetaData type.
+    /// </summary>
+    protected override string ContainerNamespace
+    {
+      get { return "Northwind.DAL.EntityClasses"; }
+    }
+
+    #endregion
   }
 }
