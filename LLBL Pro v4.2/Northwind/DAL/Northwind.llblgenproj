@@ -234,7 +234,7 @@ return p.EntityModel.Vertices;]]></SavedQuery>
           <Attributes>
             <Attribute Value="Description(&quot;Customer test description attribute&quot;)" />
             <Attribute Value="DisplayName(&quot;CustomerEntityDisplayName&quot;)" />
-            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;CategoryId&quot;)" />
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;CustomerId&quot;)" />
           </Attributes>
         </OutputSettingValues>
       </EntityDefinition>
@@ -245,7 +245,7 @@ return p.EntityModel.Vertices;]]></SavedQuery>
         </Fields>
         <OutputSettingValues>
           <Attributes>
-            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;CustomerId&quot;)" />
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;CustomerId&quot;,&quot;CustomerTypeId&quot;)" />
           </Attributes>
         </OutputSettingValues>
       </EntityDefinition>
@@ -254,6 +254,11 @@ return p.EntityModel.Vertices;]]></SavedQuery>
           <Field Name="CustomerDesc" Type="string" IsOptional="true" MaxLength="1073741823" />
           <Field Name="CustomerTypeId" Type="string" MaxLength="10" IsPrimaryKey="true" />
         </Fields>
+        <OutputSettingValues>
+          <Attributes>
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;CustomerTypeId&quot;)" />
+          </Attributes>
+        </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="Employee" ObjectID="207865ae-252c-47e6-ade7-debac7ba1bd3">
         <Fields>
@@ -351,7 +356,7 @@ return p.EntityModel.Vertices;]]></SavedQuery>
         </Fields>
         <OutputSettingValues>
           <Attributes>
-            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;EmployeeId,TerritoryId&quot;)" />
+            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;EmployeeId&quot;,&quot;TerritoryId&quot;)" />
           </Attributes>
         </OutputSettingValues>
       </EntityDefinition>

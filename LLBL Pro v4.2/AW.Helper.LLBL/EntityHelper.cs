@@ -51,6 +51,19 @@ namespace AW.Helper.LLBL
       }
     }
 
+    public delegate IQueryable GetQueryableForEntityDelegate(ILinqMetaData linqMetaData, Type typeOfEntity);
+
+    public static IQueryable GetQueryableForEntityIgnoreIfNull(ILinqMetaData linqMetaData, Type typeOfEntity)
+    {
+      IQueryable entityQueryable = null;
+      if (typeOfEntity != null && linqMetaData != null)
+      {
+        var dataSource = linqMetaData.GetQueryableForEntity(typeOfEntity);
+        entityQueryable = dataSource as IQueryable;
+      }
+      return entityQueryable;
+    }
+
     public static IDataSource GetQueryableForEntity(this ILinqMetaData linqMetaData, Type typeOfEntity)
     {
       try

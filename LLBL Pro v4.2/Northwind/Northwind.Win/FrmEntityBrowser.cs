@@ -31,21 +31,7 @@ namespace Northwind.Win
         var baseAddress = ConfigurationManager.AppSettings["WcfDataServiceUrl"];
         var uri = new Uri(baseAddress); // + typeof(LLBLGenProODataService).Name);
         var llblGenProODataService = new LLBLGenProODataService(uri, new LinqMetaData());
-        //var webClient = new WebClient();
-        //var openRead = webClient.OpenRead(llblGenProODataService.Employee.RequestUri);
-        //  llblGenProODataService.BeginExecute<Northwind.DAL.EntityClasses.EmployeeEntity>(llblGenProODataService.Employee.RequestUri, handleResult, null);
-        // llblGenProODataService.Execute<object>(llblGenProODataService.Employee.RequestUri);
-
-
-        var employee = llblGenProODataService.Employee;
-        var employeeEntities = employee.Execute();
-        //  var categoryEntities = llblGenProODataService.Category.Execute();
-
-     //   var dataServiceContext = new SampleServiceCtx(uri);
-        //var category = dataServiceContext.CreateQuery<CategoryEntity>("Category");
-        var enumerable = llblGenProODataService.Category.Execute();
-        var first = enumerable.First();
-        usrCntrlEntityBrowser1.Initialize(llblGenProODataService);
+        usrCntrlEntityBrowser1.Initialize(llblGenProODataService, llblGenProODataService.GetDataServiceQueryableForEntity);
       }
       catch (Exception ex)
       {
