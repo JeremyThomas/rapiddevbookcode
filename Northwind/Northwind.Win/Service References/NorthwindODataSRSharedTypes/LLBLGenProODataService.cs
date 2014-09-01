@@ -1,4 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using AW.Helper;
+using AW.Helper.LLBL;
+using Fasterflect;
 using Northwind.DAL;
 using Northwind.DAL.FactoryClasses;
 using SD.LLBLGen.Pro.LinqSupportClasses;
@@ -9,6 +15,7 @@ namespace Northwind.Win.NorthwindODataSRSharedTypes
   public partial class LLBLGenProODataService : ILinqMetaData
   {
     private readonly ILinqMetaData _linqMetaData;
+    private IEnumerable<PropertyInfo> _queryables;
 
     public LLBLGenProODataService(Uri serviceRoot, ILinqMetaData linqMetaData) :
       this(serviceRoot)
@@ -50,6 +57,21 @@ namespace Northwind.Win.NorthwindODataSRSharedTypes
     public static IEntityFactory2 GetFactory(int typeOfEntity)
     {
       return EntityFactoryFactory.GetFactory((EntityType) typeOfEntity);
+    }
+
+    public IQueryable GetDataServiceQueryableForEntity(ILinqMetaData linqmetadata, Type typeofentity)
+    {
+      var queryable = EntityHelper.GetQueryableForEntityIgnoreIfNull(linqmetadata, typeofentity);
+      var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(queryable.GetType());
+      if (_queryables==null)
+      _queryables = GetType().Properties().Where(m => m.IsReadable() && m.Type().Implements<IQueryable>());
+      var x = _queryables.FirstOrDefault(q => MetaDataHelper.GetTypeParameterOfGenericType(q.PropertyType) == typeParameterOfGenericType);
+      if (x != null)
+      {
+        MemberGetter nameGetter = this.GetType().DelegateForGetPropertyValue(x.Name);
+        return (IQueryable) nameGetter(this);
+      }
+      return null;
     }
   }
 }

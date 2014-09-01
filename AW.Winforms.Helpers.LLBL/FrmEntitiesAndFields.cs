@@ -140,14 +140,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     private IQueryable GetEntityQueryable()
     {
-      var typeOfEntity = treeViewEntities.SelectedNode.Tag as Type;
-      IQueryable entityQueryable = null;
-      if (typeOfEntity != null && _linqMetaData != null)
-      {
-        var dataSource = _linqMetaData.GetQueryableForEntity(typeOfEntity);
-        entityQueryable = dataSource as IQueryable;
-      }
-      return entityQueryable;
+      return EntityHelper.GetQueryableForEntityIgnoreIfNull(_linqMetaData, treeViewEntities.SelectedNode.Tag as Type);
     }
 
     private void ViewEntities(IQueryable entityQueryable, ushort pageSize)

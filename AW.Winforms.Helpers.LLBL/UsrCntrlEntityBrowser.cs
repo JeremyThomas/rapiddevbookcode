@@ -13,6 +13,7 @@ namespace AW.Winforms.Helpers.LLBL
     private Type BaseType { get; set; }
     private ILinqMetaData _linqMetaData;
     private bool _userHasInteracted;
+    private EntityHelper.GetQueryableForEntityDelegate _getQueryableForEntityDelegate;
 
     public static FrmPersistantLocation ShowDataBrowser(ILinqMetaData linqMetaData, Form parentForm = null,
       bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
@@ -44,12 +45,13 @@ namespace AW.Winforms.Helpers.LLBL
     public UsrCntrlEntityBrowser(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
       : this()
     {
-      Initialize(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, membersToExclude);
+      Initialize(linqMetaData, null, useSchema, prefixDelimiter, ensureFilteringEnabled, membersToExclude);
     }
 
-    public void Initialize(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
+    public void Initialize(ILinqMetaData linqMetaData, EntityHelper.GetQueryableForEntityDelegate getQueryableForEntityDelegate=null, bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
     {
       _linqMetaData = linqMetaData;
+      _getQueryableForEntityDelegate = getQueryableForEntityDelegate;
       gridDataEditor.EnsureFilteringEnabled = ensureFilteringEnabled;
       gridDataEditor.MembersToExclude = membersToExclude;
       LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, linqMetaData, null, useSchema, prefixDelimiter);
@@ -114,14 +116,9 @@ namespace AW.Winforms.Helpers.LLBL
 
     private IQueryable GetEntityQueryable()
     {
-      var typeOfEntity = treeViewEntities.SelectedNode.Tag as Type;
-      IQueryable entityQueryable = null;
-      if (typeOfEntity != null && _linqMetaData != null)
-      {
-        var dataSource = _linqMetaData.GetQueryableForEntity(typeOfEntity);
-        entityQueryable = dataSource as IQueryable;
-      }
-      return entityQueryable;
+      return _getQueryableForEntityDelegate==null ? 
+        EntityHelper.GetQueryableForEntityIgnoreIfNull(_linqMetaData, treeViewEntities.SelectedNode.Tag as Type) 
+        : _getQueryableForEntityDelegate(_linqMetaData, treeViewEntities.SelectedNode.Tag as Type);
     }
 
     private void ViewEntities(IQueryable entityQueryable)
