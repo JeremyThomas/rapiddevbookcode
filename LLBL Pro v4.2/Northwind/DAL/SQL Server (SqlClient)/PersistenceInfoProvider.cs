@@ -46,7 +46,7 @@ namespace Northwind.DAL.SqlServer
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			this.InitClass(13);
+			this.InitClass(29);
 			InitCategoryEntityMappings();
 			InitCustomerEntityMappings();
 			InitCustomerCustomerDemoEntityMappings();
@@ -60,13 +60,29 @@ namespace Northwind.DAL.SqlServer
 			InitShipperEntityMappings();
 			InitSupplierEntityMappings();
 			InitTerritoryEntityMappings();
+			InitAlphabeticalListOfProductTypedViewMappings();
+			InitCategorySalesFor1997TypedViewMappings();
+			InitCurrentProductListTypedViewMappings();
+			InitCustomerAndSuppliersByCityTypedViewMappings();
+			InitInvoiceTypedViewMappings();
+			InitOrderDetailsExtendedTypedViewMappings();
+			InitOrdersQryTypedViewMappings();
+			InitOrderSubtotalTypedViewMappings();
+			InitProductsAboveAveragePriceTypedViewMappings();
+			InitProductSalesFor1997TypedViewMappings();
+			InitProductsByCategoryTypedViewMappings();
+			InitQuarterlyOrderTypedViewMappings();
+			InitSalesByCategoryTypedViewMappings();
+			InitSalesTotalsByAmountTypedViewMappings();
+			InitSummaryOfSalesByQuarterTypedViewMappings();
+			InitSummaryOfSalesByYearTypedViewMappings();
 		}
 
 		/// <summary>Inits CategoryEntity's mappings</summary>
 		private void InitCategoryEntityMappings()
 		{
 			this.AddElementMapping("CategoryEntity", @"Northwind", @"dbo", "Categories", 4, 0);
-			this.AddElementFieldMapping("CategoryEntity", "CategoryId", "CategoryID", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("CategoryEntity", "CategoryId", "CategoryID", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("CategoryEntity", "CategoryName", "CategoryName", false, "NVarChar", 15, 0, 0, false, "", null, typeof(System.String), 1);
 			this.AddElementFieldMapping("CategoryEntity", "Description", "Description", true, "NText", 1073741823, 0, 0, false, "", null, typeof(System.String), 2);
 			this.AddElementFieldMapping("CategoryEntity", "Picture", "Picture", true, "Image", 2147483647, 0, 0, false, "", null, typeof(System.Byte[]), 3);
@@ -226,6 +242,220 @@ namespace Northwind.DAL.SqlServer
 			this.AddElementFieldMapping("TerritoryEntity", "RegionId", "RegionID", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 0);
 			this.AddElementFieldMapping("TerritoryEntity", "TerritoryDescription", "TerritoryDescription", false, "NChar", 50, 0, 0, false, "", null, typeof(System.String), 1);
 			this.AddElementFieldMapping("TerritoryEntity", "TerritoryId", "TerritoryID", false, "NVarChar", 20, 0, 0, false, "", null, typeof(System.String), 2);
+		}
+
+
+		/// <summary>Inits AlphabeticalListOfProductView's mappings</summary>
+		private void InitAlphabeticalListOfProductTypedViewMappings()
+		{
+			this.AddElementMapping("AlphabeticalListOfProductTypedView", @"Northwind", @"dbo", "Alphabetical list of products", 11);
+			this.AddElementFieldMapping("AlphabeticalListOfProductTypedView", "ProductId", "ProductID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("AlphabeticalListOfProductTypedView", "ProductName", "ProductName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 1);
+			this.AddElementFieldMapping("AlphabeticalListOfProductTypedView", "SupplierId", "SupplierID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 2);
+			this.AddElementFieldMapping("AlphabeticalListOfProductTypedView", "CategoryId", "CategoryID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 3);
+			this.AddElementFieldMapping("AlphabeticalListOfProductTypedView", "QuantityPerUnit", "QuantityPerUnit", false, "NVarChar", 20, 0, 0, false, string.Empty, null, typeof(System.String), 4);
+			this.AddElementFieldMapping("AlphabeticalListOfProductTypedView", "UnitPrice", "UnitPrice", false, "Money", 0, 19, 4, false, string.Empty, null, typeof(System.Decimal), 5);
+			this.AddElementFieldMapping("AlphabeticalListOfProductTypedView", "UnitsInStock", "UnitsInStock", false, "SmallInt", 0, 5, 0, false, string.Empty, null, typeof(System.Int16), 6);
+			this.AddElementFieldMapping("AlphabeticalListOfProductTypedView", "UnitsOnOrder", "UnitsOnOrder", false, "SmallInt", 0, 5, 0, false, string.Empty, null, typeof(System.Int16), 7);
+			this.AddElementFieldMapping("AlphabeticalListOfProductTypedView", "ReorderLevel", "ReorderLevel", false, "SmallInt", 0, 5, 0, false, string.Empty, null, typeof(System.Int16), 8);
+			this.AddElementFieldMapping("AlphabeticalListOfProductTypedView", "Discontinued", "Discontinued", false, "Bit", 0, 0, 0, false, string.Empty, null, typeof(System.Boolean), 9);
+			this.AddElementFieldMapping("AlphabeticalListOfProductTypedView", "CategoryName", "CategoryName", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 10);
+		}
+
+
+		/// <summary>Inits CategorySalesFor1997View's mappings</summary>
+		private void InitCategorySalesFor1997TypedViewMappings()
+		{
+			this.AddElementMapping("CategorySalesFor1997TypedView", @"Northwind", @"dbo", "Category Sales for 1997", 2);
+			this.AddElementFieldMapping("CategorySalesFor1997TypedView", "CategoryName", "CategoryName", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 0);
+			this.AddElementFieldMapping("CategorySalesFor1997TypedView", "CategorySales", "CategorySales", false, "Money", 0, 19, 4, false, string.Empty, null, typeof(System.Decimal), 1);
+		}
+
+
+		/// <summary>Inits CurrentProductListView's mappings</summary>
+		private void InitCurrentProductListTypedViewMappings()
+		{
+			this.AddElementMapping("CurrentProductListTypedView", @"Northwind", @"dbo", "Current Product List", 2);
+			this.AddElementFieldMapping("CurrentProductListTypedView", "ProductId", "ProductID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("CurrentProductListTypedView", "ProductName", "ProductName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 1);
+		}
+
+
+		/// <summary>Inits CustomerAndSuppliersByCityView's mappings</summary>
+		private void InitCustomerAndSuppliersByCityTypedViewMappings()
+		{
+			this.AddElementMapping("CustomerAndSuppliersByCityTypedView", @"Northwind", @"dbo", "Customer and Suppliers by City", 4);
+			this.AddElementFieldMapping("CustomerAndSuppliersByCityTypedView", "City", "City", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 0);
+			this.AddElementFieldMapping("CustomerAndSuppliersByCityTypedView", "CompanyName", "CompanyName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 1);
+			this.AddElementFieldMapping("CustomerAndSuppliersByCityTypedView", "ContactName", "ContactName", false, "NVarChar", 30, 0, 0, false, string.Empty, null, typeof(System.String), 2);
+			this.AddElementFieldMapping("CustomerAndSuppliersByCityTypedView", "Relationship", "Relationship", false, "VarChar", 9, 0, 0, false, string.Empty, null, typeof(System.String), 3);
+		}
+
+
+		/// <summary>Inits InvoiceView's mappings</summary>
+		private void InitInvoiceTypedViewMappings()
+		{
+			this.AddElementMapping("InvoiceTypedView", @"Northwind", @"dbo", "Invoices", 26);
+			this.AddElementFieldMapping("InvoiceTypedView", "ShipName", "ShipName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 0);
+			this.AddElementFieldMapping("InvoiceTypedView", "ShipAddress", "ShipAddress", false, "NVarChar", 60, 0, 0, false, string.Empty, null, typeof(System.String), 1);
+			this.AddElementFieldMapping("InvoiceTypedView", "ShipCity", "ShipCity", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 2);
+			this.AddElementFieldMapping("InvoiceTypedView", "ShipRegion", "ShipRegion", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 3);
+			this.AddElementFieldMapping("InvoiceTypedView", "ShipPostalCode", "ShipPostalCode", false, "NVarChar", 10, 0, 0, false, string.Empty, null, typeof(System.String), 4);
+			this.AddElementFieldMapping("InvoiceTypedView", "ShipCountry", "ShipCountry", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 5);
+			this.AddElementFieldMapping("InvoiceTypedView", "CustomerId", "CustomerID", false, "NChar", 5, 0, 0, false, string.Empty, null, typeof(System.String), 6);
+			this.AddElementFieldMapping("InvoiceTypedView", "CustomerName", "CustomerName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 7);
+			this.AddElementFieldMapping("InvoiceTypedView", "Address", "Address", false, "NVarChar", 60, 0, 0, false, string.Empty, null, typeof(System.String), 8);
+			this.AddElementFieldMapping("InvoiceTypedView", "City", "City", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 9);
+			this.AddElementFieldMapping("InvoiceTypedView", "Region", "Region", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 10);
+			this.AddElementFieldMapping("InvoiceTypedView", "PostalCode", "PostalCode", false, "NVarChar", 10, 0, 0, false, string.Empty, null, typeof(System.String), 11);
+			this.AddElementFieldMapping("InvoiceTypedView", "Country", "Country", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 12);
+			this.AddElementFieldMapping("InvoiceTypedView", "Salesperson", "Salesperson", false, "NVarChar", 31, 0, 0, false, string.Empty, null, typeof(System.String), 13);
+			this.AddElementFieldMapping("InvoiceTypedView", "OrderId", "OrderID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 14);
+			this.AddElementFieldMapping("InvoiceTypedView", "OrderDate", "OrderDate", false, "DateTime", 0, 0, 0, false, string.Empty, null, typeof(System.DateTime), 15);
+			this.AddElementFieldMapping("InvoiceTypedView", "RequiredDate", "RequiredDate", false, "DateTime", 0, 0, 0, false, string.Empty, null, typeof(System.DateTime), 16);
+			this.AddElementFieldMapping("InvoiceTypedView", "ShippedDate", "ShippedDate", false, "DateTime", 0, 0, 0, false, string.Empty, null, typeof(System.DateTime), 17);
+			this.AddElementFieldMapping("InvoiceTypedView", "ShipperName", "ShipperName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 18);
+			this.AddElementFieldMapping("InvoiceTypedView", "ProductId", "ProductID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 19);
+			this.AddElementFieldMapping("InvoiceTypedView", "ProductName", "ProductName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 20);
+			this.AddElementFieldMapping("InvoiceTypedView", "UnitPrice", "UnitPrice", false, "Money", 0, 19, 4, false, string.Empty, null, typeof(System.Decimal), 21);
+			this.AddElementFieldMapping("InvoiceTypedView", "Quantity", "Quantity", false, "SmallInt", 0, 5, 0, false, string.Empty, null, typeof(System.Int16), 22);
+			this.AddElementFieldMapping("InvoiceTypedView", "Discount", "Discount", false, "Real", 0, 24, 0, false, string.Empty, null, typeof(System.Single), 23);
+			this.AddElementFieldMapping("InvoiceTypedView", "ExtendedPrice", "ExtendedPrice", false, "Money", 0, 19, 4, false, string.Empty, null, typeof(System.Decimal), 24);
+			this.AddElementFieldMapping("InvoiceTypedView", "Freight", "Freight", false, "Money", 0, 19, 4, false, string.Empty, null, typeof(System.Decimal), 25);
+		}
+
+
+		/// <summary>Inits OrderDetailsExtendedView's mappings</summary>
+		private void InitOrderDetailsExtendedTypedViewMappings()
+		{
+			this.AddElementMapping("OrderDetailsExtendedTypedView", @"Northwind", @"dbo", "Order Details Extended", 7);
+			this.AddElementFieldMapping("OrderDetailsExtendedTypedView", "OrderId", "OrderID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("OrderDetailsExtendedTypedView", "ProductId", "ProductID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 1);
+			this.AddElementFieldMapping("OrderDetailsExtendedTypedView", "ProductName", "ProductName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 2);
+			this.AddElementFieldMapping("OrderDetailsExtendedTypedView", "UnitPrice", "UnitPrice", false, "Money", 0, 19, 4, false, string.Empty, null, typeof(System.Decimal), 3);
+			this.AddElementFieldMapping("OrderDetailsExtendedTypedView", "Quantity", "Quantity", false, "SmallInt", 0, 5, 0, false, string.Empty, null, typeof(System.Int16), 4);
+			this.AddElementFieldMapping("OrderDetailsExtendedTypedView", "Discount", "Discount", false, "Real", 0, 24, 0, false, string.Empty, null, typeof(System.Single), 5);
+			this.AddElementFieldMapping("OrderDetailsExtendedTypedView", "ExtendedPrice", "ExtendedPrice", false, "Money", 0, 19, 4, false, string.Empty, null, typeof(System.Decimal), 6);
+		}
+
+
+		/// <summary>Inits OrdersQryView's mappings</summary>
+		private void InitOrdersQryTypedViewMappings()
+		{
+			this.AddElementMapping("OrdersQryTypedView", @"Northwind", @"dbo", "Orders Qry", 20);
+			this.AddElementFieldMapping("OrdersQryTypedView", "OrderId", "OrderID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("OrdersQryTypedView", "CustomerId", "CustomerID", false, "NChar", 5, 0, 0, false, string.Empty, null, typeof(System.String), 1);
+			this.AddElementFieldMapping("OrdersQryTypedView", "EmployeeId", "EmployeeID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 2);
+			this.AddElementFieldMapping("OrdersQryTypedView", "OrderDate", "OrderDate", false, "DateTime", 0, 0, 0, false, string.Empty, null, typeof(System.DateTime), 3);
+			this.AddElementFieldMapping("OrdersQryTypedView", "RequiredDate", "RequiredDate", false, "DateTime", 0, 0, 0, false, string.Empty, null, typeof(System.DateTime), 4);
+			this.AddElementFieldMapping("OrdersQryTypedView", "ShippedDate", "ShippedDate", false, "DateTime", 0, 0, 0, false, string.Empty, null, typeof(System.DateTime), 5);
+			this.AddElementFieldMapping("OrdersQryTypedView", "ShipVia", "ShipVia", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 6);
+			this.AddElementFieldMapping("OrdersQryTypedView", "Freight", "Freight", false, "Money", 0, 19, 4, false, string.Empty, null, typeof(System.Decimal), 7);
+			this.AddElementFieldMapping("OrdersQryTypedView", "ShipName", "ShipName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 8);
+			this.AddElementFieldMapping("OrdersQryTypedView", "ShipAddress", "ShipAddress", false, "NVarChar", 60, 0, 0, false, string.Empty, null, typeof(System.String), 9);
+			this.AddElementFieldMapping("OrdersQryTypedView", "ShipCity", "ShipCity", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 10);
+			this.AddElementFieldMapping("OrdersQryTypedView", "ShipRegion", "ShipRegion", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 11);
+			this.AddElementFieldMapping("OrdersQryTypedView", "ShipPostalCode", "ShipPostalCode", false, "NVarChar", 10, 0, 0, false, string.Empty, null, typeof(System.String), 12);
+			this.AddElementFieldMapping("OrdersQryTypedView", "ShipCountry", "ShipCountry", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 13);
+			this.AddElementFieldMapping("OrdersQryTypedView", "CompanyName", "CompanyName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 14);
+			this.AddElementFieldMapping("OrdersQryTypedView", "Address", "Address", false, "NVarChar", 60, 0, 0, false, string.Empty, null, typeof(System.String), 15);
+			this.AddElementFieldMapping("OrdersQryTypedView", "City", "City", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 16);
+			this.AddElementFieldMapping("OrdersQryTypedView", "Region", "Region", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 17);
+			this.AddElementFieldMapping("OrdersQryTypedView", "PostalCode", "PostalCode", false, "NVarChar", 10, 0, 0, false, string.Empty, null, typeof(System.String), 18);
+			this.AddElementFieldMapping("OrdersQryTypedView", "Country", "Country", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 19);
+		}
+
+
+		/// <summary>Inits OrderSubtotalView's mappings</summary>
+		private void InitOrderSubtotalTypedViewMappings()
+		{
+			this.AddElementMapping("OrderSubtotalTypedView", @"Northwind", @"dbo", "Order Subtotals", 2);
+			this.AddElementFieldMapping("OrderSubtotalTypedView", "OrderId", "OrderID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("OrderSubtotalTypedView", "Subtotal", "Subtotal", false, "Money", 0, 19, 4, false, string.Empty, null, typeof(System.Decimal), 1);
+		}
+
+
+		/// <summary>Inits ProductsAboveAveragePriceView's mappings</summary>
+		private void InitProductsAboveAveragePriceTypedViewMappings()
+		{
+			this.AddElementMapping("ProductsAboveAveragePriceTypedView", @"Northwind", @"dbo", "Products Above Average Price", 2);
+			this.AddElementFieldMapping("ProductsAboveAveragePriceTypedView", "ProductName", "ProductName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 0);
+			this.AddElementFieldMapping("ProductsAboveAveragePriceTypedView", "UnitPrice", "UnitPrice", false, "Money", 0, 19, 4, false, string.Empty, null, typeof(System.Decimal), 1);
+		}
+
+
+		/// <summary>Inits ProductSalesFor1997View's mappings</summary>
+		private void InitProductSalesFor1997TypedViewMappings()
+		{
+			this.AddElementMapping("ProductSalesFor1997TypedView", @"Northwind", @"dbo", "Product Sales for 1997", 3);
+			this.AddElementFieldMapping("ProductSalesFor1997TypedView", "CategoryName", "CategoryName", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 0);
+			this.AddElementFieldMapping("ProductSalesFor1997TypedView", "ProductName", "ProductName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 1);
+			this.AddElementFieldMapping("ProductSalesFor1997TypedView", "ProductSales", "ProductSales", false, "Money", 0, 19, 4, false, string.Empty, null, typeof(System.Decimal), 2);
+		}
+
+
+		/// <summary>Inits ProductsByCategoryView's mappings</summary>
+		private void InitProductsByCategoryTypedViewMappings()
+		{
+			this.AddElementMapping("ProductsByCategoryTypedView", @"Northwind", @"dbo", "Products by Category", 5);
+			this.AddElementFieldMapping("ProductsByCategoryTypedView", "CategoryName", "CategoryName", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 0);
+			this.AddElementFieldMapping("ProductsByCategoryTypedView", "ProductName", "ProductName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 1);
+			this.AddElementFieldMapping("ProductsByCategoryTypedView", "QuantityPerUnit", "QuantityPerUnit", false, "NVarChar", 20, 0, 0, false, string.Empty, null, typeof(System.String), 2);
+			this.AddElementFieldMapping("ProductsByCategoryTypedView", "UnitsInStock", "UnitsInStock", false, "SmallInt", 0, 5, 0, false, string.Empty, null, typeof(System.Int16), 3);
+			this.AddElementFieldMapping("ProductsByCategoryTypedView", "Discontinued", "Discontinued", false, "Bit", 0, 0, 0, false, string.Empty, null, typeof(System.Boolean), 4);
+		}
+
+
+		/// <summary>Inits QuarterlyOrderView's mappings</summary>
+		private void InitQuarterlyOrderTypedViewMappings()
+		{
+			this.AddElementMapping("QuarterlyOrderTypedView", @"Northwind", @"dbo", "Quarterly Orders", 4);
+			this.AddElementFieldMapping("QuarterlyOrderTypedView", "CustomerId", "CustomerID", false, "NChar", 5, 0, 0, false, string.Empty, null, typeof(System.String), 0);
+			this.AddElementFieldMapping("QuarterlyOrderTypedView", "CompanyName", "CompanyName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 1);
+			this.AddElementFieldMapping("QuarterlyOrderTypedView", "City", "City", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 2);
+			this.AddElementFieldMapping("QuarterlyOrderTypedView", "Country", "Country", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 3);
+		}
+
+
+		/// <summary>Inits SalesByCategoryView's mappings</summary>
+		private void InitSalesByCategoryTypedViewMappings()
+		{
+			this.AddElementMapping("SalesByCategoryTypedView", @"Northwind", @"dbo", "Sales by Category", 4);
+			this.AddElementFieldMapping("SalesByCategoryTypedView", "CategoryId", "CategoryID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 0);
+			this.AddElementFieldMapping("SalesByCategoryTypedView", "CategoryName", "CategoryName", false, "NVarChar", 15, 0, 0, false, string.Empty, null, typeof(System.String), 1);
+			this.AddElementFieldMapping("SalesByCategoryTypedView", "ProductName", "ProductName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 2);
+			this.AddElementFieldMapping("SalesByCategoryTypedView", "ProductSales", "ProductSales", false, "Money", 0, 19, 4, false, string.Empty, null, typeof(System.Decimal), 3);
+		}
+
+
+		/// <summary>Inits SalesTotalsByAmountView's mappings</summary>
+		private void InitSalesTotalsByAmountTypedViewMappings()
+		{
+			this.AddElementMapping("SalesTotalsByAmountTypedView", @"Northwind", @"dbo", "Sales Totals by Amount", 4);
+			this.AddElementFieldMapping("SalesTotalsByAmountTypedView", "SaleAmount", "SaleAmount", false, "Money", 0, 19, 4, false, string.Empty, null, typeof(System.Decimal), 0);
+			this.AddElementFieldMapping("SalesTotalsByAmountTypedView", "OrderId", "OrderID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 1);
+			this.AddElementFieldMapping("SalesTotalsByAmountTypedView", "CompanyName", "CompanyName", false, "NVarChar", 40, 0, 0, false, string.Empty, null, typeof(System.String), 2);
+			this.AddElementFieldMapping("SalesTotalsByAmountTypedView", "ShippedDate", "ShippedDate", false, "DateTime", 0, 0, 0, false, string.Empty, null, typeof(System.DateTime), 3);
+		}
+
+
+		/// <summary>Inits SummaryOfSalesByQuarterView's mappings</summary>
+		private void InitSummaryOfSalesByQuarterTypedViewMappings()
+		{
+			this.AddElementMapping("SummaryOfSalesByQuarterTypedView", @"Northwind", @"dbo", "Summary of Sales by Quarter", 3);
+			this.AddElementFieldMapping("SummaryOfSalesByQuarterTypedView", "ShippedDate", "ShippedDate", false, "DateTime", 0, 0, 0, false, string.Empty, null, typeof(System.DateTime), 0);
+			this.AddElementFieldMapping("SummaryOfSalesByQuarterTypedView", "OrderId", "OrderID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 1);
+			this.AddElementFieldMapping("SummaryOfSalesByQuarterTypedView", "Subtotal", "Subtotal", false, "Money", 0, 19, 4, false, string.Empty, null, typeof(System.Decimal), 2);
+		}
+
+
+		/// <summary>Inits SummaryOfSalesByYearView's mappings</summary>
+		private void InitSummaryOfSalesByYearTypedViewMappings()
+		{
+			this.AddElementMapping("SummaryOfSalesByYearTypedView", @"Northwind", @"dbo", "Summary of Sales by Year", 3);
+			this.AddElementFieldMapping("SummaryOfSalesByYearTypedView", "ShippedDate", "ShippedDate", false, "DateTime", 0, 0, 0, false, string.Empty, null, typeof(System.DateTime), 0);
+			this.AddElementFieldMapping("SummaryOfSalesByYearTypedView", "OrderId", "OrderID", false, "Int", 0, 10, 0, false, string.Empty, null, typeof(System.Int32), 1);
+			this.AddElementFieldMapping("SummaryOfSalesByYearTypedView", "Subtotal", "Subtotal", false, "Money", 0, 19, 4, false, string.Empty, null, typeof(System.Decimal), 2);
 		}
 
 	}

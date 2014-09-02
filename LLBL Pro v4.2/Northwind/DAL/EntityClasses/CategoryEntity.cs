@@ -409,7 +409,7 @@ namespace Northwind.DAL.EntityClasses
 		/// MS_Description: Number automatically assigned to a new category.<br/></summary>
 		/// <remarks>Mapped on  table field: "Categories"."CategoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
 		public virtual System.Int32 CategoryId
 		{
 			get { return (System.Int32)GetValue((int)CategoryFieldIndex.CategoryId, true); }

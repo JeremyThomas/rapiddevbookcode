@@ -86,6 +86,49 @@
 
 }
 return p.EntityModel.Vertices;]]></SavedQuery>
+    <SavedQuery ElementType="14" Language="C#" Name="Copy Tables to Views"><![CDATA[// Example:
+var metaDataOracle = p.MetaData.GetMetaDataForDriverID(OracleOdpNetDriverID);
+var catalogOracle = metaDataOracle.FindCatalogByName("//localhost/xe");
+if( catalogOracle == null)
+ {
+		return null;
+ }
+ var schemaOracle = catalogOracle.FindSchemaByName("DBO_NORTHWIND");
+schemaOracle.Views.Clear();
+var dts =schemaOracle.Tables.Where(t=>t.CreatedByDesigner);
+foreach (var dt in dts)
+{
+	var ov=new DBView(schemaOracle,dt.Name);
+	ov.Fields.AddRange(dt.Fields);
+	schemaOracle.Views.Add(ov);
+}
+ return schemaOracle.Views;]]></SavedQuery>
+    <SavedQuery ElementType="15" Language="C#" Name="Copy Tables to Views"><![CDATA[// Example:
+var metaDataOracle = p.MetaData.GetMetaDataForDriverID(OracleOdpNetDriverID);
+var catalogOracle = metaDataOracle.FindCatalogByName("//localhost/xe");
+if( catalogOracle == null)
+ {
+		return null;
+ }
+ var schemaOracle = catalogOracle.FindSchemaByName("DBO_NORTHWIND");
+//schemaOracle.Views.Clear();
+var dts =schemaOracle.Tables.Where(t=>t.CreatedByDesigner).ToList();
+foreach (var dt in dts)
+	if (!schemaOracle.Views.Any(v=>v.Name==dt.Name))
+{
+	
+	var ov=new DBView(schemaOracle,dt.Name);
+	foreach (var tf in dt.Fields)
+	{
+		var vf = new DBViewField(tf.FieldName,tf.TypeDefinition);
+		vf.IsNullable=tf.IsNullable;
+		vf.OrdinalPosition=tf.OrdinalPosition;
+		ov.Fields.Add(vf);
+	}
+	schemaOracle.Tables.Remove(dt);
+	schemaOracle.Views.Add(ov);
+}
+ return schemaOracle.Views;]]></SavedQuery>
     <SavedQuery ElementType="15" Language="C#" Name="Copy Views"><![CDATA[// Example:
 var metaDataSql = p.MetaData.GetMetaDataForDriverID(SqlServerSqlClientDriverID);
 var catalogSql = metaDataSql.FindCatalogByName("Northwind");
@@ -159,6 +202,13 @@ return schemaOracle.Views;]]></SavedQuery>
     </SettingValues>
   </OutputSettingValues>
   <CodeGenerationMetaDataDefaults>
+    <TargetElement Type="16">
+      <Defaults>
+        <Namespaces>
+          <Namespace Name="Northwind.DAL.DTO" />
+        </Namespaces>
+      </Defaults>
+    </TargetElement>
     <TargetElement Type="256">
       <Defaults>
         <Attributes>
@@ -1494,21 +1544,6 @@ return schemaOracle.Views;]]></SavedQuery>
                 <Sequence Name="SUPPLIERS_SUPPLIERID_SEQ" />
               </Sequences>
               <Tables>
-                <Table Name="ALPHABETICALLISTOFPRODUCT" CreatedByDesigner="true">
-                  <Fields>
-                    <Field Name="CATEGORYID" Ordinal="1" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="9" />
-                    <Field Name="CATEGORYNAME" Ordinal="2" CreatedByDesigner="true" DbType="24" Length="15" />
-                    <Field Name="PRODUCTID" Ordinal="3" CreatedByDesigner="true" DbType="22" Precision="9" />
-                    <Field Name="PRODUCTNAME" Ordinal="4" CreatedByDesigner="true" DbType="24" Length="40" />
-                    <Field Name="QUANTITYPERUNIT" Ordinal="5" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="20" />
-                    <Field Name="REORDERLEVEL" Ordinal="6" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="4" />
-                    <Field Name="SUPPLIERID" Ordinal="7" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="9" />
-                    <Field Name="UNITPRICE" Ordinal="8" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="19" Scale="4" />
-                    <Field Name="UNITSINSTOCK" Ordinal="9" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="4" />
-                    <Field Name="UNITSONORDER" Ordinal="10" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="4" />
-                    <Field Name="DISCONTINUED" Ordinal="11" CreatedByDesigner="true" DbType="22" Precision="1" />
-                  </Fields>
-                </Table>
                 <Table Name="CATEGORIES">
                   <PkConstraintName Name="PK_CATEGORIES" />
                   <Fields>
@@ -1669,168 +1704,168 @@ return schemaOracle.Views;]]></SavedQuery>
               <Views>
                 <View Name="Alphabetical list of products">
                   <Fields>
-                    <Field Name="ProductID" Ordinal="1" DbType="8" Precision="10" />
-                    <Field Name="ProductName" Ordinal="2" DbType="12" Length="40" />
-                    <Field Name="SupplierID" Ordinal="3" IsOptional="true" DbType="8" Precision="10" />
-                    <Field Name="CategoryID" Ordinal="4" IsOptional="true" DbType="8" Precision="10" />
-                    <Field Name="QuantityPerUnit" Ordinal="5" IsOptional="true" DbType="12" Length="20" />
-                    <Field Name="UnitPrice" Ordinal="6" IsOptional="true" DbType="9" Precision="19" Scale="4" />
-                    <Field Name="UnitsInStock" Ordinal="7" IsOptional="true" DbType="16" Precision="5" />
-                    <Field Name="UnitsOnOrder" Ordinal="8" IsOptional="true" DbType="16" Precision="5" />
-                    <Field Name="ReorderLevel" Ordinal="9" IsOptional="true" DbType="16" Precision="5" />
-                    <Field Name="Discontinued" Ordinal="10" DbType="2" />
-                    <Field Name="CategoryName" Ordinal="11" DbType="12" Length="15" />
+                    <Field Name="CATEGORYID" Ordinal="1" IsOptional="true" DbType="22" Precision="9" />
+                    <Field Name="CATEGORYNAME" Ordinal="2" DbType="24" Length="15" />
+                    <Field Name="PRODUCTID" Ordinal="3" DbType="22" Precision="9" />
+                    <Field Name="PRODUCTNAME" Ordinal="4" DbType="24" Length="40" />
+                    <Field Name="QUANTITYPERUNIT" Ordinal="5" IsOptional="true" DbType="24" Length="20" />
+                    <Field Name="REORDERLEVEL" Ordinal="6" IsOptional="true" DbType="22" Precision="4" />
+                    <Field Name="SUPPLIERID" Ordinal="7" IsOptional="true" DbType="22" Precision="9" />
+                    <Field Name="UNITPRICE" Ordinal="8" IsOptional="true" DbType="22" Precision="19" Scale="4" />
+                    <Field Name="UNITSINSTOCK" Ordinal="9" IsOptional="true" DbType="22" Precision="4" />
+                    <Field Name="UNITSONORDER" Ordinal="10" IsOptional="true" DbType="22" Precision="4" />
+                    <Field Name="DISCONTINUED" Ordinal="11" DbType="22" Precision="1" />
                   </Fields>
                 </View>
                 <View Name="Category Sales for 1997">
                   <Fields>
-                    <Field Name="CategoryName" Ordinal="1" DbType="12" Length="15" />
-                    <Field Name="CategorySales" Ordinal="2" IsOptional="true" DbType="9" Precision="19" Scale="4" />
+                    <Field Name="CATEGORYNAME" Ordinal="0" DbType="24" Length="15" />
+                    <Field Name="CATEGORYSALES" Ordinal="0" IsOptional="true" DbType="22" Precision="19" Scale="4" />
                   </Fields>
                 </View>
                 <View Name="Current Product List">
                   <Fields>
-                    <Field Name="ProductID" Ordinal="1" DbType="8" Precision="10" />
-                    <Field Name="ProductName" Ordinal="2" DbType="12" Length="40" />
+                    <Field Name="PRODUCTID" Ordinal="0" DbType="22" Precision="9" />
+                    <Field Name="PRODUCTNAME" Ordinal="0" DbType="24" Length="40" />
                   </Fields>
                 </View>
                 <View Name="Customer and Suppliers by City">
                   <Fields>
-                    <Field Name="City" Ordinal="1" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="CompanyName" Ordinal="2" DbType="12" Length="40" />
-                    <Field Name="ContactName" Ordinal="3" IsOptional="true" DbType="12" Length="30" />
-                    <Field Name="Relationship" Ordinal="4" DbType="24" Length="9" />
+                    <Field Name="CITY" Ordinal="0" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="COMPANYNAME" Ordinal="0" DbType="24" Length="40" />
+                    <Field Name="CONTACTNAME" Ordinal="0" IsOptional="true" DbType="24" Length="30" />
+                    <Field Name="RELATIONSHIP" Ordinal="0" DbType="24" Length="9" />
                   </Fields>
                 </View>
                 <View Name="Invoices">
                   <Fields>
-                    <Field Name="ShipName" Ordinal="1" IsOptional="true" DbType="12" Length="40" />
-                    <Field Name="ShipAddress" Ordinal="2" IsOptional="true" DbType="12" Length="60" />
-                    <Field Name="ShipCity" Ordinal="3" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="ShipRegion" Ordinal="4" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="ShipPostalCode" Ordinal="5" IsOptional="true" DbType="12" Length="10" />
-                    <Field Name="ShipCountry" Ordinal="6" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="CustomerID" Ordinal="7" IsOptional="true" DbType="10" Length="5" />
-                    <Field Name="CustomerName" Ordinal="8" DbType="12" Length="40" />
-                    <Field Name="Address" Ordinal="9" IsOptional="true" DbType="12" Length="60" />
-                    <Field Name="City" Ordinal="10" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="Region" Ordinal="11" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="PostalCode" Ordinal="12" IsOptional="true" DbType="12" Length="10" />
-                    <Field Name="Country" Ordinal="13" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="Salesperson" Ordinal="14" DbType="12" Length="31" />
-                    <Field Name="OrderID" Ordinal="15" DbType="8" Precision="10" />
-                    <Field Name="OrderDate" Ordinal="16" IsOptional="true" DbType="4" />
-                    <Field Name="RequiredDate" Ordinal="17" IsOptional="true" DbType="4" />
-                    <Field Name="ShippedDate" Ordinal="18" IsOptional="true" DbType="4" />
-                    <Field Name="ShipperName" Ordinal="19" DbType="12" Length="40" />
-                    <Field Name="ProductID" Ordinal="20" DbType="8" Precision="10" />
-                    <Field Name="ProductName" Ordinal="21" DbType="12" Length="40" />
-                    <Field Name="UnitPrice" Ordinal="22" DbType="9" Precision="19" Scale="4" />
-                    <Field Name="Quantity" Ordinal="23" DbType="16" Precision="5" />
-                    <Field Name="Discount" Ordinal="24" DbType="14" Precision="24" />
-                    <Field Name="ExtendedPrice" Ordinal="25" IsOptional="true" DbType="9" Precision="19" Scale="4" />
-                    <Field Name="Freight" Ordinal="26" IsOptional="true" DbType="9" Precision="19" Scale="4" />
+                    <Field Name="ADDRESS" Ordinal="0" IsOptional="true" DbType="24" Length="60" />
+                    <Field Name="CITY" Ordinal="0" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="COUNTRY" Ordinal="0" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="CUSTOMERID" Ordinal="0" IsOptional="true" DbType="24" Length="5" />
+                    <Field Name="CUSTOMERNAME" Ordinal="0" DbType="24" Length="40" />
+                    <Field Name="DISCOUNT" Ordinal="0" DbType="44" />
+                    <Field Name="EXTENDEDPRICE" Ordinal="0" IsOptional="true" DbType="22" Precision="19" Scale="4" />
+                    <Field Name="FREIGHT" Ordinal="0" IsOptional="true" DbType="22" Precision="19" Scale="4" />
+                    <Field Name="ORDERDATE" Ordinal="0" IsOptional="true" DbType="7" />
+                    <Field Name="ORDERID" Ordinal="0" DbType="22" Precision="9" />
+                    <Field Name="POSTALCODE" Ordinal="0" IsOptional="true" DbType="24" Length="10" />
+                    <Field Name="PRODUCTID" Ordinal="0" DbType="22" Precision="9" />
+                    <Field Name="PRODUCTNAME" Ordinal="0" DbType="24" Length="40" />
+                    <Field Name="QUANTITY" Ordinal="0" DbType="22" Precision="4" />
+                    <Field Name="REGION" Ordinal="0" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="REQUIREDDATE" Ordinal="0" IsOptional="true" DbType="7" />
+                    <Field Name="SALESPERSON" Ordinal="0" DbType="24" Length="31" />
+                    <Field Name="SHIPADDRESS" Ordinal="0" IsOptional="true" DbType="24" Length="60" />
+                    <Field Name="SHIPCITY" Ordinal="0" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="SHIPCOUNTRY" Ordinal="0" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="SHIPNAME" Ordinal="0" IsOptional="true" DbType="24" Length="40" />
+                    <Field Name="SHIPPEDDATE" Ordinal="0" IsOptional="true" DbType="7" />
+                    <Field Name="SHIPPERNAME" Ordinal="0" DbType="24" Length="40" />
+                    <Field Name="SHIPPOSTALCODE" Ordinal="0" IsOptional="true" DbType="24" Length="10" />
+                    <Field Name="SHIPREGION" Ordinal="0" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="UNITPRICE" Ordinal="0" DbType="22" Precision="19" Scale="4" />
                   </Fields>
                 </View>
                 <View Name="Order Details Extended">
                   <Fields>
-                    <Field Name="OrderID" Ordinal="1" DbType="8" Precision="10" />
-                    <Field Name="ProductID" Ordinal="2" DbType="8" Precision="10" />
-                    <Field Name="ProductName" Ordinal="3" DbType="12" Length="40" />
-                    <Field Name="UnitPrice" Ordinal="4" DbType="9" Precision="19" Scale="4" />
-                    <Field Name="Quantity" Ordinal="5" DbType="16" Precision="5" />
-                    <Field Name="Discount" Ordinal="6" DbType="14" Precision="24" />
-                    <Field Name="ExtendedPrice" Ordinal="7" IsOptional="true" DbType="9" Precision="19" Scale="4" />
+                    <Field Name="DISCOUNT" Ordinal="0" DbType="44" />
+                    <Field Name="EXTENDEDPRICE" Ordinal="0" IsOptional="true" DbType="22" Precision="19" Scale="4" />
+                    <Field Name="ORDERID" Ordinal="0" DbType="22" Precision="9" />
+                    <Field Name="PRODUCTID" Ordinal="0" DbType="22" Precision="9" />
+                    <Field Name="PRODUCTNAME" Ordinal="0" DbType="24" Length="40" />
+                    <Field Name="QUANTITY" Ordinal="0" DbType="22" Precision="4" />
+                    <Field Name="UNITPRICE" Ordinal="0" DbType="22" Precision="19" Scale="4" />
                   </Fields>
                 </View>
                 <View Name="Order Subtotals">
                   <Fields>
-                    <Field Name="OrderID" Ordinal="1" DbType="8" Precision="10" />
-                    <Field Name="Subtotal" Ordinal="2" IsOptional="true" DbType="9" Precision="19" Scale="4" />
+                    <Field Name="ORDERID" Ordinal="0" DbType="22" Precision="9" />
+                    <Field Name="SUBTOTAL" Ordinal="0" IsOptional="true" DbType="22" Precision="19" Scale="4" />
                   </Fields>
                 </View>
                 <View Name="Orders Qry">
                   <Fields>
-                    <Field Name="OrderID" Ordinal="1" DbType="8" Precision="10" />
-                    <Field Name="CustomerID" Ordinal="2" IsOptional="true" DbType="10" Length="5" />
-                    <Field Name="EmployeeID" Ordinal="3" IsOptional="true" DbType="8" Precision="10" />
-                    <Field Name="OrderDate" Ordinal="4" IsOptional="true" DbType="4" />
-                    <Field Name="RequiredDate" Ordinal="5" IsOptional="true" DbType="4" />
-                    <Field Name="ShippedDate" Ordinal="6" IsOptional="true" DbType="4" />
-                    <Field Name="ShipVia" Ordinal="7" IsOptional="true" DbType="8" Precision="10" />
-                    <Field Name="Freight" Ordinal="8" IsOptional="true" DbType="9" Precision="19" Scale="4" />
-                    <Field Name="ShipName" Ordinal="9" IsOptional="true" DbType="12" Length="40" />
-                    <Field Name="ShipAddress" Ordinal="10" IsOptional="true" DbType="12" Length="60" />
-                    <Field Name="ShipCity" Ordinal="11" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="ShipRegion" Ordinal="12" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="ShipPostalCode" Ordinal="13" IsOptional="true" DbType="12" Length="10" />
-                    <Field Name="ShipCountry" Ordinal="14" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="CompanyName" Ordinal="15" DbType="12" Length="40" />
-                    <Field Name="Address" Ordinal="16" IsOptional="true" DbType="12" Length="60" />
-                    <Field Name="City" Ordinal="17" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="Region" Ordinal="18" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="PostalCode" Ordinal="19" IsOptional="true" DbType="12" Length="10" />
-                    <Field Name="Country" Ordinal="20" IsOptional="true" DbType="12" Length="15" />
+                    <Field Name="ADDRESS" Ordinal="0" IsOptional="true" DbType="24" Length="60" />
+                    <Field Name="CITY" Ordinal="0" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="COMPANYNAME" Ordinal="0" DbType="24" Length="40" />
+                    <Field Name="COUNTRY" Ordinal="0" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="CUSTOMERID" Ordinal="0" IsOptional="true" DbType="24" Length="5" />
+                    <Field Name="EMPLOYEEID" Ordinal="0" IsOptional="true" DbType="22" Precision="9" />
+                    <Field Name="FREIGHT" Ordinal="0" IsOptional="true" DbType="22" Precision="19" Scale="4" />
+                    <Field Name="ORDERDATE" Ordinal="0" IsOptional="true" DbType="7" />
+                    <Field Name="ORDERID" Ordinal="0" DbType="22" Precision="9" />
+                    <Field Name="POSTALCODE" Ordinal="0" IsOptional="true" DbType="24" Length="10" />
+                    <Field Name="REGION" Ordinal="0" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="REQUIREDDATE" Ordinal="0" IsOptional="true" DbType="7" />
+                    <Field Name="SHIPADDRESS" Ordinal="0" IsOptional="true" DbType="24" Length="60" />
+                    <Field Name="SHIPCITY" Ordinal="0" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="SHIPCOUNTRY" Ordinal="0" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="SHIPNAME" Ordinal="0" IsOptional="true" DbType="24" Length="40" />
+                    <Field Name="SHIPPEDDATE" Ordinal="0" IsOptional="true" DbType="7" />
+                    <Field Name="SHIPPOSTALCODE" Ordinal="0" IsOptional="true" DbType="24" Length="10" />
+                    <Field Name="SHIPREGION" Ordinal="0" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="SHIPVIA" Ordinal="0" IsOptional="true" DbType="22" Precision="9" />
                   </Fields>
                 </View>
                 <View Name="Product Sales for 1997">
                   <Fields>
-                    <Field Name="CategoryName" Ordinal="1" DbType="12" Length="15" />
-                    <Field Name="ProductName" Ordinal="2" DbType="12" Length="40" />
-                    <Field Name="ProductSales" Ordinal="3" IsOptional="true" DbType="9" Precision="19" Scale="4" />
+                    <Field Name="CATEGORYNAME" Ordinal="0" DbType="24" Length="15" />
+                    <Field Name="PRODUCTNAME" Ordinal="0" DbType="24" Length="40" />
+                    <Field Name="PRODUCTSALES" Ordinal="0" IsOptional="true" DbType="22" Precision="19" Scale="4" />
                   </Fields>
                 </View>
                 <View Name="Products Above Average Price">
                   <Fields>
-                    <Field Name="ProductName" Ordinal="1" DbType="12" Length="40" />
-                    <Field Name="UnitPrice" Ordinal="2" IsOptional="true" DbType="9" Precision="19" Scale="4" />
+                    <Field Name="PRODUCTNAME" Ordinal="0" DbType="24" Length="40" />
+                    <Field Name="UNITPRICE" Ordinal="0" IsOptional="true" DbType="22" Precision="19" Scale="4" />
                   </Fields>
                 </View>
                 <View Name="Products by Category">
                   <Fields>
-                    <Field Name="CategoryName" Ordinal="1" DbType="12" Length="15" />
-                    <Field Name="ProductName" Ordinal="2" DbType="12" Length="40" />
-                    <Field Name="QuantityPerUnit" Ordinal="3" IsOptional="true" DbType="12" Length="20" />
-                    <Field Name="UnitsInStock" Ordinal="4" IsOptional="true" DbType="16" Precision="5" />
-                    <Field Name="Discontinued" Ordinal="5" DbType="2" />
+                    <Field Name="CATEGORYNAME" Ordinal="0" DbType="24" Length="15" />
+                    <Field Name="PRODUCTNAME" Ordinal="0" DbType="24" Length="40" />
+                    <Field Name="QUANTITYPERUNIT" Ordinal="0" IsOptional="true" DbType="24" Length="20" />
+                    <Field Name="UNITSINSTOCK" Ordinal="0" IsOptional="true" DbType="22" Precision="4" />
+                    <Field Name="DISCONTINUED" Ordinal="0" DbType="22" Precision="1" />
                   </Fields>
                 </View>
                 <View Name="Quarterly Orders">
                   <Fields>
-                    <Field Name="CustomerID" Ordinal="1" IsOptional="true" DbType="10" Length="5" />
-                    <Field Name="CompanyName" Ordinal="2" IsOptional="true" DbType="12" Length="40" />
-                    <Field Name="City" Ordinal="3" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="Country" Ordinal="4" IsOptional="true" DbType="12" Length="15" />
+                    <Field Name="CITY" Ordinal="0" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="COMPANYNAME" Ordinal="0" IsOptional="true" DbType="24" Length="40" />
+                    <Field Name="COUNTRY" Ordinal="0" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="CUSTOMERID" Ordinal="0" IsOptional="true" DbType="24" Length="5" />
                   </Fields>
                 </View>
                 <View Name="Sales by Category">
                   <Fields>
-                    <Field Name="CategoryID" Ordinal="1" DbType="8" Precision="10" />
-                    <Field Name="CategoryName" Ordinal="2" DbType="12" Length="15" />
-                    <Field Name="ProductName" Ordinal="3" DbType="12" Length="40" />
-                    <Field Name="ProductSales" Ordinal="4" IsOptional="true" DbType="9" Precision="19" Scale="4" />
+                    <Field Name="CATEGORYID" Ordinal="0" DbType="22" Precision="9" />
+                    <Field Name="CATEGORYNAME" Ordinal="0" DbType="24" Length="15" />
+                    <Field Name="PRODUCTNAME" Ordinal="0" DbType="24" Length="40" />
+                    <Field Name="PRODUCTSALES" Ordinal="0" IsOptional="true" DbType="22" Precision="19" Scale="4" />
                   </Fields>
                 </View>
                 <View Name="Sales Totals by Amount">
                   <Fields>
-                    <Field Name="SaleAmount" Ordinal="1" IsOptional="true" DbType="9" Precision="19" Scale="4" />
-                    <Field Name="OrderID" Ordinal="2" DbType="8" Precision="10" />
-                    <Field Name="CompanyName" Ordinal="3" DbType="12" Length="40" />
-                    <Field Name="ShippedDate" Ordinal="4" IsOptional="true" DbType="4" />
+                    <Field Name="COMPANYNAME" Ordinal="0" DbType="24" Length="40" />
+                    <Field Name="ORDERID" Ordinal="0" DbType="22" Precision="9" />
+                    <Field Name="SALEAMOUNT" Ordinal="0" IsOptional="true" DbType="22" Precision="19" Scale="4" />
+                    <Field Name="SHIPPEDDATE" Ordinal="0" IsOptional="true" DbType="7" />
                   </Fields>
                 </View>
                 <View Name="Summary of Sales by Quarter">
                   <Fields>
-                    <Field Name="ShippedDate" Ordinal="1" IsOptional="true" DbType="4" />
-                    <Field Name="OrderID" Ordinal="2" DbType="8" Precision="10" />
-                    <Field Name="Subtotal" Ordinal="3" IsOptional="true" DbType="9" Precision="19" Scale="4" />
+                    <Field Name="ORDERID" Ordinal="0" DbType="22" Precision="9" />
+                    <Field Name="SHIPPEDDATE" Ordinal="0" IsOptional="true" DbType="7" />
+                    <Field Name="SUBTOTAL" Ordinal="0" IsOptional="true" DbType="22" Precision="19" Scale="4" />
                   </Fields>
                 </View>
                 <View Name="Summary of Sales by Year">
                   <Fields>
-                    <Field Name="ShippedDate" Ordinal="1" IsOptional="true" DbType="4" />
-                    <Field Name="OrderID" Ordinal="2" DbType="8" Precision="10" />
-                    <Field Name="Subtotal" Ordinal="3" IsOptional="true" DbType="9" Precision="19" Scale="4" />
+                    <Field Name="ORDERID" Ordinal="0" DbType="22" Precision="9" />
+                    <Field Name="SHIPPEDDATE" Ordinal="0" IsOptional="true" DbType="7" />
+                    <Field Name="SUBTOTAL" Ordinal="0" IsOptional="true" DbType="22" Precision="19" Scale="4" />
                   </Fields>
                 </View>
               </Views>
@@ -2367,7 +2402,7 @@ return schemaOracle.Views;]]></SavedQuery>
         </EntityMapping>
       </EntityMappings>
       <TypedViewMappings>
-        <TypedViewMapping TypedViewName=":AlphabeticalListOfProduct" TargetName="//localhost/xe:DBO_NORTHWIND:ALPHABETICALLISTOFPRODUCT">
+        <TypedViewMapping TypedViewName=":AlphabeticalListOfProduct" TargetName="//localhost/xe:DBO_NORTHWIND:Alphabetical list of products">
           <FieldMappings>
             <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" />
             <FieldMapping FieldName="CategoryName" TargetFieldName="CATEGORYNAME" />
@@ -2380,6 +2415,157 @@ return schemaOracle.Views;]]></SavedQuery>
             <FieldMapping FieldName="UnitPrice" TargetFieldName="UNITPRICE" />
             <FieldMapping FieldName="UnitsInStock" TargetFieldName="UNITSINSTOCK" />
             <FieldMapping FieldName="UnitsOnOrder" TargetFieldName="UNITSONORDER" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":CategorySalesFor1997" TargetName="//localhost/xe:DBO_NORTHWIND:Category Sales for 1997">
+          <FieldMappings>
+            <FieldMapping FieldName="CategoryName" TargetFieldName="CATEGORYNAME" />
+            <FieldMapping FieldName="CategorySales" TargetFieldName="CATEGORYSALES" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":CurrentProductList" TargetName="//localhost/xe:DBO_NORTHWIND:Current Product List">
+          <FieldMappings>
+            <FieldMapping FieldName="ProductId" TargetFieldName="PRODUCTID" />
+            <FieldMapping FieldName="ProductName" TargetFieldName="PRODUCTNAME" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":CustomerAndSuppliersByCity" TargetName="//localhost/xe:DBO_NORTHWIND:Customer and Suppliers by City">
+          <FieldMappings>
+            <FieldMapping FieldName="City" TargetFieldName="CITY" />
+            <FieldMapping FieldName="CompanyName" TargetFieldName="COMPANYNAME" />
+            <FieldMapping FieldName="ContactName" TargetFieldName="CONTACTNAME" />
+            <FieldMapping FieldName="Relationship" TargetFieldName="RELATIONSHIP" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":Invoice" TargetName="//localhost/xe:DBO_NORTHWIND:Invoices">
+          <FieldMappings>
+            <FieldMapping FieldName="Address" TargetFieldName="ADDRESS" />
+            <FieldMapping FieldName="City" TargetFieldName="CITY" />
+            <FieldMapping FieldName="Country" TargetFieldName="COUNTRY" />
+            <FieldMapping FieldName="CustomerId" TargetFieldName="CUSTOMERID" />
+            <FieldMapping FieldName="CustomerName" TargetFieldName="CUSTOMERNAME" />
+            <FieldMapping FieldName="Discount" TargetFieldName="DISCOUNT" />
+            <FieldMapping FieldName="ExtendedPrice" TargetFieldName="EXTENDEDPRICE" />
+            <FieldMapping FieldName="Freight" TargetFieldName="FREIGHT" />
+            <FieldMapping FieldName="OrderDate" TargetFieldName="ORDERDATE" />
+            <FieldMapping FieldName="OrderId" TargetFieldName="ORDERID" />
+            <FieldMapping FieldName="PostalCode" TargetFieldName="POSTALCODE" />
+            <FieldMapping FieldName="ProductId" TargetFieldName="PRODUCTID" />
+            <FieldMapping FieldName="ProductName" TargetFieldName="PRODUCTNAME" />
+            <FieldMapping FieldName="Quantity" TargetFieldName="QUANTITY" />
+            <FieldMapping FieldName="Region" TargetFieldName="REGION" />
+            <FieldMapping FieldName="RequiredDate" TargetFieldName="REQUIREDDATE" />
+            <FieldMapping FieldName="Salesperson" TargetFieldName="SALESPERSON" />
+            <FieldMapping FieldName="ShipAddress" TargetFieldName="SHIPADDRESS" />
+            <FieldMapping FieldName="ShipCity" TargetFieldName="SHIPCITY" />
+            <FieldMapping FieldName="ShipCountry" TargetFieldName="SHIPCOUNTRY" />
+            <FieldMapping FieldName="ShipName" TargetFieldName="SHIPNAME" />
+            <FieldMapping FieldName="ShippedDate" TargetFieldName="SHIPPEDDATE" />
+            <FieldMapping FieldName="ShipperName" TargetFieldName="SHIPPERNAME" />
+            <FieldMapping FieldName="ShipPostalCode" TargetFieldName="SHIPPOSTALCODE" />
+            <FieldMapping FieldName="ShipRegion" TargetFieldName="SHIPREGION" />
+            <FieldMapping FieldName="UnitPrice" TargetFieldName="UNITPRICE" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":OrderDetailsExtended" TargetName="//localhost/xe:DBO_NORTHWIND:Order Details Extended">
+          <FieldMappings>
+            <FieldMapping FieldName="Discount" TargetFieldName="DISCOUNT" />
+            <FieldMapping FieldName="ExtendedPrice" TargetFieldName="EXTENDEDPRICE" />
+            <FieldMapping FieldName="OrderId" TargetFieldName="ORDERID" />
+            <FieldMapping FieldName="ProductId" TargetFieldName="PRODUCTID" />
+            <FieldMapping FieldName="ProductName" TargetFieldName="PRODUCTNAME" />
+            <FieldMapping FieldName="Quantity" TargetFieldName="QUANTITY" />
+            <FieldMapping FieldName="UnitPrice" TargetFieldName="UNITPRICE" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":OrdersQry" TargetName="//localhost/xe:DBO_NORTHWIND:Orders Qry">
+          <FieldMappings>
+            <FieldMapping FieldName="Address" TargetFieldName="ADDRESS" />
+            <FieldMapping FieldName="City" TargetFieldName="CITY" />
+            <FieldMapping FieldName="CompanyName" TargetFieldName="COMPANYNAME" />
+            <FieldMapping FieldName="Country" TargetFieldName="COUNTRY" />
+            <FieldMapping FieldName="CustomerId" TargetFieldName="CUSTOMERID" />
+            <FieldMapping FieldName="EmployeeId" TargetFieldName="EMPLOYEEID" />
+            <FieldMapping FieldName="Freight" TargetFieldName="FREIGHT" />
+            <FieldMapping FieldName="OrderDate" TargetFieldName="ORDERDATE" />
+            <FieldMapping FieldName="OrderId" TargetFieldName="ORDERID" />
+            <FieldMapping FieldName="PostalCode" TargetFieldName="POSTALCODE" />
+            <FieldMapping FieldName="Region" TargetFieldName="REGION" />
+            <FieldMapping FieldName="RequiredDate" TargetFieldName="REQUIREDDATE" />
+            <FieldMapping FieldName="ShipAddress" TargetFieldName="SHIPADDRESS" />
+            <FieldMapping FieldName="ShipCity" TargetFieldName="SHIPCITY" />
+            <FieldMapping FieldName="ShipCountry" TargetFieldName="SHIPCOUNTRY" />
+            <FieldMapping FieldName="ShipName" TargetFieldName="SHIPNAME" />
+            <FieldMapping FieldName="ShippedDate" TargetFieldName="SHIPPEDDATE" />
+            <FieldMapping FieldName="ShipPostalCode" TargetFieldName="SHIPPOSTALCODE" />
+            <FieldMapping FieldName="ShipRegion" TargetFieldName="SHIPREGION" />
+            <FieldMapping FieldName="ShipVia" TargetFieldName="SHIPVIA" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":OrderSubtotal" TargetName="//localhost/xe:DBO_NORTHWIND:Order Subtotals">
+          <FieldMappings>
+            <FieldMapping FieldName="OrderId" TargetFieldName="ORDERID" />
+            <FieldMapping FieldName="Subtotal" TargetFieldName="SUBTOTAL" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":ProductsAboveAveragePrice" TargetName="//localhost/xe:DBO_NORTHWIND:Products Above Average Price">
+          <FieldMappings>
+            <FieldMapping FieldName="ProductName" TargetFieldName="PRODUCTNAME" />
+            <FieldMapping FieldName="UnitPrice" TargetFieldName="UNITPRICE" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":ProductSalesFor1997" TargetName="//localhost/xe:DBO_NORTHWIND:Product Sales for 1997">
+          <FieldMappings>
+            <FieldMapping FieldName="CategoryName" TargetFieldName="CATEGORYNAME" />
+            <FieldMapping FieldName="ProductName" TargetFieldName="PRODUCTNAME" />
+            <FieldMapping FieldName="ProductSales" TargetFieldName="PRODUCTSALES" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":ProductsByCategory" TargetName="//localhost/xe:DBO_NORTHWIND:Products by Category">
+          <FieldMappings>
+            <FieldMapping FieldName="CategoryName" TargetFieldName="CATEGORYNAME" />
+            <FieldMapping FieldName="Discontinued" TargetFieldName="DISCONTINUED" TypeConverterToUse="SD.LLBLGen.Pro.TypeConverters.BooleanNumericConverter" />
+            <FieldMapping FieldName="ProductName" TargetFieldName="PRODUCTNAME" />
+            <FieldMapping FieldName="QuantityPerUnit" TargetFieldName="QUANTITYPERUNIT" />
+            <FieldMapping FieldName="UnitsInStock" TargetFieldName="UNITSINSTOCK" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":QuarterlyOrder" TargetName="//localhost/xe:DBO_NORTHWIND:Quarterly Orders">
+          <FieldMappings>
+            <FieldMapping FieldName="City" TargetFieldName="CITY" />
+            <FieldMapping FieldName="CompanyName" TargetFieldName="COMPANYNAME" />
+            <FieldMapping FieldName="Country" TargetFieldName="COUNTRY" />
+            <FieldMapping FieldName="CustomerId" TargetFieldName="CUSTOMERID" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":SalesByCategory" TargetName="//localhost/xe:DBO_NORTHWIND:Sales by Category">
+          <FieldMappings>
+            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" />
+            <FieldMapping FieldName="CategoryName" TargetFieldName="CATEGORYNAME" />
+            <FieldMapping FieldName="ProductName" TargetFieldName="PRODUCTNAME" />
+            <FieldMapping FieldName="ProductSales" TargetFieldName="PRODUCTSALES" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":SalesTotalsByAmount" TargetName="//localhost/xe:DBO_NORTHWIND:Sales Totals by Amount">
+          <FieldMappings>
+            <FieldMapping FieldName="CompanyName" TargetFieldName="COMPANYNAME" />
+            <FieldMapping FieldName="OrderId" TargetFieldName="ORDERID" />
+            <FieldMapping FieldName="SaleAmount" TargetFieldName="SALEAMOUNT" />
+            <FieldMapping FieldName="ShippedDate" TargetFieldName="SHIPPEDDATE" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":SummaryOfSalesByQuarter" TargetName="//localhost/xe:DBO_NORTHWIND:Summary of Sales by Quarter">
+          <FieldMappings>
+            <FieldMapping FieldName="OrderId" TargetFieldName="ORDERID" />
+            <FieldMapping FieldName="ShippedDate" TargetFieldName="SHIPPEDDATE" />
+            <FieldMapping FieldName="Subtotal" TargetFieldName="SUBTOTAL" />
+          </FieldMappings>
+        </TypedViewMapping>
+        <TypedViewMapping TypedViewName=":SummaryOfSalesByYear" TargetName="//localhost/xe:DBO_NORTHWIND:Summary of Sales by Year">
+          <FieldMappings>
+            <FieldMapping FieldName="OrderId" TargetFieldName="ORDERID" />
+            <FieldMapping FieldName="ShippedDate" TargetFieldName="SHIPPEDDATE" />
+            <FieldMapping FieldName="Subtotal" TargetFieldName="SUBTOTAL" />
           </FieldMappings>
         </TypedViewMapping>
       </TypedViewMappings>
