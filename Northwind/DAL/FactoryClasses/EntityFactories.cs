@@ -490,6 +490,13 @@ namespace Northwind.DAL.FactoryClasses
 			return InheritanceInfoProviderSingleton.GetInstance();
 		}
 
+		/// <summary>Gets the typed view fields of the typedview with the typedviewenum type value specified.</summary>
+		/// <param name="typedViewTypeEnumValue">The typed view type enum value.</param>
+		/// <returns></returns>
+		public override IEntityFieldsCore GetTypedViewFields(int typedViewTypeEnumValue)
+		{
+			return EntityFieldsFactory.CreateTypedViewEntityFieldsObject((TypedViewType)typedViewTypeEnumValue);
+		}
 
 		/// <summary>Creates a new dynamic relation instance</summary>
 		/// <param name="leftOperand">The left operand.</param>

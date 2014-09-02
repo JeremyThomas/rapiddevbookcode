@@ -196,6 +196,102 @@ namespace Northwind.DAL.Linq
 		}
 		
  
+		/// <summary>returns the datasource to use in a Linq query when targeting AlphabeticalListOfProduct instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.AlphabeticalListOfProductRow> AlphabeticalListOfProduct
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.AlphabeticalListOfProductRow>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.AlphabeticalListOfProductTypedView }; }
+		}
+
+		/// <summary>returns the datasource to use in a Linq query when targeting CategorySalesFor1997 instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.CategorySalesFor1997Row> CategorySalesFor1997
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.CategorySalesFor1997Row>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.CategorySalesFor1997TypedView }; }
+		}
+
+		/// <summary>returns the datasource to use in a Linq query when targeting CurrentProductList instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.CurrentProductListRow> CurrentProductList
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.CurrentProductListRow>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.CurrentProductListTypedView }; }
+		}
+
+		/// <summary>returns the datasource to use in a Linq query when targeting CustomerAndSuppliersByCity instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.CustomerAndSuppliersByCityRow> CustomerAndSuppliersByCity
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.CustomerAndSuppliersByCityRow>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.CustomerAndSuppliersByCityTypedView }; }
+		}
+
+		/// <summary>returns the datasource to use in a Linq query when targeting Invoice instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.InvoiceRow> Invoice
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.InvoiceRow>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.InvoiceTypedView }; }
+		}
+
+		/// <summary>returns the datasource to use in a Linq query when targeting OrderDetailsExtended instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.OrderDetailsExtendedRow> OrderDetailsExtended
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.OrderDetailsExtendedRow>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.OrderDetailsExtendedTypedView }; }
+		}
+
+		/// <summary>returns the datasource to use in a Linq query when targeting OrdersQry instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.OrdersQryRow> OrdersQry
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.OrdersQryRow>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.OrdersQryTypedView }; }
+		}
+
+		/// <summary>returns the datasource to use in a Linq query when targeting OrderSubtotal instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.OrderSubtotalRow> OrderSubtotal
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.OrderSubtotalRow>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.OrderSubtotalTypedView }; }
+		}
+
+		/// <summary>returns the datasource to use in a Linq query when targeting ProductsAboveAveragePrice instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.ProductsAboveAveragePriceRow> ProductsAboveAveragePrice
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.ProductsAboveAveragePriceRow>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.ProductsAboveAveragePriceTypedView }; }
+		}
+
+		/// <summary>returns the datasource to use in a Linq query when targeting ProductSalesFor1997 instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.ProductSalesFor1997Row> ProductSalesFor1997
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.ProductSalesFor1997Row>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.ProductSalesFor1997TypedView }; }
+		}
+
+		/// <summary>returns the datasource to use in a Linq query when targeting ProductsByCategory instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.ProductsByCategoryRow> ProductsByCategory
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.ProductsByCategoryRow>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.ProductsByCategoryTypedView }; }
+		}
+
+		/// <summary>returns the datasource to use in a Linq query when targeting QuarterlyOrder instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.QuarterlyOrderRow> QuarterlyOrder
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.QuarterlyOrderRow>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.QuarterlyOrderTypedView }; }
+		}
+
+		/// <summary>returns the datasource to use in a Linq query when targeting SalesByCategory instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.SalesByCategoryRow> SalesByCategory
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.SalesByCategoryRow>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.SalesByCategoryTypedView }; }
+		}
+
+		/// <summary>returns the datasource to use in a Linq query when targeting SalesTotalsByAmount instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.SalesTotalsByAmountRow> SalesTotalsByAmount
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.SalesTotalsByAmountRow>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.SalesTotalsByAmountTypedView }; }
+		}
+
+		/// <summary>returns the datasource to use in a Linq query when targeting SummaryOfSalesByQuarter instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.SummaryOfSalesByQuarterRow> SummaryOfSalesByQuarter
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.SummaryOfSalesByQuarterRow>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.SummaryOfSalesByQuarterTypedView }; }
+		}
+
+		/// <summary>returns the datasource to use in a Linq query when targeting SummaryOfSalesByYear instances in the database.</summary>
+		public DataSource2<Northwind.DAL.TypedViewClasses.SummaryOfSalesByYearRow> SummaryOfSalesByYear
+		{
+			get { return new DataSource2<Northwind.DAL.TypedViewClasses.SummaryOfSalesByYearRow>(_adapterToUse, new ElementCreator(), _customFunctionMappings, _contextToUse) { TypedViewEnumTypeValue=(int)TypedViewType.SummaryOfSalesByYearTypedView }; }
+		}
+
 		#region Class Property Declarations
 		/// <summary> Gets / sets the IDataAccessAdapter to use for the queries created with this meta data object.</summary>
 		/// <remarks> Be aware that the IDataAccessAdapter object set via this property is kept alive by the LLBLGenProQuery objects created with this meta data
