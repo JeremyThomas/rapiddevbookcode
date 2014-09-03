@@ -5,7 +5,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.Services
 {
-  internal class NorthwindPersistence : IPersistence
+  public class NorthwindPersistence : IPersistence
   {
     private UnitOfWork2 _unitOfWork;
 
