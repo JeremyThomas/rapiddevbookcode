@@ -19,16 +19,15 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.Interfaces
 {
-    public interface IPersistence<T>
+    public interface IPersistence
     {
-        void Insert(T entity, bool commit);
-        void Update(T entity, bool commit);
-        void Delete(T entity, bool commit);
+      void Save(IEntity2 entity, bool commit =true);
+      void Delete(IEntity2 entity, bool commit = true);
         void Commit();
-        IQueryable<T> SearchBy(Expression<Func<T, bool>> predicate);
-        IQueryable<T> GetAll();
+       IQueryable<TEntity> GetQueryableForEntity<TEntity>()where TEntity : class;
     }
 }
