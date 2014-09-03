@@ -86,6 +86,7 @@
     </Compile>
     <Compile Include="Factories.cs" />
     <Compile Include="NorthwindODataService .cs" />
+    <Compile Include="NorthwindPersistence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
