@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
@@ -18,12 +19,22 @@ namespace Northwind.Business.WCF.Host
 
     private void start_Click(object sender, EventArgs e)
     {
-      var serviceHost = WcfServiceHost.StartService();
-      if (serviceHost.State==CommunicationState.Opened)
+      var serviceHosts = WcfServiceHost.StartService();
+      tableLayoutPanelMetaData.RowCount = 0;
+      foreach (var serviceHost in serviceHosts)
       {
-        linkLabelWsdl.Text = serviceHost.BaseAddresses.First().ToString();
-        linkLabelWsdl.Links.Add(0, linkLabelWsdl.Text.Length, linkLabelWsdl.Text);
-        _serviceState.Text = "Opened";
+        if (serviceHost.State == CommunicationState.Opened)
+        {
+          tableLayoutPanelMetaData.RowCount++;
+          var linkLabelWsdl = new LinkLabel();
+          linkLabelWsdl.AutoSize = true;
+          linkLabelWsdl.LinkClicked += linkLabelWsdl_LinkClicked;
+          tableLayoutPanelMetaData.Controls.Add(linkLabelWsdl);
+          tableLayoutPanelMetaData.SetRow(linkLabelWsdl, tableLayoutPanelMetaData.RowCount - 1);
+          linkLabelWsdl.Text = serviceHost.BaseAddresses.First().ToString();
+          linkLabelWsdl.Links.Add(0, linkLabelWsdl.Text.Length, linkLabelWsdl.Text);
+          _serviceState.Text = "Opened";
+        }
       }
     }
 
@@ -42,9 +53,8 @@ namespace Northwind.Business.WCF.Host
 
     private void linkLabelWsdl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
-      System.Diagnostics.Process.Start(linkLabelWsdl.Links[0].LinkData.ToString());
-      linkLabelWsdl.LinkVisited = true;
+      Process.Start(e.Link.LinkData.ToString());
+      e.Link.Visited = true;
     }
-
   }
 }

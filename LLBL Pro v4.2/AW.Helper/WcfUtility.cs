@@ -283,19 +283,45 @@ namespace AW.Helper
           debug.IncludeExceptionDetailInFaults = true;
     }
 
-    public static ServiceHost CreateHost(Type serviceType, string baseAddress, Binding binding = null, params IServiceBehavior[] serviceBehaviors)
+    public static IEnumerable<ServiceHost> CreateServiceHosts(string baseAddress, Binding binding, bool andOpen = true, IServiceBehavior[] serviceBehaviors = null, params Assembly[] assemblies)
     {
-      var fullBaseAddress = string.Concat(baseAddress, serviceType.Name);
+      var serviceTypes = GetServiceTypes(assemblies);
+      var hosts = serviceTypes.Select(serviceType => CreateHost(serviceType, baseAddress, binding,andOpen, serviceBehaviors));
+      return hosts;
+    }
+
+    public static ServiceHost CreateHost(Type serviceType, string baseAddress, Binding binding = null, bool andOpen= true, params IServiceBehavior[] serviceBehaviors)
+    {
+      var fullBaseAddress = String.Concat(baseAddress, serviceType.Name);
       var host = new ServiceHost(serviceType, new Uri(fullBaseAddress));
       if (binding == null)
         binding = new BasicHttpBinding {MaxReceivedMessageSize = 1000000, ReaderQuotas = {MaxDepth = 200}};
       var contractType = GetServiceContractType(serviceType);
       host.AddServiceEndpoint(contractType, binding, "");
       DoIncludeExceptionDetailInFaults(host);
-      foreach (var serviceBehavior in serviceBehaviors)
-        host.Description.Behaviors.Add(serviceBehavior);
+      if (serviceBehaviors != null)
+        foreach (var serviceBehavior in serviceBehaviors)
+          host.Description.Behaviors.Add(serviceBehavior);
       host.AddServiceEndpoint(typeof (IMetadataExchange), binding, "MEX");
+      if (andOpen)
+        host.Open();
       return host;
+    }
+
+    public static void Open(IEnumerable<ServiceHost> serviceHosts)
+    {
+      foreach (var serviceHost in serviceHosts.Where(serviceHost => serviceHost.State != CommunicationState.Opened && serviceHost.State != CommunicationState.Opening))
+        serviceHost.Open();
+    }
+
+    public static bool Close(List<ServiceHost> serviceHosts)
+    {
+      //Call StopService from your shutdown logic (i.e. dispose method)
+      foreach (var serviceHost in serviceHosts.Where(serviceHost => serviceHost.State == CommunicationState.Opened && serviceHost.State != CommunicationState.Closing))
+        serviceHost.Close();
+
+      var isClosed = serviceHosts.All(sh => sh.State == CommunicationState.Closed);
+      return isClosed;
     }
   }
 }
