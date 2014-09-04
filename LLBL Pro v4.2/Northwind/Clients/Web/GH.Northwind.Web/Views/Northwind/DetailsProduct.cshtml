@@ -1,0 +1,49 @@
+﻿@model GH.Northwind.Business.Entities.Product
+
+@{
+    ViewBag.Title = "DetailsProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DetailsProduct</h2>
+
+<fieldset>
+    <legend>Product</legend>
+
+    <div class="display-label">ProductName</div>
+    <div class="display-field">@Model.ProductName</div>
+
+    <div class="display-label">Supplier</div>
+    <div class="display-field">
+    @Html.DisplayFor(model => model.Supplier.CompanyName)
+    </div>
+    
+   <div class="display-label">Category</div>
+    <div class="display-field">
+     @Html.DisplayFor(model => model.Category.CategoryName)
+    </div>
+
+    <div class="display-label">QuantityPerUnit</div>
+    <div class="display-field">@Model.QuantityPerUnit</div>
+
+    <div class="display-label">UnitPrice</div>
+    <div class="display-field">@String.Format("{0:F}", Model.UnitPrice)</div>
+
+    <div class="display-label">UnitsInStock</div>
+    <div class="display-field">@Model.UnitsInStock</div>
+
+    <div class="display-label">UnitsOnOrder</div>
+    <div class="display-field">@Model.UnitsOnOrder</div>
+
+    <div class="display-label">ReorderLevel</div>
+    <div class="display-field">@Model.ReorderLevel</div>
+
+    <div class="display-label">Discontinued</div>
+    <div class="display-field">@Model.Discontinued</div>
+       
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "EditProduct", new { id=Model.ProductID }) |
+    @Html.ActionLink("Back to List", "AllProducts")
+</p>
+

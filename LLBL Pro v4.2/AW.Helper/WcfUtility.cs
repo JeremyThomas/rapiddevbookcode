@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.ServiceModel;
@@ -273,6 +274,30 @@ namespace AW.Helper
       return assembly.GetTypes().Where(x => x.IsInterface).Where(IsServiceContract);
     }
 
+    public static Tuple<T, Action> CreateService<T>(bool usenTier, string serviceAssembly, string serviceImplementationType)
+    {
+      ChannelFactory<T> channelFactory = null;
+      T service;
+      if (usenTier || !File.Exists(serviceAssembly))
+      {
+        // Open a channel with the WCF service endpoint, and keep it alive till the end of the program.
+        //channelFactory = new ChannelFactory<INorthwindService>("WCFServer");
+        channelFactory = WcfUtility.GetChannelFactory<T>();
+        service = channelFactory.CreateChannel();
+      }
+      else
+      {
+        var objectHandle = Activator.CreateInstanceFrom(serviceAssembly, serviceImplementationType);
+        service = (T)objectHandle.Unwrap();
+      }
+      return new Tuple<T, Action>(service, () =>
+      {
+        var x = service as IClientChannel;
+        if (channelFactory != null)
+          channelFactory.Close();
+      });
+    }
+
     public static void DoIncludeExceptionDetailInFaults(ServiceHostBase host)
     {
       var debug = host.Description.Behaviors.Find<ServiceDebugBehavior>();
@@ -322,6 +347,48 @@ namespace AW.Helper
 
       var isClosed = serviceHosts.All(sh => sh.State == CommunicationState.Closed);
       return isClosed;
+    }
+
+    /// <summary>
+    /// Closes the or abort.
+    /// http://attiq-rehman.blogspot.co.nz/2011/02/close-wcf-channels-in-reliable-way_27.html
+    /// </summary>
+    /// <param name="service">The service.</param>
+    public static void CloseOrAbort(this ICommunicationObject service)
+    {
+      // do not throw null reference exception
+      if (service == null)
+      {
+        return;
+      }
+      if (service.State != CommunicationState.Closed
+             && service.State != CommunicationState.Closing)
+      {
+        try
+        {
+          // if Close attempts closing the session on the server and there
+          // is a problem during the roundtrip it will throw an exception
+          // and never transition to the Closed state
+          service.Close();
+        }
+        catch (CommunicationException)
+        {
+          // not closed - call Abort to transition to the closed state
+          service.Abort();
+        }
+        catch (TimeoutException)
+        {
+          // not closed - call Abort to transition to the closed state
+          service.Abort();
+        }
+        catch (Exception)
+        {
+          // not closed - call Abort to transition to the closed state
+          service.Abort();
+          // this is an unexpected exception type - throw
+          throw;
+        }
+      }
     }
   }
 }
