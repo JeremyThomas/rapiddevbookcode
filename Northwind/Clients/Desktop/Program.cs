@@ -20,29 +20,15 @@ namespace Northwind.Client.Winforms
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
 
-      INorthwindService service;
-      ChannelFactory<INorthwindService> channelFactory = null;
-      if (ConfigurationSettings.AppSettings["N-Tier"] == "true" || !BusinessPresent())
-      {
-        // Open a channel with the WCF service endpoint, and keep it alive till the end of the program.
-        //channelFactory = new ChannelFactory<INorthwindService>("WCFServer");
-        channelFactory = WcfUtility.GetChannelFactory<INorthwindService>();
-        service = channelFactory.CreateChannel();
-      }
-      else
-      {
-        var objectHandle = Activator.CreateInstanceFrom("Northwind.Business.dll", "Northwind.Business.NorthwindService");
-        service = (INorthwindService)objectHandle.Unwrap();
-      }
-      var toRun = new MainForm(service);
+      var usenTier = ConfigurationSettings.AppSettings["N-Tier"] == "true";
+      var serviceAndCleanup = WcfUtility.CreateService<INorthwindService>(usenTier, "Northwind.Business.dll", "Northwind.Business.NorthwindService");
+      var toRun = new MainForm(serviceAndCleanup.Item1);
       Application.Run(toRun);
 
-      if (channelFactory != null) channelFactory.Close();
+      serviceAndCleanup.Item2();
     }
 
-    private static bool BusinessPresent()
-    {
-      return File.Exists("Northwind.Business.dll");
-    }
+
+
   }
 }
