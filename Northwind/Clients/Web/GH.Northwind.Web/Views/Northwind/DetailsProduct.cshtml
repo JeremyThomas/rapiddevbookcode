@@ -1,4 +1,4 @@
-﻿@model GH.Northwind.Business.Entities.Product
+﻿@model Northwind.DAL.EntityClasses.ProductEntity
 
 @{
     ViewBag.Title = "DetailsProduct";
@@ -43,7 +43,7 @@
        
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "EditProduct", new { id=Model.ProductID }) |
+    @Html.ActionLink("Edit", "EditProduct", new { id=Model.ProductId }) |
     @Html.ActionLink("Back to List", "AllProducts")
 </p>
 
