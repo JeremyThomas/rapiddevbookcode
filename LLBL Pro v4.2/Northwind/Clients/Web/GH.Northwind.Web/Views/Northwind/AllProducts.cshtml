@@ -47,18 +47,18 @@
     {
         <tr>
             <td>
-                @Html.ActionLink("Edit", "EditProduct", new { id = item.ProductID }) |
-                @Html.ActionLink("Details", "DetailsProduct", new { id = item.ProductID }) |
-                @Html.ActionLink("Delete", "DeleteProduct", new {id = item.ProductID})
+                @Html.ActionLink("Edit", "EditProduct", new { id = item.ProductId }) |
+                @Html.ActionLink("Details", "DetailsProduct", new { id = item.ProductId }) |
+                @Html.ActionLink("Delete", "DeleteProduct", new {id = item.ProductId})
             </td>
             <td>
                 @item.ProductName
             </td>
             <td>
-                @item.SupplierID
+                @item.SupplierId
             </td>
             <td>
-                @item.CategoryID
+                @item.CategoryId
             </td>
             <td>
                 @item.QuantityPerUnit

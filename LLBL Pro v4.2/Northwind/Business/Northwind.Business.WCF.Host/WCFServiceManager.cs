@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
+using Northwind.DAL.EntityClasses;
 
 namespace Northwind.Business.WCF.Host
 {
@@ -14,6 +15,7 @@ namespace Northwind.Business.WCF.Host
       // SD.Tools.OrmProfiler.Interceptor.InterceptorCore.Initialize("WCF Host");
 
       InitializeComponent();
+      CommonEntityBase.Initialize();
       start_Click(this, null);
     }
 

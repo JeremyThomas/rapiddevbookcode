@@ -8,6 +8,7 @@ namespace Northwind.DAL.Services
   public class NorthwindPersistence : IPersistence
   {
     private UnitOfWork2 _unitOfWork;
+    private DataAccessAdapterBase _adapterToUse;
 
     public void Save(IEntity2 entity, bool commit = true)
     {
@@ -50,11 +51,13 @@ namespace Northwind.DAL.Services
 
     public IQueryable<TEntity> GetQueryableForEntity<TEntity>() where TEntity : class
     {
-      using (var adapter = Factories.CreateDataAccessAdapter())
-      {
-        var linqMetaData = new LinqMetaData(adapter);
-        return linqMetaData.GetQueryableForEntity<TEntity>();
-      }
+      var linqMetaData = new LinqMetaData(GetAdapter());
+      return linqMetaData.GetQueryableForEntity<TEntity>();
+    }
+
+    private DataAccessAdapterBase GetAdapter() 
+    {
+      return _adapterToUse = _adapterToUse??Factories.CreateDataAccessAdapter();
     }
   }
 }
