@@ -112,6 +112,7 @@
     </Compile>
     <Compile Include="ModelBinders\AllProductsBinder.cs" />
     <Compile Include="ModelBinders\CustomerWithOrderBinder.cs" />
+    <Compile Include="ModelBinders\LLBLGenModelBinder.cs" />
     <Compile Include="ModelBinders\SuppliersCategoriesBinder.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AllProductsModel.cs" />

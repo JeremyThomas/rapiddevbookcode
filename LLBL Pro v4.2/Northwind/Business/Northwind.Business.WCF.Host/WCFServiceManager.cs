@@ -28,8 +28,7 @@ namespace Northwind.Business.WCF.Host
         if (serviceHost.State == CommunicationState.Opened)
         {
           tableLayoutPanelMetaData.RowCount++;
-          var linkLabelWsdl = new LinkLabel();
-          linkLabelWsdl.AutoSize = true;
+          var linkLabelWsdl = new LinkLabel {AutoSize = true};
           linkLabelWsdl.LinkClicked += linkLabelWsdl_LinkClicked;
           tableLayoutPanelMetaData.Controls.Add(linkLabelWsdl);
           tableLayoutPanelMetaData.SetRow(linkLabelWsdl, tableLayoutPanelMetaData.RowCount - 1);
@@ -43,9 +42,7 @@ namespace Northwind.Business.WCF.Host
     private void stop_Click(object sender, EventArgs e)
     {
       if (WcfServiceHost.StopService())
-      {
         _serviceState.Text = "Closed";
-      }
     }
 
     private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -53,7 +50,7 @@ namespace Northwind.Business.WCF.Host
       WcfServiceHost.StopService();
     }
 
-    private void linkLabelWsdl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    private static void linkLabelWsdl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
       Process.Start(e.Link.LinkData.ToString());
       e.Link.Visited = true;

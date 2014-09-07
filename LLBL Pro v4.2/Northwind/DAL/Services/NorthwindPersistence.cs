@@ -55,9 +55,9 @@ namespace Northwind.DAL.Services
       return linqMetaData.GetQueryableForEntity<TEntity>();
     }
 
-    private DataAccessAdapterBase GetAdapter() 
+    private DataAccessAdapterBase GetAdapter()
     {
-      return _adapterToUse = _adapterToUse??Factories.CreateDataAccessAdapter();
+      return _adapterToUse = _adapterToUse ?? Factories.CreateDataAccessAdapter();
     }
   }
 }
