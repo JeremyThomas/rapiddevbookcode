@@ -53,7 +53,7 @@ namespace GH.Northwind.Web
       System.Web.Mvc.ModelBinders.Binders.Add(typeof (CustomerWithOrderModel), new CustomerWithOrderBinder());
       System.Web.Mvc.ModelBinders.Binders.Add(typeof (AllProductsModel), new AllProductsBinder());
       System.Web.Mvc.ModelBinders.Binders.Add(typeof (SuppliersCategoriesModel), new SuppliersCategoriesBinder());
-      System.Web.Mvc.ModelBinders.Binders.Add(typeof(CommonEntityBase), new LLBLGenModelBinder());
+      System.Web.Mvc.ModelBinders.Binders.Add(typeof (CommonEntityBase), new LLBLGenModelBinder());
     }
   }
 }
