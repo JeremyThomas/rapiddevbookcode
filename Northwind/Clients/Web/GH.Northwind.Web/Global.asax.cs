@@ -7,6 +7,7 @@ using AW.Helper;
 using GH.Northwind.Web.Controllers;
 using GH.Northwind.Web.ModelBinders;
 using GH.Northwind.Web.Models;
+using Northwind.DAL.EntityClasses;
 using Northwind.DAL.Interfaces;
 
 namespace GH.Northwind.Web
@@ -52,6 +53,7 @@ namespace GH.Northwind.Web
       System.Web.Mvc.ModelBinders.Binders.Add(typeof (CustomerWithOrderModel), new CustomerWithOrderBinder());
       System.Web.Mvc.ModelBinders.Binders.Add(typeof (AllProductsModel), new AllProductsBinder());
       System.Web.Mvc.ModelBinders.Binders.Add(typeof (SuppliersCategoriesModel), new SuppliersCategoriesBinder());
+      System.Web.Mvc.ModelBinders.Binders.Add(typeof(CommonEntityBase), new LLBLGenModelBinder());
     }
   }
 }

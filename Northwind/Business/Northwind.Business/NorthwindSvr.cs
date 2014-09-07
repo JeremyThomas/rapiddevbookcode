@@ -38,6 +38,7 @@ namespace Northwind.Business
       {
         var dataServiceUrl = ConfigurationSettings.AppSettings["WcfDataServiceUrl"];
         //DataCxt.Cxt = new DataServiceContext(new Uri(dataServiceUrl));
+        PersistSvr.PersistenceProvider = new NorthwindODataPersistenceClient(dataServiceUrl);
         // PersistSvr
       }
       else

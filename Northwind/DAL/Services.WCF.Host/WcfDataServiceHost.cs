@@ -35,7 +35,7 @@ namespace Northwind.DAL.Services.WCF.Host
     {
       if (_serviceHost == null)
       {
-        var baseAddress = ConfigurationManager.AppSettings["WCFUrl"];
+        var baseAddress = ConfigurationManager.AppSettings["WcfDataServiceUrl"];
         //Instantiate new ServiceHost 
         _serviceHost = CreateDataServiceHost(typeof(NorthwindODataService), baseAddress);
         _serviceHost.Open();

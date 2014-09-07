@@ -147,6 +147,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\AW.Helper.LLBL\AW.Helper.LLBL.csproj">
+      <Project>{7919c746-73f3-4279-a53b-cc6c08f42318}</Project>
+      <Name>AW.Helper.LLBL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\AW.Helper\AW.Helper.csproj">
       <Project>{ffc5b55e-9157-4ce6-81bd-e593e4c08422}</Project>
       <Name>AW.Helper</Name>
