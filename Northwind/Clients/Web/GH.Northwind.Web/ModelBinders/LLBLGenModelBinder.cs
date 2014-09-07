@@ -1,5 +1,4 @@
-﻿
-/* Usage documentation at the bottom of this file */
+﻿/* Usage documentation at the bottom of this file */
 
 using System;
 using System.Collections.Generic;
@@ -12,68 +11,73 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 namespace GH.Northwind.Web.ModelBinders
 {
   /// <summary>
-  /// From http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=15191 based upon 04-Feb-2010 version
+  ///   From http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=15191 based upon 04-Feb-2010 version
   /// </summary>
   public class LLBLGenModelBinder : DefaultModelBinder
+  {
+    private static readonly string[] Entity2Exclude = {"CustomPropertiesOfType", "FieldsCustomPropertiesOfType", "Validator", 
+                                                        "AuthorizerToUse", "AuditorToUse", "Fields", "Transaction", "ConcurrencyPredicateFactoryToUse", 
+                                                        "TypeDefaultValueProviderToUse", "PrimaryKeyFields", "LLBLGenProEntityTypeValue", "LLBLGenProEntityName", 
+                                                        "ActiveContext", "IsDirty", "IsNew", "ObjectID", "ParticipatesInTransaction", "IsDeserializing"};
+    private static readonly string[] EntityExclude = {"CustomPropertiesOfType", "FieldsCustomPropertiesOfType", "Validator", 
+                                                       "AuthorizerToUse", "AuditorToUse", "Fields", "Transaction", "ConcurrencyPredicateFactoryToUse", 
+                                                       "TypeDefaultValueProviderToUse", "PrimaryKeyFields", "LLBLGenProEntityTypeValue", "LLBLGenProEntityName", 
+                                                       "ActiveContext", "IsDirty", "IsNew", "ObjectID", "ParticipatesInTransaction", "IsDeserializing", "IsSerializing"};
+    private static readonly Dictionary<Type, List<PropertyDescriptor>> EntityPropertyDescriptorCache = new Dictionary<Type, List<PropertyDescriptor>>();
+
+    protected override PropertyDescriptorCollection GetModelProperties(ControllerContext controllerContext, ModelBindingContext bindingContext)
     {
-        private static string[] _entity2Exclude = new string[] { "CustomPropertiesOfType", "FieldsCustomPropertiesOfType", "Validator", "AuthorizerToUse", "AuditorToUse", "Fields", "Transaction", "ConcurrencyPredicateFactoryToUse", "TypeDefaultValueProviderToUse", "PrimaryKeyFields", "LLBLGenProEntityTypeValue", "LLBLGenProEntityName", "ActiveContext", "IsDirty", "IsNew", "ObjectID", "ParticipatesInTransaction", "IsDeserializing" };
-        private static string[] _entityExclude = new string[] { "CustomPropertiesOfType", "FieldsCustomPropertiesOfType", "Validator", "AuthorizerToUse", "AuditorToUse", "Fields", "Transaction", "ConcurrencyPredicateFactoryToUse", "TypeDefaultValueProviderToUse", "PrimaryKeyFields", "LLBLGenProEntityTypeValue", "LLBLGenProEntityName", "ActiveContext", "IsDirty", "IsNew", "ObjectID", "ParticipatesInTransaction", "IsDeserializing", "IsSerializing" };
-        private static Dictionary<Type, List<PropertyDescriptor>> _entityPropertyDescriptorCache = new Dictionary<Type, List<PropertyDescriptor>>();
+      var entity = bindingContext.Model as IEntityCore;
+      if (entity == null) return base.GetModelProperties(controllerContext, bindingContext);
 
-        protected override PropertyDescriptorCollection GetModelProperties(ControllerContext controllerContext, ModelBindingContext bindingContext)
+      List<PropertyDescriptor> propertyDescriptorList;
+      lock (EntityPropertyDescriptorCache)
+      {
+        if (!EntityPropertyDescriptorCache.TryGetValue(entity.GetType(), out propertyDescriptorList))
         {
-            IEntityCore entity = bindingContext.Model as IEntityCore;
-            if (entity == null) return base.GetModelProperties(controllerContext, bindingContext);
+          var excludelist = entity is IEntity2 ? new List<string>(Entity2Exclude) : new List<string>(EntityExclude);
+          //skip all relations where this entity is not the PK side
+          //entity.GetAllRelations().Where(rel => rel.StartElementIsPkSide == false).ToList().ForEach(rel => excludelist.Add(rel.MappedFieldName));
 
-            List<PropertyDescriptor> propertyDescriptorList;
-            lock (_entityPropertyDescriptorCache)
-            {
-                if (!_entityPropertyDescriptorCache.TryGetValue(entity.GetType(), out propertyDescriptorList))
-                {
-                    List<string> excludelist = entity is IEntity2 ? new List<string>(_entity2Exclude) : new List<string>(_entityExclude);
-                    //skip all relations where this entity is not the PK side
-                    //entity.GetAllRelations().Where(rel => rel.StartElementIsPkSide == false).ToList().ForEach(rel => excludelist.Add(rel.MappedFieldName));
+          propertyDescriptorList = new List<PropertyDescriptor>();
+          var properties = TypeDescriptor.GetProperties(entity.GetType());
+          foreach (PropertyDescriptor property in properties)
+          {
+            if (excludelist.Contains(property.Name) ||
+                property.Name.StartsWith("AlwaysFetch") ||
+                property.Name.StartsWith("AlreadyFetched") ||
+                property.Name.EndsWith("ReturnsNewIfNotFound")) continue;
 
-                    propertyDescriptorList = new List<PropertyDescriptor>();                    
-                    PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(entity.GetType());
-                    foreach (PropertyDescriptor property in properties)
-                    {
-                        if (excludelist.Contains(property.Name) ||
-                            property.Name.StartsWith("AlwaysFetch") ||
-                            property.Name.StartsWith("AlreadyFetched") ||
-                            property.Name.EndsWith("ReturnsNewIfNotFound")) continue;
-
-                        propertyDescriptorList.Add(property);
-
-                    }
-                    _entityPropertyDescriptorCache.Add(entity.GetType(), propertyDescriptorList);
-                }
-            }
-            PropertyDescriptorCollection result = new PropertyDescriptorCollection(propertyDescriptorList.Where(pd => ShouldUpdateProp(pd, bindingContext.PropertyFilter)).ToArray());
-            return result;
+            propertyDescriptorList.Add(property);
+          }
+          EntityPropertyDescriptorCache.Add(entity.GetType(), propertyDescriptorList);
         }
+      }
+      var result = new PropertyDescriptorCollection(propertyDescriptorList.Where(pd => ShouldUpdateProp(pd, bindingContext.PropertyFilter)).ToArray());
+      return result;
+    }
 
-        protected override bool OnModelUpdating(ControllerContext controllerContext, ModelBindingContext bindingContext)
-        {
-            bool result = base.OnModelUpdating(controllerContext, bindingContext);
-            if (result)
-            {
-                IEntityCore entity = bindingContext.Model as IEntityCore;
-                if (entity != null) entity.IsDeserializing = true;
-            }
-            return result;
-        }
+    protected override bool OnModelUpdating(ControllerContext controllerContext, ModelBindingContext bindingContext)
+    {
+      var result = base.OnModelUpdating(controllerContext, bindingContext);
+      if (result)
+      {
+        var entity = bindingContext.Model as IEntityCore;
+        if (entity != null) entity.IsDeserializing = true;
+      }
+      return result;
+    }
 
-        protected override void SetProperty(ControllerContext controllerContext, ModelBindingContext bindingContext, PropertyDescriptor propertyDescriptor, object value)
-        {
-            IEntityCore entity = bindingContext.Model as IEntityCore;
-            if (entity == null)
-            {
-                base.SetProperty(controllerContext, bindingContext, propertyDescriptor, value);
-                return;
-            }
+    protected override void SetProperty(ControllerContext controllerContext, ModelBindingContext bindingContext, PropertyDescriptor propertyDescriptor, object value)
+    {
+      var entity = bindingContext.Model as IEntityCore;
+      if (entity == null)
+      {
+        base.SetProperty(controllerContext, bindingContext, propertyDescriptor, value);
+        return;
+      }
 
-      EntityFieldCore field = entity.Fields.OfType<EntityFieldCore>().FirstOrDefault(efc => efc.Name == propertyDescriptor.Name);
+      var field = entity.Fields.OfType<EntityFieldCore>().FirstOrDefault(efc => efc.Name == propertyDescriptor.Name);
       if (field == null)
       {
         base.SetProperty(controllerContext, bindingContext, propertyDescriptor, value);
@@ -91,51 +95,51 @@ namespace GH.Northwind.Web.ModelBinders
       {
         field.ForcedCurrentValueWrite(value);
         entity.IsNew = false;
-      }          
-        }
+      }
+    }
 
-        protected override void OnModelUpdated(ControllerContext controllerContext, ModelBindingContext bindingContext)
-        {
-            IEntityCore entity = bindingContext.Model as IEntityCore;
-            if (entity != null) entity.IsDeserializing = false;
-
-            base.OnModelUpdated(controllerContext, bindingContext);
-        }
-
-        protected override object CreateModel(ControllerContext controllerContext, ModelBindingContext bindingContext, Type modelType)
-        {
-          var overrideModelType = bindingContext.ValueProvider.GetValue(CreateSubPropertyName(bindingContext.ModelName, "OverrideModelType"));
-          if (overrideModelType != null)
-          {
-            modelType = Type.GetType(overrideModelType.AttemptedValue);
-            bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(null, modelType); //in theory a call to CreateModel, the model would always be null
-          }
-
-          return base.CreateModel(controllerContext, bindingContext, modelType);
-        }
-
-        protected static bool ValidKeyValue(object o)
-        {
-            return !((o == null) ||
-                (o is Int32 && (int)o <= 0) ||                
-                (o is string && string.IsNullOrEmpty((string)o)) || 
-                (o is Guid && (Guid)o == Guid.Empty) ||
-                (o == DBNull.Value) ||
-                (o is Int16 && (short)o <= 0) ||
-                (o is Int64 && (long)o <= 0) ||
-                (o is DateTime && (DateTime)o == DateTime.MinValue) ||
-                (o is Double && (double)o <= 0) ||
-                (o is Decimal && (decimal)o <= 0) ||
-                (o is Single && (float)o <= 0));
-        }
-
-    protected static readonly MethodInfo _shouldUpdateProp = typeof(DefaultModelBinder).GetMethod("ShouldUpdateProperty", BindingFlags.Static | BindingFlags.NonPublic);
-    protected static bool ShouldUpdateProp(PropertyDescriptor property, Predicate<string> propertyFilter)
+    protected override void OnModelUpdated(ControllerContext controllerContext, ModelBindingContext bindingContext)
     {
-      return (bool)_shouldUpdateProp.Invoke(null, new object[] { property, propertyFilter });
+      var entity = bindingContext.Model as IEntityCore;
+      if (entity != null) entity.IsDeserializing = false;
+
+      base.OnModelUpdated(controllerContext, bindingContext);
     }
 
+    protected override object CreateModel(ControllerContext controllerContext, ModelBindingContext bindingContext, Type modelType)
+    {
+      var overrideModelType = bindingContext.ValueProvider.GetValue(CreateSubPropertyName(bindingContext.ModelName, "OverrideModelType"));
+      if (overrideModelType != null)
+      {
+        modelType = Type.GetType(overrideModelType.AttemptedValue);
+        bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(null, modelType); //in theory a call to CreateModel, the model would always be null
+      }
+
+      return base.CreateModel(controllerContext, bindingContext, modelType);
     }
+
+    private static bool ValidKeyValue(object o)
+    {
+      return !((o == null) ||
+               (o is Int32 && (int) o <= 0) ||
+               (o is string && string.IsNullOrEmpty((string) o)) ||
+               (o is Guid && (Guid) o == Guid.Empty) ||
+               (o == DBNull.Value) ||
+               (o is Int16 && (short) o <= 0) ||
+               (o is Int64 && (long) o <= 0) ||
+               (o is DateTime && (DateTime) o == DateTime.MinValue) ||
+               (o is Double && (double) o <= 0) ||
+               (o is Decimal && (decimal) o <= 0) ||
+               (o is Single && (float) o <= 0));
+    }
+
+    private static readonly MethodInfo _shouldUpdateProp = typeof (DefaultModelBinder).GetMethod("ShouldUpdateProperty", BindingFlags.Static | BindingFlags.NonPublic);
+
+    private static bool ShouldUpdateProp(PropertyDescriptor property, Predicate<string> propertyFilter)
+    {
+      return (bool) _shouldUpdateProp.Invoke(null, new object[] {property, propertyFilter});
+    }
+  }
 }
 
 /*

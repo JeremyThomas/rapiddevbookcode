@@ -60,11 +60,7 @@ namespace GH.Northwind.Web.Controllers
     public ActionResult DetailsProduct(int? id, AllProductsModel allProductsModel, SuppliersCategoriesModel model)
     {
       ProductEntity p = null;
-      if (id != null) p = allProductsModel.ProductById(id.Value);
-      else
-      {
-        p = allProductsModel.ProductById((int) TempData["id"]);
-      }
+      p = id == null ? allProductsModel.ProductById((int) TempData["id"]) : allProductsModel.ProductById(id.Value);
       if (p.Supplier == null) p.Supplier = model.SupplierList.Where(s => s.SupplierId == p.SupplierId).DefaultIfEmpty(null).First();
       if (p.Category == null) p.Category = model.CategoryList.Where(c => c.CategoryId == p.CategoryId).DefaultIfEmpty(null).First();
       return View(p);
