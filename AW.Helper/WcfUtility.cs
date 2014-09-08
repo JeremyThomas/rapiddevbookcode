@@ -282,13 +282,13 @@ namespace AW.Helper
       {
         // Open a channel with the WCF service endpoint, and keep it alive till the end of the program.
         //channelFactory = new ChannelFactory<INorthwindService>("WCFServer");
-        channelFactory = WcfUtility.GetChannelFactory<T>();
+        channelFactory = GetChannelFactory<T>();
         service = channelFactory.CreateChannel();
       }
       else
       {
         var objectHandle = Activator.CreateInstanceFrom(serviceAssembly, serviceImplementationType);
-        service = (T)objectHandle.Unwrap();
+        service = (T) objectHandle.Unwrap();
       }
       return new Tuple<T, Action>(service, () =>
       {
@@ -311,11 +311,11 @@ namespace AW.Helper
     public static IEnumerable<ServiceHost> CreateServiceHosts(string baseAddress, Binding binding, bool andOpen = true, IServiceBehavior[] serviceBehaviors = null, params Assembly[] assemblies)
     {
       var serviceTypes = GetServiceTypes(assemblies);
-      var hosts = serviceTypes.Select(serviceType => CreateHost(serviceType, baseAddress, binding,andOpen, serviceBehaviors));
+      var hosts = serviceTypes.Select(serviceType => CreateHost(serviceType, baseAddress, binding, andOpen, serviceBehaviors));
       return hosts;
     }
 
-    public static ServiceHost CreateHost(Type serviceType, string baseAddress, Binding binding = null, bool andOpen= true, params IServiceBehavior[] serviceBehaviors)
+    public static ServiceHost CreateHost(Type serviceType, string baseAddress, Binding binding = null, bool andOpen = true, params IServiceBehavior[] serviceBehaviors)
     {
       var fullBaseAddress = String.Concat(baseAddress, serviceType.Name);
       var host = new ServiceHost(serviceType, new Uri(fullBaseAddress));
@@ -324,7 +324,9 @@ namespace AW.Helper
       var contractType = GetServiceContractType(serviceType);
       host.AddServiceEndpoint(contractType, binding, "");
       DoIncludeExceptionDetailInFaults(host);
-      if (serviceBehaviors != null)
+      if (serviceBehaviors.IsNullOrEmpty())
+        host.Description.Behaviors.Add(new ServiceMetadataBehavior {HttpGetEnabled = true});
+      else
         foreach (var serviceBehavior in serviceBehaviors)
           host.Description.Behaviors.Add(serviceBehavior);
       host.AddServiceEndpoint(typeof (IMetadataExchange), binding, "MEX");
@@ -350,8 +352,8 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Closes the or abort.
-    /// http://attiq-rehman.blogspot.co.nz/2011/02/close-wcf-channels-in-reliable-way_27.html
+    ///   Closes the or abort.
+    ///   http://attiq-rehman.blogspot.co.nz/2011/02/close-wcf-channels-in-reliable-way_27.html
     /// </summary>
     /// <param name="service">The service.</param>
     public static void CloseOrAbort(this ICommunicationObject service)
@@ -362,7 +364,7 @@ namespace AW.Helper
         return;
       }
       if (service.State != CommunicationState.Closed
-             && service.State != CommunicationState.Closing)
+          && service.State != CommunicationState.Closing)
       {
         try
         {

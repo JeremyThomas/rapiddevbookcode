@@ -88,6 +88,7 @@
     <Compile Include="NorthwindODataService .cs" />
     <Compile Include="NorthwindPersistence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemoteAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\AW.Helper\AW.Helper.csproj">

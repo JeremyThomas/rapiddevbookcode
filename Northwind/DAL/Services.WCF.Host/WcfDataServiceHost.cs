@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Services;
+using System.Linq;
 using System.ServiceModel;
+using System.ServiceModel.Description;
 using AW.Helper;
 
 namespace Northwind.DAL.Services.WCF.Host
@@ -27,8 +29,13 @@ namespace Northwind.DAL.Services.WCF.Host
     {
       var baseAddress = ConfigurationManager.AppSettings["WcfDataServiceUrl"];
       if (_serviceHosts == null)
+      {
+      //  var x= WcfUtility.CreateServiceHosts(baseAddress, null, true, new IServiceBehavior[] {new ServiceMetadataBehavior {HttpGetEnabled = true}}, typeof (RemoteAdapter).Assembly).ToList();
         //Instantiate new ServiceHosts 
-        _serviceHosts = new List<ServiceHost>() {CreateDataServiceHost(typeof (NorthwindODataService), baseAddress)};
+        _serviceHosts = new List<ServiceHost>(
+          //
+          ) { CreateDataServiceHost(typeof(NorthwindODataService), baseAddress), WcfUtility.CreateHost(typeof(RemoteAdapter), baseAddress) };
+      }
       WcfUtility.Open(_serviceHosts);
 
       return _serviceHosts;
