@@ -96,18 +96,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WCFDataServiceManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WCFDataServiceManager.Designer.cs">
-      <DependentUpon>WCFDataServiceManager.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="WCFDataServiceManager.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>WCFDataServiceManager.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -152,6 +142,10 @@
     <ProjectReference Include="..\..\..\AW.Helper\AW.Helper.csproj">
       <Project>{ffc5b55e-9157-4ce6-81bd-e593e4c08422}</Project>
       <Name>AW.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AW.Winforms.Helpers\AW.Winforms.Helpers.csproj">
+      <Project>{d8041984-1823-4672-9b6e-3e99ab6a3a7a}</Project>
+      <Name>AW.Winforms.Helpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DAL\Northwind.DAL.csproj">
       <Project>{24fa312c-06e0-462d-97fa-709ac20d09ef}</Project>

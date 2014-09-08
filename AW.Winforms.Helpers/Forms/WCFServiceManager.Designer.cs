@@ -1,4 +1,4 @@
-namespace Northwind.Business.WCF.Host
+namespace AW.Winforms.Helpers.Forms
 {
     partial class WcfServiceManager
     {

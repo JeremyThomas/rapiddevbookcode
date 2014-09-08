@@ -1,5 +1,7 @@
 using System;
 using System.Windows.Forms;
+using AW.Winforms.Helpers.Forms;
+using Northwind.DAL.EntityClasses;
 
 namespace Northwind.Business.WCF.Host
 {
@@ -14,7 +16,8 @@ namespace Northwind.Business.WCF.Host
     {
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
-      Application.Run(new WcfServiceManager());
+      CommonEntityBase.Initialize();
+      Application.Run(new WcfServiceManager(WcfServiceHost.StartService, WcfServiceHost.StopService));
     }
   }
 }

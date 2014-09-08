@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using AW.Winforms.Helpers.Forms;
 
 namespace Northwind.DAL.Services.WCF.Host
 {
@@ -14,7 +15,8 @@ namespace Northwind.DAL.Services.WCF.Host
     {
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
-      Application.Run(new WcfDataServiceManager());
+      comm
+      Application.Run(new WcfServiceManager(WcfDataServiceHost.StartService, WcfDataServiceHost.StopService) { Text = "WcfDataServiceHost" });
     }
   }
 }
