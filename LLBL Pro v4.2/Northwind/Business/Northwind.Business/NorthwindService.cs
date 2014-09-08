@@ -24,11 +24,11 @@ namespace Northwind.Business
     public NorthwindService()
     {
       var channelFactory = WcfUtility.GetChannelFactory<IRemoteDataAccessAdapter>("http://localhost:55555/RemoteAdapter");
-      RemoteDataAccessAdapter = channelFactory.CreateChannel();
+      RemoteDataAccessAdapter = new RemoteAdapterClient(channelFactory.CreateChannel());
       //   new ChannelFactory<T>(binding, endpoint);
     }
 
-    private IRemoteDataAccessAdapter RemoteDataAccessAdapter { get; set; }
+    private IDataAccessAdapter RemoteDataAccessAdapter { get; set; }
 
     private IDataAccessAdapter GetAdapter()
     {
