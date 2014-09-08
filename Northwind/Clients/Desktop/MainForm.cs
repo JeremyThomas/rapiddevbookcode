@@ -41,6 +41,7 @@ namespace Northwind.Client.Winforms
     private string _customerIdOfCustomerWithMostOrders, _customerIdOfCustomerWithMaxOrder;
 
     #endregion
+    private Button buttonConnect;
 
     /// <summary>
     ///   CTor
@@ -56,10 +57,21 @@ namespace Northwind.Client.Winforms
       _customerIdOfCustomerWithMostOrders = string.Empty;
       _customerIdOfCustomerWithMaxOrder = string.Empty;
 
-      // calculate statistics for northwind and show these in the form.
-      CalculateStatistics();
     }
 
+    private void buttonConnect_Click(object sender, EventArgs e)
+    {
+      // calculate statistics for northwind and show these in the form.
+      try
+      {
+   CalculateStatistics();
+      }
+      catch (Exception ex)
+      {
+        Application.OnThreadException(ex);
+      }
+   
+    }
 
     /// <summary>
     ///   Calculates the statistics for the Northwind database and shows them in the form, utilizing the remote service for the
@@ -122,6 +134,7 @@ namespace Northwind.Client.Winforms
       this.label2 = new System.Windows.Forms.Label();
       this.label5 = new System.Windows.Forms.Label();
       this._editHighestOrderCustomerButton = new System.Windows.Forms.Button();
+      this.buttonConnect = new System.Windows.Forms.Button();
       this.groupBox1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -312,11 +325,22 @@ namespace Northwind.Client.Winforms
       this._editHighestOrderCustomerButton.Text = "Edit";
       this._editHighestOrderCustomerButton.Click += new System.EventHandler(this._editHighestOrderCustomerButton_Click);
       // 
+      // buttonConnect
+      // 
+      this.buttonConnect.Location = new System.Drawing.Point(285, 248);
+      this.buttonConnect.Name = "buttonConnect";
+      this.buttonConnect.Size = new System.Drawing.Size(75, 23);
+      this.buttonConnect.TabIndex = 6;
+      this.buttonConnect.Text = "Connect";
+      this.buttonConnect.UseVisualStyleBackColor = true;
+      this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
+      // 
       // MainForm
       // 
       this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
       this.CancelButton = this.exitButton;
       this.ClientSize = new System.Drawing.Size(595, 278);
+      this.Controls.Add(this.buttonConnect);
       this.Controls.Add(this.groupBox1);
       this.Controls.Add(this.openCustomersByProductButton);
       this.Controls.Add(this.exitButton);
@@ -325,6 +349,7 @@ namespace Northwind.Client.Winforms
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "MainForm";
       this.Text = "Northwind C# Example Main window";
+      this.Load += new System.EventHandler(this.buttonConnect_Click);
       this.groupBox1.ResumeLayout(false);
       this.groupBox1.PerformLayout();
       this.ResumeLayout(false);
@@ -361,5 +386,7 @@ namespace Northwind.Client.Winforms
       var manager = new CustomerManager(_dalService, _customerIdOfCustomerWithMostOrders);
       manager.ShowDialog(this);
     }
+
+
   }
 }

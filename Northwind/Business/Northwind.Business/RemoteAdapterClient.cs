@@ -3,18 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Northwind.DAL.Services;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.Business
 {
- 
-  class RemoteAdapterClient  : IDataAccessAdapter
+  internal class RemoteAdapterClient : IDataAccessAdapter
   {
-    public RemoteAdapterClient()
+    private readonly IRemoteDataAccessAdapter _remoteDataAccessAdapter;
+
+    public RemoteAdapterClient(IRemoteDataAccessAdapter remoteDataAccessAdapter)
     {
+      _remoteDataAccessAdapter = remoteDataAccessAdapter;
+      FunctionMappings = _remoteDataAccessAdapter.FunctionMappings;
     }
 
     public int CallActionStoredProcedure(string storedProcedureToCall, DbParameter[] parameters)
@@ -54,12 +55,11 @@ namespace Northwind.Business
 
     public void Dispose()
     {
-      throw new NotImplementedException();
     }
 
     public void Commit()
     {
-      throw new NotImplementedException();
+      _remoteDataAccessAdapter.Commit();
     }
 
     public void Rollback()
@@ -70,6 +70,7 @@ namespace Northwind.Business
     public bool IsTransactionInProgress { get; private set; }
     public event EventHandler TransactionCommitted;
     public event EventHandler TransactionRolledback;
+
     public IPredicateExpression CreatePrimaryKeyFilter(IList primaryKeyFields)
     {
       throw new NotImplementedException();
@@ -540,9 +541,24 @@ namespace Northwind.Business
       throw new NotImplementedException();
     }
 
+    /// <summary>
+    ///   Creates a new Retrieval query from the elements passed in, executes that retrievalquery and projects the resultset of
+    ///   that query using the
+    ///   value projectors and the projector specified. If a transaction is in progress, the command is wired to the
+    ///   transaction and executed inside the
+    ///   transaction. The projection results will be stored in the projector.
+    ///   Additional information: Type 'SD.LLBLGen.Pro.QuerySpec.NullAwareDataValueProjector' cannot be serialized.
+    ///   Consider marking it with the DataContractAttribute attribute, and marking all of its members you want serialized with
+    ///   the DataMemberAttribute attribute.
+    ///   If the type is a collection, consider marking it with the CollectionDataContractAttribute.
+    ///   See the Microsoft .NET Framework documentation for other supported types.
+    /// </summary>
+    /// <param name="valueProjectors">The value projectors.</param>
+    /// <param name="projector">The projector to use for projecting a raw row onto a new object provided by the projector.</param>
+    /// <param name="parameters">The parameters.</param>
     public void FetchProjection(List<IDataValueProjector> valueProjectors, IGeneralDataProjector projector, QueryParameters parameters)
     {
-      throw new NotImplementedException();
+      _remoteDataAccessAdapter.FetchProjection(valueProjectors, projector, parameters);
     }
 
     public object GetScalar(IEntityField2 field, AggregateFunction aggregateToApply)
