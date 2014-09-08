@@ -1,10 +1,12 @@
 using System;
 using System.ServiceModel;
+using AW.Helper;
 using Northwind.DAL.DTO;
 using Northwind.DAL.EntityClasses;
 using Northwind.DAL.FactoryClasses;
 using Northwind.DAL.HelperClasses;
 using Northwind.DAL.Interfaces;
+using Northwind.DAL.Services;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using SD.LLBLGen.Pro.QuerySpec;
@@ -19,6 +21,22 @@ namespace Northwind.Business
   [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
   public class NorthwindService : INorthwindService
   {
+    public NorthwindService()
+    {
+      var channelFactory = WcfUtility.GetChannelFactory<IRemoteDataAccessAdapter>("http://localhost:55555/RemoteAdapter");
+      RemoteDataAccessAdapter = channelFactory.CreateChannel();
+      //   new ChannelFactory<T>(binding, endpoint);
+    }
+
+    private IRemoteDataAccessAdapter RemoteDataAccessAdapter { get; set; }
+
+    private IDataAccessAdapter GetAdapter()
+    {
+      if (RemoteDataAccessAdapter == null)
+      return new DataAccessAdapter();
+      return RemoteDataAccessAdapter;
+    }
+
     /// <summary>
     ///   Gets the statistics for the start screen.
     /// </summary>
@@ -27,7 +45,7 @@ namespace Northwind.Business
     {
       var toReturn = new NWStatistics();
       var qf = new QueryFactory();
-      using (var adapter = new DataAccessAdapter())
+      using (var adapter = GetAdapter())
       {
         toReturn.NumberOfCustomers = adapter.FetchScalar<int>(qf.Create().Select(qf.Customer.CountRow()));
 
@@ -94,7 +112,7 @@ namespace Northwind.Business
     public IEntityCollection2 GetAllCustomers()
     {
       var toReturn = new EntityCollection(new CustomerEntityFactory());
-      using (var adapter = new DataAccessAdapter())
+      using (var adapter = GetAdapter())
       {
         // simply fetch all customer entities into the collection.
         adapter.FetchEntityCollection(toReturn, null);
@@ -118,7 +136,7 @@ namespace Northwind.Business
         .Where(OrderDetailFields.ProductId == productId);
 
       var customers = new EntityCollection(new CustomerEntityFactory());
-      using (var adapter = new DataAccessAdapter())
+      using (var adapter = GetAdapter())
       {
         adapter.FetchQuery(q, customers);
       }
@@ -140,7 +158,7 @@ namespace Northwind.Business
     public IEntityCollection2 GetProductsSortedBy(EntityField2 sortField, SortOperator direction)
     {
       var toReturn = new EntityCollection(new ProductEntityFactory());
-      using (var adapter = new DataAccessAdapter())
+      using (var adapter = GetAdapter())
       {
         // fetch all products, sorted on the sort expression passed in
         adapter.FetchEntityCollection(toReturn, null, 0, new SortExpression(new SortClause(sortField, null, direction)));
@@ -162,7 +180,7 @@ namespace Northwind.Business
       }
 
       var toReturn = 0;
-      using (var adapter = new DataAccessAdapter())
+      using (var adapter = GetAdapter())
       {
         // get scalar for amount of times this product is sold.
         var scalarValue = adapter.GetScalar(OrderDetailFields.Quantity, null, AggregateFunction.Sum, (OrderDetailFields.ProductId == productId));
@@ -191,7 +209,7 @@ namespace Northwind.Business
           .WithSubPath(OrderEntity.PrefetchPathOrderDetails.WithOrdering(OrderDetailFields.OrderId.Ascending())));
 
       CustomerEntity toReturn;
-      using (var adapter = new DataAccessAdapter())
+      using (var adapter = GetAdapter())
       {
         toReturn = adapter.FetchFirst(q);
       }
@@ -212,7 +230,7 @@ namespace Northwind.Business
         return false;
       }
       int numberOfElementsProcessed;
-      using (var adapter = new DataAccessAdapter())
+      using (var adapter = GetAdapter())
       {
         numberOfElementsProcessed = uow.Commit(adapter);
       }
