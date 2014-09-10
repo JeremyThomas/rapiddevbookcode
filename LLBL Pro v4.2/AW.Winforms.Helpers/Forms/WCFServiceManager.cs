@@ -32,13 +32,13 @@ namespace AW.Winforms.Helpers.Forms
     {
       var serviceHosts = _startService();
       ClearTableLayoutPanel();
-      foreach (var serviceHost in serviceHosts.Where(serviceHost => serviceHost.State == CommunicationState.Opened))
+      foreach (var serviceHost in serviceHosts.Where(serviceHost => serviceHost.State == CommunicationState.Opened).OrderBy(serviceHost => serviceHost.Description.Name))
       {
-        tableLayoutPanelMetaData.RowCount++;
+       // tableLayoutPanelMetaData.RowCount++;
         var linkLabelWsdl = new LinkLabel {AutoSize = true};
         linkLabelWsdl.LinkClicked += linkLabelWsdl_LinkClicked;
         tableLayoutPanelMetaData.Controls.Add(linkLabelWsdl);
-        tableLayoutPanelMetaData.SetRow(linkLabelWsdl, tableLayoutPanelMetaData.RowCount - 1);
+      //  tableLayoutPanelMetaData.SetRow(linkLabelWsdl, tableLayoutPanelMetaData.RowCount - 1);
         linkLabelWsdl.Text = serviceHost.BaseAddresses.First().ToString();
         linkLabelWsdl.Links.Add(0, linkLabelWsdl.Text.Length, linkLabelWsdl.Text);
         _serviceState.Text = "Opened";

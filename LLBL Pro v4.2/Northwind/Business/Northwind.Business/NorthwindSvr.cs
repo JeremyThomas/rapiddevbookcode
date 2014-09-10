@@ -36,7 +36,7 @@ namespace Northwind.Business
       var useWcfDataService = ConfigurationManager.AppSettings["UseWcfDataService"];
       if (useWcfDataService.ToLower() == "true")
       {
-        var dataServiceUrl = ConfigurationSettings.AppSettings["WcfDataServiceNorthwindPersistenceUrl"];
+        var dataServiceUrl = ConfigurationSettings.AppSettings["WcfDataServiceNorthwindLLBLPersistenceUrl"];
         //DataCxt.Cxt = new DataServiceContext(new Uri(dataServiceUrl));
         PersistSvr.PersistenceProvider = new ProLinqPersistence(dataServiceUrl);
         // PersistSvr

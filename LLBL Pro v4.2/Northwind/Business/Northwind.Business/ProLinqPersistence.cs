@@ -58,7 +58,7 @@ namespace Northwind.Business
 
     public IQueryable<TEntity> GetQueryableForEntity<TEntity>() where TEntity : class
     {
-     var p = _persistence.Product;
+     var p = _persistence.GetProducts();
       return (IQueryable<TEntity>) p;
       //   var queryableForEntity = _persistence.GetQueryableForEntity(typeof(TEntity));
 //return (IQueryable<TEntity>) queryableForEntity;

@@ -1,11 +1,17 @@
 using System.ServiceModel;
 using Northwind.DAL.EntityClasses;
+using Northwind.DAL.HelperClasses;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.Linq
 {
   [ServiceContract]
+  [ServiceKnownType(typeof(CustomerEntity))]
+  [ServiceKnownType(typeof(OrderEntity))]
+  [ServiceKnownType(typeof(EntityCollection))]
+  [ServiceKnownType(typeof(EntityField2))]
+  [ServiceKnownType(typeof(UnitOfWork2))]
   public interface INorthwindLinqMetaData
   {
 
