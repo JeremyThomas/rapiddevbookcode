@@ -160,8 +160,10 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="Interfaces\INorthwindSvr.cs" />
+    <Compile Include="Interfaces\IRemotableLLBLPersistance.cs" />
     <Compile Include="Interfaces\IPersistence.cs" />
     <Compile Include="Linq\Filters\Filters.cs" />
+    <Compile Include="Linq\INorthwindLinqMetaData.cs" />
     <Compile Include="Linq\LinqMetaData.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>

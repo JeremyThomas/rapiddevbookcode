@@ -6,6 +6,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using AW.Helper;
+using ProLinq.Wcf.Behaviors;
 
 namespace Northwind.DAL.Services.WCF.Host
 {
@@ -30,11 +31,11 @@ namespace Northwind.DAL.Services.WCF.Host
       var baseAddress = ConfigurationManager.AppSettings["WcfDataServiceUrl"];
       if (_serviceHosts == null)
       {
-      //  var x= WcfUtility.CreateServiceHosts(baseAddress, null, true, new IServiceBehavior[] {new ServiceMetadataBehavior {HttpGetEnabled = true}}, typeof (RemoteAdapter).Assembly).ToList();
+        var serviceBehaviors = new IServiceBehavior[] {new ServiceMetadataBehavior {HttpGetEnabled = true,HttpsGetEnabled = true},new QueryableBehavior(), new SerializationServiceBehavior(), };
         //Instantiate new ServiceHosts 
-        _serviceHosts = new List<ServiceHost>(
+        _serviceHosts = new List<ServiceHost>(WcfUtility.CreateServiceHosts(baseAddress, null, true, serviceBehaviors, typeof(RemoteAdapter), typeof(NorthwindLLBLPersistence)) 
           //
-          ) { CreateDataServiceHost(typeof(NorthwindODataService), baseAddress), WcfUtility.CreateHost(typeof(RemoteAdapter), baseAddress) };
+          ) { CreateDataServiceHost(typeof(NorthwindODataService), baseAddress), };
       }
       WcfUtility.Open(_serviceHosts);
 

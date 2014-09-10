@@ -31,7 +31,7 @@ namespace AW.Winforms.Helpers.Forms
     private void start_Click(object sender, EventArgs e)
     {
       var serviceHosts = _startService();
-      tableLayoutPanelMetaData.RowCount = 0;
+      ClearTableLayoutPanel();
       foreach (var serviceHost in serviceHosts.Where(serviceHost => serviceHost.State == CommunicationState.Opened))
       {
         tableLayoutPanelMetaData.RowCount++;
@@ -50,8 +50,14 @@ namespace AW.Winforms.Helpers.Forms
       if (_stopservice())
       {
         _serviceState.Text = "Closed";
-        tableLayoutPanelMetaData.RowCount = 0;
+        ClearTableLayoutPanel();
       }
+    }
+
+    private void ClearTableLayoutPanel()
+    {
+      tableLayoutPanelMetaData.Controls.Clear();
+      tableLayoutPanelMetaData.RowCount = 0;
     }
 
     private void Form1_FormClosing(object sender, FormClosingEventArgs e)

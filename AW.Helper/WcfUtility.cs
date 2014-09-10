@@ -315,6 +315,12 @@ namespace AW.Helper
       return hosts;
     }
 
+    public static IEnumerable<ServiceHost> CreateServiceHosts(string baseAddress, Binding binding, bool andOpen = true, IServiceBehavior[] serviceBehaviors = null, params Type[] serviceTypes)
+    {
+      var hosts = serviceTypes.Select(serviceType => CreateHost(serviceType, baseAddress, binding, andOpen, serviceBehaviors));
+      return hosts;
+    }
+
     public static ServiceHost CreateHost(Type serviceType, string baseAddress, Binding binding = null, bool andOpen = true, params IServiceBehavior[] serviceBehaviors)
     {
       var fullBaseAddress = String.Concat(baseAddress, serviceType.Name);

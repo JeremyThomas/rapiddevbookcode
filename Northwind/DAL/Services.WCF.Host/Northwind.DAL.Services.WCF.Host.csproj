@@ -75,18 +75,29 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\Microsoft.Data.Services.Client.5.6.1\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
     </Reference>
+    <Reference Include="ProLinq">
+      <HintPath>..\..\..\packages\ProLinq.1.0.4\lib\net45\ProLinq.dll</HintPath>
+    </Reference>
+    <Reference Include="ProLinq.Wcf">
+      <HintPath>..\..\..\packages\ProLinq.Wcf.1.0.6\lib\net45\ProLinq.Wcf.dll</HintPath>
+    </Reference>
     <Reference Include="SD.LLBLGen.Pro.ODataSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
+    <Reference Include="Serialize.Linq">
+      <HintPath>..\..\..\packages\Serialize.Linq.1.1.3\lib\net45\Serialize.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Spatial, Version=5.6.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -96,6 +107,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NorthwindLLBLPersistence.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -119,6 +131,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ProxyDataContractResolverBehavior.cs" />
     <Compile Include="WcfDataServiceHost.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +152,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\AW.Helper.LLBL\AW.Helper.LLBL.csproj">
+      <Project>{7919c746-73f3-4279-a53b-cc6c08f42318}</Project>
+      <Name>AW.Helper.LLBL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\AW.Helper\AW.Helper.csproj">
       <Project>{ffc5b55e-9157-4ce6-81bd-e593e4c08422}</Project>
       <Name>AW.Helper</Name>
