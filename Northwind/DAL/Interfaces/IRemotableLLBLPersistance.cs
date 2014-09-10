@@ -20,16 +20,27 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.ServiceModel;
+using Northwind.DAL.EntityClasses;
+using Northwind.DAL.HelperClasses;
 using Northwind.DAL.Linq;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.Interfaces
 {
   [ServiceContract]
-  public interface ILLBLPersistance : INorthwindLinqMetaData
+  [ServiceKnownType(typeof(CustomerEntity))]
+  [ServiceKnownType(typeof(ProductEntity))]
+  [ServiceKnownType(typeof(EntityCollection))]
+  [ServiceKnownType(typeof(EntityField2))]
+  [ServiceKnownType(typeof(IUnitOfWorkCore))]
+  public interface ILLBLPersistance //: INorthwindLinqMetaData
     {
     [OperationContract]
     void Commit(IUnitOfWorkCore uow);
+
+    [OperationContract]
+    IQueryable<ProductEntity> GetProducts();
+
 
    // [OperationContract]
     IQueryable GetQueryableForEntity(Type entityType);
