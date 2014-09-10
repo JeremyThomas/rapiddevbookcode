@@ -1,5 +1,10 @@
-﻿namespace Northwind.DAL.DTO
+﻿using System;
+using System.Runtime.Serialization;
+
+namespace Northwind.DAL.DTO
 {
+  [DataContract]
+  [Serializable]
   public class PocoBase
   {
   }

@@ -2,7 +2,7 @@
 
 namespace Northwind.DAL.Linq
 {
-	partial class LinqMetaData
+	partial class LinqMetaData: INorthwindLinqMetaData
 	{
 		static LinqMetaData()
 		{

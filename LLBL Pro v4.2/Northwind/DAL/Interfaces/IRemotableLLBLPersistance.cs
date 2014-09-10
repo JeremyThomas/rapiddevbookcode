@@ -20,20 +20,18 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.ServiceModel;
+using Northwind.DAL.Linq;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.Interfaces
 {
- //   [ServiceContract]
-  public interface IPersistence
-  {
+  [ServiceContract]
+  public interface ILLBLPersistance : INorthwindLinqMetaData
+    {
     [OperationContract]
-      void Save(IEntity2 entity, bool commit =true);
-    [OperationContract]
-    void Delete(IEntity2 entity, bool commit = true);
-    [OperationContract]
-    void Commit();
-    [OperationContract]
-    IQueryable<TEntity> GetQueryableForEntity<TEntity>() where TEntity : class;
+    void Commit(IUnitOfWorkCore uow);
+
+   // [OperationContract]
+    IQueryable GetQueryableForEntity(Type entityType);
     }
 }
