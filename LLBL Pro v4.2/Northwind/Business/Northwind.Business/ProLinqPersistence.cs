@@ -1,5 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.ServiceModel;
+using AW.Helper;
+using Fasterflect;
 using Northwind.DAL.Interfaces;
 using ProLinq.Wcf;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -56,10 +61,50 @@ namespace Northwind.Business
         _persistence.Commit(_unitOfWork);
     }
 
+    private IEnumerable<PropertyInfo> _queryables;
+    private static Dictionary<Type, PropertyInfo> _memberGetters;
+
+
     public IQueryable<TEntity> GetQueryableForEntity<TEntity>() where TEntity : class
-    {
-     var p = _persistence.GetProducts();
-      return (IQueryable<TEntity>) p;
+    {  
+      var typeOfEntity = typeof (TEntity);
+      if (_memberGetters == null)
+        _memberGetters = new Dictionary<Type, PropertyInfo>();
+      var nameGetter = _memberGetters.GetValue(typeOfEntity);
+      if (nameGetter == null)
+      {
+        //  var queryable = EntityHelper.GetQueryableForEntityIgnoreIfNull(linqMetaData, typeOfEntity);
+        //   var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(queryable.GetType());
+        var lLblPersistanceType = typeof(ILLBLPersistance);
+        if (_queryables == null)
+        {
+          _queryables = lLblPersistanceType.Properties().Where(m => m.IsReadable() && m.Type().Implements<IQueryable>());
+        }
+        nameGetter = _queryables.FirstOrDefault(q => MetaDataHelper.GetTypeParameterOfGenericType(q.PropertyType) == typeOfEntity);
+        if (nameGetter != null)
+        {
+       //   nameGetter = lLblPersistanceType.DelegateForGetPropertyValue(x.Name);
+          _memberGetters.Add(typeOfEntity, nameGetter);
+          return (IQueryable<TEntity>)nameGetter.GetValue(_persistence, null); 
+        }
+        return null;
+      }
+      return (IQueryable<TEntity>)nameGetter.GetValue(_persistence, null); 
+
+     // if (_queryables == null)
+     //   _queryables = GetType().Properties().Where(m => m.IsReadable() && m.Type().Implements<IQueryable>());
+
+     //var p = _persistence.GetProducts();
+    
+     //var x = _queryables.FirstOrDefault(q => MetaDataHelper.GetTypeParameterOfGenericType(q.PropertyType) == typeOfEntity);
+     //if (x != null)
+     //{
+     //  nameGetter = GetType().DelegateForGetPropertyValue(x.Name);
+     //  _memberGetters.Add(typeOfEntity, nameGetter);
+     //  return (IQueryable)nameGetter(this);
+     //}
+     // var supplierEntities = _persistence.Supplier;
+     // return (IQueryable<TEntity>) p;
       //   var queryableForEntity = _persistence.GetQueryableForEntity(typeof(TEntity));
 //return (IQueryable<TEntity>) queryableForEntity;
     }

@@ -33,13 +33,17 @@ namespace Northwind.DAL.Interfaces
   [ServiceKnownType(typeof(EntityCollection))]
   [ServiceKnownType(typeof(EntityField2))]
   [ServiceKnownType(typeof(IUnitOfWorkCore))]
-  public interface ILLBLPersistance //: INorthwindLinqMetaData
+  public interface ILLBLPersistance// : INorthwindLinqMetaData
     {
     [OperationContract]
     void Commit(IUnitOfWorkCore uow);
 
     [OperationContract]
     IQueryable<ProductEntity> GetProducts();
+
+    IQueryable<ProductEntity> Product { [OperationContract]get; }
+
+    IQueryable<SupplierEntity> Supplier { [OperationContract]get; }
 
 
    // [OperationContract]

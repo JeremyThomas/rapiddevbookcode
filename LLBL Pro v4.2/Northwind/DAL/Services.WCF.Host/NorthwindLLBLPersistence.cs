@@ -24,6 +24,24 @@ namespace Northwind.DAL.Services.WCF.Host
       return linqMetaData.Product;
     }
 
+    public IQueryable<ProductEntity> Product
+    {
+      get
+      {
+        var linqMetaData = new LinqMetaData(GetAdapter());
+        return linqMetaData.Product;
+      }
+    }
+
+    public IQueryable<SupplierEntity> Supplier
+    {
+      get
+      {
+        var linqMetaData = new LinqMetaData(GetAdapter());
+        return linqMetaData.Supplier;
+      }
+    }
+
     public IQueryable GetQueryableForEntity(Type entityType)
     {
       var linqMetaData = new LinqMetaData(GetAdapter());
