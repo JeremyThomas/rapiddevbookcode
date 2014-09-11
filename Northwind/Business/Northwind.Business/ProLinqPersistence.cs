@@ -18,7 +18,7 @@ namespace Northwind.Business
 
     public ProLinqPersistence(string dataServiceUrl)
     {
-      var channelFactory = new QueryableChannelFactory<ILLBLPersistance>(new BasicHttpBinding(), new EndpointAddress(dataServiceUrl));
+      var channelFactory = new QueryableChannelFactory<ILLBLPersistance>(WcfUtility.CreateBasicHttpBinding(), new EndpointAddress(dataServiceUrl));
       _persistence = channelFactory.CreateChannel();
     }
 

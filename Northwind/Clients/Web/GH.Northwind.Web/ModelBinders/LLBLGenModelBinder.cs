@@ -15,14 +15,22 @@ namespace GH.Northwind.Web.ModelBinders
   /// </summary>
   public class LLBLGenModelBinder : DefaultModelBinder
   {
-    private static readonly string[] Entity2Exclude = {"CustomPropertiesOfType", "FieldsCustomPropertiesOfType", "Validator", 
-                                                        "AuthorizerToUse", "AuditorToUse", "Fields", "Transaction", "ConcurrencyPredicateFactoryToUse", 
-                                                        "TypeDefaultValueProviderToUse", "PrimaryKeyFields", "LLBLGenProEntityTypeValue", "LLBLGenProEntityName", 
-                                                        "ActiveContext", "IsDirty", "IsNew", "ObjectID", "ParticipatesInTransaction", "IsDeserializing"};
-    private static readonly string[] EntityExclude = {"CustomPropertiesOfType", "FieldsCustomPropertiesOfType", "Validator", 
-                                                       "AuthorizerToUse", "AuditorToUse", "Fields", "Transaction", "ConcurrencyPredicateFactoryToUse", 
-                                                       "TypeDefaultValueProviderToUse", "PrimaryKeyFields", "LLBLGenProEntityTypeValue", "LLBLGenProEntityName", 
-                                                       "ActiveContext", "IsDirty", "IsNew", "ObjectID", "ParticipatesInTransaction", "IsDeserializing", "IsSerializing"};
+    private static readonly string[] Entity2Exclude =
+    {
+      "CustomPropertiesOfType", "FieldsCustomPropertiesOfType", "Validator",
+      "AuthorizerToUse", "AuditorToUse", "Fields", "Transaction", "ConcurrencyPredicateFactoryToUse",
+      "TypeDefaultValueProviderToUse", "PrimaryKeyFields", "LLBLGenProEntityTypeValue", "LLBLGenProEntityName",
+      "ActiveContext", "IsDirty", "IsNew", "ObjectID", "ParticipatesInTransaction", "IsDeserializing"
+    };
+
+    private static readonly string[] EntityExclude =
+    {
+      "CustomPropertiesOfType", "FieldsCustomPropertiesOfType", "Validator",
+      "AuthorizerToUse", "AuditorToUse", "Fields", "Transaction", "ConcurrencyPredicateFactoryToUse",
+      "TypeDefaultValueProviderToUse", "PrimaryKeyFields", "LLBLGenProEntityTypeValue", "LLBLGenProEntityName",
+      "ActiveContext", "IsDirty", "IsNew", "ObjectID", "ParticipatesInTransaction", "IsDeserializing", "IsSerializing"
+    };
+
     private static readonly Dictionary<Type, List<PropertyDescriptor>> EntityPropertyDescriptorCache = new Dictionary<Type, List<PropertyDescriptor>>();
 
     protected override PropertyDescriptorCollection GetModelProperties(ControllerContext controllerContext, ModelBindingContext bindingContext)
@@ -95,6 +103,8 @@ namespace GH.Northwind.Web.ModelBinders
       {
         field.ForcedCurrentValueWrite(value);
         entity.IsNew = false;
+        if (entity.Fields.State == EntityState.New)
+          entity.Fields.State = EntityState.Fetched;
       }
     }
 
