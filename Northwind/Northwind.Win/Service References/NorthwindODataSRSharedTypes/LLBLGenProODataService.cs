@@ -67,11 +67,11 @@ namespace Northwind.Win.NorthwindODataSRSharedTypes
       var nameGetter = _memberGetters.GetValue(typeOfEntity);
       if (nameGetter == null)
       {
-        var queryable = EntityHelper.GetQueryableForEntityIgnoreIfNull(linqMetaData, typeOfEntity);
-        var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(queryable.GetType());
+      //  var queryable = EntityHelper.GetQueryableForEntityIgnoreIfNull(linqMetaData, typeOfEntity);
+     //   var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(queryable.GetType());
         if (_queryables == null)
           _queryables = GetType().Properties().Where(m => m.IsReadable() && m.Type().Implements<IQueryable>());
-        var x = _queryables.FirstOrDefault(q => MetaDataHelper.GetTypeParameterOfGenericType(q.PropertyType) == typeParameterOfGenericType);
+        var x = _queryables.FirstOrDefault(q => MetaDataHelper.GetTypeParameterOfGenericType(q.PropertyType) == typeOfEntity);
         if (x != null)
         {
           nameGetter = GetType().DelegateForGetPropertyValue(x.Name);

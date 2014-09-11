@@ -38,6 +38,7 @@ namespace AW.Winforms.Helpers.Forms
         var linkLabelWsdl = new LinkLabel {AutoSize = true};
         linkLabelWsdl.LinkClicked += linkLabelWsdl_LinkClicked;
         tableLayoutPanelMetaData.Controls.Add(linkLabelWsdl);
+        linkLabelWsdl.Dock=DockStyle.Top;
       //  tableLayoutPanelMetaData.SetRow(linkLabelWsdl, tableLayoutPanelMetaData.RowCount - 1);
         linkLabelWsdl.Text = serviceHost.BaseAddresses.First().ToString();
         linkLabelWsdl.Links.Add(0, linkLabelWsdl.Text.Length, linkLabelWsdl.Text);

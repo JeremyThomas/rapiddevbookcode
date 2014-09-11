@@ -35,6 +35,8 @@ namespace AW.Winforms.Helpers.Forms
       this._serviceState = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.tableLayoutPanelMetaData = new System.Windows.Forms.TableLayoutPanel();
+      this.panel1 = new System.Windows.Forms.Panel();
+      this.panel1.SuspendLayout();
       this.SuspendLayout();
       // 
       // start
@@ -89,12 +91,27 @@ namespace AW.Winforms.Helpers.Forms
       // 
       this.tableLayoutPanelMetaData.ColumnCount = 1;
       this.tableLayoutPanelMetaData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanelMetaData.Location = new System.Drawing.Point(22, 78);
+      this.tableLayoutPanelMetaData.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tableLayoutPanelMetaData.Location = new System.Drawing.Point(0, 100);
+      this.tableLayoutPanelMetaData.Margin = new System.Windows.Forms.Padding(10);
       this.tableLayoutPanelMetaData.Name = "tableLayoutPanelMetaData";
       this.tableLayoutPanelMetaData.RowCount = 1;
       this.tableLayoutPanelMetaData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanelMetaData.Size = new System.Drawing.Size(313, 37);
+      this.tableLayoutPanelMetaData.Size = new System.Drawing.Size(451, 124);
       this.tableLayoutPanelMetaData.TabIndex = 6;
+      // 
+      // panel1
+      // 
+      this.panel1.Controls.Add(this.start);
+      this.panel1.Controls.Add(this.stop);
+      this.panel1.Controls.Add(this.label1);
+      this.panel1.Controls.Add(this._serviceState);
+      this.panel1.Controls.Add(this.label2);
+      this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+      this.panel1.Location = new System.Drawing.Point(0, 0);
+      this.panel1.Name = "panel1";
+      this.panel1.Size = new System.Drawing.Size(451, 100);
+      this.panel1.TabIndex = 7;
       // 
       // WcfServiceManager
       // 
@@ -102,17 +119,14 @@ namespace AW.Winforms.Helpers.Forms
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(451, 224);
       this.Controls.Add(this.tableLayoutPanelMetaData);
-      this.Controls.Add(this.label2);
-      this.Controls.Add(this._serviceState);
-      this.Controls.Add(this.label1);
-      this.Controls.Add(this.stop);
-      this.Controls.Add(this.start);
+      this.Controls.Add(this.panel1);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "WcfServiceManager";
       this.Text = "WCF Service Manager";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+      this.panel1.ResumeLayout(false);
+      this.panel1.PerformLayout();
       this.ResumeLayout(false);
-      this.PerformLayout();
 
         }
 
@@ -124,6 +138,7 @@ namespace AW.Winforms.Helpers.Forms
         private System.Windows.Forms.Label _serviceState;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMetaData;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
