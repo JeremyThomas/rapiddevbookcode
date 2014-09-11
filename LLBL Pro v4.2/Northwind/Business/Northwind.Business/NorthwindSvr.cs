@@ -147,7 +147,7 @@ namespace Northwind.Business
     public ProductEntity GetProductById(int id)
     {
       var pds = PersistSvr.GetAll<ProductEntity>().Where(p => p.ProductId == id);
-      return pds.Count() == 0 ? null : pds.First();
+      return pds.FirstOrDefault();
     }
 
     public void InsertProduct(ProductEntity productEntity, bool commit)

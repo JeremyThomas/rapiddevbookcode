@@ -74,7 +74,7 @@ namespace AW.Helper
         //binding.ReaderQuotas.MaxNameTableCharCount = WcfSerializerMaxNameTableCharCount;
 
 
-        var binding = new BasicHttpBinding {MaxReceivedMessageSize = 1000000, ReaderQuotas = {MaxDepth = 200}};
+        var binding = CreateBasicHttpBinding();
         var factory = new ChannelFactory<T>(binding, endpoint);
         // factory.Endpoint.Behaviors.Add(new WebHttpBehavior());
         return factory;
@@ -122,6 +122,11 @@ namespace AW.Helper
 
       //no matching binding for the config
       throw new ApplicationException(String.Format("The service end point url specified does not match a supported protocol ({0}).", serviceEndpointUrl));
+    }
+
+    public static BasicHttpBinding CreateBasicHttpBinding()
+    {
+      return new BasicHttpBinding {MaxReceivedMessageSize = 1000000, ReaderQuotas = {MaxDepth = 200}};
     }
 
     /// <summary>
@@ -326,7 +331,7 @@ namespace AW.Helper
       var fullBaseAddress = String.Concat(baseAddress, serviceType.Name);
       var host = new ServiceHost(serviceType, new Uri(fullBaseAddress));
       if (binding == null)
-        binding = new BasicHttpBinding {MaxReceivedMessageSize = 1000000, ReaderQuotas = {MaxDepth = 200}};
+        binding = CreateBasicHttpBinding();
       var contractType = GetServiceContractType(serviceType);
       host.AddServiceEndpoint(contractType, binding, "");
       DoIncludeExceptionDetailInFaults(host);

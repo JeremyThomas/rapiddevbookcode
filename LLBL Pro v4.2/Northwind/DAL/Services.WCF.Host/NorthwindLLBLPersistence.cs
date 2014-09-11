@@ -1,16 +1,24 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using AW.Helper.LLBL;
 using Northwind.DAL.EntityClasses;
 using Northwind.DAL.Interfaces;
 using Northwind.DAL.Linq;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+using Serialize.Linq.Extensions;
 
 namespace Northwind.DAL.Services.WCF.Host
 {
   public class NorthwindLLBLPersistence : ILLBLPersistance
   {
-    private DataAccessAdapterBase _adapterToUse;
+  //  Lazy<DataAccessAdapterBase> _adapterToUse = new Lazy<DataAccessAdapterBase>
+  //(Factories.CreateDataAccessAdapter, true);
+
+    readonly Lazy<LinqMetaData> _linqMetaData = new Lazy<LinqMetaData>
+      (() => new LinqMetaData(Factories.CreateDataAccessAdapter()), true);
+
 
     public void Commit(IUnitOfWorkCore uow)
     {
@@ -18,18 +26,21 @@ namespace Northwind.DAL.Services.WCF.Host
         uow.Commit(adapter);
     }
 
-    public IQueryable<ProductEntity> GetProducts()
+    public IQueryable<CustomerEntity> Customer
     {
-      var linqMetaData = new LinqMetaData(GetAdapter());
-      return linqMetaData.Product;
+      get { return _linqMetaData.Value.Customer; }
+    }
+
+    public IQueryable<OrderEntity> Order
+    {
+      get { return _linqMetaData.Value.Order; }
     }
 
     public IQueryable<ProductEntity> Product
     {
       get
       {
-        var linqMetaData = new LinqMetaData(GetAdapter());
-        return linqMetaData.Product;
+        return GetQueryableForEntity<ProductEntity>();
       }
     }
 
@@ -37,20 +48,31 @@ namespace Northwind.DAL.Services.WCF.Host
     {
       get
       {
-        var linqMetaData = new LinqMetaData(GetAdapter());
-        return linqMetaData.Supplier;
+        return GetQueryableForEntity<SupplierEntity>();
       }
+    }
+
+    public IQueryable<CategoryEntity> Category
+    {
+      get
+      {
+        return GetQueryableForEntity<CategoryEntity>();
+      }
+    }
+
+    public DataSource2<TEntity> GetQueryableForEntity<TEntity>()
+          where TEntity : class
+    {
+    
+      return _linqMetaData.Value.GetQueryableForEntity<TEntity>();
     }
 
     public IQueryable GetQueryableForEntity(Type entityType)
     {
-      var linqMetaData = new LinqMetaData(GetAdapter());
-      return (IQueryable) linqMetaData.GetQueryableForEntity(entityType);
+
+      return (IQueryable)_linqMetaData.Value.GetQueryableForEntity(entityType);
     }
 
-    private DataAccessAdapterBase GetAdapter()
-    {
-      return _adapterToUse = _adapterToUse ?? Factories.CreateDataAccessAdapter();
-    }
+ 
   }
 }
