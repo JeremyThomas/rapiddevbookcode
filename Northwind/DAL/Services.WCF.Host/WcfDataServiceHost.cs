@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Services;
-using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using AW.Helper;
@@ -31,11 +30,12 @@ namespace Northwind.DAL.Services.WCF.Host
       var baseAddress = ConfigurationManager.AppSettings["WcfDataServiceUrl"];
       if (_serviceHosts == null)
       {
-        var serviceBehaviors = new IServiceBehavior[] {new ServiceMetadataBehavior {HttpGetEnabled = true,HttpsGetEnabled = true},new QueryableBehavior(), new SerializationServiceBehavior(), };
+        //new SerializationServiceBehavior()
+        var serviceBehaviors = new IServiceBehavior[] {new ServiceMetadataBehavior {HttpGetEnabled = true, HttpsGetEnabled = true}, new QueryableBehavior()};
         //Instantiate new ServiceHosts 
-        _serviceHosts = new List<ServiceHost>(WcfUtility.CreateServiceHosts(baseAddress, null, true, serviceBehaviors, typeof(RemoteAdapter), typeof(NorthwindLLBLPersistence)) 
+        _serviceHosts = new List<ServiceHost>(WcfUtility.CreateServiceHosts(baseAddress, null, true, serviceBehaviors, typeof (NorthwindLLBLPersistence)) 
           //
-          ) { CreateDataServiceHost(typeof(NorthwindODataService), baseAddress), };
+          ) {CreateDataServiceHost(typeof (NorthwindODataService), baseAddress)};
       }
       WcfUtility.Open(_serviceHosts);
 
@@ -62,7 +62,7 @@ namespace Northwind.DAL.Services.WCF.Host
       }
       return false;
     }
-    
+
     public static ServiceHost CreateDataServiceHost(Type serviceType, string baseAddress)
     {
       var fullBaseAddress = string.Concat(baseAddress, serviceType.Name);

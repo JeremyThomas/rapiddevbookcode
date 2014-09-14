@@ -29,8 +29,7 @@ namespace AW.Winforms.Helpers.Forms
         private void InitializeComponent()
         {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WcfServiceManager));
-      this.start = new System.Windows.Forms.Button();
-      this.stop = new System.Windows.Forms.Button();
+      this.ToggleOnOff = new System.Windows.Forms.Button();
       this.label1 = new System.Windows.Forms.Label();
       this._serviceState = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
@@ -39,32 +38,21 @@ namespace AW.Winforms.Helpers.Forms
       this.panel1.SuspendLayout();
       this.SuspendLayout();
       // 
-      // start
+      // ToggleOnOff
       // 
-      this.start.BackColor = System.Drawing.Color.PaleGreen;
-      this.start.Location = new System.Drawing.Point(22, 17);
-      this.start.Name = "start";
-      this.start.Size = new System.Drawing.Size(110, 23);
-      this.start.TabIndex = 0;
-      this.start.Text = "Start WCF Service";
-      this.start.UseVisualStyleBackColor = false;
-      this.start.Click += new System.EventHandler(this.start_Click);
-      // 
-      // stop
-      // 
-      this.stop.BackColor = System.Drawing.Color.LightCoral;
-      this.stop.Location = new System.Drawing.Point(158, 17);
-      this.stop.Name = "stop";
-      this.stop.Size = new System.Drawing.Size(108, 23);
-      this.stop.TabIndex = 1;
-      this.stop.Text = "Stop WCF Service";
-      this.stop.UseVisualStyleBackColor = false;
-      this.stop.Click += new System.EventHandler(this.stop_Click);
+      this.ToggleOnOff.BackColor = System.Drawing.Color.PaleGreen;
+      this.ToggleOnOff.Location = new System.Drawing.Point(22, 17);
+      this.ToggleOnOff.Name = "ToggleOnOff";
+      this.ToggleOnOff.Size = new System.Drawing.Size(110, 23);
+      this.ToggleOnOff.TabIndex = 0;
+      this.ToggleOnOff.Text = "Start WCF Service";
+      this.ToggleOnOff.UseVisualStyleBackColor = false;
+      this.ToggleOnOff.Click += new System.EventHandler(this.start_Click);
       // 
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(320, 22);
+      this.label1.Location = new System.Drawing.Point(152, 22);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(72, 13);
       this.label1.TabIndex = 2;
@@ -73,7 +61,7 @@ namespace AW.Winforms.Helpers.Forms
       // _serviceState
       // 
       this._serviceState.AutoSize = true;
-      this._serviceState.Location = new System.Drawing.Point(398, 22);
+      this._serviceState.Location = new System.Drawing.Point(230, 22);
       this._serviceState.Name = "_serviceState";
       this._serviceState.Size = new System.Drawing.Size(0, 13);
       this._serviceState.TabIndex = 3;
@@ -89,35 +77,36 @@ namespace AW.Winforms.Helpers.Forms
       // 
       // tableLayoutPanelMetaData
       // 
+      this.tableLayoutPanelMetaData.AutoSize = true;
+      this.tableLayoutPanelMetaData.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       this.tableLayoutPanelMetaData.ColumnCount = 1;
-      this.tableLayoutPanelMetaData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanelMetaData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
       this.tableLayoutPanelMetaData.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanelMetaData.Location = new System.Drawing.Point(0, 100);
       this.tableLayoutPanelMetaData.Margin = new System.Windows.Forms.Padding(10);
       this.tableLayoutPanelMetaData.Name = "tableLayoutPanelMetaData";
       this.tableLayoutPanelMetaData.RowCount = 1;
-      this.tableLayoutPanelMetaData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanelMetaData.Size = new System.Drawing.Size(451, 124);
+      this.tableLayoutPanelMetaData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanelMetaData.Size = new System.Drawing.Size(299, 124);
       this.tableLayoutPanelMetaData.TabIndex = 6;
       // 
       // panel1
       // 
-      this.panel1.Controls.Add(this.start);
-      this.panel1.Controls.Add(this.stop);
+      this.panel1.Controls.Add(this.ToggleOnOff);
       this.panel1.Controls.Add(this.label1);
       this.panel1.Controls.Add(this._serviceState);
       this.panel1.Controls.Add(this.label2);
       this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
       this.panel1.Location = new System.Drawing.Point(0, 0);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(451, 100);
+      this.panel1.Size = new System.Drawing.Size(299, 100);
       this.panel1.TabIndex = 7;
       // 
       // WcfServiceManager
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(451, 224);
+      this.ClientSize = new System.Drawing.Size(299, 224);
       this.Controls.Add(this.tableLayoutPanelMetaData);
       this.Controls.Add(this.panel1);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -127,13 +116,13 @@ namespace AW.Winforms.Helpers.Forms
       this.panel1.ResumeLayout(false);
       this.panel1.PerformLayout();
       this.ResumeLayout(false);
+      this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button start;
-        private System.Windows.Forms.Button stop;
+        private System.Windows.Forms.Button ToggleOnOff;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label _serviceState;
         private System.Windows.Forms.Label label2;

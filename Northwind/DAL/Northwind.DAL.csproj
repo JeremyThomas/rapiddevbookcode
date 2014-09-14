@@ -132,6 +132,7 @@
     <Compile Include="DTO\CustomerVM.cs" />
     <Compile Include="DTO\EmployeeViewDto.cs" />
     <Compile Include="HelperClasses\PersistSvr.cs" />
+    <Compile Include="HelperClasses\AdapterPersistence.cs" />
     <Compile Include="Interfaces\INorthwindService.cs" />
     <Compile Include="DTO\NWStatistics.cs" />
     <Compile Include="DTO\PocoBase.cs" />

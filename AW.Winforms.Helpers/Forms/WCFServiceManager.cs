@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
@@ -24,41 +25,56 @@ namespace AW.Winforms.Helpers.Forms
     public WcfServiceManager(Func<IEnumerable<ServiceHost>> startService, Func<bool> stopservice) : this()
     {
       _startService = startService;
-      _stopservice = stopservice;      
+      _stopservice = stopservice;
       start_Click(this, null);
     }
 
     private void start_Click(object sender, EventArgs e)
     {
-      var serviceHosts = _startService();
-      ClearTableLayoutPanel();
-      foreach (var serviceHost in serviceHosts.Where(serviceHost => serviceHost.State == CommunicationState.Opened).OrderBy(serviceHost => serviceHost.Description.Name))
+      if (ToggleOnOff.Text == "Start WCF Service")
       {
-       // tableLayoutPanelMetaData.RowCount++;
-        var linkLabelWsdl = new LinkLabel {AutoSize = true};
-        linkLabelWsdl.LinkClicked += linkLabelWsdl_LinkClicked;
-        tableLayoutPanelMetaData.Controls.Add(linkLabelWsdl);
-        linkLabelWsdl.Dock=DockStyle.Top;
-      //  tableLayoutPanelMetaData.SetRow(linkLabelWsdl, tableLayoutPanelMetaData.RowCount - 1);
-        linkLabelWsdl.Text = serviceHost.BaseAddresses.First().ToString();
-        linkLabelWsdl.Links.Add(0, linkLabelWsdl.Text.Length, linkLabelWsdl.Text);
-        _serviceState.Text = "Opened";
+        var serviceHosts = _startService();
+        ClearTableLayoutPanel();
+        foreach (var serviceHost in serviceHosts.Where(serviceHost => serviceHost.State == CommunicationState.Opened).OrderBy(serviceHost => serviceHost.Description.Name))
+        {
+          //Next, add a row.  Only do this when once, when creating the first column
+          if (tableLayoutPanelMetaData.RowCount == 0)
+            tableLayoutPanelMetaData.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+          tableLayoutPanelMetaData.RowCount++;
+          var linkLabelWsdl = new LinkLabel {AutoSize = true};
+          linkLabelWsdl.LinkClicked += linkLabelWsdl_LinkClicked;
+          tableLayoutPanelMetaData.Controls.Add(linkLabelWsdl);
+          linkLabelWsdl.Dock = DockStyle.Fill;
+          tableLayoutPanelMetaData.SetRow(linkLabelWsdl, tableLayoutPanelMetaData.RowCount - 1);
+          linkLabelWsdl.Text = serviceHost.BaseAddresses.First().ToString();
+          linkLabelWsdl.Links.Add(0, linkLabelWsdl.Text.Length, linkLabelWsdl.Text);
+          _serviceState.Text = "Opened";
+        }
+        ToggleOnOff.Text = "Stop WCF Service";
+        ToggleOnOff.BackColor = Color.LightCoral;
       }
-    }
-
-    private void stop_Click(object sender, EventArgs e)
-    {
-      if (_stopservice())
+      else if (_stopservice())
       {
         _serviceState.Text = "Closed";
         ClearTableLayoutPanel();
+        ToggleOnOff.Text = "Start WCF Service";
+        ToggleOnOff.BackColor = Color.PaleGreen;
       }
     }
 
+
+    //http://softwaredevelopmentforecm.wordpress.com/2011/01/18/dynamically-generating-a-tablelayoutpanel/
     private void ClearTableLayoutPanel()
     {
+      //Clear out the existing controls, we are generating a new table layout
       tableLayoutPanelMetaData.Controls.Clear();
+
+      //Clear out the existing row and column styles
+      tableLayoutPanelMetaData.ColumnStyles.Clear();
+      tableLayoutPanelMetaData.RowStyles.Clear();
       tableLayoutPanelMetaData.RowCount = 0;
+      //First add a column
+      tableLayoutPanelMetaData.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
     }
 
     private void Form1_FormClosing(object sender, FormClosingEventArgs e)
