@@ -21,20 +21,10 @@ namespace Northwind.Business
   [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
   public class NorthwindService : INorthwindService
   {
-    public NorthwindService()
+    
+    private static IDataAccessAdapter GetAdapter()
     {
-      var channelFactory = WcfUtility.GetChannelFactory<IRemoteDataAccessAdapter>("http://localhost:55555/RemoteAdapter");
-      RemoteDataAccessAdapter = new RemoteAdapterClient(channelFactory.CreateChannel());
-      //   new ChannelFactory<T>(binding, endpoint);
-    }
-
-    private IDataAccessAdapter RemoteDataAccessAdapter { get; set; }
-
-    private IDataAccessAdapter GetAdapter()
-    {
-      if (RemoteDataAccessAdapter == null)
-      return new DataAccessAdapter();
-      return RemoteDataAccessAdapter;
+      return Factories.CreateDataAccessAdapter();
     }
 
     /// <summary>
