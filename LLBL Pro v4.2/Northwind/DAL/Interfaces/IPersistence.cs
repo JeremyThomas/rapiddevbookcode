@@ -18,22 +18,28 @@
 
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.ServiceModel;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.Interfaces
 {
- //   [ServiceContract]
+
   public interface IPersistence
   {
-    [OperationContract]
-      void Save(IEntity2 entity, bool commit =true);
-    [OperationContract]
+
+    void Save(IEntity2 entity, bool commit = true);
+
+ 
     void Delete(IEntity2 entity, bool commit = true);
-    [OperationContract]
+
+  
     void Commit();
-    [OperationContract]
+
     IQueryable<TEntity> GetQueryableForEntity<TEntity>() where TEntity : class;
-    }
+  }
+
+  public interface IAdapterQueryableProvider
+  {
+    IQueryable<TEntity> GetQueryableForEntity<TEntity>(Func<DataAccessAdapterBase> dataAccessAdapterFactory) where TEntity : class;
+  }
 }

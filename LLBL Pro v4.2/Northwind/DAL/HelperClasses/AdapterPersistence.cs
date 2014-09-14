@@ -10,12 +10,13 @@ namespace Northwind.DAL.HelperClasses
   {
     private UnitOfWork2 _unitOfWork;
     private DataAccessAdapterBase _adapterToUse;
+    readonly IAdapterQueryableProvider _queryableProvider;
     private readonly Func<DataAccessAdapterBase> _dataAccessAdapterFactory;
-    //   private readonly Func<IQueryable<TEntity> > x where TEntity : class
 
-    public AdapterPersistence(Func<DataAccessAdapterBase> dataAccessAdapterFactory)
+    public AdapterPersistence(Func<DataAccessAdapterBase> dataAccessAdapterFactory, IAdapterQueryableProvider queryableProvider)
     {
       _dataAccessAdapterFactory = dataAccessAdapterFactory;
+      this._queryableProvider = queryableProvider;
     }
 
     public void Save(IEntity2 entity, bool commit = true)
@@ -67,8 +68,7 @@ namespace Northwind.DAL.HelperClasses
 
     public IQueryable<TEntity> GetQueryableForEntity<TEntity>() where TEntity : class
     {
-      var linqMetaData = new LinqMetaData(GetAdapter());
-      return linqMetaData.GetQueryableForEntity<TEntity>();
+      return _queryableProvider.GetQueryableForEntity<TEntity>(GetAdapter);
     }
 
     private DataAccessAdapterBase GetAdapter()
