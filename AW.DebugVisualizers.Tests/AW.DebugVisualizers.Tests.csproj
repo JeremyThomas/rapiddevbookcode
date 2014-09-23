@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AW.DebugVisualizers.Tests</RootNamespace>
     <AssemblyName>AW.DebugVisualizers.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SccProjectName>SAK</SccProjectName>
@@ -124,6 +124,10 @@
     <ProjectReference Include="..\Northwind\DAL\SQL Server %28SqlClient%29\Northwind.DAL.SqlServer.csproj">
       <Project>{0AAD790B-15C7-4119-9987-3137A0BB20B9}</Project>
       <Name>Northwind.DAL.SqlServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools\ObjectSourceVisualizer\ObjectSourceVisualizer.csproj">
+      <Project>{131ade94-66b8-4fe5-96ed-d01e61955327}</Project>
+      <Name>ObjectSourceVisualizer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

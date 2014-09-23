@@ -77,12 +77,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormDebuggerVisualizerInstaller.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormDebuggerVisualizerInstaller.Designer.cs">
-      <DependentUpon>FormDebuggerVisualizerInstaller.cs</DependentUpon>
-    </Compile>
     <Compile Include="JSVisualizerRegistrations.cs" />
     <Compile Include="EnumerableJSVisualizer.cs" />
     <Compile Include="EnumerableVisualizer.cs" />
@@ -113,11 +107,6 @@
     <None Include="DebugDeploy.bat" />
     <None Include="MergeAndDeploy.Bat" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="FormDebuggerVisualizerInstaller.resx">
-      <DependentUpon>FormDebuggerVisualizerInstaller.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

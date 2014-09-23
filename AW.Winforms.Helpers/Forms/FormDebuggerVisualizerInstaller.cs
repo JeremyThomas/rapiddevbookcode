@@ -4,9 +4,8 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
-using Microsoft.VisualStudio.DebuggerVisualizers;
 
-namespace AW.DebugVisualizers
+namespace AW.Winforms.Helpers.Forms
 {
   public sealed partial class FormDebuggerVisualizerInstaller : Form
   {
@@ -21,10 +20,14 @@ namespace AW.DebugVisualizers
     public FormDebuggerVisualizerInstaller()
     {
       InitializeComponent();
-      var microsoftVisualStudioDebuggerVisualizersAssembly = Assembly.GetAssembly(typeof (IDialogVisualizerService));
+    }
+
+    public FormDebuggerVisualizerInstaller(Type dialogVisualizerServiceType):this()
+    {
+      var microsoftVisualStudioDebuggerVisualizersAssembly = Assembly.GetAssembly(dialogVisualizerServiceType);
       var fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly = FileVersionInfo.GetVersionInfo(microsoftVisualStudioDebuggerVisualizersAssembly.Location);
       var visualStudioVersion = VisualStudioHelper.GetVisualStudioVersion(fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductMajorPart);
-   
+
       labelVersion.Text = "This is version " + SourceVisualizerFileVersionInfo.ProductVersion + " for "
                           + fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductName + ". Last modified: " + SourceVisualizerFileInfo.LastWriteTime;
 

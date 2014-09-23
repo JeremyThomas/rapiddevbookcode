@@ -50,12 +50,6 @@ namespace AW.DebugVisualizers.Tests
       get { return _dialogVisualizerServiceFake ?? (_dialogVisualizerServiceFake = _dialogVisualizerServiceFake = new DialogVisualizerServiceFake()); }
     }
 
-    ///<summary>
-    ///  Gets or sets the test context which provides
-    ///  information about and functionality for the current test run.
-    ///</summary>
-    public TestContext TestContext { get; set; }
-
     #region Additional test attributes
 
     //
@@ -88,9 +82,9 @@ namespace AW.DebugVisualizers.Tests
     [TestMethod]
     public void DataTableTest()
     {
-      var nonSerializableClasseDataTable = GeneralHelper.CopyToDataTable(NonSerializableClass.GenerateList());
-      TestSerialize(nonSerializableClasseDataTable);
-      TestSerialize(nonSerializableClasseDataTable.DefaultView);
+      var nonSerializableClassesDataTable = GeneralHelper.CopyToDataTable(NonSerializableClass.GenerateList());
+      TestSerialize(nonSerializableClassesDataTable);
+      TestSerialize(nonSerializableClassesDataTable.DefaultView);
 
       var serializableClassDataTable = GeneralHelper.CopyToDataTable(SerializableClass.GenerateList());
       TestSerialize(serializableClassDataTable);
@@ -232,6 +226,7 @@ namespace AW.DebugVisualizers.Tests
     public void DifferentItemTypesTest()
     {
       var listofNonSerializableClasses = SerializableClass.GenerateListWithBothSerializableClasses();
+      //ShowObjectSourceVisualizer(listofNonSerializableClasses.First());
       TestSerialize(listofNonSerializableClasses);
       TestSerialize(listofNonSerializableClasses.Distinct());
       TestSerialize(listofNonSerializableClasses.ToBindingListView());
@@ -342,7 +337,7 @@ namespace AW.DebugVisualizers.Tests
     private static void TestSerialize(object enumerableOrDataTableToVisualize)
     {
       //Assert.IsInstanceOfType(enumerableToVisualize, typeof(IEnumerable));
-      AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, VisualizerObjectProviderFake.SerializeDeserialize(enumerableOrDataTableToVisualize));
+      AssertNewContainerIsBindingListView(enumerableOrDataTableToVisualize, VisualizerObjectProviderFake.SerializeDeserialize(enumerableOrDataTableToVisualize));
     }
 
     /// <summary>
@@ -350,7 +345,7 @@ namespace AW.DebugVisualizers.Tests
     /// </summary>
     /// <param name="enumerableOrDataTableToVisualize"> The enumerable or data table to visualize. </param>
     /// <param name="transportedEnumerableOrDataTable"> The transported enumerable or data table. </param>
-    private static void AssertNewContanerIsBindingListView(object enumerableOrDataTableToVisualize, object transportedEnumerableOrDataTable)
+    private static void AssertNewContainerIsBindingListView(object enumerableOrDataTableToVisualize, object transportedEnumerableOrDataTable)
     {
       if (!(transportedEnumerableOrDataTable is DataTableSurrogate) && !(transportedEnumerableOrDataTable is IListSource)
           && transportedEnumerableOrDataTable.GetType() != enumerableOrDataTableToVisualize.GetType())
@@ -363,6 +358,12 @@ namespace AW.DebugVisualizers.Tests
       visualizerHost.ShowVisualizer();
     }
 
+    private static void ShowObjectSourceVisualizer(object enumerableOrDataTableToVisualize)
+    {
+      var visualizerHost = new VisualizerDevelopmentHost(enumerableOrDataTableToVisualize, typeof(ObjectSourceVisualizer.ObjectSourceVisualizer), typeof(ObjectSourceVisualizer.ObjectSourceVisualizerObjectSource));
+      visualizerHost.ShowVisualizer();
+    }
+
     /// <summary>
     ///   Shows the enumerable or data table to visualize and asserts the number of columns displayed.
     /// </summary>
@@ -372,7 +373,7 @@ namespace AW.DebugVisualizers.Tests
     {
       Assert.IsTrue(enumerableOrDataTableToVisualize is IEnumerable || enumerableOrDataTableToVisualize is DataTableSurrogate || enumerableOrDataTableToVisualize is WeakReference);
       var visualizerObjectProviderFake = new VisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
-      //AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, visualizerObjectProviderFake.GetObject());
+      //AssertNewContainerIsBindingListView(enumerableOrDataTableToVisualize, visualizerObjectProviderFake.GetObject());
       EnumerableVisualizer.Show(DialogVisualizerServiceFake, visualizerObjectProviderFake);
       var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
       Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());
@@ -398,7 +399,7 @@ namespace AW.DebugVisualizers.Tests
     {
       TestShow(enumerableOrDataTableToVisualize, expectedColumnCount);
       var transportedEnumerableOrDataTable = VisualizerObjectProviderFake.SerializeDeserialize(enumerableOrDataTableToVisualize);
-      AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, transportedEnumerableOrDataTable);
+      AssertNewContainerIsBindingListView(enumerableOrDataTableToVisualize, transportedEnumerableOrDataTable);
       if (expectedTransportedColumnCount == -1)
         expectedTransportedColumnCount = expectedColumnCount;
       TestShow(transportedEnumerableOrDataTable, expectedTransportedColumnCount);
