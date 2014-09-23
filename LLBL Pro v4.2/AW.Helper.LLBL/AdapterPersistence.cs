@@ -1,14 +1,12 @@
 using System;
 using System.Linq;
-using Northwind.DAL.Interfaces;
-using Northwind.DAL.Linq;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace Northwind.DAL.HelperClasses
+namespace AW.Helper.LLBL
 {
-  public class AdapterPersistence : IPersistence
+  public class AdapterPersistence : IPersistence, IDisposable
   {
-    private UnitOfWork2 _unitOfWork;
+    private IUnitOfWorkCore _unitOfWork;
     private DataAccessAdapterBase _adapterToUse;
     readonly IAdapterQueryableProvider _queryableProvider;
     private readonly Func<DataAccessAdapterBase> _dataAccessAdapterFactory;
@@ -38,7 +36,7 @@ namespace Northwind.DAL.HelperClasses
       return _dataAccessAdapterFactory();
     }
 
-    private UnitOfWork2 Uow
+    private IUnitOfWorkCore Uow
     {
       get { return _unitOfWork ?? (_unitOfWork = new UnitOfWork2()); }
     }
@@ -68,12 +66,17 @@ namespace Northwind.DAL.HelperClasses
 
     public IQueryable<TEntity> GetQueryableForEntity<TEntity>() where TEntity : class
     {
-      return _queryableProvider.GetQueryableForEntity<TEntity>(GetAdapter);
+      return _queryableProvider.GetQueryableForEntity<TEntity>(GetAdapterForQuery);
     }
 
-    private DataAccessAdapterBase GetAdapter()
+    private DataAccessAdapterBase GetAdapterForQuery()
     {
       return _adapterToUse = _adapterToUse ?? CreateDataAccessAdapter();
+    }
+
+    public void Dispose()
+    {
+      if (_adapterToUse != null) _adapterToUse.Dispose();
     }
   }
 }

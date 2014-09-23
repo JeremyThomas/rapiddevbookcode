@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.ServiceModel;
 using AW.Helper;
+using AW.Helper.LLBL;
 using Fasterflect;
 using Northwind.DAL.Interfaces;
 using ProLinq.Wcf;
@@ -11,6 +12,9 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.Business
 {
+  /// <summary>
+  /// Abstraction implementor in bridge pattern
+  /// </summary>
   public class ProLinqPersistence : IPersistence
   {
     private UnitOfWork2 _unitOfWork;

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Linq;
-using Northwind.DAL.HelperClasses;
-using Northwind.DAL.Interfaces;
+﻿using AW.Helper.LLBL;
 using Northwind.DAL.Linq;
-using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.Services
 {
@@ -14,15 +10,4 @@ namespace Northwind.DAL.Services
     {
     }
   }
-
-  public class NorthwindQueryableProvider: IAdapterQueryableProvider
-  {
-
-    public IQueryable<TEntity> GetQueryableForEntity<TEntity>(Func<DataAccessAdapterBase> dataAccessAdapterFactory) where TEntity : class
-    {
-      var linqMetaData = new LinqMetaData(dataAccessAdapterFactory());
-      return linqMetaData.GetQueryableForEntity<TEntity>();
-    }
-  }
-  
 }
