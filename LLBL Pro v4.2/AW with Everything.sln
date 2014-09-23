@@ -182,20 +182,20 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AW.WebDbEditor 4.1", "http:
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		ProjectReferences = "{47f52527-a001-405b-9cec-fcbf7fa10855}|AW.Data.dll;{FFC5B55E-9157-4CE6-81BD-E593E4C08422}|AW.Helper.dll;{7919C746-73F3-4279-A53B-CC6C08F42318}|AW.Helper.LLBL.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/AW.WebDbEditor 4.1"
-		Debug.AspNetCompiler.PhysicalPath = "AW.WebDbEditor\"
+		Debug.AspNetCompiler.PhysicalPath = "..\LLBL Pro v4.1\AW.WebDbEditor\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\AW.WebDbEditor 4.1\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/AW.WebDbEditor 4.1"
-		Release.AspNetCompiler.PhysicalPath = "AW.WebDbEditor\"
+		Release.AspNetCompiler.PhysicalPath = "..\LLBL Pro v4.1\AW.WebDbEditor\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\AW.WebDbEditor 4.1\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "AW.WebDbEditor\"
+		SlnRelativePath = "..\LLBL Pro v4.1\AW.WebDbEditor\"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Win", "Northwind\Northwind.Win\Northwind.Win.csproj", "{3FC1967C-B85A-4455-8850-F1659B8EC163}"
@@ -206,9 +206,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetPackWithVersion", "NuG
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LLBLGen.Plugins", "AW.LLBLGen.Plugins\AW.LLBLGen.Plugins.csproj", "{0455FCEB-846A-42C7-AECB-47A895213FF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectSourceVisualizer", "Tools\ObjectSourceVisualizer\ObjectSourceVisualizer.csproj", "{131ADE94-66B8-4FE5-96ED-D01E61955327}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 30
+		SccNumberOfProjects = 31
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
@@ -325,6 +327,10 @@ Global
 		SccProjectTopLevelParentUniqueName29 = AW\u0020with\u0020Everything.sln
 		SccProjectName29 = AW.LLBLGen.Plugins
 		SccLocalPath29 = AW.LLBLGen.Plugins
+		SccProjectUniqueName30 = Tools\\ObjectSourceVisualizer\\ObjectSourceVisualizer.csproj
+		SccProjectTopLevelParentUniqueName30 = AW\u0020with\u0020Everything.sln
+		SccProjectName30 = Tools/ObjectSourceVisualizer
+		SccLocalPath30 = Tools\\ObjectSourceVisualizer
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug no unit tests|Any CPU = Debug no unit tests|Any CPU
@@ -685,6 +691,18 @@ Global
 		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Release|x86.ActiveCfg = Release|Any CPU
+		{131ADE94-66B8-4FE5-96ED-D01E61955327}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{131ADE94-66B8-4FE5-96ED-D01E61955327}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{131ADE94-66B8-4FE5-96ED-D01E61955327}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
+		{131ADE94-66B8-4FE5-96ED-D01E61955327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{131ADE94-66B8-4FE5-96ED-D01E61955327}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{131ADE94-66B8-4FE5-96ED-D01E61955327}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{131ADE94-66B8-4FE5-96ED-D01E61955327}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{131ADE94-66B8-4FE5-96ED-D01E61955327}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{131ADE94-66B8-4FE5-96ED-D01E61955327}.Release - Test|x86.ActiveCfg = Release|Any CPU
+		{131ADE94-66B8-4FE5-96ED-D01E61955327}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{131ADE94-66B8-4FE5-96ED-D01E61955327}.Release|Any CPU.Build.0 = Release|Any CPU
+		{131ADE94-66B8-4FE5-96ED-D01E61955327}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -717,6 +735,7 @@ Global
 		{0D78311F-EF3D-442D-BB6F-17225EC0892C} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
 		{AE12F25F-02C9-498D-9420-1C6B32913D22} = {79351B3D-6F22-43FC-B6E3-84403C789513}
 		{0455FCEB-846A-42C7-AECB-47A895213FF2} = {79351B3D-6F22-43FC-B6E3-84403C789513}
+		{131ADE94-66B8-4FE5-96ED-D01E61955327} = {79351B3D-6F22-43FC-B6E3-84403C789513}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW with Everything.vsmdi

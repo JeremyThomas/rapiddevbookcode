@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+using AW.Winforms.Helpers.Forms;
+using Microsoft.VisualStudio.DebuggerVisualizers;
 
 namespace AW.DebugVisualizers
 {
@@ -13,7 +15,7 @@ namespace AW.DebugVisualizers
     {
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
-      Application.Run(new FormDebuggerVisualizerInstaller());
+      Application.Run(new FormDebuggerVisualizerInstaller(typeof(IDialogVisualizerService)));
     }
   }
 }

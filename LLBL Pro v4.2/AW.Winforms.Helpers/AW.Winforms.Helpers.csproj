@@ -188,6 +188,12 @@
     <Compile Include="Forms\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormDebuggerVisualizerInstaller.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormDebuggerVisualizerInstaller.Designer.cs">
+      <DependentUpon>FormDebuggerVisualizerInstaller.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TextEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -319,6 +325,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormDebuggerVisualizerInstaller.resx">
+      <DependentUpon>FormDebuggerVisualizerInstaller.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TextEditor.resx">
       <DependentUpon>TextEditor.cs</DependentUpon>

@@ -1,4 +1,4 @@
-﻿namespace AW.DebugVisualizers
+﻿namespace AW.Winforms.Helpers.Forms
 {
   sealed partial class FormDebuggerVisualizerInstaller
   {

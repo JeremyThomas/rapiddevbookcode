@@ -730,7 +730,7 @@ namespace AW.Winforms.Helpers.Forms
       // TextEditor
       // 
       this.AutoScaleDimensions = new SizeF(6F, 13F);
-      this.AutoScaleMode = AutoScaleMode.Font;
+//      this.AutoScaleMode = AutoScaleMode.Font;
       this.ClientSize = new Size(635, 407);
       this.Controls.Add(this.toolStripContainer1);
       this.Icon = ((Icon)(resources.GetObject("$this.Icon")));
