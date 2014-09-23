@@ -78,6 +78,8 @@
     <Compile Include="..\Ancillary\ToolsAssemblyInfo.cs">
       <Link>ToolsAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AdapterPersistence.cs" />
+    <Compile Include="IPersistence.cs" />
     <Compile Include="PersistanceDiagnostics.cs" />
     <Compile Include="PredicateBuilder.cs" />
     <Compile Include="PrefetchExtensions.cs" />

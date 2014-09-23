@@ -18,12 +18,14 @@
 
 using System;
 using System.Linq;
-using System.ServiceModel;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace Northwind.DAL.Interfaces
+namespace AW.Helper.LLBL
 {
 
+  /// <summary>
+  /// Abstraction in a bridge pattern
+  /// </summary>
   public interface IPersistence
   {
 

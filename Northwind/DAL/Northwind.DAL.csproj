@@ -132,7 +132,6 @@
     <Compile Include="DTO\CustomerVM.cs" />
     <Compile Include="DTO\EmployeeViewDto.cs" />
     <Compile Include="HelperClasses\PersistSvr.cs" />
-    <Compile Include="HelperClasses\AdapterPersistence.cs" />
     <Compile Include="Interfaces\INorthwindService.cs" />
     <Compile Include="DTO\NWStatistics.cs" />
     <Compile Include="DTO\PocoBase.cs" />
@@ -162,7 +161,6 @@
     </Compile>
     <Compile Include="Interfaces\INorthwindSvr.cs" />
     <Compile Include="Interfaces\IRemotableLLBLPersistance.cs" />
-    <Compile Include="Interfaces\IPersistence.cs" />
     <Compile Include="Linq\Filters\Filters.cs" />
     <Compile Include="Linq\INorthwindLinqMetaData.cs" />
     <Compile Include="Linq\LinqMetaData.cs">
@@ -352,6 +350,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AW.Helper.LLBL\AW.Helper.LLBL.csproj">
+      <Project>{7919c746-73f3-4279-a53b-cc6c08f42318}</Project>
+      <Name>AW.Helper.LLBL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\AW.Helper\AW.Helper.csproj">
       <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
       <Name>AW.Helper</Name>

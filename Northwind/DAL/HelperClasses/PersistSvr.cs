@@ -18,11 +18,18 @@
 
 using System;
 using System.Linq;
-using Northwind.DAL.Interfaces;
+using AW.Helper.LLBL;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.HelperClasses
 {
+  /// <summary>
+  /// PersistSvr is a static class solely for the user-friendly usage purpose of the interface IPersitence; 
+  /// PersistSvr gets its PersistenceProvider by service locator. 
+  /// Therefore, shifting to another Persistence provider is as easy as registering a different persistence provider by service locator
+  /// Original was generic
+  /// This could be regarded as a proxy pattern, with a singleton, an alternative would be have straight singleton
+  /// </summary>
   public static class PersistSvr
   {
     private static IPersistence _provider;
@@ -58,8 +65,7 @@ namespace Northwind.DAL.HelperClasses
     {
       PersistenceProvider.Commit();
     }
-
-
+    
     public static IQueryable<T> GetAll<T>() where T : class
     {
       return PersistenceProvider.GetQueryableForEntity<T>();
