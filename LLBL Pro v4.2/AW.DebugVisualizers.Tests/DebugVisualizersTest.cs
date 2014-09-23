@@ -226,7 +226,7 @@ namespace AW.DebugVisualizers.Tests
     public void DifferentItemTypesTest()
     {
       var listofNonSerializableClasses = SerializableClass.GenerateListWithBothSerializableClasses();
-      //ShowObjectSourceVisualizer(listofNonSerializableClasses.First());
+      ShowObjectSourceVisualizer(listofNonSerializableClasses.First());
       TestSerialize(listofNonSerializableClasses);
       TestSerialize(listofNonSerializableClasses.Distinct());
       TestSerialize(listofNonSerializableClasses.ToBindingListView());
