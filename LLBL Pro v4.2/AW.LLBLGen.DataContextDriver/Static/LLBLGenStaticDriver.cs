@@ -36,13 +36,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public static readonly string[] AdditionalNamespaces =
     {
       "SD.LLBLGen.Pro.ORMSupportClasses",
+      "SD.LLBLGen.Pro.LinqSupportClasses",
+      "LLBLGen.Linq.Prefetch",
       "AW.Helper",
       "AW.Helper.LLBL",
       "AW.Winforms.Helpers.DataEditor",
       "AW.Winforms.Helpers.LLBL",
       "AW.LLBLGen.DataContextDriver",
-      "AW.LLBLGen.DataContextDriver.Static",
-      "LLBLGen.Linq.Prefetch"
+      "AW.LLBLGen.DataContextDriver.Static"
     };
 
     #endregion

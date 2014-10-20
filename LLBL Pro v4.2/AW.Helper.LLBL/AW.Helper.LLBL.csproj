@@ -85,6 +85,7 @@
     <Compile Include="PrefetchExtensions.cs" />
     <Compile Include="MembersToExcludeCache.cs" />
     <Compile Include="PropertyDescriptorCache.cs" />
+    <Compile Include="QueryableExtensions.cs" />
     <Compile Include="QueryToSQL.cs" />
     <Compile Include="EntityHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,9 +103,6 @@
       <Link>AdventureWorks.snk</Link>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Dynamic Expressions.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
