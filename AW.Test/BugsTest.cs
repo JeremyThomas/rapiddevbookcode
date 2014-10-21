@@ -285,7 +285,7 @@ namespace AW.Tests
     ///   http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=21371
     /// </summary>
     [TestMethod, TestProperty("Bug", "Fixed"), Description("LINQ - Invalid SQL when prefetch comes before criteria")]
-    public void TestPrefetchBeforeCriterea()
+    public void TestPrefetchBeforeCriteria()
     {
       MetaSingletons.MetaData.Customer.FilterBySalesPersonID(275).PrefetchCustomerAddresses().EmptySelect().ToEntityCollection(); //OK with prefetch
       MetaSingletons.MetaData.Customer.PrefetchCustomerAddresses().FilterBySalesPersonID(275).ToEntityCollection(); //OK but prefetch ignored
@@ -349,5 +349,6 @@ namespace AW.Tests
                                                      + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductNumberWithLet(productNumber).Count()
                                                      + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductNumberWithLet(productNumber).Count());
     }
+
   }
 }

@@ -22,6 +22,16 @@ namespace Northwind.DAL.Linq.Filters
       return customerQuery;
     }
 
+    public static IQueryable<CustomerEntity> FilterByShipCountry(this IQueryable<CustomerEntity> customerQuery, params string[] countries)
+    {
+      if (countries != null && countries.Length > 0)
+        customerQuery = from customerEntity in customerQuery
+                        from orderEntity in customerEntity.Orders
+                        where countries.Contains(orderEntity.ShipCountry)
+                        select customerEntity;
+      return customerQuery;
+    }
+
     /// <summary>
     ///   Filters the ProductEntity Query by wether the product is discontinued. Generic on IProduct
     /// </summary>

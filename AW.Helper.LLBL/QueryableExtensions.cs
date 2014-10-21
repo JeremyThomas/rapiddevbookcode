@@ -32,10 +32,8 @@ namespace AW.Helper.LLBL
     /// <returns></returns>
     public static IQueryable<T> DistinctOnPrimaryKeys<T>(this IQueryable<T> query) where T : class, IEntityCore
     {
-      // Get Primary Key Fields
-      if (typeof (T).Implements(typeof (IEntity2)))
-        return DistinctByFields(query, ((IEntity2) EntityHelper.CreateEntity<T>()).Fields.PrimaryKeyFields);
-      return DistinctByFields(query, ((IEntity) EntityHelper.CreateEntity<T>()).Fields.PrimaryKeyFields);
+      var pkFields = EntityHelper.CreateEntity<T>().Fields.PrimaryKeyFields.OfType<IEntityFieldCore>();
+      return DistinctByFields(query, pkFields);
     }
 
     private static IQueryable<T> DistinctByFields<T>(IQueryable<T> query, IEnumerable<IEntityFieldCore> fields) where T : class, IEntityCore
