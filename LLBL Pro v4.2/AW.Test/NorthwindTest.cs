@@ -314,6 +314,7 @@ namespace AW.Tests
       //                       where c.Supplier.City == "xx" && c.UnitPrice == 100 
       //                       select c);
       metaData.Customer.FilterByCountry("NZ").FilterByEmployeeId(100).EmptySelect().PrefetchCustomerDemographics().ToEntityCollection2();
+   //   metaData.Customer.FilterByCountry("NZ").FilterByEmployeeId(100).EmptySelect().CountColumn(c=>c.CustomerId);
       metaData.Customer.PrefetchCustomerDemographics().FilterByEmployeeId(100).FilterByCountry("NZ").ToEntityCollection2();
       metaData.Customer.EmptySelect().PrefetchCustomerDemographics().FilterByEmployeeId(100).FilterByCountry("NZ").ToEntityCollection2();
     }
@@ -368,8 +369,11 @@ namespace AW.Tests
     {
       var employeeEntities = GetNorthwindLinqMetaData().Employee;
       employeeEntities.FilterByCustomerTypeId("ALFKI").FilterByManagersOrder(1).ToEntityCollection2();
+  //    employeeEntities.FilterByCustomerTypeId("ALFKI").FilterByManagersOrder(1).CountColumn(e => e.EmployeeId);
       employeeEntities.FilterByCustomerTypeIdViaOrders("ALFKI").FilterByOrder(1).ToEntityCollection2();
+    //  employeeEntities.FilterByCustomerTypeIdViaOrders("ALFKI").FilterByOrder(1).CountColumn(e => e.EmployeeId);
       employeeEntities.FilterByOrder(1).FilterByCustomerTypeIdViaOrders("ALFKI").ToEntityCollection2();
+   //   employeeEntities.FilterByOrder(1).FilterByCustomerTypeIdViaOrders("ALFKI").CountColumn(e => e.EmployeeId);
     }
 
     [TestMethod, Description("http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=21560")]
@@ -507,6 +511,15 @@ namespace AW.Tests
       //.Select(orderCountry => orderCountry);
 
       //    Assert.AreEqual(21, ordersGroupedByCountryDynamic.Select(o => o.Key).Count());
+    }
+
+    /// <summary>
+    ///   http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=23043
+    /// </summary>
+    [TestMethod, TestProperty("Bug", "UnFixed"), TestCategory("Failing"), Description("LINQ - Invalid SQL when CountColumn")]
+    public void TestCountColumn()
+    {
+      GetNorthwindLinqMetaData().Customer.FilterByShipCountry("NZ").FilterByCountry("NZ").CountColumn(c => c.CustomerId);
     }
   }
 }
