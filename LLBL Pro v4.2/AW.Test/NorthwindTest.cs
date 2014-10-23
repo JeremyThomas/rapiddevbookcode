@@ -516,7 +516,7 @@ namespace AW.Tests
     /// <summary>
     ///   http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=23043
     /// </summary>
-    [TestMethod, TestProperty("Bug", "UnFixed"), TestCategory("Failing"), Description("LINQ - Invalid SQL when CountColumn")]
+    [TestMethod, TestProperty("Bug", "Fixed"), Description("LINQ - Invalid SQL when CountColumn")]
     public void TestCountColumn()
     {
       GetNorthwindLinqMetaData().Customer.FilterByShipCountry("NZ").FilterByCountry("NZ").CountColumn(c => c.CustomerId);
@@ -525,7 +525,7 @@ namespace AW.Tests
     /// <summary>
     ///   http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=23043
     /// </summary>
-    [TestMethod, TestProperty("Bug", "UnFixed"), TestCategory("Failing"), Description("LINQ - Invalid SQL when CountColumn")]
+    [TestMethod, TestProperty("Bug", "Fixed"), Description("LINQ - Invalid SQL when CountColumn")]
     public void TestAny()
     {
       Assert.IsFalse(GetNorthwindLinqMetaData().Customer.FilterByShipCountry("NZ").FilterByCountry("NZ").Any());

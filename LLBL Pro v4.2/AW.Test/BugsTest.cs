@@ -292,6 +292,17 @@ namespace AW.Tests
       MetaSingletons.MetaData.Customer.EmptySelect().PrefetchCustomerAddresses().FilterBySalesPersonID(275).ToEntityCollection(); //This one fails
     }
 
+    /// <summary>
+    ///   http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=23043
+    /// </summary>
+    [TestMethod, TestProperty("Bug", "Fixed"), Description("LINQ - Invalid SQL when AnyOnSubtypeWithContainsAndWhere")]
+    public void AnyOnSubtypeWithContainsAndWhere()
+    {
+      var ids = new[] { 43659, 43660, 43661};
+      Assert.IsFalse(MetaSingletons.MetaData.Customer.FilterBySalesOrderIDs(ids).Where(x => x.SalesTerritory.CountryRegionCode == "US").Any());
+  //    Assert.IsFalse(MetaSingletons.MetaData.Customer.FilterBySalesOrderIDs(ids).Any(x => x.SalesTerritory.CountryRegionCode == "US"));
+    }
+
     [TestMethod, TestProperty("Bug", "UnFixed"), TestCategory("Failing"), Description("LINQ -  let followed by a projection followed by an ordering")]
     public void TestLetProjectionOrdering()
     {
