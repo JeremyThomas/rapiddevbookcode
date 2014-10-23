@@ -14,6 +14,16 @@ namespace AW.Data.Linq.Filters
       return string.IsNullOrEmpty(cityName) ? addressQuery : addressQuery.Where(c => c.City == cityName);
     }
 
+    public static IQueryable<SpecialOfferProductEntity> FilterByProducts(this IQueryable<SpecialOfferProductEntity> orders, params int[] productIds)
+    {
+      if (productIds != null && productIds.Length > 0)
+        return from e in orders
+          from o in e.SalesOrderDetails
+          where productIds.Contains(o.ProductID)
+          select e;
+      return orders;
+    }
+
     public static IQueryable<T> FilterBySalesPersonID<T>(this IQueryable<T> customerQuery, params int[] salesPersonIDs) where T : CustomerEntity
     {
       if (salesPersonIDs != null && salesPersonIDs.Length > 0)

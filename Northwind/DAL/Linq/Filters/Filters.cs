@@ -26,9 +26,9 @@ namespace Northwind.DAL.Linq.Filters
     {
       if (countries != null && countries.Length > 0)
         customerQuery = from customerEntity in customerQuery
-                        from orderEntity in customerEntity.Orders
-                        where countries.Contains(orderEntity.ShipCountry)
-                        select customerEntity;
+          from orderEntity in customerEntity.Orders
+          where countries.Contains(orderEntity.ShipCountry)
+          select customerEntity;
       return customerQuery;
     }
 
@@ -69,7 +69,7 @@ namespace Northwind.DAL.Linq.Filters
       return unitsInStock.HasValue ? products.Where(r => r.UnitsInStock == unitsInStock) : products;
     }
 
-    public static IQueryable<ProductEntity> FilterByUnitsOnOrder(this IQueryable<ProductEntity> products, short? unitsInStock) 
+    public static IQueryable<ProductEntity> FilterByUnitsOnOrder(this IQueryable<ProductEntity> products, short? unitsInStock)
     {
       return unitsInStock.HasValue ? products.Where(r => r.UnitsOnOrder == unitsInStock) : products;
     }
@@ -106,6 +106,26 @@ namespace Northwind.DAL.Linq.Filters
         from o in e.Orders
         where o.OrderId == orderId
         select e;
+    }
+
+    public static IQueryable<EmployeeEntity> FilterByOrders(this IQueryable<EmployeeEntity> employees, params int[] orderIds)
+    {
+      if (orderIds != null && orderIds.Length > 0)
+        return from e in employees
+          from o in e.Orders
+          where orderIds.Contains(o.OrderId)
+          select e;
+      return employees;
+    }
+
+    public static IQueryable<OrderEntity> FilterByProducts(this IQueryable<OrderEntity> orders, params int[] productIds)
+    {
+      if (productIds != null && productIds.Length > 0)
+        return from e in orders
+               from o in e.OrderDetails
+               where productIds.Contains(o.ProductId)
+               select e;
+      return orders;
     }
   }
 }

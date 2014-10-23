@@ -529,6 +529,8 @@ namespace AW.Tests
     public void TestAny()
     {
       Assert.IsFalse(GetNorthwindLinqMetaData().Customer.FilterByShipCountry("NZ").FilterByCountry("NZ").Any());
+      Assert.IsFalse(GetNorthwindLinqMetaData().Employee.FilterByOrders(2).FilterByManagersOrder(1).Any());
+      Assert.IsFalse(GetNorthwindLinqMetaData().Order.FilterByProducts(2).Where(c => c.Customer.Country == "NZ").Any());
     }
   }
 }
