@@ -24,6 +24,16 @@ namespace AW.Data.Linq.Filters
       return orders;
     }
 
+    public static IQueryable<T> FilterBySalesOrderIDs<T>(this IQueryable<T> customerQuery, params int[] salesOrderIDs) where T : CustomerEntity
+    {
+      if (salesOrderIDs != null && salesOrderIDs.Length > 0)
+        customerQuery = from customerEntity in customerQuery
+                        from salesOrderHeaderEntity in customerEntity.SalesOrderHeaders
+                        where salesOrderIDs.Contains(salesOrderHeaderEntity.SalesPersonID.Value)
+                        select customerEntity;
+      return customerQuery;
+    }
+
     public static IQueryable<T> FilterBySalesPersonID<T>(this IQueryable<T> customerQuery, params int[] salesPersonIDs) where T : CustomerEntity
     {
       if (salesPersonIDs != null && salesPersonIDs.Length > 0)
