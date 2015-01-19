@@ -23,6 +23,7 @@ namespace ListIISApps.Controllers
       string host = null;
       if (HttpContext.Request.Url != null) host = HttpContext.Request.Url.Host;
       ViewBag.Message = string.Format("List Of Applications on IIS ({0})", host);
+      ViewBag.Title = string.Format("Applications on IIS ({0})", host);
       return View(ServerManagerVM.ServerManagerVms);
     }
 
