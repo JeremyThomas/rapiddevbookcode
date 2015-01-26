@@ -139,7 +139,7 @@ namespace AW.DebugVisualizers.Tests
     public void EntityFieldsTest()
     {
       var addressType = MetaSingletons.MetaData.AddressType.First();
-      ShowObjectSourceVisualizer(addressType);
+      //ShowObjectSourceVisualizer(addressType);
       TestShow(addressType.Fields, TestData.NumFieldProperties);
     }
 
@@ -227,7 +227,7 @@ namespace AW.DebugVisualizers.Tests
     public void DifferentItemTypesTest()
     {
       var listofNonSerializableClasses = SerializableClass.GenerateListWithBothSerializableClasses();
-      ShowObjectSourceVisualizer(listofNonSerializableClasses.First());
+      //ShowObjectSourceVisualizer(listofNonSerializableClasses.First());
       TestSerialize(listofNonSerializableClasses);
       TestSerialize(listofNonSerializableClasses.Distinct());
       TestSerialize(listofNonSerializableClasses.ToBindingListView());
