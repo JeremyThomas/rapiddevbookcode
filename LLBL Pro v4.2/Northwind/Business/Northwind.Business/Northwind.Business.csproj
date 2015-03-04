@@ -56,7 +56,7 @@
       <HintPath>..\..\..\packages\ProLinq.Wcf.1.0.6\lib\net45\ProLinq.Wcf.dll</HintPath>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <HintPath>../Lib/LLBL/SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
+      <HintPath>..\..\..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20150210\lib\net45\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
     </Reference>
     <Reference Include="Serialize.Linq">
       <HintPath>..\..\..\packages\Serialize.Linq.1.1.3\lib\net45\Serialize.Linq.dll</HintPath>
