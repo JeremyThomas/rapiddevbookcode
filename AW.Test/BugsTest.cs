@@ -299,8 +299,9 @@ namespace AW.Tests
     public void AnyOnSubtypeWithContainsAndWhere()
     {
       var ids = new[] { 43659, 43660, 43661};
-      Assert.IsFalse(MetaSingletons.MetaData.Customer.FilterBySalesOrderIDs(ids).Where(x => x.SalesTerritory.CountryRegionCode == "US").Any());
-  //    Assert.IsFalse(MetaSingletons.MetaData.Customer.FilterBySalesOrderIDs(ids).Any(x => x.SalesTerritory.CountryRegionCode == "US"));
+      Assert.IsTrue(MetaSingletons.MetaData.Customer.FilterBySalesOrderIDs(ids).Where(x => x.SalesTerritory.CountryRegionCode == "US").Any());
+      // Fails ORMRelationException: Relation at index 1 doesn't contain an entity already added to the FROM clause. Bad alias?
+      //Assert.IsFalse(MetaSingletons.MetaData.Customer.FilterBySalesOrderIDs(ids).Any(x => x.SalesTerritory.CountryRegionCode == "US"));
     }
 
     [TestMethod, TestProperty("Bug", "UnFixed"), TestCategory("Failing"), Description("LINQ -  let followed by a projection followed by an ordering")]
