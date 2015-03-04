@@ -29,7 +29,7 @@ namespace AW.Data.Linq.Filters
       if (salesOrderIDs != null && salesOrderIDs.Length > 0)
         customerQuery = from customerEntity in customerQuery
                         from salesOrderHeaderEntity in customerEntity.SalesOrderHeaders
-                        where salesOrderIDs.Contains(salesOrderHeaderEntity.SalesPersonID.Value)
+                        where salesOrderIDs.Contains(salesOrderHeaderEntity.SalesOrderID)
                         select customerEntity;
       return customerQuery;
     }
