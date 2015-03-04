@@ -97,13 +97,12 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SD.LLBLGen.Pro.DQE.OracleODPNet, Version=4.0.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.dll</HintPath>
+    <Reference Include="SD.LLBLGen.Pro.DQE.OracleODPNet">
+      <HintPath>..\..\..\packages\SD.LLBLGen.Pro.DQE.OracleODPNET.4.2.20150303\lib\net35\SD.LLBLGen.Pro.DQE.OracleODPNet.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=3.1.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <HintPath>..\..\..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20150210\lib\net45\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -148,6 +147,7 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <AppDesigner Include="Properties\" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
