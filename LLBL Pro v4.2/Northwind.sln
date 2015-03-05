@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{109114F1-DE48-4B10-AF10-A18D9AF68E8B}"
 	ProjectSection(SolutionItems) = preProject
@@ -93,9 +93,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.Services.WCF.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GH.Northwind.Web", "Northwind\Clients\Web\GH.Northwind.Web\GH.Northwind.Web.csproj", "{B58568F7-CB7F-4832-B5D4-69AADDE7AB3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.LLBLGen.Pro.DynamicDataSupportClasses", "DynamicDataSupportClasses\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj", "{64696470-5D05-4E00-95C4-C320F268E526}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 17
+		SccNumberOfProjects = 18
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
@@ -163,6 +165,10 @@ Global
 		SccProjectTopLevelParentUniqueName16 = Northwind.sln
 		SccProjectName16 = Northwind/Clients/Web/GH.Northwind.Web
 		SccLocalPath16 = Northwind\\Clients\\Web\\GH.Northwind.Web
+		SccProjectUniqueName17 = DynamicDataSupportClasses\\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj
+		SccProjectTopLevelParentUniqueName17 = Northwind.sln
+		SccProjectName17 = DynamicDataSupportClasses
+		SccLocalPath17 = DynamicDataSupportClasses
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -266,6 +272,12 @@ Global
 		{B58568F7-CB7F-4832-B5D4-69AADDE7AB3A}.Release - Test|Any CPU.Build.0 = Release|Any CPU
 		{B58568F7-CB7F-4832-B5D4-69AADDE7AB3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B58568F7-CB7F-4832-B5D4-69AADDE7AB3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64696470-5D05-4E00-95C4-C320F268E526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64696470-5D05-4E00-95C4-C320F268E526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64696470-5D05-4E00-95C4-C320F268E526}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{64696470-5D05-4E00-95C4-C320F268E526}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{64696470-5D05-4E00-95C4-C320F268E526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64696470-5D05-4E00-95C4-C320F268E526}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -289,6 +301,7 @@ Global
 		{D0DF14DC-8B34-46A7-81BC-FA92B93B828F} = {EC440979-BF2B-423B-95EF-C83ADA94244C}
 		{A523BD8B-5538-4B20-A9D9-C2DCAB1637C5} = {0722ECB9-BD53-4FAC-AAAA-AA7B8F39C30A}
 		{B58568F7-CB7F-4832-B5D4-69AADDE7AB3A} = {D2DBC94E-AA0C-4419-AD82-A2A743A551A7}
+		{64696470-5D05-4E00-95C4-C320F268E526} = {D2DBC94E-AA0C-4419-AD82-A2A743A551A7}
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
 		SpecExplorer.ActivityCompletionStatus = 
