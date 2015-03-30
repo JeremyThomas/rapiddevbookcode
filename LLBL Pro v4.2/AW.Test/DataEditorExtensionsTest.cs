@@ -277,7 +277,7 @@ namespace AW.Tests
 
       var xmlDoc = new XmlDocument();
       xmlDoc.LoadXml(xml);
-      TestEditInDataGridView(xmlDoc.FirstChild.ChildNodes, 23, 1);
+      TestEditInDataGridView(xmlDoc.FirstChild.ChildNodes, 24, 1);
     }
   }
 

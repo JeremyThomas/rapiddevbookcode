@@ -290,7 +290,7 @@ namespace AW.DebugVisualizers.Tests
       var xmlDoc = new XmlDocument();
       xmlDoc.LoadXml(xml);
       //Show(xmlDoc.FirstChild.ChildNodes);
-      TestShowTransported(xmlDoc.FirstChild.ChildNodes, 24, 14);
+      TestShowTransported(xmlDoc.FirstChild.ChildNodes, 25, 14);
     }
 
     [TestMethod]
