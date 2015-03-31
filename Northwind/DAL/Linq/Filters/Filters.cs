@@ -127,5 +127,22 @@ namespace Northwind.DAL.Linq.Filters
                select e;
       return orders;
     }
+
+    public static IQueryable<OrderEntity> FilterByCustomerQuery(this IQueryable<OrderEntity> orderQuery, IQueryable<CustomerEntity> customerQuery)
+    {
+      return from e in orderQuery
+               from c in customerQuery
+               where e.CustomerId==c.CustomerId
+               select e;
+    }
+
+    public static IQueryable<T> FilterByOrderQuery<T>(this IQueryable<T> products, IQueryable<OrderEntity> orderQuery) where T : ProductEntity
+    {
+      return from p in products
+             from od in p.OrderDetails
+             from o in orderQuery
+             where o.OrderId==od.OrderId
+             select p;
+    }
   }
 }
