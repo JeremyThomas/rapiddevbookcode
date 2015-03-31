@@ -532,5 +532,12 @@ namespace AW.Tests
       Assert.IsFalse(GetNorthwindLinqMetaData().Employee.FilterByOrders(2).FilterByManagersOrder(1).Any());
       Assert.IsFalse(GetNorthwindLinqMetaData().Order.FilterByProducts(2).Where(c => c.Customer.Country == "NZ").Any());
     }
+
+    [TestMethod]
+    public void TestCrossJoin()
+    {
+      var northwindLinqMetaData = GetNorthwindLinqMetaData();
+     Assert.AreEqual(0, northwindLinqMetaData.Product.FilterByUnitsInStock(2).FilterByOrderQuery(northwindLinqMetaData.Order.Where(o => o.ShipCountry == "France")).Count());
+    }
   }
 }
