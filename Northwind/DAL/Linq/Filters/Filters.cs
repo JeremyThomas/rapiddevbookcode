@@ -161,6 +161,25 @@ namespace Northwind.DAL.Linq.Filters
              select o;
     }
 
+    public static IQueryable<OrderEntity> FilterByIProductFullGenericQuery<T>(this IQueryable<OrderEntity> orderQuery, IQueryable<T> productQuery)
+  where T : class, IProductFull
+    {
+      return from p in productQuery
+             from od in p.OrderDetails
+             from o in orderQuery
+             where o.OrderId == od.OrderId
+             select o;
+    }
+
+    public static IQueryable<T> FilterByOrderQuery<T>(this IQueryable<T> products, IQueryable<OrderEntity> orderQuery) where T : ProductEntity
+    {
+      return from p in products
+             from od in p.OrderDetails
+             from o in orderQuery
+             where o.OrderId == od.OrderId
+             select p;
+    }
+
     public static IQueryable<SupplierEntity> FilterByIProductQuery(this IQueryable<SupplierEntity> supplierQuery, IQueryable<IProduct> productQuery)
     {
       return from s in supplierQuery
@@ -186,30 +205,12 @@ namespace Northwind.DAL.Linq.Filters
     }
 
     public static IQueryable<SupplierEntity> FilterByIProductGenericJoinQuery<T>(this IQueryable<SupplierEntity> supplierQuery, IQueryable<T> productQuery)
-       where T : class, IProduct
+       where T : IProduct
     {
       return from s in supplierQuery
              join p in productQuery on s.SupplierId equals p.SupplierId
              select s;
     }
 
-    public static IQueryable<OrderEntity> FilterByIProductFullGenericQuery<T>(this IQueryable<OrderEntity> orderQuery, IQueryable<T> productQuery)
-      where T : class, IProductFull
-    {
-      return from p in productQuery
-             from od in p.OrderDetails
-             from o in orderQuery
-             where o.OrderId == od.OrderId
-             select o;
-    }
-
-    public static IQueryable<T> FilterByOrderQuery<T>(this IQueryable<T> products, IQueryable<OrderEntity> orderQuery) where T : ProductEntity
-    {
-      return from p in products
-        from od in p.OrderDetails
-        from o in orderQuery
-        where o.OrderId == od.OrderId
-        select p;
-    }
   }
 }

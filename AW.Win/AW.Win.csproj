@@ -87,6 +87,19 @@
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <HintPath>..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20150323\lib\net45\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
     </Reference>
+    <Reference Include="SD.Tools.Algorithmia">
+      <HintPath>..\packages\SD.Tools.Algorithmia.1.1.0\lib\SD.Tools.Algorithmia.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SD.Tools.BCLExtensions">
+      <HintPath>..\packages\SD.Tools.BCLExtensions.1.0.0\lib\SD.Tools.BCLExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="SD.Tools.OrmProfiler.Interceptor.NET45">
+      <HintPath>..\packages\SD.Tools.OrmProfiler.Interceptor.NET45.1.5.20150209\lib\net45\SD.Tools.OrmProfiler.Interceptor.NET45.dll</HintPath>
+    </Reference>
+    <Reference Include="SD.Tools.OrmProfiler.Shared">
+      <HintPath>..\packages\SD.Tools.OrmProfiler.Interceptor.NET45.1.5.20150209\lib\net45\SD.Tools.OrmProfiler.Shared.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
