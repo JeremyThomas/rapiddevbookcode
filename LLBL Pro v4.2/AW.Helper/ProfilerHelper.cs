@@ -184,8 +184,6 @@ namespace AW.Helper
     public static string GetOrmProfilerPath()
     {
       var opsnapshotRegistration = Registry.GetValue("HKEY_CLASSES_ROOT\\.opsnapshot", string.Empty, null);
-      if (opsnapshotRegistration == null)
-        return null;
       var realRegistryKey = opsnapshotRegistration as string;
       if (realRegistryKey == null)
         return null;
