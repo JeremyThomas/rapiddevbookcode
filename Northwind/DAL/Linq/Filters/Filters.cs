@@ -59,6 +59,13 @@ namespace Northwind.DAL.Linq.Filters
       return products;
     }
 
+    public static IQueryable<IProduct> FilterBySupplierIdI(this IQueryable<IProduct> products, params int?[] suppliers)
+    {
+      if (suppliers.IsNullOrEmpty())
+        return products;
+      return products.Where(p => suppliers.Contains(p.SupplierId));
+    }
+
     public static IQueryable<T> FilterByProductName<T>(this IQueryable<T> products, string productName) where T : class, IProduct
     {
       return string.IsNullOrEmpty(productName) ? products : products.Where(r => productName.EqualsIgnoreCase(r.ProductName));
@@ -122,27 +129,87 @@ namespace Northwind.DAL.Linq.Filters
     {
       if (productIds != null && productIds.Length > 0)
         return from e in orders
-               from o in e.OrderDetails
-               where productIds.Contains(o.ProductId)
-               select e;
+          from o in e.OrderDetails
+          where productIds.Contains(o.ProductId)
+          select e;
       return orders;
     }
 
     public static IQueryable<OrderEntity> FilterByCustomerQuery(this IQueryable<OrderEntity> orderQuery, IQueryable<CustomerEntity> customerQuery)
     {
       return from e in orderQuery
-               from c in customerQuery
-               where e.CustomerId==c.CustomerId
-               select e;
+        from c in customerQuery
+        where e.CustomerId == c.CustomerId
+        select e;
+    }
+
+    public static IQueryable<OrderEntity> FilterByProductQuery(this IQueryable<OrderEntity> orderQuery, IQueryable<ProductEntity> productQuery)
+    {
+      return from p in productQuery
+        from od in p.OrderDetails
+        from o in orderQuery
+        where o.OrderId == od.OrderId
+        select o;
+    }
+
+    public static IQueryable<OrderEntity> FilterByIProductFullQuery(this IQueryable<OrderEntity> orderQuery, IQueryable<IProductFull> productQuery)
+    {
+      return from p in productQuery
+             from od in p.OrderDetails
+             from o in orderQuery
+             where o.OrderId == od.OrderId
+             select o;
+    }
+
+    public static IQueryable<SupplierEntity> FilterByIProductQuery(this IQueryable<SupplierEntity> supplierQuery, IQueryable<IProduct> productQuery)
+    {
+      return from s in supplierQuery
+             from p in productQuery
+             where s.SupplierId == p.SupplierId
+             select s;
+    }
+
+    public static IQueryable<SupplierEntity> FilterByIProductJoinQuery(this IQueryable<SupplierEntity> supplierQuery, IQueryable<IProduct> productQuery)
+    {
+      return from s in supplierQuery
+             join p in productQuery on s.SupplierId equals p.SupplierId
+             select s;
+    }
+
+    public static IQueryable<SupplierEntity> FilterByIProductGenericQuery<T>(this IQueryable<SupplierEntity> supplierQuery, IQueryable<T> productQuery)
+           where T : class, IProduct
+    {
+      return from s in supplierQuery
+             from p in productQuery
+             where s.SupplierId == p.SupplierId
+             select s;
+    }
+
+    public static IQueryable<SupplierEntity> FilterByIProductGenericJoinQuery<T>(this IQueryable<SupplierEntity> supplierQuery, IQueryable<T> productQuery)
+       where T : class, IProduct
+    {
+      return from s in supplierQuery
+             join p in productQuery on s.SupplierId equals p.SupplierId
+             select s;
+    }
+
+    public static IQueryable<OrderEntity> FilterByIProductFullGenericQuery<T>(this IQueryable<OrderEntity> orderQuery, IQueryable<T> productQuery)
+      where T : class, IProductFull
+    {
+      return from p in productQuery
+             from od in p.OrderDetails
+             from o in orderQuery
+             where o.OrderId == od.OrderId
+             select o;
     }
 
     public static IQueryable<T> FilterByOrderQuery<T>(this IQueryable<T> products, IQueryable<OrderEntity> orderQuery) where T : ProductEntity
     {
       return from p in products
-             from od in p.OrderDetails
-             from o in orderQuery
-             where o.OrderId==od.OrderId
-             select p;
+        from od in p.OrderDetails
+        from o in orderQuery
+        where o.OrderId == od.OrderId
+        select p;
     }
   }
 }

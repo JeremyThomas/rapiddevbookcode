@@ -319,14 +319,28 @@ namespace AW.Tests
       metaData.Customer.EmptySelect().PrefetchCustomerDemographics().FilterByEmployeeId(100).FilterByCountry("NZ").ToEntityCollection2();
     }
 
+    /// <summary>
+    /// Tests for filter by an interface.
+    /// In the release notes:08082014:Linq: Added check for factory retrieval fail to make error detection easier with linq queries based on interfaces.
+    /// e.g. SD.LLBLGen.Pro.ORMSupportClasses.ORMQueryConstructionException: Can't obtain entity factory for type 'Northwind.DAL.HelperClasses.IProduct'.
+    /// But does happen for Any, count etc
+    /// </summary>
     [TestMethod, Description("http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=22914")]
     public void TestFilterByDiscontinued()
     {
       var metaData = GetNorthwindLinqMetaData();
-      metaData.Product.FilterByDiscontinued(true).ToEntityCollection2();
-      metaData.Product.FilterByDiscontinued(false).ToEntityCollection2();
+      Assert.IsTrue(metaData.Product.FilterByDiscontinuedI(true).ToList().Any()); //Still gives NullReferenceException
+      Assert.IsTrue(metaData.Product.FilterByDiscontinued(true).Any());
+      Assert.IsTrue(metaData.Product.FilterByDiscontinued(false).Any());
     }
 
+    [TestMethod, Description("http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=22914")]
+    public void TestFilterBySupplierIdI()
+    {
+      var metaData = GetNorthwindLinqMetaData();
+      Assert.IsTrue(metaData.Product.FilterBySupplierIdI(1).ToList().Any()); //Still gives NullReferenceException
+    }
+    
     [TestMethod, TestProperty("Bug", "Fixed")]
     public void TestFilterByProductName()
     {
@@ -528,16 +542,25 @@ namespace AW.Tests
     [TestMethod, TestProperty("Bug", "Fixed"), Description("LINQ - Invalid SQL when CountColumn")]
     public void TestAny()
     {
-      Assert.IsFalse(GetNorthwindLinqMetaData().Customer.FilterByShipCountry("NZ").FilterByCountry("NZ").Any());
-      Assert.IsFalse(GetNorthwindLinqMetaData().Employee.FilterByOrders(2).FilterByManagersOrder(1).Any());
-      Assert.IsFalse(GetNorthwindLinqMetaData().Order.FilterByProducts(2).Where(c => c.Customer.Country == "NZ").Any());
+      var northwindLinqMetaData = GetNorthwindLinqMetaData();
+      Assert.IsFalse(northwindLinqMetaData.Customer.FilterByShipCountry("NZ").FilterByCountry("NZ").Any());
+      Assert.IsFalse(northwindLinqMetaData.Employee.FilterByOrders(2).FilterByManagersOrder(1).Any());
+      // ReSharper disable once ReplaceWithSingleCallToAny
+      Assert.IsFalse(northwindLinqMetaData.Order.FilterByProducts(2).Where(c => c.Customer.Country == "NZ").Any());
     }
 
-    [TestMethod]
-    public void TestCrossJoin()
+    /// <summary>
+    ///   https://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=23273
+    /// </summary>
+    [TestMethod, TestProperty("Bug", "UnFixed"), Description("LINQ - Invalid SQL with Linq on interface query join")]
+    public void TestCrossJoinWithInterfaceQuery()
     {
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
-     Assert.AreEqual(0, northwindLinqMetaData.Product.FilterByUnitsInStock(2).FilterByOrderQuery(northwindLinqMetaData.Order.Where(o => o.ShipCountry == "France")).Count());
+    // Assert.AreEqual(0, northwindLinqMetaData.Product.FilterByUnitsInStock(2).FilterByOrderQuery(northwindLinqMetaData.Order.Where(o => o.ShipCountry == "France")).Count());
+      //Assert.AreEqual(53, northwindLinqMetaData.Order.FilterByIProductFullGenericQuery(northwindLinqMetaData.Product.FilterByUnitsInStock(10)).Count());
+      Assert.AreEqual(29, northwindLinqMetaData.Supplier.FilterByIProductGenericJoinQuery(northwindLinqMetaData.Product).ToEntityCollection2().Count());
+      Assert.AreEqual(29, northwindLinqMetaData.Supplier.FilterByIProductJoinQuery(northwindLinqMetaData.Product).ToList().Count());
+      //Assert.AreEqual(53, northwindLinqMetaData.Order.FilterByIProductFullQuery(northwindLinqMetaData.Product).ToEntityCollection2().Count());
     }
   }
 }
