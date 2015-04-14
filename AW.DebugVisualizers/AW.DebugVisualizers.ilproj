@@ -9,25 +9,25 @@
   <!--Signing-->
   <Sign Enabled="false" Delay="false"></Sign>
   <!--Logging-->
-  <Log Enabled="true">C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Release\AW.EnumerableVisualizer.2013.log</Log>
+  <Log Enabled="true">C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release\AW.EnumerableVisualizer.2013.log</Log>
   <!--Assemblies-->
   <Assemblies>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Release\AdvancedDataGridView.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Release\AW.Helper.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Release\AW.Winforms.Helpers.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Release\CSScriptLibrary.v3.5.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Release\Dynamic.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Release\Humanizer.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Release\Microsoft.Data.ConnectionUI.Dialog.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Release\Microsoft.Data.ConnectionUI.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Release\Newtonsoft.Json.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Release\ObjectListView.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Release\sliver.Windows.Forms.StateBrowser.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Release\AW.DebugVisualizers.2013.exe</Assembly>
-    <Primary>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Release\AW.DebugVisualizers.2013.exe</Primary>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release\AdvancedDataGridView.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release\AW.Helper.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release\AW.Winforms.Helpers.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release\CSScriptLibrary.v3.5.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release\Dynamic.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release\Humanizer.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release\Microsoft.Data.ConnectionUI.Dialog.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release\Microsoft.Data.ConnectionUI.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release\Newtonsoft.Json.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release\ObjectListView.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release\sliver.Windows.Forms.StateBrowser.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release\AW.DebugVisualizers.2013.exe</Assembly>
+    <Primary>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release\AW.DebugVisualizers.2013.exe</Primary>
   </Assemblies>
   <!--Output-->
-  <OutputAssembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Release\AW.EnumerableVisualizer.2013.exe</OutputAssembly>
+  <OutputAssembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release\AW.EnumerableVisualizer.2013.exe</OutputAssembly>
   <!--.NET Framework-->
   <Framework>.NET Framework 4.5 Full</Framework>
   <!--Merge Engine-->
