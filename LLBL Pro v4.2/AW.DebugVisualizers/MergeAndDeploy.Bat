@@ -1,6 +1,6 @@
 rem "%PROGRAMFILES%\Microsoft\ILMerge\ILMerge.exe" /out:bin\release\AW.EnumerableVisualizer.2013.dll bin\release\AW.DebugVisualizers.2013.dll bin\release\AW.Helper.dll bin\release\AW.Winforms.Helpers.dll bin\release\Dynamic.dll bin\release\ObjectListView.dll bin\release\sliver.Windows.Forms.StateBrowser.dll bin\release\CSScriptLibrary.dll
 rem xcopy /y bin\release\AW.EnumerableVisualizer.dll "%userprofile%\My Documents\Visual Studio 2013\Visualizers" 
 rem /targetplatform:v4,"%FrameworkDir%%FrameworkVersion%"
-"..\packages\ilmerge.2.14.1208\tools\ILMerge.exe" /targetplatform:v4,"%ProgramFiles%\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Profile\Client" /out:bin\release\AW.EnumerableVisualizer.2013.exe bin\release\AW.DebugVisualizers.2013.exe bin\release\AW.Helper.dll bin\release\AW.Winforms.Helpers.dll bin\release\Dynamic.dll bin\release\ObjectListView.dll bin\release\sliver.Windows.Forms.StateBrowser.dll bin\release\Newtonsoft.Json.dll bin\release\Humanizer.dll AdvancedDataGridView.dll
+"..\packages\ilmerge.2.14.1208\tools\ILMerge.exe" /out:bin\release\AW.EnumerableVisualizer.2013.exe bin\release\AW.DebugVisualizers.2013.exe bin\release\AW.Helper.dll bin\release\AW.Winforms.Helpers.dll bin\release\Dynamic.dll bin\release\ObjectListView.dll bin\release\sliver.Windows.Forms.StateBrowser.dll bin\release\Newtonsoft.Json.dll bin\release\Humanizer.dll bin\release\AdvancedDataGridView.dll
 rem xcopy /y bin\release\AW.EnumerableVisualizer.exe "%userprofile%\My Documents\Visual Studio 2013\Visualizers" 
 pause
