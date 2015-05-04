@@ -54,7 +54,8 @@
       <HintPath>..\packages\DynamicQuery.1.0\lib\35\Dynamic.dll</HintPath>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <HintPath>..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20150410\lib\net35\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
+      <HintPath>..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20150416\lib\net35\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="sliver.Windows.Forms.StateBrowser, Version=2.0.0.0, Culture=neutral, PublicKeyToken=34afe62596d00324, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
