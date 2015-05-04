@@ -14,7 +14,8 @@ namespace AW.Helper
   /// </summary>
   public enum VisualStudioVersion
   {
-// ReSharper disable InconsistentNaming
+    // ReSharper disable InconsistentNaming
+    VS2015 = 140,
     VS2013 = 120,
     VS2012 = 110,
     VS2010 = 100,
