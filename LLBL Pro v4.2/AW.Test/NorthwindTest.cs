@@ -321,20 +321,26 @@ namespace AW.Tests
 
     /// <summary>
     /// Tests for filter by an interface.
-    /// In the release notes:08082014:Linq: Added check for factory retrieval fail to make error detection easier with linq queries based on interfaces.
-    /// e.g. SD.LLBLGen.Pro.ORMSupportClasses.ORMQueryConstructionException: Can't obtain entity factory for type 'Northwind.DAL.HelperClasses.IProduct'.
-    /// But does happen for Any, count etc
     /// </summary>
     [TestMethod, Description("http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=22914")]
     public void TestFilterByDiscontinued()
     {
       var metaData = GetNorthwindLinqMetaData();
-      Assert.IsTrue(metaData.Product.FilterByDiscontinuedI(true).ToList().Any()); //Still gives NullReferenceException
       Assert.IsTrue(metaData.Product.FilterByDiscontinued(true).Any());
       Assert.IsTrue(metaData.Product.FilterByDiscontinued(false).Any());
     }
 
-    [TestMethod, Description("http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=22914")]
+    /// <summary>
+    /// Tests for filter by an interface.
+    /// </summary>
+    [TestMethod, Description("http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=22914"), ExpectedException(typeof(ORMQueryConstructionException))]
+    public void TestFilterByDiscontinuedI()
+    {
+      var metaData = GetNorthwindLinqMetaData();
+      Assert.IsTrue(metaData.Product.FilterByDiscontinuedI(true).Any());
+    }
+    
+    [TestMethod, Description("http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=22914"), ExpectedException(typeof(ORMQueryConstructionException))]
     public void TestFilterBySupplierIdI()
     {
       var metaData = GetNorthwindLinqMetaData();
@@ -552,7 +558,7 @@ namespace AW.Tests
     /// <summary>
     ///   https://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=23273
     /// </summary>
-    [TestMethod, TestProperty("Bug", "UnFixed"), Description("LINQ - Invalid SQL with Linq on interface query join")]
+    [TestMethod, TestCategory("Failing"), TestProperty("Bug", "UnFixed"), Description("LINQ - Invalid SQL with Linq on interface query join")]
     public void TestCrossJoinWithInterfaceQuery()
     {
       var northwindLinqMetaData = GetNorthwindLinqMetaData();

@@ -80,7 +80,7 @@ public partial class Controls_ListCustomerListInstances : System.Web.UI.UserCont
 		vlblAddressLine1.Text = selectedRow.AddressLine1.ToString();
 		vlblAddressLine2.Text = selectedRow.AddressLine2.ToString();
 		vlblCity.Text = selectedRow.City.ToString();
-		vlblName.Text = selectedRow.Name.ToString();
+	//	vlblName.Text = selectedRow.Name.ToString();
 		vlblTitle.Text = selectedRow.Title.ToString();
 		vlblFirstName.Text = selectedRow.FirstName.ToString();
 		vlblMiddleName.Text = selectedRow.MiddleName.ToString();

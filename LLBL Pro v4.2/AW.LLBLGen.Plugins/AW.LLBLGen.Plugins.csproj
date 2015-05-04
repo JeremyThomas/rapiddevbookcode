@@ -85,7 +85,8 @@
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Solutions Design\LLBLGen Pro v4.2\SD.LLBLGen.Pro.DBDriverCore.dll</HintPath>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <HintPath>..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20150410\lib\net35\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
+      <HintPath>..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20150416\lib\net35\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SD.Tools.Algorithmia">
       <HintPath>..\packages\SD.Tools.Algorithmia.1.1.0\lib\SD.Tools.Algorithmia.dll</HintPath>
