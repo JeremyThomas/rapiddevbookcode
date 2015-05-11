@@ -372,7 +372,9 @@ namespace AW.DebugVisualizers.Tests
     /// <param name="expectedColumnCount"> The expected column count. </param>
     private static void TestShow(object enumerableOrDataTableToVisualize, int expectedColumnCount)
     {
-      Assert.IsTrue(enumerableOrDataTableToVisualize is IEnumerable || enumerableOrDataTableToVisualize is DataTableSurrogate || enumerableOrDataTableToVisualize is WeakReference);
+      Assert.IsTrue(enumerableOrDataTableToVisualize is IEnumerable 
+        || enumerableOrDataTableToVisualize is DataTableSurrogate || enumerableOrDataTableToVisualize is DataTable
+        || enumerableOrDataTableToVisualize is WeakReference);
       var visualizerObjectProviderFake = new VisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
       //AssertNewContainerIsBindingListView(enumerableOrDataTableToVisualize, visualizerObjectProviderFake.GetObject());
       EnumerableVisualizer.Show(DialogVisualizerServiceFake, visualizerObjectProviderFake);
