@@ -65,8 +65,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.Web, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <HintPath>..\packages\SD.LLBLGen.Pro.ORMSupportClasses.Web.4.2.20150410\lib\net35\SD.LLBLGen.Pro.ORMSupportClasses.Web.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\SD.LLBLGen.Pro.ORMSupportClasses.Web.4.2.20150416\lib\net35\SD.LLBLGen.Pro.ORMSupportClasses.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
