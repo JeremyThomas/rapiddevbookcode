@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
+using System.DirectoryServices;
+using System.DirectoryServices.AccountManagement;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -330,9 +332,51 @@ namespace AW.DebugVisualizers.Tests
     [TestMethod]
     public void AssembliesTest()
     {
-      var assemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
+      var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.FullName.Contains("OrmProfiler")).ToList();
       //Show(assemblies);
       TestSerialize(assemblies);
+    }
+
+    [TestCategory("Winforms"), TestMethod]
+    public void PropertyCollectionTest()
+    {
+      using (var ctx = new PrincipalContext(ContextType.Machine))
+      using (var usr = UserPrincipal.FindByIdentity(ctx, IdentityType.SamAccountName, Environment.UserName))
+      {
+        var directoryEntry = usr?.GetUnderlyingObject() as DirectoryEntry;
+        if (directoryEntry != null) TestShowTransported(directoryEntry.Properties, 5);
+      }
+    }
+
+    [TestCategory("Winforms"), TestMethod]
+    public void DirectoryEntryTest()
+    {
+      var path = $"WinNT://{Environment.MachineName},computer";
+      using (var directoryEntry = new DirectoryEntry(path))
+        TestShowTransported(directoryEntry.Children, 3);
+    }
+
+    [TestCategory("Winforms"), TestMethod]
+    public void SearchResultCollectionTest()
+    {
+      using (var entry = new DirectoryEntry("LDAP://ldap.forumsys.com/dc=example,dc=com", "", "", AuthenticationTypes.None))
+      using (var searcher = new DirectorySearcher(entry))
+      {
+        searcher.PageSize = 5;
+        TestShowTransported(searcher.FindAll(), 2, 1);
+      }
+    }
+    [TestCategory("Winforms"), TestMethod]
+    public void ResultPropertyCollectionTest()
+    {
+      using (var entry = new DirectoryEntry("LDAP://ldap.forumsys.com/dc=example,dc=com", "", "", AuthenticationTypes.None))
+      using (var searcher = new DirectorySearcher(entry))
+      {
+        searcher.Filter = "(uid=" + "tesla" + ")";
+        var searchResult = searcher.FindOne();
+        TestShowTransported(searchResult.Properties, 2);
+        TestShowTransported(searchResult.Properties.OfType<DictionaryEntry>(), 2);
+      }
     }
 
     private static void TestSerialize(object enumerableOrDataTableToVisualize)
@@ -342,7 +386,8 @@ namespace AW.DebugVisualizers.Tests
     }
 
     /// <summary>
-    ///   Assert that if the Serialized and Deserialized enumeration is not the same type as the source then it is a IBindingListView
+    ///   Assert that if the Serialized and Deserialized enumeration is not the same type as the source then it is a
+    ///   IBindingListView
     /// </summary>
     /// <param name="enumerableOrDataTableToVisualize"> The enumerable or data table to visualize. </param>
     /// <param name="transportedEnumerableOrDataTable"> The transported enumerable or data table. </param>
@@ -361,7 +406,7 @@ namespace AW.DebugVisualizers.Tests
 
     private static void ShowObjectSourceVisualizer(object enumerableOrDataTableToVisualize)
     {
-      var visualizerHost = new VisualizerDevelopmentHost(enumerableOrDataTableToVisualize, typeof(ObjectSourceVisualizer.ObjectSourceVisualizer), typeof(ObjectSourceVisualizer.ObjectSourceVisualizerObjectSource));
+      var visualizerHost = new VisualizerDevelopmentHost(enumerableOrDataTableToVisualize, typeof (ObjectSourceVisualizer.ObjectSourceVisualizer), typeof (ObjectSourceVisualizer.ObjectSourceVisualizer));
       visualizerHost.ShowVisualizer();
     }
 
@@ -372,17 +417,17 @@ namespace AW.DebugVisualizers.Tests
     /// <param name="expectedColumnCount"> The expected column count. </param>
     private static void TestShow(object enumerableOrDataTableToVisualize, int expectedColumnCount)
     {
-      Assert.IsTrue(enumerableOrDataTableToVisualize is IEnumerable 
-        || enumerableOrDataTableToVisualize is DataTableSurrogate || enumerableOrDataTableToVisualize is DataTable
-        || enumerableOrDataTableToVisualize is WeakReference);
+      Assert.IsTrue(enumerableOrDataTableToVisualize is IEnumerable
+                    || enumerableOrDataTableToVisualize is DataTableSurrogate || enumerableOrDataTableToVisualize is DataTable
+                    || enumerableOrDataTableToVisualize is WeakReference);
       var visualizerObjectProviderFake = new VisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
       //AssertNewContainerIsBindingListView(enumerableOrDataTableToVisualize, visualizerObjectProviderFake.GetObject());
       EnumerableVisualizer.Show(DialogVisualizerServiceFake, visualizerObjectProviderFake);
       var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
       Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());
       Assert.IsTrue(dataGridView.ReadOnly, "dataGridView.ReadOnly");
-      Assert.IsInstanceOfType(dataGridView.DataSource, typeof(BindingSource)); //make it BindingSource
-      var bindingSource = (BindingSource)(dataGridView.DataSource);
+      Assert.IsInstanceOfType(dataGridView.DataSource, typeof (BindingSource)); //make it BindingSource
+      var bindingSource = (BindingSource) (dataGridView.DataSource);
       if (bindingSource.DataSource is IBindingList)
       {
         Assert.IsFalse(bindingSource.AllowRemove, "bindingSource.AllowRemove");
@@ -393,7 +438,8 @@ namespace AW.DebugVisualizers.Tests
     }
 
     /// <summary>
-    ///   Shows the enumerable or data table to visualize and asserts the number of columns displayed are that same before and after transportation.
+    ///   Shows the enumerable or data table to visualize and asserts the number of columns displayed are that same before and
+    ///   after transportation.
     /// </summary>
     /// <param name="enumerableOrDataTableToVisualize"> The enumerable or data table to visualize. </param>
     /// <param name="expectedColumnCount"> The expected column count. </param>
@@ -461,24 +507,44 @@ namespace AW.DebugVisualizers.Tests
 
     #region Implementation of IVisualizerObjectProvider
 
-    /// <returns> A stream of data containing the contents of the object being visualized. Calling this method results in <see
-    ///    cref="M:Microsoft.VisualStudio.DebuggerVisualizers.VisualizerObjectSource.GetData(System.Object,System.IO.Stream)" /> being called on the VisualizerObjectSource. The return value of that GetData call is then returned to the caller of this method. </returns>
+    /// <returns>
+    ///   A stream of data containing the contents of the object being visualized. Calling this method results in
+    ///   <see
+    ///     cref="M:Microsoft.VisualStudio.DebuggerVisualizers.VisualizerObjectSource.GetData(System.Object,System.IO.Stream)" />
+    ///   being called on the VisualizerObjectSource. The return value of that GetData call is then returned to the caller of
+    ///   this method.
+    /// </returns>
     public Stream GetData()
     {
       return null;
     }
 
-    /// <returns> The data object being visualized. This is actually a debugger-side copy of the object you are visualizing in the debuggee. If you modify the contents of this object, the changes will not be reflected back in the debuggee unless you use the <see
-    ///    cref="M:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider.ReplaceData(System.IO.Stream)" /> / <see
-    ///    cref="M:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider.ReplaceObject(System.Object)" /> or <see
-    ///    cref="M:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider.TransferData(System.IO.Stream)" /> / <see
-    ///    cref="M:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider.TransferObject(System.Object)" /> . </returns>
+    /// <returns>
+    ///   The data object being visualized. This is actually a debugger-side copy of the object you are visualizing in the
+    ///   debuggee. If you modify the contents of this object, the changes will not be reflected back in the debuggee unless
+    ///   you use the
+    ///   <see
+    ///     cref="M:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider.ReplaceData(System.IO.Stream)" />
+    ///   /
+    ///   <see
+    ///     cref="M:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider.ReplaceObject(System.Object)" />
+    ///   or
+    ///   <see
+    ///     cref="M:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider.TransferData(System.IO.Stream)" />
+    ///   /
+    ///   <see
+    ///     cref="M:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider.TransferObject(System.Object)" />
+    ///   .
+    /// </returns>
     public object GetObject()
     {
       return _enumerableOrDataTableToVisualize;
     }
 
-    /// <param name="newObjectData"> A stream containing data to be used to create a new object, replacing the object currently being visualized. </param>
+    /// <param name="newObjectData">
+    ///   A stream containing data to be used to create a new object, replacing the object currently
+    ///   being visualized.
+    /// </param>
     public void ReplaceData(Stream newObjectData)
     {
     }
@@ -488,22 +554,32 @@ namespace AW.DebugVisualizers.Tests
     {
     }
 
-    /// <returns> Returns the data stream filled in by VisualizerObjectSource's TransferData method. There is no two-way stream-based communication between the debugger side and debuggee side (object source.) </returns>
+    /// <returns>
+    ///   Returns the data stream filled in by VisualizerObjectSource's TransferData method. There is no two-way
+    ///   stream-based communication between the debugger side and debuggee side (object source.)
+    /// </returns>
     /// <param name="outgoingData"> A stream of data that is to be transferred back to the debuggee side. </param>
     public Stream TransferData(Stream outgoingData)
     {
       return null;
     }
 
-    /// <returns> The result of deserializing the return value of <see
-    ///    cref="M:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider.TransferData(System.IO.Stream)" /> . </returns>
+    /// <returns>
+    ///   The result of deserializing the return value of
+    ///   <see
+    ///     cref="M:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider.TransferData(System.IO.Stream)" />
+    ///   .
+    /// </returns>
     /// <param name="outgoingObject"> An object that is to be transferred back to the debuggee side. </param>
     public object TransferObject(object outgoingObject)
     {
       return null;
     }
 
-    /// <returns> Determines whether the data object being visualized is replaceable (read/write) or nonreplaceable (read only). </returns>
+    /// <returns>
+    ///   Determines whether the data object being visualized is replaceable (read/write) or nonreplaceable (read
+    ///   only).
+    /// </returns>
     public bool IsObjectReplaceable
     {
       get { return false; }
