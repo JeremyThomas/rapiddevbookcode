@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.DirectoryServices;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
@@ -10,6 +12,7 @@ using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
+using AW.Helper.TypeConverters;
 using AW.LinqToSQL;
 using AW.Test.Helpers;
 using AW.Tests.Properties;
@@ -278,6 +281,25 @@ namespace AW.Tests
       var xmlDoc = new XmlDocument();
       xmlDoc.LoadXml(xml);
       TestEditInDataGridView(xmlDoc.FirstChild.ChildNodes, 24, 1);
+    }
+
+    [TestCategory("Winforms"), TestMethod]
+    public void ResultPropertyCollectionTest()
+    {
+      using (var entry = new DirectoryEntry("LDAP://ldap.forumsys.com/dc=example,dc=com", "", "", AuthenticationTypes.None))
+      using (var searcher = new DirectorySearcher(entry))
+      {
+        searcher.Filter = "(uid=" + "tesla" + ")";
+        var searchResult = searcher.FindOne();
+         SingleValueCollectionConverter.AddConverter(typeof(ICollection));
+        var dictionaryEntries = searchResult.Properties.OfType<DictionaryEntry>();
+        var dictionaryEntry = dictionaryEntries.First();
+        var typeConverter = TypeDescriptor.GetConverter(dictionaryEntry.Value.GetType());
+        var convertToString = typeConverter.ConvertToString(dictionaryEntry.Value);
+        //dictionaryEntry.Value
+        //TestShowInGrid(dictionaryEntries);
+       // searchResult.Properties.ShowInGrid();
+      }
     }
   }
 
