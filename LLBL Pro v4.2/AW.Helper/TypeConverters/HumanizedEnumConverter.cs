@@ -34,13 +34,9 @@ namespace AW.Helper.TypeConverters
     {
       var coreType = MetaDataHelper.GetCoreType(enumType);
       GeneralHelper.CheckIsEnum(coreType);
-      if (!(TypeDescriptor.GetConverter(enumType) is HumanizedEnumConverter)) //perhaps could just check != EnumConverter
-        TypeDescriptor.AddAttributes(enumType, new TypeConverterAttribute(typeof (HumanizedEnumConverter)));
-      if (coreType == enumType) return;
-      if (!(TypeDescriptor.GetConverter(coreType) is HumanizedEnumConverter))
-        TypeDescriptor.AddAttributes(coreType, new TypeConverterAttribute(typeof (HumanizedEnumConverter)));
+      TypeConverterHelper.AddConverter(typeof(HumanizedEnumConverter), enumType, coreType);
     }
-
+    
     /// <summary>
     ///   Converts the given value object to the specified destination type.
     ///   When the converting to string and the enum is not defined then return empty string rather than the number

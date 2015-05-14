@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace AW.Helper.TypeConverters
@@ -50,6 +51,17 @@ namespace AW.Helper.TypeConverters
     public static Type GetType(TypeCode typeCode)
     {
       return Type.GetType("System." + typeCode);
+    }
+
+    /// <summary>
+    /// Adds TypeConverterAttribute to the targetTypes
+    /// </summary>
+    /// <param name="converterType"></param>
+    /// <param name="targetTypes"></param>
+    public static void AddConverter(Type converterType, params Type[] targetTypes)
+    {
+      foreach (var targetType in targetTypes.Distinct().Where(targetType => !(TypeDescriptor.GetConverter(targetType).GetType() == converterType)))
+        TypeDescriptor.AddAttributes(targetType, new TypeConverterAttribute(converterType));
     }
   }
 }

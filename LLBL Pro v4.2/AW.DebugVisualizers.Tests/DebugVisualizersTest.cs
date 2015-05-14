@@ -19,6 +19,7 @@ using AW.Data.EntityClasses;
 using AW.DebugVisualizers.Tests.Properties;
 using AW.Helper;
 using AW.Helper.LLBL;
+using AW.Helper.TypeConverters;
 using AW.LinqToSQL;
 using AW.Test.Helpers;
 using AW.Winforms.Helpers;
@@ -374,6 +375,8 @@ namespace AW.DebugVisualizers.Tests
       {
         searcher.Filter = "(uid=" + "tesla" + ")";
         var searchResult = searcher.FindOne();
+      //  SingleValueCollectionConverter.AddConverter(typeof(ResultPropertyValueCollection));
+        Show(searchResult.Properties.OfType<DictionaryEntry>());
         TestShowTransported(searchResult.Properties, 2);
         TestShowTransported(searchResult.Properties.OfType<DictionaryEntry>(), 2);
       }
