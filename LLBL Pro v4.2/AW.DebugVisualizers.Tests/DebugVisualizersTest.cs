@@ -23,6 +23,8 @@ using AW.Helper.TypeConverters;
 using AW.LinqToSQL;
 using AW.Test.Helpers;
 using AW.Winforms.Helpers;
+using AW.Winforms.Helpers.DataEditor;
+using AW.Winforms.Helpers.Misc;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.Linq;
@@ -46,11 +48,17 @@ namespace AW.DebugVisualizers.Tests
     }
 
     private static DialogVisualizerServiceFake _dialogVisualizerServiceFake;
+    private static DialogVisualizerServiceFake _dialogVisualizerServiceFakeForDebug;
     private static readonly EntityCollectionBase<AddressTypeEntity> AddressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
 
     private static DialogVisualizerServiceFake DialogVisualizerServiceFake
     {
       get { return _dialogVisualizerServiceFake ?? (_dialogVisualizerServiceFake = _dialogVisualizerServiceFake = new DialogVisualizerServiceFake()); }
+    }
+
+    private static DialogVisualizerServiceFake DialogVisualizerServiceFakeForDebug
+    {
+      get { return _dialogVisualizerServiceFakeForDebug ?? (_dialogVisualizerServiceFakeForDebug = _dialogVisualizerServiceFakeForDebug = new DialogVisualizerServiceFake(true)); }
     }
 
     #region Additional test attributes
@@ -240,7 +248,8 @@ namespace AW.DebugVisualizers.Tests
     public void StringArrayTest()
     {
       var enumerable = new[] {"s1", "s2", "s3"};
-      TestShow(enumerable, 1);
+     TestShow(enumerable, 1);
+      ShowWithFakeAndWait(enumerable);
       var stringEnumerable = enumerable.Where(s => s.Length > 1);
       TestShow(stringEnumerable, 1);
       TestShowTransported(stringEnumerable, 1);
@@ -375,10 +384,33 @@ namespace AW.DebugVisualizers.Tests
       {
         searcher.Filter = "(uid=" + "tesla" + ")";
         var searchResult = searcher.FindOne();
-      //  SingleValueCollectionConverter.AddConverter(typeof(ResultPropertyValueCollection));
-        Show(searchResult.Properties.OfType<DictionaryEntry>());
-        TestShowTransported(searchResult.Properties, 2);
-        TestShowTransported(searchResult.Properties.OfType<DictionaryEntry>(), 2);
+        //  SingleValueCollectionConverter.AddConverter(typeof(ResultPropertyValueCollection));
+        DictionaryEntryTypeDescriptionProvider.Add();
+        var dictionaryEntries = searchResult.Properties.OfType<DictionaryEntry>();
+        var dictionaryEntry = dictionaryEntries.First();
+        var valueType = dictionaryEntry.Value.GetType();
+        var typeConverter = TypeDescriptor.GetConverter(valueType);
+        var convertToString = typeConverter.ConvertToString(dictionaryEntry.Value);
+        var typeDictionaryEntry = typeof(DictionaryEntry);
+        var typeDescriptionProvider = TypeDescriptor.GetProvider(typeof(DictionaryEntry));
+        var propertiesToDisplay = MetaDataHelper.GetPropertiesToDisplay(typeDictionaryEntry);
+        var propertyDescriptor = propertiesToDisplay.Last();
+        var converter = propertyDescriptor.Converter;
+        if (converter != null)
+        {
+          var stringToDisplay = converter.ConvertToString(dictionaryEntry.Value);
+        }
+        //dictionaryEntry.Value
+        //TestShowInGrid(dictionaryEntries);
+        //searchResult.Properties.ShowInGrid();
+        var enumerable = searchResult.Properties.OfType<DictionaryEntry>();
+        // enumerable.ShowInGrid();
+        ShowWithFakeAndWait(searchResult.Properties);
+       // TestShow(searchResult.Properties, 3);
+        //TestShowTransported(searchResult.Properties, 3);
+        //TestShowTransported(enumerable, 3);
+
+
       }
     }
 
@@ -413,6 +445,33 @@ namespace AW.DebugVisualizers.Tests
       visualizerHost.ShowVisualizer();
     }
 
+    private static void ShowWithFake(object enumerableOrDataTableToVisualize)
+    {
+      var visualizerObjectProviderFake = new VisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
+      //AssertNewContainerIsBindingListView(enumerableOrDataTableToVisualize, visualizerObjectProviderFake.GetObject());
+      EnumerableVisualizer.Show(DialogVisualizerServiceFake, visualizerObjectProviderFake);
+    }
+
+    /// <summary>
+    /// Shows data directly
+    /// </summary>
+    /// <param name="enumerableOrDataTableToVisualize"></param>
+    private static void ShowWithFakeAndWait(object enumerableOrDataTableToVisualize)
+    {
+      //  var visualizerObjectProviderFake = new VisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
+      //DialogVisualizerServiceFakeForDebug
+      //  EnumerableVisualizer.Show(DialogVisualizerServiceFakeForDebug, visualizerObjectProviderFake);
+      //ShowWithFake(enumerableOrDataTableToVisualize);
+      //var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
+   //   ShowWithFake(enumerableOrDataTableToVisualize);
+  //    Application.DoEvents();
+      ShowWithFake(enumerableOrDataTableToVisualize);
+      while (_dialogVisualizerServiceFake.VisualizerForm.Visible)
+      {
+        Application.DoEvents();
+      }
+    }
+
     /// <summary>
     ///   Shows the enumerable or data table to visualize and asserts the number of columns displayed.
     /// </summary>
@@ -423,9 +482,7 @@ namespace AW.DebugVisualizers.Tests
       Assert.IsTrue(enumerableOrDataTableToVisualize is IEnumerable
                     || enumerableOrDataTableToVisualize is DataTableSurrogate || enumerableOrDataTableToVisualize is DataTable
                     || enumerableOrDataTableToVisualize is WeakReference);
-      var visualizerObjectProviderFake = new VisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
-      //AssertNewContainerIsBindingListView(enumerableOrDataTableToVisualize, visualizerObjectProviderFake.GetObject());
-      EnumerableVisualizer.Show(DialogVisualizerServiceFake, visualizerObjectProviderFake);
+      ShowWithFake(enumerableOrDataTableToVisualize);
       var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
       Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());
       Assert.IsTrue(dataGridView.ReadOnly, "dataGridView.ReadOnly");
@@ -460,6 +517,13 @@ namespace AW.DebugVisualizers.Tests
 
   internal class DialogVisualizerServiceFake : IDialogVisualizerService
   {
+    private readonly bool _debug;
+
+    public DialogVisualizerServiceFake(bool debug = false)
+    {
+      this._debug = debug;
+    }
+
     public Form VisualizerForm { get; private set; }
 
     #region Implementation of IDialogVisualizerService
@@ -469,8 +533,10 @@ namespace AW.DebugVisualizers.Tests
     public DialogResult ShowDialog(Form form)
     {
       VisualizerForm = form;
-      //form.ShowDialog(); 
-      form.Show();
+      if (_debug)
+        form.ShowDialog(); //Doesn't do anything
+      else
+        form.Show();
       return DialogResult.None;
     }
 

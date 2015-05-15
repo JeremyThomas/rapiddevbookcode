@@ -51,6 +51,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -229,6 +230,8 @@
     <Compile Include="FrmThreePanelBase.Designer.cs">
       <DependentUpon>FrmThreePanelBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Misc\ChainingPropertyDescriptor.cs" />
+    <Compile Include="Misc\DictionaryEntryTypeDescriptor.cs" />
     <Compile Include="QueryRunner\FrmQueryRunner.cs">
       <SubType>Form</SubType>
     </Compile>
