@@ -180,7 +180,7 @@ namespace AW.DebugVisualizers
       }
       catch (SerializationException)
       {
-        SerializeWithSurrogate(outgoingData, enumerable.CopyToDataTable());
+        Serialize(outgoingData, enumerable.CopyToDataTable());
       }
     }
   }
