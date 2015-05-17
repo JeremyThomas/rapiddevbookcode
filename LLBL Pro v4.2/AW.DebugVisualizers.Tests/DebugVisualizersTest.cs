@@ -384,34 +384,40 @@ namespace AW.DebugVisualizers.Tests
       {
         searcher.Filter = "(uid=" + "tesla" + ")";
         var searchResult = searcher.FindOne();
-        //  SingleValueCollectionConverter.AddConverter(typeof(ResultPropertyValueCollection));
-        DictionaryEntryTypeDescriptionProvider.Add();
-        var dictionaryEntries = searchResult.Properties.OfType<DictionaryEntry>();
-        var dictionaryEntry = dictionaryEntries.First();
-        var valueType = dictionaryEntry.Value.GetType();
-        var typeConverter = TypeDescriptor.GetConverter(valueType);
-        var convertToString = typeConverter.ConvertToString(dictionaryEntry.Value);
-        var typeDictionaryEntry = typeof(DictionaryEntry);
-        var typeDescriptionProvider = TypeDescriptor.GetProvider(typeof(DictionaryEntry));
-        var propertiesToDisplay = MetaDataHelper.GetPropertiesToDisplay(typeDictionaryEntry);
-        var propertyDescriptor = propertiesToDisplay.Last();
-        var converter = propertyDescriptor.Converter;
-        if (converter != null)
-        {
-          var stringToDisplay = converter.ConvertToString(dictionaryEntry.Value);
-        }
+        //SingleValueCollectionConverter.AddConverter(typeof(ResultPropertyValueCollection));
+        //SubstitutingTypeDescriptionProvider.Add<DictionaryEntry>(p=>p.Name == "Value", p =>  new ConverterSubstitutingPropertyDescriptor(p, new SpecificTypeConverter(p.Converter)));
+        //var dictionaryEntries = searchResult.Properties.OfType<DictionaryEntry>();
+        //var dictionaryEntry = dictionaryEntries.First();
+        //var valueType = dictionaryEntry.Value.GetType();
+        //var typeConverter = TypeDescriptor.GetConverter(valueType);
+        //var convertToString = typeConverter.ConvertToString(dictionaryEntry.Value);
+        //var typeDictionaryEntry = typeof(DictionaryEntry);
+        //var typeDescriptionProvider = TypeDescriptor.GetProvider(typeof(DictionaryEntry));
+        //var propertiesToDisplay = MetaDataHelper.GetPropertiesToDisplay(typeDictionaryEntry);
+        //var propertyDescriptor = propertiesToDisplay.Last();
+        //var converter = propertyDescriptor.Converter;
+        //if (converter != null)
+        //{
+        //  var stringToDisplay = converter.ConvertToString(dictionaryEntry.Value);
+        //}
         //dictionaryEntry.Value
         //TestShowInGrid(dictionaryEntries);
         //searchResult.Properties.ShowInGrid();
         var enumerable = searchResult.Properties.OfType<DictionaryEntry>();
         // enumerable.ShowInGrid();
-        ShowWithFakeAndWait(searchResult.Properties);
-       // TestShow(searchResult.Properties, 3);
+      //  ShowWithFakeAndWait(searchResult.Properties);
+        Show(searchResult.Properties);
+        TestShow(searchResult.Properties, 2);
         //TestShowTransported(searchResult.Properties, 3);
         //TestShowTransported(enumerable, 3);
 
 
       }
+    }
+
+    private static bool ConditionOnWhichToReplace(PropertyDescriptor arg)
+    {
+      return arg.Name=="Value";
     }
 
     private static void TestSerialize(object enumerableOrDataTableToVisualize)
@@ -466,6 +472,8 @@ namespace AW.DebugVisualizers.Tests
    //   ShowWithFake(enumerableOrDataTableToVisualize);
   //    Application.DoEvents();
       ShowWithFake(enumerableOrDataTableToVisualize);
+      Application.DoEvents();
+      _dialogVisualizerServiceFake.VisualizerForm.BringToFront();
       while (_dialogVisualizerServiceFake.VisualizerForm.Visible)
       {
         Application.DoEvents();
