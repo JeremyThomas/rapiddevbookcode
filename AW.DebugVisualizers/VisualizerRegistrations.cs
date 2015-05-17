@@ -16,6 +16,7 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using System.Xml;
 using AW.DebugVisualizers;
+using AW.Helper;
 using JesseJohnston;
 using Microsoft.VisualBasic;
 
@@ -118,6 +119,7 @@ using Microsoft.VisualBasic;
 
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Data.EnumerableRowCollection, System.Data.DataSetExtensions", Description = EnumerableVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(ConfigurationElementCollection), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(DataTableSurrogate), Description = EnumerableVisualizer.Description)]
 
 //-LLBL
 

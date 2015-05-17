@@ -63,5 +63,10 @@ namespace AW.Helper.TypeConverters
       foreach (var targetType in targetTypes.Distinct().Where(targetType => !(TypeDescriptor.GetConverter(targetType).GetType() == converterType)))
         TypeDescriptor.AddAttributes(targetType, new TypeConverterAttribute(converterType));
     }
+
+    public static void AddConverter<T>(params Type[] targetTypes)
+    {
+      AddConverter(typeof (T), targetTypes);
+    }
   }
 }

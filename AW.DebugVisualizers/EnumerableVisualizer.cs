@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections;
 using System.Data;
+using System.DirectoryServices;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Runtime.Serialization;
 using AW.Helper;
+using AW.Helper.TypeConverters;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.DataEditor;
+using AW.Winforms.Helpers.Misc;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 
 //http://msdn.microsoft.com/en-us/library/aa991998(VS.100).aspx 'Use IVisualizerObjectProvider..::.GetData when the object is not serializable by .NET and requires custom serialization. 
@@ -90,6 +93,9 @@ namespace AW.DebugVisualizers
     /// <param name="outgoingData">Outgoing data stream.</param>
     public override void GetData(object target, Stream outgoingData)
     {
+      SingleValueCollectionConverter.AddConverter(typeof(ResultPropertyValueCollection));
+      SubstitutingTypeDescriptionProvider.Add<DictionaryEntry>(p => p.Name == "Value", p => new ConverterSubstitutingPropertyDescriptor(p, new SpecificTypeConverter(p.Converter)));
+
       var wr = target as WeakReference;
       if (wr != null)
         target = wr.Target;

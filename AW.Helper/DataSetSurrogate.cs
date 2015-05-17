@@ -1001,6 +1001,11 @@ namespace AW.Helper
           var originalValue = row[i, DataRowVersion.Original];
           if (originalValue.GetType().IsSerializable)
             _records[i][bitIndex] = originalValue;
+          else
+          {
+            var typeConverter = TypeDescriptor.GetConverter(originalValue);
+            _records[i][bitIndex] = typeConverter.ConvertToString(originalValue);
+          }
         }
       }
 

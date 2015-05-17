@@ -231,7 +231,7 @@
       <DependentUpon>FrmThreePanelBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Misc\ChainingPropertyDescriptor.cs" />
-    <Compile Include="Misc\DictionaryEntryTypeDescriptor.cs" />
+    <Compile Include="Misc\SubstitutingTypeDescriptor.cs" />
     <Compile Include="QueryRunner\FrmQueryRunner.cs">
       <SubType>Form</SubType>
     </Compile>
