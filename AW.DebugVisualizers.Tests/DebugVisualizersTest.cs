@@ -5,11 +5,13 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Windows.Data;
@@ -391,8 +393,10 @@ namespace AW.DebugVisualizers.Tests
         //var dictionaryEntries = searchResult.Properties.OfType<DictionaryEntry>();
         //var dictionaryEntry = dictionaryEntries.First();
         //var valueType = dictionaryEntry.Value.GetType();
+        //var s = NullableConverter.(valueType);
         //var typeConverter = TypeDescriptor.GetConverter(valueType);
         //var convertToString = typeConverter.ConvertToString(dictionaryEntry.Value);
+        //TypeConverter.StandardValuesCollection
         //var typeDictionaryEntry = typeof(DictionaryEntry);
         //var typeDescriptionProvider = TypeDescriptor.GetProvider(typeof(DictionaryEntry));
         //var propertiesToDisplay = MetaDataHelper.GetPropertiesToDisplay(typeDictionaryEntry);
@@ -424,9 +428,29 @@ namespace AW.DebugVisualizers.Tests
       TestShowTransported(claims, 7);
     }
 
-    private static bool ConditionOnWhichToReplace(PropertyDescriptor arg)
+    [TestCategory("Winforms"), TestMethod]
+    public void DebuggerVisualizerAttributeTest()
     {
-      return arg.Name=="Value";
+      var assemblyCore = typeof (System.Linq.EnumerableQuery).Assembly;
+      var enumerableVisualizerType = typeof(AW.DebugVisualizers.EnumerableVisualizer);
+      var assembly = enumerableVisualizerType.Assembly;
+      var debuggerVisualizerAttributes = assembly.GetCustomAttributes(typeof (DebuggerVisualizerAttribute),false);
+      var visualizerAttributes = new List<DebuggerVisualizerAttribute>();
+      var visualizerAttributesNotFound = new List<DebuggerVisualizerAttribute>();
+      foreach (DebuggerVisualizerAttribute debuggerVisualizerAttribute in debuggerVisualizerAttributes)
+        if (debuggerVisualizerAttribute.VisualizerTypeName== enumerableVisualizerType.AssemblyQualifiedName)
+      {
+        var type = Type.GetType(debuggerVisualizerAttribute.TargetTypeName);
+        if (type == null && debuggerVisualizerAttribute.TargetTypeName.Contains("System.Core"))
+        {
+            type = MetaDataHelper.GetTypesContaining(assemblyCore, debuggerVisualizerAttribute.TargetTypeName).FirstOrDefault();
+        //  type = assemblyCore.GetType(debuggerVisualizerAttribute.TargetTypeName);
+        }
+          if (type==null)
+          visualizerAttributesNotFound.Add(debuggerVisualizerAttribute);
+        else
+          visualizerAttributes.Add(debuggerVisualizerAttribute);
+      }
     }
 
     private static void TestSerialize(object enumerableOrDataTableToVisualize)
@@ -456,7 +480,8 @@ namespace AW.DebugVisualizers.Tests
 
     private static void ShowObjectSourceVisualizer(object enumerableOrDataTableToVisualize)
     {
-      var visualizerHost = new VisualizerDevelopmentHost(enumerableOrDataTableToVisualize, typeof (ObjectSourceVisualizer.ObjectSourceVisualizer), typeof (ObjectSourceVisualizer.ObjectSourceVisualizer));
+      var visualizerHost = new VisualizerDevelopmentHost(enumerableOrDataTableToVisualize, typeof (ObjectSourceVisualizer.ObjectSourceVisualizer), 
+        typeof (ObjectSourceVisualizer.ObjectSourceVisualizer));
       visualizerHost.ShowVisualizer();
     }
 
