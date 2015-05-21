@@ -218,6 +218,13 @@ namespace AW.Helper
       return assembly.GetTypes().Where(t => t.AssemblyQualifiedName.ContainsIgnoreCase(typeName));
     }
 
+    public static IEnumerable<Type> GetTypesContaining(string typeName)
+    {
+      return from assembly in AppDomain.CurrentDomain.GetAssemblies()
+        from types in GetTypesContaining(assembly, typeName)
+        select types;
+    }
+    
     public static IEnumerable<string> GetNamespaces(Assembly assembly)
     {
       return (assembly.GetTypes().Select(t => t.Namespace)

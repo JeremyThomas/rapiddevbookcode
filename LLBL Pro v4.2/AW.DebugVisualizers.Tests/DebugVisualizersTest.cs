@@ -11,8 +11,6 @@ using System.DirectoryServices.AccountManagement;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Security.Claims;
 using System.Security.Principal;
 using System.Windows.Data;
 using System.Windows.Forms;
@@ -23,12 +21,9 @@ using AW.Data.EntityClasses;
 using AW.DebugVisualizers.Tests.Properties;
 using AW.Helper;
 using AW.Helper.LLBL;
-using AW.Helper.TypeConverters;
 using AW.LinqToSQL;
 using AW.Test.Helpers;
 using AW.Winforms.Helpers;
-using AW.Winforms.Helpers.DataEditor;
-using AW.Winforms.Helpers.Misc;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.Linq;
@@ -79,14 +74,14 @@ namespace AW.DebugVisualizers.Tests
     // public static void MyClassCleanup() { }
     //
     //Use TestInitialize to run code before running each test
-    [TestInitialize()]
+    [TestInitialize]
     public void MyTestInitialize()
     {
       Init();
     }
 
     //Use TestCleanup to run code after each test has run
-    [TestCleanup()]
+    [TestCleanup]
     public void MyTestCleanup()
     {
       Verify();
@@ -252,7 +247,7 @@ namespace AW.DebugVisualizers.Tests
     public void StringArrayTest()
     {
       var enumerable = new[] {"s1", "s2", "s3"};
-     TestShow(enumerable, 1);
+      TestShow(enumerable, 1);
       ShowWithFakeAndWait(enumerable);
       var stringEnumerable = enumerable.Where(s => s.Length > 1);
       TestShow(stringEnumerable, 1);
@@ -380,6 +375,7 @@ namespace AW.DebugVisualizers.Tests
         TestShowTransported(searcher.FindAll(), 2, 1);
       }
     }
+
     [TestCategory("Winforms"), TestMethod]
     public void ResultPropertyCollectionTest()
     {
@@ -411,13 +407,11 @@ namespace AW.DebugVisualizers.Tests
         //searchResult.Properties.ShowInGrid();
         var enumerable = searchResult.Properties.OfType<DictionaryEntry>();
         // enumerable.ShowInGrid();
-      //  ShowWithFakeAndWait(searchResult.Properties);
+        //  ShowWithFakeAndWait(searchResult.Properties);
         Show(searchResult.Properties);
         TestShow(searchResult.Properties, 2);
         //TestShowTransported(searchResult.Properties, 3);
         //TestShowTransported(enumerable, 3);
-
-
       }
     }
 
@@ -431,26 +425,25 @@ namespace AW.DebugVisualizers.Tests
     [TestCategory("Winforms"), TestMethod]
     public void DebuggerVisualizerAttributeTest()
     {
-      var assemblyCore = typeof (System.Linq.EnumerableQuery).Assembly;
-      var enumerableVisualizerType = typeof(AW.DebugVisualizers.EnumerableVisualizer);
+      var assemblyCore = typeof (EnumerableQuery).Assembly;
+      var enumerableVisualizerType = typeof (EnumerableVisualizer);
       var assembly = enumerableVisualizerType.Assembly;
-      var debuggerVisualizerAttributes = assembly.GetCustomAttributes(typeof (DebuggerVisualizerAttribute),false);
+      var debuggerVisualizerAttributes = assembly.GetCustomAttributes(typeof (DebuggerVisualizerAttribute), false);
       var visualizerAttributes = new List<DebuggerVisualizerAttribute>();
       var visualizerAttributesNotFound = new List<DebuggerVisualizerAttribute>();
       foreach (DebuggerVisualizerAttribute debuggerVisualizerAttribute in debuggerVisualizerAttributes)
-        if (debuggerVisualizerAttribute.VisualizerTypeName== enumerableVisualizerType.AssemblyQualifiedName)
-      {
-        var type = Type.GetType(debuggerVisualizerAttribute.TargetTypeName);
-        if (type == null && debuggerVisualizerAttribute.TargetTypeName.Contains("System.Core"))
+        if (debuggerVisualizerAttribute.VisualizerTypeName == enumerableVisualizerType.AssemblyQualifiedName)
         {
-            type = MetaDataHelper.GetTypesContaining(assemblyCore, debuggerVisualizerAttribute.TargetTypeName).FirstOrDefault();
-        //  type = assemblyCore.GetType(debuggerVisualizerAttribute.TargetTypeName);
+          var type = Type.GetType(debuggerVisualizerAttribute.TargetTypeName);
+          if (type == null)
+          {
+            type = MetaDataHelper.GetTypesContaining(debuggerVisualizerAttribute.TargetTypeName).FirstOrDefault();
+          }
+          if (type == null)
+            visualizerAttributesNotFound.Add(debuggerVisualizerAttribute);
+          else
+            visualizerAttributes.Add(debuggerVisualizerAttribute);
         }
-          if (type==null)
-          visualizerAttributesNotFound.Add(debuggerVisualizerAttribute);
-        else
-          visualizerAttributes.Add(debuggerVisualizerAttribute);
-      }
     }
 
     private static void TestSerialize(object enumerableOrDataTableToVisualize)
@@ -480,7 +473,7 @@ namespace AW.DebugVisualizers.Tests
 
     private static void ShowObjectSourceVisualizer(object enumerableOrDataTableToVisualize)
     {
-      var visualizerHost = new VisualizerDevelopmentHost(enumerableOrDataTableToVisualize, typeof (ObjectSourceVisualizer.ObjectSourceVisualizer), 
+      var visualizerHost = new VisualizerDevelopmentHost(enumerableOrDataTableToVisualize, typeof (ObjectSourceVisualizer.ObjectSourceVisualizer),
         typeof (ObjectSourceVisualizer.ObjectSourceVisualizer));
       visualizerHost.ShowVisualizer();
     }
@@ -493,7 +486,7 @@ namespace AW.DebugVisualizers.Tests
     }
 
     /// <summary>
-    /// Shows data directly
+    ///   Shows data directly
     /// </summary>
     /// <param name="enumerableOrDataTableToVisualize"></param>
     private static void ShowWithFakeAndWait(object enumerableOrDataTableToVisualize)
@@ -503,8 +496,8 @@ namespace AW.DebugVisualizers.Tests
       //  EnumerableVisualizer.Show(DialogVisualizerServiceFakeForDebug, visualizerObjectProviderFake);
       //ShowWithFake(enumerableOrDataTableToVisualize);
       //var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
-   //   ShowWithFake(enumerableOrDataTableToVisualize);
-  //    Application.DoEvents();
+      //   ShowWithFake(enumerableOrDataTableToVisualize);
+      //    Application.DoEvents();
       ShowWithFake(enumerableOrDataTableToVisualize);
       Application.DoEvents();
       _dialogVisualizerServiceFake.VisualizerForm.BringToFront();
@@ -563,7 +556,7 @@ namespace AW.DebugVisualizers.Tests
 
     public DialogVisualizerServiceFake(bool debug = false)
     {
-      this._debug = debug;
+      _debug = debug;
     }
 
     public Form VisualizerForm { get; private set; }
