@@ -130,6 +130,7 @@ namespace AW.Helper
     /// <param name="assembly">The assembly.</param>
     public static void AddSelfAssemblyResolverIfNeeded(Assembly assembly)
     {
+ 
       if (AssemblyResolverIsNeeded(assembly))
         AddSelfAssemblyResolve(assembly);
     }
@@ -210,6 +211,11 @@ namespace AW.Helper
       {
         return new Type[] {};
       }
+    }
+
+    public static IEnumerable<Type> GetTypesContaining(Assembly assembly, string typeName)
+    {
+      return assembly.GetTypes().Where(t => t.AssemblyQualifiedName.ContainsIgnoreCase(typeName));
     }
 
     public static IEnumerable<string> GetNamespaces(Assembly assembly)

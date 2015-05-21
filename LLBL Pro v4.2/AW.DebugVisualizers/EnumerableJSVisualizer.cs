@@ -98,7 +98,7 @@ namespace AW.DebugVisualizers
       if (!_firstJToken.HasValues)
       {
         _firstJToken = _firstJToken.Root;
-        return ValueTypeWrapper.CreateWrapperForBinding(_firstJToken.Root).CopyToDataTable();
+        return GeneralHelper.CopyToDataTable(ValueTypeWrapper.CreateWrapperForBinding(_firstJToken.Root));
       }
       return new ObjectShredder(GetPropertiesToSerialize).Shred(source, null, null);
     }
