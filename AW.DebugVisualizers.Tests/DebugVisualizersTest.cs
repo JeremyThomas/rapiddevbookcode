@@ -10,6 +10,8 @@ using System.DirectoryServices.AccountManagement;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Xml;
@@ -413,6 +415,13 @@ namespace AW.DebugVisualizers.Tests
 
 
       }
+    }
+
+    [TestCategory("Winforms"), TestMethod]
+    public void ClaimsTest()
+    {
+      var claims = WindowsPrincipal.Current.Claims;
+      TestShowTransported(claims, 7);
     }
 
     private static bool ConditionOnWhichToReplace(PropertyDescriptor arg)

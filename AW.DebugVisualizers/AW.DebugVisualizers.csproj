@@ -108,6 +108,7 @@
     </None>
     <None Include="AW.DebugVisualizers.ilproj" />
     <None Include="AW.EnumerableVisualizer.glm" />
+    <None Include="DebugDeploy2015.bat" />
     <None Include="DebugDeploy.bat" />
     <None Include="MergeAndDeploy.Bat" />
     <None Include="packages.config" />
