@@ -21,9 +21,11 @@ using AW.Data.EntityClasses;
 using AW.DebugVisualizers.Tests.Properties;
 using AW.Helper;
 using AW.Helper.LLBL;
+using AW.Helper.TypeConverters;
 using AW.LinqToSQL;
 using AW.Test.Helpers;
 using AW.Winforms.Helpers;
+using AW.Winforms.Helpers.Misc;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.Linq;
@@ -248,7 +250,7 @@ namespace AW.DebugVisualizers.Tests
     {
       var enumerable = new[] {"s1", "s2", "s3"};
       TestShow(enumerable, 1);
-      ShowWithFakeAndWait(enumerable);
+      //ShowWithFakeAndWait(enumerable);
       var stringEnumerable = enumerable.Where(s => s.Length > 1);
       TestShow(stringEnumerable, 1);
       TestShowTransported(stringEnumerable, 1);
@@ -341,7 +343,8 @@ namespace AW.DebugVisualizers.Tests
     [TestMethod]
     public void AssembliesTest()
     {
-      var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.FullName.Contains("OrmProfiler")).ToList();
+      var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.FullName.Contains("OrmProfiler")
+                                                                          && !a.FullName.Contains("SD.Tools")).ToList();
       //Show(assemblies);
       TestSerialize(assemblies);
     }
@@ -384,8 +387,10 @@ namespace AW.DebugVisualizers.Tests
       {
         searcher.Filter = "(uid=" + "tesla" + ")";
         var searchResult = searcher.FindOne();
+        SingleValueCollectionConverter.AddConverter(typeof (ResultPropertyValueCollection));
+        SubstitutingTypeDescriptionProvider.AddSpecificTypeConverterFor((DictionaryEntry d) => d.Value);
         //SingleValueCollectionConverter.AddConverter(typeof(ResultPropertyValueCollection));
-        //SubstitutingTypeDescriptionProvider.Add<DictionaryEntry>(p=>p.Name == "Value", p =>  new ConverterSubstitutingPropertyDescriptor(p, new SpecificTypeConverter(p.Converter)));
+        //SubstitutingTypeDescriptionProvider.AddFor<DictionaryEntry>(p=>p.Name == "Value", p =>  new ConverterSubstitutingPropertyDescriptor(p, new SpecificTypeConverter(p.Converter)));
         //var dictionaryEntries = searchResult.Properties.OfType<DictionaryEntry>();
         //var dictionaryEntry = dictionaryEntries.First();
         //var valueType = dictionaryEntry.Value.GetType();
@@ -407,10 +412,10 @@ namespace AW.DebugVisualizers.Tests
         //searchResult.Properties.ShowInGrid();
         var enumerable = searchResult.Properties.OfType<DictionaryEntry>();
         // enumerable.ShowInGrid();
-        //  ShowWithFakeAndWait(searchResult.Properties);
-        Show(searchResult.Properties);
-        TestShow(searchResult.Properties, 2);
-        //TestShowTransported(searchResult.Properties, 3);
+        // ShowWithFakeAndWait(searchResult.Properties);
+        // Show(searchResult.Properties);
+        //TestShow(searchResult.Properties, 2);
+        TestShowTransported(searchResult.Properties, 2);
         //TestShowTransported(enumerable, 3);
       }
     }

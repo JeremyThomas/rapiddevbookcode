@@ -16,6 +16,7 @@ using AW.Helper.TypeConverters;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.EntityViewer;
 using AW.Winforms.Helpers.Forms;
+using AW.Winforms.Helpers.Misc;
 using AW.Winforms.Helpers.Reporting;
 using JesseJohnston;
 
@@ -38,10 +39,15 @@ namespace AW.Winforms.Helpers.Controls
     public IDataEditorPersister DataEditorPersister;
     private static readonly Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider> FieldsToPropertiesTypeDescriptionProviders = new Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider>();
 
+    static GridDataEditor()
+    {
+      AddConvertersAndDescriptors.AddIfNotAllready();
+    }
+
     public GridDataEditor()
     {
       InitializeComponent();
-      HumanizedEnumConverter.AddEnumerationConverter(typeof (DataGridViewClipboardCopyMode));
+      
       dataGridViewEnumerable.AutoGenerateColumns = true;
       toolStripButtonShowDatagrid_Click(null, null);
       var toolStripItemFromBeginButton = searchToolBar.Items["fromBeginButton"] as ToolStripButton;

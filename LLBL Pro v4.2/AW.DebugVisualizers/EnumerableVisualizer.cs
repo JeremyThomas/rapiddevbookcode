@@ -74,6 +74,11 @@ namespace AW.DebugVisualizers
 
   public class EnumerableVisualizerObjectSource : VisualizerObjectSource
   {
+    static EnumerableVisualizerObjectSource()
+    {
+      AddConvertersAndDescriptors.AddIfNotAllready();
+    }
+
     #region Overrides of VisualizerObjectSource
 
     /// <summary>
@@ -93,9 +98,6 @@ namespace AW.DebugVisualizers
     /// <param name="outgoingData">Outgoing data stream.</param>
     public override void GetData(object target, Stream outgoingData)
     {
-      SingleValueCollectionConverter.AddConverter(typeof(ResultPropertyValueCollection));
-      SubstitutingTypeDescriptionProvider.Add<DictionaryEntry>(p => p.Name == "Value", p => new ConverterSubstitutingPropertyDescriptor(p, new SpecificTypeConverter(p.Converter)));
-
       var wr = target as WeakReference;
       if (wr != null)
         target = wr.Target;
