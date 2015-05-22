@@ -111,6 +111,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
@@ -231,6 +232,7 @@
       <DependentUpon>FrmThreePanelBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Misc\ChainingPropertyDescriptor.cs" />
+    <Compile Include="Misc\ConvertersAndDescriptors.cs" />
     <Compile Include="Misc\SubstitutingTypeDescriptor.cs" />
     <Compile Include="QueryRunner\FrmQueryRunner.cs">
       <SubType>Form</SubType>

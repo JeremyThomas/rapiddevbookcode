@@ -11,7 +11,7 @@ namespace AW.LLBLGen.DataContextDriver
     /// </summary>
     public const string LLBLVersion = "4.2";
 
-    private const string CopyrightYear = "2014";
+    private const string CopyrightYear = "2015";
     public const string LLBLGenNameVersion = "LLBLGen Pro v" + LLBLVersion;
     public const string DriverName = "AW " + LLBLGenNameVersion;
     public const string Name = DriverName + " (v" + AssemblyVersion + ")";
@@ -21,7 +21,7 @@ namespace AW.LLBLGen.DataContextDriver
     private const string MajorVersion = "3";
     private const string MinorVersion = "0";
     private const string Version = MajorVersion + "." + MinorVersion;
-    public const string AssemblyVersion = Version + ".3.0";
+    public const string AssemblyVersion = Version + ".4.0";
   }
 
   public enum DisplayInGrid

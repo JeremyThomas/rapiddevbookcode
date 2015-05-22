@@ -5,9 +5,12 @@ using System.Globalization;
 
 namespace AW.Helper.TypeConverters
 {
-  public class SingleValueCollectionConverter : CollectionConverter
+  /// <summary>
+  /// If a collection only contains 1 item then, when converting to string, convert that 1 item
+  /// </summary>
+  public class SingleValueCollectionConverter : CollectionConverter, IExtendingOriginalConverter
   {
-    private readonly TypeConverter _originalConverter;
+    public TypeConverter OriginalConverter { get;  set; }
 
     public SingleValueCollectionConverter()
     {
@@ -15,15 +18,15 @@ namespace AW.Helper.TypeConverters
 
     public SingleValueCollectionConverter(TypeConverter originalConverter)
     {
-      _originalConverter = originalConverter;
+      OriginalConverter = originalConverter;
     }
 
     public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
     {
       var collection = value as ICollection;
-      if (collection != null && collection.Count == 1)
+      if (collection != null && typeof(string) == destinationType && collection.Count == 1)
         return base.ConvertTo(context, culture, GetFirstItemByEnumerable(collection), destinationType);
-      return _originalConverter == null ? base.ConvertTo(context, culture, value, destinationType) : _originalConverter.ConvertTo(context, culture, value, destinationType);
+      return OriginalConverter == null ? base.ConvertTo(context, culture, value, destinationType) : OriginalConverter.ConvertTo(context, culture, value, destinationType);
     }
 
     /// <summary>
