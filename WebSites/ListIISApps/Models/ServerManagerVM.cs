@@ -24,7 +24,7 @@ namespace ListIISApps.Models
     private IEnumerable<SectionGroup> _sectionGroupsDefinitions;
     private Configuration _webConfig;
     private IEnumerable<ConfigurationSectionGroup> _sectionGroups;
-    public Microsoft.Web.Administration.Configuration WebConfiguration { get; private set; }
+    private Microsoft.Web.Administration.Configuration WebConfiguration { get; set; }
 
     public Application Application
     {
@@ -33,7 +33,7 @@ namespace ListIISApps.Models
 
     public string PhysicalPath
     {
-      get { return Application.VirtualDirectories.First().PhysicalPath; }
+      get { return Environment.ExpandEnvironmentVariables(Application.VirtualDirectories.First().PhysicalPath); }
     }
 
     private string BinPath
@@ -45,7 +45,7 @@ namespace ListIISApps.Models
       }
     }
 
-    public Configuration WebConfig
+    private Configuration WebConfig
     {
       get
       {
@@ -110,12 +110,12 @@ namespace ListIISApps.Models
       }
     }
 
-    public static IEnumerable<ConnectionStringSettings> GetConnectionStrings(Microsoft.Web.Administration.Configuration webConfiguration)
+    private static IEnumerable<ConnectionStringSettings> GetConnectionStrings(Microsoft.Web.Administration.Configuration webConfiguration)
     {
-      return webConfiguration.GetSection("connectionStrings").GetCollection()
-                             .Select(configurationElement => new ConnectionStringSettings(Convert.ToString(configurationElement.Attributes["Name"].Value),
-                                                                                          Convert.ToString(configurationElement.Attributes["connectionString"].Value),
-                                                                                          Convert.ToString(configurationElement.Attributes["providerName"].Value)));
+      return webConfiguration.GetSection("connectionStrings").GetCollection().Where(configurationElement => configurationElement.IsLocallyStored)
+        .Select(configurationElement => new ConnectionStringSettings(Convert.ToString(configurationElement.Attributes["Name"].Value),
+          Convert.ToString(configurationElement.Attributes["connectionString"].Value),
+          Convert.ToString(configurationElement.Attributes["providerName"].Value)));
     }
 
     public AuthenticationMode AuthenticationMode
@@ -135,12 +135,12 @@ namespace ListIISApps.Models
       }
     }
 
-    public static ConfigurationAttribute GetAuthenticationMode(Microsoft.Web.Administration.Configuration webConfiguration)
+    private static ConfigurationAttribute GetAuthenticationMode(Microsoft.Web.Administration.Configuration webConfiguration)
     {
       return webConfiguration.GetSection("system.web/authentication").GetAttribute("mode");
     }
 
-    public IEnumerable<SectionGroup> SectionGroupsDefinitions
+    private IEnumerable<SectionGroup> SectionGroupsDefinitions
     {
       get
       {
@@ -165,8 +165,8 @@ namespace ListIISApps.Models
         try
         {
           return from sg in SectionGroupsDefinitions
-                 from s in sg.Sections
-                 select s;
+            from s in sg.Sections
+            select s;
         }
         catch (Exception e)
         {
@@ -176,7 +176,7 @@ namespace ListIISApps.Models
       }
     }
 
-    public IEnumerable<ConfigurationSectionGroup> SectionGroups
+    private IEnumerable<ConfigurationSectionGroup> SectionGroups
     {
       get
       {
@@ -198,19 +198,47 @@ namespace ListIISApps.Models
       get
       {
         if (SectionGroups == null) return Enumerable.Empty<ConfigurationSection>();
-        var list = new List<ConfigurationSection>();
-        foreach (var sg in SectionGroups)
-          for (var i = 0; i < sg.Sections.Count - 1; i++)
-            try
-            {
-              list.Add(sg.Sections[i]);
-            }
-            catch (Exception e)
-            {
-              Exceptions.Add(e);
-            }
-        return list;
+        //AppDomain.CurrentDomain.AssemblyResolve += MetaDataHelper.LoadedAssemblyResolver;
+        ResolveEventHandler currentDomainOnAssemblyResolve = (sender, args) => MetaDataHelper.LoadFrom(BinPath, args.Name);
+        AppDomain.CurrentDomain.AssemblyResolve += currentDomainOnAssemblyResolve;
+        try
+        {
+          var list = new List<ConfigurationSection>();
+          //var list = new Dictionary<ConfigurationSection, Dictionary<string, object>>();
+          foreach (var sg in SectionGroups)
+            for (var i = 0; i < sg.Sections.Count - 1; i++)
+              try
+              {
+                var configurationSection = sg.Sections[i];
+                if (configurationSection.ElementInformation.IsPresent)
+                {
+                 // var properties = GeModifiedPropertyInformation(configurationSection).ToDictionary(pi => pi.Name, pi => pi.Value);
+                  //list.Add(configurationSection, properties);
+                  list.Add(configurationSection);
+                }
+              }
+              catch (Exception e)
+              {
+                Exceptions.Add(e);
+              }
+          return list;
+        }
+        finally
+        {
+          AppDomain.CurrentDomain.AssemblyResolve -= currentDomainOnAssemblyResolve;
+        }
       }
+    }
+
+    /// <summary>
+    /// Ges the modified property information.
+    /// </summary>
+    /// <example><td>@ServerManagerVM.GeModifiedtPropertyInformation(cs).ToDictionary(pi => pi.Name, pi => pi.Value).First().Value</td></example>
+    /// <param name="configurationSection">The configuration section.</param>
+    /// <returns></returns>
+    public static IEnumerable<PropertyInformation> GeModifiedPropertyInformation(ConfigurationSection configurationSection)
+    {
+      return configurationSection.ElementInformation.Properties.OfType<PropertyInformation>().Where(pi => pi.IsModified);
     }
 
     public IEnumerable<Assembly> Assemblies
@@ -247,7 +275,7 @@ namespace ListIISApps.Models
     {
     }
 
-    public ServerManagerVM(Application application)
+    private ServerManagerVM(Application application)
     {
       _application = application;
       Exceptions = new List<Exception>();
@@ -273,13 +301,13 @@ namespace ListIISApps.Models
       get { return _serverManagerVms ?? (_serverManagerVms = GetServerManagerVms().ToList()); }
     }
 
-    public static IEnumerable<ServerManagerVM> GetServerManagerVms()
+    private static IEnumerable<ServerManagerVM> GetServerManagerVms()
     {
       return from site in new ServerManager().Sites
-             from application in site.Applications
-             let smvm = new ServerManagerVM(application)
-             where smvm.WebConfiguration != null
-             select smvm;
+        from application in site.Applications
+        let smvm = new ServerManagerVM(application)
+        where smvm.WebConfiguration != null
+        select smvm;
     }
   }
 }

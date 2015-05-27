@@ -112,7 +112,7 @@ namespace AW.Helper
       }
     }
 
-    private static Assembly LoadFrom(string directoryName, string name)
+    public static Assembly LoadFrom(string directoryName, string name)
     {
       var assemblyName = new AssemblyName(name);
       var assemblyLocation = GetAssemblyLocation(directoryName, assemblyName.Name);
