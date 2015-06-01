@@ -24,6 +24,6 @@ IF EXIST "%USERPROFILE%\My Documents\Visual Studio 2015\Visualizers" (
     )
  )
 @echo on
-"..\packages\ilmerge.2.14.1208\tools\ILMerge.exe" /out:bin\release\AW.EnumerableVisualizer.2015.exe bin\release\AW.DebugVisualizers.exe bin\release\AW.Helper.dll bin\release\AW.Winforms.Helpers.dll bin\release\Dynamic.dll bin\release\ObjectListView.dll bin\release\sliver.Windows.Forms.StateBrowser.dll bin\release\Newtonsoft.Json.dll bin\release\Humanizer.dll bin\release\AdvancedDataGridView.dll
- xcopy /y bin\release\AW.EnumerableVisualizer.2015.exe %VisualizersDir% 
+"..\packages\ilmerge.2.14.1208\tools\ILMerge.exe" /out:bin\Release2013\AW.EnumerableVisualizer.2013.exe bin\Release2013\AW.DebugVisualizers.exe bin\Release2013\AW.Helper.dll bin\Release2013\AW.Winforms.Helpers.dll bin\Release2013\Dynamic.dll bin\Release2013\ObjectListView.dll bin\Release2013\sliver.Windows.Forms.StateBrowser.dll bin\Release2013\Newtonsoft.Json.dll bin\Release2013\Humanizer.dll bin\Release2013\AdvancedDataGridView.dll
+ xcopy /y bin\Release2013\AW.EnumerableVisualizer.2013.exe %VisualizersDir% 
 pause

@@ -355,7 +355,7 @@ namespace AW.DebugVisualizers.Tests
       using (var ctx = new PrincipalContext(ContextType.Machine))
       using (var usr = UserPrincipal.FindByIdentity(ctx, IdentityType.SamAccountName, Environment.UserName))
       {
-        var directoryEntry = usr?.GetUnderlyingObject() as DirectoryEntry;
+        var directoryEntry = usr != null ? usr.GetUnderlyingObject() as DirectoryEntry : null;
         if (directoryEntry != null) TestShowTransported(directoryEntry.Properties, 5);
       }
     }
@@ -363,7 +363,7 @@ namespace AW.DebugVisualizers.Tests
     [TestCategory("Winforms"), TestMethod]
     public void DirectoryEntryTest()
     {
-      var path = $"WinNT://{Environment.MachineName},computer";
+      var path = string.Format("WinNT://{0},computer", Environment.MachineName);
       using (var directoryEntry = new DirectoryEntry(path))
         TestShowTransported(directoryEntry.Children, 3);
     }

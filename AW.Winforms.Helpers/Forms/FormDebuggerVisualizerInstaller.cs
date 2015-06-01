@@ -22,14 +22,20 @@ namespace AW.Winforms.Helpers.Forms
       InitializeComponent();
     }
 
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="startIndex" /> is less than zero or greater than the length of this instance. </exception>
+    /// <exception cref="ArgumentNullException"><paramref name="type" /> is null. </exception>
+    /// <exception cref="NotSupportedException">The current assembly is a dynamic assembly, represented by an <see cref="T:System.Reflection.Emit.AssemblyBuilder" /> object. </exception>
+    /// <exception cref="FileNotFoundException">The file specified cannot be found. </exception>
+    /// <exception cref="IOException"><see cref="M:System.IO.FileSystemInfo.Refresh" /> cannot initialize the data. </exception>
+    /// <exception cref="PlatformNotSupportedException">The current operating system is not Windows NT or later.</exception>
     public FormDebuggerVisualizerInstaller(Type dialogVisualizerServiceType):this()
     {
       var microsoftVisualStudioDebuggerVisualizersAssembly = Assembly.GetAssembly(dialogVisualizerServiceType);
       var fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly = FileVersionInfo.GetVersionInfo(microsoftVisualStudioDebuggerVisualizersAssembly.Location);
       var visualStudioVersion = VisualStudioHelper.GetVisualStudioVersion(fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductMajorPart);
 
-      labelVersion.Text = "This is version " + SourceVisualizerFileVersionInfo.ProductVersion + " for "
-                          + fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductName + ". Last modified: " + SourceVisualizerFileInfo.LastWriteTime;
+      labelVersion.Text = string.Format("This is version {0} for {1}. Last modified: {2}", SourceVisualizerFileVersionInfo.ProductVersion, 
+        fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductName, SourceVisualizerFileInfo.LastWriteTime);
 
       linkLabelAll.Text = VisualStudioHelper.GetVisualStudioDebuggerVisualizersDir(visualStudioVersion);
       linkLabelAll.Links.Add(0, linkLabelAll.Text.Length, linkLabelAll.Text);
@@ -68,12 +74,12 @@ namespace AW.Winforms.Helpers.Forms
       if (visualizerFileInfoUser.Exists)
       {
         var fileVersionInfo = FileVersionInfo.GetVersionInfo(destinationFileName);
-        statusLabel.Text = "Installed. Version:" + fileVersionInfo.ProductVersion + " Last modified: " + visualizerFileInfoUser.LastWriteTime;
+        statusLabel.Text = string.Format("Installed. Version:{0} Last modified: {1}", fileVersionInfo.ProductVersion, visualizerFileInfoUser.LastWriteTime);
       }
       return visualizerFileInfoUser;
     }
 
-    private static FileInfo CopyVisualizer(FileInfo sourceVisualizerFileInfo, FileInfo destinationVisualizerFileInfo, Control statusLabel)
+    private static FileInfo CopyVisualizer(FileSystemInfo sourceVisualizerFileInfo, FileSystemInfo destinationVisualizerFileInfo, Control statusLabel)
     {
       if (destinationVisualizerFileInfo.Exists && sourceVisualizerFileInfo.LastWriteTime > destinationVisualizerFileInfo.LastWriteTime)
         File.Copy(Application.ExecutablePath, destinationVisualizerFileInfo.FullName, true);
