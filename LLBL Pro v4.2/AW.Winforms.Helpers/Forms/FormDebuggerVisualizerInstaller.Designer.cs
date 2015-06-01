@@ -115,7 +115,7 @@
       this.tableLayoutPanel1.Controls.Add(this.labelStatusUser, 1, 2);
       this.tableLayoutPanel1.Controls.Add(this.buttonInstallAllUsers, 0, 1);
       this.tableLayoutPanel1.Controls.Add(this.labelVersion, 0, 3);
-      this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 56);
+      this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 62);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 4;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
@@ -195,7 +195,7 @@
       this.linkLabelWebSite.LinkArea = new System.Windows.Forms.LinkArea(0, 0);
       this.linkLabelWebSite.Location = new System.Drawing.Point(3, 9);
       this.linkLabelWebSite.Name = "linkLabelWebSite";
-      this.linkLabelWebSite.Size = new System.Drawing.Size(558, 39);
+      this.linkLabelWebSite.Size = new System.Drawing.Size(558, 52);
       this.linkLabelWebSite.TabIndex = 6;
       this.linkLabelWebSite.Text = resources.GetString("linkLabelWebSite.Text");
       this.linkLabelWebSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAll_LinkClicked);
@@ -205,10 +205,11 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoSize = true;
-      this.ClientSize = new System.Drawing.Size(628, 159);
+      this.ClientSize = new System.Drawing.Size(628, 171);
       this.Controls.Add(this.linkLabelWebSite);
       this.Controls.Add(this.tableLayoutPanel1);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "FormDebuggerVisualizerInstaller";
       this.ShowIcon = false;
       this.Text = "Enumerable Debugger Visualizer Installer";

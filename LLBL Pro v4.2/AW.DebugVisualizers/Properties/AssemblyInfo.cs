@@ -6,8 +6,13 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("AW.DebugVisualizers")]
+#if VS2013
 [assembly: AssemblyDescription("Enumerable Debugger Visualizer for VS2013")]
 [assembly: AssemblyProduct("Enumerable Debugger Visualizer for VS2013")]
+#else
+[assembly: AssemblyDescription("Enumerable Debugger Visualizer for VS2015")]
+[assembly: AssemblyProduct("Enumerable Debugger Visualizer for VS2015")]
+#endif
 [assembly: AssemblyCopyright("Copyright © Jeremy Thomas 2015")]
 [assembly: AssemblyCompany("Jeremy Thomas")]
 
