@@ -22,19 +22,19 @@ namespace AW.Winforms.Helpers.Forms
       InitializeComponent();
     }
 
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="startIndex" /> is less than zero or greater than the length of this instance. </exception>
-    /// <exception cref="ArgumentNullException"><paramref name="type" /> is null. </exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref /> is less than zero or greater than the length of this instance. </exception>
+    /// <exception cref="ArgumentNullException"><paramref /> is null. </exception>
     /// <exception cref="NotSupportedException">The current assembly is a dynamic assembly, represented by an <see cref="T:System.Reflection.Emit.AssemblyBuilder" /> object. </exception>
     /// <exception cref="FileNotFoundException">The file specified cannot be found. </exception>
     /// <exception cref="IOException"><see cref="M:System.IO.FileSystemInfo.Refresh" /> cannot initialize the data. </exception>
     /// <exception cref="PlatformNotSupportedException">The current operating system is not Windows NT or later.</exception>
-    public FormDebuggerVisualizerInstaller(Type dialogVisualizerServiceType):this()
+    public FormDebuggerVisualizerInstaller(Type dialogVisualizerServiceType, string title, string description) : this()
     {
       var microsoftVisualStudioDebuggerVisualizersAssembly = Assembly.GetAssembly(dialogVisualizerServiceType);
       var fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly = FileVersionInfo.GetVersionInfo(microsoftVisualStudioDebuggerVisualizersAssembly.Location);
       var visualStudioVersion = VisualStudioHelper.GetVisualStudioVersion(fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductMajorPart);
 
-      labelVersion.Text = string.Format("This is version {0} for {1}. Last modified: {2}", SourceVisualizerFileVersionInfo.ProductVersion, 
+      labelVersion.Text = string.Format("This is version {0} for {1}. Last modified: {2}", SourceVisualizerFileVersionInfo.ProductVersion,
         fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductName, SourceVisualizerFileInfo.LastWriteTime);
 
       linkLabelAll.Text = VisualStudioHelper.GetVisualStudioDebuggerVisualizersDir(visualStudioVersion);
@@ -51,6 +51,8 @@ namespace AW.Winforms.Helpers.Forms
       }
       GetAllStatus();
       GetUserStatus();
+      Text = string.Format("{0} Installer", title);
+      linkLabelWebSite.Text = description;
       var indexOfHyperLink = linkLabelWebSite.Text.IndexOf("https", StringComparison.Ordinal);
       linkLabelWebSite.Links.Add(indexOfHyperLink, linkLabelWebSite.Text.Length,
         linkLabelWebSite.Text.Substring(indexOfHyperLink));

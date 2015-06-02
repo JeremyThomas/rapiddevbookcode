@@ -661,12 +661,18 @@
           </Grid>
           <WrapPanel Orientation="Horizontal" Margin="0" Grid.Row="3">
 
-            <Button x:Name="buttonClearAdditionalCnxt"
+            <Button x:Name="buttonClearAdditionalNameSpacesCnxt"
                     Margin="5,0,0,0"
                     VerticalAlignment="Center"
-                    Click="buttonClearAdditionalCnxtClick"
-                    Content="Clear additional"
-                    ToolTip="Clear additional Assemblies and Namespaces" />
+                    Click="buttonClearAdditionalNamespacesCnxtClick"
+                    Content="Clear Namespaces"
+                    ToolTip="Clear additional Namespaces" />
+            <Button x:Name="buttonClearAdditionalAssembliesCnxt"
+                    Margin="5,0,0,0"
+                    VerticalAlignment="Center"
+                    Click="buttonClearAdditionalAssembliesCnxtClick"
+                    Content="Clear Assemblies"
+                    ToolTip="Clear additional Assemblies" />
             <Button Margin="5,0,0,0"
                     VerticalAlignment="Center"
                     Click="ChooseAssembliesCnxt"
@@ -686,7 +692,7 @@
                     VerticalAlignment="Center"
                     Click="AddNamespacesFromAssemblies"
                     Content="Add namespaces from selected assemblies"
-                    ToolTip="Add namespaces from selected assemblies and the assemblies defined in the driver" />
+                    ToolTip="Add namespaces from selected assemblies and the assemblies referenced in the Connection tab" />
           </WrapPanel>
           <GridSplitter Name="gridSplitterAdditionalAssemblies" HorizontalAlignment="Stretch" Height="2"
                         VerticalAlignment="Top" Grid.Row="1"

@@ -1291,9 +1291,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
       AdditionalAssemblies.Clear();
     }
 
-    private void buttonClearAdditionalCnxtClick(object sender, RoutedEventArgs e)
+    private void buttonClearAdditionalNamespacesCnxtClick(object sender, RoutedEventArgs e)
     {
       AdditionalNamespacesCnxt.Clear();
+    }
+
+    private void buttonClearAdditionalAssembliesCnxtClick(object sender, RoutedEventArgs e)
+    {
       AdditionalAssembliesCnxt.Clear();
     }
 

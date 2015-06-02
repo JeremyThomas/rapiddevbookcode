@@ -5,17 +5,21 @@ using Microsoft.VisualStudio.DebuggerVisualizers;
 
 namespace AW.DebugVisualizers
 {
-  static class Program
+  internal static class Program
   {
     /// <summary>
-    /// The main entry point for the application.
+    ///   The main entry point for the application.
     /// </summary>
     [STAThread]
-    static void Main()
+    private static void Main()
     {
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
-      Application.Run(new FormDebuggerVisualizerInstaller(typeof(IDialogVisualizerService)));
+      var description = "This is an Enumerable Debugger Visualizer that displays any registered IEnumerable object in a DataGridView control." + Environment.NewLine +
+                        "To install click on either of the buttons below which will copy this assembly to the directory chosen. " + Environment.NewLine +
+                        "To uninstall go to the folder and remove the AW.EnumerableVisualizer assembly." + Environment.NewLine +
+                        "For more info see: https://rapiddevbookcode.codeplex.com/wikipage?title=EnumerableDebugVisualizer";
+      Application.Run(new FormDebuggerVisualizerInstaller(typeof (IDialogVisualizerService), "Enumerable Debugger Visualizer", description));
     }
   }
 }
