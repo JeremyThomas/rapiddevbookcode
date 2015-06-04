@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.ServiceModel.Dispatcher;
 using System.Windows.Forms;
 
 namespace AW.Helper
@@ -40,6 +41,27 @@ namespace AW.Helper
     public static IEnumerable<Type> GetAllLoadedDescendance(Type ancestorType)
     {
       return GetAssignable(ancestorType, GetAllExportedTypes());
+    }
+
+    public static IEnumerable<Type> GetTypeAndParentTypes(this Type type)
+    {
+      // is there any base type?
+      if ((type == null))
+      {
+        yield break;
+      }
+      yield return type;
+      // return all inherited types
+      var currentBaseType = type.BaseType;
+      while (currentBaseType != null && currentBaseType != typeof(object) && currentBaseType != typeof(MarshalByValueComponent)
+        && currentBaseType != typeof(MarshalByRefObject) && currentBaseType != typeof(Component) && currentBaseType.Implements(typeof(IEnumerable)))
+      {
+        if (currentBaseType.IsGenericType)
+          yield return currentBaseType.GetGenericTypeDefinition();
+        else
+          yield return currentBaseType;
+        currentBaseType = currentBaseType.BaseType;
+      }
     }
 
     /// <summary>
