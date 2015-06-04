@@ -11,6 +11,7 @@ using System.DirectoryServices.AccountManagement;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Windows.Data;
 using System.Windows.Forms;
@@ -51,6 +52,9 @@ namespace AW.DebugVisualizers.Tests
     private static DialogVisualizerServiceFake _dialogVisualizerServiceFake;
     private static DialogVisualizerServiceFake _dialogVisualizerServiceFakeForDebug;
     private static readonly EntityCollectionBase<AddressTypeEntity> AddressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
+    private static Dictionary<Type, DebuggerVisualizerAttribute> _visualizerAttributes;
+    private static List<DebuggerVisualizerAttribute> _visualizerAttributesNotFound;
+    private static List<DebuggerVisualizerAttribute> _visualizerAttributesNotFoundInAssembly;
 
     private static DialogVisualizerServiceFake DialogVisualizerServiceFake
     {
@@ -60,6 +64,66 @@ namespace AW.DebugVisualizers.Tests
     private static DialogVisualizerServiceFake DialogVisualizerServiceFakeForDebug
     {
       get { return _dialogVisualizerServiceFakeForDebug ?? (_dialogVisualizerServiceFakeForDebug = _dialogVisualizerServiceFakeForDebug = new DialogVisualizerServiceFake(true)); }
+    }
+
+    public static Dictionary<Type, DebuggerVisualizerAttribute> VisualizerAttributes
+    {
+      get
+      {
+        if (_visualizerAttributes == null)
+          LoadDebuggerVisualizerAttributes();
+        return _visualizerAttributes;
+      }
+    }
+
+    public static List<DebuggerVisualizerAttribute> VisualizerAttributesNotFound
+    {
+      get
+      {
+        if (_visualizerAttributesNotFound == null)
+          LoadDebuggerVisualizerAttributes();
+        return _visualizerAttributesNotFound;
+      }
+    }
+
+    public static List<DebuggerVisualizerAttribute> VisualizerAttributesNotFoundInAssembly
+    {
+      get
+      {
+        if (_visualizerAttributesNotFoundInAssembly == null)
+          LoadDebuggerVisualizerAttributes();
+        return _visualizerAttributesNotFoundInAssembly;
+      }
+    }
+
+    public static void LoadDebuggerVisualizerAttributes()
+    {
+      var enumerableVisualizerType = typeof (EnumerableVisualizer);
+      var assembly = enumerableVisualizerType.Assembly;
+      var debuggerVisualizerAttributes = assembly.GetCustomAttributes(typeof (DebuggerVisualizerAttribute), false);
+      _visualizerAttributes = new Dictionary<Type, DebuggerVisualizerAttribute>();
+      _visualizerAttributesNotFound = new List<DebuggerVisualizerAttribute>();
+      _visualizerAttributesNotFoundInAssembly = new List<DebuggerVisualizerAttribute>();
+      foreach (DebuggerVisualizerAttribute debuggerVisualizerAttribute in debuggerVisualizerAttributes)
+        if (debuggerVisualizerAttribute.VisualizerTypeName == enumerableVisualizerType.AssemblyQualifiedName)
+        {
+          var type = Type.GetType(debuggerVisualizerAttribute.TargetTypeName);
+          if (type == null)
+          {
+            type = MetaDataHelper.GetTypesContaining(debuggerVisualizerAttribute.TargetTypeName).FirstOrDefault();
+          }
+          if (type == null)
+          {
+            var parts = debuggerVisualizerAttribute.TargetTypeName.Split(',');
+            var assemblyName = parts[1];
+            if (MetaDataHelper.GetAssembly(assemblyName) == null) 
+              _visualizerAttributesNotFound.Add(debuggerVisualizerAttribute); //This is OK
+            else
+              _visualizerAttributesNotFoundInAssembly.Add(debuggerVisualizerAttribute); //This is not
+          }
+          else
+            _visualizerAttributes.Add(type, debuggerVisualizerAttribute);
+        }
     }
 
     #region Additional test attributes
@@ -423,32 +487,15 @@ namespace AW.DebugVisualizers.Tests
     [TestCategory("Winforms"), TestMethod]
     public void ClaimsTest()
     {
-      var claims = WindowsPrincipal.Current.Claims;
+      var claims = ClaimsPrincipal.Current.Claims;
       TestShowTransported(claims, 7);
     }
 
     [TestCategory("Winforms"), TestMethod]
     public void DebuggerVisualizerAttributeTest()
     {
-      var assemblyCore = typeof (EnumerableQuery).Assembly;
-      var enumerableVisualizerType = typeof (EnumerableVisualizer);
-      var assembly = enumerableVisualizerType.Assembly;
-      var debuggerVisualizerAttributes = assembly.GetCustomAttributes(typeof (DebuggerVisualizerAttribute), false);
-      var visualizerAttributes = new List<DebuggerVisualizerAttribute>();
-      var visualizerAttributesNotFound = new List<DebuggerVisualizerAttribute>();
-      foreach (DebuggerVisualizerAttribute debuggerVisualizerAttribute in debuggerVisualizerAttributes)
-        if (debuggerVisualizerAttribute.VisualizerTypeName == enumerableVisualizerType.AssemblyQualifiedName)
-        {
-          var type = Type.GetType(debuggerVisualizerAttribute.TargetTypeName);
-          if (type == null)
-          {
-            type = MetaDataHelper.GetTypesContaining(debuggerVisualizerAttribute.TargetTypeName).FirstOrDefault();
-          }
-          if (type == null)
-            visualizerAttributesNotFound.Add(debuggerVisualizerAttribute);
-          else
-            visualizerAttributes.Add(debuggerVisualizerAttribute);
-        }
+      Assert.AreEqual(0, VisualizerAttributesNotFoundInAssembly.Count, VisualizerAttributesNotFoundInAssembly.Select(va=>va.TargetTypeName).JoinAsString());
+      
     }
 
     private static void TestSerialize(object enumerableOrDataTableToVisualize)
@@ -476,12 +523,12 @@ namespace AW.DebugVisualizers.Tests
       visualizerHost.ShowVisualizer();
     }
 
-    private static void ShowObjectSourceVisualizer(object enumerableOrDataTableToVisualize)
-    {
-      var visualizerHost = new VisualizerDevelopmentHost(enumerableOrDataTableToVisualize, typeof (ObjectSourceVisualizer.ObjectSourceVisualizer),
-        typeof (ObjectSourceVisualizer.ObjectSourceVisualizer));
-      visualizerHost.ShowVisualizer();
-    }
+    //private static void ShowObjectSourceVisualizer(object enumerableOrDataTableToVisualize)
+    //{
+    //  var visualizerHost = new VisualizerDevelopmentHost(enumerableOrDataTableToVisualize, typeof (ObjectSourceVisualizer.ObjectSourceVisualizer),
+    //    typeof (ObjectSourceVisualizer.ObjectSourceVisualizer));
+    //  visualizerHost.ShowVisualizer();
+    //}
 
     private static void ShowWithFake(object enumerableOrDataTableToVisualize)
     {
@@ -522,6 +569,10 @@ namespace AW.DebugVisualizers.Tests
       Assert.IsTrue(enumerableOrDataTableToVisualize is IEnumerable
                     || enumerableOrDataTableToVisualize is DataTableSurrogate || enumerableOrDataTableToVisualize is DataTable
                     || enumerableOrDataTableToVisualize is WeakReference);
+      var type = enumerableOrDataTableToVisualize.GetType();
+      var rootType = type.GetTypeAndParentTypes().Last();
+      if (!type.IsArray)
+        Assert.IsTrue(VisualizerAttributes.ContainsKey(rootType), rootType.Name +"-"+ type.Name);
       ShowWithFake(enumerableOrDataTableToVisualize);
       var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
       Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());
