@@ -258,7 +258,7 @@ namespace AW.DebugVisualizers.Tests
       TestShowTransported(new ObservableCollection<AddressTypeEntity>(MetaSingletons.MetaData.AddressType.ToEntityCollection()), TestData.BrowseableAddressTypeProperties);
     }
 
-    [TestMethod]
+    [TestMethod, Microsoft.VisualStudio.TestTools.UnitTesting.Description("Can throw null exception but doesn't when debugged")]
     public void SerializableCollectionViewTest()
     {
       var collectionView = (new CollectionViewSource {Source = MetaSingletons.MetaData.AddressType.ToEntityCollection()}).View;
@@ -489,13 +489,14 @@ namespace AW.DebugVisualizers.Tests
     {
       var claims = ClaimsPrincipal.Current.Claims;
       TestShowTransported(claims, 7);
+      var identityClaims = ((GenericIdentity)ClaimsPrincipal.Current.Identity).Claims;
+      TestShowTransported(identityClaims, 7);
     }
 
     [TestCategory("Winforms"), TestMethod]
     public void DebuggerVisualizerAttributeTest()
     {
       Assert.AreEqual(0, VisualizerAttributesNotFoundInAssembly.Count, VisualizerAttributesNotFoundInAssembly.Select(va=>va.TargetTypeName).JoinAsString());
-      
     }
 
     private static void TestSerialize(object enumerableOrDataTableToVisualize)
