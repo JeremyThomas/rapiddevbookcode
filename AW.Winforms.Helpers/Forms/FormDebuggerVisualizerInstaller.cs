@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
 
 namespace AW.Winforms.Helpers.Forms
 {
-  public sealed partial class FormDebuggerVisualizerInstaller : Form
+  public sealed partial class FormDebuggerVisualizerInstaller : FrmPersistantLocation
   {
     private readonly string _destinationFileNameAll;
     private readonly string _destinationFileNameUser;
@@ -16,6 +17,7 @@ namespace AW.Winforms.Helpers.Forms
     private static readonly string SourceFileName = Path.GetFileName(Application.ExecutablePath);
     private FileInfo _destinationVisualizerFileInfoAll;
     private FileInfo _destinationVisualizerFileInfoUser;
+    private readonly string _title;
 
     public FormDebuggerVisualizerInstaller()
     {
@@ -51,7 +53,8 @@ namespace AW.Winforms.Helpers.Forms
       }
       GetAllStatus();
       GetUserStatus();
-      Text = string.Format("{0} Installer", title);
+      _title = title;
+      Text = string.Format("{0} Installer", _title);
       linkLabelWebSite.Text = description;
       var indexOfHyperLink = linkLabelWebSite.Text.IndexOf("https", StringComparison.Ordinal);
       linkLabelWebSite.Links.Add(indexOfHyperLink, linkLabelWebSite.Text.Length,
@@ -121,6 +124,31 @@ namespace AW.Winforms.Helpers.Forms
     private void linkLabelAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
       Process.Start(e.Link.LinkData.ToString());
+    }
+
+    private void buttonAbout_Click(object sender, EventArgs e)
+    {
+      AboutBox.ShowAboutBox(this);
+    }
+
+    private void buttonRegistered_Click(object sender, EventArgs e)
+    {
+      var debuggerVisualizerAttributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof (DebuggerVisualizerAttribute), false);
+      var form = new FrmPersistantLocation { Icon = Icon,
+        Text = string.Format("These are {0} classes that the {1} is registered to display", debuggerVisualizerAttributes.Length, _title),
+        Width = this.Width
+      };
+      var textBox = new TextBox
+      {
+        Dock = DockStyle.Fill,
+        Multiline = true,
+        ReadOnly = true,
+        ScrollBars = ScrollBars.Both,
+        WordWrap = false,
+        Text = debuggerVisualizerAttributes.OfType<DebuggerVisualizerAttribute>().Select(dv => dv.TargetTypeName).JoinAsString(Environment.NewLine)
+      };
+      form.Controls.Add(textBox);
+      form.ShowDialog();
     }
   }
 }

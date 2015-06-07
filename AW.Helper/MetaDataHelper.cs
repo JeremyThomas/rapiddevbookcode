@@ -52,16 +52,15 @@ namespace AW.Helper
       }
       yield return type;
       // return all inherited types
-      var currentBaseType = type.BaseType;
-      while (currentBaseType != null && currentBaseType != typeof(object) && currentBaseType != typeof(MarshalByValueComponent)
-        && currentBaseType != typeof(MarshalByRefObject) && currentBaseType != typeof(Component) && currentBaseType.Implements(typeof(IEnumerable)))
+      var currentBaseType = type;
+      do
       {
         if (currentBaseType.IsGenericType)
           yield return currentBaseType.GetGenericTypeDefinition();
         else
           yield return currentBaseType;
         currentBaseType = currentBaseType.BaseType;
-      }
+      } while (currentBaseType != null && currentBaseType != typeof (object) && currentBaseType != typeof (Component) && currentBaseType.Implements(typeof (IEnumerable)));
     }
 
     /// <summary>

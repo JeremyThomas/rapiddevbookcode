@@ -1478,8 +1478,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-      var ab = new AboutBox("") {AppEntryAssembly = Assembly.GetExecutingAssembly()};
-      ab.ShowDialog();
+      AboutBox.ShowAboutBox();
     }
 
   }

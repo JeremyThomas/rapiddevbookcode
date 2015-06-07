@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("AW.DebugVisualizers")]
+[assembly: AssemblyTitle("Enumerable Debugger Visualizer")]
 #if VS2013
 [assembly: AssemblyDescription("Enumerable Debugger Visualizer for VS2013")]
 [assembly: AssemblyProduct("Enumerable Debugger Visualizer for VS2013")]
