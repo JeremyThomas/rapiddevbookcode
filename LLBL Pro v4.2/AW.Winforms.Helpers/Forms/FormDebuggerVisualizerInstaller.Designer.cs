@@ -121,14 +121,14 @@
       this.tableLayoutPanel1.Controls.Add(this.buttonInstallAllUsers, 0, 1);
       this.tableLayoutPanel1.Controls.Add(this.labelVersion, 0, 3);
       this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 55);
+      this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 60);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 4;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(637, 103);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(641, 103);
       this.tableLayoutPanel1.TabIndex = 5;
       // 
       // label3
@@ -203,7 +203,8 @@
       this.linkLabelWebSite.Location = new System.Drawing.Point(0, 0);
       this.linkLabelWebSite.MinimumSize = new System.Drawing.Size(100, 50);
       this.linkLabelWebSite.Name = "linkLabelWebSite";
-      this.linkLabelWebSite.Size = new System.Drawing.Size(558, 52);
+      this.linkLabelWebSite.Padding = new System.Windows.Forms.Padding(0, 5, 5, 0);
+      this.linkLabelWebSite.Size = new System.Drawing.Size(563, 57);
       this.linkLabelWebSite.TabIndex = 0;
       this.linkLabelWebSite.Text = resources.GetString("linkLabelWebSite.Text");
       this.linkLabelWebSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAll_LinkClicked);
@@ -223,9 +224,9 @@
       // 
       this.buttonRegistered.Location = new System.Drawing.Point(0, 26);
       this.buttonRegistered.Name = "buttonRegistered";
-      this.buttonRegistered.Size = new System.Drawing.Size(70, 23);
+      this.buttonRegistered.Size = new System.Drawing.Size(70, 34);
       this.buttonRegistered.TabIndex = 8;
-      this.buttonRegistered.Text = "Registered";
+      this.buttonRegistered.Text = "Registered classes";
       this.toolTip1.SetToolTip(this.buttonRegistered, "Show the classes this is registered for");
       this.buttonRegistered.UseVisualStyleBackColor = true;
       this.buttonRegistered.Click += new System.EventHandler(this.buttonRegistered_Click);
@@ -237,7 +238,7 @@
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel1.Location = new System.Drawing.Point(0, 0);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(637, 55);
+      this.panel1.Size = new System.Drawing.Size(641, 60);
       this.panel1.TabIndex = 8;
       // 
       // panel2
@@ -245,9 +246,9 @@
       this.panel2.Controls.Add(this.buttonRegistered);
       this.panel2.Controls.Add(this.buttonAbout);
       this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-      this.panel2.Location = new System.Drawing.Point(558, 0);
+      this.panel2.Location = new System.Drawing.Point(562, 0);
       this.panel2.Name = "panel2";
-      this.panel2.Size = new System.Drawing.Size(79, 55);
+      this.panel2.Size = new System.Drawing.Size(79, 60);
       this.panel2.TabIndex = 8;
       // 
       // FormDebuggerVisualizerInstaller
@@ -255,7 +256,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoSize = true;
-      this.ClientSize = new System.Drawing.Size(637, 158);
+      this.ClientSize = new System.Drawing.Size(641, 163);
       this.Controls.Add(this.panel1);
       this.Controls.Add(this.tableLayoutPanel1);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;

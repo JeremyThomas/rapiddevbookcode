@@ -261,7 +261,7 @@ namespace AW.Helper.LLBL
 
     public static IEnumerable<Type> GetEntitiesTypes()
     {
-      return MetaDataHelper.GetAllLoadedDescendance(typeof (IEntityCore));
+      return MetaDataHelper.GetAllLoadedDescendants(typeof (IEntityCore));
     }
 
     public static IEnumerable<Type> GetEntitiesTypes(Assembly entityAssembly)

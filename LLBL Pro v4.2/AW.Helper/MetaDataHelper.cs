@@ -38,7 +38,7 @@ namespace AW.Helper
         select type;
     }
 
-    public static IEnumerable<Type> GetAllLoadedDescendance(Type ancestorType)
+    public static IEnumerable<Type> GetAllLoadedDescendants(Type ancestorType)
     {
       return GetAssignable(ancestorType, GetAllExportedTypes());
     }
@@ -47,10 +47,7 @@ namespace AW.Helper
     {
       // is there any base type?
       if ((type == null))
-      {
         yield break;
-      }
-      yield return type;
       // return all inherited types
       var currentBaseType = type;
       do
@@ -59,8 +56,17 @@ namespace AW.Helper
           yield return currentBaseType.GetGenericTypeDefinition();
         else
           yield return currentBaseType;
-        currentBaseType = currentBaseType.BaseType;
-      } while (currentBaseType != null && currentBaseType != typeof (object) && currentBaseType != typeof (Component) && currentBaseType.Implements(typeof (IEnumerable)));
+        if (currentBaseType.IsNested)
+        {
+          var nestedTypeInBase = currentBaseType.DeclaringType.BaseType.GetNestedType(type.Name,BindingFlags.NonPublic| BindingFlags.Public);
+          if (nestedTypeInBase != null)
+            currentBaseType = nestedTypeInBase;
+          else
+            currentBaseType = currentBaseType.BaseType;
+        }
+        else
+          currentBaseType = currentBaseType.BaseType;
+      } while (currentBaseType != null && currentBaseType != typeof(object) && currentBaseType.Implements(typeof(IEnumerable)));
     }
 
     /// <summary>
