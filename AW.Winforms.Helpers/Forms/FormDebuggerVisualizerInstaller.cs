@@ -134,9 +134,11 @@ namespace AW.Winforms.Helpers.Forms
     private void buttonRegistered_Click(object sender, EventArgs e)
     {
       var debuggerVisualizerAttributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof (DebuggerVisualizerAttribute), false);
-      var form = new FrmPersistantLocation { Icon = Icon,
-        Text = string.Format("These are {0} classes that the {1} is registered to display", debuggerVisualizerAttributes.Length, _title),
-        Width = this.Width
+      var form = new FrmPersistantLocation
+      {
+        Icon = Icon,
+        Text = string.Format("These are the {0} classes that the {1} is registered to display", debuggerVisualizerAttributes.Length, _title),
+        Width = Width
       };
       var textBox = new TextBox
       {
@@ -145,7 +147,7 @@ namespace AW.Winforms.Helpers.Forms
         ReadOnly = true,
         ScrollBars = ScrollBars.Both,
         WordWrap = false,
-        Text = debuggerVisualizerAttributes.OfType<DebuggerVisualizerAttribute>().Select(dv => dv.TargetTypeName).JoinAsString(Environment.NewLine)
+        Text = debuggerVisualizerAttributes.OfType<DebuggerVisualizerAttribute>().Select(dv => dv.TargetTypeName).OrderBy(n => n).JoinAsString(Environment.NewLine)
       };
       form.Controls.Add(textBox);
       form.ShowDialog();
