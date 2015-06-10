@@ -96,8 +96,9 @@ namespace AW.DebugVisualizers.Tests
       }
     }
 
-    public static void LoadDebuggerVisualizerAttributes()
+    private static void LoadDebuggerVisualizerAttributes()
     {
+      var majorMinorVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(typeof (System.Linq.Enumerable).Assembly.Location).FileVersion.Substring(0, 3);
       var enumerableVisualizerType = typeof (EnumerableVisualizer);
       var assembly = enumerableVisualizerType.Assembly;
       var debuggerVisualizerAttributes = assembly.GetCustomAttributes(typeof (DebuggerVisualizerAttribute), false);
@@ -118,7 +119,7 @@ namespace AW.DebugVisualizers.Tests
             var assemblyName = parts[1];
             if (MetaDataHelper.GetAssembly(assemblyName) == null) 
               _visualizerAttributesNotFound.Add(debuggerVisualizerAttribute); //This is OK
-            else
+            else if (debuggerVisualizerAttribute.Description.Contains(majorMinorVersion) || !debuggerVisualizerAttribute.Description.Contains("4"))
               _visualizerAttributesNotFoundInAssembly.Add(debuggerVisualizerAttribute); //This is not
           }
           else
