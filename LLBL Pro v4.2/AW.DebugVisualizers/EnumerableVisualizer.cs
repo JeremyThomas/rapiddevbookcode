@@ -26,6 +26,8 @@ namespace AW.DebugVisualizers
     ///   Enumerable Visualizer
     /// </summary>
     public const string Description = "Enumerable Visualizer";
+    public const string DescriptionV46 = Description+" V4.6";
+    public const string DescriptionV45 = Description + " V4.0";
 
     /// <summary>
     ///   Shows the user interface for the visualizer
