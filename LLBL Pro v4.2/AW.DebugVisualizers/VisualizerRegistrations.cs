@@ -61,7 +61,7 @@ using PropertyCollection = System.DirectoryServices.PropertyCollection;
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (StringCollection), Description = EnumerableVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (StringDictionary), Description = EnumerableVisualizer.Description)]
 
-//-Collections.Generic classes
+//-Collections.Generic classes3
 
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (Dictionary<,>), Description = EnumerableVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (LinkedList<>), Description = EnumerableVisualizer.Description)]
