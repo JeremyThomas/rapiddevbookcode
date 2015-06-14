@@ -488,18 +488,26 @@ namespace AW.DebugVisualizers.Tests
     [TestCategory("Winforms"), TestMethod]
     public void ClaimsTest()
     {
-      var claims = ClaimsPrincipal.Current.Claims;
-      TestShowTransported(claims, 7);
-      var identityClaims = ((GenericIdentity)ClaimsPrincipal.Current.Identity).Claims;
-      TestShowTransported(identityClaims, 7);
       var windowsIdentity = WindowsIdentity.GetCurrent();
-      var windowsPrincipal = new WindowsPrincipal(windowsIdentity);
-      Assert.IsNotNull(windowsIdentity);
-      TestShowTransported(windowsIdentity.Claims, 7);
-      TestShowTransported(windowsPrincipal.Claims, 7);
-     // TestShowTransported(windowsPrincipal.DeviceClaims,7);
-      //TestShowTransported(windowsPrincipal.UserClaims, 7);
-      //TestShowTransported(windowsIdentity.DeviceClaims, 7);
+      if (windowsIdentity != null)
+      {
+        var windowsPrincipal = new WindowsPrincipal(windowsIdentity);
+        Assert.IsNotNull(windowsIdentity);
+        AssertTypeIsRegistered(windowsPrincipal.DeviceClaims);
+        AssertTypeIsRegistered(windowsPrincipal.UserClaims);
+        AssertTypeIsRegistered(windowsIdentity.DeviceClaims);
+        TestShowTransported(windowsIdentity.Claims, 7);
+        TestShowTransported(windowsPrincipal.Claims, 7);
+      }             
+      var claimsPrincipal = ClaimsPrincipal.Current as GenericPrincipal;
+      if (claimsPrincipal != null)
+      {
+        var claims = claimsPrincipal.Claims;
+        TestShowTransported(claims, 7);
+        var identityClaims = ((GenericIdentity)claimsPrincipal.Identity).Claims;
+        TestShowTransported(identityClaims, 7);
+      }
+
     }
 
     [TestCategory("Winforms"), TestMethod]
@@ -579,10 +587,7 @@ namespace AW.DebugVisualizers.Tests
       Assert.IsTrue(enumerableOrDataTableToVisualize is IEnumerable
                     || enumerableOrDataTableToVisualize is DataTableSurrogate || enumerableOrDataTableToVisualize is DataTable
                     || enumerableOrDataTableToVisualize is WeakReference);
-      var type = enumerableOrDataTableToVisualize.GetType();
-      var rootType = type.GetTypeAndParentTypes().Last();
-      if (!type.IsArray)
-        Assert.IsTrue(VisualizerAttributes.ContainsKey(rootType), rootType== type? rootType.FullName : rootType.FullName +"-"+ type.FullName);
+      AssertTypeIsRegistered(enumerableOrDataTableToVisualize);
       ShowWithFake(enumerableOrDataTableToVisualize);
       var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
       Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());
@@ -596,6 +601,14 @@ namespace AW.DebugVisualizers.Tests
         Assert.IsFalse(bindingSource.AllowNew, "bindingSource.AllowNew");
       }
       Application.DoEvents();
+    }
+
+    private static void AssertTypeIsRegistered(object enumerableOrDataTableToVisualize)
+    {
+      var type = enumerableOrDataTableToVisualize.GetType();
+      var rootType = type.GetTypeAndParentTypes().Last();
+      if (!type.IsArray)
+        Assert.IsTrue(VisualizerAttributes.ContainsKey(rootType), rootType == type ? rootType.FullName : rootType.FullName + "-" + type.FullName);
     }
 
     /// <summary>

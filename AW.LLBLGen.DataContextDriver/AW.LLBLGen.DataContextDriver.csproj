@@ -80,7 +80,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LINQPad">
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LINQPad\4\LINQPad.exe</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\LINQPad4\LINQPad.exe</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.ConnectionUI.Dialog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f4ca07f51760da93, processorArchitecture=MSIL">
