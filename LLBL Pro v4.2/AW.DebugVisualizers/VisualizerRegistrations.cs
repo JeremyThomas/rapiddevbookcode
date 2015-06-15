@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -17,7 +18,14 @@ using System.Diagnostics;
 using System.DirectoryServices;
 using System.Dynamic;
 using System.Linq;
+using System.Resources;
 using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Channels;
+using System.Security;
+using System.Security.AccessControl;
+using System.Security.Permissions;
+using System.Security.Policy;
+using System.Security.Principal;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Xml;
@@ -32,54 +40,92 @@ using PropertyCollection = System.DirectoryServices.PropertyCollection;
 //http://joshsmithonwpf.wordpress.com/2008/01/20/the-rock-star-hack-of-2008/
 //http://code.google.com/p/linqpadvisualizer/
 
+// mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(ApplicationTrustCollection), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(Array), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(ArrayList), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(BaseChannelObjectWithProperties), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(BitArray), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(Collection<>), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(CollectionBase), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(ConcurrentDictionary<,>), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(ConcurrentQueue<>), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(ConcurrentStack<>), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(Dictionary<,>), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(DictionaryBase), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(Evidence), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(GenericAcl), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(Hashtable), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(IdentityReferenceCollection), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(KeyContainerPermissionAccessEntryCollection), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(List<>), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(PermissionSet), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(Queue), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(ReadOnlyCollection<>), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(ReadOnlyCollectionBase), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(ReadOnlyDictionary<,>), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(ResourceReader), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(ResourceSet), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(SortedList), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(Stack), Description = EnumerableVisualizer.Description)]
+
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.ArrayList+FixedSizeList, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.ArrayList+ReadOnlyList, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.ArrayList+SyncIList, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Concurrent.OrderablePartitioner`1+EnumerableDropIndices, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Concurrent.Partitioner+DynamicPartitionerForArray`1+InternalPartitionEnumerable, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Concurrent.Partitioner+DynamicPartitionerForIEnumerable`1+InternalPartitionEnumerable, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Concurrent.Partitioner+DynamicPartitionerForIList`1+InternalPartitionEnumerable, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.EmptyReadOnlyDictionaryInternal, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Generic.Dictionary`2+KeyCollection, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Generic.Dictionary`2+ValueCollection, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Generic.List`1+SynchronizedList, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Hashtable+KeyCollection, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Hashtable+ValueCollection, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.ListDictionaryInternal, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.ListDictionaryInternal+NodeKeyValueCollection, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.ObjectModel.ReadOnlyDictionary`2+KeyCollection, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.ObjectModel.ReadOnlyDictionary`2+ValueCollection, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.SortedList+KeyList, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.SortedList+ValueList, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.IO.Iterator`1, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Resources.ResourceFallbackManager, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Runtime.InteropServices.WindowsRuntime.ConstantSplittableMap`2, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Runtime.InteropServices.WindowsRuntime.DictionaryKeyCollection`2, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Runtime.InteropServices.WindowsRuntime.DictionaryValueCollection`2, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Runtime.InteropServices.WindowsRuntime.ICustomPropertyProviderProxy`2, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Runtime.InteropServices.WindowsRuntime.ReadOnlyDictionaryKeyCollection`2, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Runtime.InteropServices.WindowsRuntime.ReadOnlyDictionaryValueCollection`2, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Runtime.Remoting.Channels.AggregateDictionary, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Runtime.Remoting.Messaging.MessageDictionary, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Threading.Tasks.SingleProducerSingleConsumerQueue`1, mscorlib", Description = EnumerableVisualizer.Description)]
+
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Concurrent.Partitioner+<CreateRanges>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Concurrent.Partitioner+<CreateRanges>d__7, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Diagnostics.Tracing.ActivityFilter+<GetFilterAsTuple>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Reflection.TypeInfo+<get_DeclaredNestedTypes>d__7, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Reflection.TypeInfo+<GetDeclaredMethods>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Security.Claims.ClaimsIdentity+<get_Claims>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Security.Claims.ClaimsPrincipal+<get_Claims>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Security.Claims.RoleClaimProvider+<get_Claims>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Security.Principal.WindowsIdentity+<get_Claims>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Security.Principal.WindowsPrincipal+<get_DeviceClaims>d__a, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Security.Principal.WindowsPrincipal+<get_UserClaims>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Threading.Tasks.ThreadPoolTaskScheduler+<FilterTasksFromWorkItems>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Threading.ThreadPool+<EnumerateQueuedWorkItems>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (WeakReference), Description = EnumerableVisualizer.Description)]
 
-//Serializable
-
-//-Collections classes
-
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (ArrayList), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (BitArray), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (CollectionBase), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (ReadOnlyCollectionBase), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (DictionaryBase), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (Hashtable), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Hashtable+KeyCollection, mscorlib", Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Hashtable+ValueCollection, mscorlib", Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (Queue), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (SortedList), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (Stack), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.ListDictionaryInternal, mscorlib", Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.ListDictionaryInternal+NodeKeyValueCollection, mscorlib", Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(SortedSet<>), Description = EnumerableVisualizer.Description)]
 
 //-Collections.Specialized classes
 
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (HybridDictionary), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (ListDictionary), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (NameObjectCollectionBase), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (OrderedDictionary), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (StringCollection), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (StringDictionary), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(HybridDictionary), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(ListDictionary), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(NameObjectCollectionBase), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(OrderedDictionary), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(StringCollection), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(StringDictionary), Description = EnumerableVisualizer.Description)]
 
-//-Collections.Generic classes3
-
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (Dictionary<,>), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (LinkedList<>), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (List<>), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (Queue<>), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (SortedDictionary<,>), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (SortedList<,>), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (Stack<>), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (Dictionary<, >.KeyCollection), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (Dictionary<, >.ValueCollection), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (SortedSet<>), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (HashSet<>), Description = EnumerableVisualizer.Description)]
-
-// System.Collections.ObjectModel
-
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (Collection<>), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (ReadOnlyCollection<>), Description = EnumerableVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (KeyedCollection<,>), Description = EnumerableVisualizer.Description)]
 
 //-Winforms
 
@@ -282,20 +328,6 @@ using PropertyCollection = System.DirectoryServices.PropertyCollection;
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Security.Principal.WindowsPrincipal+<get_UserClaims>d__1, mscorlib", Description = EnumerableVisualizer.DescriptionV46)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Threading.Tasks.ThreadPoolTaskScheduler+<FilterTasksFromWorkItems>d__1, mscorlib", Description = EnumerableVisualizer.DescriptionV46)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Threading.ThreadPool+<EnumerateQueuedWorkItems>d__1, mscorlib", Description = EnumerableVisualizer.DescriptionV46)]
-
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Concurrent.Partitioner+<CreateRanges>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Concurrent.Partitioner+<CreateRanges>d__7, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Diagnostics.Tracing.ActivityFilter+<GetFilterAsTuple>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Reflection.TypeInfo+<get_DeclaredNestedTypes>d__7, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Reflection.TypeInfo+<GetDeclaredMethods>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Security.Claims.ClaimsIdentity+<get_Claims>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Security.Claims.ClaimsPrincipal+<get_Claims>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Security.Claims.RoleClaimProvider+<get_Claims>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Security.Principal.WindowsIdentity+<get_Claims>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Security.Principal.WindowsPrincipal+<get_DeviceClaims>d__a, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Security.Principal.WindowsPrincipal+<get_UserClaims>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Threading.Tasks.ThreadPoolTaskScheduler+<FilterTasksFromWorkItems>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Threading.ThreadPool+<EnumerateQueuedWorkItems>d__0, mscorlib", Description = EnumerableVisualizer.DescriptionV45)]
 
 //misc
 

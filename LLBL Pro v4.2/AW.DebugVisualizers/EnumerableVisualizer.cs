@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
-using System.DirectoryServices;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Reflection;
 using System.Runtime.Serialization;
+using System.Text;
 using AW.Helper;
-using AW.Helper.TypeConverters;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.Misc;
@@ -26,8 +28,83 @@ namespace AW.DebugVisualizers
     ///   Enumerable Visualizer
     /// </summary>
     public const string Description = "Enumerable Visualizer";
-    public const string DescriptionV46 = Description+" V4.6";
+
+    public const string DescriptionV46 = Description + " V4.6";
     public const string DescriptionV45 = Description + " V4.0";
+
+    /// <summary>
+    ///   Gets the BCL major minor version. e.g. 4.5 or 4.6
+    /// </summary>
+    /// <returns></returns>
+    public static string GetBclMajorMinorVersion()
+    {
+      return FileVersionInfo.GetVersionInfo(typeof (Enumerable).Assembly.Location).FileVersion.Substring(0, 3);
+    }
+
+    public static IOrderedEnumerable<string> CreateVisualizerRegistrationsNestedNotGenericSealed(Assembly assembly)
+    {
+      var majorMinorVersion = GetBclMajorMinorVersion().Replace(".","");
+      var visualizerRegistrations = assembly
+        .GetTypes().Where(t =>
+          t.GetInterface("IEnumerable") != null && !t.IsInterface
+          && !t.IsPublic
+          && !t.IsSerializable
+          && t.IsNested && !t.IsGenericType
+          && t.IsSealed
+          && (t.BaseType == null || t.BaseType.FullName == "System.Object"))
+        .Select(t => string.Format("[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = \"{0}\", Description = EnumerableVisualizer.DescriptionV{1})]",
+          GetClassAssemblyName(t), majorMinorVersion))
+        .OrderBy(n => n);
+      return visualizerRegistrations;
+    }
+
+    private static string GetClassAssemblyName(Type t)
+    {
+      return t.AssemblyQualifiedName == null ? String.Empty : t.AssemblyQualifiedName.Substring(0, t.AssemblyQualifiedName.IndexOf(',', t.FullName.Length + 1));
+    }
+
+    public static IOrderedEnumerable<string> CreateOtherPrivateVisualizerRegistrations(Assembly assembly)
+    {
+      var visualizerRegistrations = from t in assembly.GetTypes()
+        where
+          t.GetInterface("IEnumerable") != null && !t.IsInterface
+          && !t.IsPublic
+          && (t.IsSerializable|| !t.IsNested ||t.IsGenericType || !t.IsSealed)
+          && (t.BaseType == null || t.BaseType.FullName == "System.Object")
+        select string.Format("[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = \"{0}\", Description = EnumerableVisualizer.Description)]",
+          GetClassAssemblyName(t));
+      return visualizerRegistrations.OrderBy(n => n);
+      ;
+    }
+
+    public static IOrderedEnumerable<string> CreatePublicVisualizerRegistrations(Assembly assembly)
+    {
+      var visualizerRegistrations = from t in assembly.GetTypes()
+        where
+          t.GetInterface("IEnumerable") != null && !t.IsInterface
+          && t.IsPublic
+          && (t.BaseType == null || t.BaseType.FullName == "System.Object")
+        select string.Format("[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof ({0}), Description = EnumerableVisualizer.Description)]",
+          t.Name.Replace("`1","<>").Replace("`2", "<,>"));
+      return visualizerRegistrations.OrderBy(n => n);
+    }
+
+    public static string CreateVisualizerRegistrations(params Assembly[] assemblies)
+    {
+      var stringBuilder = new StringBuilder();
+      foreach (var assembly in assemblies)
+      {
+        stringBuilder.Append("// " + assembly.FullName);
+        stringBuilder.AppendLine();
+        var visualizerRegistrations = CreatePublicVisualizerRegistrations(assembly).Union(CreateOtherPrivateVisualizerRegistrations(assembly)).Union(CreateVisualizerRegistrationsNestedNotGenericSealed(assembly));
+        foreach (var visualizerRegistration in visualizerRegistrations)
+        {
+          stringBuilder.Append(visualizerRegistration);
+          stringBuilder.AppendLine();
+        }
+      }
+      return stringBuilder.ToString();
+    }
 
     /// <summary>
     ///   Shows the user interface for the visualizer
@@ -68,9 +145,7 @@ namespace AW.DebugVisualizers
       }
 
       if (enumerable != null)
-      {
         _modalService.ShowDialog(FrmDataEditor.CreateDataViewForm(enumerable));
-      }
     }
   }
 
@@ -85,19 +160,26 @@ namespace AW.DebugVisualizers
 
     /// <summary>
     ///   Gets data from the specified object and serializes it into the outgoing data stream
-    ///   This class implements the debugee side of the visualizer. It is responsible for running the commands against the
-    ///   server.
+    ///   This class implements the debugee side of the visualizer. It is responsible for running the commands against the   server.
     /// </summary>
     /// <remarks>
-    ///   Strategy is: if the items are serializable then
-    ///   if the enumerable is also serializable
-    ///   serialize the enumerable
+    ///   Uses the Bi­na­ry­For­mat­ter se­ri­al­iz­er.
+    ///   Strategy is:
+    ///   if the items are serializable then
+    ///   __if the enumerable is also serializable then
+    ///   ____serialize the enumerable
     ///   else
-    ///   create a ObjectListView to contains the items and serialize that instead.
-    ///   Full back is to copy the enumerable to a data table and serialize that instead.
+    ///   __create an ObjectListView to contain the items and serialize that.
+    ///   Full back is to:
+    ///   Copy the enumerable to a DataTable and serialize that.
+    ///   If that fails:
+    ///   Create a DataTableSurrogate from the DataTable and serialize that
     /// </remarks>
     /// <param name="target">Object being visualized.</param>
     /// <param name="outgoingData">Outgoing data stream.</param>
+    /// <see cref="http://msdn.microsoft.com/en-us/library/bb669096.aspx" />
+    /// <see cref="http://support.microsoft.com/default.aspx?scid=kb;en-us;829740" />
+    /// <see cref="http://msdn.microsoft.com/en-us/library/microsoft.synchronization.data.datatablesurrogate(SQL.105).aspx" />
     public override void GetData(object target, Stream outgoingData)
     {
       var wr = target as WeakReference;
@@ -144,13 +226,12 @@ namespace AW.DebugVisualizers
     #endregion
 
     /// <summary>
-    ///   Gets data from the specified DataTable and serializes it into the outgoing data stream
+    ///   Gets data from the specified DataTable and into DataTableSurrogate and Serializes that.
     /// </summary>
     /// <param name="outgoingData">The outgoing data.</param>
     /// <param name="target">The target.</param>
     /// <remarks>
-    ///   The default binary serialization of a DataTable is XML but we want the data to be serialized binary "column" wise
-    ///   so a DataTableSurrogate is used to do this.
+    ///   This is a fallback if serializing a DataTable throws a SerializationException
     /// </remarks>
     private static void SerializeWithSurrogate(Stream outgoingData, DataTable target)
     {
@@ -159,6 +240,12 @@ namespace AW.DebugVisualizers
       Serialize(outgoingData, dataTableSurrogate);
     }
 
+    /// <summary>
+    ///   Binary Serialize DataTable.
+    ///   On SerializationException try DataTableSurrogate
+    /// </summary>
+    /// <param name="outgoingData"></param>
+    /// <param name="target"></param>
     private static void Serialize(Stream outgoingData, DataTable target)
     {
       outgoingData.Position = 0;
