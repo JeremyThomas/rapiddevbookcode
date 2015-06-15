@@ -101,7 +101,7 @@
       <HintPath>..\..\..\packages\SD.LLBLGen.Pro.DQE.SqlServer.4.2.20150609\lib\net35\SD.LLBLGen.Pro.DQE.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20150210\lib\net45\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
+      <HintPath>..\..\..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20150609\lib\net45\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>

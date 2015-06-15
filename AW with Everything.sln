@@ -826,7 +826,7 @@ Global
 		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 29
+		SccNumberOfProjects = 30
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccProjectUniqueName0 = AW.Win\\AW.Win.csproj
@@ -964,6 +964,7 @@ Global
 		SccProvider22 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccProjectUniqueName23 = WebSites\\ListIISApps\\ListIISApps.csproj
 		SccProjectTopLevelParentUniqueName23 = AW\u0020with\u0020Everything.sln
+		SccProjectName23 = WebSites/ListIISApps
 		SccAuxPath23 = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath23 = WebSites\\ListIISApps
 		SccProvider23 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
@@ -997,6 +998,14 @@ Global
 		SccAuxPath28 = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath28 = Tools\\ObjectSourceVisualizer
 		SccProvider28 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccWebProject29 = true
+		SccProjectUniqueName29 = http://localhost/AW.WebDbEditor\u00204.2
+		SccProjectTopLevelParentUniqueName29 = AW\u0020with\u0020Everything.sln
+		SccProjectName29 = AW.WebDbEditor
+		SccAuxPath29 = https://tfs.codeplex.com/tfs/tfs01
+		SccLocalPath29 = AW.WebDbEditor
+		SccProvider29 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectEnlistmentChoice29 = 2
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 30
