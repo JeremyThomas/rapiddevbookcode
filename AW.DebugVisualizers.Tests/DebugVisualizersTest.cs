@@ -98,7 +98,7 @@ namespace AW.DebugVisualizers.Tests
 
     private static void LoadDebuggerVisualizerAttributes()
     {
-      var majorMinorVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(typeof (System.Linq.Enumerable).Assembly.Location).FileVersion.Substring(0, 3);
+      var majorMinorVersion = FileVersionInfo.GetVersionInfo(typeof(Enumerable).Assembly.Location).FileVersion.Substring(0, 3); 
       var enumerableVisualizerType = typeof (EnumerableVisualizer);
       var assembly = enumerableVisualizerType.Assembly;
       var debuggerVisualizerAttributes = assembly.GetCustomAttributes(typeof (DebuggerVisualizerAttribute), false);
@@ -117,7 +117,7 @@ namespace AW.DebugVisualizers.Tests
           {
             var parts = debuggerVisualizerAttribute.TargetTypeName.Split(',');
             var assemblyName = parts[1];
-            if (MetaDataHelper.GetAssembly(assemblyName) == null) 
+            if (MetaDataHelper.GetAssembly(assemblyName) == null)
               _visualizerAttributesNotFound.Add(debuggerVisualizerAttribute); //This is OK
             else if (debuggerVisualizerAttribute.Description.Contains(majorMinorVersion) || !debuggerVisualizerAttribute.Description.Contains("4"))
               _visualizerAttributesNotFoundInAssembly.Add(debuggerVisualizerAttribute); //This is not
@@ -498,22 +498,21 @@ namespace AW.DebugVisualizers.Tests
         AssertTypeIsRegistered(windowsIdentity.DeviceClaims);
         TestShowTransported(windowsIdentity.Claims, 7);
         TestShowTransported(windowsPrincipal.Claims, 7);
-      }             
+      }
       var claimsPrincipal = ClaimsPrincipal.Current as GenericPrincipal;
       if (claimsPrincipal != null)
       {
         var claims = claimsPrincipal.Claims;
         TestShowTransported(claims, 7);
-        var identityClaims = ((GenericIdentity)claimsPrincipal.Identity).Claims;
+        var identityClaims = ((GenericIdentity) claimsPrincipal.Identity).Claims;
         TestShowTransported(identityClaims, 7);
       }
-
     }
 
     [TestCategory("Winforms"), TestMethod]
     public void DebuggerVisualizerAttributeTest()
     {
-      Assert.AreEqual(0, VisualizerAttributesNotFoundInAssembly.Count, VisualizerAttributesNotFoundInAssembly.Select(va=>va.TargetTypeName).JoinAsString());
+      Assert.AreEqual(0, VisualizerAttributesNotFoundInAssembly.Count, VisualizerAttributesNotFoundInAssembly.Select(va => va.TargetTypeName).JoinAsString());
     }
 
     private static void TestSerialize(object enumerableOrDataTableToVisualize)
