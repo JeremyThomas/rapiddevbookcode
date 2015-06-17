@@ -41,7 +41,7 @@ namespace AW.DebugVisualizers
       return FileVersionInfo.GetVersionInfo(typeof (Enumerable).Assembly.Location).FileVersion.Substring(0, 3);
     }
 
-    public static IOrderedEnumerable<string> CreateVisualizerRegistrationsNestedNotGenericSealed(Assembly assembly)
+    public static IEnumerable<string> CreateVisualizerRegistrationsNestedNotGenericSealed(Assembly assembly)
     {
       var majorMinorVersion = GetBclMajorMinorVersion().Replace(".","");
       var visualizerRegistrations = assembly
@@ -63,7 +63,7 @@ namespace AW.DebugVisualizers
       return t.AssemblyQualifiedName == null ? String.Empty : t.AssemblyQualifiedName.Substring(0, t.AssemblyQualifiedName.IndexOf(',', t.FullName.Length + 1));
     }
 
-    public static IOrderedEnumerable<string> CreateOtherPrivateVisualizerRegistrations(Assembly assembly)
+    public static IEnumerable<string> CreateOtherPrivateVisualizerRegistrations(Assembly assembly)
     {
       var visualizerRegistrations = from t in assembly.GetTypes()
         where
@@ -74,10 +74,9 @@ namespace AW.DebugVisualizers
         select string.Format("[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = \"{0}\", Description = EnumerableVisualizer.Description)]",
           GetClassAssemblyName(t));
       return visualizerRegistrations.OrderBy(n => n);
-      ;
     }
 
-    public static IOrderedEnumerable<string> CreatePublicVisualizerRegistrations(Assembly assembly)
+    public static IEnumerable<string> CreatePublicVisualizerRegistrations(Assembly assembly)
     {
       var visualizerRegistrations = from t in assembly.GetTypes()
         where
