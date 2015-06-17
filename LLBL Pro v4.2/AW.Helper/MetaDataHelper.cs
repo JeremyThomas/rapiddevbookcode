@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -750,6 +751,20 @@ namespace AW.Helper
     public static T[] GetCustomAttributes<T>(Type type, bool inherit = true) where T : Attribute
     {
       return ((T[])type.GetCustomAttributes(typeof(T), inherit));
+    }
+
+    /// <summary>
+    ///   Gets the BCL major minor version. e.g. 4.5 or 4.6
+    /// </summary>
+    /// <returns></returns>
+    public static string GetBclMajorMinorVersion()
+    {
+      return FileVersionInfo.GetVersionInfo(typeof(Enumerable).Assembly.Location).FileVersion.Substring(0, 3);
+    }
+
+    public static string GetClassAssemblyName(Type t)
+    {
+      return t.AssemblyQualifiedName == null ? String.Empty : t.AssemblyQualifiedName.Substring(0, t.AssemblyQualifiedName.IndexOf(',', t.FullName.Length + 1));
     }
 
     public static string GetVersion(this Assembly assembly)

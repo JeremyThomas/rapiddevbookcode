@@ -123,7 +123,7 @@ namespace AW.DebugVisualizers.Tests
               _visualizerAttributesNotFoundInAssembly.Add(debuggerVisualizerAttribute); //This is not
           }
           else
-            _visualizerAttributes.Add(type, debuggerVisualizerAttribute);
+            _visualizerAttributes.AddWithErrorInfo(type, debuggerVisualizerAttribute);
         }
     }
 
@@ -155,6 +155,12 @@ namespace AW.DebugVisualizers.Tests
     }
 
     #endregion
+
+    [TestMethod]
+    public void DebuggerVisualizerAttributeTest()
+    {
+      Assert.AreEqual(0, VisualizerAttributesNotFoundInAssembly.Count, VisualizerAttributesNotFoundInAssembly.Select(va => va.TargetTypeName).JoinAsString());
+    }
 
     [TestMethod]
     public void DataTableTest()
@@ -507,12 +513,6 @@ namespace AW.DebugVisualizers.Tests
         var identityClaims = ((GenericIdentity) claimsPrincipal.Identity).Claims;
         TestShowTransported(identityClaims, 7);
       }
-    }
-
-    [TestCategory("Winforms"), TestMethod]
-    public void DebuggerVisualizerAttributeTest()
-    {
-      Assert.AreEqual(0, VisualizerAttributesNotFoundInAssembly.Count, VisualizerAttributesNotFoundInAssembly.Select(va => va.TargetTypeName).JoinAsString());
     }
 
     private static void TestSerialize(object enumerableOrDataTableToVisualize)

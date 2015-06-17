@@ -20,90 +20,10 @@ using Microsoft.VisualStudio.DebuggerVisualizers;
 
 namespace AW.DebugVisualizers
 {
+
   public class EnumerableVisualizer : DialogDebuggerVisualizer
   {
     private IDialogVisualizerService _modalService;
-
-    /// <summary>
-    ///   Enumerable Visualizer
-    /// </summary>
-    public const string Description = "Enumerable Visualizer";
-
-    public const string DescriptionV46 = Description + " V4.6";
-    public const string DescriptionV45 = Description + " V4.0";
-
-    /// <summary>
-    ///   Gets the BCL major minor version. e.g. 4.5 or 4.6
-    /// </summary>
-    /// <returns></returns>
-    public static string GetBclMajorMinorVersion()
-    {
-      return FileVersionInfo.GetVersionInfo(typeof (Enumerable).Assembly.Location).FileVersion.Substring(0, 3);
-    }
-
-    public static IEnumerable<string> CreateVisualizerRegistrationsNestedNotGenericSealed(Assembly assembly)
-    {
-      var majorMinorVersion = GetBclMajorMinorVersion().Replace(".","");
-      var visualizerRegistrations = assembly
-        .GetTypes().Where(t =>
-          t.GetInterface("IEnumerable") != null && !t.IsInterface
-          && !t.IsPublic
-          && !t.IsSerializable
-          && t.IsNested && !t.IsGenericType
-          && t.IsSealed
-          && (t.BaseType == null || t.BaseType.FullName == "System.Object"))
-        .Select(t => string.Format("[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = \"{0}\", Description = EnumerableVisualizer.DescriptionV{1})]",
-          GetClassAssemblyName(t), majorMinorVersion))
-        .OrderBy(n => n);
-      return visualizerRegistrations;
-    }
-
-    private static string GetClassAssemblyName(Type t)
-    {
-      return t.AssemblyQualifiedName == null ? String.Empty : t.AssemblyQualifiedName.Substring(0, t.AssemblyQualifiedName.IndexOf(',', t.FullName.Length + 1));
-    }
-
-    public static IEnumerable<string> CreateOtherPrivateVisualizerRegistrations(Assembly assembly)
-    {
-      var visualizerRegistrations = from t in assembly.GetTypes()
-        where
-          t.GetInterface("IEnumerable") != null && !t.IsInterface
-          && !t.IsPublic
-          && (t.IsSerializable|| !t.IsNested ||t.IsGenericType || !t.IsSealed)
-          && (t.BaseType == null || t.BaseType.FullName == "System.Object")
-        select string.Format("[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = \"{0}\", Description = EnumerableVisualizer.Description)]",
-          GetClassAssemblyName(t));
-      return visualizerRegistrations.OrderBy(n => n);
-    }
-
-    public static IEnumerable<string> CreatePublicVisualizerRegistrations(Assembly assembly)
-    {
-      var visualizerRegistrations = from t in assembly.GetTypes()
-        where
-          t.GetInterface("IEnumerable") != null && !t.IsInterface
-          && t.IsPublic
-          && (t.BaseType == null || t.BaseType.FullName == "System.Object")
-        select string.Format("[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof ({0}), Description = EnumerableVisualizer.Description)]",
-          t.Name.Replace("`1","<>").Replace("`2", "<,>"));
-      return visualizerRegistrations.OrderBy(n => n);
-    }
-
-    public static string CreateVisualizerRegistrations(params Assembly[] assemblies)
-    {
-      var stringBuilder = new StringBuilder();
-      foreach (var assembly in assemblies)
-      {
-        stringBuilder.Append("// " + assembly.FullName);
-        stringBuilder.AppendLine();
-        var visualizerRegistrations = CreatePublicVisualizerRegistrations(assembly).Union(CreateOtherPrivateVisualizerRegistrations(assembly)).Union(CreateVisualizerRegistrationsNestedNotGenericSealed(assembly));
-        foreach (var visualizerRegistration in visualizerRegistrations)
-        {
-          stringBuilder.Append(visualizerRegistration);
-          stringBuilder.AppendLine();
-        }
-      }
-      return stringBuilder.ToString();
-    }
 
     /// <summary>
     ///   Shows the user interface for the visualizer

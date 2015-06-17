@@ -124,7 +124,7 @@ namespace AW.Helper
         throw new ArgumentException(String.Format("typeof({0}).IsEnum == false", enumType), "enumType");
     }
 
-    #pragma warning disable 1584,1711,1572,1581,1580
+#pragma warning disable 1584,1711,1572,1581,1580
     /// <summary>
     ///   Turns an enum member into a human readable string using humanizer; e.g. AnonymousUser -&gt; Anonymous user.
     ///   It also honors DescriptionAttribute data annotation
@@ -342,6 +342,18 @@ namespace AW.Helper
       if (totalItemCount > 0)
         return (int) Math.Ceiling(totalItemCount/(double) pageSize);
       return 0;
+    }
+
+    public static void AddWithErrorInfo<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key, TValue value)
+    {
+      try
+      {
+        dict.Add(key, value);
+      }
+      catch (ArgumentException e)
+      {
+        throw new ArgumentException(e.Message + " Key is : " + key, e);
+      }
     }
 
     public static DataTable CopyToDataTable(this IEnumerable source)
@@ -806,7 +818,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Surrounds the string with a char if not already.
+    ///   Surrounds the string with a char if not already.
     /// </summary>
     /// <param name="value">The value.</param>
     /// <param name="surroundingChar">The surrounding character.</param>
