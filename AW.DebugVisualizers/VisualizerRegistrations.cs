@@ -20,6 +20,7 @@ using System.Data.Odbc;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using System.Linq;
 using System.Net;
@@ -52,7 +53,6 @@ using JesseJohnston;
 //http://code.google.com/p/linqpadvisualizer/
 
 // mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (WeakReference), Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (ApplicationTrustCollection), Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (Array), Description = VisualizerRegistration.Description)]
@@ -125,7 +125,6 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Threading.Tasks.ThreadPoolTaskScheduler+<FilterTasksFromWorkItems>d__0, mscorlib", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Threading.ThreadPool+<EnumerateQueuedWorkItems>d__0, mscorlib", Description = VisualizerRegistration.DescriptionV45)]
 //.net4.6
-
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Concurrent.Partitioner+<CreateRanges>d__1, mscorlib", Description = VisualizerRegistration.DescriptionV46)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Concurrent.Partitioner+<CreateRanges>d__2, mscorlib", Description = VisualizerRegistration.DescriptionV46)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Diagnostics.Tracing.ActivityFilter+<GetFilterAsTuple>d__1, mscorlib", Description = VisualizerRegistration.DescriptionV46)]
@@ -141,7 +140,6 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Threading.ThreadPool+<EnumerateQueuedWorkItems>d__1, mscorlib", Description = VisualizerRegistration.DescriptionV46)]
 
 // System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (AsnEncodedDataCollection), Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (AttributeCollection), Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (BlockingCollection<>), Description = VisualizerRegistration.Description)]
@@ -201,7 +199,6 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Collections.Generic.SortedSet`1+<Reverse>d__1, System", Description = VisualizerRegistration.DescriptionV46)]
 
 // System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (EnumerableQuery<>), Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (ExpandoObject), Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (HashSet<>), Description = VisualizerRegistration.Description)]
@@ -261,7 +258,6 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Linq.Parallel.PartitionerQueryOperator`1+<AsSequentialQuery>d__0, System.Core", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Linq.Parallel.ZipQueryOperator`3+<AsSequentialQuery>d__0, System.Core", Description = VisualizerRegistration.DescriptionV45)]
 //.net4.6
-
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Dynamic.Utils.CollectionExtensions+<Select>d__1`2, System.Core", Description = VisualizerRegistration.DescriptionV46)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Dynamic.Utils.CollectionExtensions+<Where>d__1`1, System.Core", Description = VisualizerRegistration.DescriptionV46)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Linq.Enumerable+<CastIterator>d__1`1, System.Core", Description = VisualizerRegistration.DescriptionV46)]
@@ -297,7 +293,6 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Linq.Parallel.ZipQueryOperator`3+<AsSequentialQuery>d__1, System.Core", Description = VisualizerRegistration.DescriptionV46)]
 
 // System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (ArrangedElementCollection), Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (AutoCompleteStringCollection), Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (BaseCollection), Description = VisualizerRegistration.Description)]
@@ -340,7 +335,6 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Windows.Forms.PropertyGridInternal.MergePropertyDescriptor+MultiMergeCollection, System.Windows.Forms", Description = VisualizerRegistration.Description)]
 
 // PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
-
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "MS.Internal.Annotations.ObservableDictionary, PresentationFramework", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "MS.Internal.Controls.EmptyEnumerable, PresentationFramework", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "MS.Internal.Data.IndexedEnumerable, PresentationFramework", Description = VisualizerRegistration.Description)]
@@ -411,7 +405,7 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Windows.Markup.Primitives.MarkupWriter+Scope+<get_EnumerateAllMappings>d__f, PresentationFramework", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Windows.Markup.Primitives.MarkupWriter+Scope+<get_EnumerateLocalMappings>d__9, PresentationFramework", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Windows.Markup.XmlnsDictionary+<GetNamespacePrefixes>d__0, PresentationFramework", Description = VisualizerRegistration.DescriptionV45)]
-
+//.net4.6
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "MS.Internal.Ink.ClipboardProcessor+<get_PreferredFormats>d__1, PresentationFramework", Description = VisualizerRegistration.DescriptionV46)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "MS.Internal.Ink.InkCanvasSelection+<get_SelectedElementsBoundsEnumerator>d__1, PresentationFramework", Description = VisualizerRegistration.DescriptionV46)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Windows.Controls.Primitives.CalendarItem+<GetCalendarButtons>d__1, PresentationFramework", Description = VisualizerRegistration.DescriptionV46)]
@@ -431,7 +425,6 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Windows.Markup.XmlnsDictionary+<GetNamespacePrefixes>d__1, PresentationFramework", Description = VisualizerRegistration.DescriptionV46)]
 
 // System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (DataColumnMappingCollection), Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (DataTableMappingCollection), Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (DataView), Description = VisualizerRegistration.Description)]
@@ -447,9 +440,7 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Data.Common.ReadOnlyCollection`1, System.Data", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Data.RBTree`1, System.Data", Description = VisualizerRegistration.Description)]
 
-
 // System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (XmlNamedNodeMap), Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (XmlNamespaceManager), Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (XmlNode), Description = VisualizerRegistration.Description)]
@@ -464,7 +455,6 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Xml.Schema.SchemaInfo+<System_Xml_IDtdInfo_GetAttributeLists>d__1, System.Xml", Description = VisualizerRegistration.DescriptionV46)]
 
 // System.Xml.Linq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "MS.Internal.Xml.Linq.ComponentModel.XDeferredAxis`1, System.Xml.Linq", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Xml.Linq.Extensions+<GetAncestors>d__f`1, System.Xml.Linq", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Xml.Linq.Extensions+<GetAttributes>d__8, System.Xml.Linq", Description = VisualizerRegistration.DescriptionV45)]
@@ -485,6 +475,7 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Xml.Linq.XObject+<Annotations>d__6`1, System.Xml.Linq", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Xml.Linq.XObject+<AnnotationsIterator>d__0, System.Xml.Linq", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Xml.XPath.XPathEvaluator+<EvaluateIterator>d__0`1, System.Xml.Linq", Description = VisualizerRegistration.DescriptionV45)]
+//.net4.6
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Xml.Linq.Extensions+<GetAncestors>d__1`1, System.Xml.Linq", Description = VisualizerRegistration.DescriptionV46)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Xml.Linq.Extensions+<GetAttributes>d__1, System.Xml.Linq", Description = VisualizerRegistration.DescriptionV46)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Xml.Linq.Extensions+<GetDescendantNodes>d__1`1, System.Xml.Linq", Description = VisualizerRegistration.DescriptionV46)]
@@ -554,18 +545,29 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Util.FileEnumerator, System.Web", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Util.ObjectSet, System.Web", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Util.SingleObjectCollection, System.Web", Description = VisualizerRegistration.Description)]
-
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.ModelBinding.ModelValidator+CompositeModelValidator+<Validate>d__1, System.Web", Description = VisualizerRegistration.Description)]
+//.net4.5
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Hosting.ApplicationManager+<CreateFutureMicrosoftWebInfrastructureStrongNames>d__19, System.Web", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.ModelBinding.AssociatedMetadataProvider+<GetMetadataForPropertiesImpl>d__0, System.Web", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.ModelBinding.CollectionModelBinderUtil+<GetZeroBasedIndexes>d__0, System.Web", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.ModelBinding.DataAnnotationsModelValidator+<Validate>d__15, System.Web", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.ModelBinding.DictionaryHelpers+<FindKeysWithPrefix>d__0`1, System.Web", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.ModelBinding.ModelValidator+CompositeModelValidator+<Validate>d__1, System.Web", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.ModelBinding.ValidatableObjectAdapter+<ConvertResults>d__2, System.Web", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Security.AntiXss.CssEncoder+<CssSafeList>d__0, System.Web", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Security.AntiXss.HtmlParameterEncoder+<UrlParameterSafeList>d__0, System.Web", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Security.AntiXss.HtmlParameterEncoder+<UrlPathSafeList>d__6, System.Web", Description = VisualizerRegistration.DescriptionV45)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Security.RoleClaimProvider+<get_Claims>d__0, System.Web", Description = VisualizerRegistration.DescriptionV45)]
+//.net4.6
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Hosting.ApplicationManager+<CreateFutureMicrosoftWebInfrastructureStrongNames>d__1, System.Web", Description = VisualizerRegistration.DescriptionV46)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.ModelBinding.AssociatedMetadataProvider+<GetMetadataForPropertiesImpl>d__1, System.Web", Description = VisualizerRegistration.DescriptionV46)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.ModelBinding.CollectionModelBinderUtil+<GetZeroBasedIndexes>d__1, System.Web", Description = VisualizerRegistration.DescriptionV46)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.ModelBinding.DataAnnotationsModelValidator+<Validate>d__1, System.Web", Description = VisualizerRegistration.DescriptionV46)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.ModelBinding.DictionaryHelpers+<FindKeysWithPrefix>d__1`1, System.Web", Description = VisualizerRegistration.DescriptionV46)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.ModelBinding.ValidatableObjectAdapter+<ConvertResults>d__1, System.Web", Description = VisualizerRegistration.DescriptionV46)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Security.AntiXss.CssEncoder+<CssSafeList>d__1, System.Web", Description = VisualizerRegistration.DescriptionV46)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Security.AntiXss.HtmlParameterEncoder+<UrlParameterSafeList>d__1, System.Web", Description = VisualizerRegistration.DescriptionV46)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Security.AntiXss.HtmlParameterEncoder+<UrlPathSafeList>d__1, System.Web", Description = VisualizerRegistration.DescriptionV46)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Security.RoleClaimProvider+<get_Claims>d__1, System.Web", Description = VisualizerRegistration.DescriptionV46)]
 
 // System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.GlobalFilterCollection, System.Web.Mvc", Description = VisualizerRegistration.Description)]
@@ -575,25 +577,24 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.TempDataDictionary, System.Web.Mvc", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.ValueProviderDictionary, System.Web.Mvc", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.ViewDataDictionary, System.Web.Mvc", Description = VisualizerRegistration.Description)]
-
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.AssociatedMetadataProvider+<GetMetadataForPropertiesImpl>d__2, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.ClientDataTypeModelValidatorProvider+<GetValidatorsImpl>d__0, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.CompareAttribute+<GetClientValidationRules>d__8, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.CompareAttributeAdapter+<GetClientValidationRules>d__1a, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.ControllerInstanceFilterProvider+<GetFilters>d__0, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.DataAnnotationsModelValidator+<Validate>d__15, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.DataErrorInfoModelValidatorProvider+<GetValidatorsImpl>d__0, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.DataTypeAttributeAdapter+<GetClientValidationRules>d__1, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.DefaultModelBinder+<GetZeroBasedIndexes>d__18, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.DictionaryHelpers+<FindKeysWithPrefix>d__0`1, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.FileExtensionsAttributeAdapter+<GetClientValidationRules>d__1, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.FilterProviderCollection+<RemoveDuplicates>d__b, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.Html.TemplateHelpers+<GetViewNames>d__4, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.MembershipPasswordAttributeAdapter+<GetClientValidationRules>d__0, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.ModelValidator+CompositeModelValidator+<Validate>d__1, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.RemoteAttribute+<GetClientValidationRules>d__0, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.ValidatableObjectAdapter+<ConvertResults>d__2, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
-[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.ViewDataDictionary+ViewDataEvaluator+<GetRightToLeftExpressions>d__2, System.Web.Mvc", Description = VisualizerRegistration.DescriptionV45)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.AssociatedMetadataProvider+<GetMetadataForPropertiesImpl>d__2, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.ClientDataTypeModelValidatorProvider+<GetValidatorsImpl>d__0, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.CompareAttribute+<GetClientValidationRules>d__8, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.CompareAttributeAdapter+<GetClientValidationRules>d__1a, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.ControllerInstanceFilterProvider+<GetFilters>d__0, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.DataAnnotationsModelValidator+<Validate>d__15, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.DataErrorInfoModelValidatorProvider+<GetValidatorsImpl>d__0, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.DataTypeAttributeAdapter+<GetClientValidationRules>d__1, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.DefaultModelBinder+<GetZeroBasedIndexes>d__18, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.DictionaryHelpers+<FindKeysWithPrefix>d__0`1, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.FileExtensionsAttributeAdapter+<GetClientValidationRules>d__1, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.FilterProviderCollection+<RemoveDuplicates>d__b, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.Html.TemplateHelpers+<GetViewNames>d__4, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.MembershipPasswordAttributeAdapter+<GetClientValidationRules>d__0, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.ModelValidator+CompositeModelValidator+<Validate>d__1, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.RemoteAttribute+<GetClientValidationRules>d__0, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.ValidatableObjectAdapter+<ConvertResults>d__2, System.Web.Mvc", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.ViewDataDictionary+ViewDataEvaluator+<GetRightToLeftExpressions>d__2, System.Web.Mvc", Description = VisualizerRegistration.Description)]
 
 // Microsoft.Web.Administration, Version=7.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "Microsoft.Web.Administration.ConfigurationAttributeCollection, Microsoft.Web.Administration", Description = VisualizerRegistration.Description)]
@@ -607,7 +608,6 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "Microsoft.Web.Administration.SectionGroupCollection, Microsoft.Web.Administration", Description = VisualizerRegistration.Description)]
 
 // System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
-
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (ConfigurationElementCollection), Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (ConfigurationLockCollection), Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (ConfigurationPropertyCollection), Description = VisualizerRegistration.Description)]
@@ -625,23 +625,38 @@ using JesseJohnston;
 
 // Microsoft.VisualBasic, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "Microsoft.VisualBasic.Collection, Microsoft.VisualBasic", Description = VisualizerRegistration.Description)]
+
 // System.Data.DataSetExtensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Data.EnumerableRowCollection, System.Data.DataSetExtensions", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Data.TypedTableBase`1, System.Data.DataSetExtensions", Description = VisualizerRegistration.Description)]
 
-//-LLBL
-
+// SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.DataSourceBase`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.Grouping`2, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.LLBLGenProQuery`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.CollectionCore`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityFieldsCore`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.GroupByCollection, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.PredicateExpression, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.TypedListBase`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.TypedListBase2`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.TypedViewBase`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.UniqueList`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.QuerySpec.Grouping`2, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase+<GetDependentRelatedEntityCoreInstances>d__6, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.DescriptionV46)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase+<GetDependingRelatedEntityCoreInstances>d__0, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.DescriptionV46)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase+<GetMemberEntityCollectionCoreInstances>d__c, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.DescriptionV46)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2+<GetDependentRelatedEntityCoreInstances>d__8, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.DescriptionV46)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2+<GetDependingRelatedEntityCoreInstances>d__2, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.DescriptionV46)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2+<GetMemberEntityCollectionCoreInstances>d__e, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.DescriptionV46)]
+//-LLBL 3
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.CollectionCore`1, SD.LLBLGen.Pro.ORMSupportClasses.NET20", Description = VisualizerRegistration.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.CollectionCore`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.DataSourceBase`1, SD.LLBLGen.Pro.LinqSupportClasses.NET35", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.DataSourceBase2`1, SD.LLBLGen.Pro.LinqSupportClasses.NET35", Description = VisualizerRegistration.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.DataSourceBase`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.LLBLGenProQuery`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.LLBLGenProQuery`1, SD.LLBLGen.Pro.LinqSupportClasses.NET35", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1, SD.LLBLGen.Pro.ORMSupportClasses.NET20", Description = VisualizerRegistration.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityFieldsCore`1, SD.LLBLGen.Pro.ORMSupportClasses.NET20", Description = VisualizerRegistration.Description)]
-[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityFieldsCore`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
 
 //misc
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "Microsoft.Data.ConnectionUI.DataConnectionDialog+DataSourceCollection, Microsoft.Data.ConnectionUI.Dialog", Description = VisualizerRegistration.Description)]
@@ -649,7 +664,6 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "Microsoft.Data.ConnectionUI.DataConnectionDialog+DataSourceCollection, Microsoft.Data.ConnectionUI.Dialog", Description = VisualizerRegistration.Description)]
 
 //-Other classes
-
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Data.Linq.DataQuery`1, System.Data.Linq", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(ObjectListView), Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(ObjectListView<>), Description = VisualizerRegistration.Description)]
@@ -661,6 +675,8 @@ using JesseJohnston;
 
 namespace AW.DebugVisualizers
 {
+  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+  [SuppressMessage("ReSharper", "UnusedMember.Global")]
   public static class VisualizerRegistration
   {
     /// <summary>
@@ -673,9 +689,9 @@ namespace AW.DebugVisualizers
     private const string VisualizerRegistrationsPart1 = "[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), ";
     private const string TargetTypeNameDescriptionVisualizerRegistrationDescription = "TargetTypeName = \"{0}\", Description = VisualizerRegistration.Description)]";
     private const string TargetTypeNameFormat = VisualizerRegistrationsPart1 + TargetTypeNameDescriptionVisualizerRegistrationDescription;
-    private const string TargetTypeNameDescriptionVisualizerRegistrationDescriptionVersion = "TargetTypeName = \"{0}\", Description = VisualizerRegistration.DescriptionV{1}))]";
+    private const string TargetTypeNameDescriptionVisualizerRegistrationDescriptionVersion = "TargetTypeName = \"{0}\", Description = VisualizerRegistration.DescriptionV{1})]";
     private const string TargetTypeNameFormatVersion = VisualizerRegistrationsPart1 + TargetTypeNameDescriptionVisualizerRegistrationDescriptionVersion;
-    private const string TargetTypeDescriptionVisualizerRegistrationDescription = "Target = typeof ({0}), Description = VisualizerRegistration.Description))]";
+    private const string TargetTypeDescriptionVisualizerRegistrationDescription = "Target = typeof ({0}), Description = VisualizerRegistration.Description)]";
     private const string TargetTypeFormat = VisualizerRegistrationsPart1 + TargetTypeDescriptionVisualizerRegistrationDescription;
 
     public static IEnumerable<string> CreateForPrivateNestedNotSerializableSealed(Assembly assembly)
