@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
-using System.Reflection;
 using System.Runtime.Serialization;
-using System.Text;
 using AW.Helper;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.DataEditor;
@@ -20,7 +16,6 @@ using Microsoft.VisualStudio.DebuggerVisualizers;
 
 namespace AW.DebugVisualizers
 {
-
   public class EnumerableVisualizer : DialogDebuggerVisualizer
   {
     private IDialogVisualizerService _modalService;
