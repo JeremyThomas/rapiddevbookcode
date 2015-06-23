@@ -28,7 +28,8 @@ namespace AW.Win
     public FrmTrace()
     {
       InitializeComponent();
-      frmTraceBindingSource.DataSource = this;
+      frmTraceBindingSource.DataSource = this;      
+      _textBoxTraceListener = new TextBoxTraceListener(textBoxTrace);
     }
 
     private void FrmTrace_Load(object sender, EventArgs e)
@@ -43,7 +44,6 @@ namespace AW.Win
 
     private void frmTrace_Shown(object sender, EventArgs e)
     {
-      _textBoxTraceListener = new TextBoxTraceListener(textBoxTrace);
       _textBoxTraceListenerIndex = Trace.Listeners.Add(_textBoxTraceListener);
     }
 

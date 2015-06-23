@@ -451,7 +451,6 @@ namespace AW.Winforms.Helpers.Controls
       // 
       this.dataGridViewEnumerable.AllowUserToOrderColumns = true;
       this.dataGridViewEnumerable.AutoGenerateColumns = false;
-      this.dataGridViewEnumerable.AutoGenerateContextFilters = true;
       dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
       dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
       dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -462,7 +461,6 @@ namespace AW.Winforms.Helpers.Controls
       this.dataGridViewEnumerable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
       this.dataGridViewEnumerable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dataGridViewEnumerable.DataSource = this.bindingSourceEnumerable;
-      this.dataGridViewEnumerable.DateWithTime = false;
       dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
       dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
       dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -474,9 +472,8 @@ namespace AW.Winforms.Helpers.Controls
       this.dataGridViewEnumerable.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridViewEnumerable.Location = new System.Drawing.Point(3, 3);
       this.dataGridViewEnumerable.Name = "dataGridViewEnumerable";
-      this.dataGridViewEnumerable.Size = new System.Drawing.Size(1321, 516);
+      this.dataGridViewEnumerable.Size = new System.Drawing.Size(1321, 489);
       this.dataGridViewEnumerable.TabIndex = 4;
-      this.dataGridViewEnumerable.TimeFilter = false;
       this.dataGridViewEnumerable.SortStringChanged += new System.EventHandler(this.dataGridViewEnumerable_SortStringChanged);
       this.dataGridViewEnumerable.FilterStringChanged += new System.EventHandler(this.dataGridViewEnumerable_FilterStringChanged);
       this.dataGridViewEnumerable.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridViewEnumerable_CellFormatting);
@@ -648,7 +645,7 @@ namespace AW.Winforms.Helpers.Controls
       // 
       this.toolStripLabel4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
       this.toolStripLabel4.Name = "toolStripLabel4";
-      this.toolStripLabel4.Size = new System.Drawing.Size(71, 22);
+      this.toolStripLabel4.Size = new System.Drawing.Size(70, 22);
       this.toolStripLabel4.Text = "Total Count";
       // 
       // toolStripLabelSuperSetCount
@@ -671,10 +668,10 @@ namespace AW.Winforms.Helpers.Controls
       this.tabControlGrids.Controls.Add(this.tabPageDataGrid);
       this.tabControlGrids.Controls.Add(this.tabPageDataGridView);
       this.tabControlGrids.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tabControlGrids.Location = new System.Drawing.Point(0, 25);
+      this.tabControlGrids.Location = new System.Drawing.Point(0, 52);
       this.tabControlGrids.Name = "tabControlGrids";
       this.tabControlGrids.SelectedIndex = 0;
-      this.tabControlGrids.Size = new System.Drawing.Size(1335, 548);
+      this.tabControlGrids.Size = new System.Drawing.Size(1335, 521);
       this.tabControlGrids.TabIndex = 7;
       this.tabControlGrids.SelectedIndexChanged += new System.EventHandler(this.tabControlGrids_SelectedIndexChanged);
       // 
@@ -695,7 +692,7 @@ namespace AW.Winforms.Helpers.Controls
       this.tabPageDataGridView.Location = new System.Drawing.Point(4, 22);
       this.tabPageDataGridView.Name = "tabPageDataGridView";
       this.tabPageDataGridView.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageDataGridView.Size = new System.Drawing.Size(1327, 522);
+      this.tabPageDataGridView.Size = new System.Drawing.Size(1327, 495);
       this.tabPageDataGridView.TabIndex = 1;
       this.tabPageDataGridView.Text = "DataGridView";
       this.tabPageDataGridView.UseVisualStyleBackColor = true;
@@ -709,7 +706,7 @@ namespace AW.Winforms.Helpers.Controls
       this.searchToolBar.MinimumSize = new System.Drawing.Size(0, 27);
       this.searchToolBar.Name = "searchToolBar";
       this.searchToolBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-      this.searchToolBar.Size = new System.Drawing.Size(0, 27);
+      this.searchToolBar.Size = new System.Drawing.Size(1335, 27);
       this.searchToolBar.TabIndex = 8;
       this.searchToolBar.Text = "searchToolBar1";
       this.searchToolBar.Visible = false;
