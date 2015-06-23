@@ -82,8 +82,7 @@ namespace AW.Win
       // dgvResults
       // 
       this.dgvResults.AutoGenerateColumns = false;
-      this.dgvResults.AutoGenerateContextFilters = true;
-      this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+   this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dgvResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.FirstName,
@@ -92,14 +91,12 @@ namespace AW.Win
             this.StateProvinceName,
             this.CountryRegionName});
       this.dgvResults.DataSource = this.bindingSourceCustomerList;
-      this.dgvResults.DateWithTime = false;
       this.dgvResults.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dgvResults.Location = new System.Drawing.Point(0, 294);
       this.dgvResults.Name = "dgvResults";
       this.dgvResults.Size = new System.Drawing.Size(1040, 193);
       this.dgvResults.TabIndex = 0;
       this.dgvResults.Tag = "True";
-      this.dgvResults.TimeFilter = false;
       this.toolTip1.SetToolTip(this.dgvResults, "Double click to view");
       this.dgvResults.SortStringChanged += new System.EventHandler(this.dgvResults_SortStringChanged);
       this.dgvResults.FilterStringChanged += new System.EventHandler(this.dgvResults_FilterStringChanged);

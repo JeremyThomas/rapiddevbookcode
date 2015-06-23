@@ -578,11 +578,11 @@ namespace AW.Winforms.Helpers.Controls
       if (MembersToExclude != null && MembersToExclude.Contains(e.Column.DataPropertyName))
         dataGridView.Columns.Remove(e.Column);
 
-      dataGridViewEnumerable.AutoGenerateContextFilters = bindingSourceEnumerable.SupportsFiltering;
-      if (dataGridViewEnumerable.AutoGenerateContextFilters)
+      dataGridViewEnumerable.DefaultCellBehavior = bindingSourceEnumerable.SupportsFiltering ? ADGVColumnHeaderCellBehavior.SortingFiltering:ADGVColumnHeaderCellBehavior.SortingStandartGlyph;
+      if (dataGridViewEnumerable.DefaultCellBehavior==ADGVColumnHeaderCellBehavior.SortingFiltering)
       {
         var adgvColumnHeaderCell = e.Column.HeaderCell as ADGVColumnHeaderCell;
-        if (adgvColumnHeaderCell != null) adgvColumnHeaderCell.FilterEnabled = true;
+        if (adgvColumnHeaderCell != null) adgvColumnHeaderCell.CellBehavior = ADGVColumnHeaderCellBehavior.SortingFiltering;
       }
       else
         e.Column.SortMode = DataGridViewColumnSortMode.Automatic;

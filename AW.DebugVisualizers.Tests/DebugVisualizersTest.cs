@@ -360,6 +360,8 @@ namespace AW.DebugVisualizers.Tests
       const int expectedColumnCount = NonSerializableClass.NumberOfNonSerializableClassProperties*2;
       TestShowTransported(dictionary.Values, expectedColumnCount);
       TestShowTransported(dictionary.Keys, 1);
+      var readOnlyDictionary = new ReadOnlyDictionary<int, NonSerializableClass>(dictionary);
+      TestShowTransported(readOnlyDictionary, 2, 1);
     }
 
     [TestCategory("Winforms"), TestMethod]
