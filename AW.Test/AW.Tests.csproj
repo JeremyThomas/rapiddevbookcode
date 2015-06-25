@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AW.Tests</RootNamespace>
     <AssemblyName>AW.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SccProjectName>SAK</SccProjectName>
@@ -120,6 +120,7 @@
     <Compile Include="..\Ancillary\GlobalAssemblyVersion.cs">
       <Link>GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="CSharpSerializerTests.cs" />
     <Compile Include="CustomerQueriesTest.cs" />
     <Compile Include="BindingListHelperTest.cs" />
     <Compile Include="DataConnectionConfigurationTest.cs" />
@@ -190,6 +191,10 @@
     <ProjectReference Include="..\ObjectListView\ObjectListView.csproj">
       <Project>{3A62F36D-4E53-4532-B9EF-3B303A578B5E}</Project>
       <Name>ObjectListView</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools\ObjectSourceVisualizer\ObjectAsSourceCodeVisualizer.csproj">
+      <Project>{131ADE94-66B8-4FE5-96ED-D01E61955327}</Project>
+      <Name>ObjectAsSourceCodeVisualizer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
