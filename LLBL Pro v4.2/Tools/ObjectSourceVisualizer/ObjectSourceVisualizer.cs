@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.DebuggerVisualizers;
 //http://msdn.microsoft.com/en-us/library/aa991998(VS.100).aspx 'Use IVisualizerObjectProvider..::.GetData when the object is not serializable by .NET and requires custom serialization. 
 // In that case, you must also override the VisualizerObjectSource..::.Serialize method.'
 
-namespace ObjectSourceVisualizer
+namespace ObjectAsSourceCodeVisualizer
 {
   public class ObjectSourceVisualizer : DialogDebuggerVisualizer
   {
@@ -75,7 +75,7 @@ namespace ObjectSourceVisualizer
       var wr = target as WeakReference;
       if (wr != null)
         target = wr.Target;
-      var result = ObjectToObjectLiteral.ToObjectInitializer
+      var result = CSharpSerializer.SerializerToCSharp
         (
           target, ""
         );

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using AW.Helper;
 
-namespace ObjectSourceVisualizer
+namespace ObjectAsSourceCodeVisualizer
 {
   public class Restriction
   {
@@ -33,7 +33,7 @@ namespace ObjectSourceVisualizer
   /// <summary>
   ///   https://github.com/jefflomax/csharp-object-to-object-literal
   /// </summary>
-  public static class ObjectToObjectLiteral
+  public static class CSharpSerializer
   {
     public static string NewLine = Environment.NewLine;
     public static string KeyProperty = "Key";
@@ -103,9 +103,9 @@ namespace ObjectSourceVisualizer
     ///   traversal
     /// </param>
     /// <returns>string containing Object Literal Constructor</returns>
-    public static string ToObjectInitializer
+    public static string SerializerToCSharp
       (
-      Object obj,
+      this object obj,
       string globalExcludeProperties = "",
       params Restriction[] entityRestrictions
       )
