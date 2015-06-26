@@ -6,9 +6,8 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using AW.Helper;
 
-namespace ObjectAsSourceCodeVisualizer
+namespace AW.Helper
 {
   public class Restriction
   {

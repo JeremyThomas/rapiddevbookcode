@@ -817,6 +817,14 @@ namespace AW.Helper
       return posA == -1 ? "" : value.Substring(0, posA);
     }
 
+    public static string After(this string value, string delimiter)
+    {
+      var posA = value.IndexOf(delimiter, StringComparison.Ordinal);
+      if (posA == -1) return "";
+      var pos = posA + delimiter.Length;
+      return value.Substring(pos, value.Length - pos);
+    }
+
     /// <summary>
     ///   Surrounds the string with a char if not already.
     /// </summary>
