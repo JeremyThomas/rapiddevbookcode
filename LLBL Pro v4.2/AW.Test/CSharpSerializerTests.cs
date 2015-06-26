@@ -1,11 +1,11 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using AW.Helper;
+using Fasterflect;
 using Microsoft.CSharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ObjectAsSourceCodeVisualizer;
 
 namespace AW.Tests
 {
@@ -18,7 +18,7 @@ namespace AW.Tests
                                                 Environment.NewLine +
                                                 "public static class ResultContainer" + Environment.NewLine +
                                                 "  {" + Environment.NewLine +
-                                                "    static void Result() " + Environment.NewLine +
+                                                "    static object Result() " + Environment.NewLine +
                                                 "      {";
 
     [TestMethod]
@@ -26,28 +26,21 @@ namespace AW.Tests
     {
       var order = GetOrder();
 
-      var result = order.SerializerToCSharp
-        ("Description"
-        );
-
-
-      WriteToFile("test.txt", result);
-
-      // Poor man's unit test, paste results into 
-      // GetOrderFromObjectListeral()
-      Assert.IsTrue(CompareOrders(order, GetOrderFromObjectLiteral()), "Error: Object Literal does not match");
-
+      var result = order.SerializerToCSharp("Description");
+      var rootVariableName = result.Before("=");
+      rootVariableName = rootVariableName.After("var").Trim();
       var cSharpCodeProvider = new CSharpCodeProvider();
-      var compilableSource = FileHeader + result + "}}";
+      var compilableSource = FileHeader + result + Environment.NewLine + "return " + rootVariableName + ";}}";
       var compilerParameters = new CompilerParameters();
       compilerParameters.ReferencedAssemblies.Add(typeof (Order).Assembly.Location);
       var compileAssemblyFromSource = cSharpCodeProvider.CompileAssemblyFromSource(compilerParameters, compilableSource);
-      Assert.AreEqual(0, compileAssemblyFromSource.Errors.Count);
-    }
+      Assert.AreEqual(0, compileAssemblyFromSource.Errors.Count, compileAssemblyFromSource.Errors.OfType<CompilerError>().JoinAsString());
+      var compiledAssembly = compileAssemblyFromSource.CompiledAssembly;
+      var type = compiledAssembly.GetType("ResultContainer");
+      var rootVariable = type.CallMethod("Result");
+      Assert.IsInstanceOfType(rootVariable, typeof (Order));
 
-    private static void WriteToFile(string fileName, string content)
-    {
-      File.WriteAllText(fileName, content);
+      Assert.IsTrue(CompareOrders(order, (Order) rootVariable), "Error: Object Literal does not match");
     }
 
     private static bool CompareOrders(Order lhs, Order rhs)
@@ -120,7 +113,7 @@ namespace AW.Tests
         Key = 2,
         Name = "Sheet Music",
         SortOrder = 2,
-        Departments = new Department[2] {department2, department3},
+        Departments = new[] {department2, department3},
         Timestamp = "8"
       };
 
@@ -155,130 +148,6 @@ namespace AW.Tests
       return order;
     }
 
-    /// <summary>
-    ///   Paste the output of the Object Literal Serializer here
-    /// </summary>
-    /// <returns></returns>
-    private static Order GetOrderFromObjectLiteral()
-    {
-      // Object Literal
-      // Globally Excluded Properties:
-      //  Description
-      var Order1 = new Order
-      {
-        Name = "Business Order #1",
-        SentDate = null,
-        Hold = true,
-        Key = 1L,
-        Timestamp = "14",
-        Customer = new Customer
-        {
-          FirstName = "Mortimer",
-          LastName = "Sneurd",
-          Key = 1L,
-          Timestamp = "3"
-        }
-      };
-      var Address0 = new Address
-      {
-        Street = "1313 Mockingbird Lane",
-        City = "Candy Land",
-        AddressType = AddressType.Residential,
-        ZipCode = 90210,
-        Key = 0L,
-        Timestamp = "1",
-        Customer = Order1.Customer
-      };
-      var Address1 = new Address
-      {
-        Key = 1L,
-        Street = "411 Bonham",
-        City = "Sao Antonio",
-        AddressType = AddressType.Business,
-        ZipCode = 66016,
-        Timestamp = "2",
-        Customer = Order1.Customer
-      };
-      Order1.Customer.Addresses = new List<Address> {Address0, Address1};
-      Order1.Address = Address1;
-      var Item0 = new Item
-      {
-        Quantity = 6,
-        Price = 13.13F,
-        Key = 0L,
-        Timestamp = "11",
-        Order = Order1,
-        Product = new Product
-        {
-          Name = "Everready",
-          Key = 0L,
-          Timestamp = "9",
-          Category = new Category
-          {
-            Name = "Batteries",
-            SortOrder = 1,
-            Key = 0L,
-            Timestamp = "7"
-          }
-        }
-      };
-      var Department0 = new Department
-      {
-        Name = "Electronics",
-        Key = 0L,
-        Timestamp = "4"
-      };
-      var Department1 = new Department
-      {
-        Key = 1L,
-        Name = "Computers",
-        Timestamp = "5"
-      };
-      Item0.Product.Category.Departments = new[] {Department0, Department1};
-      var Item1 = new Item
-      {
-        Key = 1L,
-        Quantity = 1,
-        Price = 15F,
-        Timestamp = "12",
-        Order = Order1,
-        Product = new Product
-        {
-          Name = "Shroeder's Theme",
-          Key = 1L,
-          Timestamp = "10",
-          Category = new Category
-          {
-            Name = "Sheet Music",
-            SortOrder = 2,
-            Key = 2L,
-            Timestamp = "8"
-          }
-        }
-      };
-      var Department2 = new Department
-      {
-        Key = 2L,
-        Name = "Music",
-        Timestamp = "6"
-      };
-      Item1.Product.Category.Departments = new[] {Department1, Department2};
-      var Item2 = new Item
-      {
-        Key = 2L,
-        Quantity = 1,
-        Price = 5F,
-        Timestamp = "13",
-        Order = Order1,
-        Product = Item0.Product
-      };
-      Order1.Items = new List<Item> {Item0, Item1, Item2};
-      Order1.Alerts = new[] {1234L, 5678L};
-      Order1.ContactTimes = new[] {new DateTime(2013, 12, 25, 9, 30, 0), new DateTime(2014, 1, 1, 10, 0, 0)};
-      Order1.Coupons = new List<String> {"Summer", "Fall"};
-
-      return Order1;
-    }
   }
 
   /***********************/
@@ -364,6 +233,7 @@ namespace AW.Tests
       var productEqualityComparer = new ProductEqualityComparer();
 
       return lhs.Key == rhs.Key &&
+             // ReSharper disable once CompareOfFloatsByEqualityOperator
              lhs.Price == rhs.Price &&
              lhs.Order.Key == rhs.Order.Key &&
              lhs.Quantity == rhs.Quantity &&
