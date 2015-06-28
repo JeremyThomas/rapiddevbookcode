@@ -121,7 +121,7 @@ namespace AW.Tests
     ///   <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
     /// </summary>
     [TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
-    public void CustomerExpicitLeftJoinCustomerDemographic()
+    public void CustomerExplicitLeftJoinCustomerDemographic()
     {
       var queryable = from c in GetNorthwindLinqMetaData().Customer
         from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()

@@ -64,7 +64,7 @@ namespace AW.Helper
 
       public string UniqueName
       {
-        get { return string.Format("{0}{1}", Type.Name, Key); }
+        get { return string.Format("{0}{1}", Type.Name.Before("`", Type.Name), Key); }
       }
     }
 
@@ -214,7 +214,7 @@ namespace AW.Helper
       var type = obj.GetType();
       var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public)
         .Where(p => p.CanRead && p.CanWrite && !p.GetCustomAttributes(false).Any(a => a is XmlIgnoreAttribute)).ToList();
-      var workingTypeName = type.Name;
+      var workingTypeName = type.FriendlyName();
 
       var entity = new Entity(obj, parent);
 
@@ -296,9 +296,14 @@ namespace AW.Helper
           appendComma = HandleBaseTypes(property, obj, sb, level);
         }
       }
+      var enumerable1 = obj as IEnumerable;
+      if (enumerable1!=null && !(obj is string))
+      {
+        WalkList(enumerable1, MetaDataHelper.GetEnumerableItemType(enumerable1), sb, entityMap, restrictions, excludeProperties, level + 1);
+      }
 
       sb.AppendFormat("{0}{1}}};{2}", NewLine, Tabs(level), NewLine);
-
+      
       // Emit all class types and lists, assiging into the parent class/path
       foreach (var property in properties)
       {
@@ -311,12 +316,12 @@ namespace AW.Helper
         var propertyName = property.Name;
         var name = pt.Name;
 
-        if (!IsBaseType(property.PropertyType))
+        if (!IsBaseType(pt))
         {
-          var interfaces = property.PropertyType.GetInterfaces();
+          var interfaces = pt.GetInterfaces();
           var isIList = interfaces.Contains(typeof (IList));
-          var isEnumerable = property.PropertyType.FullName.StartsWith("System.Collections.Generic.IEnumerable");
-          var isCollection = property.PropertyType.FullName.StartsWith("System.Collections.Generic.IList");
+          var isEnumerable = pt.FullName.StartsWith("System.Collections.Generic.IEnumerable");
+          var isCollection = pt.FullName.StartsWith("System.Collections.Generic.IList");
 
           if (isIList || isCollection || isEnumerable)
           {
@@ -327,10 +332,10 @@ namespace AW.Helper
             {
               sb.AppendFormat("{0}.{1} = null;{2}", parent, property.Name, NewLine);
             }
-            else if (property.PropertyType.IsArray) // aka typeof(System.Array)
+            else if (pt.IsArray) // aka typeof(System.Array)
             {
-              var listTypeName = property.PropertyType.Name; // includes []
-              var listItemType = property.PropertyType.GetElementType();
+              var listTypeName = pt.Name; // includes []
+              var listItemType = pt.GetElementType();
 
               var parentPath = ParentPath(parent, property.Name);
               var listParent = string.Format("{0} = new {1}", parentPath, listTypeName);
@@ -346,23 +351,23 @@ namespace AW.Helper
             }
             else
             {
-              var genericArguments = property.PropertyType.GetGenericArguments();
+              var genericArguments = pt.GetGenericArguments();
               if (list.Count > 0)
               {
                 // List<T> and Collection<T> can be quite complex.  T could be a Nullable<T>
                 // or a Dictionary<T,T>.  Currently this code handles only simple types
                 // not nullables
 
-                var isGeneric = property.PropertyType.IsGenericType;
-                var isGenericTypeDefinition = property.PropertyType.IsGenericTypeDefinition;
-                var isGenericType = property.PropertyType.IsGenericType;
+                var isGeneric = pt.IsGenericType;
+                var isGenericTypeDefinition = pt.IsGenericTypeDefinition;
+                var isGenericType = pt.IsGenericType;
                 Type listItemType;
                 string listParent;
                 var parentPath = ParentPath(parent, property.Name);
                 if (genericArguments.Length == 0)
                 {
                   listItemType = ListBindingHelper.GetListItemType(list);
-                  listParent = string.Format("{0} = new {1}", parentPath, property.PropertyType);
+                  listParent = string.Format("{0} = new {1}", parentPath, pt);
                 }
                 else
                 {
@@ -395,7 +400,7 @@ namespace AW.Helper
                     "{0}.{1} = new {2}();{3}",
                     parent,
                     property.Name,
-                    property.PropertyType,
+                    pt,
                     NewLine);
               }
             }
@@ -406,6 +411,7 @@ namespace AW.Helper
             try
             {
               var value = property.GetValue(obj);
+              if (value!=null)
               WalkObject
                 (
                   value,
@@ -620,8 +626,8 @@ namespace AW.Helper
       Dictionary<string, HashSet<string>> restrictions,
       HashSet<string> exclude,
       int level,
-      string parent,
-      string listParent
+      string parent = "",
+      string listParent=""
       )
     {
       var appendComma = false;
@@ -685,6 +691,7 @@ namespace AW.Helper
         sb.AppendLine("};");
       }
       else if (processType == ListType.Class)
+        if (!string.IsNullOrWhiteSpace(listParent))
       {
         appendComma = false;
         sb.Append(listParent + " {");
