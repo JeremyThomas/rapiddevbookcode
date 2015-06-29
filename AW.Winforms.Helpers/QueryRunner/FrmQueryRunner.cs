@@ -38,6 +38,14 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     #endregion
 
+    public void ViewText(string cSharpSource)
+    {
+      var queryRunner = AddNew("FromGrid");
+      queryRunner.LoadText(cSharpSource);
+      if (tabControl.TabPages[0].ToolTipText == "Sample")
+        tabControl.TabPages.RemoveAt(0);
+    }
+
     private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
     {
       var dr = openFileDialog.ShowDialog();

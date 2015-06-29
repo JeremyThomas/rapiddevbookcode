@@ -220,49 +220,52 @@ namespace AW.Winforms.Helpers.LLBL
         if (elementCreator == null)
           elementCreator = EntityHelper.CreateElementCreator(entityType);
         var entity = LinqUtils.CreateEntityInstanceFromEntityType(entityType, elementCreator);
-        var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafely(entity, adapter);
-        var treeNodeCollectionToAddTo = schemaTreeNodeCollection;
-        if (fieldPersistenceInfo != null)
+        if (entity != null)
         {
-          var schema = fieldPersistenceInfo.SourceSchemaName;
-          if (useSchema && !String.IsNullOrWhiteSpace(schema))
+          var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafely(entity, adapter);
+          var treeNodeCollectionToAddTo = schemaTreeNodeCollection;
+          if (fieldPersistenceInfo != null)
           {
-            TreeNode schemaTreeNode;
-            if (!schemas.TryGetValue(schema, out schemaTreeNode))
+            var schema = fieldPersistenceInfo.SourceSchemaName;
+            if (useSchema && !String.IsNullOrWhiteSpace(schema))
             {
-              schemaTreeNode = new TreeNode(schema, 6, 4);
-              schemas.Add(schema, schemaTreeNode);
-            }
-            treeNodeCollectionToAddTo = schemaTreeNode.Nodes;
-          }
-
-          if (usePrefixes)
-          {
-            var prefix = fieldPersistenceInfo.SourceObjectName.Before(prefixDelimiter);
-            if (!String.IsNullOrWhiteSpace(prefix))
-            {
-              TreeNode prefixTreeNode;
-              var prefixKey = useSchema ? schema + prefix : prefix;
-              if (!prefixesToGroupBy.TryGetValue(prefixKey, out prefixTreeNode))
+              TreeNode schemaTreeNode;
+              if (!schemas.TryGetValue(schema, out schemaTreeNode))
               {
-                prefixTreeNode = new TreeNode(prefix, 5, 4);
-                prefixesToGroupBy.Add(prefixKey, prefixTreeNode);
-                treeNodeCollectionToAddTo.Add(prefixTreeNode);
+                schemaTreeNode = new TreeNode(schema, 6, 4);
+                schemas.Add(schema, schemaTreeNode);
               }
-              treeNodeCollectionToAddTo = prefixTreeNode.Nodes;
+              treeNodeCollectionToAddTo = schemaTreeNode.Nodes;
+            }
+
+            if (usePrefixes)
+            {
+              var prefix = fieldPersistenceInfo.SourceObjectName.Before(prefixDelimiter);
+              if (!String.IsNullOrWhiteSpace(prefix))
+              {
+                TreeNode prefixTreeNode;
+                var prefixKey = useSchema ? schema + prefix : prefix;
+                if (!prefixesToGroupBy.TryGetValue(prefixKey, out prefixTreeNode))
+                {
+                  prefixTreeNode = new TreeNode(prefix, 5, 4);
+                  prefixesToGroupBy.Add(prefixKey, prefixTreeNode);
+                  treeNodeCollectionToAddTo.Add(prefixTreeNode);
+                }
+                treeNodeCollectionToAddTo = prefixTreeNode.Nodes;
+              }
             }
           }
+
+          var entityNodeText = GetEntityTypeName(entityType);
+          if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
+            if (entityType.BaseType != null && !entityType.BaseType.IsAbstract)
+              entityNodeText += String.Format(" (Sub-type of '{0}')", GetEntityTypeName(entityType.BaseType));
+          var entityNode = treeNodeCollectionToAddTo.Add(entityType.Name, entityNodeText);
+          entityNode.Tag = entityType;
+
+          entityNode.ToolTipText = CreateTableToolTipText(entity, fieldPersistenceInfo);
+          entityNodes.Add(entityType, new Tuple<TreeNode, IEntityCore>(entityNode, entity));
         }
-
-        var entityNodeText = GetEntityTypeName(entityType);
-        if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
-          if (entityType.BaseType != null && !entityType.BaseType.IsAbstract)
-            entityNodeText += String.Format(" (Sub-type of '{0}')", GetEntityTypeName(entityType.BaseType));
-        var entityNode = treeNodeCollectionToAddTo.Add(entityType.Name, entityNodeText);
-        entityNode.Tag = entityType;
-
-        entityNode.ToolTipText = CreateTableToolTipText(entity, fieldPersistenceInfo);
-        entityNodes.Add(entityType, new Tuple<TreeNode, IEntityCore>(entityNode, entity));
       }
 
       foreach (var entityNode in entityNodes)

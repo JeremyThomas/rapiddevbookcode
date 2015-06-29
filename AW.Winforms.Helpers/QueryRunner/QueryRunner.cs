@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.EntityViewer;
 using CSScriptLibrary;
+using FastColoredTextBoxNS;
 using JesseJohnston;
 
 namespace AW.Winforms.Helpers.QueryRunner
@@ -68,7 +69,13 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     internal void LoadStream(StreamReader streamReader)
     {
-      textBoxScript.Text = streamReader.ReadToEnd();
+      LoadText(streamReader.ReadToEnd());
+    }
+
+    internal void LoadText(string text)
+    {
+      var fastColoredTextBox = textBoxScript.CreateTab();
+      fastColoredTextBox.Text = text;
     }
 
     private void viewObjectToolStripMenuItem_Click(object sender, EventArgs e)

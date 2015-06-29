@@ -54,7 +54,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private readonly Style sameWordsStyle = new MarkerStyle(new SolidBrush(Color.FromArgb(50, Color.Gray)));
 
-    public void CreateTab(string fileName)
+    public FastColoredTextBox CreateTab(string fileName = null)
     {
       try
       {
@@ -92,12 +92,14 @@ namespace AW.Winforms.Helpers.Controls
         popupMenu.Opening += new EventHandler<CancelEventArgs>(popupMenu_Opening);
         BuildAutocompleteMenu(popupMenu);
         (tb.Tag as TbInfo).popupMenu = popupMenu;
+        return tb;
       }
       catch (Exception ex)
       {
         if (MessageBox.Show(ex.Message, "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
-          CreateTab(fileName);
+          return CreateTab(fileName);
       }
+      return null;
     }
 
     private void popupMenu_Opening(object sender, CancelEventArgs e)

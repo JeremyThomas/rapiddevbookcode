@@ -1,15 +1,16 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Xml;
 using AW.Helper;
 using AW.Helper.LLBL;
 using Fasterflect;
 using FluentAssertions;
+using FluentAssertions.Equivalency;
 using Microsoft.CSharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Northwind.DAL.EntityClasses;
-using Northwind.DAL.HelperClasses;
 using Northwind.DAL.Linq;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -20,7 +21,7 @@ namespace AW.Tests
   public class CSharpSerializerTests
   {
     private static readonly string FileHeader1 = "using System;" + Environment.NewLine +
-                                              //   "using System.Xml;" + Environment.NewLine +
+                                                 //   "using System.Xml;" + Environment.NewLine +
                                                  "using System.Collections.Generic;" + Environment.NewLine;
 
     private static readonly string FileHeader2 = Environment.NewLine +
@@ -35,7 +36,7 @@ namespace AW.Tests
       var order = GetOrder();
       var rootVariable = TestSerializerToCSharp(order, "Description");
       Assert.IsTrue(CompareOrders(order, (Order) rootVariable), "Error: Object Literal does not match");
-  //    rootVariable.ShouldBeEquivalentTo(order);
+      //    rootVariable.ShouldBeEquivalentTo(order);
     }
 
     private static object TestSerializerToCSharp(object obj, string globalExcludeProperties = "", params Restriction[] entityRestrictions)
@@ -60,7 +61,7 @@ namespace AW.Tests
         compilerParameters.ReferencedAssemblies.Add(genericTypeArgument.Assembly.Location);
       }
 
-     compilableSource += Environment.NewLine + FileHeader2 + result + Environment.NewLine + "return " + rootVariableName + ";}}";
+      compilableSource += Environment.NewLine + FileHeader2 + result + Environment.NewLine + "return " + rootVariableName + ";}}";
       var compileAssemblyFromSource = cSharpCodeProvider.CompileAssemblyFromSource(compilerParameters, compilableSource);
       Assert.AreEqual(0, compileAssemblyFromSource.Errors.Count, compileAssemblyFromSource.Errors.OfType<CompilerError>().JoinAsString());
       var compiledAssembly = compileAssemblyFromSource.CompiledAssembly;
@@ -80,52 +81,32 @@ namespace AW.Tests
     {
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
       var customerEntity = northwindLinqMetaData.Customer.First();
-      var rootVariable = (CustomerEntity)TestSerializerLlbltoCSharp(customerEntity);
-      rootVariable.ShouldBeEquivalentTo(customerEntity, options =>options.Excluding(o => o.Fields).Excluding(o => o.IsDirty).Excluding(o => o.IsNew));//o => o.Excluding(s => s.SelectedMemberPath == "Fields")
+      var rootVariable = TestSerializerLlbltoCSharp(customerEntity);
+      rootVariable.ShouldBeEquivalentTo(customerEntity, ExcludingLLBLProperties()); 
+    }
 
-      // Object Literal
-      // Globally Excluded Properties:
-      //  Fields,EntityFactoryToUse
-      var EntityCollection62634992 = new EntityCollection<CustomerEntity>
-      {
-        new CustomerEntity
-        {
-          Address = "Obere Str. 57",
-          City = "Berlin",
-          CompanyName = "Alfreds Futterkiste",
-          ContactName = "Maria Anders",
-          ContactTitle = "Sales Representative",
-          Country = "Germany",
-          CustomerId = "ALFKI",
-          Fax = "030-0076545",
-          Phone = "030-0074321",
-          PostalCode = "12209",
-          Region = ""
-        },
-    };
+    private static Func<EquivalencyAssertionOptions<EntityBase2>, EquivalencyAssertionOptions<EntityBase2>> ExcludingLLBLProperties()
+    {
+      return options => options.Excluding(o => o.Fields).Excluding(o => o.IsDirty).Excluding(o => o.IsNew);
+    }
 
-  }
-
-  [TestMethod]
+    [TestMethod]
     public void SerializerAdapterToEntityCollectionToCSharpTest()
     {
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
-      var entities = northwindLinqMetaData.Customer.Take(1).ToEntityCollection2();
+      var entities = northwindLinqMetaData.Customer.Take(3).ToEntityCollection2();
       var rootVariable2 = TestSerializerLlbltoCSharp(entities);
-      rootVariable2.ShouldBeEquivalentTo(entities);
-      //var customerList = northwindLinqMetaData.Customer.ToList();
-      //const int expectedColumnCount = 12;
-      //result = customerList.SerializerToCSharp();
+      rootVariable2.ShouldAllBeEquivalentTo(entities, ExcludingLLBLProperties());
     }
 
-    private static object TestSerializerLlbltoCSharp(object obj)
+    private static T TestSerializerLlbltoCSharp<T>(T obj)
     {
       var result = obj.SerializerToCSharp("Fields,EntityFactoryToUse");
       var expectedType = obj.GetType();
       var rootVariable = TestSerializerToCSharp(result, expectedType, typeof (EntityBase2).Assembly.Location,
-        typeof (System.ComponentModel.IEditableObject).Assembly.Location,
-        typeof (System.Xml.XmlEntity).Assembly.Location);
-      return rootVariable;
+        typeof (IEditableObject).Assembly.Location,
+        typeof (XmlEntity).Assembly.Location);
+      return (T)rootVariable;
     }
 
     private static bool CompareOrders(Order lhs, Order rhs)
