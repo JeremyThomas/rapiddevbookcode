@@ -17,6 +17,7 @@ using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.EntityViewer;
 using AW.Winforms.Helpers.Forms;
 using AW.Winforms.Helpers.Misc;
+using AW.Winforms.Helpers.QueryRunner;
 using AW.Winforms.Helpers.Reporting;
 using JesseJohnston;
 
@@ -834,6 +835,14 @@ namespace AW.Winforms.Helpers.Controls
         if (editedText != null)
           dataGridViewTextBoxCell.Value = editedText;
       }
+    }
+
+    private void toolStripButtonCSharp_Click(object sender, EventArgs e)
+    {
+      var cSharp = SourceEnumerable.SerializerToCSharp();
+      var frmQueryRunner = new FrmQueryRunner(DataEditorPersister.Save, DataEditorPersister.Delete);
+      frmQueryRunner.ViewText(cSharp);
+      frmQueryRunner.ShowDialog();
     }
   }
 }
