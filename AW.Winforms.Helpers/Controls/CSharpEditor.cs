@@ -58,7 +58,7 @@ namespace AW.Winforms.Helpers.Controls
     {
       try
       {
-        var tb = new FastColoredTextBox();
+        var tb = CurrentTB;
         tb.Font = new Font("Consolas", 9.75f);
         tb.ContextMenuStrip = cmMain;
         tb.Dock = DockStyle.Fill;
@@ -67,13 +67,9 @@ namespace AW.Winforms.Helpers.Controls
         tb.LeftPadding = 17;
         tb.Language = Language.CSharp;
         tb.AddStyle(sameWordsStyle); //same words style
-        var tab = new FATabStripItem(fileName != null ? Path.GetFileName(fileName) : "[new]", tb);
-        tab.Tag = fileName;
         if (fileName != null)
           tb.OpenFile(fileName);
         tb.Tag = new TbInfo();
-        tsFiles.AddTab(tab);
-        tsFiles.SelectedItem = tab;
         tb.Focus();
         tb.DelayedTextChangedInterval = 1000;
         tb.DelayedEventsInterval = 500;
@@ -323,95 +319,7 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
-    private void tsFiles_TabStripItemClosing(TabStripItemClosingEventArgs e)
-    {
-      if ((e.Item.Controls[0] as FastColoredTextBox).IsChanged)
-      {
-        switch (MessageBox.Show("Do you want save " + e.Item.Title + " ?", "Save", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information))
-        {
-          case DialogResult.Yes:
-            if (!Save(e.Item))
-              e.Cancel = true;
-            break;
-          case DialogResult.Cancel:
-            e.Cancel = true;
-            break;
-        }
-      }
-    }
-
-    private bool Save(FATabStripItem tab)
-    {
-      var tb = (tab.Controls[0] as FastColoredTextBox);
-      if (tab.Tag == null)
-      {
-        if (sfdMain.ShowDialog() != DialogResult.OK)
-          return false;
-        tab.Title = Path.GetFileName(sfdMain.FileName);
-        tab.Tag = sfdMain.FileName;
-      }
-
-      try
-      {
-        File.WriteAllText(tab.Tag as string, tb.Text);
-        tb.IsChanged = false;
-      }
-      catch (Exception ex)
-      {
-        if (MessageBox.Show(ex.Message, "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
-          return Save(tab);
-        else
-          return false;
-      }
-
-      tb.Invalidate();
-
-      return true;
-    }
-
-    private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      if (tsFiles.SelectedItem != null)
-        Save(tsFiles.SelectedItem);
-    }
-
-    private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      if (tsFiles.SelectedItem != null)
-      {
-        var oldFile = tsFiles.SelectedItem.Tag as string;
-        tsFiles.SelectedItem.Tag = null;
-        if (!Save(tsFiles.SelectedItem))
-          if (oldFile != null)
-          {
-            tsFiles.SelectedItem.Tag = oldFile;
-            tsFiles.SelectedItem.Title = Path.GetFileName(oldFile);
-          }
-      }
-    }
-
-
-    private void openToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      if (ofdMain.ShowDialog() == DialogResult.OK)
-        CreateTab(ofdMain.FileName);
-    }
-
-    public FastColoredTextBox CurrentTB
-    {
-      get
-      {
-        if (tsFiles.SelectedItem == null)
-          return null;
-        return (tsFiles.SelectedItem.Controls[0] as FastColoredTextBox);
-      }
-
-      set
-      {
-        tsFiles.SelectedItem = (value.Parent as FATabStripItem);
-        value.Focus();
-      }
-    }
+  
 
     private void cutToolStripMenuItem_Click(object sender, EventArgs e)
     {
@@ -449,26 +357,21 @@ namespace AW.Winforms.Helpers.Controls
     {
       try
       {
-        if (CurrentTB != null && tsFiles.Items.Count > 0)
+        if (CurrentTB != null )
         {
           var tb = CurrentTB;
           undoStripButton.Enabled = undoToolStripMenuItem.Enabled = tb.UndoEnabled;
           redoStripButton.Enabled = redoToolStripMenuItem.Enabled = tb.RedoEnabled;
-          saveToolStripButton.Enabled = saveToolStripMenuItem.Enabled = tb.IsChanged;
-          saveAsToolStripMenuItem.Enabled = true;
+
           pasteToolStripButton.Enabled = pasteToolStripMenuItem.Enabled = true;
           cutToolStripButton.Enabled = cutToolStripMenuItem.Enabled =
             copyToolStripButton.Enabled = copyToolStripMenuItem.Enabled = !tb.Selection.IsEmpty;
-          printToolStripButton.Enabled = true;
         }
         else
         {
-          saveToolStripButton.Enabled = saveToolStripMenuItem.Enabled = false;
-          saveAsToolStripMenuItem.Enabled = false;
           cutToolStripButton.Enabled = cutToolStripMenuItem.Enabled =
             copyToolStripButton.Enabled = copyToolStripMenuItem.Enabled = false;
           pasteToolStripButton.Enabled = pasteToolStripMenuItem.Enabled = false;
-          printToolStripButton.Enabled = false;
           undoStripButton.Enabled = undoToolStripMenuItem.Enabled = false;
           redoStripButton.Enabled = redoToolStripMenuItem.Enabled = false;
           dgvObjectExplorer.RowCount = 0;
@@ -477,18 +380,6 @@ namespace AW.Winforms.Helpers.Controls
       catch (Exception ex)
       {
         Console.WriteLine(ex.Message);
-      }
-    }
-
-    private void printToolStripButton_Click(object sender, EventArgs e)
-    {
-      if (CurrentTB != null)
-      {
-        var settings = new PrintDialogSettings();
-        settings.Title = tsFiles.SelectedItem.Title;
-        settings.Header = "&b&w&b";
-        settings.Footer = "&b&p";
-        CurrentTB.Print(settings);
       }
     }
 
@@ -599,10 +490,10 @@ namespace AW.Winforms.Helpers.Controls
     {
       var max = new DateTime();
       var iLine = -1;
-      FastColoredTextBox tb = null;
-      for (var iTab = 0; iTab < tsFiles.Items.Count; iTab++)
+      FastColoredTextBox tb = CurrentTB;
+
       {
-        var t = (tsFiles.Items[iTab].Controls[0] as FastColoredTextBox);
+        var t = CurrentTB;
         for (var i = 0; i < t.LinesCount; i++)
           if (t[i].LastVisit < lastNavigatedDateTime && t[i].LastVisit > max)
           {
@@ -613,7 +504,7 @@ namespace AW.Winforms.Helpers.Controls
       }
       if (iLine >= 0)
       {
-        tsFiles.SelectedItem = (tb.Parent as FATabStripItem);
+        
         tb.Navigate(iLine);
         lastNavigatedDateTime = tb[iLine].LastVisit;
         Console.WriteLine("Backward: " + lastNavigatedDateTime);
@@ -629,10 +520,9 @@ namespace AW.Winforms.Helpers.Controls
     {
       var min = DateTime.Now;
       var iLine = -1;
-      FastColoredTextBox tb = null;
-      for (var iTab = 0; iTab < tsFiles.Items.Count; iTab++)
+      FastColoredTextBox tb = CurrentTB;
       {
-        var t = (tsFiles.Items[iTab].Controls[0] as FastColoredTextBox);
+        var t = CurrentTB;
         for (var i = 0; i < t.LinesCount; i++)
           if (t[i].LastVisit > lastNavigatedDateTime && t[i].LastVisit < min)
           {
@@ -643,7 +533,6 @@ namespace AW.Winforms.Helpers.Controls
       }
       if (iLine >= 0)
       {
-        tsFiles.SelectedItem = (tb.Parent as FATabStripItem);
         tb.Navigate(iLine);
         lastNavigatedDateTime = tb[iLine].LastVisit;
         Console.WriteLine("Forward: " + lastNavigatedDateTime);
@@ -780,20 +669,18 @@ namespace AW.Winforms.Helpers.Controls
 
     private void btInvisibleChars_Click(object sender, EventArgs e)
     {
-      foreach (FATabStripItem tab in tsFiles.Items)
-        HighlightInvisibleChars((tab.Controls[0] as FastColoredTextBox).Range);
+        HighlightInvisibleChars(CurrentTB.Range);
       if (CurrentTB != null)
         CurrentTB.Invalidate();
     }
 
     private void btHighlightCurrentLine_Click(object sender, EventArgs e)
     {
-      foreach (FATabStripItem tab in tsFiles.Items)
       {
         if (btHighlightCurrentLine.Checked)
-          (tab.Controls[0] as FastColoredTextBox).CurrentLineColor = currentLineColor;
+          CurrentTB.CurrentLineColor = currentLineColor;
         else
-          (tab.Controls[0] as FastColoredTextBox).CurrentLineColor = Color.Transparent;
+          CurrentTB.CurrentLineColor = Color.Transparent;
       }
       if (CurrentTB != null)
         CurrentTB.Invalidate();
@@ -856,12 +743,12 @@ namespace AW.Winforms.Helpers.Controls
     private void gotoButton_DropDownOpening(object sender, EventArgs e)
     {
       gotoButton.DropDownItems.Clear();
-      foreach (Control tab in tsFiles.Items)
+
       {
-        var tb = tab.Controls[0] as FastColoredTextBox;
+        var tb = CurrentTB;
         foreach (var bookmark in tb.Bookmarks)
         {
-          var item = gotoButton.DropDownItems.Add(bookmark.Name + " [" + Path.GetFileNameWithoutExtension(tab.Tag as String) + "]");
+          var item = gotoButton.DropDownItems.Add(bookmark.Name + " [" + Path.GetFileNameWithoutExtension("tab.Tag" as String) + "]");
           item.Tag = bookmark;
           item.Click += (o, a) =>
           {
@@ -883,8 +770,8 @@ namespace AW.Winforms.Helpers.Controls
 
     private void btShowFoldingLines_Click(object sender, EventArgs e)
     {
-      foreach (FATabStripItem tab in tsFiles.Items)
-        (tab.Controls[0] as FastColoredTextBox).ShowFoldingLines = btShowFoldingLines.Checked;
+
+        CurrentTB.ShowFoldingLines = btShowFoldingLines.Checked;
       if (CurrentTB != null)
         CurrentTB.Invalidate();
     }
@@ -894,6 +781,281 @@ namespace AW.Winforms.Helpers.Controls
       if (CurrentTB != null)
         CurrentTB.Zoom = int.Parse((sender as ToolStripItem).Tag.ToString());
     }
+
+    #region MenuStrip
+
+    private void collapseSelectedBlockToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      CurrentTB.CollapseBlock(CurrentTB.Selection.Start.iLine, CurrentTB.Selection.End.iLine);
+    }
+
+    private void collapseAllregionToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      //this example shows how to collapse all #region blocks (C#)
+
+      for (int iLine = 0; iLine < CurrentTB.LinesCount; iLine++)
+      {
+        if (CurrentTB[iLine].FoldingStartMarker == @"#region\b")//marker @"#region\b" was used in SetFoldingMarkers()
+          CurrentTB.CollapseFoldingBlock(iLine);
+      }
+    }
+
+    private void exapndAllregionToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      //this example shows how to expand all #region blocks (C#)
+
+      for (int iLine = 0; iLine < CurrentTB.LinesCount; iLine++)
+      {
+        if (CurrentTB[iLine].FoldingStartMarker == @"#region\b")//marker @"#region\b" was used in SetFoldingMarkers()
+          CurrentTB.ExpandFoldedBlock(iLine);
+      }
+    }
+
+    private void increaseIndentSiftTabToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      CurrentTB.IncreaseIndent();
+    }
+
+    private void decreaseIndentTabToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      CurrentTB.DecreaseIndent();
+    }
+
+    private void hTMLToolStripMenuItem1_Click(object sender, EventArgs e)
+    {
+      SaveFileDialog sfd = new SaveFileDialog();
+      sfd.Filter = "HTML with <PRE> tag|*.html|HTML without <PRE> tag|*.html";
+      if (sfd.ShowDialog() == DialogResult.OK)
+      {
+        string html = "";
+
+        if (sfd.FilterIndex == 1)
+        {
+          html = CurrentTB.Html;
+        }
+        if (sfd.FilterIndex == 2)
+        {
+
+          ExportToHTML exporter = new ExportToHTML();
+          exporter.UseBr = true;
+          exporter.UseNbsp = false;
+          exporter.UseForwardNbsp = true;
+          exporter.UseStyleTag = true;
+          html = exporter.GetHtml(CurrentTB);
+        }
+        File.WriteAllText(sfd.FileName, html);
+      }
+    }
+
+    MarkerStyle SameWordsStyle = new MarkerStyle(new SolidBrush(Color.FromArgb(40, Color.Gray)));
+
+    private void fctb_SelectionChangedDelayed(object sender, EventArgs e)
+    {
+      CurrentTB.VisibleRange.ClearStyle(SameWordsStyle);
+      if (!CurrentTB.Selection.IsEmpty)
+        return;//user selected diapason
+
+      //get fragment around caret
+      var fragment = CurrentTB.Selection.GetFragment(@"\w");
+      string text = fragment.Text;
+      if (text.Length == 0)
+        return;
+      //highlight same words
+      var ranges = CurrentTB.VisibleRange.GetRanges("\\b" + text + "\\b").ToArray();
+      if (ranges.Length > 1)
+        foreach (var r in ranges)
+          r.SetStyle(SameWordsStyle);
+    }
+
+    private void goForwardCtrlShiftToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      CurrentTB.NavigateForward();
+    }
+
+    private void goBackwardCtrlToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      CurrentTB.NavigateBackward();
+    }
+
+    private void autoIndentToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      CurrentTB.DoAutoIndent();
+    }
+
+    const int maxBracketSearchIterations = 2000;
+
+    void GoLeftBracket(FastColoredTextBox tb, char leftBracket, char rightBracket)
+    {
+      Range range = tb.Selection.Clone();//need to clone because we will move caret
+      int counter = 0;
+      int maxIterations = maxBracketSearchIterations;
+      while (range.GoLeftThroughFolded())//move caret left
+      {
+        if (range.CharAfterStart == leftBracket) counter++;
+        if (range.CharAfterStart == rightBracket) counter--;
+        if (counter == 1)
+        {
+          //found
+          tb.Selection.Start = range.Start;
+          tb.DoSelectionVisible();
+          break;
+        }
+        //
+        maxIterations--;
+        if (maxIterations <= 0) break;
+      }
+      tb.Invalidate();
+    }
+
+    void GoRightBracket(FastColoredTextBox tb, char leftBracket, char rightBracket)
+    {
+      var range = tb.Selection.Clone();//need clone because we will move caret
+      int counter = 0;
+      int maxIterations = maxBracketSearchIterations;
+      do
+      {
+        if (range.CharAfterStart == leftBracket) counter++;
+        if (range.CharAfterStart == rightBracket) counter--;
+        if (counter == -1)
+        {
+          //found
+          tb.Selection.Start = range.Start;
+          tb.Selection.GoRightThroughFolded();
+          tb.DoSelectionVisible();
+          break;
+        }
+        //
+        maxIterations--;
+        if (maxIterations <= 0) break;
+      } while (range.GoRightThroughFolded());//move caret right
+
+      tb.Invalidate();
+    }
+
+    private void goLeftBracketToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      GoLeftBracket(CurrentTB, '{', '}');
+    }
+
+    private void goRightBracketToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      GoRightBracket(CurrentTB, '{', '}');
+    }
+
+    private void fctb_AutoIndentNeeded(object sender, AutoIndentEventArgs args)
+    {
+      //block {}
+      if (Regex.IsMatch(args.LineText, @"^[^""']*\{.*\}[^""']*$"))
+        return;
+      //start of block {}
+      if (Regex.IsMatch(args.LineText, @"^[^""']*\{"))
+      {
+        args.ShiftNextLines = args.TabLength;
+        return;
+      }
+      //end of block {}
+      if (Regex.IsMatch(args.LineText, @"}[^""']*$"))
+      {
+        args.Shift = -args.TabLength;
+        args.ShiftNextLines = -args.TabLength;
+        return;
+      }
+      //label
+      if (Regex.IsMatch(args.LineText, @"^\s*\w+\s*:\s*($|//)") &&
+          !Regex.IsMatch(args.LineText, @"^\s*default\s*:"))
+      {
+        args.Shift = -args.TabLength;
+        return;
+      }
+      //some statements: case, default
+      if (Regex.IsMatch(args.LineText, @"^\s*(case|default)\b.*:\s*($|//)"))
+      {
+        args.Shift = -args.TabLength / 2;
+        return;
+      }
+      //is unclosed operator in previous line ?
+      if (Regex.IsMatch(args.PrevLineText, @"^\s*(if|for|foreach|while|[\}\s]*else)\b[^{]*$"))
+        if (!Regex.IsMatch(args.PrevLineText, @"(;\s*$)|(;\s*//)"))//operator is unclosed
+        {
+          args.Shift = args.TabLength;
+          return;
+        }
+    }
+
+    private void miPrint_Click(object sender, EventArgs e)
+    {
+      CurrentTB.Print(new PrintDialogSettings() { ShowPrintPreviewDialog = true });
+    }
+
+    Random rnd = new Random();
+
+    private void miChangeColors_Click(object sender, EventArgs e)
+    {
+      var styles = new Style[] { CurrentTB.SyntaxHighlighter.BlueBoldStyle, CurrentTB.SyntaxHighlighter.BlueStyle, CurrentTB.SyntaxHighlighter.BoldStyle, CurrentTB.SyntaxHighlighter.BrownStyle, CurrentTB.SyntaxHighlighter.GrayStyle, CurrentTB.SyntaxHighlighter.GreenStyle, CurrentTB.SyntaxHighlighter.MagentaStyle, CurrentTB.SyntaxHighlighter.MaroonStyle, CurrentTB.SyntaxHighlighter.RedStyle };
+      CurrentTB.SyntaxHighlighter.AttributeStyle = styles[rnd.Next(styles.Length)];
+      CurrentTB.SyntaxHighlighter.ClassNameStyle = styles[rnd.Next(styles.Length)];
+      CurrentTB.SyntaxHighlighter.CommentStyle = styles[rnd.Next(styles.Length)];
+      CurrentTB.SyntaxHighlighter.CommentTagStyle = styles[rnd.Next(styles.Length)];
+      CurrentTB.SyntaxHighlighter.KeywordStyle = styles[rnd.Next(styles.Length)];
+      CurrentTB.SyntaxHighlighter.NumberStyle = styles[rnd.Next(styles.Length)];
+      CurrentTB.SyntaxHighlighter.StringStyle = styles[rnd.Next(styles.Length)];
+
+      CurrentTB.OnSyntaxHighlight(new TextChangedEventArgs(CurrentTB.Range));
+    }
+
+    private void setSelectedAsReadonlyToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      CurrentTB.Selection.ReadOnly = true;
+    }
+
+    private void setSelectedAsWritableToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      CurrentTB.Selection.ReadOnly = false;
+    }
+
+    private void startStopMacroRecordingToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      CurrentTB.MacrosManager.IsRecording = !CurrentTB.MacrosManager.IsRecording;
+    }
+
+    private void executeMacroToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      CurrentTB.MacrosManager.ExecuteMacros();
+    }
+
+    private void changeHotkeysToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      var form = new HotkeysEditorForm(CurrentTB.HotkeysMapping);
+      if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        CurrentTB.HotkeysMapping = form.GetHotkeys();
+    }
+
+    private void rTFToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      SaveFileDialog sfd = new SaveFileDialog();
+      sfd.Filter = "RTF|*.rtf";
+      if (sfd.ShowDialog() == DialogResult.OK)
+      {
+        string rtf = CurrentTB.Rtf;
+        File.WriteAllText(sfd.FileName, rtf);
+      }
+    }
+
+    private void fctb_CustomAction(object sender, CustomActionEventArgs e)
+    {
+      MessageBox.Show(e.Action.ToString());
+    }
+
+    private void commentSelectedLinesToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      CurrentTB.InsertLinePrefix(CurrentTB.CommentPrefix);
+    }
+
+    private void uncommentSelectedLinesToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      CurrentTB.RemoveLinePrefix(CurrentTB.CommentPrefix);
+    }
+    #endregion
   }
 
   public class InvisibleCharsRenderer : Style
@@ -928,6 +1090,8 @@ namespace AW.Winforms.Helpers.Controls
           }
         }
     }
+
+
   }
 
   public class TbInfo
