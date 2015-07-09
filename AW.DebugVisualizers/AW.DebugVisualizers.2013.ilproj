@@ -7,7 +7,8 @@
   <Internalize Enabled="false" />
   <MergeXml Enabled="false" />
   <!--Signing-->
-  <Sign Enabled="false" Delay="false"></Sign>
+  <Sign Enabled="false" Delay="false">
+  </Sign>
   <!--Logging-->
   <Log Enabled="true">C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\AW.DebugVisualizers\bin\Release2013\AW.EnumerableVisualizer.2013.log</Log>
   <!--Assemblies-->
