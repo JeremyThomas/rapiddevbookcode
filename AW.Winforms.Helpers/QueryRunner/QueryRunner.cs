@@ -31,6 +31,8 @@ namespace AW.Winforms.Helpers.QueryRunner
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
     private void toolStripButtonViewRunQuery_Click(object sender, EventArgs e)
     {
+      try
+      {
       var helper = new AsmHelper(CSScript.LoadCode(textBoxScript.CurrentTB.Text, null, true));
       using (helper)
       {
@@ -42,18 +44,26 @@ namespace AW.Winforms.Helpers.QueryRunner
           splitContainerScript.SplitterDistance = Height/2;
           toolStripButtonBrowse.Enabled = true;
         }
+      }
+      catch (Exception ex)
+      {
+        textBoxOutPut.Text += ex.Message;
+      }
     }
 
     private void QueryRunner_Load(object sender, EventArgs e)
     {
-      splitContainerScript.SplitterDistance = Height - gridDataEditorScript.BindingNavigator.Height - gridDataEditorScript.BindingNavigator.Height;
+      splitContainerScript.SplitterDistance = Height - gridDataEditorScript.BindingNavigator.Height- tabControlResults.Height;
       gridDataEditorScript.Items.Remove(toolStripButtonRunQuery);
       gridDataEditorScript.Items.Insert(0, toolStripButtonRunQuery);
+
+   //   var toolStripButton = new ToolStripButton();
+      textBoxScript.tsMain.Items.Add(toolStripButtonRunQuery);
     }
 
     internal void Save(string fileName)
     {
-      File.WriteAllText(fileName, textBoxScript.Text);
+      File.WriteAllText(fileName, textBoxScript.CurrentTB.Text);
     }
 
     internal void LoadFile(string fileName)
