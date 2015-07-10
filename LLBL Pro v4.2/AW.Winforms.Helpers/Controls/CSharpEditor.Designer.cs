@@ -255,7 +255,7 @@ namespace AW.Winforms.Helpers.Controls
             this.gotoButton});
       this.tsMain.Location = new System.Drawing.Point(0, 3);
       this.tsMain.Name = "tsMain";
-      this.tsMain.Size = new System.Drawing.Size(505, 25);
+      this.tsMain.Size = new System.Drawing.Size(536, 25);
       this.tsMain.TabIndex = 3;
       this.tsMain.Text = "toolStrip1";
       // 
@@ -696,7 +696,7 @@ namespace AW.Winforms.Helpers.Controls
             this.changeHotkeysToolStripMenuItem});
       this.menuStrip1.Location = new System.Drawing.Point(500, 0);
       this.menuStrip1.Name = "menuStrip1";
-      this.menuStrip1.Size = new System.Drawing.Size(406, 24);
+      this.menuStrip1.Size = new System.Drawing.Size(51, 24);
       this.menuStrip1.TabIndex = 4;
       this.menuStrip1.Text = "menuStrip1";
       // 
@@ -1052,7 +1052,6 @@ namespace AW.Winforms.Helpers.Controls
 
         #endregion
         private System.Windows.Forms.StatusStrip ssMain;
-        private System.Windows.Forms.ToolStrip tsMain;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.ContextMenuStrip cmMain;
         private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
@@ -1155,5 +1154,6 @@ namespace AW.Winforms.Helpers.Controls
     public FastColoredTextBox CurrentTB;
     private System.Windows.Forms.ToolStripContainer toolStripContainer1;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+    public System.Windows.Forms.ToolStrip tsMain;
   }
 }
