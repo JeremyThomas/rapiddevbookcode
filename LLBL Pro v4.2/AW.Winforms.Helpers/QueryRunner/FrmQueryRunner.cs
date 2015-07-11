@@ -75,6 +75,7 @@ namespace AW.Winforms.Helpers.QueryRunner
       }
       var queryRunner = AddNew(fileName);
       queryRunner.LoadFile(fileName);
+      mruHandler1.AddRecentlyUsedFile(fileName);
       if (tabControl.TabPages[0].ToolTipText == "Sample")
         tabControl.TabPages.RemoveAt(0);
     }
@@ -177,6 +178,11 @@ namespace AW.Winforms.Helpers.QueryRunner
     private void tabControl_DragOver(object sender, DragEventArgs e)
     {
       e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Move : DragDropEffects.None;
+    }
+
+    private void mruHandler1_MRUItemClicked(object sender, MostRecentlyUsedHandler.MRUItemClickedEventArgs e)
+    {
+      DoFileOpen(e.File);
     }
   }
 }

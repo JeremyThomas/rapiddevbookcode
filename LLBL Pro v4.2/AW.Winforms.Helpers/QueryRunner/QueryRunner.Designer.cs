@@ -37,14 +37,14 @@ namespace AW.Winforms.Helpers.QueryRunner
       this.browseObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.contextMenuStripBlank = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.splitContainerScript = new System.Windows.Forms.SplitContainer();
-      this.textBoxScript = new AW.Winforms.Helpers.Controls.CSharpEditor();
       this.tabControlResults = new System.Windows.Forms.TabControl();
       this.tabPageGrid = new System.Windows.Forms.TabPage();
+      this.tabPageText = new System.Windows.Forms.TabPage();
+      this.textBoxOutPut = new System.Windows.Forms.TextBox();
+      this.textBoxScript = new AW.Winforms.Helpers.Controls.CSharpEditor();
       this.gridDataEditorScript = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.toolStripButtonRunQuery = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonBrowse = new System.Windows.Forms.ToolStripButton();
-      this.tabPageText = new System.Windows.Forms.TabPage();
-      this.textBoxOutPut = new System.Windows.Forms.TextBox();
       this.contextMenuStripGrid.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerScript)).BeginInit();
       this.splitContainerScript.Panel1.SuspendLayout();
@@ -100,6 +100,49 @@ namespace AW.Winforms.Helpers.QueryRunner
       this.splitContainerScript.SplitterDistance = 200;
       this.splitContainerScript.TabIndex = 6;
       // 
+      // tabControlResults
+      // 
+      this.tabControlResults.Controls.Add(this.tabPageGrid);
+      this.tabControlResults.Controls.Add(this.tabPageText);
+      this.tabControlResults.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tabControlResults.Location = new System.Drawing.Point(0, 0);
+      this.tabControlResults.Name = "tabControlResults";
+      this.tabControlResults.SelectedIndex = 0;
+      this.tabControlResults.Size = new System.Drawing.Size(913, 196);
+      this.tabControlResults.TabIndex = 6;
+      // 
+      // tabPageGrid
+      // 
+      this.tabPageGrid.Controls.Add(this.gridDataEditorScript);
+      this.tabPageGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tabPageGrid.Location = new System.Drawing.Point(4, 22);
+      this.tabPageGrid.Name = "tabPageGrid";
+      this.tabPageGrid.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPageGrid.Size = new System.Drawing.Size(905, 170);
+      this.tabPageGrid.TabIndex = 0;
+      this.tabPageGrid.Text = "Grid";
+      this.tabPageGrid.UseVisualStyleBackColor = true;
+      // 
+      // tabPageText
+      // 
+      this.tabPageText.Controls.Add(this.textBoxOutPut);
+      this.tabPageText.Location = new System.Drawing.Point(4, 22);
+      this.tabPageText.Name = "tabPageText";
+      this.tabPageText.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPageText.Size = new System.Drawing.Size(905, 170);
+      this.tabPageText.TabIndex = 1;
+      this.tabPageText.Text = "Text";
+      this.tabPageText.UseVisualStyleBackColor = true;
+      // 
+      // textBoxOutPut
+      // 
+      this.textBoxOutPut.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.textBoxOutPut.Location = new System.Drawing.Point(3, 3);
+      this.textBoxOutPut.Multiline = true;
+      this.textBoxOutPut.Name = "textBoxOutPut";
+      this.textBoxOutPut.Size = new System.Drawing.Size(899, 164);
+      this.textBoxOutPut.TabIndex = 0;
+      // 
       // textBoxScript
       // 
       this.textBoxScript.AllowDrop = true;
@@ -112,28 +155,6 @@ namespace AW.Winforms.Helpers.QueryRunner
       this.textBoxScript.DragEnter += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragEnter);
       this.textBoxScript.DragOver += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragOver);
       this.textBoxScript.MouseDown += new System.Windows.Forms.MouseEventHandler(this.textBoxScript_MouseDown);
-      // 
-      // tabControlResults
-      // 
-      this.tabControlResults.Controls.Add(this.tabPageGrid);
-      this.tabControlResults.Controls.Add(this.tabPageText);
-      this.tabControlResults.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.tabControlResults.Location = new System.Drawing.Point(0, 0);
-      this.tabControlResults.Name = "tabControlResults";
-      this.tabControlResults.SelectedIndex = 0;
-      this.tabControlResults.Size = new System.Drawing.Size(913, 196);
-      this.tabControlResults.TabIndex = 6;
-      // 
-      // tabPageGrid
-      // 
-      this.tabPageGrid.Controls.Add(this.gridDataEditorScript);
-      this.tabPageGrid.Location = new System.Drawing.Point(4, 22);
-      this.tabPageGrid.Name = "tabPageGrid";
-      this.tabPageGrid.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageGrid.Size = new System.Drawing.Size(905, 170);
-      this.tabPageGrid.TabIndex = 0;
-      this.tabPageGrid.Text = "Grid";
-      this.tabPageGrid.UseVisualStyleBackColor = true;
       // 
       // gridDataEditorScript
       // 
@@ -172,26 +193,6 @@ namespace AW.Winforms.Helpers.QueryRunner
       this.toolStripButtonBrowse.Size = new System.Drawing.Size(65, 22);
       this.toolStripButtonBrowse.Text = "Browse";
       this.toolStripButtonBrowse.Click += new System.EventHandler(this.toolStripButtonBrowse_Click);
-      // 
-      // tabPageText
-      // 
-      this.tabPageText.Controls.Add(this.textBoxOutPut);
-      this.tabPageText.Location = new System.Drawing.Point(4, 22);
-      this.tabPageText.Name = "tabPageText";
-      this.tabPageText.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageText.Size = new System.Drawing.Size(905, 170);
-      this.tabPageText.TabIndex = 1;
-      this.tabPageText.Text = "Text";
-      this.tabPageText.UseVisualStyleBackColor = true;
-      // 
-      // textBoxOutPut
-      // 
-      this.textBoxOutPut.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.textBoxOutPut.Location = new System.Drawing.Point(3, 3);
-      this.textBoxOutPut.Multiline = true;
-      this.textBoxOutPut.Name = "textBoxOutPut";
-      this.textBoxOutPut.Size = new System.Drawing.Size(899, 164);
-      this.textBoxOutPut.TabIndex = 0;
       // 
       // QueryRunner
       // 

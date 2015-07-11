@@ -37,7 +37,8 @@ namespace AW.Winforms.Helpers.QueryRunner
       using (helper)
       {
         gridDataEditorScript.BindEnumerable(((IQueryScript) helper.CreateObject("Script")).Query());
-      }
+        tabControlResults.SelectedTab = tabPageGrid;
+        }
       if (gridDataEditorScript.BindingSource.Count > 0)
         if (gridDataEditorScript.Height < 50)
         {
@@ -48,6 +49,7 @@ namespace AW.Winforms.Helpers.QueryRunner
       catch (Exception ex)
       {
         textBoxOutPut.Text += ex.Message;
+        tabControlResults.SelectedTab = tabPageText;
       }
     }
 
@@ -55,7 +57,7 @@ namespace AW.Winforms.Helpers.QueryRunner
     {
       splitContainerScript.SplitterDistance = Height - gridDataEditorScript.BindingNavigator.Height- tabControlResults.Height;
       gridDataEditorScript.Items.Remove(toolStripButtonRunQuery);
-      gridDataEditorScript.Items.Insert(0, toolStripButtonRunQuery);
+  //    gridDataEditorScript.Items.Insert(0, toolStripButtonRunQuery);
 
    //   var toolStripButton = new ToolStripButton();
       textBoxScript.tsMain.Items.Add(toolStripButtonRunQuery);

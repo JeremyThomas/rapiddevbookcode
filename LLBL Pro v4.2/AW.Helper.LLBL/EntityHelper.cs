@@ -626,6 +626,20 @@ namespace AW.Helper.LLBL
       return 0;
     }
 
+    public static void SetSelfservicingConnectionString(Type commonDaoBaseType, object context, string connectionString)
+    {
+      if (!String.IsNullOrEmpty(connectionString))
+      {
+        var actualConnectionStringField = commonDaoBaseType.GetField("ActualConnectionString");
+        if (actualConnectionStringField == null)
+        {
+          throw new InvalidOperationException(String.Format("The type '{0}' doesn't have a static property ActualConnectionString.", commonDaoBaseType.FullName));
+        }
+        //CustomCxString overrides config value
+        actualConnectionStringField.SetValue(context, connectionString);
+      }
+    }
+
     #endregion
 
     #region Adapter
