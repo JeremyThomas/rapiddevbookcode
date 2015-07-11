@@ -141,7 +141,7 @@ namespace AW.Winforms.Helpers.Controls
       this.cmMain.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dgvObjectExplorer)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.CurrentTB)).BeginInit();
-      this.toolStripContainer1.ContentPanel.SuspendLayout();
+      this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
       this.toolStripContainer1.SuspendLayout();
       this.menuStrip1.SuspendLayout();
       this.SuspendLayout();
@@ -253,9 +253,9 @@ namespace AW.Winforms.Helpers.Controls
             this.bookmarkPlusButton,
             this.bookmarkMinusButton,
             this.gotoButton});
-      this.tsMain.Location = new System.Drawing.Point(0, 3);
+      this.tsMain.Location = new System.Drawing.Point(3, 24);
       this.tsMain.Name = "tsMain";
-      this.tsMain.Size = new System.Drawing.Size(536, 25);
+      this.tsMain.Size = new System.Drawing.Size(505, 25);
       this.tsMain.TabIndex = 3;
       this.tsMain.Text = "toolStrip1";
       // 
@@ -672,9 +672,7 @@ namespace AW.Winforms.Helpers.Controls
       // 
       // toolStripContainer1.ContentPanel
       // 
-      this.toolStripContainer1.ContentPanel.Controls.Add(this.tsMain);
-      this.toolStripContainer1.ContentPanel.Controls.Add(this.menuStrip1);
-      this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(726, 28);
+      this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(726, 4);
       this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Top;
       this.toolStripContainer1.LeftToolStripPanelVisible = false;
       this.toolStripContainer1.Location = new System.Drawing.Point(3, 0);
@@ -683,6 +681,11 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripContainer1.Size = new System.Drawing.Size(726, 53);
       this.toolStripContainer1.TabIndex = 10;
       this.toolStripContainer1.Text = "toolStripContainer1";
+      // 
+      // toolStripContainer1.TopToolStripPanel
+      // 
+      this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
+      this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.tsMain);
       // 
       // menuStrip1
       // 
@@ -694,9 +697,9 @@ namespace AW.Winforms.Helpers.Controls
             this.miExport,
             this.miChangeColors,
             this.changeHotkeysToolStripMenuItem});
-      this.menuStrip1.Location = new System.Drawing.Point(500, 0);
+      this.menuStrip1.Location = new System.Drawing.Point(0, 0);
       this.menuStrip1.Name = "menuStrip1";
-      this.menuStrip1.Size = new System.Drawing.Size(51, 24);
+      this.menuStrip1.Size = new System.Drawing.Size(726, 24);
       this.menuStrip1.TabIndex = 4;
       this.menuStrip1.Text = "menuStrip1";
       // 
@@ -1039,8 +1042,8 @@ namespace AW.Winforms.Helpers.Controls
       this.cmMain.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.dgvObjectExplorer)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.CurrentTB)).EndInit();
-      this.toolStripContainer1.ContentPanel.ResumeLayout(false);
-      this.toolStripContainer1.ContentPanel.PerformLayout();
+      this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
+      this.toolStripContainer1.TopToolStripPanel.PerformLayout();
       this.toolStripContainer1.ResumeLayout(false);
       this.toolStripContainer1.PerformLayout();
       this.menuStrip1.ResumeLayout(false);

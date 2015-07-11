@@ -317,12 +317,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private void InitializeSelfservicing(IConnectionInfo cxInfo, Type commonDaoBaseType, object context, QueryExecutionManager executionManager)
     {
-      var actualConnectionStringField = commonDaoBaseType.GetField("ActualConnectionString");
-      //var actualConnectionString = actualConnectionStringField.GetValue(context) as string;
-      if (!string.IsNullOrEmpty(cxInfo.DatabaseInfo.CustomCxString)) //CustomCxString overrides config value
-        actualConnectionStringField.SetValue(context, cxInfo.DatabaseInfo.CustomCxString);
+      EntityHelper.SetSelfservicingConnectionString(commonDaoBaseType, context, cxInfo.DatabaseInfo.CustomCxString);
       SetSQLTranslationWriter(commonDaoBaseType, executionManager);
     }
+
+
 
     /// <summary>
     ///   Initializes the adapter.
