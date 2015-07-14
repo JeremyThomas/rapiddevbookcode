@@ -30,7 +30,6 @@
     {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmQueryRunner));
-      this.tabControl = new System.Windows.Forms.TabControl();
       this.contextMenuStripTab = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.toolStripMenuItemSave = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripMenuItemOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,8 +37,6 @@
       this.closeAllButThisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.tabPageSample = new System.Windows.Forms.TabPage();
-      this.queryRunner1 = new AW.Winforms.Helpers.QueryRunner.QueryRunner();
       this.contextMenuStripBlank = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.blankToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -59,31 +56,21 @@
       this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
+      this.tabControl = new System.Windows.Forms.TabControl();
+      this.tabPageSample = new System.Windows.Forms.TabPage();
+      this.queryRunner1 = new AW.Winforms.Helpers.QueryRunner.QueryRunner();
       this.mruHandler1 = new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler(this.components);
-      this.tabControl.SuspendLayout();
       this.contextMenuStripTab.SuspendLayout();
-      this.tabPageSample.SuspendLayout();
       this.contextMenuStripBlank.SuspendLayout();
       this.menuStrip1.SuspendLayout();
       this.toolStrip1.SuspendLayout();
+      this.toolStripContainer2.ContentPanel.SuspendLayout();
       this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
       this.toolStripContainer2.SuspendLayout();
+      this.tabControl.SuspendLayout();
+      this.tabPageSample.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.mruHandler1)).BeginInit();
       this.SuspendLayout();
-      // 
-      // tabControl
-      // 
-      this.tabControl.AllowDrop = true;
-      this.tabControl.ContextMenuStrip = this.contextMenuStripTab;
-      this.tabControl.Controls.Add(this.tabPageSample);
-      this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tabControl.Location = new System.Drawing.Point(0, 25);
-      this.tabControl.Name = "tabControl";
-      this.tabControl.SelectedIndex = 0;
-      this.tabControl.Size = new System.Drawing.Size(918, 599);
-      this.tabControl.TabIndex = 0;
-      this.tabControl.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabControl_DragDrop);
-      this.tabControl.DragOver += new System.Windows.Forms.DragEventHandler(this.tabControl_DragOver);
       // 
       // contextMenuStripTab
       // 
@@ -140,32 +127,6 @@
       this.newToolStripMenuItem.Text = "New";
       this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
       // 
-      // tabPageSample
-      // 
-      this.tabPageSample.ContextMenuStrip = this.contextMenuStripTab;
-      this.tabPageSample.Controls.Add(this.queryRunner1);
-      this.tabPageSample.Location = new System.Drawing.Point(4, 22);
-      this.tabPageSample.Name = "tabPageSample";
-      this.tabPageSample.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageSample.Size = new System.Drawing.Size(910, 573);
-      this.tabPageSample.TabIndex = 0;
-      this.tabPageSample.Text = "Sample";
-      this.tabPageSample.ToolTipText = "Sample";
-      this.tabPageSample.UseVisualStyleBackColor = true;
-      // 
-      // queryRunner1
-      // 
-      this.queryRunner1.AllowDrop = true;
-      this.queryRunner1.ContextMenuStrip = this.contextMenuStripBlank;
-      this.queryRunner1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.queryRunner1.Location = new System.Drawing.Point(3, 3);
-      this.queryRunner1.Name = "queryRunner1";
-      this.queryRunner1.Size = new System.Drawing.Size(904, 567);
-      this.queryRunner1.SplitterDistance = 272;
-      this.queryRunner1.TabIndex = 0;
-      this.queryRunner1.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabControl_DragDrop);
-      this.queryRunner1.DragOver += new System.Windows.Forms.DragEventHandler(this.tabControl_DragOver);
-      // 
       // contextMenuStripBlank
       // 
       this.contextMenuStripBlank.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -181,12 +142,13 @@
       // 
       // menuStrip1
       // 
-      this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
+      this.menuStrip1.Dock = System.Windows.Forms.DockStyle.Left;
       this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
-      this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+      this.menuStrip1.Location = new System.Drawing.Point(3, 0);
       this.menuStrip1.Name = "menuStrip1";
-      this.menuStrip1.Size = new System.Drawing.Size(918, 24);
+      this.menuStrip1.Size = new System.Drawing.Size(45, 24);
+      this.menuStrip1.Stretch = false;
       this.menuStrip1.TabIndex = 1;
       this.menuStrip1.Text = "menuStrip1";
       // 
@@ -223,7 +185,8 @@
       // 
       // toolStrip1
       // 
-      this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+      this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Left;
+      this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripButton,
             this.openToolStripButton,
@@ -234,9 +197,9 @@
             this.copyToolStripButton,
             this.pasteToolStripButton,
             this.toolStripSeparator1});
-      this.toolStrip1.Location = new System.Drawing.Point(3, 24);
+      this.toolStrip1.Location = new System.Drawing.Point(48, 0);
       this.toolStrip1.Name = "toolStrip1";
-      this.toolStrip1.Size = new System.Drawing.Size(216, 25);
+      this.toolStrip1.Size = new System.Drawing.Size(176, 25);
       this.toolStrip1.TabIndex = 1;
       this.toolStrip1.Text = "toolStrip1";
       // 
@@ -322,13 +285,14 @@
       // 
       // toolStripContainer2.ContentPanel
       // 
-      this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(918, 0);
-      this.toolStripContainer2.Dock = System.Windows.Forms.DockStyle.Top;
+      this.toolStripContainer2.ContentPanel.Controls.Add(this.tabControl);
+      this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(918, 599);
+      this.toolStripContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.toolStripContainer2.LeftToolStripPanelVisible = false;
       this.toolStripContainer2.Location = new System.Drawing.Point(0, 0);
       this.toolStripContainer2.Name = "toolStripContainer2";
       this.toolStripContainer2.RightToolStripPanelVisible = false;
-      this.toolStripContainer2.Size = new System.Drawing.Size(918, 25);
+      this.toolStripContainer2.Size = new System.Drawing.Size(918, 624);
       this.toolStripContainer2.TabIndex = 2;
       this.toolStripContainer2.Text = "toolStripContainer2";
       // 
@@ -336,6 +300,46 @@
       // 
       this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStrip1);
       this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.menuStrip1);
+      // 
+      // tabControl
+      // 
+      this.tabControl.AllowDrop = true;
+      this.tabControl.ContextMenuStrip = this.contextMenuStripTab;
+      this.tabControl.Controls.Add(this.tabPageSample);
+      this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tabControl.Location = new System.Drawing.Point(0, 0);
+      this.tabControl.Name = "tabControl";
+      this.tabControl.SelectedIndex = 0;
+      this.tabControl.Size = new System.Drawing.Size(918, 599);
+      this.tabControl.TabIndex = 0;
+      this.tabControl.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabControl_DragDrop);
+      this.tabControl.DragOver += new System.Windows.Forms.DragEventHandler(this.tabControl_DragOver);
+      // 
+      // tabPageSample
+      // 
+      this.tabPageSample.ContextMenuStrip = this.contextMenuStripTab;
+      this.tabPageSample.Controls.Add(this.queryRunner1);
+      this.tabPageSample.Location = new System.Drawing.Point(4, 22);
+      this.tabPageSample.Name = "tabPageSample";
+      this.tabPageSample.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPageSample.Size = new System.Drawing.Size(910, 573);
+      this.tabPageSample.TabIndex = 0;
+      this.tabPageSample.Text = "Sample";
+      this.tabPageSample.ToolTipText = "Sample";
+      this.tabPageSample.UseVisualStyleBackColor = true;
+      // 
+      // queryRunner1
+      // 
+      this.queryRunner1.AllowDrop = true;
+      this.queryRunner1.ContextMenuStrip = this.contextMenuStripBlank;
+      this.queryRunner1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.queryRunner1.Location = new System.Drawing.Point(3, 3);
+      this.queryRunner1.Name = "queryRunner1";
+      this.queryRunner1.Size = new System.Drawing.Size(904, 567);
+      this.queryRunner1.SplitterDistance = 262;
+      this.queryRunner1.TabIndex = 0;
+      this.queryRunner1.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabControl_DragDrop);
+      this.queryRunner1.DragOver += new System.Windows.Forms.DragEventHandler(this.tabControl_DragOver);
       // 
       // mruHandler1
       // 
@@ -348,35 +352,31 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(918, 624);
-      this.Controls.Add(this.tabControl);
       this.Controls.Add(this.toolStripContainer2);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MainMenuStrip = this.menuStrip1;
       this.Name = "FrmQueryRunner";
       this.Tag = "true";
       this.Text = "Query Runner";
-      this.tabControl.ResumeLayout(false);
       this.contextMenuStripTab.ResumeLayout(false);
-      this.tabPageSample.ResumeLayout(false);
       this.contextMenuStripBlank.ResumeLayout(false);
       this.menuStrip1.ResumeLayout(false);
       this.menuStrip1.PerformLayout();
       this.toolStrip1.ResumeLayout(false);
       this.toolStrip1.PerformLayout();
+      this.toolStripContainer2.ContentPanel.ResumeLayout(false);
       this.toolStripContainer2.TopToolStripPanel.ResumeLayout(false);
       this.toolStripContainer2.TopToolStripPanel.PerformLayout();
       this.toolStripContainer2.ResumeLayout(false);
       this.toolStripContainer2.PerformLayout();
+      this.tabControl.ResumeLayout(false);
+      this.tabPageSample.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.mruHandler1)).EndInit();
       this.ResumeLayout(false);
 
     }
 
     #endregion
-
-    private System.Windows.Forms.TabControl tabControl;
-    private System.Windows.Forms.TabPage tabPageSample;
-    private QueryRunner queryRunner1;
     private System.Windows.Forms.ContextMenuStrip contextMenuStripTab;
     private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSave;
     private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpen;
@@ -404,5 +404,8 @@
     private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem mostRecentlyUsedToolStripMenuItem;
+    private System.Windows.Forms.TabControl tabControl;
+    private System.Windows.Forms.TabPage tabPageSample;
+    private QueryRunner queryRunner1;
   }
 }

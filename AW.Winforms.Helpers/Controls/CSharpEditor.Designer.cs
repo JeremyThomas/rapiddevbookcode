@@ -141,6 +141,8 @@ namespace AW.Winforms.Helpers.Controls
       this.cmMain.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dgvObjectExplorer)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.CurrentTB)).BeginInit();
+      this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
+      this.toolStripContainer1.ContentPanel.SuspendLayout();
       this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
       this.toolStripContainer1.SuspendLayout();
       this.menuStrip1.SuspendLayout();
@@ -148,12 +150,13 @@ namespace AW.Winforms.Helpers.Controls
       // 
       // ssMain
       // 
+      this.ssMain.Dock = System.Windows.Forms.DockStyle.None;
       this.ssMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lbWordUnderMouse,
             this.btZoom});
-      this.ssMain.Location = new System.Drawing.Point(0, 407);
+      this.ssMain.Location = new System.Drawing.Point(0, 0);
       this.ssMain.Name = "ssMain";
-      this.ssMain.Size = new System.Drawing.Size(901, 22);
+      this.ssMain.Size = new System.Drawing.Size(1020, 22);
       this.ssMain.TabIndex = 2;
       this.ssMain.Text = "statusStrip1";
       // 
@@ -162,7 +165,7 @@ namespace AW.Winforms.Helpers.Controls
       this.lbWordUnderMouse.AutoSize = false;
       this.lbWordUnderMouse.ForeColor = System.Drawing.Color.Gray;
       this.lbWordUnderMouse.Name = "lbWordUnderMouse";
-      this.lbWordUnderMouse.Size = new System.Drawing.Size(831, 17);
+      this.lbWordUnderMouse.Size = new System.Drawing.Size(950, 17);
       this.lbWordUnderMouse.Spring = true;
       this.lbWordUnderMouse.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       // 
@@ -232,7 +235,8 @@ namespace AW.Winforms.Helpers.Controls
       // 
       // tsMain
       // 
-      this.tsMain.Dock = System.Windows.Forms.DockStyle.None;
+      this.tsMain.Dock = System.Windows.Forms.DockStyle.Right;
+      this.tsMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       this.tsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator3,
             this.cutToolStripButton,
@@ -253,9 +257,9 @@ namespace AW.Winforms.Helpers.Controls
             this.bookmarkPlusButton,
             this.bookmarkMinusButton,
             this.gotoButton});
-      this.tsMain.Location = new System.Drawing.Point(3, 24);
+      this.tsMain.Location = new System.Drawing.Point(3, 0);
       this.tsMain.Name = "tsMain";
-      this.tsMain.Size = new System.Drawing.Size(505, 25);
+      this.tsMain.Size = new System.Drawing.Size(527, 25);
       this.tsMain.TabIndex = 3;
       this.tsMain.Text = "toolStrip1";
       // 
@@ -450,7 +454,7 @@ namespace AW.Winforms.Helpers.Controls
       // 
       this.splitter1.Location = new System.Drawing.Point(0, 0);
       this.splitter1.Name = "splitter1";
-      this.splitter1.Size = new System.Drawing.Size(3, 407);
+      this.splitter1.Size = new System.Drawing.Size(3, 391);
       this.splitter1.TabIndex = 5;
       this.splitter1.TabStop = false;
       // 
@@ -604,7 +608,7 @@ namespace AW.Winforms.Helpers.Controls
       this.dgvObjectExplorer.Cursor = System.Windows.Forms.Cursors.Hand;
       this.dgvObjectExplorer.Dock = System.Windows.Forms.DockStyle.Right;
       this.dgvObjectExplorer.GridColor = System.Drawing.Color.White;
-      this.dgvObjectExplorer.Location = new System.Drawing.Point(729, 0);
+      this.dgvObjectExplorer.Location = new System.Drawing.Point(848, 0);
       this.dgvObjectExplorer.MultiSelect = false;
       this.dgvObjectExplorer.Name = "dgvObjectExplorer";
       this.dgvObjectExplorer.ReadOnly = true;
@@ -614,7 +618,7 @@ namespace AW.Winforms.Helpers.Controls
       this.dgvObjectExplorer.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Green;
       this.dgvObjectExplorer.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
       this.dgvObjectExplorer.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      this.dgvObjectExplorer.Size = new System.Drawing.Size(172, 407);
+      this.dgvObjectExplorer.Size = new System.Drawing.Size(172, 391);
       this.dgvObjectExplorer.TabIndex = 6;
       this.dgvObjectExplorer.VirtualMode = true;
       this.dgvObjectExplorer.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvObjectExplorer_CellMouseDoubleClick);
@@ -657,49 +661,56 @@ namespace AW.Winforms.Helpers.Controls
       this.CurrentTB.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
       this.CurrentTB.Dock = System.Windows.Forms.DockStyle.Fill;
       this.CurrentTB.IsReplaceMode = false;
-      this.CurrentTB.Location = new System.Drawing.Point(3, 53);
+      this.CurrentTB.Location = new System.Drawing.Point(3, 0);
       this.CurrentTB.Name = "CurrentTB";
       this.CurrentTB.Paddings = new System.Windows.Forms.Padding(0);
       this.CurrentTB.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
       this.CurrentTB.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("CurrentTB.ServiceColors")));
-      this.CurrentTB.Size = new System.Drawing.Size(726, 354);
+      this.CurrentTB.Size = new System.Drawing.Size(845, 391);
       this.CurrentTB.TabIndex = 7;
       this.CurrentTB.Zoom = 100;
       // 
       // toolStripContainer1
       // 
+      // 
+      // toolStripContainer1.BottomToolStripPanel
+      // 
+      this.toolStripContainer1.BottomToolStripPanel.Controls.Add(this.ssMain);
       this.toolStripContainer1.BottomToolStripPanelVisible = false;
       // 
       // toolStripContainer1.ContentPanel
       // 
-      this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(726, 4);
-      this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Top;
+      this.toolStripContainer1.ContentPanel.Controls.Add(this.CurrentTB);
+      this.toolStripContainer1.ContentPanel.Controls.Add(this.splitter1);
+      this.toolStripContainer1.ContentPanel.Controls.Add(this.dgvObjectExplorer);
+      this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1020, 391);
+      this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.toolStripContainer1.LeftToolStripPanelVisible = false;
-      this.toolStripContainer1.Location = new System.Drawing.Point(3, 0);
+      this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
       this.toolStripContainer1.Name = "toolStripContainer1";
       this.toolStripContainer1.RightToolStripPanelVisible = false;
-      this.toolStripContainer1.Size = new System.Drawing.Size(726, 53);
+      this.toolStripContainer1.Size = new System.Drawing.Size(1020, 416);
       this.toolStripContainer1.TabIndex = 10;
       this.toolStripContainer1.Text = "toolStripContainer1";
       // 
       // toolStripContainer1.TopToolStripPanel
       // 
-      this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
       this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.tsMain);
+      this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
       // 
       // menuStrip1
       // 
-      this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
-      this.menuStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
+      this.menuStrip1.Dock = System.Windows.Forms.DockStyle.Left;
       this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editToolStripMenuItem,
             this.miLanguage,
             this.miExport,
             this.miChangeColors,
             this.changeHotkeysToolStripMenuItem});
-      this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+      this.menuStrip1.Location = new System.Drawing.Point(545, 0);
       this.menuStrip1.Name = "menuStrip1";
-      this.menuStrip1.Size = new System.Drawing.Size(726, 24);
+      this.menuStrip1.Size = new System.Drawing.Size(47, 24);
+      this.menuStrip1.Stretch = false;
       this.menuStrip1.TabIndex = 4;
       this.menuStrip1.Text = "menuStrip1";
       // 
@@ -1028,13 +1039,9 @@ namespace AW.Winforms.Helpers.Controls
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.CurrentTB);
       this.Controls.Add(this.toolStripContainer1);
-      this.Controls.Add(this.splitter1);
-      this.Controls.Add(this.dgvObjectExplorer);
-      this.Controls.Add(this.ssMain);
       this.Name = "CSharpEditor";
-      this.Size = new System.Drawing.Size(901, 429);
+      this.Size = new System.Drawing.Size(1020, 416);
       this.ssMain.ResumeLayout(false);
       this.ssMain.PerformLayout();
       this.tsMain.ResumeLayout(false);
@@ -1042,6 +1049,9 @@ namespace AW.Winforms.Helpers.Controls
       this.cmMain.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.dgvObjectExplorer)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.CurrentTB)).EndInit();
+      this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
+      this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
+      this.toolStripContainer1.ContentPanel.ResumeLayout(false);
       this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
       this.toolStripContainer1.TopToolStripPanel.PerformLayout();
       this.toolStripContainer1.ResumeLayout(false);
@@ -1049,7 +1059,6 @@ namespace AW.Winforms.Helpers.Controls
       this.menuStrip1.ResumeLayout(false);
       this.menuStrip1.PerformLayout();
       this.ResumeLayout(false);
-      this.PerformLayout();
 
         }
 
