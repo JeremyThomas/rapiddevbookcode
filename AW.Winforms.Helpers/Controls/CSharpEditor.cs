@@ -34,6 +34,11 @@ namespace AW.Winforms.Helpers.Controls
     private readonly Color currentLineColor = Color.FromArgb(100, 210, 210, 255);
     private readonly Color changedLineColor = Color.FromArgb(255, 230, 230, 255);
 
+    [Description("ToolStripItemsDescr"), MergableProperty(false), Category("CatData"), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+    public ToolStripItemCollection Items
+    {
+      get { return tsMain.Items; }
+    }
 
     public CSharpEditor()
     {
@@ -1056,6 +1061,11 @@ namespace AW.Winforms.Helpers.Controls
       CurrentTB.RemoveLinePrefix(CurrentTB.CommentPrefix);
     }
     #endregion
+
+    public void Merge(ToolStrip sourceToolStrip)
+    {
+      ToolStripManager.Merge(sourceToolStrip, tsMain);
+    }
   }
 
   public class InvisibleCharsRenderer : Style

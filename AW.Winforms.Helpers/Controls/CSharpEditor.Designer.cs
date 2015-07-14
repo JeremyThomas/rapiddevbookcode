@@ -85,6 +85,7 @@ namespace AW.Winforms.Helpers.Controls
       this.tmUpdateInterface = new System.Windows.Forms.Timer(this.components);
       this.dgvObjectExplorer = new System.Windows.Forms.DataGridView();
       this.clImage = new System.Windows.Forms.DataGridViewImageColumn();
+      this.clName = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.ilAutocomplete = new System.Windows.Forms.ImageList(this.components);
       this.CurrentTB = new FastColoredTextBoxNS.FastColoredTextBox();
       this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
@@ -135,7 +136,6 @@ namespace AW.Winforms.Helpers.Controls
       this.jSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.luaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.clName = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.ssMain.SuspendLayout();
       this.tsMain.SuspendLayout();
       this.cmMain.SuspendLayout();
@@ -235,7 +235,7 @@ namespace AW.Winforms.Helpers.Controls
       // 
       // tsMain
       // 
-      this.tsMain.Dock = System.Windows.Forms.DockStyle.Right;
+      this.tsMain.Dock = System.Windows.Forms.DockStyle.None;
       this.tsMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       this.tsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator3,
@@ -632,6 +632,13 @@ namespace AW.Winforms.Helpers.Controls
       this.clImage.ReadOnly = true;
       this.clImage.Width = 32;
       // 
+      // clName
+      // 
+      this.clName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+      this.clName.HeaderText = "Column1";
+      this.clName.Name = "clName";
+      this.clName.ReadOnly = true;
+      // 
       // ilAutocomplete
       // 
       this.ilAutocomplete.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilAutocomplete.ImageStream")));
@@ -660,6 +667,7 @@ namespace AW.Winforms.Helpers.Controls
       this.CurrentTB.Cursor = System.Windows.Forms.Cursors.IBeam;
       this.CurrentTB.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
       this.CurrentTB.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.CurrentTB.Font = new System.Drawing.Font("Courier New", 9.75F);
       this.CurrentTB.IsReplaceMode = false;
       this.CurrentTB.Location = new System.Drawing.Point(3, 0);
       this.CurrentTB.Name = "CurrentTB";
@@ -695,19 +703,19 @@ namespace AW.Winforms.Helpers.Controls
       // 
       // toolStripContainer1.TopToolStripPanel
       // 
-      this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.tsMain);
       this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
+      this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.tsMain);
       // 
       // menuStrip1
       // 
-      this.menuStrip1.Dock = System.Windows.Forms.DockStyle.Left;
+      this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
       this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editToolStripMenuItem,
             this.miLanguage,
             this.miExport,
             this.miChangeColors,
             this.changeHotkeysToolStripMenuItem});
-      this.menuStrip1.Location = new System.Drawing.Point(545, 0);
+      this.menuStrip1.Location = new System.Drawing.Point(530, 0);
       this.menuStrip1.Name = "menuStrip1";
       this.menuStrip1.Size = new System.Drawing.Size(47, 24);
       this.menuStrip1.Stretch = false;
@@ -1027,13 +1035,6 @@ namespace AW.Winforms.Helpers.Controls
       this.dataGridViewTextBoxColumn1.HeaderText = "Column1";
       this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
       this.dataGridViewTextBoxColumn1.ReadOnly = true;
-      // 
-      // clName
-      // 
-      this.clName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-      this.clName.HeaderText = "Column1";
-      this.clName.Name = "clName";
-      this.clName.ReadOnly = true;
       // 
       // CSharpEditor
       // 

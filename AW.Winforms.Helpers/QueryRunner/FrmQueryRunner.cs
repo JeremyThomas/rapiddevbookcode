@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using AW.Winforms.Helpers.Forms;
 
 namespace AW.Winforms.Helpers.QueryRunner
 {
@@ -42,7 +43,7 @@ namespace AW.Winforms.Helpers.QueryRunner
     {
       var queryRunner = AddNew("FromGrid");
       queryRunner.LoadText(cSharpSource);
-      if (tabControl.TabPages[0].ToolTipText == "Sample")
+      if (tabControl.TabPages[0].ToolTipText == "New")
         tabControl.TabPages.RemoveAt(0);
     }
 
@@ -76,7 +77,7 @@ namespace AW.Winforms.Helpers.QueryRunner
       var queryRunner = AddNew(fileName);
       queryRunner.LoadFile(fileName);
       mruHandler1.AddRecentlyUsedFile(fileName);
-      if (tabControl.TabPages[0].ToolTipText == "Sample")
+      if (tabControl.TabPages[0].ToolTipText == "New")
         tabControl.TabPages.RemoveAt(0);
     }
 
@@ -183,6 +184,11 @@ namespace AW.Winforms.Helpers.QueryRunner
     private void mruHandler1_MRUItemClicked(object sender, MostRecentlyUsedHandler.MRUItemClickedEventArgs e)
     {
       DoFileOpen(e.File);
+    }
+
+    private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      AboutBox.ShowAboutBox(this);
     }
   }
 }

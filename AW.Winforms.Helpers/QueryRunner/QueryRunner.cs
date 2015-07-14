@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.EntityViewer;
 using CSScriptLibrary;
-using FastColoredTextBoxNS;
 using JesseJohnston;
 
 namespace AW.Winforms.Helpers.QueryRunner
 {
   public partial class QueryRunner : UserControl
   {
-
     public QueryRunner()
     {
       InitializeComponent();
@@ -33,18 +32,19 @@ namespace AW.Winforms.Helpers.QueryRunner
     {
       try
       {
-      var helper = new AsmHelper(CSScript.LoadCode(textBoxScript.CurrentTB.Text, null, true));
-      using (helper)
-      {
-        gridDataEditorScript.BindEnumerable(((IQueryScript) helper.CreateObject("Script")).Query());
-        tabControlResults.SelectedTab = tabPageGrid;
-        }
-      if (gridDataEditorScript.BindingSource.Count > 0)
-        if (gridDataEditorScript.Height < 50)
+        var helper = new AsmHelper(CSScript.LoadCode(textBoxScript.CurrentTB.Text, null, true));
+        using (helper)
         {
-          splitContainerScript.SplitterDistance = Height/2;
-          toolStripButtonBrowse.Enabled = true;
+          var enumerable = ((IQueryScript) helper.CreateObject("Script")).Query();
+          gridDataEditorScript.BindEnumerable(enumerable);
+          tabControlResults.SelectedTab = tabPageGrid;
         }
+        if (gridDataEditorScript.BindingSource.Count > 0)
+          if (gridDataEditorScript.Height < 50)
+          {
+            splitContainerScript.SplitterDistance = Height/2;
+            toolStripButtonBrowse.Enabled = true;
+          }
       }
       catch (Exception ex)
       {
@@ -55,12 +55,11 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     private void QueryRunner_Load(object sender, EventArgs e)
     {
-      splitContainerScript.SplitterDistance = Height - gridDataEditorScript.BindingNavigator.Height- tabControlResults.Height;
-      gridDataEditorScript.Items.Remove(toolStripButtonRunQuery);
-  //    gridDataEditorScript.Items.Insert(0, toolStripButtonRunQuery);
+      splitContainerScript.SplitterDistance = Height - gridDataEditorScript.BindingNavigator.Height - gridDataEditorScript.BindingNavigator.Height;
 
-   //   var toolStripButton = new ToolStripButton();
-      textBoxScript.tsMain.Items.Add(toolStripButtonRunQuery);
+      textBoxScript.Merge(toolStripHidden);
+//      textBoxScript.tsMain.Items.Add(toolStripButtonRunQuery);
+      tabControlResults.ItemSize = new Size(0, 1);
     }
 
     internal void Save(string fileName)
@@ -113,7 +112,7 @@ namespace AW.Winforms.Helpers.QueryRunner
         return;
       var node = (TreeNode) e.Data.GetData(typeof (TreeNode));
 
-    //  textBoxScript.SelectedText = node.Text;
+      //  textBoxScript.SelectedText = node.Text;
 
       //try
       //{
