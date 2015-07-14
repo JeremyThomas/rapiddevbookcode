@@ -444,6 +444,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MostRecentlyUsedHandler\MRUHandler.bmp" />
+    <None Include="Resources\startwithoutdebugging_6556.png" />
     <None Include="Resources\unsure.gif" />
     <None Include="Resources\undo_16x16.png" />
     <None Include="Resources\smile_16x16.png" />

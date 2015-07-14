@@ -318,7 +318,8 @@ namespace AW.Winforms.Helpers
       bool shownEnumerable;
       try
       {
-        bindingSource.DataSource = enumerable.ToBindingListView(ensureFilteringEnabled);
+        var bindingListView = enumerable.ToBindingListView(ensureFilteringEnabled);
+        bindingSource.DataSource = bindingListView;
         shownEnumerable = bindingSource.DataSource != null;
       }
       catch (ArgumentException) //From ObjectListView constructor

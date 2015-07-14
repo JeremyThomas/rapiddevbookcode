@@ -37,19 +37,21 @@ namespace AW.Winforms.Helpers.QueryRunner
       this.browseObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.contextMenuStripBlank = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.splitContainerScript = new System.Windows.Forms.SplitContainer();
+      this.toolStripHidden = new System.Windows.Forms.ToolStrip();
+      this.toolStripButtonRunQuery = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonBrowse = new System.Windows.Forms.ToolStripButton();
       this.tabControlResults = new System.Windows.Forms.TabControl();
       this.tabPageGrid = new System.Windows.Forms.TabPage();
       this.tabPageText = new System.Windows.Forms.TabPage();
       this.textBoxOutPut = new System.Windows.Forms.TextBox();
       this.textBoxScript = new AW.Winforms.Helpers.Controls.CSharpEditor();
       this.gridDataEditorScript = new AW.Winforms.Helpers.Controls.GridDataEditor();
-      this.toolStripButtonRunQuery = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButtonBrowse = new System.Windows.Forms.ToolStripButton();
       this.contextMenuStripGrid.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerScript)).BeginInit();
       this.splitContainerScript.Panel1.SuspendLayout();
       this.splitContainerScript.Panel2.SuspendLayout();
       this.splitContainerScript.SuspendLayout();
+      this.toolStripHidden.SuspendLayout();
       this.tabControlResults.SuspendLayout();
       this.tabPageGrid.SuspendLayout();
       this.tabPageText.SuspendLayout();
@@ -91,6 +93,7 @@ namespace AW.Winforms.Helpers.QueryRunner
       // 
       // splitContainerScript.Panel1
       // 
+      this.splitContainerScript.Panel1.Controls.Add(this.toolStripHidden);
       this.splitContainerScript.Panel1.Controls.Add(this.textBoxScript);
       // 
       // splitContainerScript.Panel2
@@ -100,8 +103,42 @@ namespace AW.Winforms.Helpers.QueryRunner
       this.splitContainerScript.SplitterDistance = 200;
       this.splitContainerScript.TabIndex = 6;
       // 
+      // toolStripHidden
+      // 
+      this.toolStripHidden.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonRunQuery,
+            this.toolStripButtonBrowse});
+      this.toolStripHidden.Location = new System.Drawing.Point(0, 0);
+      this.toolStripHidden.Name = "toolStripHidden";
+      this.toolStripHidden.Size = new System.Drawing.Size(913, 25);
+      this.toolStripHidden.TabIndex = 1;
+      this.toolStripHidden.Text = "toolStrip1";
+      this.toolStripHidden.Visible = false;
+      // 
+      // toolStripButtonRunQuery
+      // 
+      this.toolStripButtonRunQuery.Image = global::AW.Winforms.Helpers.Properties.Resources.startwithoutdebugging_6556;
+      this.toolStripButtonRunQuery.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonRunQuery.MergeAction = System.Windows.Forms.MergeAction.Insert;
+      this.toolStripButtonRunQuery.MergeIndex = 0;
+      this.toolStripButtonRunQuery.Name = "toolStripButtonRunQuery";
+      this.toolStripButtonRunQuery.Size = new System.Drawing.Size(80, 22);
+      this.toolStripButtonRunQuery.Text = "RunQuery";
+      this.toolStripButtonRunQuery.Click += new System.EventHandler(this.toolStripButtonViewRunQuery_Click);
+      // 
+      // toolStripButtonBrowse
+      // 
+      this.toolStripButtonBrowse.Enabled = false;
+      this.toolStripButtonBrowse.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonBrowse.Image")));
+      this.toolStripButtonBrowse.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonBrowse.Name = "toolStripButtonBrowse";
+      this.toolStripButtonBrowse.Size = new System.Drawing.Size(65, 22);
+      this.toolStripButtonBrowse.Text = "Browse";
+      this.toolStripButtonBrowse.Click += new System.EventHandler(this.toolStripButtonBrowse_Click);
+      // 
       // tabControlResults
       // 
+      this.tabControlResults.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
       this.tabControlResults.Controls.Add(this.tabPageGrid);
       this.tabControlResults.Controls.Add(this.tabPageText);
       this.tabControlResults.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -109,16 +146,17 @@ namespace AW.Winforms.Helpers.QueryRunner
       this.tabControlResults.Name = "tabControlResults";
       this.tabControlResults.SelectedIndex = 0;
       this.tabControlResults.Size = new System.Drawing.Size(913, 196);
+      this.tabControlResults.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
       this.tabControlResults.TabIndex = 6;
       // 
       // tabPageGrid
       // 
       this.tabPageGrid.Controls.Add(this.gridDataEditorScript);
       this.tabPageGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tabPageGrid.Location = new System.Drawing.Point(4, 22);
+      this.tabPageGrid.Location = new System.Drawing.Point(4, 25);
       this.tabPageGrid.Name = "tabPageGrid";
       this.tabPageGrid.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageGrid.Size = new System.Drawing.Size(905, 170);
+      this.tabPageGrid.Size = new System.Drawing.Size(905, 167);
       this.tabPageGrid.TabIndex = 0;
       this.tabPageGrid.Text = "Grid";
       this.tabPageGrid.UseVisualStyleBackColor = true;
@@ -126,10 +164,10 @@ namespace AW.Winforms.Helpers.QueryRunner
       // tabPageText
       // 
       this.tabPageText.Controls.Add(this.textBoxOutPut);
-      this.tabPageText.Location = new System.Drawing.Point(4, 22);
+      this.tabPageText.Location = new System.Drawing.Point(4, 25);
       this.tabPageText.Name = "tabPageText";
       this.tabPageText.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageText.Size = new System.Drawing.Size(905, 170);
+      this.tabPageText.Size = new System.Drawing.Size(905, 167);
       this.tabPageText.TabIndex = 1;
       this.tabPageText.Text = "Text";
       this.tabPageText.UseVisualStyleBackColor = true;
@@ -140,7 +178,7 @@ namespace AW.Winforms.Helpers.QueryRunner
       this.textBoxOutPut.Location = new System.Drawing.Point(3, 3);
       this.textBoxOutPut.Multiline = true;
       this.textBoxOutPut.Name = "textBoxOutPut";
-      this.textBoxOutPut.Size = new System.Drawing.Size(899, 164);
+      this.textBoxOutPut.Size = new System.Drawing.Size(899, 161);
       this.textBoxOutPut.TabIndex = 0;
       // 
       // textBoxScript
@@ -163,36 +201,13 @@ namespace AW.Winforms.Helpers.QueryRunner
       this.gridDataEditorScript.DataSource = null;
       this.gridDataEditorScript.Dock = System.Windows.Forms.DockStyle.Fill;
       this.gridDataEditorScript.EnsureFilteringEnabled = false;
-      this.gridDataEditorScript.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonRunQuery,
-            this.toolStripButtonBrowse});
       this.gridDataEditorScript.Location = new System.Drawing.Point(3, 3);
       this.gridDataEditorScript.MembersToExclude = null;
       this.gridDataEditorScript.Name = "gridDataEditorScript";
       this.gridDataEditorScript.PageSize = ((ushort)(0));
       this.gridDataEditorScript.Readonly = false;
-      this.gridDataEditorScript.Size = new System.Drawing.Size(899, 164);
+      this.gridDataEditorScript.Size = new System.Drawing.Size(899, 161);
       this.gridDataEditorScript.TabIndex = 5;
-      // 
-      // toolStripButtonRunQuery
-      // 
-      this.toolStripButtonRunQuery.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRunQuery.Image")));
-      this.toolStripButtonRunQuery.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonRunQuery.MergeIndex = 0;
-      this.toolStripButtonRunQuery.Name = "toolStripButtonRunQuery";
-      this.toolStripButtonRunQuery.Size = new System.Drawing.Size(80, 22);
-      this.toolStripButtonRunQuery.Text = "RunQuery";
-      this.toolStripButtonRunQuery.Click += new System.EventHandler(this.toolStripButtonViewRunQuery_Click);
-      // 
-      // toolStripButtonBrowse
-      // 
-      this.toolStripButtonBrowse.Enabled = false;
-      this.toolStripButtonBrowse.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonBrowse.Image")));
-      this.toolStripButtonBrowse.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonBrowse.Name = "toolStripButtonBrowse";
-      this.toolStripButtonBrowse.Size = new System.Drawing.Size(65, 22);
-      this.toolStripButtonBrowse.Text = "Browse";
-      this.toolStripButtonBrowse.Click += new System.EventHandler(this.toolStripButtonBrowse_Click);
       // 
       // QueryRunner
       // 
@@ -205,9 +220,12 @@ namespace AW.Winforms.Helpers.QueryRunner
       this.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragDrop);
       this.contextMenuStripGrid.ResumeLayout(false);
       this.splitContainerScript.Panel1.ResumeLayout(false);
+      this.splitContainerScript.Panel1.PerformLayout();
       this.splitContainerScript.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerScript)).EndInit();
       this.splitContainerScript.ResumeLayout(false);
+      this.toolStripHidden.ResumeLayout(false);
+      this.toolStripHidden.PerformLayout();
       this.tabControlResults.ResumeLayout(false);
       this.tabPageGrid.ResumeLayout(false);
       this.tabPageText.ResumeLayout(false);
@@ -231,5 +249,6 @@ namespace AW.Winforms.Helpers.QueryRunner
     private System.Windows.Forms.TabPage tabPageGrid;
     private System.Windows.Forms.TabPage tabPageText;
     private System.Windows.Forms.TextBox textBoxOutPut;
+    private System.Windows.Forms.ToolStrip toolStripHidden;
   }
 }
