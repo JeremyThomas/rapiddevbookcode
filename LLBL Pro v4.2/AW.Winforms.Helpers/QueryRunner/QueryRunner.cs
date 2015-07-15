@@ -30,27 +30,55 @@ namespace AW.Winforms.Helpers.QueryRunner
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
     private void toolStripButtonViewRunQuery_Click(object sender, EventArgs e)
     {
-      try
-      {
-        var helper = new AsmHelper(CSScript.LoadCode(textBoxScript.CurrentTB.Text, null, true));
-        using (helper)
+      var control = ((ToolStripButton) sender);
+      if (!string.IsNullOrWhiteSpace(textBoxScript.CurrentTB.Text))
+        try
         {
-          var enumerable = ((IQueryScript) helper.CreateObject("Script")).Query();
-          gridDataEditorScript.BindEnumerable(enumerable);
-          tabControlResults.SelectedTab = tabPageGrid;
-        }
-        if (gridDataEditorScript.BindingSource.Count > 0)
-          if (gridDataEditorScript.Height < 50)
+          control.Enabled = false;
+          try
           {
-            splitContainerScript.SplitterDistance = Height/2;
-            toolStripButtonBrowse.Enabled = true;
+            var startTime = DateTime.Now;
+            toolStripLabelExecution.Text = "StartTime: " + startTime.ToLongTimeString();
+            var helper = new AsmHelper(CSScript.LoadCode(textBoxScript.CurrentTB.Text, null, true));
+            using (helper)
+            {
+              var scriptObject = helper.CreateObject("Script");
+              if (scriptObject != null)
+              {
+                var lastTime = DateTime.Now;
+                var timeSpan = lastTime - startTime;
+                toolStripLabelExecution.Text += " Compilation: " + timeSpan.ToString("ss':'ff");
+                Application.DoEvents();
+                var enumerable = ((IQueryScript) scriptObject).Query();
+                var dateTime = DateTime.Now;
+                timeSpan = dateTime - lastTime;
+                lastTime = dateTime;
+                toolStripLabelExecution.Text += " QueryExecution: " + timeSpan.ToString("ss':'ff");
+                Application.DoEvents();
+                gridDataEditorScript.BindEnumerable(enumerable);
+                dateTime = DateTime.Now;
+                timeSpan = dateTime - lastTime;
+                toolStripLabelExecution.Text += " Display: " + timeSpan.ToString("ss':'ff");
+                toolStripLabelExecution.Text += " Total: " + (dateTime - startTime).ToString("ss':'ff");
+              }
+              tabControlResults.SelectedTab = tabPageGrid;
+            }
+            if (gridDataEditorScript.BindingSource.Count > 0)
+              if (gridDataEditorScript.Height < 100)
+              {
+                splitContainerScript.SplitterDistance = Height/2;
+              }
           }
-      }
-      catch (Exception ex)
-      {
-        textBoxOutPut.Text += ex.Message;
-        tabControlResults.SelectedTab = tabPageText;
-      }
+          catch (Exception ex)
+          {
+            textBoxOutPut.Text = ex.Message;
+            tabControlResults.SelectedTab = tabPageText;
+          }
+        }
+        finally
+        {
+          control.Enabled = true;
+        }
     }
 
     private void QueryRunner_Load(object sender, EventArgs e)
@@ -58,7 +86,6 @@ namespace AW.Winforms.Helpers.QueryRunner
       splitContainerScript.SplitterDistance = Height - gridDataEditorScript.BindingNavigator.Height - gridDataEditorScript.BindingNavigator.Height;
 
       textBoxScript.Merge(toolStripHidden);
-//      textBoxScript.tsMain.Items.Add(toolStripButtonRunQuery);
       tabControlResults.ItemSize = new Size(0, 1);
     }
 

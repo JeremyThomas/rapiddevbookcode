@@ -31,7 +31,6 @@ namespace AW.Winforms.Helpers.QueryRunner
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QueryRunner));
       this.contextMenuStripGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.viewObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.browseObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,13 +38,13 @@ namespace AW.Winforms.Helpers.QueryRunner
       this.splitContainerScript = new System.Windows.Forms.SplitContainer();
       this.toolStripHidden = new System.Windows.Forms.ToolStrip();
       this.toolStripButtonRunQuery = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButtonBrowse = new System.Windows.Forms.ToolStripButton();
       this.tabControlResults = new System.Windows.Forms.TabControl();
       this.tabPageGrid = new System.Windows.Forms.TabPage();
       this.tabPageText = new System.Windows.Forms.TabPage();
       this.textBoxOutPut = new System.Windows.Forms.TextBox();
       this.textBoxScript = new AW.Winforms.Helpers.Controls.CSharpEditor();
       this.gridDataEditorScript = new AW.Winforms.Helpers.Controls.GridDataEditor();
+      this.toolStripLabelExecution = new System.Windows.Forms.ToolStripLabel();
       this.contextMenuStripGrid.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerScript)).BeginInit();
       this.splitContainerScript.Panel1.SuspendLayout();
@@ -107,7 +106,7 @@ namespace AW.Winforms.Helpers.QueryRunner
       // 
       this.toolStripHidden.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonRunQuery,
-            this.toolStripButtonBrowse});
+            this.toolStripLabelExecution});
       this.toolStripHidden.Location = new System.Drawing.Point(0, 0);
       this.toolStripHidden.Name = "toolStripHidden";
       this.toolStripHidden.Size = new System.Drawing.Size(913, 25);
@@ -125,16 +124,6 @@ namespace AW.Winforms.Helpers.QueryRunner
       this.toolStripButtonRunQuery.Size = new System.Drawing.Size(80, 22);
       this.toolStripButtonRunQuery.Text = "RunQuery";
       this.toolStripButtonRunQuery.Click += new System.EventHandler(this.toolStripButtonViewRunQuery_Click);
-      // 
-      // toolStripButtonBrowse
-      // 
-      this.toolStripButtonBrowse.Enabled = false;
-      this.toolStripButtonBrowse.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonBrowse.Image")));
-      this.toolStripButtonBrowse.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonBrowse.Name = "toolStripButtonBrowse";
-      this.toolStripButtonBrowse.Size = new System.Drawing.Size(65, 22);
-      this.toolStripButtonBrowse.Text = "Browse";
-      this.toolStripButtonBrowse.Click += new System.EventHandler(this.toolStripButtonBrowse_Click);
       // 
       // tabControlResults
       // 
@@ -209,6 +198,12 @@ namespace AW.Winforms.Helpers.QueryRunner
       this.gridDataEditorScript.Size = new System.Drawing.Size(899, 161);
       this.gridDataEditorScript.TabIndex = 5;
       // 
+      // toolStripLabelExecution
+      // 
+      this.toolStripLabelExecution.Name = "toolStripLabelExecution";
+      this.toolStripLabelExecution.Size = new System.Drawing.Size(22, 22);
+      this.toolStripLabelExecution.Text = "     ";
+      // 
       // QueryRunner
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -244,11 +239,11 @@ namespace AW.Winforms.Helpers.QueryRunner
     private System.Windows.Forms.ToolStripMenuItem browseObjectToolStripMenuItem;
     private AW.Winforms.Helpers.Controls.GridDataEditor gridDataEditorScript;
     private System.Windows.Forms.ToolStripButton toolStripButtonRunQuery;
-    private System.Windows.Forms.ToolStripButton toolStripButtonBrowse;
     private System.Windows.Forms.TabControl tabControlResults;
     private System.Windows.Forms.TabPage tabPageGrid;
     private System.Windows.Forms.TabPage tabPageText;
     private System.Windows.Forms.TextBox textBoxOutPut;
     private System.Windows.Forms.ToolStrip toolStripHidden;
+    private System.Windows.Forms.ToolStripLabel toolStripLabelExecution;
   }
 }
