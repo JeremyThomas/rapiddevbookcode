@@ -76,11 +76,7 @@ namespace ObjectAsSourceCodeVisualizer
       var wr = target as WeakReference;
       if (wr != null)
         target = wr.Target;
-      var result = CSharpSerializer.SerializerToCSharp
-        (
-          target, ""
-        );
-
+      var result = target.SerializerToCSharp();
       Serialize(outgoingData, result);
     }
 

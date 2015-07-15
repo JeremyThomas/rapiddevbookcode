@@ -20,55 +20,66 @@ namespace AW.Tests
   [TestClass]
   public class CSharpSerializerTests
   {
-    private static readonly string FileHeader1 = "using System;" + Environment.NewLine +
-                                                 //   "using System.Xml;" + Environment.NewLine +
-                                                 "using System.Collections.Generic;" + Environment.NewLine;
-
-    private static readonly string FileHeader2 = Environment.NewLine +
-                                                 "public static class ResultContainer" + Environment.NewLine +
-                                                 "  {" + Environment.NewLine +
-                                                 "    static object Result() " + Environment.NewLine +
-                                                 "      {";
-
     [TestMethod]
     public void SerializerToCSharpTest()
     {
       var order = GetOrder();
       var rootVariable = TestSerializerToCSharp(order, "Description");
-      Assert.IsTrue(CompareOrders(order, (Order) rootVariable), "Error: Object Literal does not match");
+      Assert.IsTrue(CompareOrders(order, rootVariable), "Error: Object Literal does not match");
       //    rootVariable.ShouldBeEquivalentTo(order);
     }
 
-    private static object TestSerializerToCSharp(object obj, string globalExcludeProperties = "", params Restriction[] entityRestrictions)
+    private static T TestSerializerToCSharp<T>(T obj, string globalExcludeProperties = "", params Restriction[] entityRestrictions)
     {
-      return TestSerializerToCSharp(obj.SerializerToCSharp(globalExcludeProperties, entityRestrictions), obj.GetType());
+      return CreateCompilableSourceAndCompile<T>(obj.SerializerToCSharp(true, globalExcludeProperties, entityRestrictions));
     }
 
-    private static object TestSerializerToCSharp(string result, Type expectedType, params string[] referencedAssemblies)
+    /// <summary>
+    ///   Tests the c sharp source code by adding file header and compiling it.
+    /// </summary>
+    /// <param name="result">The result.</param>
+    /// <param name="referencedAssemblies">The referenced assemblies.</param>
+    /// <returns></returns>
+    private static T CreateCompilableSourceAndCompile<T>(string result, params string[] referencedAssemblies)
     {
-      var rootVariableName = result.Before("=");
-      rootVariableName = rootVariableName.After("var").Trim();
-      var cSharpCodeProvider = new CSharpCodeProvider();
+      var compilableSource = CreateCompilableSource(result, typeof (T));
 
+      return CompilableSource<T>(compilableSource, referencedAssemblies);
+    }
+
+    private static T CompilableSource<T>(string compilableSource, params Type[] types)
+    {
+      return CompilableSource<T>(compilableSource, types.Select(t => t.Assembly.Location).ToArray());
+    }
+
+    private static T CompilableSource<T>(string compilableSource, params string[] referencedAssemblies)
+    {
+      var expectedType = typeof (T);
+      var cSharpCodeProvider = new CSharpCodeProvider();
       var compilerParameters = new CompilerParameters();
       compilerParameters.ReferencedAssemblies.Add(expectedType.Assembly.Location);
       compilerParameters.ReferencedAssemblies.AddRange(referencedAssemblies);
-
-      var compilableSource = FileHeader1 + "using " + expectedType.Namespace + ";" + Environment.NewLine;
       foreach (var genericTypeArgument in expectedType.GenericTypeArguments)
       {
-        compilableSource += "using " + genericTypeArgument.Namespace + ";" + Environment.NewLine;
         compilerParameters.ReferencedAssemblies.Add(genericTypeArgument.Assembly.Location);
       }
-
-      compilableSource += Environment.NewLine + FileHeader2 + result + Environment.NewLine + "return " + rootVariableName + ";}}";
       var compileAssemblyFromSource = cSharpCodeProvider.CompileAssemblyFromSource(compilerParameters, compilableSource);
       Assert.AreEqual(0, compileAssemblyFromSource.Errors.Count, compileAssemblyFromSource.Errors.OfType<CompilerError>().JoinAsString());
       var compiledAssembly = compileAssemblyFromSource.CompiledAssembly;
-      var type = compiledAssembly.GetType("ResultContainer");
-      var rootVariable = type.CallMethod("Result");
+      var type = compiledAssembly.GetType(CSharpSerializer.ResultClassName);
+      var rootVariable = type.CallMethod(CSharpSerializer.ResultMethodName);
       Assert.IsInstanceOfType(rootVariable, expectedType);
-      return rootVariable;
+      return (T) rootVariable;
+    }
+
+    private static string CreateCompilableSource(string result, Type expectedType)
+    {
+      var rootVariableName = result.Before("=");
+      rootVariableName = rootVariableName.After("var").Trim();
+      var compilableSource = CSharpSerializer.FileHeader1 + "using " + expectedType.Namespace + ";" + Environment.NewLine;
+      compilableSource = expectedType.GenericTypeArguments.Aggregate(compilableSource, (current, genericTypeArgument) => current + ("using " + genericTypeArgument.Namespace + ";" + Environment.NewLine));
+      compilableSource += Environment.NewLine + CSharpSerializer.FileHeader2 + result + Environment.NewLine + "return " + rootVariableName + ";}}";
+      return compilableSource;
     }
 
     public static LinqMetaData GetNorthwindLinqMetaData()
@@ -82,7 +93,7 @@ namespace AW.Tests
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
       var customerEntity = northwindLinqMetaData.Customer.First();
       var rootVariable = TestSerializerLlbltoCSharp(customerEntity);
-      rootVariable.ShouldBeEquivalentTo(customerEntity, ExcludingLLBLProperties()); 
+      rootVariable.ShouldBeEquivalentTo(customerEntity, ExcludingLLBLProperties());
     }
 
     private static Func<EquivalencyAssertionOptions<EntityBase2>, EquivalencyAssertionOptions<EntityBase2>> ExcludingLLBLProperties()
@@ -101,12 +112,9 @@ namespace AW.Tests
 
     private static T TestSerializerLlbltoCSharp<T>(T obj)
     {
-      var result = obj.SerializerToCSharp("Fields,EntityFactoryToUse");
-      var expectedType = obj.GetType();
-      var rootVariable = TestSerializerToCSharp(result, expectedType, typeof (EntityBase2).Assembly.Location,
-        typeof (IEditableObject).Assembly.Location,
-        typeof (XmlEntity).Assembly.Location);
-      return (T)rootVariable;
+      var result = obj.SerializerToCSharp(false, "Fields,EntityFactoryToUse");
+      var rootVariable = CompilableSource<T>(result, typeof (EntityBase2), typeof (IEditableObject), typeof (XmlEntity));
+      return rootVariable;
     }
 
     private static bool CompareOrders(Order lhs, Order rhs)
