@@ -34,8 +34,18 @@ namespace AW.Helper
   /// </summary>
   public static class CSharpSerializer
   {
+    public const string ResultClassName = "ResultContainer";
+    public const string ResultMethodName = "Result";
     public static string NewLine = Environment.NewLine;
     public static string KeyProperty = "Key";
+
+    public static readonly string FileHeader1 = "using System;" + Environment.NewLine +
+                                                //   "using System.Xml;" + Environment.NewLine +
+                                                "using System.Collections.Generic;" + Environment.NewLine;
+
+    public static readonly string FileHeader2 = Environment.NewLine + "public static class " + ResultClassName + Environment.NewLine +
+                                                "  {" + Environment.NewLine + "    static object " + ResultMethodName + "() " + Environment.NewLine +
+                                                "      {";
 
     private enum ListType
     {
@@ -64,7 +74,7 @@ namespace AW.Helper
 
       public string UniqueName
       {
-        get { return string.Format("{0}{1}", Type.Name.Before("`", Type.Name), Key); }
+        get { return String.Format("{0}{1}", Type.Name.Before("`", Type.Name), Key); }
       }
     }
 
@@ -96,15 +106,19 @@ namespace AW.Helper
     ///   Convert NHibernate .NET object graph to C# Object Literal Contructor
     /// </summary>
     /// <param name="obj">Object graph to serialize to C# Object Literal Constructor</param>
+    /// <param name="asFragment">if set to <c>true</c> [as fragment].</param>
     /// <param name="globalExcludeProperties">Properties to globally exculde</param>
     /// <param name="entityRestrictions">
     ///   Entities to serialize as a limited set of properties, useful to limit depth of
     ///   traversal
     /// </param>
-    /// <returns>string containing Object Literal Constructor</returns>
+    /// <returns>
+    ///   string containing Object Literal Constructor
+    /// </returns>
     public static string SerializerToCSharp
       (
       this object obj,
+      bool asFragment = false,
       string globalExcludeProperties = "",
       params Restriction[] entityRestrictions
       )
@@ -116,8 +130,7 @@ namespace AW.Helper
       // infinite loop.  If the entity is a parent relationship, NHibernate
       // will have the same reference on both objects, but if it is simply
       // a second reference it will have a different reference
-      var entityMap = new Dictionary<Entity, Entity>
-        (
+      var entityMap = new Dictionary<Entity, Entity>(
         new EntityEqualityComparer()
         );
 
@@ -127,9 +140,8 @@ namespace AW.Helper
         .ToDictionary(k => k.EntityName, v => v.IncludeProperties);
 
       // Place properties to globally exclude in a HashSet
-      var collection = string.IsNullOrWhiteSpace(globalExcludeProperties) ? new string[0] : globalExcludeProperties.Split(',');
-      var excludeProperties = new HashSet<string>
-        (
+      var collection = String.IsNullOrWhiteSpace(globalExcludeProperties) ? new string[0] : globalExcludeProperties.Split(',');
+      var excludeProperties = new HashSet<string>(
         collection
         );
 
@@ -157,7 +169,29 @@ namespace AW.Helper
         }
       }
 
-      var rootEntity = new Entity(obj, string.Empty);
+      if (!asFragment)
+      {
+        var type = obj.GetType();
+        sb.AppendLine(FileHeader1 + "using " + type.Namespace + ";");
+        if (type.IsGenericType)
+          foreach (var genericTypeArgument in type.GenericTypeArguments)
+          {
+            sb.AppendLine("using " + genericTypeArgument.Namespace + ";");
+          }
+        else
+        {
+          var enumerable = obj as IEnumerable;
+          if (enumerable != null)
+          {
+            var itemType=MetaDataHelper.GetEnumerableItemType(enumerable);
+            sb.AppendLine("using " + itemType.Namespace + ";");
+          }
+        }
+
+        sb.AppendLine(Environment.NewLine + FileHeader2);
+      }
+
+      var rootEntity = new Entity(obj, String.Empty);
 
       sb.Append("var ");
       WalkObject
@@ -168,7 +202,10 @@ namespace AW.Helper
           restrictions,
           excludeProperties, 0, rootEntity.UniqueName
         );
-
+      if (!asFragment)
+      {
+        sb.AppendLine(NewLine + "return " + rootEntity.UniqueName + ";}}");
+      }
       return sb.ToString();
     }
 
@@ -271,11 +308,11 @@ namespace AW.Helper
       entityMap.Add(entity, entity);
 
       // Emit Object with all base type  properties
-      var isListInit = string.IsNullOrWhiteSpace(parent);
+      var isListInit = String.IsNullOrWhiteSpace(parent);
       if (isListInit)
         sb.AppendFormat("new {1}{2}{3}{{{4}", parent, workingTypeName, NewLine, Tabs(level), NewLine);
       else
-      sb.AppendFormat("{0} = new {1}{2}{3}{{{4}", parent, workingTypeName, NewLine, Tabs(level), NewLine);
+        sb.AppendFormat("{0} = new {1}{2}{3}{{{4}", parent, workingTypeName, NewLine, Tabs(level), NewLine);
 
       var enumerable1 = obj as IEnumerable;
       if (enumerable1 != null && !(obj is string))
@@ -347,7 +384,7 @@ namespace AW.Helper
                 var listItemType = pt.GetElementType();
 
                 var parentPath = ParentPath(parent, property.Name);
-                var listParent = string.Format("{0} = new {1}", parentPath, listTypeName);
+                var listParent = String.Format("{0} = new {1}", parentPath, listTypeName);
 
                 if (list.Count == 0)
                 {
@@ -376,7 +413,7 @@ namespace AW.Helper
                   if (genericArguments.Length == 0)
                   {
                     listItemType = ListBindingHelper.GetListItemType(list);
-                    listParent = string.Format("{0} = new {1}", parentPath, pt);
+                    listParent = String.Format("{0} = new {1}", parentPath, pt);
                   }
                   else
                   {
@@ -385,7 +422,7 @@ namespace AW.Helper
                     listItemType = firstGenericType.UnderlyingSystemType;
 
                     var listTypeName = firstGenericType.Name;
-                    listParent = string.Format("{0} = new List<{1}>", parentPath, listTypeName);
+                    listParent = String.Format("{0} = new List<{1}>", parentPath, listTypeName);
                   }
 
                   WalkList(list, listItemType, sb, entityMap, restrictions, excludeProperties, level + 1, parentPath, listParent);
@@ -463,8 +500,7 @@ namespace AW.Helper
     }
 
     // System types handled as primitives
-    private static readonly HashSet<Type> _baseTypes = new HashSet<Type>
-      (
+    private static readonly HashSet<Type> _baseTypes = new HashSet<Type>(
       new[]
       {
         typeof (String),
@@ -654,7 +690,7 @@ namespace AW.Helper
       }
 
       var listEntities = new List<Entity>();
-      var isListItem = string.IsNullOrWhiteSpace(listParent);
+      var isListItem = String.IsNullOrWhiteSpace(listParent);
       foreach (var obj in list)
       {
         switch (processType)
@@ -670,7 +706,7 @@ namespace AW.Helper
           case ListType.Class:
           {
             // Lookup to see if this entity has ref'ed
-            var listEntity = new Entity(obj, string.Empty);
+            var listEntity = new Entity(obj, String.Empty);
 
             Entity canonicalEntity;
             if (entityMap.TryGetValue(listEntity, out canonicalEntity))
@@ -680,8 +716,8 @@ namespace AW.Helper
             else
             {
               listEntities.Add(listEntity);
-                if (!isListItem)
-                  sb.AppendFormat("{0}var ", Tabs(level));
+              if (!isListItem)
+                sb.AppendFormat("{0}var ", Tabs(level));
               WalkObject
                 (
                   obj,
@@ -689,14 +725,14 @@ namespace AW.Helper
                   entityMap,
                   restrictions,
                   exclude,
-                  level, isListItem?"":listEntity.UniqueName
+                  level, isListItem ? "" : listEntity.UniqueName
                 );
             }
           }
             break;
         }
       }
-      
+
       if (processType == ListType.Intrinsic)
       {
         sb.AppendLine("};");
