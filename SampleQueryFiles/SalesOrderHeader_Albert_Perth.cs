@@ -6,6 +6,7 @@ using System.Linq;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Data.Linq;
+using AW.Helper.LLBL;
 using AW.Winforms.Helpers.QueryRunner;
 
 public class Script : MarshalByRefObject, IQueryScript
@@ -15,7 +16,7 @@ public class Script : MarshalByRefObject, IQueryScript
        AW.Data.DaoClasses.CommonDaoBase.ActualConnectionString = @"data source=(local)\sqlexpress;initial catalog=AdventureWorks;integrated security=SSPI";
         return (from soh in MetaSingletons.MetaData.SalesOrderHeader
            where ((IndividualEntity)soh.Customer).Contact.FirstName.Contains("Albert") && soh.Customer.CustomerAddresses.Any(ca => ca.Address.City == "Perth")
-           select soh).Take(2).PrefetchCustomerViewRelated(); 
+           select soh).Take(2).PrefetchCustomerViewRelated().ToEntityCollection(); 
     }
 
 }

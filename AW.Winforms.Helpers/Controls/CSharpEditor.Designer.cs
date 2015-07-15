@@ -85,7 +85,6 @@ namespace AW.Winforms.Helpers.Controls
       this.tmUpdateInterface = new System.Windows.Forms.Timer(this.components);
       this.dgvObjectExplorer = new System.Windows.Forms.DataGridView();
       this.clImage = new System.Windows.Forms.DataGridViewImageColumn();
-      this.clName = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.ilAutocomplete = new System.Windows.Forms.ImageList(this.components);
       this.CurrentTB = new FastColoredTextBoxNS.FastColoredTextBox();
       this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
@@ -136,6 +135,7 @@ namespace AW.Winforms.Helpers.Controls
       this.jSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.luaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.clName = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.ssMain.SuspendLayout();
       this.tsMain.SuspendLayout();
       this.cmMain.SuspendLayout();
@@ -257,7 +257,7 @@ namespace AW.Winforms.Helpers.Controls
             this.bookmarkPlusButton,
             this.bookmarkMinusButton,
             this.gotoButton});
-      this.tsMain.Location = new System.Drawing.Point(3, 0);
+      this.tsMain.Location = new System.Drawing.Point(62, 0);
       this.tsMain.Name = "tsMain";
       this.tsMain.Size = new System.Drawing.Size(527, 25);
       this.tsMain.TabIndex = 3;
@@ -454,7 +454,7 @@ namespace AW.Winforms.Helpers.Controls
       // 
       this.splitter1.Location = new System.Drawing.Point(0, 0);
       this.splitter1.Name = "splitter1";
-      this.splitter1.Size = new System.Drawing.Size(3, 391);
+      this.splitter1.Size = new System.Drawing.Size(3, 369);
       this.splitter1.TabIndex = 5;
       this.splitter1.TabStop = false;
       // 
@@ -618,7 +618,7 @@ namespace AW.Winforms.Helpers.Controls
       this.dgvObjectExplorer.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Green;
       this.dgvObjectExplorer.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
       this.dgvObjectExplorer.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      this.dgvObjectExplorer.Size = new System.Drawing.Size(172, 391);
+      this.dgvObjectExplorer.Size = new System.Drawing.Size(172, 369);
       this.dgvObjectExplorer.TabIndex = 6;
       this.dgvObjectExplorer.VirtualMode = true;
       this.dgvObjectExplorer.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvObjectExplorer_CellMouseDoubleClick);
@@ -631,13 +631,6 @@ namespace AW.Winforms.Helpers.Controls
       this.clImage.Name = "clImage";
       this.clImage.ReadOnly = true;
       this.clImage.Width = 32;
-      // 
-      // clName
-      // 
-      this.clName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-      this.clName.HeaderText = "Column1";
-      this.clName.Name = "clName";
-      this.clName.ReadOnly = true;
       // 
       // ilAutocomplete
       // 
@@ -667,14 +660,13 @@ namespace AW.Winforms.Helpers.Controls
       this.CurrentTB.Cursor = System.Windows.Forms.Cursors.IBeam;
       this.CurrentTB.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
       this.CurrentTB.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.CurrentTB.Font = new System.Drawing.Font("Courier New", 9.75F);
       this.CurrentTB.IsReplaceMode = false;
       this.CurrentTB.Location = new System.Drawing.Point(3, 0);
       this.CurrentTB.Name = "CurrentTB";
       this.CurrentTB.Paddings = new System.Windows.Forms.Padding(0);
       this.CurrentTB.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
       this.CurrentTB.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("CurrentTB.ServiceColors")));
-      this.CurrentTB.Size = new System.Drawing.Size(845, 391);
+      this.CurrentTB.Size = new System.Drawing.Size(845, 369);
       this.CurrentTB.TabIndex = 7;
       this.CurrentTB.Zoom = 100;
       // 
@@ -691,11 +683,19 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripContainer1.ContentPanel.Controls.Add(this.CurrentTB);
       this.toolStripContainer1.ContentPanel.Controls.Add(this.splitter1);
       this.toolStripContainer1.ContentPanel.Controls.Add(this.dgvObjectExplorer);
-      this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1020, 391);
+      this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1020, 369);
       this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+      // 
+      // toolStripContainer1.LeftToolStripPanel
+      // 
+      this.toolStripContainer1.LeftToolStripPanel.Enabled = false;
       this.toolStripContainer1.LeftToolStripPanelVisible = false;
       this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
       this.toolStripContainer1.Name = "toolStripContainer1";
+      // 
+      // toolStripContainer1.RightToolStripPanel
+      // 
+      this.toolStripContainer1.RightToolStripPanel.Enabled = false;
       this.toolStripContainer1.RightToolStripPanelVisible = false;
       this.toolStripContainer1.Size = new System.Drawing.Size(1020, 416);
       this.toolStripContainer1.TabIndex = 10;
@@ -715,7 +715,7 @@ namespace AW.Winforms.Helpers.Controls
             this.miExport,
             this.miChangeColors,
             this.changeHotkeysToolStripMenuItem});
-      this.menuStrip1.Location = new System.Drawing.Point(530, 0);
+      this.menuStrip1.Location = new System.Drawing.Point(3, 0);
       this.menuStrip1.Name = "menuStrip1";
       this.menuStrip1.Size = new System.Drawing.Size(47, 24);
       this.menuStrip1.Stretch = false;
@@ -1035,6 +1035,13 @@ namespace AW.Winforms.Helpers.Controls
       this.dataGridViewTextBoxColumn1.HeaderText = "Column1";
       this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
       this.dataGridViewTextBoxColumn1.ReadOnly = true;
+      // 
+      // clName
+      // 
+      this.clName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+      this.clName.HeaderText = "Column1";
+      this.clName.Name = "clName";
+      this.clName.ReadOnly = true;
       // 
       // CSharpEditor
       // 
