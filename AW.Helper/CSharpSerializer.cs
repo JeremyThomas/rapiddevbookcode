@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using AW.Helper.Properties;
 
 namespace AW.Helper
 {
@@ -40,12 +41,17 @@ namespace AW.Helper
     public static string KeyProperty = "Key";
 
     public static readonly string FileHeader1 = "using System;" + NewLine +
-                                                //   "using System.Xml;" + Environment.NewLine +
                                                 "using System.Collections.Generic;" + NewLine;
 
     public static readonly string FileHeader2 = NewLine + "public static class " + ResultClassName + NewLine +
                                                 "{" + NewLine + "public  static object " + ResultMethodName + "() " + NewLine +
                                                 "{";
+
+    public static void SetPropertiesToExcludeIfEmpty(string propertiesToExclude)
+    {
+      if (string.IsNullOrWhiteSpace(Settings.Default.PropertiesToExclude))
+        Settings.Default.PropertiesToExclude = propertiesToExclude;
+    }
 
     private enum ListType
     {
@@ -103,7 +109,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    ///   Convert NHibernate .NET object graph to C# Object Literal Contructor
+    ///   Convert .NET object graph to C# source code
     /// </summary>
     /// <param name="obj">Object graph to serialize to C# Object Literal Constructor</param>
     /// <param name="asFragment">if set to <c>true</c> [as fragment].</param>
@@ -115,7 +121,7 @@ namespace AW.Helper
     /// <returns>
     ///   string containing Object Literal Constructor
     /// </returns>
-    public static string SerializerToCSharp
+    public static string SerializeToCSharp
       (
       this object obj,
       bool asFragment = false,
@@ -183,12 +189,12 @@ namespace AW.Helper
           var enumerable = obj as IEnumerable;
           if (enumerable != null)
           {
-            var itemType=MetaDataHelper.GetEnumerableItemType(enumerable);
+            var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
             sb.AppendLine("using " + itemType.Namespace + ";");
           }
         }
 
-        sb.AppendLine(Environment.NewLine + FileHeader2);
+        sb.AppendLine(NewLine + FileHeader2);
       }
 
       var rootEntity = new Entity(obj, String.Empty);
@@ -345,10 +351,7 @@ namespace AW.Helper
             appendComma = HandleBaseTypes(property, obj, sb, level);
           }
         }
-        if (isListInit)
-          sb.AppendFormat("{0}{1}}},{2}", NewLine, Tabs(level), NewLine);
-        else
-          sb.AppendFormat("{0}{1}}};{2}", NewLine, Tabs(level), NewLine);
+        sb.AppendFormat(isListInit ? "{0}{1}}},{2}" : "{0}{1}}};{2}", NewLine, Tabs(level), NewLine);
 
         // Emit all class types and lists, assiging into the parent class/path
         foreach (var property in properties)
@@ -360,7 +363,6 @@ namespace AW.Helper
 
           var pt = property.PropertyType;
           var propertyName = property.Name;
-          var name = pt.Name;
 
           if (!IsBaseType(pt))
           {
@@ -500,7 +502,7 @@ namespace AW.Helper
     }
 
     // System types handled as primitives
-    private static readonly HashSet<Type> _baseTypes = new HashSet<Type>(
+    private static readonly HashSet<Type> BaseTypes = new HashSet<Type>(
       new[]
       {
         typeof (String),
@@ -516,7 +518,7 @@ namespace AW.Helper
     private static bool IsBaseType(Type propertyType)
     {
       propertyType = MetaDataHelper.GetCoreType(propertyType);
-      return _baseTypes.Contains(propertyType) || propertyType.IsEnum;
+      return BaseTypes.Contains(propertyType) || propertyType.IsEnum;
     }
 
     private static string FormatType(object obj)
@@ -678,7 +680,7 @@ namespace AW.Helper
     {
       var appendComma = false;
 
-      var processType = ListType.Unknown;
+      ListType processType;
       if (IsBaseType(listItemType))
       {
         processType = ListType.Intrinsic;

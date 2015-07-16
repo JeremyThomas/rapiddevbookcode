@@ -8,10 +8,10 @@ using AW.Data;
 using AW.Data.Linq;
 using AW.Winforms.Helpers.QueryRunner;
 
-public class Script : MarshalByRefObject, IQueryScript
+public class Script
 {
-	public IEnumerable Query()
-	{
+  public static IEnumerable Query()
+  {
 		var x = from soh in MetaSingletons.MetaData.SalesOrderHeader
 						where soh.Customer.Individual.Contact.FirstName.Contains("Albert") && soh.Customer.CustomerAddresses.Any(ca => ca.Address.City == "Perth")
 						select soh;

@@ -9,11 +9,10 @@ using Northwind.DAL.EntityClasses;
 using Northwind.DAL.Linq;
 using Northwind.DAL.Linq.Filters;
 using Northwind.DAL.SqlServer;
-using AW.Winforms.Helpers.QueryRunner;
 
-public class Script : MarshalByRefObject, IQueryScript
+public class Script 
 {
-  public IEnumerable Query()
+  public static IEnumerable Query()
   {
     return from p in (new LinqMetaData(new DataAccessAdapter("Data Source=(local);Initial Catalog=Northwind;Integrated Security=True"))).Product
            from od in p.OrderDetails.DefaultIfEmpty()

@@ -95,6 +95,12 @@
     <Compile Include="CSharpSerializer.cs" />
     <Compile Include="DataHelper.cs" />
     <Compile Include="DataSetSurrogate.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="TypeConverters\BaseEnumConverter.cs" />
     <Compile Include="TypeConverters\HumanizedEnumConverter.cs" />
     <Compile Include="GeneralHelper.cs" />
@@ -119,7 +125,12 @@
     <None Include="..\Ancillary\AdventureWorks.snk">
       <Link>AdventureWorks.snk</Link>
     </None>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

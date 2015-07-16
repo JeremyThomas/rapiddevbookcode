@@ -2,6 +2,7 @@
 using System.IO;
 using AW.Helper;
 using AW.Winforms.Helpers.Forms;
+using AW.Winforms.Helpers.QueryRunner;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 
 //http://msdn.microsoft.com/en-us/library/aa991998(VS.100).aspx 'Use IVisualizerObjectProvider..::.GetData when the object is not serializable by .NET and requires custom serialization. 
@@ -43,11 +44,9 @@ namespace ObjectAsSourceCodeVisualizer
 
       if (s != null)
       {
-        var textEditor = new TextEditor();
-        // AWHelper.ShowForm(textEditor);
-        // Application.DoEvents();
-        textEditor.Open(s);
-        _modalService.ShowDialog(textEditor);
+        var frmQueryRunner = new FrmQueryRunner();
+        frmQueryRunner.ViewText(s);
+        _modalService.ShowDialog(frmQueryRunner);
       }
     }
   }
@@ -76,7 +75,7 @@ namespace ObjectAsSourceCodeVisualizer
       var wr = target as WeakReference;
       if (wr != null)
         target = wr.Target;
-      var result = target.SerializerToCSharp();
+      var result = target.SerializeToCSharp();
       Serialize(outgoingData, result);
     }
 
