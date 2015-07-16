@@ -20,4 +20,9 @@ public class Script : MarshalByRefObject, IQueryScript
            where od.Quantity < 2
            select p;
   }
+       
+         public static object test()
+  {
+      return null;
+  }
 }

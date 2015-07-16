@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.EntityViewer;
@@ -35,50 +36,66 @@ namespace AW.Winforms.Helpers.QueryRunner
         try
         {
           control.Enabled = false;
-          try
-          {
-            var startTime = DateTime.Now;
-            toolStripLabelExecution.Text = "StartTime: " + startTime.ToLongTimeString();
-            var helper = new AsmHelper(CSScript.LoadCode(textBoxScript.CurrentTB.Text, null, true));
-            using (helper)
+          var firstMethod = textBoxScript.ExplorerList.FirstOrDefault(ei => ei.type == CSharpEditor.ExplorerItemType.Method);
+          if (firstMethod != null)
+            try
             {
-              var scriptObject = helper.CreateObject("Script");
-              if (scriptObject != null)
+              var startTime = DateTime.Now;
+              toolStripLabelExecution.Text = "StartTime: " + startTime.ToLongTimeString();
+              var helper = new AsmHelper(CSScript.LoadCode(textBoxScript.CurrentTB.Text, null, true));
+              using (helper)
               {
-                var lastTime = DateTime.Now;
-                var timeSpan = lastTime - startTime;
-                toolStripLabelExecution.Text += " Compilation: " + timeSpan.ToString("ss':'ff");
-                Application.DoEvents();
-                var enumerable = ((IQueryScript) scriptObject).Query();
-                var dateTime = DateTime.Now;
-                timeSpan = dateTime - lastTime;
-                lastTime = dateTime;
-                toolStripLabelExecution.Text += " QueryExecution: " + timeSpan.ToString("ss':'ff");
-                Application.DoEvents();
-                gridDataEditorScript.BindEnumerable(enumerable);
-                dateTime = DateTime.Now;
-                timeSpan = dateTime - lastTime;
-                toolStripLabelExecution.Text += " Display: " + timeSpan.ToString("ss':'ff");
-                toolStripLabelExecution.Text += " Total: " + (dateTime - startTime).ToString("ss':'ff");
+                var methodDelegate = helper.GetStaticMethod();
+                if (methodDelegate != null)
+                {
+                  ExecuteQuery(startTime, () => methodDelegate.Invoke() as IEnumerable);
+                }
+                else if (textBoxScript.ExplorerList.Any(ei => ei.type == CSharpEditor.ExplorerItemType.Class && ei.title == "Script"))
+                {
+                  var scriptObject = helper.CreateObject("Script") as IQueryScript;
+                  if (scriptObject != null)
+                    ExecuteQuery(startTime, () => scriptObject.Query());
+                }
+                tabControlResults.SelectedTab = tabPageGrid;
               }
-              tabControlResults.SelectedTab = tabPageGrid;
+              if (gridDataEditorScript.BindingSource.Count > 0)
+                if (gridDataEditorScript.Height < 100)
+                {
+                  splitContainerScript.SplitterDistance = Height/2;
+                }
             }
-            if (gridDataEditorScript.BindingSource.Count > 0)
-              if (gridDataEditorScript.Height < 100)
-              {
-                splitContainerScript.SplitterDistance = Height/2;
-              }
-          }
-          catch (Exception ex)
-          {
-            textBoxOutPut.Text = ex.Message;
-            tabControlResults.SelectedTab = tabPageText;
-          }
+            catch (Exception ex)
+            {
+              textBoxOutPut.Text = ex.Message;
+              tabControlResults.SelectedTab = tabPageText;
+            }
         }
         finally
         {
           control.Enabled = true;
         }
+    }
+
+    private void ExecuteQuery(DateTime startTime, Func<IEnumerable> methodExecution)
+    {
+      var lastTime = DateTime.Now;
+      var timeSpan = lastTime - startTime;
+      toolStripLabelExecution.Text += " Compilation: " + timeSpan.ToString("ss':'ff");
+      Application.DoEvents();
+      var enumerable = methodExecution();
+      if (enumerable != null)
+      {
+        var dateTime = DateTime.Now;
+        timeSpan = dateTime - lastTime;
+        lastTime = dateTime;
+        toolStripLabelExecution.Text += " QueryExecution: " + timeSpan.ToString("ss':'ff");
+        Application.DoEvents();
+        gridDataEditorScript.BindEnumerable(enumerable);
+        dateTime = DateTime.Now;
+        timeSpan = dateTime - lastTime;
+        toolStripLabelExecution.Text += " Display: " + timeSpan.ToString("ss':'ff");
+        toolStripLabelExecution.Text += " Total: " + (dateTime - startTime).ToString("ss':'ff");
+      }
     }
 
     private void QueryRunner_Load(object sender, EventArgs e)

@@ -39,13 +39,13 @@ namespace AW.Helper
     public static string NewLine = Environment.NewLine;
     public static string KeyProperty = "Key";
 
-    public static readonly string FileHeader1 = "using System;" + Environment.NewLine +
+    public static readonly string FileHeader1 = "using System;" + NewLine +
                                                 //   "using System.Xml;" + Environment.NewLine +
-                                                "using System.Collections.Generic;" + Environment.NewLine;
+                                                "using System.Collections.Generic;" + NewLine;
 
-    public static readonly string FileHeader2 = Environment.NewLine + "public static class " + ResultClassName + Environment.NewLine +
-                                                "  {" + Environment.NewLine + "    static object " + ResultMethodName + "() " + Environment.NewLine +
-                                                "      {";
+    public static readonly string FileHeader2 = NewLine + "public static class " + ResultClassName + NewLine +
+                                                "{" + NewLine + "public  static object " + ResultMethodName + "() " + NewLine +
+                                                "{";
 
     private enum ListType
     {
