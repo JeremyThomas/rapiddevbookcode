@@ -40,6 +40,12 @@ namespace AW.Winforms.Helpers.Controls
       get { return tsMain.Items; }
     }
 
+    public List<ExplorerItem> ExplorerList
+    {
+      get { return _explorerList; }
+      set { _explorerList = value; }
+    }
+
     public CSharpEditor()
     {
       InitializeComponent();
@@ -78,10 +84,10 @@ namespace AW.Winforms.Helpers.Controls
         tb.Focus();
         tb.DelayedTextChangedInterval = 1000;
         tb.DelayedEventsInterval = 500;
-        tb.TextChangedDelayed += new EventHandler<TextChangedEventArgs>(tb_TextChangedDelayed);
-        tb.SelectionChangedDelayed += new EventHandler(tb_SelectionChangedDelayed);
-        tb.KeyDown += new KeyEventHandler(tb_KeyDown);
-        tb.MouseMove += new MouseEventHandler(tb_MouseMove);
+        tb.TextChangedDelayed += tb_TextChangedDelayed;
+        tb.SelectionChangedDelayed += tb_SelectionChangedDelayed;
+        tb.KeyDown += tb_KeyDown;
+        tb.MouseMove += tb_MouseMove;
         tb.ChangedLineColor = changedLineColor;
         if (btHighlightCurrentLine.Checked)
           tb.CurrentLineColor = currentLineColor;
@@ -90,7 +96,7 @@ namespace AW.Winforms.Helpers.Controls
         //create autocomplete popup menu
         var popupMenu = new AutocompleteMenu(tb);
         popupMenu.Items.ImageList = ilAutocomplete;
-        popupMenu.Opening += new EventHandler<CancelEventArgs>(popupMenu_Opening);
+        popupMenu.Opening += popupMenu_Opening;
         BuildAutocompleteMenu(popupMenu);
         (tb.Tag as TbInfo).popupMenu = popupMenu;
         return tb;
@@ -123,16 +129,11 @@ namespace AW.Winforms.Helpers.Controls
 
     private void BuildAutocompleteMenu(AutocompleteMenu popupMenu)
     {
-      var items = new List<AutocompleteItem>();
+      var items = snippets.Select(item => new SnippetAutocompleteItem(item) {ImageIndex = 1}).Cast<AutocompleteItem>().ToList();
+      items.AddRange(declarationSnippets.Select(item => new DeclarationSnippet(item) {ImageIndex = 0}).Cast<AutocompleteItem>());
 
-      foreach (var item in snippets)
-        items.Add(new SnippetAutocompleteItem(item) {ImageIndex = 1});
-      foreach (var item in declarationSnippets)
-        items.Add(new DeclarationSnippet(item) {ImageIndex = 0});
-      foreach (var item in methods)
-        items.Add(new MethodAutocompleteItem(item) {ImageIndex = 2});
-      foreach (var item in keywords)
-        items.Add(new AutocompleteItem(item));
+      items.AddRange(methods.Select(item => new MethodAutocompleteItem(item) {ImageIndex = 2}).Cast<AutocompleteItem>());
+      items.AddRange(keywords.Select(item => new AutocompleteItem(item)));
 
       items.Add(new InsertSpaceSnippet());
       items.Add(new InsertSpaceSnippet(@"^(\w+)([=<>!:]+)(\w+)$"));
@@ -211,7 +212,7 @@ namespace AW.Winforms.Helpers.Controls
       //rebuild object explorer
       var text = (sender as FastColoredTextBox).Text;
       ThreadPool.QueueUserWorkItem(
-        (o) => ReBuildObjectExplorer(text)
+        o => ReBuildObjectExplorer(text)
         );
 
       //show invisible chars
@@ -225,7 +226,7 @@ namespace AW.Winforms.Helpers.Controls
         range.SetStyle(invisibleCharsStyle, @".$|.\r\n|\s");
     }
 
-    private List<ExplorerItem> explorerList = new List<ExplorerItem>();
+    private List<ExplorerItem> _explorerList = new List<ExplorerItem>();
 
     private void ReBuildObjectExplorer(string text)
     {
@@ -239,12 +240,12 @@ namespace AW.Winforms.Helpers.Controls
           try
           {
             var s = r.Value;
-            var i = s.IndexOfAny(new char[] {'=', '{', ';'});
+            var i = s.IndexOfAny(new[] {'=', '{', ';'});
             if (i >= 0)
               s = s.Substring(0, i);
             s = s.Trim();
 
-            var item = new ExplorerItem() {title = s, position = r.Index};
+            var item = new ExplorerItem {title = s, position = r.Index};
             if (Regex.IsMatch(item.title, @"\b(class|struct|enum|interface)\b"))
             {
               item.title = item.title.Substring(item.title.LastIndexOf(' ')).Trim();
@@ -289,8 +290,8 @@ namespace AW.Winforms.Helpers.Controls
         BeginInvoke(
           new Action(() =>
           {
-            explorerList = list;
-            dgvObjectExplorer.RowCount = explorerList.Count;
+            _explorerList = list;
+            dgvObjectExplorer.RowCount = _explorerList.Count;
             dgvObjectExplorer.Invalidate();
           })
           );
@@ -301,7 +302,7 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
-    private enum ExplorerItemType
+    public enum ExplorerItemType
     {
       Class,
       Method,
@@ -309,7 +310,7 @@ namespace AW.Winforms.Helpers.Controls
       Event
     }
 
-    private class ExplorerItem
+    public class ExplorerItem
     {
       public ExplorerItemType type;
       public string title;
@@ -324,7 +325,6 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
-  
 
     private void cutToolStripMenuItem_Click(object sender, EventArgs e)
     {
@@ -362,7 +362,7 @@ namespace AW.Winforms.Helpers.Controls
     {
       try
       {
-        if (CurrentTB != null )
+        if (CurrentTB != null)
         {
           var tb = CurrentTB;
           undoStripButton.Enabled = undoToolStripMenuItem.Enabled = tb.UndoEnabled;
@@ -388,7 +388,7 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
-    private bool tbFindChanged = false;
+    private bool tbFindChanged;
 
     private void tbFind_KeyPress(object sender, KeyPressEventArgs e)
     {
@@ -429,7 +429,7 @@ namespace AW.Winforms.Helpers.Controls
     {
       if (CurrentTB != null)
       {
-        var item = explorerList[e.RowIndex];
+        var item = _explorerList[e.RowIndex];
         CurrentTB.GoEnd();
         CurrentTB.SelectionStart = item.position;
         CurrentTB.DoSelectionVisible();
@@ -441,7 +441,7 @@ namespace AW.Winforms.Helpers.Controls
     {
       try
       {
-        var item = explorerList[e.RowIndex];
+        var item = _explorerList[e.RowIndex];
         if (e.ColumnIndex == 1)
           e.Value = item.title;
         else
@@ -474,7 +474,7 @@ namespace AW.Winforms.Helpers.Controls
         CurrentTB.Focus();
         var text = CurrentTB.Text;
         ThreadPool.QueueUserWorkItem(
-          (o) => ReBuildObjectExplorer(text)
+          o => ReBuildObjectExplorer(text)
           );
       }
     }
@@ -495,7 +495,7 @@ namespace AW.Winforms.Helpers.Controls
     {
       var max = new DateTime();
       var iLine = -1;
-      FastColoredTextBox tb = CurrentTB;
+      var tb = CurrentTB;
 
       {
         var t = CurrentTB;
@@ -509,7 +509,6 @@ namespace AW.Winforms.Helpers.Controls
       }
       if (iLine >= 0)
       {
-        
         tb.Navigate(iLine);
         lastNavigatedDateTime = tb[iLine].LastVisit;
         Console.WriteLine("Backward: " + lastNavigatedDateTime);
@@ -517,15 +516,14 @@ namespace AW.Winforms.Helpers.Controls
         tb.Invalidate();
         return true;
       }
-      else
-        return false;
+      return false;
     }
 
     private bool NavigateForward()
     {
       var min = DateTime.Now;
       var iLine = -1;
-      FastColoredTextBox tb = CurrentTB;
+      var tb = CurrentTB;
       {
         var t = CurrentTB;
         for (var i = 0; i < t.LinesCount; i++)
@@ -545,8 +543,7 @@ namespace AW.Winforms.Helpers.Controls
         tb.Invalidate();
         return true;
       }
-      else
-        return false;
+      return false;
     }
 
     /// <summary>
@@ -598,7 +595,7 @@ namespace AW.Winforms.Helpers.Controls
         return CompareResult.Hidden;
       }
 
-      public string InsertSpaces(string fragment)
+      private string InsertSpaces(string fragment)
       {
         var m = Regex.Match(fragment, pattern);
         if (m == null)
@@ -674,19 +671,14 @@ namespace AW.Winforms.Helpers.Controls
 
     private void btInvisibleChars_Click(object sender, EventArgs e)
     {
-        HighlightInvisibleChars(CurrentTB.Range);
+      HighlightInvisibleChars(CurrentTB.Range);
       if (CurrentTB != null)
         CurrentTB.Invalidate();
     }
 
     private void btHighlightCurrentLine_Click(object sender, EventArgs e)
     {
-      {
-        if (btHighlightCurrentLine.Checked)
-          CurrentTB.CurrentLineColor = currentLineColor;
-        else
-          CurrentTB.CurrentLineColor = Color.Transparent;
-      }
+      CurrentTB.CurrentLineColor = btHighlightCurrentLine.Checked ? currentLineColor : Color.Transparent;
       if (CurrentTB != null)
         CurrentTB.Invalidate();
     }
@@ -753,7 +745,7 @@ namespace AW.Winforms.Helpers.Controls
         var tb = CurrentTB;
         foreach (var bookmark in tb.Bookmarks)
         {
-          var item = gotoButton.DropDownItems.Add(bookmark.Name + " [" + Path.GetFileNameWithoutExtension("tab.Tag" as String) + "]");
+          var item = gotoButton.DropDownItems.Add(bookmark.Name + " [" + Path.GetFileNameWithoutExtension("tab.Tag") + "]");
           item.Tag = bookmark;
           item.Click += (o, a) =>
           {
@@ -775,8 +767,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void btShowFoldingLines_Click(object sender, EventArgs e)
     {
-
-        CurrentTB.ShowFoldingLines = btShowFoldingLines.Checked;
+      CurrentTB.ShowFoldingLines = btShowFoldingLines.Checked;
       if (CurrentTB != null)
         CurrentTB.Invalidate();
     }
@@ -798,9 +789,9 @@ namespace AW.Winforms.Helpers.Controls
     {
       //this example shows how to collapse all #region blocks (C#)
 
-      for (int iLine = 0; iLine < CurrentTB.LinesCount; iLine++)
+      for (var iLine = 0; iLine < CurrentTB.LinesCount; iLine++)
       {
-        if (CurrentTB[iLine].FoldingStartMarker == @"#region\b")//marker @"#region\b" was used in SetFoldingMarkers()
+        if (CurrentTB[iLine].FoldingStartMarker == @"#region\b") //marker @"#region\b" was used in SetFoldingMarkers()
           CurrentTB.CollapseFoldingBlock(iLine);
       }
     }
@@ -809,9 +800,9 @@ namespace AW.Winforms.Helpers.Controls
     {
       //this example shows how to expand all #region blocks (C#)
 
-      for (int iLine = 0; iLine < CurrentTB.LinesCount; iLine++)
+      for (var iLine = 0; iLine < CurrentTB.LinesCount; iLine++)
       {
-        if (CurrentTB[iLine].FoldingStartMarker == @"#region\b")//marker @"#region\b" was used in SetFoldingMarkers()
+        if (CurrentTB[iLine].FoldingStartMarker == @"#region\b") //marker @"#region\b" was used in SetFoldingMarkers()
           CurrentTB.ExpandFoldedBlock(iLine);
       }
     }
@@ -828,11 +819,11 @@ namespace AW.Winforms.Helpers.Controls
 
     private void hTMLToolStripMenuItem1_Click(object sender, EventArgs e)
     {
-      SaveFileDialog sfd = new SaveFileDialog();
+      var sfd = new SaveFileDialog();
       sfd.Filter = "HTML with <PRE> tag|*.html|HTML without <PRE> tag|*.html";
       if (sfd.ShowDialog() == DialogResult.OK)
       {
-        string html = "";
+        var html = "";
 
         if (sfd.FilterIndex == 1)
         {
@@ -840,36 +831,37 @@ namespace AW.Winforms.Helpers.Controls
         }
         if (sfd.FilterIndex == 2)
         {
-
-          ExportToHTML exporter = new ExportToHTML();
-          exporter.UseBr = true;
-          exporter.UseNbsp = false;
-          exporter.UseForwardNbsp = true;
-          exporter.UseStyleTag = true;
+          var exporter = new ExportToHTML
+          {
+            UseBr = true,
+            UseNbsp = false,
+            UseForwardNbsp = true,
+            UseStyleTag = true
+          };
           html = exporter.GetHtml(CurrentTB);
         }
         File.WriteAllText(sfd.FileName, html);
       }
     }
 
-    MarkerStyle SameWordsStyle = new MarkerStyle(new SolidBrush(Color.FromArgb(40, Color.Gray)));
+    private readonly MarkerStyle _sameWordsStyle = new MarkerStyle(new SolidBrush(Color.FromArgb(40, Color.Gray)));
 
     private void fctb_SelectionChangedDelayed(object sender, EventArgs e)
     {
-      CurrentTB.VisibleRange.ClearStyle(SameWordsStyle);
+      CurrentTB.VisibleRange.ClearStyle(_sameWordsStyle);
       if (!CurrentTB.Selection.IsEmpty)
-        return;//user selected diapason
+        return; //user selected diapason
 
       //get fragment around caret
       var fragment = CurrentTB.Selection.GetFragment(@"\w");
-      string text = fragment.Text;
+      var text = fragment.Text;
       if (text.Length == 0)
         return;
       //highlight same words
       var ranges = CurrentTB.VisibleRange.GetRanges("\\b" + text + "\\b").ToArray();
       if (ranges.Length > 1)
         foreach (var r in ranges)
-          r.SetStyle(SameWordsStyle);
+          r.SetStyle(_sameWordsStyle);
     }
 
     private void goForwardCtrlShiftToolStripMenuItem_Click(object sender, EventArgs e)
@@ -887,14 +879,14 @@ namespace AW.Winforms.Helpers.Controls
       CurrentTB.DoAutoIndent();
     }
 
-    const int maxBracketSearchIterations = 2000;
+    private const int maxBracketSearchIterations = 2000;
 
-    void GoLeftBracket(FastColoredTextBox tb, char leftBracket, char rightBracket)
+    private void GoLeftBracket(FastColoredTextBox tb, char leftBracket, char rightBracket)
     {
-      Range range = tb.Selection.Clone();//need to clone because we will move caret
-      int counter = 0;
-      int maxIterations = maxBracketSearchIterations;
-      while (range.GoLeftThroughFolded())//move caret left
+      var range = tb.Selection.Clone(); //need to clone because we will move caret
+      var counter = 0;
+      var maxIterations = maxBracketSearchIterations;
+      while (range.GoLeftThroughFolded()) //move caret left
       {
         if (range.CharAfterStart == leftBracket) counter++;
         if (range.CharAfterStart == rightBracket) counter--;
@@ -912,11 +904,11 @@ namespace AW.Winforms.Helpers.Controls
       tb.Invalidate();
     }
 
-    void GoRightBracket(FastColoredTextBox tb, char leftBracket, char rightBracket)
+    private void GoRightBracket(FastColoredTextBox tb, char leftBracket, char rightBracket)
     {
-      var range = tb.Selection.Clone();//need clone because we will move caret
-      int counter = 0;
-      int maxIterations = maxBracketSearchIterations;
+      var range = tb.Selection.Clone(); //need clone because we will move caret
+      var counter = 0;
+      var maxIterations = maxBracketSearchIterations;
       do
       {
         if (range.CharAfterStart == leftBracket) counter++;
@@ -932,7 +924,7 @@ namespace AW.Winforms.Helpers.Controls
         //
         maxIterations--;
         if (maxIterations <= 0) break;
-      } while (range.GoRightThroughFolded());//move caret right
+      } while (range.GoRightThroughFolded()); //move caret right
 
       tb.Invalidate();
     }
@@ -975,28 +967,27 @@ namespace AW.Winforms.Helpers.Controls
       //some statements: case, default
       if (Regex.IsMatch(args.LineText, @"^\s*(case|default)\b.*:\s*($|//)"))
       {
-        args.Shift = -args.TabLength / 2;
+        args.Shift = -args.TabLength/2;
         return;
       }
       //is unclosed operator in previous line ?
       if (Regex.IsMatch(args.PrevLineText, @"^\s*(if|for|foreach|while|[\}\s]*else)\b[^{]*$"))
-        if (!Regex.IsMatch(args.PrevLineText, @"(;\s*$)|(;\s*//)"))//operator is unclosed
+        if (!Regex.IsMatch(args.PrevLineText, @"(;\s*$)|(;\s*//)")) //operator is unclosed
         {
           args.Shift = args.TabLength;
-          return;
         }
     }
 
     private void miPrint_Click(object sender, EventArgs e)
     {
-      CurrentTB.Print(new PrintDialogSettings() { ShowPrintPreviewDialog = true });
+      CurrentTB.Print(new PrintDialogSettings {ShowPrintPreviewDialog = true});
     }
 
-    Random rnd = new Random();
+    private readonly Random rnd = new Random();
 
     private void miChangeColors_Click(object sender, EventArgs e)
     {
-      var styles = new Style[] { CurrentTB.SyntaxHighlighter.BlueBoldStyle, CurrentTB.SyntaxHighlighter.BlueStyle, CurrentTB.SyntaxHighlighter.BoldStyle, CurrentTB.SyntaxHighlighter.BrownStyle, CurrentTB.SyntaxHighlighter.GrayStyle, CurrentTB.SyntaxHighlighter.GreenStyle, CurrentTB.SyntaxHighlighter.MagentaStyle, CurrentTB.SyntaxHighlighter.MaroonStyle, CurrentTB.SyntaxHighlighter.RedStyle };
+      var styles = new[] {CurrentTB.SyntaxHighlighter.BlueBoldStyle, CurrentTB.SyntaxHighlighter.BlueStyle, CurrentTB.SyntaxHighlighter.BoldStyle, CurrentTB.SyntaxHighlighter.BrownStyle, CurrentTB.SyntaxHighlighter.GrayStyle, CurrentTB.SyntaxHighlighter.GreenStyle, CurrentTB.SyntaxHighlighter.MagentaStyle, CurrentTB.SyntaxHighlighter.MaroonStyle, CurrentTB.SyntaxHighlighter.RedStyle};
       CurrentTB.SyntaxHighlighter.AttributeStyle = styles[rnd.Next(styles.Length)];
       CurrentTB.SyntaxHighlighter.ClassNameStyle = styles[rnd.Next(styles.Length)];
       CurrentTB.SyntaxHighlighter.CommentStyle = styles[rnd.Next(styles.Length)];
@@ -1031,17 +1022,17 @@ namespace AW.Winforms.Helpers.Controls
     private void changeHotkeysToolStripMenuItem_Click(object sender, EventArgs e)
     {
       var form = new HotkeysEditorForm(CurrentTB.HotkeysMapping);
-      if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+      if (form.ShowDialog() == DialogResult.OK)
         CurrentTB.HotkeysMapping = form.GetHotkeys();
     }
 
     private void rTFToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      SaveFileDialog sfd = new SaveFileDialog();
+      var sfd = new SaveFileDialog();
       sfd.Filter = "RTF|*.rtf";
       if (sfd.ShowDialog() == DialogResult.OK)
       {
-        string rtf = CurrentTB.Rtf;
+        var rtf = CurrentTB.Rtf;
         File.WriteAllText(sfd.FileName, rtf);
       }
     }
@@ -1060,6 +1051,7 @@ namespace AW.Winforms.Helpers.Controls
     {
       CurrentTB.RemoveLinePrefix(CurrentTB.CommentPrefix);
     }
+
     #endregion
 
     public void Merge(ToolStrip sourceToolStrip)
@@ -1100,8 +1092,6 @@ namespace AW.Winforms.Helpers.Controls
           }
         }
     }
-
-
   }
 
   public class TbInfo

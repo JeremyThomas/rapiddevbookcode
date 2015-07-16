@@ -635,7 +635,6 @@ namespace AW.Winforms.Helpers.Controls
       // 
       this.toolStripTextBoxNewPageSize.Name = "toolStripTextBoxNewPageSize";
       this.toolStripTextBoxNewPageSize.Size = new System.Drawing.Size(40, 25);
-      this.toolStripTextBoxNewPageSize.Text = global::AW.Winforms.Helpers.Properties.Settings.Default.PropertiesToExclude;
       // 
       // toolStripButtonSetPageSize
       // 
