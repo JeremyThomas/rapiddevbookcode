@@ -9,9 +9,9 @@ using AW.Winforms.Helpers.QueryRunner;
 
 public class Script : MarshalByRefObject, IQueryScript
 {
-    public IEnumerable Query()
-    {
-        return CustomerQueries.GetCustomerViewTypedView(5);
-    }
+  public static IEnumerable Query()
+  {
+    return CustomerQueries.GetCustomerViewTypedView(5);
+  }
 
 }

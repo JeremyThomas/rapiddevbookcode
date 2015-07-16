@@ -31,7 +31,7 @@ namespace AW.Tests
 
     private static T TestSerializerToCSharp<T>(T obj, string globalExcludeProperties = "", params Restriction[] entityRestrictions)
     {
-      return CreateCompilableSourceAndCompile<T>(obj.SerializerToCSharp(true, globalExcludeProperties, entityRestrictions));
+      return CreateCompilableSourceAndCompile<T>(obj.SerializeToCSharp(true, globalExcludeProperties, entityRestrictions));
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ namespace AW.Tests
 
     private static T TestSerializerLlbltoCSharp<T>(T obj)
     {
-      var result = obj.SerializerToCSharp(false, "Fields,EntityFactoryToUse");
+      var result = obj.SerializeToCSharp(false, "Fields,EntityFactoryToUse");
       var rootVariable = CompilableSource<T>(result, typeof (EntityBase2), typeof (IEditableObject), typeof (XmlEntity));
       return rootVariable;
     }

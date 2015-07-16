@@ -103,6 +103,7 @@
     <None Include="app.config" />
     <None Include="AW.EnumerableVisualizer.glm" />
     <None Include="DebugDeploy.bat" />
+    <None Include="DebugDeploy2015.bat" />
     <None Include="MergeAndDeploy.Bat" />
     <None Include="ObjectSourceVisualizer.ilproj" />
     <None Include="packages.config" />

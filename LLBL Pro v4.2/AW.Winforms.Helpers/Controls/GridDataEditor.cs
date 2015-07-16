@@ -840,14 +840,20 @@ namespace AW.Winforms.Helpers.Controls
 
     private void toolStripButtonCSharp_Click(object sender, EventArgs e)
     {
-      Settings.Default.PropertiesToExclude = Microsoft.VisualBasic.Interaction.InputBox(
-        string.Format("Enter the properties to exclude from {0} and {1} seperated by commas.", SourceEnumerable.GetType().FullName, ItemType) ,
-        "Choose Properties To Exclude", Settings.Default.PropertiesToExclude);
-      var cSharp = SourceEnumerable.SerializerToCSharp(false, Settings.Default.PropertiesToExclude);
+      var cSharp = SourceEnumerable.SerializeToCSharp(false, PromptForPropertiesToExclude());
       var frmQueryRunner = new FrmQueryRunner(DataEditorPersister.Save, DataEditorPersister.Delete);
       frmQueryRunner.ViewText(cSharp);
       frmQueryRunner.ShowDialog();
       Settings.Default.Save();
+    }
+
+    private string PromptForPropertiesToExclude()
+    {
+      Helper.Properties.Settings.Default.PropertiesToExclude = Microsoft.VisualBasic.Interaction.InputBox(
+        string.Format("Enter the properties to exclude from {0} and {1};{2}seperated by commas.",
+          SourceEnumerable.GetType().FriendlyName(), ItemType.FriendlyName(), Environment.NewLine),
+        "Choose Properties To Exclude", Helper.Properties.Settings.Default.PropertiesToExclude);
+      return Helper.Properties.Settings.Default.PropertiesToExclude;
     }
   }
 }

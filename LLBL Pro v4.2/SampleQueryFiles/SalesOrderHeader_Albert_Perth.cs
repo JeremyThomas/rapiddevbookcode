@@ -7,12 +7,11 @@ using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Data.Linq;
 using AW.Helper.LLBL;
-using AW.Winforms.Helpers.QueryRunner;
 
-public class Script : MarshalByRefObject, IQueryScript
+public class Script 
 {
-    public IEnumerable Query()
-    {
+  public static IEnumerable Query()
+  {
        AW.Data.DaoClasses.CommonDaoBase.ActualConnectionString = @"data source=(local)\sqlexpress;initial catalog=AdventureWorks;integrated security=SSPI";
         return (from soh in MetaSingletons.MetaData.SalesOrderHeader
            where ((IndividualEntity)soh.Customer).Contact.FirstName.Contains("Albert") && soh.Customer.CustomerAddresses.Any(ca => ca.Address.City == "Perth")

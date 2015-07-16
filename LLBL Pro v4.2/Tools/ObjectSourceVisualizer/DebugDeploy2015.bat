@@ -10,13 +10,13 @@ IF EXIST "!USERPROFILE!\Documents" (
 ) 
 )
 
-set VisualizersDir= "%USERPROFILE%\My Documents\Visual Studio 2013\Visualizers"
-IF EXIST "%USERPROFILE%\My Documents\Visual Studio 2013\Visualizers" (
+set VisualizersDir= "%USERPROFILE%\My Documents\Visual Studio 2015\Visualizers"
+IF EXIST "%USERPROFILE%\My Documents\Visual Studio 2015\Visualizers" (
   echo using 1 !VisualizersDir!
 ) else (
     echo !VisualizersDir! not found 1
-    set VisualizersDir= "%USERPROFILE%\Documents\Visual Studio 2013\Visualizers"
-    IF EXIST "%USERPROFILE%\Documents\Visual Studio 2013\Visualizers" (
+    set VisualizersDir= "%USERPROFILE%\Documents\Visual Studio 2015\Visualizers"
+    IF EXIST "%USERPROFILE%\Documents\Visual Studio 2015\Visualizers" (
       echo using 2 !VisualizersDir!
       ) else (
       echo !VisualizersDir! not found 2

@@ -10,19 +10,19 @@ using AW.Helper.LLBL;
 using AW.Winforms.Helpers.QueryRunner;
 using AW.Winforms.Helpers.LLBL;
 
-public class Script : MarshalByRefObject, IQueryScript
+public class Script
 {
-    public IEnumerable Query()
-    {
-        var contacts = from contact in MetaSingletons.MetaData.Contact
-                                     where contact.FirstName.Contains("Albert")
-                                     select contact;
+  public static IEnumerable Query()
+  {
+    var contacts = from contact in MetaSingletons.MetaData.Contact
+                   where contact.FirstName.Contains("Albert")
+                   select contact;
 
-        return contacts.AsEnumerable().ShowInGrid(20);
-        //var t= x.ToList();
-        //return  AW.Winforms.Helpers.AWHelper.ViewInDataGridView(x);
-        //return AW.Winforms.Helpers.AWHelper.EditInDataGridView(t, MetaSingletons.Save, typeof(IEntity));
-        //return AW.Winforms.Helpers.DataEditor.DataEditorExtensions.EditInDataGridView(contacts, EntityHelper.Save, EntityHelper.Delete);
-    }
+    return contacts.AsEnumerable().ShowInGrid(20);
+    //var t= x.ToList();
+    //return  AW.Winforms.Helpers.AWHelper.ViewInDataGridView(x);
+    //return AW.Winforms.Helpers.AWHelper.EditInDataGridView(t, MetaSingletons.Save, typeof(IEntity));
+    //return AW.Winforms.Helpers.DataEditor.DataEditorExtensions.EditInDataGridView(contacts, EntityHelper.Save, EntityHelper.Delete);
+  }
 
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using AW.Helper;
 using AW.Helper.LLBL;
 using AW.LLBLGen.DataContextDriver.Static;
 using AW.Winforms.Helpers.Controls;
@@ -16,6 +17,11 @@ namespace AW.LLBLGen.DataContextDriver
 {
   public static class CustomVisualizers
   {
+    static CustomVisualizers()
+    {
+      CSharpSerializer.SetPropertiesToExcludeIfEmpty("Fields,EntityFactoryToUse");
+    }
+    
     /// <summary>
     /// Displays the enumerable in a paged DataGridView Custom Visualizer.
     /// If the enumerable contains LLBL entities it attempts to create a LLBL Persister

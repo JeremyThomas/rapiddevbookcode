@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("ObjectSourceVisualizer.2013")]
+[assembly: AssemblyTitle("ObjectSourceVisualizer")]
 [assembly: AssemblyDescription("ObjectSource Debugger Visualizer for VS2013")]
 [assembly: AssemblyProduct("ObjectSource Debugger Visualizer for VS2013")]
-[assembly: AssemblyCopyright("Copyright © Jeremy Thomas 2014")]
+[assembly: AssemblyCopyright("Copyright © Jeremy Thomas 2015")]
 [assembly: AssemblyCompany("Jeremy Thomas")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

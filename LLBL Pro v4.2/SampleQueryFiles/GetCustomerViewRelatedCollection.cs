@@ -10,8 +10,8 @@ using AW.Winforms.Helpers.QueryRunner;
 
 public class Script : MarshalByRefObject, IQueryScript
 {
-	public IEnumerable Query()
-	{
+  public static IEnumerable Query()
+  {
 		return CustomerQueries.GetCustomerViewRelatedCollection();
 	}
 

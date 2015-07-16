@@ -9,20 +9,16 @@ using Northwind.DAL.EntityClasses;
 using Northwind.DAL.Linq;
 using Northwind.DAL.Linq.Filters;
 using Northwind.DAL.SqlServer;
-using AW.Winforms.Helpers.QueryRunner;
+using AW.Helper.LLBL;
 
-public class Script : MarshalByRefObject, IQueryScript
+public static class Script 
 {
-  public IEnumerable Query()
+  public static IEnumerable Query()
   {
-    return from p in (new LinqMetaData(new DataAccessAdapter("Data Source=(local);Initial Catalog=Northwind;Integrated Security=True"))).Product
+    return (from p in (new LinqMetaData(new DataAccessAdapter("Data Source=(local);Initial Catalog=Northwind;Integrated Security=True"))).Product
            from od in p.OrderDetails.DefaultIfEmpty()
            where od.Quantity < 2
-           select p;
+           select p).ToEntityCollection2();
   }
        
-         public static object test()
-  {
-      return null;
-  }
 }

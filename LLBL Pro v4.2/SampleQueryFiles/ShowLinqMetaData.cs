@@ -13,7 +13,7 @@ using AW.Winforms.Helpers.QueryRunner;
 
 public class Script : MarshalByRefObject, IQueryScript
 {
-  public IEnumerable Query()
+  public static IEnumerable Query()
   {
     AW.Winforms.Helpers.LLBL.FrmLLBLEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, EntityHelper.Save, typeof(IEntity));
   }
