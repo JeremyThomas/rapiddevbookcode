@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Northwind.DAL.EntityClasses;
 using SD.LLBLGen.Pro.LinqSupportClasses;
+using LLBLGen.Linq.Prefetch;
 
 namespace Northwind.DAL.Linq
 {
@@ -41,5 +42,10 @@ namespace Northwind.DAL.Linq
 		{
 			return productEntities.WithPath(cp => cp.Prefetch<OrderDetailEntity>(c => c.OrderDetails).SubPath(p => p.Prefetch<OrderEntity>(c => c.Order).SubPath(o => o.Prefetch(or => or.Customer))));
 		}
-	}
+
+    public static IQueryable<ProductEntity> PrefetchCategorySupplier(this IQueryable<ProductEntity> productEntities)
+    {
+      return productEntities.With(cp => cp.Supplier).With(cp => cp.Category);
+    }
+  }
 }

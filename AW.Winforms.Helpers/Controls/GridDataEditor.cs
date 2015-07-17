@@ -460,6 +460,7 @@ namespace AW.Winforms.Helpers.Controls
     private Type _itemType;
     protected bool SupportsNotifyPropertyChanged;
     private ushort _pageSize;
+    public static OutputFormat SerializeToCSharpOutputFormat = OutputFormat.Compileable;
 
     protected virtual Type ItemType
     {
@@ -840,7 +841,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void toolStripButtonCSharp_Click(object sender, EventArgs e)
     {
-      var cSharp = SourceEnumerable.SerializeToCSharp(false, PromptForPropertiesToExclude());
+      var cSharp = SourceEnumerable.SerializeToCSharp(SerializeToCSharpOutputFormat, PromptForPropertiesToExclude());
       var frmQueryRunner = new FrmQueryRunner(DataEditorPersister.Save, DataEditorPersister.Delete);
       frmQueryRunner.ViewText(cSharp);
       frmQueryRunner.ShowDialog();

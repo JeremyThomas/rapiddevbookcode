@@ -5,7 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using AW.Helper;
 using AW.Helper.LLBL;
-using AW.LLBLGen.DataContextDriver.Static;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.LLBL;
 using LINQPad;
@@ -20,11 +19,12 @@ namespace AW.LLBLGen.DataContextDriver
     static CustomVisualizers()
     {
       CSharpSerializer.SetPropertiesToExcludeIfEmpty("Fields,EntityFactoryToUse");
+      GridDataEditor.SerializeToCSharpOutputFormat = OutputFormat.LinqpadProgram;
     }
-    
+
     /// <summary>
-    /// Displays the enumerable in a paged DataGridView Custom Visualizer.
-    /// If the enumerable contains LLBL entities it attempts to create a LLBL Persister
+    ///   Displays the enumerable in a paged DataGridView Custom Visualizer.
+    ///   If the enumerable contains LLBL entities it attempts to create a LLBL Persister
     /// </summary>
     /// <param name="enumerable">The enumerable.</param>
     /// <param name="pageSize">Size of the page.</param>
@@ -37,19 +37,19 @@ namespace AW.LLBLGen.DataContextDriver
       if (enumerable != null)
       {
         var elementType = LinqUtils.DetermineSetElementType(enumerable.GetType());
-        if (typeof(EntityBase).IsAssignableFrom(elementType))
+        if (typeof (EntityBase).IsAssignableFrom(elementType))
           dataEditorPersister = new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister();
         else
-          {
-            var dataAccessAdapter = EntityHelper.GetDataAccessAdapter(enumerable);
-            if (dataAccessAdapter != null) dataEditorPersister = new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter);
-          }
+        {
+          var dataAccessAdapter = EntityHelper.GetDataAccessAdapter(enumerable);
+          if (dataAccessAdapter != null) dataEditorPersister = new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter);
+        }
       }
       return enumerable.DisplayInGrid(dataEditorPersister, pageSize, options);
     }
 
     /// <summary>
-    /// Browses the data as LLBL Entities from a LINQPad like Treeview.
+    ///   Browses the data as LLBL Entities from a LINQPad like Treeview.
     /// </summary>
     /// <param name="linqMetaData">The linq meta data.</param>
     /// <param name="useSchema">if set to <c>true</c> group by schema.</param>
@@ -62,7 +62,7 @@ namespace AW.LLBLGen.DataContextDriver
     {
       if (linqMetaData == null)
         return false;
-      PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, MembersToExcludeCache.GetMembersToExclude(typeof(EntityBase))), "Data Browser");
+      PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, MembersToExcludeCache.GetMembersToExclude(typeof (EntityBase))), "Data Browser");
       return true;
     }
 
@@ -90,7 +90,7 @@ namespace AW.LLBLGen.DataContextDriver
     }
 
     public static IEnumerable<T> DisplaySelfServicingHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
-                                                                          Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression) where T : EntityBase
+      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression) where T : EntityBase
     {
       return enumerable.DisplayHierarchyInTree(iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
     }
@@ -125,13 +125,13 @@ namespace AW.LLBLGen.DataContextDriver
     }
 
     public static IEnumerable<T> DisplayAdapterHierarchyInTree<T, TId, TParentId, TName>(this IQueryable<T> query, Expression<Func<T, TId>> iDPropertyExpression,
-                                                                              Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression)
+      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression)
     {
       return query.DisplayHierarchyInTree(EntityHelper.GetDataAccessAdapter(query), iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression);
     }
 
     public static IEnumerable<T> DisplayHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, Expression<Func<T, TId>> iDPropertyExpression,
-                                                                          Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression)
+      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression)
     {
       return enumerable.DisplayHierarchyInTree(iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter));
     }
