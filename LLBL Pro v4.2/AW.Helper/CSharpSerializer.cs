@@ -30,6 +30,13 @@ namespace AW.Helper
     }
   }
 
+  public enum OutputFormat
+  {
+    Compileable,
+    LinqpadProgram,
+    Snippet
+  }
+
   /// <summary>
   ///   https://github.com/jefflomax/csharp-object-to-object-literal
   /// </summary>
@@ -113,6 +120,7 @@ namespace AW.Helper
     /// </summary>
     /// <param name="obj">Object graph to serialize to C# Object Literal Constructor</param>
     /// <param name="asFragment">if set to <c>true</c> [as fragment].</param>
+    /// <param name="outputFormat"></param>
     /// <param name="globalExcludeProperties">Properties to globally exculde</param>
     /// <param name="entityRestrictions">
     ///   Entities to serialize as a limited set of properties, useful to limit depth of
@@ -124,11 +132,12 @@ namespace AW.Helper
     public static string SerializeToCSharp
       (
       this object obj,
-      bool asFragment = false,
+      OutputFormat outputFormat = OutputFormat.Compileable,
       string globalExcludeProperties = "",
       params Restriction[] entityRestrictions
       )
     {
+      var asFragment = outputFormat == OutputFormat.Snippet;
       var sb = new StringBuilder(1024);
 
       // Maintain a list of each entity encountered.  This is used to
@@ -175,39 +184,50 @@ namespace AW.Helper
         }
       }
 
+      switch (outputFormat)
+      {
+        case OutputFormat.Compileable:
+          var type = obj.GetType();
+          sb.AppendLine(FileHeader1 + "using " + type.Namespace + ";");
+          if (type.IsGenericType)
+            foreach (var genericTypeArgument in type.GenericTypeArguments)
+            {
+              sb.AppendLine("using " + genericTypeArgument.Namespace + ";");
+            }
+          else
+          {
+            var enumerable = obj as IEnumerable;
+            if (enumerable != null)
+            {
+              var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
+              sb.AppendLine("using " + itemType.Namespace + ";");
+            }
+          }
+          break;
+        case OutputFormat.LinqpadProgram:
+          sb.AppendLine(@"void Main()");
+          sb.AppendLine(@"{");
+          sb.AppendLine(string.Format(@"	{0}.{1}().Dump();", ResultClassName, ResultMethodName));
+          sb.AppendLine(@"}");
+          break;
+      }
+
       if (!asFragment)
       {
-        var type = obj.GetType();
-        sb.AppendLine(FileHeader1 + "using " + type.Namespace + ";");
-        if (type.IsGenericType)
-          foreach (var genericTypeArgument in type.GenericTypeArguments)
-          {
-            sb.AppendLine("using " + genericTypeArgument.Namespace + ";");
-          }
-        else
-        {
-          var enumerable = obj as IEnumerable;
-          if (enumerable != null)
-          {
-            var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
-            sb.AppendLine("using " + itemType.Namespace + ";");
-          }
-        }
-
         sb.AppendLine(NewLine + FileHeader2);
       }
 
       var rootEntity = new Entity(obj, String.Empty);
 
       sb.Append("var ");
+      string parent = rootEntity.UniqueName;
       WalkObject
         (
           obj,
           sb,
           entityMap,
           restrictions,
-          excludeProperties, 0, rootEntity.UniqueName
-        );
+          excludeProperties, 0, parent, false);
       if (!asFragment)
       {
         sb.AppendLine(NewLine + "return " + rootEntity.UniqueName + ";}}");
@@ -236,6 +256,7 @@ namespace AW.Helper
     /// <param name="excludeProperties"></param>
     /// <param name="level"></param>
     /// <param name="parent"></param>
+    /// <param name="isListInit"></param>
     /// <returns></returns>
     private static void WalkObject
       (
@@ -245,8 +266,7 @@ namespace AW.Helper
       Dictionary<string, HashSet<string>> restrictions,
       HashSet<string> excludeProperties,
       int level,
-      string parent
-      )
+      string parent, bool isListInit)
     {
       if (obj == null)
       {
@@ -286,7 +306,7 @@ namespace AW.Helper
       }
 
       Entity canonicalEntity;
-      if (entityMap.TryGetValue(entity, out canonicalEntity))
+      if (!isListInit && entityMap.TryGetValue(entity, out canonicalEntity))
       {
         // Entity has already been processed, such as a parent reference.  Emit at it's
         // original definition
@@ -310,12 +330,11 @@ namespace AW.Helper
 
       if (skipEntity) // TODO: Not Tested
         return;
-
-      entityMap.Add(entity, entity);
+      if (!isListInit)
+        entityMap.Add(entity, entity);
 
       // Emit Object with all base type  properties
-      var isListInit = String.IsNullOrWhiteSpace(parent);
-      if (isListInit)
+      if (string.IsNullOrWhiteSpace(parent))
         sb.AppendFormat("new {1}{2}{3}{{{4}", parent, workingTypeName, NewLine, Tabs(level), NewLine);
       else
         sb.AppendFormat("{0} = new {1}{2}{3}{{{4}", parent, workingTypeName, NewLine, Tabs(level), NewLine);
@@ -351,7 +370,9 @@ namespace AW.Helper
             appendComma = HandleBaseTypes(property, obj, sb, level);
           }
         }
-        sb.AppendFormat(isListInit ? "{0}{1}}},{2}" : "{0}{1}}};{2}", NewLine, Tabs(level), NewLine);
+        var endOfClassFormat = isListInit ? "{0}{1}}},{2}" : "{0}{1}}}{2};{2}";
+        if (!isListInit)
+        sb.AppendFormat(endOfClassFormat, NewLine, Tabs(level), NewLine);
 
         // Emit all class types and lists, assiging into the parent class/path
         foreach (var property in properties)
@@ -460,6 +481,13 @@ namespace AW.Helper
               {
                 var value = property.GetValue(obj);
                 if (value != null)
+                {
+                  if (isListInit)
+                  {
+                    var tabs = Tabs(level + 1);
+                    var comma = "," + NewLine+ tabs;
+                    sb.Append(comma);
+                  }
                   WalkObject
                     (
                       value,
@@ -468,8 +496,7 @@ namespace AW.Helper
                       restrictions,
                       excludeProperties,
                       level + 1,
-                      ParentPath(parent, propertyName)
-                    );
+                      ParentPath(parent, propertyName), isListInit);}
               }
               catch (Exception e)
               {
@@ -478,6 +505,8 @@ namespace AW.Helper
             }
           }
         }
+        if (isListInit)
+          sb.AppendFormat(endOfClassFormat, NewLine, Tabs(level), NewLine);
       }
     } // WalkObject
 
@@ -655,6 +684,7 @@ namespace AW.Helper
         case "Boolean":
         case "DateTime":
         case "String":
+        case "Decimal":
           sb.AppendFormat("{0} = {1}", property.Name, FormatType(value));
           return true;
 
@@ -727,8 +757,7 @@ namespace AW.Helper
                   entityMap,
                   restrictions,
                   exclude,
-                  level, isListItem ? "" : listEntity.UniqueName
-                );
+                  level, isListItem ? "" : listEntity.UniqueName, isListItem);
             }
           }
             break;

@@ -31,7 +31,7 @@ namespace AW.Tests
 
     private static T TestSerializerToCSharp<T>(T obj, string globalExcludeProperties = "", params Restriction[] entityRestrictions)
     {
-      return CreateCompilableSourceAndCompile<T>(obj.SerializeToCSharp(true, globalExcludeProperties, entityRestrictions));
+      return CreateCompilableSourceAndCompile<T>(obj.SerializeToCSharp(OutputFormat.Snippet, globalExcludeProperties, entityRestrictions));
     }
 
     /// <summary>
@@ -98,21 +98,34 @@ namespace AW.Tests
 
     private static Func<EquivalencyAssertionOptions<EntityBase2>, EquivalencyAssertionOptions<EntityBase2>> ExcludingLLBLProperties()
     {
-      return options => options.Excluding(o => o.Fields).Excluding(o => o.IsDirty).Excluding(o => o.IsNew);
+      return options => options.IncludingAllRuntimeProperties().ExcludingNestedObjects().Excluding(o => o.Fields).Excluding(o => o.IsDirty).Excluding(o => o.IsNew)
+      .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Fields")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("IsDirty")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("IsNew"))
+      .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Category"))
+      .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Internal"));
     }
 
     [TestMethod]
     public void SerializerAdapterToEntityCollectionToCSharpTest()
     {
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
-      var entities = northwindLinqMetaData.Customer.Take(3).ToEntityCollection2();
+      var entities = northwindLinqMetaData.Customer.Take(3).ToEntityCollection2(); //.PrefetchOrders().ToEntityCollection2();
       var rootVariable2 = TestSerializerLlbltoCSharp(entities);
       rootVariable2.ShouldAllBeEquivalentTo(entities, ExcludingLLBLProperties());
     }
 
+    [TestMethod]
+    public void SerializeAdapterEntityCollectionWithPrefetchToCSharpTest()
+    {
+      var northwindLinqMetaData = GetNorthwindLinqMetaData();
+      var productEntities = northwindLinqMetaData.Product.Take(3).PrefetchCategorySupplier().ToEntityCollection2();
+      var productEntitiesCompiled = TestSerializerLlbltoCSharp(productEntities);
+      productEntitiesCompiled.ShouldAllBeEquivalentTo(productEntities, ExcludingLLBLProperties());
+    }
+
+
     private static T TestSerializerLlbltoCSharp<T>(T obj)
     {
-      var result = obj.SerializeToCSharp(false, "Fields,EntityFactoryToUse");
+      var result = obj.SerializeToCSharp(OutputFormat.Compileable, "Fields,EntityFactoryToUse,Picture");
       var rootVariable = CompilableSource<T>(result, typeof (EntityBase2), typeof (IEditableObject), typeof (XmlEntity));
       return rootVariable;
     }
