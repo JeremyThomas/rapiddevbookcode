@@ -11,6 +11,7 @@ using FluentAssertions;
 using FluentAssertions.Equivalency;
 using Microsoft.CSharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Northwind.DAL.EntityClasses;
 using Northwind.DAL.Linq;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -99,9 +100,9 @@ namespace AW.Tests
     private static Func<EquivalencyAssertionOptions<EntityBase2>, EquivalencyAssertionOptions<EntityBase2>> ExcludingLLBLProperties()
     {
       return options => options.IncludingAllRuntimeProperties().ExcludingNestedObjects().Excluding(o => o.Fields).Excluding(o => o.IsDirty).Excluding(o => o.IsNew)
-      .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Fields")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("IsDirty")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("IsNew"))
-      .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Category"))
-      .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Internal"));
+        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Fields")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("IsDirty")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("IsNew"))
+        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Category"))
+        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Internal"));
     }
 
     [TestMethod]
@@ -122,13 +123,63 @@ namespace AW.Tests
       productEntitiesCompiled.ShouldAllBeEquivalentTo(productEntities, ExcludingLLBLProperties());
     }
 
-
     private static T TestSerializerLlbltoCSharp<T>(T obj)
     {
       var result = obj.SerializeToCSharp(OutputFormat.Compileable, "Fields,EntityFactoryToUse,Picture");
       var rootVariable = CompilableSource<T>(result, typeof (EntityBase2), typeof (IEditableObject), typeof (XmlEntity));
       return rootVariable;
     }
+
+    [TestMethod]
+    public void SerializerCustomerEntityWithOrderTest()
+    {
+      var customer = GetCustomerEntityWithOrder();
+      var rootVariable2 = TestSerializerLlbltoCSharp(customer);
+      rootVariable2.ShouldBeEquivalentTo(customer, ExcludingLLBLProperties());
+    }
+
+    public static CustomerEntity GetCustomerEntityWithOrder()
+    {
+      var CustomerEntity1594500641 = new CustomerEntity
+      {
+        Address = "Obere Str. 57",
+        City = "Berlin",
+        CompanyName = "Alfreds Futterkiste",
+        ContactName = "Maria Anders",
+        ContactTitle = "Sales Representative",
+        Country = "Germany",
+        CustomerId = "ALFKI",
+        Fax = "030-0076545",
+        Phone = "030-0074321",
+        PostalCode = "12209",
+        Region = ""
+      };
+      CustomerEntity1594500641.Orders.AddRange(new[]
+      {
+        new OrderEntity
+        {
+          CustomerId = "ALFKI",
+          EmployeeId = 4,
+          Freight = 61.0200m,
+          OrderDate = new DateTime(1997, 10, 3),
+          OrderId = 10692,
+          RequiredDate = new DateTime(1997, 10, 31),
+          ShipAddress = "Obere Str. 57",
+          ShipCity = "Berlin",
+          ShipCountry = "Germany",
+          ShipName = "Alfred's Futterkiste",
+          ShippedDate = new DateTime(1997, 10, 13),
+          ShipPostalCode = "12209",
+          ShipRegion = "",
+          ShipVia = 2,
+          Customer = CustomerEntity1594500641
+        }
+      }
+        );
+
+      return CustomerEntity1594500641;
+    }
+
 
     private static bool CompareOrders(Order lhs, Order rhs)
     {
