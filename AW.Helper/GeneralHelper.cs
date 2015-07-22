@@ -541,6 +541,105 @@ namespace AW.Helper
       return MetaDataHelper.ConvertToArray(list);
     }
 
+    /// <summary>
+    /// Adds the range specified to an ICollection(Of T) typed container.
+    /// 
+    /// </summary>
+    /// <typeparam name="T">type of the element in the Collection</typeparam><param name="container">The container.</param><param name="rangeToAdd">The range to add.</param>
+    public static void AddRange<T>(this ICollection<T> container, IEnumerable<T> rangeToAdd)
+    {
+      if (container == null || rangeToAdd == null)
+        return;
+      foreach (var obj in rangeToAdd)
+        container.Add(obj);
+    }
+    
+    /// <summary>
+    ///   Adds the range of items.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list">The list.</param>
+    /// <param name="range">The range.</param>
+    /// <returns></returns>
+    public static ICollection<T> AddRange<T>(this ICollection<T> list, params T[] range)
+    {
+      if (range != null)
+        list.AddRange((IEnumerable<T>)range);
+      return list;
+    }
+
+    /// <summary>
+    ///   does an Add distinct by checking if the list contains the item first before adding each item in the range.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list">The list.</param>
+    /// <param name="range">The range.</param>
+    /// <param name="comparer">The comparer.</param>
+    /// <returns></returns>
+    public static ICollection<T> AddRangeDistinct<T>(this ICollection<T> list, IEnumerable<T> range, IEqualityComparer<T> comparer)
+    {
+      foreach (var item in range)
+        list.AddDistinct(item, comparer);
+      return list;
+    }
+
+    /// <summary>
+    ///   Adds the range of items to the Collection if they are not already present.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list">The list.</param>
+    /// <param name="range">The range.</param>
+    /// <returns></returns>
+    public static ICollection<T> AddRangeDistinct<T>(this ICollection<T> list, params T[] range)
+    {
+      if (range != null)
+        list.AddRangeDistinct((IEnumerable<T>)range);
+      return list;
+    }
+
+    /// <summary>
+    ///   does an Add distinct by checking if the list contains the item first before adding each item in the range.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="range"></param>
+    /// <returns></returns>
+    public static ICollection<T> AddRangeDistinct<T>(this ICollection<T> list, IEnumerable<T> range)
+    {
+      foreach (var item in range)
+        list.AddDistinct(item);
+      return list;
+    }
+
+    /// <summary>
+    ///   Does a contains check before adding.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list">The list.</param>
+    /// <param name="item">The item.</param>
+    /// <param name="comparer">The comparer.</param>
+    /// <returns></returns>
+    public static ICollection<T> AddDistinct<T>(this ICollection<T> list, T item, IEqualityComparer<T> comparer)
+    {
+      if (!list.Contains(item, comparer))
+        list.Add(item);
+      return list;
+    }
+
+    /// <summary>
+    ///   Does a contains check before adding.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    public static ICollection<T> AddDistinct<T>(this ICollection<T> list, T item)
+    {
+      if (!list.Contains(item))
+        list.Add(item);
+      return list;
+    }
+
     #region Settings
 
     public static IEnumerable<string> GetStringCollection(SettingValueElement element)

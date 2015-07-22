@@ -48,7 +48,9 @@ namespace AW.Helper
     public static string KeyProperty = "Key";
 
     public static readonly string FileHeader1 = "using System;" + NewLine +
-                                                "using System.Collections.Generic;" + NewLine;
+                                                "using System.Collections.Generic;" + NewLine +
+                                                "using AW.Helper;" + NewLine;
+
 
     public static readonly string FileHeader2 = NewLine + "public static class " + ResultClassName + NewLine +
                                                 "{" + NewLine + "public  static object " + ResultMethodName + "() " + NewLine +
@@ -413,7 +415,7 @@ namespace AW.Helper
                     listParent = String.Format("{0} = new {1}", parentPath, listTypeName);
                   else
                   {
-                    listParent = String.Format("{0}.AddRange(new []", parentPath);
+                    listParent = String.Format("{0}.AddRangeDistinct(new []", parentPath);
                   }
 
                   if (list.Count == 0)
@@ -448,7 +450,7 @@ namespace AW.Helper
                         listParent = String.Format("{0} = new {1}", parentPath, pt);
                       else
                       {
-                        listParent = String.Format("{0}.AddRange(new []", parentPath);
+                        listParent = String.Format("{0}.AddRangeDistinct(new []", parentPath);
                       }
                     }
                     else
@@ -462,7 +464,7 @@ namespace AW.Helper
                         listParent = String.Format("{0} = new List<{1}>", parentPath, listTypeName);
                       else
                       {
-                        listParent = String.Format("{0}.AddRange(new []", parentPath);
+                        listParent = String.Format("{0}.AddRangeDistinct(new []", parentPath);
                       }
                     }
 
