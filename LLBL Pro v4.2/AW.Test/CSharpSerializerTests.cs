@@ -102,7 +102,9 @@ namespace AW.Tests
       return options => options.IncludingAllRuntimeProperties().ExcludingNestedObjects().Excluding(o => o.Fields).Excluding(o => o.IsDirty).Excluding(o => o.IsNew)
         .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Fields")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("IsDirty")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("IsNew"))
         .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Category"))
-        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Internal"));
+        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Internal"))
+        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Orders"))
+          .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Customer"));
     }
 
     [TestMethod]
@@ -126,7 +128,7 @@ namespace AW.Tests
     private static T TestSerializerLlbltoCSharp<T>(T obj)
     {
       var result = obj.SerializeToCSharp(OutputFormat.Compileable, "Fields,EntityFactoryToUse,Picture");
-      var rootVariable = CompilableSource<T>(result, typeof (EntityBase2), typeof (IEditableObject), typeof (XmlEntity));
+      var rootVariable = CompilableSource<T>(result, typeof (EntityBase2), typeof (IEditableObject), typeof(XmlEntity), typeof(GeneralHelper));
       return rootVariable;
     }
 
@@ -152,30 +154,50 @@ namespace AW.Tests
         Fax = "030-0076545",
         Phone = "030-0074321",
         PostalCode = "12209",
-        Region = ""
-      };
-      CustomerEntity1594500641.Orders.AddRange(new[]
-      {
-        new OrderEntity
+        Region = "",
+                Orders =
         {
-          CustomerId = "ALFKI",
-          EmployeeId = 4,
-          Freight = 61.0200m,
-          OrderDate = new DateTime(1997, 10, 3),
-          OrderId = 10692,
-          RequiredDate = new DateTime(1997, 10, 31),
-          ShipAddress = "Obere Str. 57",
-          ShipCity = "Berlin",
-          ShipCountry = "Germany",
-          ShipName = "Alfred's Futterkiste",
-          ShippedDate = new DateTime(1997, 10, 13),
-          ShipPostalCode = "12209",
-          ShipRegion = "",
-          ShipVia = 2,
-          Customer = CustomerEntity1594500641
+          new OrderEntity
+          {
+            CustomerId = "ALFKI",
+            EmployeeId = 4,
+            Freight = 61.0200m,
+            OrderDate = new DateTime(1997, 10, 3),
+            OrderId = 10692,
+            RequiredDate = new DateTime(1997, 10, 31),
+            ShipAddress = "Obere Str. 57",
+            ShipCity = "Berlin",
+            ShipCountry = "Germany",
+            ShipName = "Alfred's Futterkiste",
+            ShippedDate = new DateTime(1997, 10, 13),
+            ShipPostalCode = "12209",
+            ShipRegion = "",
+            ShipVia = 2,
+          }
         }
-      }
-        );
+      };
+      //CustomerEntity1594500641.Orders.AddRange(new[]
+      //{
+      //  new OrderEntity
+      //  {
+      //    CustomerId = "ALFKI",
+      //    EmployeeId = 4,
+      //    Freight = 61.0200m,
+      //    OrderDate = new DateTime(1997, 10, 3),
+      //    OrderId = 10692,
+      //    RequiredDate = new DateTime(1997, 10, 31),
+      //    ShipAddress = "Obere Str. 57",
+      //    ShipCity = "Berlin",
+      //    ShipCountry = "Germany",
+      //    ShipName = "Alfred's Futterkiste",
+      //    ShippedDate = new DateTime(1997, 10, 13),
+      //    ShipPostalCode = "12209",
+      //    ShipRegion = "",
+      //    ShipVia = 2,
+      //    Customer = CustomerEntity1594500641
+      //  }
+      //}
+      //  );
 
       return CustomerEntity1594500641;
     }
