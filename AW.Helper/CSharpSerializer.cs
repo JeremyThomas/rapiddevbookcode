@@ -121,7 +121,6 @@ namespace AW.Helper
     ///   Convert .NET object graph to C# source code
     /// </summary>
     /// <param name="obj">Object graph to serialize to C# Object Literal Constructor</param>
-    /// <param name="asFragment">if set to <c>true</c> [as fragment].</param>
     /// <param name="outputFormat"></param>
     /// <param name="globalExcludeProperties">Properties to globally exculde</param>
     /// <param name="entityRestrictions">
@@ -232,7 +231,7 @@ namespace AW.Helper
           excludeProperties, 0, parent, false);
       if (!asFragment)
       {
-        sb.AppendLine(NewLine + "return " + rootEntity.UniqueName + ";}}");
+        sb.AppendLine(string.Format("{0}return {1};{0}}}}}", NewLine, rootEntity.UniqueName));
       }
       return sb.ToString();
     }
@@ -332,8 +331,10 @@ namespace AW.Helper
 
       if (skipEntity) // TODO: Not Tested
         return;
-      if (!isListInit)
-        entityMap.Add(entity, entity);
+      //  if (!isListInit)
+      if (entityMap.ContainsKey(entity))
+        return;
+      entityMap.Add(entity, entity);
 
       // Emit Object with all base type  properties
       if (string.IsNullOrWhiteSpace(parent))
@@ -393,138 +394,151 @@ namespace AW.Helper
             var isIList = interfaces.Contains(typeof (IList));
             var isEnumerable = pt.FullName.StartsWith("System.Collections.Generic.IEnumerable");
             var isCollection = pt.FullName.StartsWith("System.Collections.Generic.IList");
-            if (!isListInit)
-              if (isIList || isCollection || isEnumerable)
+            //  if (!isListInit)
+            if (isIList || isCollection || isEnumerable)
+            {
+              var enumerable = (IEnumerable) property.GetValue(obj, null);
+              var list = enumerable as ICollection;
+
+              if (list == null)
               {
-                var enumerable = (IEnumerable) property.GetValue(obj, null);
-                var list = enumerable as ICollection;
+                if (property.CanWrite)
+                  sb.AppendFormat("{0}.{1} = null;{2}", parent, property.Name, NewLine);
+              }
+              else if (pt.IsArray) // aka typeof(System.Array)
+              {
+                var listTypeName = pt.Name; // includes []
+                var listItemType = pt.GetElementType();
 
-                if (list == null)
+                var parentPath = ParentPath(parent, property.Name);
+                string listParent = null;
+                if (property.CanWrite)
+                  listParent = String.Format("{0} = new {1}", parentPath, listTypeName);
+                else
                 {
-                  if (property.CanWrite)
-                    sb.AppendFormat("{0}.{1} = null;{2}", parent, property.Name, NewLine);
+                  listParent = String.Format("{0}.AddRangeDistinct(new []", parentPath);
                 }
-                else if (pt.IsArray) // aka typeof(System.Array)
+
+                if (list.Count == 0)
                 {
-                  var listTypeName = pt.Name; // includes []
-                  var listItemType = pt.GetElementType();
-
-                  var parentPath = ParentPath(parent, property.Name);
-                  string listParent = null;
                   if (property.CanWrite)
-                    listParent = String.Format("{0} = new {1}", parentPath, listTypeName);
-                  else
-                  {
-                    listParent = String.Format("{0}.AddRangeDistinct(new []", parentPath);
-                  }
-
-                  if (list.Count == 0)
-                  {
-                    if (property.CanWrite)
-                      sb.AppendLine(listParent + " {};");
-                  }
-                  else
-                  {
-                    WalkList(list, listItemType, sb, entityMap, restrictions, excludeProperties, level + 1, parentPath, listParent);
-                  }
+                    sb.AppendLine(listParent + " {};");
                 }
                 else
                 {
-                  var genericArguments = pt.GetGenericArguments();
-                  if (list.Count > 0)
-                  {
-                    // List<T> and Collection<T> can be quite complex.  T could be a Nullable<T>
-                    // or a Dictionary<T,T>.  Currently this code handles only simple types
-                    // not nullables
-
-                    var isGeneric = pt.IsGenericType;
-                    var isGenericTypeDefinition = pt.IsGenericTypeDefinition;
-                    var isGenericType = pt.IsGenericType;
-                    Type listItemType;
-                    string listParent;
-                    var parentPath = ParentPath(parent, property.Name);
-                    if (genericArguments.Length == 0)
-                    {
-                      listItemType = ListBindingHelper.GetListItemType(list);
-                      if (property.CanWrite)
-                        listParent = String.Format("{0} = new {1}", parentPath, pt);
-                      else
-                      {
-                        listParent = String.Format("{0}.AddRangeDistinct(new []", parentPath);
-                      }
-                    }
-                    else
-                    {
-                      var firstGenericType = genericArguments[0];
-
-                      listItemType = firstGenericType.UnderlyingSystemType;
-
-                      var listTypeName = firstGenericType.Name;
-                      if (property.CanWrite)
-                        listParent = String.Format("{0} = new List<{1}>", parentPath, listTypeName);
-                      else
-                      {
-                        listParent = String.Format("{0}.AddRangeDistinct(new []", parentPath);
-                      }
-                    }
-
-                    WalkList(list, listItemType, sb, entityMap, restrictions, excludeProperties, level + 1, parentPath, listParent);
-                  }
-                  else if (property.CanWrite)
-                    if (genericArguments.Any())
-                    {
-                      var listTypeName = genericArguments[0].Name;
-                      sb.AppendFormat
-                        (
-                          "{0}.{1} = new List<{2}>();{3}",
-                          parent,
-                          property.Name,
-                          listTypeName,
-                          NewLine
-                        );
-                    }
-                    else
-                    {
-                      sb.AppendFormat
-                        (
-                          "{0}.{1} = new {2}();{3}",
-                          parent,
-                          property.Name,
-                          pt,
-                          NewLine);
-                    }
+                  WalkList(list, listItemType, sb, entityMap, restrictions, excludeProperties, level + 1, parentPath, listParent);
                 }
               }
               else
               {
-                // Recurse into class
-                try
+                var genericArguments = pt.GetGenericArguments();
+                if (list.Count > 0)
                 {
-                  var value = property.GetValue(obj);
-                  if (value != null)
+                  // List<T> and Collection<T> can be quite complex.  T could be a Nullable<T>
+                  // or a Dictionary<T,T>.  Currently this code handles only simple types
+                  // not nullables
+
+                  if (isListInit)
                   {
-                    if (isListInit)
-                    {
-                      var tabs = Tabs(level + 1);
-                      var comma = "," + NewLine + tabs;
-                      sb.Append(comma);
-                    }
-                    WalkObject
-                      (
-                        value,
-                        sb,
-                        entityMap,
-                        restrictions,
-                        excludeProperties,
-                        level + 1,
-                        ParentPath(parent, propertyName), isListInit);
+                    var tabs = Tabs(level + 1);
+                    var comma = "," + NewLine + tabs;
+                    sb.Append(comma);
                   }
+
+                  var isGeneric = pt.IsGenericType;
+                  var isGenericTypeDefinition = pt.IsGenericTypeDefinition;
+                  var isGenericType = pt.IsGenericType;
+                  Type listItemType;
+                  string listParent = null;
+                  var parentPath = ParentPath(parent, property.Name);
+                  if (genericArguments.Length == 0)
+                  {
+                    listItemType = ListBindingHelper.GetListItemType(list);
+                    if (property.CanWrite)
+                      listParent = String.Format("{0} = new {1}", parentPath, pt);
+                    else
+                    {
+                      listParent = String.Format("{0}.AddRangeDistinct(new []", parentPath);
+                    }
+                  }
+                  else
+                  {
+                    var firstGenericType = genericArguments[0];
+
+                    listItemType = firstGenericType.UnderlyingSystemType;
+
+                    var listTypeName = firstGenericType.Name;
+                    if (property.CanWrite)
+                      listParent = String.Format("{0} = new List<{1}>", parentPath, listTypeName);
+                    else
+                    {
+                      if (isListInit)
+                      {
+                        sb.AppendFormat("{0} = {{", parentPath);
+                        listParent = "";
+                      }
+                      else
+                        listParent = String.Format("{0}.AddRangeDistinct(new []", parentPath);
+                    }
+                  }
+
+                  WalkList(list, listItemType, sb, entityMap, restrictions, excludeProperties, level + 1, parentPath, listParent);
                 }
-                catch (Exception e)
+                else if (property.CanWrite)
+                  if (genericArguments.Any())
+                  {
+                    var listTypeName = genericArguments[0].Name;
+                    sb.AppendFormat
+                      (
+                        "{0}.{1} = new List<{2}>();{3}",
+                        parent,
+                        property.Name,
+                        listTypeName,
+                        NewLine
+                      );
+                  }
+                  else
+                  {
+                    sb.AppendFormat
+                      (
+                        "{0}.{1} = new {2}();{3}",
+                        parent,
+                        property.Name,
+                        pt,
+                        NewLine);
+                  }
+              }
+            }
+            else
+            {
+              // Recurse into class
+              try
+              {
+                var value = property.GetValue(obj);
+                if (value != null)
                 {
-                  sb.AppendLine("//" + e.Message);
+                  if (isListInit)
+                  {
+                    var tabs = Tabs(level + 1);
+                    var comma = "," + NewLine + tabs;
+                    sb.Append(comma);
+                  }
+                  WalkObject
+                    (
+                      value,
+                      sb,
+                      entityMap,
+                      restrictions,
+                      excludeProperties,
+                      level + 1,
+                      ParentPath(parent, propertyName), isListInit);
                 }
               }
+              catch (Exception e)
+              {
+                sb.AppendLine("//" + e.Message);
+              }
+            }
           }
         }
         if (isListInit)
@@ -794,7 +808,12 @@ namespace AW.Helper
           sb.AppendLine("};");
       }
       else if (processType == ListType.Class)
-        if (!isListItem)
+        if (isListItem)
+        {
+          if (!String.IsNullOrWhiteSpace(parent))
+            sb.Append("}," + NewLine);
+        }
+        else
         {
           appendComma = false;
           sb.Append(listParent + " {");

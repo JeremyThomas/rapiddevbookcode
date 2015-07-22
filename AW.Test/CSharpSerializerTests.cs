@@ -12,6 +12,7 @@ using FluentAssertions.Equivalency;
 using Microsoft.CSharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.EntityClasses;
+using Northwind.DAL.HelperClasses;
 using Northwind.DAL.Linq;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -32,25 +33,31 @@ namespace AW.Tests
 
     private static T TestSerializerToCSharp<T>(T obj, string globalExcludeProperties = "", params Restriction[] entityRestrictions)
     {
-      return CreateCompilableSourceAndCompile<T>(obj.SerializeToCSharp(OutputFormat.Snippet, globalExcludeProperties, entityRestrictions));
+      return CreateCompilableSourceAndCompile<T>(obj.SerializeToCSharp(OutputFormat.Snippet, globalExcludeProperties, entityRestrictions), typeof (GeneralHelper));
     }
 
     /// <summary>
     ///   Tests the c sharp source code by adding file header and compiling it.
     /// </summary>
+    /// <typeparam name="T"></typeparam>
     /// <param name="result">The result.</param>
-    /// <param name="referencedAssemblies">The referenced assemblies.</param>
+    /// <param name="types">The types.</param>
     /// <returns></returns>
-    private static T CreateCompilableSourceAndCompile<T>(string result, params string[] referencedAssemblies)
+    private static T CreateCompilableSourceAndCompile<T>(string result, params Type[] types)
     {
       var compilableSource = CreateCompilableSource(result, typeof (T));
 
-      return CompilableSource<T>(compilableSource, referencedAssemblies);
+      return CompilableSource<T>(compilableSource, GetAssemblies<T>(types));
     }
 
     private static T CompilableSource<T>(string compilableSource, params Type[] types)
     {
-      return CompilableSource<T>(compilableSource, types.Select(t => t.Assembly.Location).ToArray());
+      return CompilableSource<T>(compilableSource, GetAssemblies<T>(types));
+    }
+
+    private static string[] GetAssemblies<T>(IEnumerable<Type> types)
+    {
+      return types.Select(t => t.Assembly.Location).ToArray();
     }
 
     private static T CompilableSource<T>(string compilableSource, params string[] referencedAssemblies)
@@ -104,14 +111,14 @@ namespace AW.Tests
         .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Category"))
         .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Internal"))
         .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Orders"))
-          .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Customer"));
+        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Customer"));
     }
 
     [TestMethod]
     public void SerializerAdapterToEntityCollectionToCSharpTest()
     {
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
-      var entities = northwindLinqMetaData.Customer.Take(3).ToEntityCollection2(); //.PrefetchOrders().ToEntityCollection2();
+      var entities = northwindLinqMetaData.Customer.Take(3).PrefetchOrders().ToEntityCollection2(); //.ToEntityCollection2();
       var rootVariable2 = TestSerializerLlbltoCSharp(entities);
       rootVariable2.ShouldAllBeEquivalentTo(entities, ExcludingLLBLProperties());
     }
@@ -128,7 +135,7 @@ namespace AW.Tests
     private static T TestSerializerLlbltoCSharp<T>(T obj)
     {
       var result = obj.SerializeToCSharp(OutputFormat.Compileable, "Fields,EntityFactoryToUse,Picture");
-      var rootVariable = CompilableSource<T>(result, typeof (EntityBase2), typeof (IEditableObject), typeof(XmlEntity), typeof(GeneralHelper));
+      var rootVariable = CompilableSource<T>(result, typeof (EntityBase2), typeof (IEditableObject), typeof (XmlEntity), typeof (GeneralHelper));
       return rootVariable;
     }
 
@@ -138,6 +145,14 @@ namespace AW.Tests
       var customer = GetCustomerEntityWithOrder();
       var rootVariable2 = TestSerializerLlbltoCSharp(customer);
       rootVariable2.ShouldBeEquivalentTo(customer, ExcludingLLBLProperties());
+    }
+
+    [TestMethod]
+    public void SerializerCustomerEntityCollectionWithOrderTest()
+    {
+      var customerEntities = GetCustomerEntityCollectionWithOrder();
+      var rootVariable2 = TestSerializerLlbltoCSharp(customerEntities);
+      rootVariable2.ShouldAllBeEquivalentTo(customerEntities, ExcludingLLBLProperties());
     }
 
     public static CustomerEntity GetCustomerEntityWithOrder()
@@ -155,7 +170,7 @@ namespace AW.Tests
         Phone = "030-0074321",
         PostalCode = "12209",
         Region = "",
-                Orders =
+        Orders =
         {
           new OrderEntity
           {
@@ -172,7 +187,7 @@ namespace AW.Tests
             ShippedDate = new DateTime(1997, 10, 13),
             ShipPostalCode = "12209",
             ShipRegion = "",
-            ShipVia = 2,
+            ShipVia = 2
           }
         }
       };
@@ -200,6 +215,169 @@ namespace AW.Tests
       //  );
 
       return CustomerEntity1594500641;
+    }
+
+
+    public static EntityCollection<CustomerEntity> GetCustomerEntityCollectionWithOrder()
+    {
+      var entityCollection58667681 = new EntityCollection<CustomerEntity>
+      {
+        new CustomerEntity
+        {
+          Address = "Obere Str. 57",
+          City = "Berlin",
+          CompanyName = "Alfreds Futterkiste",
+          ContactName = "Maria Anders",
+          ContactTitle = "Sales Representative",
+          Country = "Germany",
+          CustomerId = "ALFKI",
+          Fax = "030-0076545",
+          Phone = "030-0074321",
+          PostalCode = "12209",
+          Region = "",
+          Orders =
+          {
+            new OrderEntity
+            {
+              CustomerId = "ALFKI",
+              EmployeeId = 6,
+              Freight = 29.4600m,
+              OrderDate = new DateTime(1997, 8, 25),
+              OrderId = 10643,
+              RequiredDate = new DateTime(1997, 9, 22),
+              ShipAddress = "Obere Str. 57",
+              ShipCity = "Berlin",
+              ShipCountry = "Germany",
+              ShipName = "Alfreds Futterkiste",
+              ShippedDate = new DateTime(1997, 9, 2),
+              ShipPostalCode = "12209",
+              ShipRegion = "",
+              ShipVia = 1
+            },
+            new OrderEntity
+            {
+              CustomerId = "ALFKI",
+              EmployeeId = 4,
+              Freight = 61.0200m,
+              OrderDate = new DateTime(1997, 10, 3),
+              OrderId = 10692,
+              RequiredDate = new DateTime(1997, 10, 31),
+              ShipAddress = "Obere Str. 57",
+              ShipCity = "Berlin",
+              ShipCountry = "Germany",
+              ShipName = "Alfred's Futterkiste",
+              ShippedDate = new DateTime(1997, 10, 13),
+              ShipPostalCode = "12209",
+              ShipRegion = "",
+              ShipVia = 2
+            }
+          }
+        },
+        new CustomerEntity
+        {
+          Address = "Avda. de la Constitución 2222",
+          City = "México D.F.",
+          CompanyName = "Ana Trujillo Emparedados y helados",
+          ContactName = "Ana Trujillo",
+          ContactTitle = "Owner",
+          Country = "Mexico",
+          CustomerId = "ANATR",
+          Fax = "(5) 555-3745",
+          Phone = "(5) 555-4729",
+          PostalCode = "05021",
+          Region = "",
+          Orders =
+          {
+            new OrderEntity
+            {
+              CustomerId = "ANATR",
+              EmployeeId = 7,
+              Freight = 1.6100m,
+              OrderDate = new DateTime(1996, 9, 18),
+              OrderId = 10308,
+              RequiredDate = new DateTime(1996, 10, 16),
+              ShipAddress = "Avda. de la Constitución 2222",
+              ShipCity = "México D.F.",
+              ShipCountry = "Mexico",
+              ShipName = "Ana Trujillo Emparedados y helados",
+              ShippedDate = new DateTime(1996, 9, 24),
+              ShipPostalCode = "05021",
+              ShipRegion = "",
+              ShipVia = 3
+            },
+            new OrderEntity
+            {
+              CustomerId = "ANATR",
+              EmployeeId = 3,
+              Freight = 43.9000m,
+              OrderDate = new DateTime(1997, 8, 8),
+              OrderId = 10625,
+              RequiredDate = new DateTime(1997, 9, 5),
+              ShipAddress = "Avda. de la Constitución 2222",
+              ShipCity = "México D.F.",
+              ShipCountry = "Mexico",
+              ShipName = "Ana Trujillo Emparedados y helados",
+              ShippedDate = new DateTime(1997, 8, 14),
+              ShipPostalCode = "05021",
+              ShipRegion = "",
+              ShipVia = 1
+            }
+          }
+        },
+        new CustomerEntity
+        {
+          Address = "Mataderos  2312",
+          City = "México D.F.",
+          CompanyName = "Antonio Moreno Taquería",
+          ContactName = "Antonio Moreno",
+          ContactTitle = "Owner",
+          Country = "Mexico",
+          CustomerId = "ANTON",
+          Fax = "",
+          Phone = "(5) 555-3932",
+          PostalCode = "05023",
+          Region = "",
+          Orders =
+          {
+            new OrderEntity
+            {
+              CustomerId = "ANTON",
+              EmployeeId = 3,
+              Freight = 22.0000m,
+              OrderDate = new DateTime(1996, 11, 27),
+              OrderId = 10365,
+              RequiredDate = new DateTime(1996, 12, 25),
+              ShipAddress = "Mataderos  2312",
+              ShipCity = "México D.F.",
+              ShipCountry = "Mexico",
+              ShipName = "Antonio Moreno Taquería",
+              ShippedDate = new DateTime(1996, 12, 2),
+              ShipPostalCode = "05023",
+              ShipRegion = "",
+              ShipVia = 2
+            },
+            new OrderEntity
+            {
+              CustomerId = "ANTON",
+              EmployeeId = 7,
+              Freight = 47.4500m,
+              OrderDate = new DateTime(1997, 4, 15),
+              OrderId = 10507,
+              RequiredDate = new DateTime(1997, 5, 13),
+              ShipAddress = "Mataderos  2312",
+              ShipCity = "México D.F.",
+              ShipCountry = "Mexico",
+              ShipName = "Antonio Moreno Taquería",
+              ShippedDate = new DateTime(1997, 4, 22),
+              ShipPostalCode = "05023",
+              ShipRegion = "",
+              ShipVia = 1
+            }
+          }
+        }
+      };
+
+      return entityCollection58667681;
     }
 
 
