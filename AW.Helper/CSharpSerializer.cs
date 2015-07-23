@@ -450,7 +450,7 @@ namespace AW.Helper
                   var isGenericType = pt.IsGenericType;
                   Type listItemType;
                   string listParent = null;
-                  var parentPath = ParentPath(parent, property.Name);
+                  var parentPath = isListInit? property.Name : ParentPath(parent, property.Name);
                   if (genericArguments.Length == 0)
                   {
                     listItemType = ListBindingHelper.GetListItemType(list);

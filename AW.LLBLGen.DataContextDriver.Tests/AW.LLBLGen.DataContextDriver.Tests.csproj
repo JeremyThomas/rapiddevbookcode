@@ -48,12 +48,12 @@
     <AssemblyOriginatorKeyFile>..\AW.LLBLGen.DataContextDriver\AW.LINQPad.LLBLGen.DataContextDriver.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions, Version=3.4.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.3.4.0\lib\net45\FluentAssertions.dll</HintPath>
+    <Reference Include="FluentAssertions, Version=3.4.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.3.4.1\lib\net45\FluentAssertions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FluentAssertions.Core, Version=3.4.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.3.4.0\lib\net45\FluentAssertions.Core.dll</HintPath>
+    <Reference Include="FluentAssertions.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.3.4.1\lib\net45\FluentAssertions.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="LINQPad, Version=1.0.0.0, Culture=neutral, PublicKeyToken=21353812cd2a2db5, processorArchitecture=MSIL">
@@ -61,14 +61,14 @@
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LINQPad\LINQPad.exe</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Moq, Version=4.2.1506.2016, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\packages\Moq.4.2.1506.2016\lib\net40\Moq.dll</HintPath>
+    <Reference Include="Moq, Version=4.2.1507.118, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <HintPath>..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20150609\lib\net45\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
+      <HintPath>..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20150721\lib\net45\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
