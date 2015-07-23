@@ -155,6 +155,77 @@ namespace AW.Tests
       rootVariable2.ShouldAllBeEquivalentTo(customerEntities, ExcludingLLBLProperties());
     }
 
+    [TestMethod]
+    public void SerializerProductsWithCategoriesTest()
+    {
+      var productEntities = GetProductsWithCategories();
+      var rootVariable2 = TestSerializerLlbltoCSharp(productEntities);
+      rootVariable2.ShouldAllBeEquivalentTo(productEntities, ExcludingLLBLProperties());
+    }
+
+    public static EntityCollection<ProductEntity> GetProductsWithCategories()
+    {
+      var entityCollection9185816 = new EntityCollection<ProductEntity>
+      {
+        new ProductEntity
+        {
+          CategoryId = 1,
+          Discontinued = false,
+          ProductId = 1,
+          ProductName = "Chai3",
+          QuantityPerUnit = "10 boxes x 20 bags",
+          ReorderLevel = 10,
+          SupplierId = 1,
+          UnitPrice = 18.0000m,
+          UnitsInStock = 39,
+          UnitsOnOrder = 0,
+          Category = new CategoryEntity
+          {
+            CategoryId = 1,
+            CategoryName = "Beverages",
+            Description = "Soft drinks, coffees, teas, beers, and ales",
+            Products =
+            {
+              new ProductEntity
+              {
+                CategoryId = 1,
+                Discontinued = false,
+                ProductId = 2,
+                ProductName = "Chang",
+                QuantityPerUnit = "24 - 12 oz bottles",
+                ReorderLevel = 25,
+                SupplierId = 1,
+                UnitPrice = 19.0000m,
+                UnitsInStock = 17,
+                UnitsOnOrder = 40
+              }
+            }
+          }
+        },
+        new ProductEntity
+        {
+          CategoryId = 2,
+          Discontinued = false,
+          ProductId = 3,
+          ProductName = "Aniseed Syrup",
+          QuantityPerUnit = "12 - 550 ml bottles",
+          ReorderLevel = 25,
+          SupplierId = 1,
+          UnitPrice = 10.0000m,
+          UnitsInStock = 13,
+          UnitsOnOrder = 70,
+          Category = new CategoryEntity
+          {
+            CategoryId = 2,
+            CategoryName = "Condiments",
+            Description = "Sweet and savory sauces, relishes, spreads, and seasonings"
+          }
+        }
+      };
+
+      return entityCollection9185816;
+    }
+
     public static CustomerEntity GetCustomerEntityWithOrder()
     {
       var CustomerEntity1594500641 = new CustomerEntity

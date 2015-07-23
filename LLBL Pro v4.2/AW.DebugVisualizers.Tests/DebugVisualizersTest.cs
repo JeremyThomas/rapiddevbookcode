@@ -226,6 +226,14 @@ namespace AW.DebugVisualizers.Tests
       TestShow(addressType.Fields, TestData.NumFieldProperties);
     }
 
+    [TestCategory("Winforms"), TestMethod]
+    public void EnumsTest()
+    {
+      var productCategoryFieldIndices = GeneralHelper.EnumAsEnumerable<ProductCategoryFieldIndex>(ProductCategoryFieldIndex.AmountOfFields).OfType<Enum>();
+
+      TestShow(productCategoryFieldIndices, 1);
+    }
+
     [TestCategory("Winforms"), TestMethod, Timeout(20000)]
     public void LargeSerializableQueryTest()
     {
