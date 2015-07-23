@@ -87,9 +87,22 @@ namespace AW.Helper
           : path;
       }
 
+      public static string FirstCharacterToLower(string str)
+      {
+        if (String.IsNullOrEmpty(str) || Char.IsLower(str, 0))
+          return str;
+
+        return Char.ToLowerInvariant(str[0]) + str.Substring(1);
+      }
+
       public string UniqueName
       {
-        get { return String.Format("{0}{1}", Type.Name.Before("`", Type.Name), Key); }
+        get { return FirstCharacterToLower(Type.Name.Before("`", Type.Name)) + Key; }
+      }
+
+      public override string ToString()
+      {
+        return Path;
       }
     }
 
@@ -450,7 +463,7 @@ namespace AW.Helper
                   var isGenericType = pt.IsGenericType;
                   Type listItemType;
                   string listParent = null;
-                  var parentPath = isListInit? property.Name : ParentPath(parent, property.Name);
+                  var parentPath = isListInit ? property.Name : ParentPath(parent, property.Name);
                   if (genericArguments.Length == 0)
                   {
                     listItemType = ListBindingHelper.GetListItemType(list);
@@ -758,47 +771,100 @@ namespace AW.Helper
       }
 
       var listEntities = new List<Entity>();
+      var entityMapForList = new HashSet<Entity>(new EntityEqualityComparer());
       var isListItem = String.IsNullOrWhiteSpace(listParent);
-      foreach (var obj in list)
+      if (isListItem) //Want breadth first
       {
-        switch (processType)
+        foreach (var obj in list)
         {
-          case ListType.Intrinsic:
-            if (appendComma)
-            {
-              sb.Append(",");
-            }
-            appendComma = true;
-            sb.AppendFormat("{0}", FormatType(obj));
-            break;
-          case ListType.Class:
+          switch (processType)
           {
-            // Lookup to see if this entity has ref'ed
-            var listEntity = new Entity(obj, String.Empty);
-
-            Entity canonicalEntity;
-            if (entityMap.TryGetValue(listEntity, out canonicalEntity))
+             case ListType.Class:
             {
-              listEntities.Add(canonicalEntity);
+              // Lookup to see if this entity has ref'ed
+              var listEntity = new Entity(obj, String.Empty);
+              if (!entityMap.ContainsKey(listEntity))
+              {
+                  entityMapForList.Add(listEntity);
+                  entityMap.Add(listEntity, listEntity);
+                }
             }
-            else
-            {
-              listEntities.Add(listEntity);
-              if (!isListItem)
-                sb.AppendFormat("{0}var ", Tabs(level));
-              WalkObject
-                (
-                  obj,
-                  sb,
-                  entityMap,
-                  restrictions,
-                  exclude,
-                  level, isListItem ? "" : listEntity.UniqueName, isListItem);
-            }
+              break;
           }
-            break;
+        }
+        foreach (var obj in list)
+        {
+          switch (processType)
+          {
+            case ListType.Intrinsic:
+              if (appendComma)
+              {
+                sb.Append(",");
+              }
+              appendComma = true;
+              sb.AppendFormat("{0}", FormatType(obj));
+              break;
+            case ListType.Class:
+              {
+                // Lookup to see if this entity has ref'ed
+                var listEntity = new Entity(obj, String.Empty);
+                if (entityMapForList.Contains(listEntity))
+                {
+                  entityMap.Remove(listEntity);
+                  WalkObject
+                    (
+                      obj,
+                      sb,
+                      entityMap,
+                      restrictions,
+                      exclude,
+                      level, "", true);
+                }
+              }
+              break;
+          }
         }
       }
+      else
+        foreach (var obj in list)
+        {
+          switch (processType)
+          {
+            case ListType.Intrinsic:
+              if (appendComma)
+              {
+                sb.Append(",");
+              }
+              appendComma = true;
+              sb.AppendFormat("{0}", FormatType(obj));
+              break;
+            case ListType.Class:
+            {
+              // Lookup to see if this entity has ref'ed
+              var listEntity = new Entity(obj, String.Empty);
+
+              Entity canonicalEntity;
+              if (entityMap.TryGetValue(listEntity, out canonicalEntity))
+              {
+                listEntities.Add(canonicalEntity);
+              }
+              else
+              {
+                listEntities.Add(listEntity);
+                sb.AppendFormat("{0}var ", Tabs(level));
+                WalkObject
+                  (
+                    obj,
+                    sb,
+                    entityMap,
+                    restrictions,
+                    exclude,
+                    level, listEntity.UniqueName, false);
+              }
+            }
+              break;
+          }
+        }
 
       if (processType == ListType.Intrinsic)
       {

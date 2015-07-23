@@ -165,7 +165,7 @@ namespace AW.Tests
 
     public static EntityCollection<ProductEntity> GetProductsWithCategories()
     {
-      var entityCollection9185816 = new EntityCollection<ProductEntity>
+      var entityCollection12882670 = new EntityCollection<ProductEntity>
       {
         new ProductEntity
         {
@@ -184,23 +184,21 @@ namespace AW.Tests
             CategoryId = 1,
             CategoryName = "Beverages",
             Description = "Soft drinks, coffees, teas, beers, and ales",
-            Products =
-            {
-              new ProductEntity
-              {
-                CategoryId = 1,
-                Discontinued = false,
-                ProductId = 2,
-                ProductName = "Chang",
-                QuantityPerUnit = "24 - 12 oz bottles",
-                ReorderLevel = 25,
-                SupplierId = 1,
-                UnitPrice = 19.0000m,
-                UnitsInStock = 17,
-                UnitsOnOrder = 40
-              }
-            }
+            Products = {}
           }
+        },
+        new ProductEntity
+        {
+          CategoryId = 1,
+          Discontinued = false,
+          ProductId = 2,
+          ProductName = "Chang",
+          QuantityPerUnit = "24 - 12 oz bottles",
+          ReorderLevel = 25,
+          SupplierId = 1,
+          UnitPrice = 19.0000m,
+          UnitsInStock = 17,
+          UnitsOnOrder = 40
         },
         new ProductEntity
         {
@@ -218,12 +216,13 @@ namespace AW.Tests
           {
             CategoryId = 2,
             CategoryName = "Condiments",
-            Description = "Sweet and savory sauces, relishes, spreads, and seasonings"
+            Description = "Sweet and savory sauces, relishes, spreads, and seasonings",
+            Products = {}
           }
         }
       };
 
-      return entityCollection9185816;
+      return entityCollection12882670;
     }
 
     public static CustomerEntity GetCustomerEntityWithOrder()
@@ -643,6 +642,7 @@ namespace AW.Tests
       return lhs.Key == rhs.Key &&
              // ReSharper disable once CompareOfFloatsByEqualityOperator
              lhs.Price == rhs.Price &&
+             lhs.Order != null &&
              lhs.Order.Key == rhs.Order.Key &&
              lhs.Quantity == rhs.Quantity &&
              lhs.Timestamp == rhs.Timestamp &&
