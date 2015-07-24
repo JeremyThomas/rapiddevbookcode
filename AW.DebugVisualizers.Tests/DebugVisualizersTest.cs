@@ -229,9 +229,9 @@ namespace AW.DebugVisualizers.Tests
     [TestCategory("Winforms"), TestMethod]
     public void EnumsTest()
     {
-      var productCategoryFieldIndices = GeneralHelper.EnumAsEnumerable<ProductCategoryFieldIndex>(ProductCategoryFieldIndex.AmountOfFields).OfType<Enum>();
-
-      TestShow(productCategoryFieldIndices, 1);
+      var productCategoryFieldIndices = GeneralHelper.EnumAsEnumerable((Enum)ProductCategoryFieldIndex.AmountOfFields);
+      TestSerialize(productCategoryFieldIndices);
+      //TestShow(productCategoryFieldIndices, 1);
     }
 
     [TestCategory("Winforms"), TestMethod, Timeout(20000)]

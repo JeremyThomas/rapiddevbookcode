@@ -110,10 +110,28 @@ namespace AW.Helper
     /// <returns> Enums as enumerable </returns>
     public static TEnum[] EnumAsEnumerable<TEnum>(params TEnum[] enumsToExclude)
     {
-      var enumType = typeof (TEnum);
-      CheckIsEnum(enumType);
-      var enumAsEnumerable = (TEnum[]) Enum.GetValues(enumType);
-      return enumsToExclude.IsNullOrEmpty() ? enumAsEnumerable : enumAsEnumerable.Where(et => !enumsToExclude.Contains(et)).ToArray();
+      var type = typeof(TEnum);
+      var enumType = MetaDataHelper.GetCoreType(type);
+      var nothingToExclude = enumsToExclude.IsNullOrEmpty();
+      if (enumType == typeof(Enum))
+      {
+        if (!nothingToExclude)
+          enumType = MetaDataHelper.GetCoreType(enumsToExclude[0].GetType());
+        CheckIsEnum(enumType);
+      }
+      if (!(enumType.IsEnum))
+        throw new ArgumentException(String.Format("typeof({0}).IsEnum == false", enumType), "TEnum");
+
+      TEnum[] enumAsEnumerable;
+      var values = Enum.GetValues(enumType);
+      if (enumType == type)
+        enumAsEnumerable = (TEnum[])values;
+      else
+      {
+        enumAsEnumerable = (values.Cast<TEnum>()).ToArray();
+        //enumAsEnumerable = ConvertArray<TEnum>(values);
+      }
+      return nothingToExclude ? enumAsEnumerable : enumAsEnumerable.Except(enumsToExclude).ToArray();
     }
 
     public static void CheckIsEnum(Type enumType)
