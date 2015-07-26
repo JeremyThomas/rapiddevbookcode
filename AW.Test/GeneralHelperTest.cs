@@ -71,7 +71,7 @@ namespace AW.Tests
     [TestMethod]
     public void IsNullOrEmptyTest()
     {
-      Assert.IsFalse(SerializableClass.GenerateList().Where(mc => !mc.NulllableIntField.Equals(1)).IsNullOrEmpty());
+      Assert.IsFalse(SerializableClass.GenerateList().Where(mc => !mc.NullableIntField.Equals(1)).IsNullOrEmpty());
       Assert.IsTrue((new List<SerializableClass>()).IsNullOrEmpty());
     }
 

@@ -9,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.ServiceModel.Dispatcher;
 using System.Windows.Forms;
 
 namespace AW.Helper
@@ -59,7 +58,7 @@ namespace AW.Helper
           yield return currentBaseType;
         if (currentBaseType.IsNested)
         {
-          var nestedTypeInBase = currentBaseType.DeclaringType.BaseType.GetNestedType(type.Name,BindingFlags.NonPublic| BindingFlags.Public);
+          var nestedTypeInBase = currentBaseType.DeclaringType.BaseType.GetNestedType(type.Name, BindingFlags.NonPublic | BindingFlags.Public);
           if (nestedTypeInBase != null)
             currentBaseType = nestedTypeInBase;
           else
@@ -67,7 +66,7 @@ namespace AW.Helper
         }
         else
           currentBaseType = currentBaseType.BaseType;
-      } while (currentBaseType != null && currentBaseType != typeof(object) && currentBaseType.Implements(typeof(IEnumerable)));
+      } while (currentBaseType != null && currentBaseType != typeof (object) && currentBaseType.Implements(typeof (IEnumerable)));
     }
 
     /// <summary>
@@ -158,7 +157,6 @@ namespace AW.Helper
     /// <param name="assembly">The assembly.</param>
     public static void AddSelfAssemblyResolverIfNeeded(Assembly assembly)
     {
- 
       if (AssemblyResolverIsNeeded(assembly))
         AddSelfAssemblyResolve(assembly);
     }
@@ -252,7 +250,7 @@ namespace AW.Helper
         from types in GetTypesContaining(assembly, typeName)
         select types;
     }
-    
+
     public static IEnumerable<string> GetNamespaces(Assembly assembly)
     {
       return (assembly.GetTypes().Select(t => t.Namespace)
@@ -355,7 +353,7 @@ namespace AW.Helper
 
     public static bool IsSerializable(Type type)
     {
-      if (type.IsSerializable || type.IsInterface)
+      if (type != typeof (Enum) && (type.IsSerializable || type.IsInterface))
       {
         var typeParametersOfGenericType = GetTypeParametersOfGenericType(type);
         return typeParametersOfGenericType.IsNullOrEmpty() || typeParametersOfGenericType.All(IsSerializable);
@@ -410,7 +408,7 @@ namespace AW.Helper
     /// <returns> </returns>
     public static object CreateGeneric(Type generic, Type innerType, params object[] args)
     {
-      var specificType = generic.MakeGenericType(new[] {innerType});
+      var specificType = generic.MakeGenericType(innerType);
       return Activator.CreateInstance(specificType, args);
     }
 
@@ -421,7 +419,7 @@ namespace AW.Helper
 
     public static Type CreateNullableType(Type innerType)
     {
-      return typeof (Nullable<>).MakeGenericType(new[] {innerType});
+      return typeof (Nullable<>).MakeGenericType(innerType);
     }
 
     public static IList ConvertToList(IEnumerable enumerable)
@@ -750,7 +748,7 @@ namespace AW.Helper
 
     public static T[] GetCustomAttributes<T>(Type type, bool inherit = true) where T : Attribute
     {
-      return ((T[])type.GetCustomAttributes(typeof(T), inherit));
+      return ((T[]) type.GetCustomAttributes(typeof (T), inherit));
     }
 
     /// <summary>
@@ -759,7 +757,7 @@ namespace AW.Helper
     /// <returns></returns>
     public static string GetBclMajorMinorVersion()
     {
-      return FileVersionInfo.GetVersionInfo(typeof(Enumerable).Assembly.Location).FileVersion.Substring(0, 3);
+      return FileVersionInfo.GetVersionInfo(typeof (Enumerable).Assembly.Location).FileVersion.Substring(0, 3);
     }
 
     public static string GetClassAssemblyName(Type t)

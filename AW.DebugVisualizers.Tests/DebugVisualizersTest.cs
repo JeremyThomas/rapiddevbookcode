@@ -11,6 +11,7 @@ using System.DirectoryServices.AccountManagement;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Windows.Data;
@@ -29,10 +30,12 @@ using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.Misc;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Northwind.DAL.HelperClasses;
 using Northwind.DAL.Linq;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using AddressType = AW.Data.AddressType;
+using CommonEntityBase = Northwind.DAL.EntityClasses.CommonEntityBase;
 
 namespace AW.DebugVisualizers.Tests
 {
@@ -226,12 +229,35 @@ namespace AW.DebugVisualizers.Tests
       TestShow(addressType.Fields, TestData.NumFieldProperties);
     }
 
-    [TestCategory("Winforms"), TestMethod]
+    /// <summary>
+    /// Need to handle Enum specially
+    /// </summary>
+    /// <remarks>https://social.msdn.microsoft.com/Forums/en-US/6551e338-747d-427b-b626-4232caffb74d/serialization-of-a-listenum-in-c?forum=netfxremoting</remarks>
+    [TestMethod]
     public void EnumsTest()
     {
+      var enums = new List<Enum>();
+      TestSerialize(enums);
+      enums.Add(ProductCategoryFieldIndex.AmountOfFields);
+      TestSerialize(enums);
       var productCategoryFieldIndices = GeneralHelper.EnumAsEnumerable((Enum)ProductCategoryFieldIndex.AmountOfFields);
       TestSerialize(productCategoryFieldIndices);
-      //TestShow(productCategoryFieldIndices, 1);
+    }
+
+    [TestMethod]
+    public void AbstractNoDefaultConstructorClassTest()
+    {
+      var list = new List<SerializableAbstractNoDefaultConstructorClass> {new SerializableNoDefaultConstructorClass("Hi")};
+      TestSerialize(list);
+    }
+
+    [TestMethod]
+    public void AbstractTest()
+    {
+      var serializableAbstractBaseClasses = new List<SerializableAbstractBaseClass>();
+      serializableAbstractBaseClasses.AddRange(SerializableBaseClass.GenerateList());
+      TestSerialize(serializableAbstractBaseClasses);
+      TestSerialize(serializableAbstractBaseClasses.ToArray());
     }
 
     [TestCategory("Winforms"), TestMethod, Timeout(20000)]
@@ -260,6 +286,9 @@ namespace AW.DebugVisualizers.Tests
       TestShowTransported(customerList, expectedColumnCount);
       TestShowTransported(northwindLinqMetaData.Customer, expectedColumnCount);
       TestShowTransported(northwindLinqMetaData.Customer.ToEntityCollection2(), expectedColumnCount);
+      var commonEntityBases = new EntityCollection<CommonEntityBase>();
+      commonEntityBases.AddRange(customerList);
+      TestSerialize(commonEntityBases);
     }
 
     private static LinqMetaData GetNorthwindLinqMetaData()
