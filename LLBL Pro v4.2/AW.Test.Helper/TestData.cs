@@ -183,7 +183,18 @@ namespace AW.Test.Helpers
   }
 
   [Serializable]
-  public class SerializableBaseClass
+  public abstract class SerializableAbstractBaseClass
+  {
+    //private readonly string _someString;
+
+    //protected SerializableAbstractBaseClass(string someString)
+    //{
+    //  _someString = someString;
+    //}
+  }
+
+  [Serializable]
+  public class SerializableBaseClass: SerializableAbstractBaseClass
   {
     public int IntField;
 
@@ -213,7 +224,7 @@ namespace AW.Test.Helpers
       set { StringField = value; }
     }
 
-    private new static List<SerializableBaseClass2> GenerateList()
+    private static List<SerializableBaseClass2> GenerateSerializableBaseClass2List()
     {
       var list = new List<SerializableBaseClass2>();
       for (var i = 0; i < 10; i++)
@@ -223,8 +234,8 @@ namespace AW.Test.Helpers
 
     public static List<SerializableBaseClass> GenerateListWithBothSerializableClasses()
     {
-      var list = SerializableBaseClass.GenerateList();
-      list.AddRange(GenerateList());
+      var list = GenerateList();
+      list.AddRange(GenerateSerializableBaseClass2List());
       return list;
     }
   }
@@ -256,12 +267,12 @@ namespace AW.Test.Helpers
   [Serializable]
   public class SerializableClass : NonSerializableClass
   {
-    public int? NulllableIntField;
+    public int? NullableIntField;
 
-    public int? NulllableIntProperty
+    public int? NullableIntProperty
     {
-      get { return NulllableIntField; }
-      set { NulllableIntField = value; }
+      get { return NullableIntField; }
+      set { NullableIntField = value; }
     }
 
     public new static List<SerializableClass> GenerateList()
@@ -284,6 +295,25 @@ namespace AW.Test.Helpers
       var list = SerializableBaseClass.GenerateList();
       list.AddRange(GenerateList());
       return list;
+    }
+  }
+
+  [Serializable]
+  public abstract class SerializableAbstractNoDefaultConstructorClass
+  {
+    public string SomeString { get; }
+
+    protected SerializableAbstractNoDefaultConstructorClass(string someString)
+    {
+      SomeString = someString;
+    }
+  }
+
+  [Serializable]
+  public class SerializableNoDefaultConstructorClass: SerializableAbstractNoDefaultConstructorClass
+  {
+    public SerializableNoDefaultConstructorClass(string someString):base(someString)
+    {
     }
   }
 }
