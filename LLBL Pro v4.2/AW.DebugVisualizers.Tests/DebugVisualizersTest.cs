@@ -15,6 +15,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Web.Caching;
+using System.Web.Mvc;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Xml;
@@ -32,11 +33,13 @@ using AW.Winforms.Helpers.Misc;
 using Microsoft.VisualBasic;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Web.Administration;
 using Northwind.DAL.HelperClasses;
 using Northwind.DAL.Linq;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using AddressType = AW.Data.AddressType;
+using Application = System.Windows.Forms.Application;
 using CommonEntityBase = Northwind.DAL.EntityClasses.CommonEntityBase;
 
 namespace AW.DebugVisualizers.Tests
@@ -86,7 +89,7 @@ namespace AW.DebugVisualizers.Tests
       get
       {
         if (_visualizerAttributesNotFound == null)
-          LoadDebuggerVisualizerAttributes(true);
+          LoadDebuggerVisualizerAttributes();
         return _visualizerAttributesNotFound;
       }
     }
@@ -96,7 +99,7 @@ namespace AW.DebugVisualizers.Tests
       get
       {
         if (_visualizerAttributesNotFoundInAssembly == null)
-          LoadDebuggerVisualizerAttributes(true);
+          LoadDebuggerVisualizerAttributes();
         return _visualizerAttributesNotFoundInAssembly;
       }
     }
@@ -108,36 +111,32 @@ namespace AW.DebugVisualizers.Tests
     /// <summary>
     ///   Creates a type=>debuggerVisualizerAttribute dictionary for later checking
     /// </summary>
-    private static void LoadDebuggerVisualizerAttributes(bool lookForMissing = false)
+    private static void LoadDebuggerVisualizerAttributes()
     {
       LoadTypes(typeof (CollectionView), typeof (Table<>), typeof (EnumerableRowCollection), typeof (Collection)
-        , typeof (Extensions), typeof (Cache), typeof (DirectoryEntry));
+        , typeof (Extensions), typeof (Cache), typeof (ActionResult),
+        typeof (SectionGroupCollection), typeof (DirectoryEntry));
 
       var majorMinorVersion = FileVersionInfo.GetVersionInfo(typeof (Enumerable).Assembly.Location).FileVersion.Substring(0, 3);
       var enumerableVisualizerType = typeof (EnumerableVisualizer);
       var assembly = enumerableVisualizerType.Assembly;
       var debuggerVisualizerAttributes = assembly.GetCustomAttributes(typeof (DebuggerVisualizerAttribute), false);
       _visualizerAttributes = new Dictionary<Type, DebuggerVisualizerAttribute>();
-      if (lookForMissing)
-      {
-        _visualizerAttributesNotFound = new List<DebuggerVisualizerAttribute>();
-        _visualizerAttributesNotFoundInAssembly = new List<DebuggerVisualizerAttribute>();
-      }
+
+      _visualizerAttributesNotFound = new List<DebuggerVisualizerAttribute>();
+      _visualizerAttributesNotFoundInAssembly = new List<DebuggerVisualizerAttribute>();
+
       foreach (var debuggerVisualizerAttribute in debuggerVisualizerAttributes.OfType<DebuggerVisualizerAttribute>()
         .Where(dv => dv.VisualizerTypeName == enumerableVisualizerType.AssemblyQualifiedName))
       {
         var type = MetaDataHelper.GetType(debuggerVisualizerAttribute.TargetTypeName);
         if (type == null)
         {
-          if (lookForMissing)
-          {
-            var parts = debuggerVisualizerAttribute.TargetTypeName.Split(',');
-            var assemblyName = parts[1];
-            if (MetaDataHelper.GetAssembly(assemblyName) == null)
-              _visualizerAttributesNotFound.Add(debuggerVisualizerAttribute); //This is OK
-            else if (debuggerVisualizerAttribute.Description.Contains(majorMinorVersion) || !debuggerVisualizerAttribute.Description.Contains("4"))
-              _visualizerAttributesNotFoundInAssembly.Add(debuggerVisualizerAttribute); //This is not
-          }
+          var assemblyName = debuggerVisualizerAttribute.TargetTypeName.After(",");
+          if (MetaDataHelper.GetAssembly(assemblyName) == null)
+            _visualizerAttributesNotFound.Add(debuggerVisualizerAttribute); //This is OK
+          else if (debuggerVisualizerAttribute.Description.Contains(majorMinorVersion) || !debuggerVisualizerAttribute.Description.Contains("4"))
+            _visualizerAttributesNotFoundInAssembly.Add(debuggerVisualizerAttribute); //This is not
         }
         else
           _visualizerAttributes.AddWithErrorInfo(type, debuggerVisualizerAttribute);
