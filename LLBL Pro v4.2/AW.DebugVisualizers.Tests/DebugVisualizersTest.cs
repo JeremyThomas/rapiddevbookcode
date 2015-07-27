@@ -5,15 +5,16 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Linq;
 using System.Diagnostics;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Web.Caching;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Xml;
@@ -28,6 +29,7 @@ using AW.LinqToSQL;
 using AW.Test.Helpers;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.Misc;
+using Microsoft.VisualBasic;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.HelperClasses;
@@ -84,7 +86,7 @@ namespace AW.DebugVisualizers.Tests
       get
       {
         if (_visualizerAttributesNotFound == null)
-          LoadDebuggerVisualizerAttributes();
+          LoadDebuggerVisualizerAttributes(true);
         return _visualizerAttributesNotFound;
       }
     }
@@ -94,29 +96,40 @@ namespace AW.DebugVisualizers.Tests
       get
       {
         if (_visualizerAttributesNotFoundInAssembly == null)
-          LoadDebuggerVisualizerAttributes();
+          LoadDebuggerVisualizerAttributes(true);
         return _visualizerAttributesNotFoundInAssembly;
       }
     }
 
-    private static void LoadDebuggerVisualizerAttributes()
+    public static void LoadTypes(params Type[] types)
     {
-      var majorMinorVersion = FileVersionInfo.GetVersionInfo(typeof(Enumerable).Assembly.Location).FileVersion.Substring(0, 3); 
+    }
+
+    /// <summary>
+    ///   Creates a type=>debuggerVisualizerAttribute dictionary for later checking
+    /// </summary>
+    private static void LoadDebuggerVisualizerAttributes(bool lookForMissing = false)
+    {
+      LoadTypes(typeof (CollectionView), typeof (Table<>), typeof (EnumerableRowCollection), typeof (Collection)
+        , typeof (Extensions), typeof (Cache), typeof (DirectoryEntry));
+
+      var majorMinorVersion = FileVersionInfo.GetVersionInfo(typeof (Enumerable).Assembly.Location).FileVersion.Substring(0, 3);
       var enumerableVisualizerType = typeof (EnumerableVisualizer);
       var assembly = enumerableVisualizerType.Assembly;
       var debuggerVisualizerAttributes = assembly.GetCustomAttributes(typeof (DebuggerVisualizerAttribute), false);
       _visualizerAttributes = new Dictionary<Type, DebuggerVisualizerAttribute>();
-      _visualizerAttributesNotFound = new List<DebuggerVisualizerAttribute>();
-      _visualizerAttributesNotFoundInAssembly = new List<DebuggerVisualizerAttribute>();
-      foreach (DebuggerVisualizerAttribute debuggerVisualizerAttribute in debuggerVisualizerAttributes)
-        if (debuggerVisualizerAttribute.VisualizerTypeName == enumerableVisualizerType.AssemblyQualifiedName)
+      if (lookForMissing)
+      {
+        _visualizerAttributesNotFound = new List<DebuggerVisualizerAttribute>();
+        _visualizerAttributesNotFoundInAssembly = new List<DebuggerVisualizerAttribute>();
+      }
+      foreach (var debuggerVisualizerAttribute in debuggerVisualizerAttributes.OfType<DebuggerVisualizerAttribute>()
+        .Where(dv => dv.VisualizerTypeName == enumerableVisualizerType.AssemblyQualifiedName))
+      {
+        var type = MetaDataHelper.GetType(debuggerVisualizerAttribute.TargetTypeName);
+        if (type == null)
         {
-          var type = Type.GetType(debuggerVisualizerAttribute.TargetTypeName);
-          if (type == null)
-          {
-            type = MetaDataHelper.GetTypesContaining(debuggerVisualizerAttribute.TargetTypeName).FirstOrDefault();
-          }
-          if (type == null)
+          if (lookForMissing)
           {
             var parts = debuggerVisualizerAttribute.TargetTypeName.Split(',');
             var assemblyName = parts[1];
@@ -125,9 +138,10 @@ namespace AW.DebugVisualizers.Tests
             else if (debuggerVisualizerAttribute.Description.Contains(majorMinorVersion) || !debuggerVisualizerAttribute.Description.Contains("4"))
               _visualizerAttributesNotFoundInAssembly.Add(debuggerVisualizerAttribute); //This is not
           }
-          else
-            _visualizerAttributes.AddWithErrorInfo(type, debuggerVisualizerAttribute);
         }
+        else
+          _visualizerAttributes.AddWithErrorInfo(type, debuggerVisualizerAttribute);
+      }
     }
 
     #region Additional test attributes
@@ -230,7 +244,7 @@ namespace AW.DebugVisualizers.Tests
     }
 
     /// <summary>
-    /// Need to handle Enum specially
+    ///   Need to handle Enum specially
     /// </summary>
     /// <remarks>https://social.msdn.microsoft.com/Forums/en-US/6551e338-747d-427b-b626-4232caffb74d/serialization-of-a-listenum-in-c?forum=netfxremoting</remarks>
     [TestMethod]
@@ -240,7 +254,7 @@ namespace AW.DebugVisualizers.Tests
       TestSerialize(enums);
       enums.Add(ProductCategoryFieldIndex.AmountOfFields);
       TestSerialize(enums);
-      var productCategoryFieldIndices = GeneralHelper.EnumAsEnumerable((Enum)ProductCategoryFieldIndex.AmountOfFields);
+      var productCategoryFieldIndices = GeneralHelper.EnumAsEnumerable((Enum) ProductCategoryFieldIndex.AmountOfFields);
       TestSerialize(productCategoryFieldIndices);
     }
 
@@ -646,7 +660,7 @@ namespace AW.DebugVisualizers.Tests
       var type = enumerableOrDataTableToVisualize.GetType();
       var rootType = type.GetTypeAndParentTypes().Last();
       if (!type.IsArray)
-        Assert.IsTrue(VisualizerAttributes.ContainsKey(rootType), rootType == type ? rootType.FullName : rootType.FullName + "-" + type.FullName);
+        Assert.IsTrue(VisualizerAttributes.ContainsKey(rootType), (rootType == type ? rootType.FullName : rootType.FullName + "-" + type.FullName) + " is not Registered");
     }
 
     /// <summary>

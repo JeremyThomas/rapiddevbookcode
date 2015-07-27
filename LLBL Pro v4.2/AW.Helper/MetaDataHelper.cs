@@ -80,6 +80,23 @@ namespace AW.Helper
         select exportedType;
     }
 
+    private static Assembly GetAssembly(AssemblyName assemblyName)
+    {
+      return GetAssembly(AppDomain.CurrentDomain.GetAssemblies(), assemblyName);
+    }
+
+    public static Assembly GetAssembly(this IEnumerable<Assembly> assemblies, AssemblyName assemblyName)
+    {
+      try
+      {
+        return assemblies.SingleOrDefault(a => AssembliesMatch(a, assemblyName));
+      }
+      catch
+      {
+        return assemblies.SingleOrDefault(a => a.FullName.Equals(assemblyName.FullName));
+      }
+    }
+
     public static Assembly GetAssembly(string assemblyName)
     {
       return GetAssembly(AppDomain.CurrentDomain.GetAssemblies(), assemblyName);
@@ -176,7 +193,7 @@ namespace AW.Helper
       return Type.GetType(GetShortAssemblyQualifiedName(type)) == null;
     }
 
-    private static string GetShortAssemblyQualifiedName(Type type)
+    public static string GetShortAssemblyQualifiedName(Type type)
     {
       return type.FullName + ", " + type.Assembly.GetName().Name;
     }
@@ -225,6 +242,29 @@ namespace AW.Helper
     private static bool AssemblyResolverIsNeeded(string directoryPath)
     {
       return !AppDomain.CurrentDomain.BaseDirectory.Equals(directoryPath, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    /// Gets the type, case insensitive, if it can't find it it then looks in the loaded assemblies.
+    /// </summary>
+    /// <param name="typeName">Name of the type.</param>
+    /// <returns></returns>
+    public static Type GetType(string typeName)
+    {
+      var type =Type.GetType(typeName, false, true);
+      return type ?? Type.GetType(typeName, GetAssembly, TypeResolver);
+    }
+
+    /// <summary>
+    /// Resolves a type by stripping off the assembly name
+    /// </summary>
+    /// <param name="assembly">The assembly.</param>
+    /// <param name="typeName">Name of the type.</param>
+    /// <param name="ignoreCase">if set to <c>true</c> [ignore case].</param>
+    /// <returns></returns>
+    public static Type TypeResolver(Assembly assembly, string typeName, bool ignoreCase)
+    {
+      return assembly == null ? null : assembly.GetType(typeName.Before(",", typeName), false, ignoreCase);
     }
 
     private static IEnumerable<Type> GetPublicTypes(Assembly assembly)

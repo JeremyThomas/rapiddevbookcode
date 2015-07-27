@@ -334,5 +334,13 @@ namespace AW.Tests
         }
       }
     }
+
+    [TestMethod, Microsoft.VisualStudio.TestTools.UnitTesting.Description("")]
+    public void GetTypeTest()
+    {
+      var collectionViewType = typeof(System.Windows.Data.CollectionView);
+      Assert.IsNull(MetaDataHelper.GetType(collectionViewType.FullName));
+      Assert.IsNotNull( MetaDataHelper.GetType(MetaDataHelper.GetShortAssemblyQualifiedName(collectionViewType)));
+    }
   }
 }
