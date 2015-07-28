@@ -712,23 +712,23 @@ namespace Northwind.DAL.EntityClasses
 			get { return (int)Northwind.DAL.EntityType.CustomerEntity; }
 		}
 
-		#endregion
+    #endregion
 
 
-		#region Custom Entity code
-		
-		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
+    #region Custom Entity code
 
-		public virtual IEnumerable<EmployeeEntity> EmployeesViaOrdersInCode
-		{
-			get { return Orders.Select(o => o.Employee); }
-		}
+    // __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 
-		// __LLBLGENPRO_USER_CODE_REGION_END
-		#endregion
+    public virtual IEnumerable<EmployeeEntity> EmployeesViaOrdersInCode
+    {
+      get { return Orders.Where(o => o.Employee != null).Select(o => o.Employee); }
+    }
 
-		#region Included code
+    // __LLBLGENPRO_USER_CODE_REGION_END
+    #endregion
 
-		#endregion
-	}
+    #region Included code
+
+    #endregion
+  }
 }

@@ -45,7 +45,7 @@ namespace Northwind.DAL.Linq
 
     public static IQueryable<ProductEntity> PrefetchCategorySupplier(this IQueryable<ProductEntity> productEntities)
     {
-      return productEntities.With(cp => cp.Supplier).With(cp => cp.Category);
+      return productEntities.With(cp => cp.Supplier, cp => cp.Category);
     }
   }
 }

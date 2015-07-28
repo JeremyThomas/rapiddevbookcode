@@ -168,11 +168,12 @@ namespace AW.Helper
       var restrictions = entityRestrictions
         .ToDictionary(k => k.EntityName, v => v.IncludeProperties);
 
-      // Place properties to globally exclude in a HashSet
-      var collection = String.IsNullOrWhiteSpace(globalExcludeProperties) ? new string[0] : globalExcludeProperties.Split(',');
-      var excludeProperties = new HashSet<string>(
-        collection
-        );
+      if (String.IsNullOrWhiteSpace(globalExcludeProperties) && obj.GetType().GetTypeAndParentTypes().Last().FullName.Contains("LLBL"))
+        globalExcludeProperties = "Fields,EntityFactoryToUse";
+
+        // Place properties to globally exclude in a HashSet
+        var collection = String.IsNullOrWhiteSpace(globalExcludeProperties) ? new string[0] : globalExcludeProperties.Split(',');
+      var excludeProperties = new HashSet<string>(collection);
 
       sb.Append("// Object Literal" + NewLine);
 
@@ -450,7 +451,7 @@ namespace AW.Helper
                   // List<T> and Collection<T> can be quite complex.  T could be a Nullable<T>
                   // or a Dictionary<T,T>.  Currently this code handles only simple types
                   // not nullables
-
+                  var indexBeforeList = sb.Length;
                   if (isListInit)
                   {
                     var tabs = Tabs(level + 1);
@@ -495,7 +496,9 @@ namespace AW.Helper
                     }
                   }
 
-                  WalkList(list, listItemType, sb, entityMap, restrictions, excludeProperties, level + 1, parentPath, listParent);
+                 var numAdded= WalkList(list, listItemType, sb, entityMap, restrictions, excludeProperties, level + 1, parentPath, listParent);
+                  if (numAdded == 0)
+                    sb.Remove(indexBeforeList, sb.Length- indexBeforeList);
                 }
                 else if (property.CanWrite)
                   if (genericArguments.Any())
@@ -533,8 +536,15 @@ namespace AW.Helper
                   if (isListInit)
                   {
                     var tabs = Tabs(level + 1);
-                    var comma = "," + NewLine + tabs;
-                    sb.Append(comma);
+                    if (appendComma)
+                    {
+                      var comma = "," + NewLine + tabs;
+                      sb.Append(comma);
+                    }
+                    else
+                    {
+                      sb.Append(tabs);
+                    }
                   }
                   WalkObject
                     (
@@ -545,6 +555,8 @@ namespace AW.Helper
                       excludeProperties,
                       level + 1,
                       ParentPath(parent, propertyName), isListInit);
+                  if (isListInit)
+                    appendComma = false;
                 }
               }
               catch (Exception e)
@@ -744,7 +756,7 @@ namespace AW.Helper
     } // HandleBaseTypes
 
 
-    private static void WalkList
+    private static int WalkList
       (
       IEnumerable list,
       Type listItemType,
@@ -898,6 +910,7 @@ namespace AW.Helper
           else
             sb.Append("};" + NewLine);
         }
+      return listEntities.Count;
     } // WalkList
   } // class ObjectToObjectLiteral
 }

@@ -479,7 +479,8 @@ namespace AW.DebugVisualizers.Tests
       using (var usr = UserPrincipal.FindByIdentity(ctx, IdentityType.SamAccountName, Environment.UserName))
       {
         var directoryEntry = usr != null ? usr.GetUnderlyingObject() as DirectoryEntry : null;
-        if (directoryEntry != null) TestShowTransported(directoryEntry.Properties, 5);
+        if (directoryEntry != null) TestShowTransported(directoryEntry.Properties, 5); 
+        //Slow when calling System.DirectoryServices.Interop.UnsafeNativeMethods.ADsOpenObject() from System.DirectoryServices.PropertyCollection.GetEnumerator()   (from System.Collections.IEnumerable)
       }
     }
 

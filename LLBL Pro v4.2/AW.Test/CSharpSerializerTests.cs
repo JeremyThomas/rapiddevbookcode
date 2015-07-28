@@ -111,7 +111,8 @@ namespace AW.Tests
         .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Category"))
         .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Internal"))
         .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Orders"))
-        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Customer"));
+        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Customer"))
+        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Supplier"));
     }
 
     [TestMethod]
@@ -183,8 +184,22 @@ namespace AW.Tests
           {
             CategoryId = 1,
             CategoryName = "Beverages",
-            Description = "Soft drinks, coffees, teas, beers, and ales",
-            Products = {}
+            Description = "Soft drinks, coffees, teas, beers, and ales"
+          },
+          Supplier = new SupplierEntity
+          {
+            Address = "49 Gilbert St.",
+            City = "London",
+            CompanyName = "Exotic Liquids",
+            ContactName = "Charlotte Cooper",
+            ContactTitle = "Purchasing Manager",
+            Country = "UK",
+            Fax = "",
+            HomePage = "",
+            Phone = "(171) 555-2222",
+            PostalCode = "EC1 4SD",
+            Region = "",
+            SupplierId = 1
           }
         },
         new ProductEntity
@@ -216,8 +231,7 @@ namespace AW.Tests
           {
             CategoryId = 2,
             CategoryName = "Condiments",
-            Description = "Sweet and savory sauces, relishes, spreads, and seasonings",
-            Products = {}
+            Description = "Sweet and savory sauces, relishes, spreads, and seasonings"
           }
         }
       };
