@@ -41,6 +41,8 @@ namespace AW.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
+		private AW.Data.CollectionClasses.PurchaseOrderHistoryCollection	_purchaseOrderHistories;
+		private bool	_alwaysFetchPurchaseOrderHistories, _alreadyFetchedPurchaseOrderHistories;
 		private AW.Data.CollectionClasses.PurchaseOrderDetailCollection	_purchaseOrderDetails;
 		private bool	_alwaysFetchPurchaseOrderDetails, _alreadyFetchedPurchaseOrderDetails;
 		private EmployeeEntity _employee;
@@ -67,6 +69,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string ShipMethod = "ShipMethod";
 			/// <summary>Member name Vendor</summary>
 			public static readonly string Vendor = "Vendor";
+			/// <summary>Member name PurchaseOrderHistories</summary>
+			public static readonly string PurchaseOrderHistories = "PurchaseOrderHistories";
 			/// <summary>Member name PurchaseOrderDetails</summary>
 			public static readonly string PurchaseOrderDetails = "PurchaseOrderDetails";
 		}
@@ -112,6 +116,10 @@ namespace AW.Data.EntityClasses
 		/// <param name="context"></param>
 		protected PurchaseOrderHeaderEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
+			_purchaseOrderHistories = (AW.Data.CollectionClasses.PurchaseOrderHistoryCollection)info.GetValue("_purchaseOrderHistories", typeof(AW.Data.CollectionClasses.PurchaseOrderHistoryCollection));
+			_alwaysFetchPurchaseOrderHistories = info.GetBoolean("_alwaysFetchPurchaseOrderHistories");
+			_alreadyFetchedPurchaseOrderHistories = info.GetBoolean("_alreadyFetchedPurchaseOrderHistories");
+
 			_purchaseOrderDetails = (AW.Data.CollectionClasses.PurchaseOrderDetailCollection)info.GetValue("_purchaseOrderDetails", typeof(AW.Data.CollectionClasses.PurchaseOrderDetailCollection));
 			_alwaysFetchPurchaseOrderDetails = info.GetBoolean("_alwaysFetchPurchaseOrderDetails");
 			_alreadyFetchedPurchaseOrderDetails = info.GetBoolean("_alreadyFetchedPurchaseOrderDetails");
@@ -174,6 +182,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> Will perform post-ReadXml actions</summary>
 		protected override void PerformPostReadXmlFixups()
 		{
+			_alreadyFetchedPurchaseOrderHistories = (_purchaseOrderHistories.Count > 0);
 			_alreadyFetchedPurchaseOrderDetails = (_purchaseOrderDetails.Count > 0);
 			_alreadyFetchedEmployee = (_employee != null);
 			_alreadyFetchedShipMethod = (_shipMethod != null);
@@ -205,6 +214,9 @@ namespace AW.Data.EntityClasses
 				case "Vendor":
 					toReturn.Add(Relations.VendorEntityUsingVendorID);
 					break;
+				case "PurchaseOrderHistories":
+					toReturn.Add(Relations.PurchaseOrderHistoryEntityUsingReferenceOrderID);
+					break;
 				case "PurchaseOrderDetails":
 					toReturn.Add(Relations.PurchaseOrderDetailEntityUsingPurchaseOrderID);
 					break;
@@ -222,6 +234,9 @@ namespace AW.Data.EntityClasses
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		protected override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
+			info.AddValue("_purchaseOrderHistories", (!this.MarkedForDeletion?_purchaseOrderHistories:null));
+			info.AddValue("_alwaysFetchPurchaseOrderHistories", _alwaysFetchPurchaseOrderHistories);
+			info.AddValue("_alreadyFetchedPurchaseOrderHistories", _alreadyFetchedPurchaseOrderHistories);
 			info.AddValue("_purchaseOrderDetails", (!this.MarkedForDeletion?_purchaseOrderDetails:null));
 			info.AddValue("_alwaysFetchPurchaseOrderDetails", _alwaysFetchPurchaseOrderDetails);
 			info.AddValue("_alreadyFetchedPurchaseOrderDetails", _alreadyFetchedPurchaseOrderDetails);
@@ -264,6 +279,13 @@ namespace AW.Data.EntityClasses
 					_alreadyFetchedVendor = true;
 					this.Vendor = (VendorEntity)entity;
 					break;
+				case "PurchaseOrderHistories":
+					_alreadyFetchedPurchaseOrderHistories = true;
+					if(entity!=null)
+					{
+						this.PurchaseOrderHistories.Add((PurchaseOrderHistoryEntity)entity);
+					}
+					break;
 				case "PurchaseOrderDetails":
 					_alreadyFetchedPurchaseOrderDetails = true;
 					if(entity!=null)
@@ -294,6 +316,9 @@ namespace AW.Data.EntityClasses
 				case "Vendor":
 					SetupSyncVendor(relatedEntity);
 					break;
+				case "PurchaseOrderHistories":
+					_purchaseOrderHistories.Add((PurchaseOrderHistoryEntity)relatedEntity);
+					break;
 				case "PurchaseOrderDetails":
 					_purchaseOrderDetails.Add((PurchaseOrderDetailEntity)relatedEntity);
 					break;
@@ -319,6 +344,9 @@ namespace AW.Data.EntityClasses
 					break;
 				case "Vendor":
 					DesetupSyncVendor(false, true);
+					break;
+				case "PurchaseOrderHistories":
+					this.PerformRelatedEntityRemoval(_purchaseOrderHistories, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "PurchaseOrderDetails":
 					this.PerformRelatedEntityRemoval(_purchaseOrderDetails, relatedEntity, signalRelatedEntityManyToOne);
@@ -361,6 +389,7 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntityCollection> GetMemberEntityCollections()
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
+			toReturn.Add(_purchaseOrderHistories);
 			toReturn.Add(_purchaseOrderDetails);
 
 			return toReturn;
@@ -421,6 +450,61 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntityRelation> GetAllRelations()
 		{
 			return new PurchaseOrderHeaderRelations().GetAllRelations();
+		}
+
+		/// <summary> Retrieves all related entities of type 'PurchaseOrderHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'PurchaseOrderHistoryEntity'</returns>
+		public AW.Data.CollectionClasses.PurchaseOrderHistoryCollection GetMultiPurchaseOrderHistories(bool forceFetch)
+		{
+			return GetMultiPurchaseOrderHistories(forceFetch, _purchaseOrderHistories.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'PurchaseOrderHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'PurchaseOrderHistoryEntity'</returns>
+		public AW.Data.CollectionClasses.PurchaseOrderHistoryCollection GetMultiPurchaseOrderHistories(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiPurchaseOrderHistories(forceFetch, _purchaseOrderHistories.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'PurchaseOrderHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.PurchaseOrderHistoryCollection GetMultiPurchaseOrderHistories(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiPurchaseOrderHistories(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'PurchaseOrderHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.PurchaseOrderHistoryCollection GetMultiPurchaseOrderHistories(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedPurchaseOrderHistories || forceFetch || _alwaysFetchPurchaseOrderHistories) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_purchaseOrderHistories);
+				_purchaseOrderHistories.SuppressClearInGetMulti=!forceFetch;
+				_purchaseOrderHistories.EntityFactoryToUse = entityFactoryToUse;
+				_purchaseOrderHistories.GetMultiManyToOne(null, this, filter);
+				_purchaseOrderHistories.SuppressClearInGetMulti=false;
+				_alreadyFetchedPurchaseOrderHistories = true;
+			}
+			return _purchaseOrderHistories;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'PurchaseOrderHistories'. These settings will be taken into account
+		/// when the property PurchaseOrderHistories is requested or GetMultiPurchaseOrderHistories is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersPurchaseOrderHistories(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_purchaseOrderHistories.SortClauses=sortClauses;
+			_purchaseOrderHistories.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'PurchaseOrderDetailEntity' using a relation of type '1:n'.</summary>
@@ -609,6 +693,7 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("Employee", _employee);
 			toReturn.Add("ShipMethod", _shipMethod);
 			toReturn.Add("Vendor", _vendor);
+			toReturn.Add("PurchaseOrderHistories", _purchaseOrderHistories);
 			toReturn.Add("PurchaseOrderDetails", _purchaseOrderDetails);
 			return toReturn;
 		}
@@ -649,6 +734,9 @@ namespace AW.Data.EntityClasses
 		/// <summary> Initializes the class members</summary>
 		private void InitClassMembers()
 		{
+
+			_purchaseOrderHistories = new AW.Data.CollectionClasses.PurchaseOrderHistoryCollection();
+			_purchaseOrderHistories.SetContainingEntityInfo(this, "PurchaseOrder");
 
 			_purchaseOrderDetails = new AW.Data.CollectionClasses.PurchaseOrderDetailCollection();
 			_purchaseOrderDetails.SetContainingEntityInfo(this, "PurchaseOrderHeader");
@@ -862,6 +950,13 @@ namespace AW.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'PurchaseOrderHistory' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathPurchaseOrderHistories
+		{
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.PurchaseOrderHistoryCollection(), (IEntityRelation)GetRelationsForField("PurchaseOrderHistories")[0], (int)AW.Data.EntityType.PurchaseOrderHeaderEntity, (int)AW.Data.EntityType.PurchaseOrderHistoryEntity, 0, null, null, null, "PurchaseOrderHistories", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'PurchaseOrderDetail' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
 		public static IPrefetchPathElement PrefetchPathPurchaseOrderDetails
@@ -1057,6 +1152,39 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)PurchaseOrderHeaderFieldIndex.VendorID, value, true); }
 		}
 
+		/// <summary> Retrieves all related entities of type 'PurchaseOrderHistoryEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiPurchaseOrderHistories()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.PurchaseOrderHistoryCollection PurchaseOrderHistories
+		{
+			get	{ return GetMultiPurchaseOrderHistories(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for PurchaseOrderHistories. When set to true, PurchaseOrderHistories is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time PurchaseOrderHistories is accessed. You can always execute/ a forced fetch by calling GetMultiPurchaseOrderHistories(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchPurchaseOrderHistories
+		{
+			get	{ return _alwaysFetchPurchaseOrderHistories; }
+			set	{ _alwaysFetchPurchaseOrderHistories = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property PurchaseOrderHistories already has been fetched. Setting this property to false when PurchaseOrderHistories has been fetched
+		/// will clear the PurchaseOrderHistories collection well. Setting this property to true while PurchaseOrderHistories hasn't been fetched disables lazy loading for PurchaseOrderHistories</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedPurchaseOrderHistories
+		{
+			get { return _alreadyFetchedPurchaseOrderHistories;}
+			set 
+			{
+				if(_alreadyFetchedPurchaseOrderHistories && !value && (_purchaseOrderHistories != null))
+				{
+					_purchaseOrderHistories.Clear();
+				}
+				_alreadyFetchedPurchaseOrderHistories = value;
+			}
+		}
 		/// <summary> Retrieves all related entities of type 'PurchaseOrderDetailEntity' using a relation of type '1:n'.<br/><br/>
 		/// </summary>
 		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiPurchaseOrderDetails()', because 

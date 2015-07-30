@@ -30,6 +30,7 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.PurchaseOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderID);
 			toReturn.Add(this.ProductEntityUsingProductID);
 			toReturn.Add(this.PurchaseOrderHeaderEntityUsingPurchaseOrderID);
 			return toReturn;
@@ -38,6 +39,29 @@ namespace AW.Data.RelationClasses
 		#region Class Property Declarations
 
 
+		/// <summary>Returns a new IEntityRelation object, between PurchaseOrderDetailEntity and PurchaseOrderHistoryEntity over the 1:1 relation they have, using the relation between the fields:
+		/// PurchaseOrderDetail.PurchaseOrderDetailID - PurchaseOrderHistory.ReferenceOrderLineID
+		/// PurchaseOrderDetail.PurchaseOrderID - PurchaseOrderHistory.ReferenceOrderID
+		/// </summary>
+		public virtual IEntityRelation PurchaseOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, "PurchaseOrderHistory", true);
+
+
+				relation.AddEntityFieldPair(PurchaseOrderDetailFields.PurchaseOrderDetailID, PurchaseOrderHistoryFields.ReferenceOrderLineID);
+
+
+
+				relation.AddEntityFieldPair(PurchaseOrderDetailFields.PurchaseOrderID, PurchaseOrderHistoryFields.ReferenceOrderID);
+
+
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PurchaseOrderDetailEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PurchaseOrderHistoryEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between PurchaseOrderDetailEntity and ProductEntity over the m:1 relation they have, using the relation between the fields:
 		/// PurchaseOrderDetail.ProductID - Product.ProductID
@@ -81,6 +105,7 @@ namespace AW.Data.RelationClasses
 	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
 	internal static class StaticPurchaseOrderDetailRelations
 	{
+		internal static readonly IEntityRelation PurchaseOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderIDStatic = new PurchaseOrderDetailRelations().PurchaseOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderID;
 		internal static readonly IEntityRelation ProductEntityUsingProductIDStatic = new PurchaseOrderDetailRelations().ProductEntityUsingProductID;
 		internal static readonly IEntityRelation PurchaseOrderHeaderEntityUsingPurchaseOrderIDStatic = new PurchaseOrderDetailRelations().PurchaseOrderHeaderEntityUsingPurchaseOrderID;
 

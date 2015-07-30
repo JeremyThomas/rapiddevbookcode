@@ -136,26 +136,5 @@ namespace AW.Data.Filters
 
       return FilterBySalesOrderHeaderProperties(salesOrderHeaderPredicate, orderSearchCriteria);
     }
-
-    public static IQueryable<T> FilterByProductID<T>(this IQueryable<T> transactionHistoryEntities, int productID) where T : TransactionHistoryEntity
-    {
-      return transactionHistoryEntities.Where(th => th.ProductID == productID);
-    }
-
-    public static IQueryable<T> FilterByProductIDWithLet<T>(this IQueryable<T> transactionHistoryEntities, int productID) where T : TransactionHistoryEntity
-    {
-      return from th in transactionHistoryEntities
-        let soh = th as SalesOrderHistoryEntity
-        where soh.ProductID == productID
-        select th;
-    }
-
-    public static IQueryable<T> FilterByProductNumberWithLet<T>(this IQueryable<T> transactionHistoryEntities, string productNumber) where T : TransactionHistoryEntity
-    {
-      return from th in transactionHistoryEntities
-        let soh = th as SalesOrderHistoryEntity
-        where soh.Product.ProductNumber == productNumber
-        select th;
-    }
   }
 }

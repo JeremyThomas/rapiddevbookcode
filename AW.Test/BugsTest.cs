@@ -360,6 +360,13 @@ namespace AW.Tests
       Assert.AreEqual(expectedCountProductNumberLet, MetaSingletons.MetaData.WorkOrderHistory.FilterByProductNumberWithLet(productNumber).Count()
                                                      + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductNumberWithLet(productNumber).Count()
                                                      + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductNumberWithLet(productNumber).Count());
+
+      var queryableProductNumber = MetaSingletons.MetaData.TransactionHistory.FilterByProductNumber(productNumber);
+      var expectedCountProductNumber = queryableProductNumber.ToEntityCollection().Count;
+      Assert.AreEqual(expectedCountProductNumber, queryableProductNumberLet.Count());
+      Assert.AreEqual(expectedCountProductNumber, MetaSingletons.MetaData.WorkOrderHistory.FilterByProductNumber(productNumber).Count()
+                                                     + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductNumber(productNumber).Count()
+                                                     + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductNumber(productNumber).Count());
     }
 
   }

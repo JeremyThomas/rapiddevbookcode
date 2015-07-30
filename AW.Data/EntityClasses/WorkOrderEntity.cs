@@ -47,6 +47,8 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchProduct, _alreadyFetchedProduct, _productReturnsNewIfNotFound;
 		private ScrapReasonEntity _scrapReason;
 		private bool	_alwaysFetchScrapReason, _alreadyFetchedScrapReason, _scrapReasonReturnsNewIfNotFound;
+		private WorkOrderHistoryEntity _workOrderHistory;
+		private bool	_alwaysFetchWorkOrderHistory, _alreadyFetchedWorkOrderHistory, _workOrderHistoryReturnsNewIfNotFound;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -65,6 +67,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string ScrapReason = "ScrapReason";
 			/// <summary>Member name WorkOrderRoutings</summary>
 			public static readonly string WorkOrderRoutings = "WorkOrderRoutings";
+			/// <summary>Member name WorkOrderHistory</summary>
+			public static readonly string WorkOrderHistory = "WorkOrderHistory";
 		}
 		#endregion
 		
@@ -128,6 +132,14 @@ namespace AW.Data.EntityClasses
 			_scrapReasonReturnsNewIfNotFound = info.GetBoolean("_scrapReasonReturnsNewIfNotFound");
 			_alwaysFetchScrapReason = info.GetBoolean("_alwaysFetchScrapReason");
 			_alreadyFetchedScrapReason = info.GetBoolean("_alreadyFetchedScrapReason");
+			_workOrderHistory = (WorkOrderHistoryEntity)info.GetValue("_workOrderHistory", typeof(WorkOrderHistoryEntity));
+			if(_workOrderHistory!=null)
+			{
+				_workOrderHistory.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_workOrderHistoryReturnsNewIfNotFound = info.GetBoolean("_workOrderHistoryReturnsNewIfNotFound");
+			_alwaysFetchWorkOrderHistory = info.GetBoolean("_alwaysFetchWorkOrderHistory");
+			_alreadyFetchedWorkOrderHistory = info.GetBoolean("_alreadyFetchedWorkOrderHistory");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -160,6 +172,7 @@ namespace AW.Data.EntityClasses
 			_alreadyFetchedWorkOrderRoutings = (_workOrderRoutings.Count > 0);
 			_alreadyFetchedProduct = (_product != null);
 			_alreadyFetchedScrapReason = (_scrapReason != null);
+			_alreadyFetchedWorkOrderHistory = (_workOrderHistory != null);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -187,6 +200,9 @@ namespace AW.Data.EntityClasses
 				case "WorkOrderRoutings":
 					toReturn.Add(Relations.WorkOrderRoutingEntityUsingWorkOrderID);
 					break;
+				case "WorkOrderHistory":
+					toReturn.Add(Relations.WorkOrderHistoryEntityUsingReferenceOrderID);
+					break;
 				default:
 					break;				
 			}
@@ -212,6 +228,11 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_scrapReasonReturnsNewIfNotFound", _scrapReasonReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchScrapReason", _alwaysFetchScrapReason);
 			info.AddValue("_alreadyFetchedScrapReason", _alreadyFetchedScrapReason);
+
+			info.AddValue("_workOrderHistory", (!this.MarkedForDeletion?_workOrderHistory:null));
+			info.AddValue("_workOrderHistoryReturnsNewIfNotFound", _workOrderHistoryReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchWorkOrderHistory", _alwaysFetchWorkOrderHistory);
+			info.AddValue("_alreadyFetchedWorkOrderHistory", _alreadyFetchedWorkOrderHistory);
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -242,6 +263,10 @@ namespace AW.Data.EntityClasses
 						this.WorkOrderRoutings.Add((WorkOrderRoutingEntity)entity);
 					}
 					break;
+				case "WorkOrderHistory":
+					_alreadyFetchedWorkOrderHistory = true;
+					this.WorkOrderHistory = (WorkOrderHistoryEntity)entity;
+					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
 					break;
@@ -264,6 +289,9 @@ namespace AW.Data.EntityClasses
 					break;
 				case "WorkOrderRoutings":
 					_workOrderRoutings.Add((WorkOrderRoutingEntity)relatedEntity);
+					break;
+				case "WorkOrderHistory":
+					SetupSyncWorkOrderHistory(relatedEntity);
 					break;
 				default:
 					break;
@@ -288,6 +316,9 @@ namespace AW.Data.EntityClasses
 				case "WorkOrderRoutings":
 					this.PerformRelatedEntityRemoval(_workOrderRoutings, relatedEntity, signalRelatedEntityManyToOne);
 					break;
+				case "WorkOrderHistory":
+					DesetupSyncWorkOrderHistory(false, true);
+					break;
 				default:
 					break;
 			}
@@ -298,6 +329,10 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntity> GetDependingRelatedEntities()
 		{
 			List<IEntity> toReturn = new List<IEntity>();
+			if(_workOrderHistory!=null)
+			{
+				toReturn.Add(_workOrderHistory);
+			}
 			return toReturn;
 		}
 		
@@ -520,6 +555,46 @@ namespace AW.Data.EntityClasses
 			return _scrapReason;
 		}
 
+		/// <summary> Retrieves the related entity of type 'WorkOrderHistoryEntity', using a relation of type '1:1'</summary>
+		/// <returns>A fetched entity of type 'WorkOrderHistoryEntity' which is related to this entity.</returns>
+		public WorkOrderHistoryEntity GetSingleWorkOrderHistory()
+		{
+			return GetSingleWorkOrderHistory(false);
+		}
+		
+		/// <summary> Retrieves the related entity of type 'WorkOrderHistoryEntity', using a relation of type '1:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'WorkOrderHistoryEntity' which is related to this entity.</returns>
+		public virtual WorkOrderHistoryEntity GetSingleWorkOrderHistory(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedWorkOrderHistory || forceFetch || _alwaysFetchWorkOrderHistory) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode )
+			{
+				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.WorkOrderHistoryEntityUsingReferenceOrderID);
+				WorkOrderHistoryEntity newEntity = (WorkOrderHistoryEntity)GeneralEntityFactory.Create(AW.Data.EntityType.WorkOrderHistoryEntity);
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					newEntity = WorkOrderHistoryEntity.FetchPolymorphicUsingUCReferenceOrderID(this.Transaction, this.WorkOrderID, this.ActiveContext);
+					fetchResult = (newEntity.Fields.State==EntityState.Fetched);
+				}
+				if(fetchResult)
+				{
+					newEntity = (WorkOrderHistoryEntity)GetFromActiveContext(newEntity);
+				}
+				else
+				{
+					if(!_workOrderHistoryReturnsNewIfNotFound)
+					{
+						RemoveFromTransactionIfNecessary(newEntity);
+						newEntity = null;
+					}
+				}
+				this.WorkOrderHistory = newEntity;
+				_alreadyFetchedWorkOrderHistory = fetchResult;
+			}
+			return _workOrderHistory;
+		}
+
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
 		/// <returns>Dictionary with per name the related referenced data element, which can be an entity collection or an entity or null</returns>
@@ -529,6 +604,7 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("Product", _product);
 			toReturn.Add("ScrapReason", _scrapReason);
 			toReturn.Add("WorkOrderRoutings", _workOrderRoutings);
+			toReturn.Add("WorkOrderHistory", _workOrderHistory);
 			return toReturn;
 		}
 	
@@ -573,6 +649,7 @@ namespace AW.Data.EntityClasses
 			_workOrderRoutings.SetContainingEntityInfo(this, "WorkOrder");
 			_productReturnsNewIfNotFound = true;
 			_scrapReasonReturnsNewIfNotFound = true;
+			_workOrderHistoryReturnsNewIfNotFound = true;
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
@@ -687,6 +764,39 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Removes the sync logic for member _workOrderHistory</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncWorkOrderHistory(bool signalRelatedEntity, bool resetFKFields)
+		{
+			this.PerformDesetupSyncRelatedEntity( _workOrderHistory, new PropertyChangedEventHandler( OnWorkOrderHistoryPropertyChanged ), "WorkOrderHistory", AW.Data.RelationClasses.StaticWorkOrderRelations.WorkOrderHistoryEntityUsingReferenceOrderIDStatic, false, signalRelatedEntity, "WorkOrder", false, new int[] { (int)WorkOrderFieldIndex.WorkOrderID } );
+			_workOrderHistory = null;
+		}
+	
+		/// <summary> setups the sync logic for member _workOrderHistory</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncWorkOrderHistory(IEntityCore relatedEntity)
+		{
+			if(_workOrderHistory!=relatedEntity)
+			{
+				DesetupSyncWorkOrderHistory(true, true);
+				_workOrderHistory = (WorkOrderHistoryEntity)relatedEntity;
+				this.PerformSetupSyncRelatedEntity( _workOrderHistory, new PropertyChangedEventHandler( OnWorkOrderHistoryPropertyChanged ), "WorkOrderHistory", AW.Data.RelationClasses.StaticWorkOrderRelations.WorkOrderHistoryEntityUsingReferenceOrderIDStatic, false, ref _alreadyFetchedWorkOrderHistory, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnWorkOrderHistoryPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
 		/// <summary> Fetches the entity from the persistent storage. Fetch simply reads the entity into an EntityFields object. </summary>
 		/// <param name="workOrderID">PK value for WorkOrder which data should be fetched into this WorkOrder object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
@@ -757,6 +867,13 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathScrapReason
 		{
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.ScrapReasonCollection(), (IEntityRelation)GetRelationsForField("ScrapReason")[0], (int)AW.Data.EntityType.WorkOrderEntity, (int)AW.Data.EntityType.ScrapReasonEntity, 0, null, null, null, "ScrapReason", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'WorkOrderHistory'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathWorkOrderHistory
+		{
+			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.WorkOrderHistoryCollection(), (IEntityRelation)GetRelationsForField("WorkOrderHistory")[0], (int)AW.Data.EntityType.WorkOrderEntity, (int)AW.Data.EntityType.WorkOrderHistoryEntity, 0, null, null, null, "WorkOrderHistory", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne);	}
 		}
 
 
@@ -1045,6 +1162,79 @@ namespace AW.Data.EntityClasses
 			set { _scrapReasonReturnsNewIfNotFound = value; }	
 		}
 
+		/// <summary> Gets / sets related entity of type 'WorkOrderHistoryEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/></summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleWorkOrderHistory()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
+		public virtual WorkOrderHistoryEntity WorkOrderHistory
+		{
+			get	{ return GetSingleWorkOrderHistory(false); }
+			set
+			{
+				if(this.IsDeserializing)
+				{
+					SetupSyncWorkOrderHistory(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						bool raisePropertyChanged = (_workOrderHistory !=null);
+						DesetupSyncWorkOrderHistory(true, true);
+						if(raisePropertyChanged)
+						{
+							OnPropertyChanged("WorkOrderHistory");
+						}
+					}
+					else
+					{
+						if(_workOrderHistory!=value)
+						{
+							((IEntity)value).SetRelatedEntity(this, "WorkOrder");
+							SetupSyncWorkOrderHistory(value);
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for WorkOrderHistory. When set to true, WorkOrderHistory is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time WorkOrderHistory is accessed. You can always execute a forced fetch by calling GetSingleWorkOrderHistory(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchWorkOrderHistory
+		{
+			get	{ return _alwaysFetchWorkOrderHistory; }
+			set	{ _alwaysFetchWorkOrderHistory = value; }	
+		}
+		
+		/// <summary>Gets / Sets the lazy loading flag if the property WorkOrderHistory already has been fetched. Setting this property to false when WorkOrderHistory has been fetched
+		/// will set WorkOrderHistory to null as well. Setting this property to true while WorkOrderHistory hasn't been fetched disables lazy loading for WorkOrderHistory</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedWorkOrderHistory
+		{
+			get { return _alreadyFetchedWorkOrderHistory;}
+			set 
+			{
+				if(_alreadyFetchedWorkOrderHistory && !value)
+				{
+					this.WorkOrderHistory = null;
+				}
+				_alreadyFetchedWorkOrderHistory = value;
+			}
+		}
+		
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property WorkOrderHistory is not found
+		/// in the database. When set to true, WorkOrderHistory will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool WorkOrderHistoryReturnsNewIfNotFound
+		{
+			get	{ return _workOrderHistoryReturnsNewIfNotFound; }
+			set	{ _workOrderHistoryReturnsNewIfNotFound = value; }	
+		}
 
 		/// <summary> Gets or sets a value indicating whether this entity is a subtype</summary>
 		protected override bool LLBLGenProIsSubType

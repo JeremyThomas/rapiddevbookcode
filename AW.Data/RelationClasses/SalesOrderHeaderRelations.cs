@@ -30,6 +30,7 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.SalesOrderHistoryEntityUsingReferenceOrderID);
 			toReturn.Add(this.SalesOrderDetailEntityUsingSalesOrderID);
 			toReturn.Add(this.SalesOrderHeaderSalesReasonEntityUsingSalesOrderID);
 			toReturn.Add(this.AddressEntityUsingBillToAddressID);
@@ -46,6 +47,21 @@ namespace AW.Data.RelationClasses
 		}
 
 		#region Class Property Declarations
+
+		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and SalesOrderHistoryEntity over the 1:n relation they have, using the relation between the fields:
+		/// SalesOrderHeader.SalesOrderID - SalesOrderHistory.ReferenceOrderID
+		/// </summary>
+		public virtual IEntityRelation SalesOrderHistoryEntityUsingReferenceOrderID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SalesOrderHistory" , true);
+				relation.AddEntityFieldPair(SalesOrderHeaderFields.SalesOrderID, SalesOrderHistoryFields.ReferenceOrderID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHistoryEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and SalesOrderDetailEntity over the 1:n relation they have, using the relation between the fields:
 		/// SalesOrderHeader.SalesOrderID - SalesOrderDetail.SalesOrderID
@@ -232,6 +248,7 @@ namespace AW.Data.RelationClasses
 	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
 	internal static class StaticSalesOrderHeaderRelations
 	{
+		internal static readonly IEntityRelation SalesOrderHistoryEntityUsingReferenceOrderIDStatic = new SalesOrderHeaderRelations().SalesOrderHistoryEntityUsingReferenceOrderID;
 		internal static readonly IEntityRelation SalesOrderDetailEntityUsingSalesOrderIDStatic = new SalesOrderHeaderRelations().SalesOrderDetailEntityUsingSalesOrderID;
 		internal static readonly IEntityRelation SalesOrderHeaderSalesReasonEntityUsingSalesOrderIDStatic = new SalesOrderHeaderRelations().SalesOrderHeaderSalesReasonEntityUsingSalesOrderID;
 		internal static readonly IEntityRelation AddressEntityUsingBillToAddressIDStatic = new SalesOrderHeaderRelations().AddressEntityUsingBillToAddressID;

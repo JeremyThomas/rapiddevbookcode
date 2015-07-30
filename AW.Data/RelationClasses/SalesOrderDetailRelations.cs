@@ -30,6 +30,7 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.SalesOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderID);
 			toReturn.Add(this.SalesOrderHeaderEntityUsingSalesOrderID);
 			toReturn.Add(this.SpecialOfferProductEntityUsingProductIDSpecialOfferID);
 			return toReturn;
@@ -38,6 +39,29 @@ namespace AW.Data.RelationClasses
 		#region Class Property Declarations
 
 
+		/// <summary>Returns a new IEntityRelation object, between SalesOrderDetailEntity and SalesOrderHistoryEntity over the 1:1 relation they have, using the relation between the fields:
+		/// SalesOrderDetail.SalesOrderDetailID - SalesOrderHistory.ReferenceOrderLineID
+		/// SalesOrderDetail.SalesOrderID - SalesOrderHistory.ReferenceOrderID
+		/// </summary>
+		public virtual IEntityRelation SalesOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, "SalesOrderHistory", true);
+
+
+				relation.AddEntityFieldPair(SalesOrderDetailFields.SalesOrderDetailID, SalesOrderHistoryFields.ReferenceOrderLineID);
+
+
+
+				relation.AddEntityFieldPair(SalesOrderDetailFields.SalesOrderID, SalesOrderHistoryFields.ReferenceOrderID);
+
+
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderDetailEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHistoryEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderDetailEntity and SalesOrderHeaderEntity over the m:1 relation they have, using the relation between the fields:
 		/// SalesOrderDetail.SalesOrderID - SalesOrderHeader.SalesOrderID
@@ -83,6 +107,7 @@ namespace AW.Data.RelationClasses
 	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
 	internal static class StaticSalesOrderDetailRelations
 	{
+		internal static readonly IEntityRelation SalesOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderIDStatic = new SalesOrderDetailRelations().SalesOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderID;
 		internal static readonly IEntityRelation SalesOrderHeaderEntityUsingSalesOrderIDStatic = new SalesOrderDetailRelations().SalesOrderHeaderEntityUsingSalesOrderID;
 		internal static readonly IEntityRelation SpecialOfferProductEntityUsingProductIDSpecialOfferIDStatic = new SalesOrderDetailRelations().SpecialOfferProductEntityUsingProductIDSpecialOfferID;
 

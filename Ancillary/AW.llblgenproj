@@ -4797,6 +4797,28 @@
           <FieldFieldRelationship FkField="ProductCategoryID" PkField="ProductCategoryID" />
         </FieldRelationships>
       </NormalRelationship>
+      <NormalRelationship Name="Production.PurchaseOrderHistory.PurchaseOrder-Purchasing.PurchaseOrderHeader.PurchaseOrderHistories" Start="Production:PurchaseOrderHistory" End="Purchasing:PurchaseOrderHeader" StartNavigator="PurchaseOrder" EndNavigator="PurchaseOrderHistories" Type="4" ModelOnly="true" DeleteRuleAction="1">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ReferenceOrderID" PkField="PurchaseOrderID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.PurchaseOrderHistory.PurchaseOrderDetail-Purchasing.PurchaseOrderDetail.PurchaseOrderHistory" Start="Production:PurchaseOrderHistory" End="Purchasing:PurchaseOrderDetail" StartNavigator="PurchaseOrderDetail" EndNavigator="PurchaseOrderHistory" Type="1" StartIsOptional="true" ModelOnly="true" DeleteRuleAction="1">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ReferenceOrderLineID" PkField="PurchaseOrderDetailID" />
+          <FieldFieldRelationship FkField="ReferenceOrderID" PkField="PurchaseOrderID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.SalesOrderHistory.SalesOrderDetail-Sales.SalesOrderDetail.SalesOrderHistory" Start="Production:SalesOrderHistory" End="Sales:SalesOrderDetail" StartNavigator="SalesOrderDetail" EndNavigator="SalesOrderHistory" Type="1" StartIsOptional="true" ModelOnly="true" DeleteRuleAction="1">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ReferenceOrderLineID" PkField="SalesOrderDetailID" />
+          <FieldFieldRelationship FkField="ReferenceOrderID" PkField="SalesOrderID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.SalesOrderHistory.SalesOrders-Sales.SalesOrderHeader.SalesOrderHistory" Start="Production:SalesOrderHistory" End="Sales:SalesOrderHeader" StartNavigator="SalesOrders" EndNavigator="SalesOrderHistory" Type="4" ModelOnly="true" DeleteRuleAction="1">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ReferenceOrderID" PkField="SalesOrderID" />
+        </FieldRelationships>
+      </NormalRelationship>
       <NormalRelationship Name="Production.TransactionHistory.Product-Production.Product.TransactionHistories" Start="Production:TransactionHistory" End="Production:Product" StartNavigator="Product" EndNavigator="TransactionHistories" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="ProductID" PkField="ProductID" />
@@ -4810,6 +4832,11 @@
       <NormalRelationship Name="Production.WorkOrder.ScrapReason-Production.ScrapReason.WorkOrders" Start="Production:WorkOrder" End="Production:ScrapReason" StartNavigator="ScrapReason" EndNavigator="WorkOrders" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="ScrapReasonID" PkField="ScrapReasonID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.WorkOrderHistory.WorkOrder-Production.WorkOrder.WorkOrderHistory" Start="Production:WorkOrderHistory" End="Production:WorkOrder" StartNavigator="WorkOrder" EndNavigator="WorkOrderHistory" Type="1" StartIsOptional="true" ModelOnly="true" DeleteRuleAction="1">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ReferenceOrderID" PkField="WorkOrderID" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="Production.WorkOrderRouting.Location-Production.Location.WorkOrderRoutings" Start="Production:WorkOrderRouting" End="Production:Location" StartNavigator="Location" EndNavigator="WorkOrderRoutings" Type="4">
