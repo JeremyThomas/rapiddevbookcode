@@ -30,6 +30,7 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.PurchaseOrderHistoryEntityUsingReferenceOrderID);
 			toReturn.Add(this.PurchaseOrderDetailEntityUsingPurchaseOrderID);
 			toReturn.Add(this.EmployeeEntityUsingEmployeeID);
 			toReturn.Add(this.ShipMethodEntityUsingShipMethodID);
@@ -38,6 +39,21 @@ namespace AW.Data.RelationClasses
 		}
 
 		#region Class Property Declarations
+
+		/// <summary>Returns a new IEntityRelation object, between PurchaseOrderHeaderEntity and PurchaseOrderHistoryEntity over the 1:n relation they have, using the relation between the fields:
+		/// PurchaseOrderHeader.PurchaseOrderID - PurchaseOrderHistory.ReferenceOrderID
+		/// </summary>
+		public virtual IEntityRelation PurchaseOrderHistoryEntityUsingReferenceOrderID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PurchaseOrderHistories" , true);
+				relation.AddEntityFieldPair(PurchaseOrderHeaderFields.PurchaseOrderID, PurchaseOrderHistoryFields.ReferenceOrderID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PurchaseOrderHeaderEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PurchaseOrderHistoryEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between PurchaseOrderHeaderEntity and PurchaseOrderDetailEntity over the 1:n relation they have, using the relation between the fields:
 		/// PurchaseOrderHeader.PurchaseOrderID - PurchaseOrderDetail.PurchaseOrderID
@@ -111,6 +127,7 @@ namespace AW.Data.RelationClasses
 	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
 	internal static class StaticPurchaseOrderHeaderRelations
 	{
+		internal static readonly IEntityRelation PurchaseOrderHistoryEntityUsingReferenceOrderIDStatic = new PurchaseOrderHeaderRelations().PurchaseOrderHistoryEntityUsingReferenceOrderID;
 		internal static readonly IEntityRelation PurchaseOrderDetailEntityUsingPurchaseOrderIDStatic = new PurchaseOrderHeaderRelations().PurchaseOrderDetailEntityUsingPurchaseOrderID;
 		internal static readonly IEntityRelation EmployeeEntityUsingEmployeeIDStatic = new PurchaseOrderHeaderRelations().EmployeeEntityUsingEmployeeID;
 		internal static readonly IEntityRelation ShipMethodEntityUsingShipMethodIDStatic = new PurchaseOrderHeaderRelations().ShipMethodEntityUsingShipMethodID;

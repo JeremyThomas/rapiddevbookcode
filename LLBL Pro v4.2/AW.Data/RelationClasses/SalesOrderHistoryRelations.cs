@@ -30,12 +30,37 @@ namespace AW.Data.RelationClasses
 		public override List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = base.GetAllRelations();
+			toReturn.Add(this.SalesOrderDetailEntityUsingReferenceOrderLineIDReferenceOrderID);
+			toReturn.Add(this.SalesOrderHeaderEntityUsingReferenceOrderID);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
 
 
+		/// <summary>Returns a new IEntityRelation object, between SalesOrderHistoryEntity and SalesOrderDetailEntity over the 1:1 relation they have, using the relation between the fields:
+		/// SalesOrderHistory.ReferenceOrderLineID - SalesOrderDetail.SalesOrderDetailID
+		/// SalesOrderHistory.ReferenceOrderID - SalesOrderDetail.SalesOrderID
+		/// </summary>
+		public virtual IEntityRelation SalesOrderDetailEntityUsingReferenceOrderLineIDReferenceOrderID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, "SalesOrderDetail", false);
+
+
+
+
+				relation.AddEntityFieldPair(SalesOrderDetailFields.SalesOrderDetailID, SalesOrderHistoryFields.ReferenceOrderLineID);
+
+
+
+				relation.AddEntityFieldPair(SalesOrderDetailFields.SalesOrderID, SalesOrderHistoryFields.ReferenceOrderID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderDetailEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHistoryEntity", true);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderHistoryEntity and ProductEntity over the m:1 relation they have, using the relation between the fields:
 		/// SalesOrderHistory.ProductID - Product.ProductID
@@ -47,6 +72,20 @@ namespace AW.Data.RelationClasses
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Product", false);
 				relation.AddEntityFieldPair(ProductFields.ProductID, SalesOrderHistoryFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHistoryEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between SalesOrderHistoryEntity and SalesOrderHeaderEntity over the m:1 relation they have, using the relation between the fields:
+		/// SalesOrderHistory.ReferenceOrderID - SalesOrderHeader.SalesOrderID
+		/// </summary>
+		public virtual IEntityRelation SalesOrderHeaderEntityUsingReferenceOrderID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "SalesOrders", false);
+				relation.AddEntityFieldPair(SalesOrderHeaderFields.SalesOrderID, SalesOrderHistoryFields.ReferenceOrderID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHistoryEntity", true);
 				return relation;
 			}
@@ -65,7 +104,9 @@ namespace AW.Data.RelationClasses
 	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
 	internal static class StaticSalesOrderHistoryRelations
 	{
+		internal static readonly IEntityRelation SalesOrderDetailEntityUsingReferenceOrderLineIDReferenceOrderIDStatic = new SalesOrderHistoryRelations().SalesOrderDetailEntityUsingReferenceOrderLineIDReferenceOrderID;
 		internal static readonly IEntityRelation ProductEntityUsingProductIDStatic = new SalesOrderHistoryRelations().ProductEntityUsingProductID;
+		internal static readonly IEntityRelation SalesOrderHeaderEntityUsingReferenceOrderIDStatic = new SalesOrderHistoryRelations().SalesOrderHeaderEntityUsingReferenceOrderID;
 
 		/// <summary>CTor</summary>
 		static StaticSalesOrderHistoryRelations()

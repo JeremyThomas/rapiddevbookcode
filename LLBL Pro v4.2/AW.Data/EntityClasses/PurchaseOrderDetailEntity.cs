@@ -45,6 +45,8 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchProduct, _alreadyFetchedProduct, _productReturnsNewIfNotFound;
 		private PurchaseOrderHeaderEntity _purchaseOrderHeader;
 		private bool	_alwaysFetchPurchaseOrderHeader, _alreadyFetchedPurchaseOrderHeader, _purchaseOrderHeaderReturnsNewIfNotFound;
+		private PurchaseOrderHistoryEntity _purchaseOrderHistory;
+		private bool	_alwaysFetchPurchaseOrderHistory, _alreadyFetchedPurchaseOrderHistory, _purchaseOrderHistoryReturnsNewIfNotFound;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -61,6 +63,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string Product = "Product";
 			/// <summary>Member name PurchaseOrderHeader</summary>
 			public static readonly string PurchaseOrderHeader = "PurchaseOrderHeader";
+			/// <summary>Member name PurchaseOrderHistory</summary>
+			public static readonly string PurchaseOrderHistory = "PurchaseOrderHistory";
 		}
 		#endregion
 		
@@ -124,6 +128,14 @@ namespace AW.Data.EntityClasses
 			_purchaseOrderHeaderReturnsNewIfNotFound = info.GetBoolean("_purchaseOrderHeaderReturnsNewIfNotFound");
 			_alwaysFetchPurchaseOrderHeader = info.GetBoolean("_alwaysFetchPurchaseOrderHeader");
 			_alreadyFetchedPurchaseOrderHeader = info.GetBoolean("_alreadyFetchedPurchaseOrderHeader");
+			_purchaseOrderHistory = (PurchaseOrderHistoryEntity)info.GetValue("_purchaseOrderHistory", typeof(PurchaseOrderHistoryEntity));
+			if(_purchaseOrderHistory!=null)
+			{
+				_purchaseOrderHistory.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_purchaseOrderHistoryReturnsNewIfNotFound = info.GetBoolean("_purchaseOrderHistoryReturnsNewIfNotFound");
+			_alwaysFetchPurchaseOrderHistory = info.GetBoolean("_alwaysFetchPurchaseOrderHistory");
+			_alreadyFetchedPurchaseOrderHistory = info.GetBoolean("_alreadyFetchedPurchaseOrderHistory");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -155,6 +167,7 @@ namespace AW.Data.EntityClasses
 		{
 			_alreadyFetchedProduct = (_product != null);
 			_alreadyFetchedPurchaseOrderHeader = (_purchaseOrderHeader != null);
+			_alreadyFetchedPurchaseOrderHistory = (_purchaseOrderHistory != null);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -179,6 +192,9 @@ namespace AW.Data.EntityClasses
 				case "PurchaseOrderHeader":
 					toReturn.Add(Relations.PurchaseOrderHeaderEntityUsingPurchaseOrderID);
 					break;
+				case "PurchaseOrderHistory":
+					toReturn.Add(Relations.PurchaseOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderID);
+					break;
 				default:
 					break;				
 			}
@@ -202,6 +218,11 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_alwaysFetchPurchaseOrderHeader", _alwaysFetchPurchaseOrderHeader);
 			info.AddValue("_alreadyFetchedPurchaseOrderHeader", _alreadyFetchedPurchaseOrderHeader);
 
+			info.AddValue("_purchaseOrderHistory", (!this.MarkedForDeletion?_purchaseOrderHistory:null));
+			info.AddValue("_purchaseOrderHistoryReturnsNewIfNotFound", _purchaseOrderHistoryReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchPurchaseOrderHistory", _alwaysFetchPurchaseOrderHistory);
+			info.AddValue("_alreadyFetchedPurchaseOrderHistory", _alreadyFetchedPurchaseOrderHistory);
+
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			base.GetObjectData(info, context);
@@ -224,6 +245,10 @@ namespace AW.Data.EntityClasses
 					_alreadyFetchedPurchaseOrderHeader = true;
 					this.PurchaseOrderHeader = (PurchaseOrderHeaderEntity)entity;
 					break;
+				case "PurchaseOrderHistory":
+					_alreadyFetchedPurchaseOrderHistory = true;
+					this.PurchaseOrderHistory = (PurchaseOrderHistoryEntity)entity;
+					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
 					break;
@@ -243,6 +268,9 @@ namespace AW.Data.EntityClasses
 					break;
 				case "PurchaseOrderHeader":
 					SetupSyncPurchaseOrderHeader(relatedEntity);
+					break;
+				case "PurchaseOrderHistory":
+					SetupSyncPurchaseOrderHistory(relatedEntity);
 					break;
 				default:
 					break;
@@ -264,6 +292,9 @@ namespace AW.Data.EntityClasses
 				case "PurchaseOrderHeader":
 					DesetupSyncPurchaseOrderHeader(false, true);
 					break;
+				case "PurchaseOrderHistory":
+					DesetupSyncPurchaseOrderHistory(false, true);
+					break;
 				default:
 					break;
 			}
@@ -274,6 +305,10 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntity> GetDependingRelatedEntities()
 		{
 			List<IEntity> toReturn = new List<IEntity>();
+			if(_purchaseOrderHistory!=null)
+			{
+				toReturn.Add(_purchaseOrderHistory);
+			}
 			return toReturn;
 		}
 		
@@ -445,6 +480,46 @@ namespace AW.Data.EntityClasses
 			return _purchaseOrderHeader;
 		}
 
+		/// <summary> Retrieves the related entity of type 'PurchaseOrderHistoryEntity', using a relation of type '1:1'</summary>
+		/// <returns>A fetched entity of type 'PurchaseOrderHistoryEntity' which is related to this entity.</returns>
+		public PurchaseOrderHistoryEntity GetSinglePurchaseOrderHistory()
+		{
+			return GetSinglePurchaseOrderHistory(false);
+		}
+		
+		/// <summary> Retrieves the related entity of type 'PurchaseOrderHistoryEntity', using a relation of type '1:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'PurchaseOrderHistoryEntity' which is related to this entity.</returns>
+		public virtual PurchaseOrderHistoryEntity GetSinglePurchaseOrderHistory(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedPurchaseOrderHistory || forceFetch || _alwaysFetchPurchaseOrderHistory) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode )
+			{
+				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.PurchaseOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderID);
+				PurchaseOrderHistoryEntity newEntity = (PurchaseOrderHistoryEntity)GeneralEntityFactory.Create(AW.Data.EntityType.PurchaseOrderHistoryEntity);
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					newEntity = PurchaseOrderHistoryEntity.FetchPolymorphicUsingUCReferenceOrderIDReferenceOrderLineID(this.Transaction, this.PurchaseOrderID, this.PurchaseOrderDetailID, this.ActiveContext);
+					fetchResult = (newEntity.Fields.State==EntityState.Fetched);
+				}
+				if(fetchResult)
+				{
+					newEntity = (PurchaseOrderHistoryEntity)GetFromActiveContext(newEntity);
+				}
+				else
+				{
+					if(!_purchaseOrderHistoryReturnsNewIfNotFound)
+					{
+						RemoveFromTransactionIfNecessary(newEntity);
+						newEntity = null;
+					}
+				}
+				this.PurchaseOrderHistory = newEntity;
+				_alreadyFetchedPurchaseOrderHistory = fetchResult;
+			}
+			return _purchaseOrderHistory;
+		}
+
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
 		/// <returns>Dictionary with per name the related referenced data element, which can be an entity collection or an entity or null</returns>
@@ -453,6 +528,7 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("Product", _product);
 			toReturn.Add("PurchaseOrderHeader", _purchaseOrderHeader);
+			toReturn.Add("PurchaseOrderHistory", _purchaseOrderHistory);
 			return toReturn;
 		}
 	
@@ -495,6 +571,7 @@ namespace AW.Data.EntityClasses
 		{
 			_productReturnsNewIfNotFound = true;
 			_purchaseOrderHeaderReturnsNewIfNotFound = true;
+			_purchaseOrderHistoryReturnsNewIfNotFound = true;
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
@@ -612,6 +689,39 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Removes the sync logic for member _purchaseOrderHistory</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncPurchaseOrderHistory(bool signalRelatedEntity, bool resetFKFields)
+		{
+			this.PerformDesetupSyncRelatedEntity( _purchaseOrderHistory, new PropertyChangedEventHandler( OnPurchaseOrderHistoryPropertyChanged ), "PurchaseOrderHistory", AW.Data.RelationClasses.StaticPurchaseOrderDetailRelations.PurchaseOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderIDStatic, false, signalRelatedEntity, "PurchaseOrderDetail", false, new int[] { (int)PurchaseOrderDetailFieldIndex.PurchaseOrderDetailID, (int)PurchaseOrderDetailFieldIndex.PurchaseOrderID } );
+			_purchaseOrderHistory = null;
+		}
+	
+		/// <summary> setups the sync logic for member _purchaseOrderHistory</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncPurchaseOrderHistory(IEntityCore relatedEntity)
+		{
+			if(_purchaseOrderHistory!=relatedEntity)
+			{
+				DesetupSyncPurchaseOrderHistory(true, true);
+				_purchaseOrderHistory = (PurchaseOrderHistoryEntity)relatedEntity;
+				this.PerformSetupSyncRelatedEntity( _purchaseOrderHistory, new PropertyChangedEventHandler( OnPurchaseOrderHistoryPropertyChanged ), "PurchaseOrderHistory", AW.Data.RelationClasses.StaticPurchaseOrderDetailRelations.PurchaseOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderIDStatic, false, ref _alreadyFetchedPurchaseOrderHistory, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPurchaseOrderHistoryPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
 		/// <summary> Fetches the entity from the persistent storage. Fetch simply reads the entity into an EntityFields object. </summary>
 		/// <param name="purchaseOrderDetailID">PK value for PurchaseOrderDetail which data should be fetched into this PurchaseOrderDetail object</param>
 		/// <param name="purchaseOrderID">PK value for PurchaseOrderDetail which data should be fetched into this PurchaseOrderDetail object</param>
@@ -677,6 +787,13 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathPurchaseOrderHeader
 		{
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.PurchaseOrderHeaderCollection(), (IEntityRelation)GetRelationsForField("PurchaseOrderHeader")[0], (int)AW.Data.EntityType.PurchaseOrderDetailEntity, (int)AW.Data.EntityType.PurchaseOrderHeaderEntity, 0, null, null, null, "PurchaseOrderHeader", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'PurchaseOrderHistory'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathPurchaseOrderHistory
+		{
+			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.PurchaseOrderHistoryCollection(), (IEntityRelation)GetRelationsForField("PurchaseOrderHistory")[0], (int)AW.Data.EntityType.PurchaseOrderDetailEntity, (int)AW.Data.EntityType.PurchaseOrderHistoryEntity, 0, null, null, null, "PurchaseOrderHistory", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne);	}
 		}
 
 
@@ -943,6 +1060,79 @@ namespace AW.Data.EntityClasses
 			set { _purchaseOrderHeaderReturnsNewIfNotFound = value; }	
 		}
 
+		/// <summary> Gets / sets related entity of type 'PurchaseOrderHistoryEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/></summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSinglePurchaseOrderHistory()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
+		public virtual PurchaseOrderHistoryEntity PurchaseOrderHistory
+		{
+			get	{ return GetSinglePurchaseOrderHistory(false); }
+			set
+			{
+				if(this.IsDeserializing)
+				{
+					SetupSyncPurchaseOrderHistory(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						bool raisePropertyChanged = (_purchaseOrderHistory !=null);
+						DesetupSyncPurchaseOrderHistory(true, true);
+						if(raisePropertyChanged)
+						{
+							OnPropertyChanged("PurchaseOrderHistory");
+						}
+					}
+					else
+					{
+						if(_purchaseOrderHistory!=value)
+						{
+							((IEntity)value).SetRelatedEntity(this, "PurchaseOrderDetail");
+							SetupSyncPurchaseOrderHistory(value);
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for PurchaseOrderHistory. When set to true, PurchaseOrderHistory is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time PurchaseOrderHistory is accessed. You can always execute a forced fetch by calling GetSinglePurchaseOrderHistory(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchPurchaseOrderHistory
+		{
+			get	{ return _alwaysFetchPurchaseOrderHistory; }
+			set	{ _alwaysFetchPurchaseOrderHistory = value; }	
+		}
+		
+		/// <summary>Gets / Sets the lazy loading flag if the property PurchaseOrderHistory already has been fetched. Setting this property to false when PurchaseOrderHistory has been fetched
+		/// will set PurchaseOrderHistory to null as well. Setting this property to true while PurchaseOrderHistory hasn't been fetched disables lazy loading for PurchaseOrderHistory</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedPurchaseOrderHistory
+		{
+			get { return _alreadyFetchedPurchaseOrderHistory;}
+			set 
+			{
+				if(_alreadyFetchedPurchaseOrderHistory && !value)
+				{
+					this.PurchaseOrderHistory = null;
+				}
+				_alreadyFetchedPurchaseOrderHistory = value;
+			}
+		}
+		
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property PurchaseOrderHistory is not found
+		/// in the database. When set to true, PurchaseOrderHistory will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool PurchaseOrderHistoryReturnsNewIfNotFound
+		{
+			get	{ return _purchaseOrderHistoryReturnsNewIfNotFound; }
+			set	{ _purchaseOrderHistoryReturnsNewIfNotFound = value; }	
+		}
 
 		/// <summary> Gets or sets a value indicating whether this entity is a subtype</summary>
 		protected override bool LLBLGenProIsSubType

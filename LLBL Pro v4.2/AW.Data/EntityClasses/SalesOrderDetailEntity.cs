@@ -45,6 +45,8 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchSalesOrderHeader, _alreadyFetchedSalesOrderHeader, _salesOrderHeaderReturnsNewIfNotFound;
 		private SpecialOfferProductEntity _specialOfferProduct;
 		private bool	_alwaysFetchSpecialOfferProduct, _alreadyFetchedSpecialOfferProduct, _specialOfferProductReturnsNewIfNotFound;
+		private SalesOrderHistoryEntity _salesOrderHistory;
+		private bool	_alwaysFetchSalesOrderHistory, _alreadyFetchedSalesOrderHistory, _salesOrderHistoryReturnsNewIfNotFound;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -61,6 +63,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string SalesOrderHeader = "SalesOrderHeader";
 			/// <summary>Member name SpecialOfferProduct</summary>
 			public static readonly string SpecialOfferProduct = "SpecialOfferProduct";
+			/// <summary>Member name SalesOrderHistory</summary>
+			public static readonly string SalesOrderHistory = "SalesOrderHistory";
 		}
 		#endregion
 		
@@ -124,6 +128,14 @@ namespace AW.Data.EntityClasses
 			_specialOfferProductReturnsNewIfNotFound = info.GetBoolean("_specialOfferProductReturnsNewIfNotFound");
 			_alwaysFetchSpecialOfferProduct = info.GetBoolean("_alwaysFetchSpecialOfferProduct");
 			_alreadyFetchedSpecialOfferProduct = info.GetBoolean("_alreadyFetchedSpecialOfferProduct");
+			_salesOrderHistory = (SalesOrderHistoryEntity)info.GetValue("_salesOrderHistory", typeof(SalesOrderHistoryEntity));
+			if(_salesOrderHistory!=null)
+			{
+				_salesOrderHistory.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_salesOrderHistoryReturnsNewIfNotFound = info.GetBoolean("_salesOrderHistoryReturnsNewIfNotFound");
+			_alwaysFetchSalesOrderHistory = info.GetBoolean("_alwaysFetchSalesOrderHistory");
+			_alreadyFetchedSalesOrderHistory = info.GetBoolean("_alreadyFetchedSalesOrderHistory");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -159,6 +171,7 @@ namespace AW.Data.EntityClasses
 		{
 			_alreadyFetchedSalesOrderHeader = (_salesOrderHeader != null);
 			_alreadyFetchedSpecialOfferProduct = (_specialOfferProduct != null);
+			_alreadyFetchedSalesOrderHistory = (_salesOrderHistory != null);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -183,6 +196,9 @@ namespace AW.Data.EntityClasses
 				case "SpecialOfferProduct":
 					toReturn.Add(Relations.SpecialOfferProductEntityUsingProductIDSpecialOfferID);
 					break;
+				case "SalesOrderHistory":
+					toReturn.Add(Relations.SalesOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderID);
+					break;
 				default:
 					break;				
 			}
@@ -206,6 +222,11 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_alwaysFetchSpecialOfferProduct", _alwaysFetchSpecialOfferProduct);
 			info.AddValue("_alreadyFetchedSpecialOfferProduct", _alreadyFetchedSpecialOfferProduct);
 
+			info.AddValue("_salesOrderHistory", (!this.MarkedForDeletion?_salesOrderHistory:null));
+			info.AddValue("_salesOrderHistoryReturnsNewIfNotFound", _salesOrderHistoryReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchSalesOrderHistory", _alwaysFetchSalesOrderHistory);
+			info.AddValue("_alreadyFetchedSalesOrderHistory", _alreadyFetchedSalesOrderHistory);
+
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			base.GetObjectData(info, context);
@@ -228,6 +249,10 @@ namespace AW.Data.EntityClasses
 					_alreadyFetchedSpecialOfferProduct = true;
 					this.SpecialOfferProduct = (SpecialOfferProductEntity)entity;
 					break;
+				case "SalesOrderHistory":
+					_alreadyFetchedSalesOrderHistory = true;
+					this.SalesOrderHistory = (SalesOrderHistoryEntity)entity;
+					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
 					break;
@@ -247,6 +272,9 @@ namespace AW.Data.EntityClasses
 					break;
 				case "SpecialOfferProduct":
 					SetupSyncSpecialOfferProduct(relatedEntity);
+					break;
+				case "SalesOrderHistory":
+					SetupSyncSalesOrderHistory(relatedEntity);
 					break;
 				default:
 					break;
@@ -268,6 +296,9 @@ namespace AW.Data.EntityClasses
 				case "SpecialOfferProduct":
 					DesetupSyncSpecialOfferProduct(false, true);
 					break;
+				case "SalesOrderHistory":
+					DesetupSyncSalesOrderHistory(false, true);
+					break;
 				default:
 					break;
 			}
@@ -278,6 +309,10 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntity> GetDependingRelatedEntities()
 		{
 			List<IEntity> toReturn = new List<IEntity>();
+			if(_salesOrderHistory!=null)
+			{
+				toReturn.Add(_salesOrderHistory);
+			}
 			return toReturn;
 		}
 		
@@ -449,6 +484,46 @@ namespace AW.Data.EntityClasses
 			return _specialOfferProduct;
 		}
 
+		/// <summary> Retrieves the related entity of type 'SalesOrderHistoryEntity', using a relation of type '1:1'</summary>
+		/// <returns>A fetched entity of type 'SalesOrderHistoryEntity' which is related to this entity.</returns>
+		public SalesOrderHistoryEntity GetSingleSalesOrderHistory()
+		{
+			return GetSingleSalesOrderHistory(false);
+		}
+		
+		/// <summary> Retrieves the related entity of type 'SalesOrderHistoryEntity', using a relation of type '1:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'SalesOrderHistoryEntity' which is related to this entity.</returns>
+		public virtual SalesOrderHistoryEntity GetSingleSalesOrderHistory(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedSalesOrderHistory || forceFetch || _alwaysFetchSalesOrderHistory) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode )
+			{
+				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.SalesOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderID);
+				SalesOrderHistoryEntity newEntity = (SalesOrderHistoryEntity)GeneralEntityFactory.Create(AW.Data.EntityType.SalesOrderHistoryEntity);
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					newEntity = SalesOrderHistoryEntity.FetchPolymorphicUsingUCReferenceOrderIDReferenceOrderLineID(this.Transaction, this.SalesOrderID, this.SalesOrderDetailID, this.ActiveContext);
+					fetchResult = (newEntity.Fields.State==EntityState.Fetched);
+				}
+				if(fetchResult)
+				{
+					newEntity = (SalesOrderHistoryEntity)GetFromActiveContext(newEntity);
+				}
+				else
+				{
+					if(!_salesOrderHistoryReturnsNewIfNotFound)
+					{
+						RemoveFromTransactionIfNecessary(newEntity);
+						newEntity = null;
+					}
+				}
+				this.SalesOrderHistory = newEntity;
+				_alreadyFetchedSalesOrderHistory = fetchResult;
+			}
+			return _salesOrderHistory;
+		}
+
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
 		/// <returns>Dictionary with per name the related referenced data element, which can be an entity collection or an entity or null</returns>
@@ -457,6 +532,7 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("SalesOrderHeader", _salesOrderHeader);
 			toReturn.Add("SpecialOfferProduct", _specialOfferProduct);
+			toReturn.Add("SalesOrderHistory", _salesOrderHistory);
 			return toReturn;
 		}
 	
@@ -499,6 +575,7 @@ namespace AW.Data.EntityClasses
 		{
 			_salesOrderHeaderReturnsNewIfNotFound = true;
 			_specialOfferProductReturnsNewIfNotFound = true;
+			_salesOrderHistoryReturnsNewIfNotFound = true;
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
@@ -616,6 +693,39 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Removes the sync logic for member _salesOrderHistory</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncSalesOrderHistory(bool signalRelatedEntity, bool resetFKFields)
+		{
+			this.PerformDesetupSyncRelatedEntity( _salesOrderHistory, new PropertyChangedEventHandler( OnSalesOrderHistoryPropertyChanged ), "SalesOrderHistory", AW.Data.RelationClasses.StaticSalesOrderDetailRelations.SalesOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderIDStatic, false, signalRelatedEntity, "SalesOrderDetail", false, new int[] { (int)SalesOrderDetailFieldIndex.SalesOrderDetailID, (int)SalesOrderDetailFieldIndex.SalesOrderID } );
+			_salesOrderHistory = null;
+		}
+	
+		/// <summary> setups the sync logic for member _salesOrderHistory</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncSalesOrderHistory(IEntityCore relatedEntity)
+		{
+			if(_salesOrderHistory!=relatedEntity)
+			{
+				DesetupSyncSalesOrderHistory(true, true);
+				_salesOrderHistory = (SalesOrderHistoryEntity)relatedEntity;
+				this.PerformSetupSyncRelatedEntity( _salesOrderHistory, new PropertyChangedEventHandler( OnSalesOrderHistoryPropertyChanged ), "SalesOrderHistory", AW.Data.RelationClasses.StaticSalesOrderDetailRelations.SalesOrderHistoryEntityUsingReferenceOrderLineIDReferenceOrderIDStatic, false, ref _alreadyFetchedSalesOrderHistory, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnSalesOrderHistoryPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
 		/// <summary> Fetches the entity from the persistent storage. Fetch simply reads the entity into an EntityFields object. </summary>
 		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
@@ -681,6 +791,13 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathSpecialOfferProduct
 		{
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.SpecialOfferProductCollection(), (IEntityRelation)GetRelationsForField("SpecialOfferProduct")[0], (int)AW.Data.EntityType.SalesOrderDetailEntity, (int)AW.Data.EntityType.SpecialOfferProductEntity, 0, null, null, null, "SpecialOfferProduct", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesOrderHistory'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathSalesOrderHistory
+		{
+			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesOrderHistoryCollection(), (IEntityRelation)GetRelationsForField("SalesOrderHistory")[0], (int)AW.Data.EntityType.SalesOrderDetailEntity, (int)AW.Data.EntityType.SalesOrderHistoryEntity, 0, null, null, null, "SalesOrderHistory", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne);	}
 		}
 
 
@@ -947,6 +1064,79 @@ namespace AW.Data.EntityClasses
 			set { _specialOfferProductReturnsNewIfNotFound = value; }	
 		}
 
+		/// <summary> Gets / sets related entity of type 'SalesOrderHistoryEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/></summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSalesOrderHistory()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
+		public virtual SalesOrderHistoryEntity SalesOrderHistory
+		{
+			get	{ return GetSingleSalesOrderHistory(false); }
+			set
+			{
+				if(this.IsDeserializing)
+				{
+					SetupSyncSalesOrderHistory(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						bool raisePropertyChanged = (_salesOrderHistory !=null);
+						DesetupSyncSalesOrderHistory(true, true);
+						if(raisePropertyChanged)
+						{
+							OnPropertyChanged("SalesOrderHistory");
+						}
+					}
+					else
+					{
+						if(_salesOrderHistory!=value)
+						{
+							((IEntity)value).SetRelatedEntity(this, "SalesOrderDetail");
+							SetupSyncSalesOrderHistory(value);
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for SalesOrderHistory. When set to true, SalesOrderHistory is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SalesOrderHistory is accessed. You can always execute a forced fetch by calling GetSingleSalesOrderHistory(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchSalesOrderHistory
+		{
+			get	{ return _alwaysFetchSalesOrderHistory; }
+			set	{ _alwaysFetchSalesOrderHistory = value; }	
+		}
+		
+		/// <summary>Gets / Sets the lazy loading flag if the property SalesOrderHistory already has been fetched. Setting this property to false when SalesOrderHistory has been fetched
+		/// will set SalesOrderHistory to null as well. Setting this property to true while SalesOrderHistory hasn't been fetched disables lazy loading for SalesOrderHistory</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedSalesOrderHistory
+		{
+			get { return _alreadyFetchedSalesOrderHistory;}
+			set 
+			{
+				if(_alreadyFetchedSalesOrderHistory && !value)
+				{
+					this.SalesOrderHistory = null;
+				}
+				_alreadyFetchedSalesOrderHistory = value;
+			}
+		}
+		
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property SalesOrderHistory is not found
+		/// in the database. When set to true, SalesOrderHistory will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool SalesOrderHistoryReturnsNewIfNotFound
+		{
+			get	{ return _salesOrderHistoryReturnsNewIfNotFound; }
+			set	{ _salesOrderHistoryReturnsNewIfNotFound = value; }	
+		}
 
 		/// <summary> Gets or sets a value indicating whether this entity is a subtype</summary>
 		protected override bool LLBLGenProIsSubType

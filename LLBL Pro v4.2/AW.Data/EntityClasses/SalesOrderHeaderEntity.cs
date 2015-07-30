@@ -42,6 +42,8 @@ namespace AW.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
+		private AW.Data.CollectionClasses.SalesOrderHistoryCollection	_salesOrderHistory;
+		private bool	_alwaysFetchSalesOrderHistory, _alreadyFetchedSalesOrderHistory;
 		private AW.Data.CollectionClasses.SalesOrderDetailCollection	_salesOrderDetails;
 		private bool	_alwaysFetchSalesOrderDetails, _alreadyFetchedSalesOrderDetails;
 		private AW.Data.CollectionClasses.SalesOrderHeaderSalesReasonCollection	_salesOrderHeaderSalesReasons;
@@ -102,6 +104,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string SalesPerson = "SalesPerson";
 			/// <summary>Member name SalesTerritory</summary>
 			public static readonly string SalesTerritory = "SalesTerritory";
+			/// <summary>Member name SalesOrderHistory</summary>
+			public static readonly string SalesOrderHistory = "SalesOrderHistory";
 			/// <summary>Member name SalesOrderDetails</summary>
 			public static readonly string SalesOrderDetails = "SalesOrderDetails";
 			/// <summary>Member name SalesOrderHeaderSalesReasons</summary>
@@ -153,6 +157,10 @@ namespace AW.Data.EntityClasses
 		/// <param name="context"></param>
 		protected SalesOrderHeaderEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
+			_salesOrderHistory = (AW.Data.CollectionClasses.SalesOrderHistoryCollection)info.GetValue("_salesOrderHistory", typeof(AW.Data.CollectionClasses.SalesOrderHistoryCollection));
+			_alwaysFetchSalesOrderHistory = info.GetBoolean("_alwaysFetchSalesOrderHistory");
+			_alreadyFetchedSalesOrderHistory = info.GetBoolean("_alreadyFetchedSalesOrderHistory");
+
 			_salesOrderDetails = (AW.Data.CollectionClasses.SalesOrderDetailCollection)info.GetValue("_salesOrderDetails", typeof(AW.Data.CollectionClasses.SalesOrderDetailCollection));
 			_alwaysFetchSalesOrderDetails = info.GetBoolean("_alwaysFetchSalesOrderDetails");
 			_alreadyFetchedSalesOrderDetails = info.GetBoolean("_alreadyFetchedSalesOrderDetails");
@@ -315,6 +323,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> Will perform post-ReadXml actions</summary>
 		protected override void PerformPostReadXmlFixups()
 		{
+			_alreadyFetchedSalesOrderHistory = (_salesOrderHistory.Count > 0);
 			_alreadyFetchedSalesOrderDetails = (_salesOrderDetails.Count > 0);
 			_alreadyFetchedSalesOrderHeaderSalesReasons = (_salesOrderHeaderSalesReasons.Count > 0);
 			_alreadyFetchedSalesReasons = (_salesReasons.Count > 0);
@@ -377,6 +386,9 @@ namespace AW.Data.EntityClasses
 				case "SalesTerritory":
 					toReturn.Add(Relations.SalesTerritoryEntityUsingTerritoryID);
 					break;
+				case "SalesOrderHistory":
+					toReturn.Add(Relations.SalesOrderHistoryEntityUsingReferenceOrderID);
+					break;
 				case "SalesOrderDetails":
 					toReturn.Add(Relations.SalesOrderDetailEntityUsingSalesOrderID);
 					break;
@@ -405,6 +417,9 @@ namespace AW.Data.EntityClasses
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		protected override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
+			info.AddValue("_salesOrderHistory", (!this.MarkedForDeletion?_salesOrderHistory:null));
+			info.AddValue("_alwaysFetchSalesOrderHistory", _alwaysFetchSalesOrderHistory);
+			info.AddValue("_alreadyFetchedSalesOrderHistory", _alreadyFetchedSalesOrderHistory);
 			info.AddValue("_salesOrderDetails", (!this.MarkedForDeletion?_salesOrderDetails:null));
 			info.AddValue("_alwaysFetchSalesOrderDetails", _alwaysFetchSalesOrderDetails);
 			info.AddValue("_alreadyFetchedSalesOrderDetails", _alreadyFetchedSalesOrderDetails);
@@ -512,6 +527,13 @@ namespace AW.Data.EntityClasses
 					_alreadyFetchedSalesTerritory = true;
 					this.SalesTerritory = (SalesTerritoryEntity)entity;
 					break;
+				case "SalesOrderHistory":
+					_alreadyFetchedSalesOrderHistory = true;
+					if(entity!=null)
+					{
+						this.SalesOrderHistory.Add((SalesOrderHistoryEntity)entity);
+					}
+					break;
 				case "SalesOrderDetails":
 					_alreadyFetchedSalesOrderDetails = true;
 					if(entity!=null)
@@ -584,6 +606,9 @@ namespace AW.Data.EntityClasses
 				case "SalesTerritory":
 					SetupSyncSalesTerritory(relatedEntity);
 					break;
+				case "SalesOrderHistory":
+					_salesOrderHistory.Add((SalesOrderHistoryEntity)relatedEntity);
+					break;
 				case "SalesOrderDetails":
 					_salesOrderDetails.Add((SalesOrderDetailEntity)relatedEntity);
 					break;
@@ -633,6 +658,9 @@ namespace AW.Data.EntityClasses
 					break;
 				case "SalesTerritory":
 					DesetupSyncSalesTerritory(false, true);
+					break;
+				case "SalesOrderHistory":
+					this.PerformRelatedEntityRemoval(_salesOrderHistory, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "SalesOrderDetails":
 					this.PerformRelatedEntityRemoval(_salesOrderDetails, relatedEntity, signalRelatedEntityManyToOne);
@@ -706,6 +734,7 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntityCollection> GetMemberEntityCollections()
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
+			toReturn.Add(_salesOrderHistory);
 			toReturn.Add(_salesOrderDetails);
 			toReturn.Add(_salesOrderHeaderSalesReasons);
 
@@ -767,6 +796,61 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntityRelation> GetAllRelations()
 		{
 			return new SalesOrderHeaderRelations().GetAllRelations();
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesOrderHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'SalesOrderHistoryEntity'</returns>
+		public AW.Data.CollectionClasses.SalesOrderHistoryCollection GetMultiSalesOrderHistory(bool forceFetch)
+		{
+			return GetMultiSalesOrderHistory(forceFetch, _salesOrderHistory.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesOrderHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'SalesOrderHistoryEntity'</returns>
+		public AW.Data.CollectionClasses.SalesOrderHistoryCollection GetMultiSalesOrderHistory(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiSalesOrderHistory(forceFetch, _salesOrderHistory.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesOrderHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.SalesOrderHistoryCollection GetMultiSalesOrderHistory(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiSalesOrderHistory(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesOrderHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.SalesOrderHistoryCollection GetMultiSalesOrderHistory(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedSalesOrderHistory || forceFetch || _alwaysFetchSalesOrderHistory) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_salesOrderHistory);
+				_salesOrderHistory.SuppressClearInGetMulti=!forceFetch;
+				_salesOrderHistory.EntityFactoryToUse = entityFactoryToUse;
+				_salesOrderHistory.GetMultiManyToOne(null, this, filter);
+				_salesOrderHistory.SuppressClearInGetMulti=false;
+				_alreadyFetchedSalesOrderHistory = true;
+			}
+			return _salesOrderHistory;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'SalesOrderHistory'. These settings will be taken into account
+		/// when the property SalesOrderHistory is requested or GetMultiSalesOrderHistory is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersSalesOrderHistory(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_salesOrderHistory.SortClauses=sortClauses;
+			_salesOrderHistory.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'SalesOrderDetailEntity' using a relation of type '1:n'.</summary>
@@ -1380,6 +1464,7 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("CustomerViewRelated", _customerViewRelated);
 			toReturn.Add("SalesPerson", _salesPerson);
 			toReturn.Add("SalesTerritory", _salesTerritory);
+			toReturn.Add("SalesOrderHistory", _salesOrderHistory);
 			toReturn.Add("SalesOrderDetails", _salesOrderDetails);
 			toReturn.Add("SalesOrderHeaderSalesReasons", _salesOrderHeaderSalesReasons);
 			toReturn.Add("SalesReasons", _salesReasons);
@@ -1423,6 +1508,9 @@ namespace AW.Data.EntityClasses
 		/// <summary> Initializes the class members</summary>
 		private void InitClassMembers()
 		{
+
+			_salesOrderHistory = new AW.Data.CollectionClasses.SalesOrderHistoryCollection();
+			_salesOrderHistory.SetContainingEntityInfo(this, "SalesOrders");
 
 			_salesOrderDetails = new AW.Data.CollectionClasses.SalesOrderDetailCollection();
 			_salesOrderDetails.SetContainingEntityInfo(this, "SalesOrderHeader");
@@ -1939,6 +2027,13 @@ namespace AW.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesOrderHistory' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathSalesOrderHistory
+		{
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesOrderHistoryCollection(), (IEntityRelation)GetRelationsForField("SalesOrderHistory")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.SalesOrderHistoryEntity, 0, null, null, null, "SalesOrderHistory", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesOrderDetail' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
 		public static IPrefetchPathElement PrefetchPathSalesOrderDetails
@@ -2368,6 +2463,39 @@ namespace AW.Data.EntityClasses
 
 		}
 
+		/// <summary> Retrieves all related entities of type 'SalesOrderHistoryEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSalesOrderHistory()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.SalesOrderHistoryCollection SalesOrderHistory
+		{
+			get	{ return GetMultiSalesOrderHistory(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for SalesOrderHistory. When set to true, SalesOrderHistory is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SalesOrderHistory is accessed. You can always execute/ a forced fetch by calling GetMultiSalesOrderHistory(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchSalesOrderHistory
+		{
+			get	{ return _alwaysFetchSalesOrderHistory; }
+			set	{ _alwaysFetchSalesOrderHistory = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property SalesOrderHistory already has been fetched. Setting this property to false when SalesOrderHistory has been fetched
+		/// will clear the SalesOrderHistory collection well. Setting this property to true while SalesOrderHistory hasn't been fetched disables lazy loading for SalesOrderHistory</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedSalesOrderHistory
+		{
+			get { return _alreadyFetchedSalesOrderHistory;}
+			set 
+			{
+				if(_alreadyFetchedSalesOrderHistory && !value && (_salesOrderHistory != null))
+				{
+					_salesOrderHistory.Clear();
+				}
+				_alreadyFetchedSalesOrderHistory = value;
+			}
+		}
 		/// <summary> Retrieves all related entities of type 'SalesOrderDetailEntity' using a relation of type '1:n'.<br/><br/>
 		/// </summary>
 		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSalesOrderDetails()', because 

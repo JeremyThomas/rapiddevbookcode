@@ -30,12 +30,37 @@ namespace AW.Data.RelationClasses
 		public override List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = base.GetAllRelations();
+			toReturn.Add(this.PurchaseOrderDetailEntityUsingReferenceOrderLineIDReferenceOrderID);
+			toReturn.Add(this.PurchaseOrderHeaderEntityUsingReferenceOrderID);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
 
 
+		/// <summary>Returns a new IEntityRelation object, between PurchaseOrderHistoryEntity and PurchaseOrderDetailEntity over the 1:1 relation they have, using the relation between the fields:
+		/// PurchaseOrderHistory.ReferenceOrderLineID - PurchaseOrderDetail.PurchaseOrderDetailID
+		/// PurchaseOrderHistory.ReferenceOrderID - PurchaseOrderDetail.PurchaseOrderID
+		/// </summary>
+		public virtual IEntityRelation PurchaseOrderDetailEntityUsingReferenceOrderLineIDReferenceOrderID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, "PurchaseOrderDetail", false);
+
+
+
+
+				relation.AddEntityFieldPair(PurchaseOrderDetailFields.PurchaseOrderDetailID, PurchaseOrderHistoryFields.ReferenceOrderLineID);
+
+
+
+				relation.AddEntityFieldPair(PurchaseOrderDetailFields.PurchaseOrderID, PurchaseOrderHistoryFields.ReferenceOrderID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PurchaseOrderDetailEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PurchaseOrderHistoryEntity", true);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between PurchaseOrderHistoryEntity and ProductEntity over the m:1 relation they have, using the relation between the fields:
 		/// PurchaseOrderHistory.ProductID - Product.ProductID
@@ -47,6 +72,20 @@ namespace AW.Data.RelationClasses
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Product", false);
 				relation.AddEntityFieldPair(ProductFields.ProductID, PurchaseOrderHistoryFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PurchaseOrderHistoryEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between PurchaseOrderHistoryEntity and PurchaseOrderHeaderEntity over the m:1 relation they have, using the relation between the fields:
+		/// PurchaseOrderHistory.ReferenceOrderID - PurchaseOrderHeader.PurchaseOrderID
+		/// </summary>
+		public virtual IEntityRelation PurchaseOrderHeaderEntityUsingReferenceOrderID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "PurchaseOrder", false);
+				relation.AddEntityFieldPair(PurchaseOrderHeaderFields.PurchaseOrderID, PurchaseOrderHistoryFields.ReferenceOrderID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PurchaseOrderHeaderEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PurchaseOrderHistoryEntity", true);
 				return relation;
 			}
@@ -65,7 +104,9 @@ namespace AW.Data.RelationClasses
 	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
 	internal static class StaticPurchaseOrderHistoryRelations
 	{
+		internal static readonly IEntityRelation PurchaseOrderDetailEntityUsingReferenceOrderLineIDReferenceOrderIDStatic = new PurchaseOrderHistoryRelations().PurchaseOrderDetailEntityUsingReferenceOrderLineIDReferenceOrderID;
 		internal static readonly IEntityRelation ProductEntityUsingProductIDStatic = new PurchaseOrderHistoryRelations().ProductEntityUsingProductID;
+		internal static readonly IEntityRelation PurchaseOrderHeaderEntityUsingReferenceOrderIDStatic = new PurchaseOrderHistoryRelations().PurchaseOrderHeaderEntityUsingReferenceOrderID;
 
 		/// <summary>CTor</summary>
 		static StaticPurchaseOrderHistoryRelations()

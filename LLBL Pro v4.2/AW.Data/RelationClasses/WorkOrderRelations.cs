@@ -31,6 +31,7 @@ namespace AW.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.WorkOrderRoutingEntityUsingWorkOrderID);
+			toReturn.Add(this.WorkOrderHistoryEntityUsingReferenceOrderID);
 			toReturn.Add(this.ProductEntityUsingProductID);
 			toReturn.Add(this.ScrapReasonEntityUsingScrapReasonID);
 			return toReturn;
@@ -53,6 +54,24 @@ namespace AW.Data.RelationClasses
 			}
 		}
 
+		/// <summary>Returns a new IEntityRelation object, between WorkOrderEntity and WorkOrderHistoryEntity over the 1:1 relation they have, using the relation between the fields:
+		/// WorkOrder.WorkOrderID - WorkOrderHistory.ReferenceOrderID
+		/// </summary>
+		public virtual IEntityRelation WorkOrderHistoryEntityUsingReferenceOrderID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, "WorkOrderHistory", true);
+
+
+				relation.AddEntityFieldPair(WorkOrderFields.WorkOrderID, WorkOrderHistoryFields.ReferenceOrderID);
+
+
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("WorkOrderEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("WorkOrderHistoryEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between WorkOrderEntity and ProductEntity over the m:1 relation they have, using the relation between the fields:
 		/// WorkOrder.ProductID - Product.ProductID
@@ -97,6 +116,7 @@ namespace AW.Data.RelationClasses
 	internal static class StaticWorkOrderRelations
 	{
 		internal static readonly IEntityRelation WorkOrderRoutingEntityUsingWorkOrderIDStatic = new WorkOrderRelations().WorkOrderRoutingEntityUsingWorkOrderID;
+		internal static readonly IEntityRelation WorkOrderHistoryEntityUsingReferenceOrderIDStatic = new WorkOrderRelations().WorkOrderHistoryEntityUsingReferenceOrderID;
 		internal static readonly IEntityRelation ProductEntityUsingProductIDStatic = new WorkOrderRelations().ProductEntityUsingProductID;
 		internal static readonly IEntityRelation ScrapReasonEntityUsingScrapReasonIDStatic = new WorkOrderRelations().ScrapReasonEntityUsingScrapReasonID;
 

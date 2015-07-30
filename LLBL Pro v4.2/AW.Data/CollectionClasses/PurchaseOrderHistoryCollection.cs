@@ -58,6 +58,86 @@ namespace AW.Data.CollectionClasses
 		}
 
 
+		/// <summary> Retrieves in this PurchaseOrderHistoryCollection object all PurchaseOrderHistoryEntity objects which have data in common with the specified related Entities.
+		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productInstance">ProductEntity instance to use as a filter for the PurchaseOrderHistoryEntity objects to return</param>
+		/// <param name="purchaseOrderInstance">PurchaseOrderHeaderEntity instance to use as a filter for the PurchaseOrderHistoryEntity objects to return</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiManyToOne(IEntity productInstance, IEntity purchaseOrderInstance)
+		{
+			return GetMultiManyToOne(productInstance, purchaseOrderInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, null, 0, 0);
+		}
+
+		/// <summary> Retrieves in this PurchaseOrderHistoryCollection object all PurchaseOrderHistoryEntity objects which have data in common with the specified related Entities.
+		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productInstance">ProductEntity instance to use as a filter for the PurchaseOrderHistoryEntity objects to return</param>
+		/// <param name="purchaseOrderInstance">PurchaseOrderHeaderEntity instance to use as a filter for the PurchaseOrderHistoryEntity objects to return</param>
+		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiManyToOne(IEntity productInstance, IEntity purchaseOrderInstance, IPredicateExpression filter)
+		{
+			return GetMultiManyToOne(productInstance, purchaseOrderInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, filter, 0, 0);
+		}
+
+		/// <summary> Retrieves in this PurchaseOrderHistoryCollection object all PurchaseOrderHistoryEntity objects which have data in common with the specified related Entities.
+		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productInstance">ProductEntity instance to use as a filter for the PurchaseOrderHistoryEntity objects to return</param>
+		/// <param name="purchaseOrderInstance">PurchaseOrderHeaderEntity instance to use as a filter for the PurchaseOrderHistoryEntity objects to return</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiManyToOne(IEntity productInstance, IEntity purchaseOrderInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter)
+		{
+			return GetMultiManyToOne(productInstance, purchaseOrderInstance, maxNumberOfItemsToReturn, sortClauses, filter, 0, 0);
+		}
+
+		/// <summary> Retrieves in this PurchaseOrderHistoryCollection object all PurchaseOrderHistoryEntity objects which have data in common with the specified related Entities.
+		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productInstance">ProductEntity instance to use as a filter for the PurchaseOrderHistoryEntity objects to return</param>
+		/// <param name="purchaseOrderInstance">PurchaseOrderHeaderEntity instance to use as a filter for the PurchaseOrderHistoryEntity objects to return</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public virtual bool GetMultiManyToOne(IEntity productInstance, IEntity purchaseOrderInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter, int pageNumber, int pageSize)
+		{
+			bool validParameters = false;
+			validParameters |= (productInstance!=null);
+			validParameters |= (purchaseOrderInstance!=null);
+			if(!validParameters)
+			{
+				return GetMulti(filter, maxNumberOfItemsToReturn, sortClauses, null, pageNumber, pageSize);
+			}
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreatePurchaseOrderHistoryDAO().GetMulti(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, filter, productInstance, purchaseOrderInstance, pageNumber, pageSize);
+		}
+
+		/// <summary> Deletes from the persistent storage all PurchaseOrderHistory entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.</summary>
+		/// <remarks>Runs directly on the persistent storage. It will not delete entity objects from the current collection.</remarks>
+		/// <param name="productInstance">ProductEntity instance to use as a filter for the PurchaseOrderHistoryEntity objects to return</param>
+		/// <param name="purchaseOrderInstance">PurchaseOrderHeaderEntity instance to use as a filter for the PurchaseOrderHistoryEntity objects to return</param>
+		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
+		public int DeleteMultiManyToOne(IEntity productInstance, IEntity purchaseOrderInstance)
+		{
+			return DAOFactory.CreatePurchaseOrderHistoryDAO().DeleteMulti(this.Transaction, productInstance, purchaseOrderInstance);
+		}
+
+		/// <summary> Updates in the persistent storage all PurchaseOrderHistory entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.
+		/// Which fields are updated in those matching entities depends on which fields are <i>changed</i> in the passed in entity entityWithNewValues. The new values of these fields are read from entityWithNewValues. </summary>
+		/// <param name="entityWithNewValues">PurchaseOrderHistoryEntity instance which holds the new values for the matching entities to update. Only changed fields are taken into account</param>
+		/// <param name="productInstance">ProductEntity instance to use as a filter for the PurchaseOrderHistoryEntity objects to return</param>
+		/// <param name="purchaseOrderInstance">PurchaseOrderHeaderEntity instance to use as a filter for the PurchaseOrderHistoryEntity objects to return</param>
+		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
+		public int UpdateMultiManyToOne(PurchaseOrderHistoryEntity entityWithNewValues, IEntity productInstance, IEntity purchaseOrderInstance)
+		{
+			return DAOFactory.CreatePurchaseOrderHistoryDAO().UpdateMulti(entityWithNewValues, this.Transaction, productInstance, purchaseOrderInstance);
+		}
 
 
 		/// <summary> Retrieves Entity rows in a datatable which match the specified filter. It will always create a new connection to the database.</summary>

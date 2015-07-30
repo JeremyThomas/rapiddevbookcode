@@ -124,6 +124,12 @@ namespace AW.Data.EntityClasses
 					DesetupSyncProduct(true, false);
 					_alreadyFetchedProduct = false;
 					break;
+				case TransactionHistoryFieldIndex.ReferenceOrderID:
+
+					break;
+				case TransactionHistoryFieldIndex.ReferenceOrderLineID:
+
+					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
 					break;

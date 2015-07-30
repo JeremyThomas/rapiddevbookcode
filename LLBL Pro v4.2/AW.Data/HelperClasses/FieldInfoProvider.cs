@@ -558,8 +558,8 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("TransactionHistoryEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)TransactionHistoryFieldIndex.ModifiedDate, 0, 0, 0);
 			this.AddElementFieldInfo("TransactionHistoryEntity", "ProductID", typeof(System.Int32), false, true, false, false,  (int)TransactionHistoryFieldIndex.ProductID, 0, 0, 10);
 			this.AddElementFieldInfo("TransactionHistoryEntity", "Quantity", typeof(System.Int32), false, false, false, false,  (int)TransactionHistoryFieldIndex.Quantity, 0, 0, 10);
-			this.AddElementFieldInfo("TransactionHistoryEntity", "ReferenceOrderID", typeof(System.Int32), false, false, false, false,  (int)TransactionHistoryFieldIndex.ReferenceOrderID, 0, 0, 10);
-			this.AddElementFieldInfo("TransactionHistoryEntity", "ReferenceOrderLineID", typeof(System.Int32), false, false, false, false,  (int)TransactionHistoryFieldIndex.ReferenceOrderLineID, 0, 0, 10);
+			this.AddElementFieldInfo("TransactionHistoryEntity", "ReferenceOrderID", typeof(System.Int32), false, true, false, false,  (int)TransactionHistoryFieldIndex.ReferenceOrderID, 0, 0, 10);
+			this.AddElementFieldInfo("TransactionHistoryEntity", "ReferenceOrderLineID", typeof(System.Int32), false, true, false, false,  (int)TransactionHistoryFieldIndex.ReferenceOrderLineID, 0, 0, 10);
 			this.AddElementFieldInfo("TransactionHistoryEntity", "TransactionDate", typeof(System.DateTime), false, false, false, false,  (int)TransactionHistoryFieldIndex.TransactionDate, 0, 0, 0);
 			this.AddElementFieldInfo("TransactionHistoryEntity", "TransactionID", typeof(System.Int32), true, false, true, false,  (int)TransactionHistoryFieldIndex.TransactionID, 0, 0, 10);
 			this.AddElementFieldInfo("TransactionHistoryEntity", "TransactionType", typeof(System.String), false, false, true, false,  (int)TransactionHistoryFieldIndex.TransactionType, 1, 0, 0);

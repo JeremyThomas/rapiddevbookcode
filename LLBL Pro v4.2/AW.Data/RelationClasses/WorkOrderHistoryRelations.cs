@@ -30,12 +30,31 @@ namespace AW.Data.RelationClasses
 		public override List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = base.GetAllRelations();
+			toReturn.Add(this.WorkOrderEntityUsingReferenceOrderID);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
 
 
+		/// <summary>Returns a new IEntityRelation object, between WorkOrderHistoryEntity and WorkOrderEntity over the 1:1 relation they have, using the relation between the fields:
+		/// WorkOrderHistory.ReferenceOrderID - WorkOrder.WorkOrderID
+		/// </summary>
+		public virtual IEntityRelation WorkOrderEntityUsingReferenceOrderID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, "WorkOrder", false);
+
+
+
+
+				relation.AddEntityFieldPair(WorkOrderFields.WorkOrderID, WorkOrderHistoryFields.ReferenceOrderID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("WorkOrderEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("WorkOrderHistoryEntity", true);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between WorkOrderHistoryEntity and ProductEntity over the m:1 relation they have, using the relation between the fields:
 		/// WorkOrderHistory.ProductID - Product.ProductID
@@ -65,6 +84,7 @@ namespace AW.Data.RelationClasses
 	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
 	internal static class StaticWorkOrderHistoryRelations
 	{
+		internal static readonly IEntityRelation WorkOrderEntityUsingReferenceOrderIDStatic = new WorkOrderHistoryRelations().WorkOrderEntityUsingReferenceOrderID;
 		internal static readonly IEntityRelation ProductEntityUsingProductIDStatic = new WorkOrderHistoryRelations().ProductEntityUsingProductID;
 
 		/// <summary>CTor</summary>
