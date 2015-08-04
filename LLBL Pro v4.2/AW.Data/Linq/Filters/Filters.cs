@@ -166,5 +166,13 @@ namespace AW.Data.Linq.Filters
         where th.Product.ProductNumber == productNumber
         select th;
     }
+
+    public static IQueryable<T> FilterByProductNumberWithJoin<T>(this IQueryable<T> transactionHistoryEntities, string productNumber) where T : TransactionHistoryEntity
+    {
+      return from th in transactionHistoryEntities
+             join p in MetaSingletons.MetaData.Product on th.ProductID equals p.ProductID
+             where p.ProductNumber == productNumber
+             select th;
+    }
   }
 }

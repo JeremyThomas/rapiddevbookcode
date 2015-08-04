@@ -455,8 +455,15 @@ namespace AW.Helper
                   if (isListInit)
                   {
                     var tabs = Tabs(level + 1);
-                    var comma = "," + NewLine + tabs;
-                    sb.Append(comma);
+                    if (appendComma)
+                    {
+                      var comma = "," + NewLine + tabs;
+                      sb.Append(comma);
+                    }
+                    else
+                    {
+                      sb.Append(tabs);
+                    }
                   }
 
                   var isGeneric = pt.IsGenericType;
@@ -499,6 +506,10 @@ namespace AW.Helper
                  var numAdded= WalkList(list, listItemType, sb, entityMap, restrictions, excludeProperties, level + 1, parentPath, listParent);
                   if (numAdded == 0)
                     sb.Remove(indexBeforeList, sb.Length- indexBeforeList);
+                  else
+                  {
+                    appendComma = false;
+                  }
                 }
                 else if (property.CanWrite)
                   if (genericArguments.Any())
@@ -554,7 +565,7 @@ namespace AW.Helper
                       restrictions,
                       excludeProperties,
                       level + 1,
-                      ParentPath(parent, propertyName), isListInit);
+                      ParentPath(parent, propertyName, isListInit), isListInit);
                   if (isListInit)
                     appendComma = false;
                 }
@@ -571,9 +582,9 @@ namespace AW.Helper
       }
     } // WalkObject
 
-    private static string ParentPath(string parent, string propertyName)
+    private static string ParentPath(string parent, string propertyName, bool isListInit = false)
     {
-      return (parent.Length == 0)
+      return (isListInit  || parent.Length == 0)
         ? propertyName
         : parent + "." + propertyName;
     }
@@ -584,7 +595,7 @@ namespace AW.Helper
       {
         return true;
       }
-      return exclude.Any(nameToExclude => property.Name.StartsWith(nameToExclude));
+      return exclude.Any(nameToExclude => property.Name.Equals(nameToExclude));
       //if (exclude.Contains(property.Name))
       //{
       //  return true;
@@ -783,6 +794,7 @@ namespace AW.Helper
       }
 
       var listEntities = new List<Entity>();
+     var intrinsicCount = 0;
       var entityMapForList = new HashSet<Entity>(new EntityEqualityComparer());
       var isListItem = String.IsNullOrWhiteSpace(listParent);
       if (isListItem) //Want breadth first
@@ -815,6 +827,7 @@ namespace AW.Helper
               }
               appendComma = true;
               sb.AppendFormat("{0}", FormatType(obj));
+              intrinsicCount++;
               break;
             case ListType.Class:
               {
@@ -823,6 +836,7 @@ namespace AW.Helper
                 if (entityMapForList.Contains(listEntity))
                 {
                   entityMap.Remove(listEntity);
+                  listEntities.Add(listEntity);
                   WalkObject
                     (
                       obj,
@@ -849,6 +863,7 @@ namespace AW.Helper
               }
               appendComma = true;
               sb.AppendFormat("{0}", FormatType(obj));
+              intrinsicCount++;
               break;
             case ListType.Class:
             {
@@ -910,7 +925,7 @@ namespace AW.Helper
           else
             sb.Append("};" + NewLine);
         }
-      return listEntities.Count;
+      return listEntities.Count+ intrinsicCount;
     } // WalkList
   } // class ObjectToObjectLiteral
 }

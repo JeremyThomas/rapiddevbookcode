@@ -318,7 +318,7 @@ namespace AW.Tests
       queryable.OrderBy(th => th.ModifiedDate).ToList(); //Doesn't
     }
 
-    [TestMethod]
+    [TestMethod, TestProperty("Bug", "Fixed"), Description("Discriminator filter missing when Entity Instance in projection")]
     //http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=21502
     public void TestInheritanceProjectionEntityInstance()
     {
@@ -333,7 +333,8 @@ namespace AW.Tests
       queryable.ToList(); //System.InvalidCastException: Unable to cast object of type 'AW.Data.EntityClasses.WorkOrderHistoryEntity' to type 'AW.Data.EntityClasses.SalesOrderHistoryEntity'.
     }
 
-    [TestMethod, Description("LINQ - Inheritance projection followed by a count")]
+    [TestMethod, TestProperty("Bug", "Fixed"), Description("LINQ - Inheritance projection followed by a count")]
+    //http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=21502
     public void TestInheritanceCounts()
     {
       const int productID = 1;
@@ -367,6 +368,37 @@ namespace AW.Tests
       Assert.AreEqual(expectedCountProductNumber, MetaSingletons.MetaData.WorkOrderHistory.FilterByProductNumber(productNumber).Count()
                                                      + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductNumber(productNumber).Count()
                                                      + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductNumber(productNumber).Count());
+
+      Assert.AreEqual(expectedCountProductNumber, MetaSingletons.MetaData.WorkOrderHistory.FilterByProductNumberWithJoin(productNumber).Count()
+                                               + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductNumberWithJoin(productNumber).Count()
+                                               + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductNumberWithJoin(productNumber).Count());
+    }
+
+    [TestMethod, TestProperty("Bug", "UnFixed"), TestCategory("Failing"), Description("LINQ Discriminator filter missing with Count when filtering on 1:M related table.")]
+    //http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=23424
+    public void TestInheritanceWithJoinCounts()
+    {
+      Assert.AreEqual(MetaSingletons.MetaData.SalesOrderHistory.Count(), ExplicitJoinWithProduct(MetaSingletons.MetaData.SalesOrderHistory).Count(), "ExplicitJoinWithProduct");
+      const string productNumber = "AR-5381";
+      var queryableProductNumber = MetaSingletons.MetaData.TransactionHistory.FilterByProductNumber(productNumber);
+      var expectedCountProductNumber = queryableProductNumber.ToEntityCollection().Count;
+      Assert.AreEqual(expectedCountProductNumber, MetaSingletons.MetaData.WorkOrderHistory.FilterByProductNumberWithJoin(productNumber).Count()
+                                               + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductNumberWithJoin(productNumber).Count()
+                                               + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductNumberWithJoin(productNumber).Count());
+    }
+
+    public static IQueryable<T> ExplicitJoinWithProduct<T>(IQueryable<T> transactionHistoryEntities) where T : TransactionHistoryEntity
+    {
+      return from th in transactionHistoryEntities
+             join p in MetaSingletons.MetaData.Product on th.ProductID equals p.ProductID
+             select th;
+    }
+
+    [TestMethod, TestProperty("Bug", "UnFixed"), TestCategory("Failing"), Description("LINQ Discriminator filter missing with Count when filtering on 1:M related table.")]
+    //http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=23424
+    public void TestInheritanceWithJoinAny()
+    {
+      Assert.AreEqual(MetaSingletons.MetaData.SalesOrderHistory.Any(), ExplicitJoinWithProduct(MetaSingletons.MetaData.SalesOrderHistory).Any(), "ExplicitJoinWithProduct");
     }
 
   }

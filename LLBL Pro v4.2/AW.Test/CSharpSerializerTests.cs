@@ -28,7 +28,7 @@ namespace AW.Tests
       var order = GetOrder();
       var rootVariable = TestSerializerToCSharp(order, "Description");
       Assert.IsTrue(CompareOrders(order, rootVariable), "Error: Object Literal does not match");
-      //    rootVariable.ShouldBeEquivalentTo(order);
+      rootVariable.ShouldBeEquivalentTo(order, options => options.IgnoringCyclicReferences());
     }
 
     private static T TestSerializerToCSharp<T>(T obj, string globalExcludeProperties = "", params Restriction[] entityRestrictions)
@@ -101,27 +101,42 @@ namespace AW.Tests
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
       var customerEntity = northwindLinqMetaData.Customer.First();
       var rootVariable = TestSerializerLlbltoCSharp(customerEntity);
-      rootVariable.ShouldBeEquivalentTo(customerEntity, ExcludingLLBLProperties());
+      rootVariable.ShouldBeEquivalentTo(customerEntity, ExcludingLlblProperties());
     }
 
-    private static Func<EquivalencyAssertionOptions<EntityBase2>, EquivalencyAssertionOptions<EntityBase2>> ExcludingLLBLProperties()
+    private static Func<EquivalencyAssertionOptions<EntityBase2>, EquivalencyAssertionOptions<EntityBase2>> ExcludingLlblProperties()
     {
-      return options => options.IncludingAllRuntimeProperties().ExcludingNestedObjects().Excluding(o => o.Fields).Excluding(o => o.IsDirty).Excluding(o => o.IsNew)
-        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Fields")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("IsDirty")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("IsNew"))
-        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Category"))
-        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Internal"))
-        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Orders"))
-        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Customer"))
-        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Supplier"));
+      return LlblAssertionOptions;
+    }
+
+    private static EquivalencyAssertionOptions<EntityBase2> LlblAssertionOptions(EquivalencyAssertionOptions<EntityBase2> options)
+    {
+      return options.IncludingAllRuntimeProperties().ExcludingNestedObjects().IgnoringCyclicReferences().Excluding(o => o.Fields).Excluding(o => o.IsDirty).Excluding(o => o.IsNew)
+        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Fields")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("IsDirty"))
+        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("IsNew")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Internal"))
+        .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Picture")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Photo"));
+    }
+
+    private static Func<EquivalencyAssertionOptions<EntityBase2>, EquivalencyAssertionOptions<EntityBase2>> ExcludingLlblProperties(params string[] memberPaths)
+    {
+      return options =>
+      {
+        var equivalencyAssertionOptions = LlblAssertionOptions(options);
+        return memberPaths.Aggregate(equivalencyAssertionOptions, (current, memberPath) => current.Excluding(ctx => ctx.SelectedMemberPath.EndsWith(memberPath)));
+      };
     }
 
     [TestMethod]
     public void SerializerAdapterToEntityCollectionToCSharpTest()
     {
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
-      var entities = northwindLinqMetaData.Customer.Take(3).PrefetchOrders().ToEntityCollection2(); //.ToEntityCollection2();
-      var rootVariable2 = TestSerializerLlbltoCSharp(entities);
-      rootVariable2.ShouldAllBeEquivalentTo(entities, ExcludingLLBLProperties());
+      var expectedCustomerEntities = northwindLinqMetaData.Customer.Take(3).PrefetchOrders().ToEntityCollection2(); //.ToEntityCollection2();
+      var actualCustomerEntities = TestSerializerLlbltoCSharp(expectedCustomerEntities);
+      actualCustomerEntities.ShouldAllBeEquivalentTo(expectedCustomerEntities, ExcludingLlblProperties("Orders", "Customer"));
+      var expectedOrderEntities = expectedCustomerEntities[0].Orders;
+      var actualOrderEntities = expectedCustomerEntities[0].Orders;
+      Assert.AreEqual(expectedOrderEntities.Count, actualOrderEntities.Count, "Orders.Count");
+      actualOrderEntities.ShouldAllBeEquivalentTo(expectedOrderEntities, ExcludingLlblProperties());
     }
 
     [TestMethod]
@@ -130,12 +145,12 @@ namespace AW.Tests
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
       var productEntities = northwindLinqMetaData.Product.Take(3).PrefetchCategorySupplier().ToEntityCollection2();
       var productEntitiesCompiled = TestSerializerLlbltoCSharp(productEntities);
-      productEntitiesCompiled.ShouldAllBeEquivalentTo(productEntities, ExcludingLLBLProperties());
+      productEntitiesCompiled.ShouldAllBeEquivalentTo(productEntities, ExcludingLlblProperties("Category", "Supplier"));
     }
 
     private static T TestSerializerLlbltoCSharp<T>(T obj)
     {
-      var result = obj.SerializeToCSharp(OutputFormat.Compileable, "Fields,EntityFactoryToUse,Picture");
+      var result = obj.SerializeToCSharp(OutputFormat.Compileable, "Fields,EntityFactoryToUse,Picture,Photo");
       var rootVariable = CompilableSource<T>(result, typeof (EntityBase2), typeof (IEditableObject), typeof (XmlEntity), typeof (GeneralHelper));
       return rootVariable;
     }
@@ -144,8 +159,11 @@ namespace AW.Tests
     public void SerializerCustomerEntityWithOrderTest()
     {
       var customer = GetCustomerEntityWithOrder();
-      var rootVariable2 = TestSerializerLlbltoCSharp(customer);
-      rootVariable2.ShouldBeEquivalentTo(customer, ExcludingLLBLProperties());
+      var actualCustomer = TestSerializerLlbltoCSharp(customer);
+      actualCustomer.Orders[0].ShouldBeEquivalentTo(customer.Orders[0], ExcludingLlblProperties("Customer"));
+      actualCustomer.Orders.ShouldAllBeEquivalentTo(customer.Orders, ExcludingLlblProperties("Customer"));
+      actualCustomer.ShouldBeEquivalentTo(customer, ExcludingLlblProperties("Orders"));
+      //actualCustomer.ShouldBeEquivalentTo(customer, ExcludingLlblProperties("Customer"));
     }
 
     [TestMethod]
@@ -153,7 +171,25 @@ namespace AW.Tests
     {
       var customerEntities = GetCustomerEntityCollectionWithOrder();
       var rootVariable2 = TestSerializerLlbltoCSharp(customerEntities);
-      rootVariable2.ShouldAllBeEquivalentTo(customerEntities, ExcludingLLBLProperties());
+      rootVariable2.ShouldAllBeEquivalentTo(customerEntities, ExcludingLlblProperties("Customer", "Orders"));
+    }
+
+    [TestMethod]
+    public void SerializeOrdersPrefetchAlltoCSharpTest()
+    {
+      var northwindLinqMetaData = GetNorthwindLinqMetaData();
+      var orderEntities = northwindLinqMetaData.Order.Take(3).PrefetchAll().ToEntityCollection2();
+      var actualOrders = TestSerializerLlbltoCSharp(orderEntities);
+      actualOrders.ShouldAllBeEquivalentTo(orderEntities, ExcludingLlblProperties("Customer", "Employee", "Shipper", "OrderDetails"));
+    }
+
+    [TestMethod]
+    public void SerializeEmployeesPrefetchAlltoCSharpTest()
+    {
+      var northwindLinqMetaData = GetNorthwindLinqMetaData();
+      var employeeEntities = northwindLinqMetaData.Employee.Take(3).PrefetchAll().ToEntityCollection2();
+      var actualEmployees = TestSerializerLlbltoCSharp(employeeEntities);
+      actualEmployees.ShouldAllBeEquivalentTo(employeeEntities, ExcludingLlblProperties("EmployeeTerritories", "Manager", "Orders", "Staff"));
     }
 
     [TestMethod]
@@ -161,7 +197,9 @@ namespace AW.Tests
     {
       var productEntities = GetProductsWithCategories();
       var rootVariable2 = TestSerializerLlbltoCSharp(productEntities);
-      rootVariable2.ShouldAllBeEquivalentTo(productEntities, ExcludingLLBLProperties());
+      rootVariable2.ShouldAllBeEquivalentTo(productEntities, ExcludingLlblProperties("Category", "Supplier"));
+      rootVariable2[0].ShouldBeEquivalentTo(productEntities[0], ExcludingLlblProperties("Supplier", "Category"));
+      rootVariable2[0].Category.ShouldBeEquivalentTo(productEntities[0].Category, ExcludingLlblProperties("Products"));
     }
 
     public static EntityCollection<ProductEntity> GetProductsWithCategories()
@@ -243,36 +281,20 @@ namespace AW.Tests
     {
       var CustomerEntity1594500641 = new CustomerEntity
       {
-        Address = "Obere Str. 57",
-        City = "Berlin",
-        CompanyName = "Alfreds Futterkiste",
-        ContactName = "Maria Anders",
-        ContactTitle = "Sales Representative",
-        Country = "Germany",
-        CustomerId = "ALFKI",
-        Fax = "030-0076545",
-        Phone = "030-0074321",
-        PostalCode = "12209",
-        Region = "",
+        //Address = "Obere Str. 57",
+        //City = "Berlin",
+        //CompanyName = "Alfreds Futterkiste",
+        //ContactName = "Maria Anders",
+        //ContactTitle = "Sales Representative",
+        //Country = "Germany",
+        //CustomerId = "ALFKI",
+        //Fax = "030-0076545",
+        //Phone = "030-0074321",
+        //PostalCode = "12209",
+        //Region = "",
         Orders =
         {
-          new OrderEntity
-          {
-            CustomerId = "ALFKI",
-            EmployeeId = 4,
-            Freight = 61.0200m,
-            OrderDate = new DateTime(1997, 10, 3),
-            OrderId = 10692,
-            RequiredDate = new DateTime(1997, 10, 31),
-            ShipAddress = "Obere Str. 57",
-            ShipCity = "Berlin",
-            ShipCountry = "Germany",
-            ShipName = "Alfred's Futterkiste",
-            ShippedDate = new DateTime(1997, 10, 13),
-            ShipPostalCode = "12209",
-            ShipRegion = "",
-            ShipVia = 2
-          }
+          new OrderEntity()
         }
       };
       //CustomerEntity1594500641.Orders.AddRange(new[]
