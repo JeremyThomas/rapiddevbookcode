@@ -58,7 +58,7 @@ namespace AW.Tests
     {
       DataContext dataContext = AWDataClassesDataContext.GetNew();
       var target = new DataEditorLinqtoSQLPersister(dataContext);
-      Assert.IsTrue(target.CanSave(typeof (AddressType)));
+      Assert.IsTrue(target.CanSave(typeof (LinqToSQL.AddressType)));
       Assert.IsFalse(target.CanSave(typeof (DataEditorLinqtoSQLPersisterTest)));
     }
   }

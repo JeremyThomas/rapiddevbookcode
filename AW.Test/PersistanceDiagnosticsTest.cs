@@ -122,42 +122,6 @@ namespace AW.Tests
         }
       }
     }
-
-    /// <summary>
-    ///   A test for ExecuteQueryAndReadEveryBindableProperty
-    /// </summary>
-    [TestCategory("Slow"), TestMethod, Ignore]
-    public void ExecuteQueryAndReadEveryBindablePropertyTest()
-    {
-      ILLBLGenProQuery query = null; // TODO: Initialize to an appropriate value
-      StringBuilder errors = null; // TODO: Initialize to an appropriate value
-      PersistanceDiagnostics.ExecuteQueryAndReadEveryBindableProperty(query, errors);
-      Assert.Inconclusive("A method that does not return a value cannot be verified.");
-    }
-
-    /// <summary>
-    ///   A test for ReadEveryBindableProperty
-    /// </summary>
-    [TestCategory("Inconclusive"), TestMethod, Ignore]
-    public void ReadEveryBindablePropertyTest()
-    {
-      IEntityCollection2 entityCollection = null; // TODO: Initialize to an appropriate value
-      StringBuilder errors = null; // TODO: Initialize to an appropriate value
-      PersistanceDiagnostics.ReadEveryBindableProperty(entityCollection, errors);
-      Assert.Inconclusive("A method that does not return a value cannot be verified.");
-    }
-
-    /// <summary>
-    ///   A test for ReadEveryBindableProperty
-    /// </summary>
-    [TestCategory("Inconclusive"), TestMethod, Ignore]
-    public void ReadEveryBindablePropertyTest1()
-    {
-      IEntity2 entity = null; // TODO: Initialize to an appropriate value
-      StringBuilder expected = null; // TODO: Initialize to an appropriate value
-      var actual = PersistanceDiagnostics.ReadEveryBindableProperty(entity);
-      Assert.AreEqual(expected, actual);
-      Assert.Inconclusive("Verify the correctness of this test method.");
-    }
+    
   }
 }

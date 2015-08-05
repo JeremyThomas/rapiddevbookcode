@@ -368,10 +368,6 @@ namespace AW.Tests
       Assert.AreEqual(expectedCountProductNumber, MetaSingletons.MetaData.WorkOrderHistory.FilterByProductNumber(productNumber).Count()
                                                      + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductNumber(productNumber).Count()
                                                      + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductNumber(productNumber).Count());
-
-      Assert.AreEqual(expectedCountProductNumber, MetaSingletons.MetaData.WorkOrderHistory.FilterByProductNumberWithJoin(productNumber).Count()
-                                               + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductNumberWithJoin(productNumber).Count()
-                                               + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductNumberWithJoin(productNumber).Count());
     }
 
     [TestMethod, TestProperty("Bug", "UnFixed"), TestCategory("Failing"), Description("LINQ Discriminator filter missing with Count when filtering on 1:M related table.")]

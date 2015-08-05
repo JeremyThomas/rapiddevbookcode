@@ -24,7 +24,7 @@ namespace AW.Tests
   public class LLBLWinformHelperTest : GridDataEditorTestBase
   {
     private static readonly TreeView EntityTreeView = new TreeView();
-    public const int NumSchemaObjects = 851;
+    public const int NumSchemaObjects = 861;
 
     /// <summary>
     ///   Gets or sets the test context which provides
