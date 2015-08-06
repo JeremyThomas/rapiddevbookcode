@@ -111,7 +111,7 @@ namespace AW.Tests
 
     private static EquivalencyAssertionOptions<EntityBase2> LlblAssertionOptions(EquivalencyAssertionOptions<EntityBase2> options)
     {
-      return options.IncludingAllRuntimeProperties().ExcludingNestedObjects().IgnoringCyclicReferences().Excluding(o => o.Fields).Excluding(o => o.IsDirty).Excluding(o => o.IsNew)
+      return options.IncludingAllRuntimeProperties().IgnoringCyclicReferences().Excluding(o => o.Fields).Excluding(o => o.IsDirty).Excluding(o => o.IsNew)
         .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Fields")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("IsDirty"))
         .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("IsNew")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Internal"))
         .Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Picture")).Excluding(ctx => ctx.SelectedMemberPath.EndsWith("Photo"));
@@ -132,7 +132,7 @@ namespace AW.Tests
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
       var expectedCustomerEntities = northwindLinqMetaData.Customer.Take(3).PrefetchOrders().ToEntityCollection2(); //.ToEntityCollection2();
       var actualCustomerEntities = TestSerializerLlbltoCSharp(expectedCustomerEntities);
-      actualCustomerEntities.ShouldAllBeEquivalentTo(expectedCustomerEntities, ExcludingLlblProperties("Orders", "Customer"));
+      actualCustomerEntities.ShouldAllBeEquivalentTo(expectedCustomerEntities, ExcludingLlblProperties( "Customer"));
       var expectedOrderEntities = expectedCustomerEntities[0].Orders;
       var actualOrderEntities = expectedCustomerEntities[0].Orders;
       Assert.AreEqual(expectedOrderEntities.Count, actualOrderEntities.Count, "Orders.Count");
@@ -160,10 +160,7 @@ namespace AW.Tests
     {
       var customer = GetCustomerEntityWithOrder();
       var actualCustomer = TestSerializerLlbltoCSharp(customer);
-      actualCustomer.Orders[0].ShouldBeEquivalentTo(customer.Orders[0], ExcludingLlblProperties("Customer"));
-      actualCustomer.Orders.ShouldAllBeEquivalentTo(customer.Orders, ExcludingLlblProperties("Customer"));
-      actualCustomer.ShouldBeEquivalentTo(customer, ExcludingLlblProperties("Orders"));
-      //actualCustomer.ShouldBeEquivalentTo(customer, ExcludingLlblProperties("Customer"));
+      actualCustomer.ShouldBeEquivalentTo(customer, ExcludingLlblProperties());
     }
 
     [TestMethod]
@@ -171,7 +168,7 @@ namespace AW.Tests
     {
       var customerEntities = GetCustomerEntityCollectionWithOrder();
       var rootVariable2 = TestSerializerLlbltoCSharp(customerEntities);
-      rootVariable2.ShouldAllBeEquivalentTo(customerEntities, ExcludingLlblProperties("Customer", "Orders"));
+      rootVariable2.ShouldAllBeEquivalentTo(customerEntities, ExcludingLlblProperties());
     }
 
     [TestMethod]
@@ -189,7 +186,7 @@ namespace AW.Tests
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
       var employeeEntities = northwindLinqMetaData.Employee.Take(3).PrefetchAll().ToEntityCollection2();
       var actualEmployees = TestSerializerLlbltoCSharp(employeeEntities);
-      actualEmployees.ShouldAllBeEquivalentTo(employeeEntities, ExcludingLlblProperties("EmployeeTerritories", "Manager", "Orders", "Staff"));
+      actualEmployees.ShouldAllBeEquivalentTo(employeeEntities, ExcludingLlblProperties( "Manager", "Orders", "Staff"));
     }
 
     [TestMethod]
@@ -197,9 +194,7 @@ namespace AW.Tests
     {
       var productEntities = GetProductsWithCategories();
       var rootVariable2 = TestSerializerLlbltoCSharp(productEntities);
-      rootVariable2.ShouldAllBeEquivalentTo(productEntities, ExcludingLlblProperties("Category", "Supplier"));
-      rootVariable2[0].ShouldBeEquivalentTo(productEntities[0], ExcludingLlblProperties("Supplier", "Category"));
-      rootVariable2[0].Category.ShouldBeEquivalentTo(productEntities[0].Category, ExcludingLlblProperties("Products"));
+      rootVariable2.ShouldAllBeEquivalentTo(productEntities, ExcludingLlblProperties());
     }
 
     public static EntityCollection<ProductEntity> GetProductsWithCategories()
@@ -279,48 +274,43 @@ namespace AW.Tests
 
     public static CustomerEntity GetCustomerEntityWithOrder()
     {
-      var CustomerEntity1594500641 = new CustomerEntity
+      var customerEntity1594500641 = new CustomerEntity
       {
-        //Address = "Obere Str. 57",
-        //City = "Berlin",
-        //CompanyName = "Alfreds Futterkiste",
-        //ContactName = "Maria Anders",
-        //ContactTitle = "Sales Representative",
-        //Country = "Germany",
-        //CustomerId = "ALFKI",
-        //Fax = "030-0076545",
-        //Phone = "030-0074321",
-        //PostalCode = "12209",
-        //Region = "",
-        Orders =
-        {
-          new OrderEntity()
-        }
+        Address = "Obere Str. 57",
+        City = "Berlin",
+        CompanyName = "Alfreds Futterkiste",
+        ContactName = "Maria Anders",
+        ContactTitle = "Sales Representative",
+        Country = "Germany",
+        CustomerId = "ALFKI",
+        Fax = "030-0076545",
+        Phone = "030-0074321",
+        PostalCode = "12209",
+        Region = "",
       };
-      //CustomerEntity1594500641.Orders.AddRange(new[]
-      //{
-      //  new OrderEntity
-      //  {
-      //    CustomerId = "ALFKI",
-      //    EmployeeId = 4,
-      //    Freight = 61.0200m,
-      //    OrderDate = new DateTime(1997, 10, 3),
-      //    OrderId = 10692,
-      //    RequiredDate = new DateTime(1997, 10, 31),
-      //    ShipAddress = "Obere Str. 57",
-      //    ShipCity = "Berlin",
-      //    ShipCountry = "Germany",
-      //    ShipName = "Alfred's Futterkiste",
-      //    ShippedDate = new DateTime(1997, 10, 13),
-      //    ShipPostalCode = "12209",
-      //    ShipRegion = "",
-      //    ShipVia = 2,
-      //    Customer = CustomerEntity1594500641
-      //  }
-      //}
-      //  );
+      customerEntity1594500641.Orders.AddRange(new[]
+      {
+        new OrderEntity
+        {
+          CustomerId = "ALFKI",
+          EmployeeId = 4,
+          Freight = 61.0200m,
+          OrderDate = new DateTime(1997, 10, 3),
+          OrderId = 10692,
+          RequiredDate = new DateTime(1997, 10, 31),
+          ShipAddress = "Obere Str. 57",
+          ShipCity = "Berlin",
+          ShipCountry = "Germany",
+          ShipName = "Alfred's Futterkiste",
+          ShippedDate = new DateTime(1997, 10, 13),
+          ShipPostalCode = "12209",
+          ShipRegion = "",
+          ShipVia = 2,
+        }
+      }
+        );
 
-      return CustomerEntity1594500641;
+      return customerEntity1594500641;
     }
 
 
