@@ -120,6 +120,7 @@
     <Compile Include="ValueTypeWrapper.cs" />
     <Compile Include="VisualStudioHelper.cs" />
     <Compile Include="WcfUtility.cs" />
+    <Compile Include="XmlSchemaHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Ancillary\AdventureWorks.snk">

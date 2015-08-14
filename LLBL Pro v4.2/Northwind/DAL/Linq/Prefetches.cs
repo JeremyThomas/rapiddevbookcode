@@ -55,7 +55,9 @@ namespace Northwind.DAL.Linq
 
     public static IQueryable<EmployeeEntity> PrefetchAll(this IQueryable<EmployeeEntity> employeeEntities)
     {
-      return employeeEntities.With(o => o.EmployeeTerritories, e => e.Manager, o => o.Orders, o => o.Staff);
+      return employeeEntities.With(o => o.EmployeeTerritories, e => e.Manager, o => o.Orders, o => o.Staff
+        //, o => o.CustomersViaOrders, o => o.Territories
+        );
     }
   }
 }
