@@ -439,6 +439,7 @@ namespace AW.DebugVisualizers.Tests
       TestShowTransported(xmlSchema.Elements.Values, 28, 23);
       TestShowTransported(xmlSchema.Groups.Values, 0);
       TestShowTransported(xmlSchema.SchemaTypes.Values, 0);
+      TestShowTransported(XmlSchemaHelper.GetAllElements(xmlSchema), 28, 23);
     }
 
     //[TestMethod]

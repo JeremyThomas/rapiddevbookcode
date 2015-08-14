@@ -407,6 +407,28 @@ namespace AW.Helper
 
     #endregion
 
+    /// <summary>
+    /// Loads the data row.
+    /// </summary>
+    /// <param name="table">The table.</param>
+    /// <param name="values">The values.</param>
+    /// <returns></returns>
+    public static DataRow LoadDataRow(this DataTable table, IEnumerable<object> values)
+    {
+      return table.LoadDataRowWithValues(values.ToArray());
+    }
+
+    /// <summary>
+    /// Loads the data row.
+    /// </summary>
+    /// <param name="table">The table.</param>
+    /// <param name="values">The values.</param>
+    /// <returns></returns>
+    public static DataRow LoadDataRowWithValues(this DataTable table, params object[] values)
+    {
+      return table.LoadDataRow(values, true);
+    }
+
     public static IEnumerable<DataTable> AsEnumerable(this DataTableCollection dataTableCollection)
     {
       return dataTableCollection.Cast<DataTable>();

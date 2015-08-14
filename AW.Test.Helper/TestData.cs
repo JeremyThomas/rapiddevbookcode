@@ -301,7 +301,7 @@ namespace AW.Test.Helpers
   [Serializable]
   public abstract class SerializableAbstractNoDefaultConstructorClass
   {
-    public string SomeString { get; }
+    public string SomeString { get; private set; }
 
     protected SerializableAbstractNoDefaultConstructorClass(string someString)
     {
