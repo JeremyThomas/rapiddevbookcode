@@ -30,13 +30,14 @@ namespace AW.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
   using AW.Data.HelperClasses;
-	// __LLBLGENPRO_USER_CODE_REGION_END
+  using System.Linq;
+  // __LLBLGENPRO_USER_CODE_REGION_END
 
-	/// <summary>Entity class which represents the entity 'Employee'. <br/><br/>
-	/// 
-	/// MS_Description: Employee information such as salary, department, and title.<br/>
-	/// </summary>
-	[Serializable]
+  /// <summary>Entity class which represents the entity 'Employee'. <br/><br/>
+  /// 
+  /// MS_Description: Employee information such as salary, department, and title.<br/>
+  /// </summary>
+  [Serializable]
 	public partial class EmployeeEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	
@@ -1903,11 +1904,28 @@ namespace AW.Data.EntityClasses
                 }
                 return RowsAffected;
             }
-		// __LLBLGENPRO_USER_CODE_REGION_END
-		#endregion
 
-		#region Included code
+    /// <summary>
+    ///   Wires up the parent and child relations of a self join Employee collection.
+    /// </summary>
+    /// <param name="employeeEntities">The employee entities.</param>
+    /// <returns></returns>
+    public static IEnumerable<EmployeeEntity> WireUpSelfJoin(IEnumerable<EmployeeEntity> employeeEntities)
+    {
+      var edDictionary = employeeEntities.ToDictionary(ed => ed.EmployeeID);
+      foreach (var employeeEntity in edDictionary.Values.Where(e => e.ManagerID.HasValue))
+        {
+          var parent = edDictionary[employeeEntity.ManagerID.Value];
+          employeeEntity.Manager = parent;
+        }
+      return edDictionary.Values;
+    }
 
-		#endregion
-	}
+    // __LLBLGENPRO_USER_CODE_REGION_END
+    #endregion
+
+    #region Included code
+
+    #endregion
+  }
 }
