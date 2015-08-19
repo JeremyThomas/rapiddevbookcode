@@ -31,7 +31,7 @@ namespace Chaliy.Windows.Forms
 
     #region Fields
 
-    private readonly BindingSource m_BindingSource;
+    private readonly BindingSource _bindingSource;
     private CurrencyManager _listManager;
 
     private string _idPropertyName;
@@ -66,7 +66,7 @@ namespace Chaliy.Windows.Forms
       _parentIdPropertyName = string.Empty;
       _selectionChanging = false;
 
-      m_BindingSource = new BindingSource();
+      _bindingSource = new BindingSource();
 
       FullRowSelect = true;
       HideSelection = false;
@@ -108,12 +108,12 @@ namespace Chaliy.Windows.Forms
      Description("Data source of the tree.")]
     public object DataSource
     {
-      private get { return m_BindingSource.DataSource; }
+      get { return _bindingSource.DataSource; }
       set
       {
-        if (m_BindingSource.DataSource != value)
+        if (_bindingSource.DataSource != value)
         {
-          m_BindingSource.DataSource = value;
+          _bindingSource.DataSource = value;
           ResetData();
         }
       }
@@ -125,11 +125,11 @@ namespace Chaliy.Windows.Forms
      Description("Data member of the tree.")]
     public string DataMember
     {
-      private get { return m_BindingSource.DataMember; }
+      get { return _bindingSource.DataMember; }
       set
       {
-        if (m_BindingSource.DataMember != value)
-          m_BindingSource.DataMember = value;
+        if (_bindingSource.DataMember != value)
+          _bindingSource.DataMember = value;
         //this.ResetData();
       }
     }
@@ -237,7 +237,7 @@ namespace Chaliy.Windows.Forms
       Category("Behavior"),
       Description("Still try and display even if there are errors in the data")
     ]
-    public bool IgnoreErrors { private get; set; }
+    public bool IgnoreErrors { get; set; }
 
     #endregion
 
@@ -401,9 +401,9 @@ namespace Chaliy.Windows.Forms
     private bool PrepareDataSource()
     {
       if (BindingContext != null)
-        if (m_BindingSource.DataSource != null)
+        if (_bindingSource.DataSource != null)
         {
-          _listManager = BindingContext[m_BindingSource.DataSource, m_BindingSource.DataMember] as CurrencyManager;
+          _listManager = BindingContext[_bindingSource.DataSource, _bindingSource.DataMember] as CurrencyManager;
           return _listManager != null;
         }
         else

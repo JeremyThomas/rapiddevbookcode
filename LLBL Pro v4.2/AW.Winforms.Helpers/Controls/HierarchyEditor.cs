@@ -25,6 +25,7 @@ namespace AW.Winforms.Helpers.Controls
       dataTreeView.IDColumn = iDPropertyName;
       dataTreeView.ParentIDColumn = parentIDPropertyName;
       dataTreeView.NameColumn = nameColumn;
+      dataTreeView.Sorted = true;
     }
 
     public HierarchyEditor(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister, params string[] membersToExclude)

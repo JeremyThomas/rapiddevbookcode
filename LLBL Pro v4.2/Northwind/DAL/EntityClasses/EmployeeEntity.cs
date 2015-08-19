@@ -969,11 +969,27 @@ namespace Northwind.DAL.EntityClasses
 			get { return Orders.Select(o => o.Customer); }
 		}
 
-		// __LLBLGENPRO_USER_CODE_REGION_END
-		#endregion
+    /// <summary>
+    ///   Wires up the parent and child relations of a self join Employee collection.
+    /// </summary>
+    /// <param name="employeeEntities">The employee entities.</param>
+    /// <returns></returns>
+    public static IEnumerable<EmployeeEntity> WireUpSelfJoin(IEnumerable<EmployeeEntity> employeeEntities)
+    {
+      var edDictionary = employeeEntities.ToDictionary(ed => ed.EmployeeId);
+      foreach (var employeeEntity in edDictionary.Values.Where(e => e.ReportsTo.HasValue))
+        {
+          var parent = edDictionary[employeeEntity.ReportsTo.Value];
+          employeeEntity.Manager = parent;
+        }
+      return edDictionary.Values;
+    }
 
-		#region Included code
+    // __LLBLGENPRO_USER_CODE_REGION_END
+    #endregion
 
-		#endregion
-	}
+    #region Included code
+
+    #endregion
+  }
 }
