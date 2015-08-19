@@ -37,14 +37,17 @@ namespace Chaliy.Windows.Forms
     private string _idPropertyName;
     private string _namePropertyName;
     private string _parentIdPropertyName;
-/*
-    private string valuePropertyName;
-*/
+    private string _childCollectionPropertyName;
+    /*
+        private string valuePropertyName;
+    */
     private readonly Char[] _dataMemberFieldSeparator = {'.'};
 
     private PropertyDescriptor _idProperty;
     private PropertyDescriptor _nameProperty;
     private PropertyDescriptor _parentIdProperty;
+    private PropertyDescriptor _childCollectionProperty;
+
 
     private FieldsToPropertiesTypeDescriptionProvider _fieldsToPropertiesTypeDescriptionProvider;
 
@@ -134,22 +137,6 @@ namespace Chaliy.Windows.Forms
       }
     }
 
-
-    /// <summary>
-    ///   Identifier member, in most cases this is primary column of the table.
-    /// </summary>
-    [
-      DefaultValue(""),
-      Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof (UITypeEditor)),
-      Category("Data"),
-      Description("Identifier member, in most cases this is primary column of the table.")
-    ]
-    public string IDColumn
-    {
-      get { return _idPropertyName; }
-      set { SetProperty(ref _idProperty, ref _idPropertyName, value); }
-    }
-
     private void SetProperty(ref PropertyDescriptor property, ref string propertyName, string value)
     {
       if (propertyName != value)
@@ -203,6 +190,21 @@ namespace Chaliy.Windows.Forms
     }
 
     /// <summary>
+    ///   Identifier member, in most cases this is primary column of the table.
+    /// </summary>
+    [
+      DefaultValue(""),
+      Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor)),
+      Category("Data"),
+      Description("Identifier member, in most cases this is primary column of the table.")
+    ]
+    public string IDColumn
+    {
+      get { return _idPropertyName; }
+      set { SetProperty(ref _idProperty, ref _idPropertyName, value); }
+    }
+
+    /// <summary>
     ///   Name member. Note: editing of this column available only with types that support converting from string.
     /// </summary>
     [
@@ -230,6 +232,21 @@ namespace Chaliy.Windows.Forms
     {
       get { return _parentIdPropertyName; }
       set { SetProperty(ref _parentIdProperty, ref _parentIdPropertyName, value); }
+    }
+
+    /// <summary>
+    ///   Identifier of the parent. Note: this member must have the same type as identifier column.
+    /// </summary>
+    [
+      DefaultValue(""),
+      Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor)),
+      Category("Data"),
+      Description("ChildCollectionPropertName")
+    ]
+    public string ChildCollectionPropertyName
+    {
+      get { return _childCollectionPropertyName; }
+      set { SetProperty(ref _childCollectionProperty, ref _childCollectionPropertyName, value); }
     }
 
     [
@@ -418,25 +435,35 @@ namespace Chaliy.Windows.Forms
 
     private bool PropertyAreSet()
     {
-      return (_idProperty != null
-              && _nameProperty != null
-              && _parentIdProperty != null);
+      return _nameProperty != null && (UsingChildCollection ||_nameProperty != null&& _parentIdProperty != null);
+    }
+
+    private bool UsingChildCollection
+    {
+      get { return _childCollectionProperty != null; }
     }
 
     private bool PrepareDescriptors()
     {
-      if (!string.IsNullOrEmpty(_idPropertyName)
-          && _namePropertyName.Length != 0
-          && _parentIdPropertyName.Length != 0)
+      if (!string.IsNullOrEmpty(_namePropertyName))
       {
         var propertyDescriptorCollection = _listManager.GetItemProperties();
-        //APropertyDescriptorCollection.Find
-        if (_idProperty == null)
-          _idProperty = propertyDescriptorCollection[_idPropertyName];
         if (_nameProperty == null)
           _nameProperty = propertyDescriptorCollection[_namePropertyName];
-        if (_parentIdProperty == null)
-          _parentIdProperty = propertyDescriptorCollection[_parentIdPropertyName];
+
+        if (_namePropertyName.Length != 0 && _parentIdPropertyName.Length != 0)
+        {
+          if (_idProperty == null)
+            _idProperty = propertyDescriptorCollection[_idPropertyName];
+          if (_parentIdProperty == null)
+            _parentIdProperty = propertyDescriptorCollection[_parentIdPropertyName];
+        }
+
+        if (!string.IsNullOrEmpty(_childCollectionPropertyName))
+        {
+          if (_childCollectionProperty == null)
+            _childCollectionProperty = propertyDescriptorCollection[_childCollectionPropertyName];
+        }
       }
 
       return PropertyAreSet();
@@ -447,9 +474,7 @@ namespace Chaliy.Windows.Forms
       if (_valueConverter == null)
         _valueConverter = TypeDescriptor.GetConverter(_nameProperty.PropertyType);
 
-      return (_valueConverter != null
-              && _valueConverter.CanConvertFrom(typeof (string))
-        );
+      return (_valueConverter != null&& _valueConverter.CanConvertFrom(typeof (string)));
     }
 
     #endregion
@@ -473,29 +498,35 @@ namespace Chaliy.Windows.Forms
           WireDataSource();
           if (PrepareDescriptors())
           {
-            var unsortedNodes = new ArrayList();
-
-            for (var i = 0; i < _listManager.Count; i++)
-              unsortedNodes.Add(CreateNode(i));
-
-            while (unsortedNodes.Count > 0)
+            if (UsingChildCollection)
             {
-              var startCount = unsortedNodes.Count;
+              foreach (var item in _listManager.List)
+                AddChildren(Nodes, item);
+            }
+            else
+            {
+              var unsortedNodes = new ArrayList();
+              for (var i = 0; i < _listManager.Count; i++)
+              unsortedNodes.Add(CreateNode(i));
+              while (unsortedNodes.Count > 0)
+              {
+                var startCount = unsortedNodes.Count;
 
-              for (var i = unsortedNodes.Count - 1; i >= 0; i--)
-                if (TryAddNode((TreeNode) unsortedNodes[i]))
-                  unsortedNodes.RemoveAt(i);
+                for (var i = unsortedNodes.Count - 1; i >= 0; i--)
+                  if (TryAddNode((TreeNode) unsortedNodes[i]))
+                    unsortedNodes.RemoveAt(i);
 
-              if (startCount == unsortedNodes.Count)
-                if (IgnoreErrors)
-                  break;
-                else
-                {
-                  var ae = new ApplicationException("Tree view confused when try to make your data hierarchical.");
-                  foreach (var node in unsortedNodes)
-                    ae.Data.Add(node.ToString(), node);
-                  throw ae;
-                }
+                if (startCount == unsortedNodes.Count)
+                  if (IgnoreErrors)
+                    break;
+                  else
+                  {
+                    var ae = new ApplicationException("Tree view confused when try to make your data hierarchical.");
+                    foreach (var node in unsortedNodes)
+                      ae.Data.Add(node.ToString(), node);
+                    throw ae;
+                  }
+              }
             }
           }
         }
@@ -504,6 +535,16 @@ namespace Chaliy.Windows.Forms
       {
         EndUpdate();
       }
+    }
+
+    private void AddChildren(TreeNodeCollection treeNodeCollection, object item)
+    {
+      var treeNode = treeNodeCollection.Add(GetNodeText(item));
+      treeNode.Tag = item;
+      var children = _childCollectionProperty.GetValue(item) as IEnumerable;
+      if (children != null)
+        foreach (var child in children)
+          AddChildren(treeNode.Nodes, child);
     }
 
     private bool TryAddNode(TreeNode node)
@@ -608,15 +649,20 @@ namespace Chaliy.Windows.Forms
     {
       node.Tag = data;
       node.Name = GetID(node).ToString();
+      node.Text = GetNodeText( node.Tag);
+      ChangeParent(node);
+    }
+
+    private string GetNodeText(object component)
+    {
       try
       {
-        node.Text = (string) _nameProperty.GetValue(node.Tag);
+       return Convert.ToString(_nameProperty.GetValue(component));
       }
       catch (Exception e)
       {
-        node.Text = e.Message;
+        return e.Message;
       }
-      ChangeParent(node);
     }
 
     private void RefreshData(TreeNode node, int position)

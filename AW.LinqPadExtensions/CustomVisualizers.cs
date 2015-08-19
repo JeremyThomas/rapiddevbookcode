@@ -159,6 +159,17 @@ namespace LINQPad
       return enumerable;
     }
 
+    public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, string nameColumn, string childCollectionPropertyName, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
+    {
+      if (enumerable != null)
+      {
+        var panelTitle = GetPanelTitle(enumerable);
+        var outputPanel = PanelManager.DisplayControl(new HierarchyEditor(enumerable,  nameColumn, childCollectionPropertyName,dataEditorPersister, membersToExclude), TrimTitle(panelTitle));
+        outputPanel.ToolTip = panelTitle;
+      }
+      return enumerable;
+    }
+
     public static IEnumerable<T> DisplayHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
       Expression<Func<T, TParentId>> parentIDPropertyExpression,
       Expression<Func<T, TName>> namePropertyExpression, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)

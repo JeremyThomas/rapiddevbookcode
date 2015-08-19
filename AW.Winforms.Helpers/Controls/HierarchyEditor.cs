@@ -16,25 +16,49 @@ namespace AW.Winforms.Helpers.Controls
       InitializeComponent();
     }
 
-    private HierarchyEditor(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn)
+    private HierarchyEditor(IEnumerable hierarchicalData, string nameColumn)
       : this()
     {
       if (hierarchicalData == null) throw new ArgumentNullException("hierarchicalData");
       bindingSourceHierarchicalData.BindEnumerable(hierarchicalData, false);
       bindingNavigatorDeleteItem.Enabled = bindingSourceHierarchicalData.AllowRemove;
-      dataTreeView.IDColumn = iDPropertyName;
-      dataTreeView.ParentIDColumn = parentIDPropertyName;
       dataTreeView.NameColumn = nameColumn;
       dataTreeView.Sorted = true;
     }
 
-    public HierarchyEditor(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister, params string[] membersToExclude)
-      : this(hierarchicalData, iDPropertyName, parentIDPropertyName, nameColumn)
+    private HierarchyEditor(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn)
+      : this(hierarchicalData, nameColumn)
+    {
+      dataTreeView.IDColumn = iDPropertyName;
+      dataTreeView.ParentIDColumn = parentIDPropertyName;
+    }
+
+    private HierarchyEditor(IEnumerable hierarchicalData, string nameColumn, string childCollectionPropertyName)
+      : this(hierarchicalData, nameColumn)
+    {
+      dataTreeView.ChildCollectionPropertyName = childCollectionPropertyName;
+    }
+
+    public HierarchyEditor(IEnumerable hierarchicalData, string nameColumn, IDataEditorPersister dataEditorPersister, params string[] membersToExclude)
+      : this(hierarchicalData, nameColumn)
     {
       gridDataEditor.DataEditorPersister = dataEditorPersister;
       gridDataEditor.MembersToExclude = membersToExclude;
       saveToolStripButton.Enabled = gridDataEditor.DataEditorPersister != null;
       toolStripButtonCancelEdit.Enabled = saveToolStripButton.Enabled;
+    }
+
+    public HierarchyEditor(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister, params string[] membersToExclude)
+      : this(hierarchicalData, nameColumn, dataEditorPersister, membersToExclude)
+    {
+      dataTreeView.IDColumn = iDPropertyName;
+      dataTreeView.ParentIDColumn = parentIDPropertyName;
+    }
+
+    public HierarchyEditor(IEnumerable hierarchicalData, string nameColumn, string childCollectionPropertyName, IDataEditorPersister dataEditorPersister, params string[] membersToExclude)
+      : this(hierarchicalData, nameColumn, dataEditorPersister, membersToExclude)
+    {
+      dataTreeView.ChildCollectionPropertyName = childCollectionPropertyName;
     }
 
     public static HierarchyEditor HierarchyEditorFactory<T, TId, TParentId, TName>(IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
