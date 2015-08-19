@@ -48,6 +48,29 @@ namespace AW.Tests
       Assert.AreEqual("Benshoof, Wanida", treeNodeBradley.Nodes[0].Text);
     }
 
+    [TestMethod]
+    public void TestDataTreeViewWithChildCollectionProperty()
+    {
+      var employeeEntities = Employees.Value;
+      var managers = employeeEntities.Where(e=>e.ManagerID==null).ToEntityCollection();
+      var dataTreeView = new DataTreeView
+      {
+        Sorted = true,
+        ChildCollectionPropertyName = "Manages",
+        NameColumn = "EmployeeDisplayName",
+        DataSource = managers,
+        BindingContext = new BindingContext()
+      };
+      // dataTreeView.ResetData();
+      Assert.AreEqual(1, dataTreeView.Nodes.Count);
+      var rootNode = dataTreeView.Nodes[0];
+      Assert.AreEqual(6, rootNode.Nodes.Count);
+      var treeNodeBradley = rootNode.Nodes[0];
+      Assert.AreEqual("Bradley, David", treeNodeBradley.Text);
+      Assert.AreEqual(8, treeNodeBradley.Nodes.Count);
+      Assert.AreEqual("Benshoof, Wanida", treeNodeBradley.Nodes[0].Text);
+    }
+
     [TestProperty("Winforms", "Interactive"), TestMethod]
     public void TestShowInTree()
     {
