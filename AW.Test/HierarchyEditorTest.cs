@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -6,11 +7,13 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper.LLBL;
+using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.LLBL;
 using Chaliy.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+using CustomerEntity = Northwind.DAL.EntityClasses.CustomerEntity;
 
 namespace AW.Tests
 {
@@ -39,13 +42,7 @@ namespace AW.Tests
         BindingContext = new BindingContext()
       };
       // dataTreeView.ResetData();
-      Assert.AreEqual(1, dataTreeView.Nodes.Count);
-      var rootNode = dataTreeView.Nodes[0];
-      Assert.AreEqual(6, rootNode.Nodes.Count);
-      var treeNodeBradley = rootNode.Nodes[0];
-      Assert.AreEqual("Bradley, David", treeNodeBradley.Text);
-      Assert.AreEqual(8, treeNodeBradley.Nodes.Count);
-      Assert.AreEqual("Benshoof, Wanida", treeNodeBradley.Nodes[0].Text);
+      AssertEmployeesInTree(dataTreeView);
     }
 
     [TestMethod]
@@ -62,6 +59,51 @@ namespace AW.Tests
         BindingContext = new BindingContext()
       };
       // dataTreeView.ResetData();
+      AssertEmployeesInTree(dataTreeView);
+    }
+
+    [TestMethod]
+    public void TestDataTreeViewGroup()
+    {
+      var groupBy = NorthwindTest.GetNorthwindLinqMetaData().Customer.GroupBy(c => c.Country);
+      TestDataTreeViewGroup(groupBy.ToList());
+      TestDataTreeViewGroup(AW.Winforms.Helpers.BindingListHelper.ToBindingListView(groupBy));
+      TestDataTreeViewGroup(AW.Winforms.Helpers.BindingListHelper.ToBindingListView((IEnumerable)groupBy));
+    }
+
+    private static void TestDataTreeViewGroup(IEnumerable customerGroupedByCountry)
+    {
+      var dataTreeView = new DataTreeView
+      {
+        Sorted = true,
+        NameColumn = "CompanyName",
+        DataSource = customerGroupedByCountry,
+        BindingContext = new BindingContext()
+      };
+      AssertCustomerGroupedByCountryInTree(dataTreeView);
+    }
+
+    private static void AssertCustomerGroupedByCountryInTree(TreeView dataTreeView)
+    {
+      Assert.AreEqual(21, dataTreeView.Nodes.Count);
+      var rootNode = dataTreeView.Nodes[0];
+      Assert.AreEqual("Argentina", rootNode.Text);
+      Assert.AreEqual(3, rootNode.Nodes.Count);
+      var treeNodeCactus = rootNode.Nodes[0];
+      Assert.AreEqual("Cactus Comidas para llevar", treeNodeCactus.Text);
+    }
+
+    [TestMethod]
+    public void TestHierarchyEditorGroup()
+    {
+      var customerGroupedByCountry = NorthwindTest.GetNorthwindLinqMetaData().Customer.GroupBy(c => c.Country).ToList();
+      var hierarchyEditor = new HierarchyEditor(customerGroupedByCountry, "CompanyName", null) {BindingContext = new BindingContext()};
+      var dataTreeView = hierarchyEditor.Controls.Find("dataTreeView",true).Single() as TreeView;
+      AssertCustomerGroupedByCountryInTree(dataTreeView);
+    }
+
+    private static void AssertEmployeesInTree(TreeView dataTreeView)
+    {
       Assert.AreEqual(1, dataTreeView.Nodes.Count);
       var rootNode = dataTreeView.Nodes[0];
       Assert.AreEqual(6, rootNode.Nodes.Count);
