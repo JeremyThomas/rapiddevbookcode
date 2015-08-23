@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using AW.Helper;
 using AW.Winforms.Helpers.EntityViewer;
 
 namespace Chaliy.Windows.Forms
@@ -45,6 +47,7 @@ namespace Chaliy.Windows.Forms
 
     private PropertyDescriptor _idProperty;
     private PropertyDescriptor _nameProperty;
+    private PropertyDescriptor _childNameProperty;
     private PropertyDescriptor _parentIdProperty;
     private PropertyDescriptor _childCollectionProperty;
 
@@ -194,7 +197,7 @@ namespace Chaliy.Windows.Forms
     /// </summary>
     [
       DefaultValue(""),
-      Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor)),
+      Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof (UITypeEditor)),
       Category("Data"),
       Description("Identifier member, in most cases this is primary column of the table.")
     ]
@@ -239,7 +242,7 @@ namespace Chaliy.Windows.Forms
     /// </summary>
     [
       DefaultValue(""),
-      Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor)),
+      Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof (UITypeEditor)),
       Category("Data"),
       Description("ChildCollectionPropertName")
     ]
@@ -346,6 +349,7 @@ namespace Chaliy.Windows.Forms
     }
 
     private bool _handelingItemChanged;
+    private bool _isSelfCollection;
 
     private void DataTreeView_ListChanged(object sender, ListChangedEventArgs e)
     {
@@ -435,35 +439,76 @@ namespace Chaliy.Windows.Forms
 
     private bool PropertyAreSet()
     {
-      return _nameProperty != null && (UsingChildCollection ||_nameProperty != null&& _parentIdProperty != null);
+      return _nameProperty != null && (UsingChildCollection || _nameProperty != null && _parentIdProperty != null);
     }
 
     private bool UsingChildCollection
     {
-      get { return _childCollectionProperty != null; }
+      get { return _childCollectionProperty != null || _isSelfCollection; }
     }
 
     private bool PrepareDescriptors()
     {
+      var propertyDescriptorCollection = _listManager.GetItemProperties();
+
+      var enumerableItemType = MetaDataHelper.GetEnumerableItemType(_listManager.List);
+      _isSelfCollection = enumerableItemType.Implements(typeof (IEnumerable));
+      if (propertyDescriptorCollection.Count == 0)
+      {
+        var implementedInterfaces = enumerableItemType.GetTypeInfo().ImplementedInterfaces;
+        if (implementedInterfaces != null)
+        {
+          propertyDescriptorCollection = TypeDescriptor.GetProperties(implementedInterfaces.First());
+        }
+        if (propertyDescriptorCollection.Count == 0)
+        {
+          _fieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(enumerableItemType, BindingFlags.Instance | BindingFlags.NonPublic);
+          TypeDescriptor.AddProvider(_fieldsToPropertiesTypeDescriptionProvider, enumerableItemType);
+          propertyDescriptorCollection = TypeDescriptor.GetProperties(enumerableItemType);
+        }
+      }
+      if (_isSelfCollection & _listManager.Count > 0)
+      {
+        var childItemType = MetaDataHelper.GetEnumerableItemType(_listManager.Current as IEnumerable);
+        var childPropertyDescriptorCollection = TypeDescriptor.GetProperties(childItemType);
+        if (!string.IsNullOrEmpty(_namePropertyName))
+          _childNameProperty = childPropertyDescriptorCollection[_namePropertyName];
+      }
+
       if (!string.IsNullOrEmpty(_namePropertyName))
       {
-        var propertyDescriptorCollection = _listManager.GetItemProperties();
+        if (_nameProperty == null)
+          _nameProperty = propertyDescriptorCollection[_namePropertyName];
+        if (_nameProperty == null)
+          _nameProperty = propertyDescriptorCollection["Key"];
+      }
+      else if (propertyDescriptorCollection.Count == 1)
+      {
+        _nameProperty = propertyDescriptorCollection[0];
+      }
+
+      if (_nameProperty != null)
+      {
         if (_nameProperty == null)
           _nameProperty = propertyDescriptorCollection[_namePropertyName];
 
-        if (_namePropertyName.Length != 0 && _parentIdPropertyName.Length != 0)
+        if (_idPropertyName.Length != 0 && _parentIdPropertyName.Length != 0)
         {
           if (_idProperty == null)
             _idProperty = propertyDescriptorCollection[_idPropertyName];
           if (_parentIdProperty == null)
             _parentIdProperty = propertyDescriptorCollection[_parentIdPropertyName];
         }
+        else if (string.IsNullOrEmpty(_childCollectionPropertyName) && _nameProperty != null)
+        {
+          _isSelfCollection = _nameProperty.ComponentType.Implements(typeof (IEnumerable));
+        }
 
         if (!string.IsNullOrEmpty(_childCollectionPropertyName))
-        {
           if (_childCollectionProperty == null)
+          {
             _childCollectionProperty = propertyDescriptorCollection[_childCollectionPropertyName];
-        }
+          }
       }
 
       return PropertyAreSet();
@@ -474,7 +519,7 @@ namespace Chaliy.Windows.Forms
       if (_valueConverter == null)
         _valueConverter = TypeDescriptor.GetConverter(_nameProperty.PropertyType);
 
-      return (_valueConverter != null&& _valueConverter.CanConvertFrom(typeof (string)));
+      return (_valueConverter != null && _valueConverter.CanConvertFrom(typeof (string)));
     }
 
     #endregion
@@ -482,7 +527,8 @@ namespace Chaliy.Windows.Forms
     private void WireDataSource()
     {
       _listManager.PositionChanged += ListManagerPositionChanged;
-      ((IBindingList) _listManager.List).ListChanged += DataTreeView_ListChanged;
+      var bindingList = _listManager.List as IBindingList;
+      if (bindingList != null) bindingList.ListChanged += DataTreeView_ListChanged;
     }
 
     public void ResetData()
@@ -507,7 +553,7 @@ namespace Chaliy.Windows.Forms
             {
               var unsortedNodes = new ArrayList();
               for (var i = 0; i < _listManager.Count; i++)
-              unsortedNodes.Add(CreateNode(i));
+                unsortedNodes.Add(CreateNode(i));
               while (unsortedNodes.Count > 0)
               {
                 var startCount = unsortedNodes.Count;
@@ -541,7 +587,7 @@ namespace Chaliy.Windows.Forms
     {
       var treeNode = treeNodeCollection.Add(GetNodeText(item));
       treeNode.Tag = item;
-      var children = _childCollectionProperty.GetValue(item) as IEnumerable;
+      var children = (_childCollectionProperty == null ? item : _childCollectionProperty.GetValue(item)) as IEnumerable;
       if (children != null)
         foreach (var child in children)
           AddChildren(treeNode.Nodes, child);
@@ -649,7 +695,7 @@ namespace Chaliy.Windows.Forms
     {
       node.Tag = data;
       node.Name = GetID(node).ToString();
-      node.Text = GetNodeText( node.Tag);
+      node.Text = GetNodeText(node.Tag);
       ChangeParent(node);
     }
 
@@ -657,7 +703,10 @@ namespace Chaliy.Windows.Forms
     {
       try
       {
-       return Convert.ToString(_nameProperty.GetValue(component));
+        if (_childNameProperty != null && component.GetType().IsAssignableTo(_childNameProperty.ComponentType))
+          return Convert.ToString(_childNameProperty.GetValue(component));
+        //_childNameProperty
+        return Convert.ToString(_nameProperty.GetValue(component));
       }
       catch (Exception e)
       {
