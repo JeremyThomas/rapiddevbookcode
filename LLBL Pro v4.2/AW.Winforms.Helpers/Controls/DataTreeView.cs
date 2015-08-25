@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -337,7 +336,8 @@ namespace Chaliy.Windows.Forms
 
     private void DataTreeView_BindingContextChanged(object sender, EventArgs e)
     {
-      ResetData();
+      if (Visible)
+        ResetData();
     }
 
     private void ListManagerPositionChanged(object sender, EventArgs e)
@@ -350,6 +350,7 @@ namespace Chaliy.Windows.Forms
 
     private bool _handelingItemChanged;
     private bool _isSelfCollection;
+    private bool _reseting;
 
     private void DataTreeView_ListChanged(object sender, ListChangedEventArgs e)
     {
@@ -450,16 +451,18 @@ namespace Chaliy.Windows.Forms
     private bool PrepareDescriptors()
     {
       var propertyDescriptorCollection = _listManager.GetItemProperties();
-
       var enumerableItemType = MetaDataHelper.GetEnumerableItemType(_listManager.List);
       _isSelfCollection = enumerableItemType.Implements(typeof (IEnumerable));
       if (propertyDescriptorCollection.Count == 0)
       {
         var implementedInterfaces = enumerableItemType.GetTypeInfo().ImplementedInterfaces;
         if (implementedInterfaces != null)
-        {
-          propertyDescriptorCollection = TypeDescriptor.GetProperties(implementedInterfaces.First());
-        }
+          foreach (var implementedInterface in implementedInterfaces)
+          {
+            propertyDescriptorCollection = TypeDescriptor.GetProperties(implementedInterface);
+            if (propertyDescriptorCollection.Count > 0)
+              break;
+          }
         if (propertyDescriptorCollection.Count == 0)
         {
           _fieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(enumerableItemType, BindingFlags.Instance | BindingFlags.NonPublic);
@@ -536,51 +539,53 @@ namespace Chaliy.Windows.Forms
       BeginUpdate();
 
       Clear();
-
-      try
-      {
-        if (PrepareDataSource())
+      if (!_reseting)
+        try
         {
-          WireDataSource();
-          if (PrepareDescriptors())
+          _reseting = true;
+          if (PrepareDataSource())
           {
-            if (UsingChildCollection)
+            WireDataSource();
+            if (PrepareDescriptors())
             {
-              foreach (var item in _listManager.List)
-                AddChildren(Nodes, item);
-            }
-            else
-            {
-              var unsortedNodes = new ArrayList();
-              for (var i = 0; i < _listManager.Count; i++)
-                unsortedNodes.Add(CreateNode(i));
-              while (unsortedNodes.Count > 0)
+              if (UsingChildCollection)
               {
-                var startCount = unsortedNodes.Count;
+                foreach (var item in _listManager.List)
+                  AddChildren(Nodes, item);
+              }
+              else
+              {
+                var unsortedNodes = new ArrayList();
+                for (var i = 0; i < _listManager.Count; i++)
+                  unsortedNodes.Add(CreateNode(i));
+                while (unsortedNodes.Count > 0)
+                {
+                  var startCount = unsortedNodes.Count;
 
-                for (var i = unsortedNodes.Count - 1; i >= 0; i--)
-                  if (TryAddNode((TreeNode) unsortedNodes[i]))
-                    unsortedNodes.RemoveAt(i);
+                  for (var i = unsortedNodes.Count - 1; i >= 0; i--)
+                    if (TryAddNode((TreeNode) unsortedNodes[i]))
+                      unsortedNodes.RemoveAt(i);
 
-                if (startCount == unsortedNodes.Count)
-                  if (IgnoreErrors)
-                    break;
-                  else
-                  {
-                    var ae = new ApplicationException("Tree view confused when try to make your data hierarchical.");
-                    foreach (var node in unsortedNodes)
-                      ae.Data.Add(node.ToString(), node);
-                    throw ae;
-                  }
+                  if (startCount == unsortedNodes.Count)
+                    if (IgnoreErrors)
+                      break;
+                    else
+                    {
+                      var ae = new ApplicationException("Tree view confused when try to make your data hierarchical.");
+                      foreach (var node in unsortedNodes)
+                        ae.Data.Add(node.ToString(), node);
+                      throw ae;
+                    }
+                }
               }
             }
           }
         }
-      }
-      finally
-      {
-        EndUpdate();
-      }
+        finally
+        {
+          EndUpdate();
+          _reseting = false;
+        }
     }
 
     private void AddChildren(TreeNodeCollection treeNodeCollection, object item)
