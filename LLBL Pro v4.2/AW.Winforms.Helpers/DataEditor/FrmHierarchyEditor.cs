@@ -12,6 +12,7 @@ namespace AW.Winforms.Helpers.DataEditor
 {
   public partial class FrmHierarchyEditor : FrmThreePanelBase
   {
+    private bool _shown;
 // ReSharper disable once MemberCanBePrivate.Global
     public FrmHierarchyEditor()
     {
@@ -23,11 +24,11 @@ namespace AW.Winforms.Helpers.DataEditor
       : this()
     {
       if (hierarchicalData == null) throw new ArgumentNullException("hierarchicalData");
-      bindingSourceHierarchicalData.BindEnumerable(hierarchicalData, false);
-      bindingNavigatorDeleteItem.Enabled = bindingSourceHierarchicalData.AllowRemove;
       dataTreeView.IDColumn = iDPropertyName;
       dataTreeView.ParentIDColumn = parentIDPropertyName;
       dataTreeView.NameColumn = nameColumn;
+      bindingSourceHierarchicalData.BindEnumerable(hierarchicalData, false);
+      bindingNavigatorDeleteItem.Enabled = bindingSourceHierarchicalData.AllowRemove;
     }
 
     private FrmHierarchyEditor(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister)
@@ -53,13 +54,16 @@ namespace AW.Winforms.Helpers.DataEditor
 
     private void dataTreeView1_AfterSelect(object sender, TreeViewEventArgs e)
     {
-      toolStripStatusLabelSelectePath.Text = ((dataTreeView).SelectedNode).FullPath;
-      propertyGrid1.SelectedObject = e.Node.Tag;
-      splitContainerHorizontal.Panel2Collapsed = e.Node.Nodes.Count == 0;
-      if (splitContainerHorizontal.Panel2Collapsed)
-        gridDataEditor.DataSource = null;
-      else
-        gridDataEditor.BindEnumerable(e.Node.Nodes.Cast<TreeNode>().Select(tn => tn.Tag).ToList());
+      if (_shown)
+      {
+        toolStripStatusLabelSelectePath.Text = ((dataTreeView).SelectedNode).FullPath;
+        propertyGrid1.SelectedObject = e.Node.Tag;
+        splitContainerHorizontal.Panel2Collapsed = e.Node.Nodes.Count == 0;
+        if (splitContainerHorizontal.Panel2Collapsed)
+          gridDataEditor.DataSource = null;
+        else
+          gridDataEditor.BindEnumerable(e.Node.Nodes.Cast<TreeNode>().Select(tn => tn.Tag).ToList());
+      }
     }
 
     private void FrmHierarchyEditor_FormClosing(object sender, FormClosingEventArgs e)
@@ -93,6 +97,11 @@ namespace AW.Winforms.Helpers.DataEditor
         //saveToolStripButton.Enabled = false;
       }
       //toolStripButtonCancelEdit.Enabled = false;
+    }
+
+    private void FrmHierarchyEditor_Shown(object sender, EventArgs e)
+    {
+      _shown = true;
     }
   }
 }

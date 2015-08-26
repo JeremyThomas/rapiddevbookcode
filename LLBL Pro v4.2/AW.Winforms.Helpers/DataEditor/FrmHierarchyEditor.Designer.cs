@@ -62,9 +62,11 @@
       this.splitContainerHorizontal.Panel1.SuspendLayout();
       this.splitContainerHorizontal.Panel2.SuspendLayout();
       this.splitContainerHorizontal.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.dataTreeView)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceHierarchicalData)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorHierarchicalData)).BeginInit();
       this.bindingNavigatorHierarchicalData.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.gridDataEditor)).BeginInit();
       this.statusStrip1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -89,11 +91,12 @@
       // 
       this.splitContainerHorizontal.Panel2.Controls.Add(this.gridDataEditor);
       this.splitContainerHorizontal.Size = new System.Drawing.Size(593, 584);
-      this.splitContainerHorizontal.SplitterDistance = 164;
+      this.splitContainerHorizontal.SplitterDistance = 160;
       // 
       // dataTreeView
       // 
       this.dataTreeView.AllowDrop = true;
+      this.dataTreeView.ChildCollectionPropertyName = null;
       this.dataTreeView.DataMember = "";
       this.dataTreeView.DataSource = this.bindingSourceHierarchicalData;
       this.dataTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -292,10 +295,11 @@
       // 
       // propertyGrid1
       // 
+      this.propertyGrid1.CategoryForeColor = System.Drawing.SystemColors.InactiveCaptionText;
       this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
       this.propertyGrid1.Name = "propertyGrid1";
-      this.propertyGrid1.Size = new System.Drawing.Size(593, 164);
+      this.propertyGrid1.Size = new System.Drawing.Size(593, 160);
       this.propertyGrid1.TabIndex = 0;
       // 
       // gridDataEditor
@@ -305,10 +309,11 @@
       this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
       this.gridDataEditor.EnsureFilteringEnabled = false;
       this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
+      this.gridDataEditor.MembersToExclude = null;
       this.gridDataEditor.Name = "gridDataEditor";
       this.gridDataEditor.PageSize = ((ushort)(0));
       this.gridDataEditor.Readonly = false;
-      this.gridDataEditor.Size = new System.Drawing.Size(593, 416);
+      this.gridDataEditor.Size = new System.Drawing.Size(593, 420);
       this.gridDataEditor.TabIndex = 0;
       // 
       // statusStrip1
@@ -337,6 +342,7 @@
       this.Name = "FrmHierarchyEditor";
       this.Text = "FrmHierarchyEditor";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmHierarchyEditor_FormClosing);
+      this.Shown += new System.EventHandler(this.FrmHierarchyEditor_Shown);
       this.Controls.SetChildIndex(this.statusStrip1, 0);
       this.Controls.SetChildIndex(this.splitContainerVertical, 0);
       this.splitContainerVertical.Panel1.ResumeLayout(false);
@@ -348,10 +354,12 @@
       this.splitContainerHorizontal.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerHorizontal)).EndInit();
       this.splitContainerHorizontal.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.dataTreeView)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceHierarchicalData)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorHierarchicalData)).EndInit();
       this.bindingNavigatorHierarchicalData.ResumeLayout(false);
       this.bindingNavigatorHierarchicalData.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.gridDataEditor)).EndInit();
       this.statusStrip1.ResumeLayout(false);
       this.statusStrip1.PerformLayout();
       this.ResumeLayout(false);

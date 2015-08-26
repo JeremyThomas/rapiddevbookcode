@@ -50,7 +50,7 @@
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonExpand = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonCollapse = new System.Windows.Forms.ToolStripButton();
-      this.employeeEntityDataGridView = new System.Windows.Forms.DataGridView();
+      this.employeeEntityDataGridView = new ADGV.AdvancedDataGridView();
       this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -77,6 +77,8 @@
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityBindingNavigator)).BeginInit();
       this.employeeEntityBindingNavigator.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityDataGridView)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataTreeViewrOganizationStructure)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataTreeViewrOganizationStructureEcho)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
@@ -498,6 +500,8 @@
       this.employeeEntityBindingNavigator.ResumeLayout(false);
       this.employeeEntityBindingNavigator.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityDataGridView)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataTreeViewrOganizationStructure)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataTreeViewrOganizationStructureEcho)).EndInit();
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel2.ResumeLayout(false);
       this.splitContainer1.Panel2.PerformLayout();
@@ -526,7 +530,7 @@
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
     private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
     private System.Windows.Forms.ToolStripButton employeeEntityBindingNavigatorSaveItem;
-    private System.Windows.Forms.DataGridView employeeEntityDataGridView;
+    private ADGV.AdvancedDataGridView employeeEntityDataGridView;
     private System.Windows.Forms.ImageList imageList1;
     private System.Windows.Forms.SplitContainer splitContainer1;
     private System.Windows.Forms.ToolStripButton toolStripButtonExpand;

@@ -27,5 +27,11 @@ namespace AW.Data.Linq
         a => a.CustomerAddresses.With(ca => ca.Customer)
         );
     }
+
+    public static IQueryable<EmployeeEntity> PrefetchAll(this IQueryable<EmployeeEntity> employeeEntities)
+    {
+      return employeeEntities.With(o => o.PurchaseOrderHeaders, e => e.Manager, e => e.Contact, e => e.Manages, 
+        e => e.JobCandidates, e => e.EmployeePayHistories, e => e.EmployeeDepartmentHistories, e => e.EmployeeAddresses);
+    }
   }
 }
