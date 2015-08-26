@@ -61,7 +61,9 @@ namespace AW.Winforms.Helpers.Controls
 			((System.ComponentModel.ISupportInitialize)(this.bindingSourceHierarchicalData)).BeginInit();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorHierarchicalData)).BeginInit();
-			this.bindingNavigatorHierarchicalData.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.gridDataEditor)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataTreeView)).BeginInit();
+      this.bindingNavigatorHierarchicalData.SuspendLayout();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
@@ -353,7 +355,10 @@ namespace AW.Winforms.Helpers.Controls
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorHierarchicalData)).EndInit();
-			this.bindingNavigatorHierarchicalData.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.dataTreeView)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.gridDataEditor)).EndInit();
+ 
+      this.bindingNavigatorHierarchicalData.ResumeLayout(false);
 			this.bindingNavigatorHierarchicalData.PerformLayout();
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);

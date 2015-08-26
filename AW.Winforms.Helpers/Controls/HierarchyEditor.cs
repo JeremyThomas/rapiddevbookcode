@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Windows.Forms;
@@ -8,7 +9,7 @@ using AW.Helper;
 
 namespace AW.Winforms.Helpers.Controls
 {
-  public partial class HierarchyEditor : UserControl
+  public partial class HierarchyEditor : UserControl, ISupportInitialize
   {
 // ReSharper disable once MemberCanBePrivate.Global
     public HierarchyEditor()
@@ -104,6 +105,22 @@ namespace AW.Winforms.Helpers.Controls
         //saveToolStripButton.Enabled = false;
       }
       //toolStripButtonCancelEdit.Enabled = false;
+    }
+
+    public void BeginInit()
+    {
+      ((ISupportInitialize) (bindingSourceHierarchicalData)).BeginInit();
+      ((ISupportInitialize) (bindingNavigatorHierarchicalData)).BeginInit();
+      ((ISupportInitialize) (gridDataEditor)).BeginInit();
+      ((ISupportInitialize) (dataTreeView)).BeginInit();
+    }
+
+    public void EndInit()
+    {
+      ((ISupportInitialize) (bindingSourceHierarchicalData)).EndInit();
+      ((ISupportInitialize) (bindingNavigatorHierarchicalData)).EndInit();
+      ((ISupportInitialize) (dataTreeView)).EndInit();
+      ((ISupportInitialize) (gridDataEditor)).EndInit();
     }
   }
 }
