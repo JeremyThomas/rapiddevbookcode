@@ -353,7 +353,7 @@ namespace Chaliy.Windows.Forms
     private void DataTreeView_BindingContextChanged(object sender, EventArgs e)
     {
       if (Visible)
-        ResetData();
+        ResetIfEmpty();
     }
 
     private void ListManagerPositionChanged(object sender, EventArgs e)
@@ -417,13 +417,19 @@ namespace Chaliy.Windows.Forms
             break;
 
           case ListChangedType.Reset:
-            ResetData();
+            ResetIfEmpty();
             break;
 
           case ListChangedType.ItemMoved:
             break;
         }
       else
+        ResetIfEmpty();
+    }
+
+    private void ResetIfEmpty()
+    {
+      if (Nodes.Count == 0)
         ResetData();
     }
 
@@ -442,7 +448,7 @@ namespace Chaliy.Windows.Forms
         if (_dataSource != null)
         {
           _listManager = BindingContext[_dataSource, _dataMember] as CurrencyManager;
-          return _listManager != null;
+          return _listManager != null && !_listManager.IsBindingSuspended;
         }
         else
         {
