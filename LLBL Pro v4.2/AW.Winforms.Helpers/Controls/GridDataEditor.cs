@@ -24,7 +24,7 @@ using JesseJohnston;
 
 namespace AW.Winforms.Helpers.Controls
 {
-  public partial class GridDataEditor : UserControl
+  public partial class GridDataEditor : UserControl, ISupportInitialize
   {
     public string[] MembersToExclude { get; set; }
 
@@ -648,17 +648,20 @@ namespace AW.Winforms.Helpers.Controls
 
     private void dataGridViewEnumerable_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
     {
-      if (dataGridViewEnumerable.Columns.Count > 0 && dataGridViewEnumerable.Columns.Cast<DataGridViewColumn>().Any(c => !c.IsDataBound))
+      if (!IsBinding)
       {
-        dataGridViewEnumerable.AutoGenerateColumns = false;
-        dataGridViewEnumerable.AutoGenerateColumns = true;
+        if (dataGridViewEnumerable.Columns.Count > 0 && dataGridViewEnumerable.Columns.Cast<DataGridViewColumn>().Any(c => !c.IsDataBound))
+        {
+          dataGridViewEnumerable.AutoGenerateColumns = false;
+          dataGridViewEnumerable.AutoGenerateColumns = true;
+        }
+        // Resize the master DataGridView columns to fit the newly loaded data.
+        dataGridViewEnumerable.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.DisplayedCells);
+        foreach (var column in dataGridViewEnumerable.Columns.Cast<DataGridViewColumn>().Where(column => column.Width > MaxAutoGenerateColumnWidth))
+          column.Width = MaxAutoGenerateColumnWidth;
+        searchToolBar.SetColumns(dataGridViewEnumerable.Columns);
+        toolStripButtonUnPage.Visible = Paging();
       }
-      // Resize the master DataGridView columns to fit the newly loaded data.
-      dataGridViewEnumerable.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.DisplayedCells);
-      foreach (var column in dataGridViewEnumerable.Columns.Cast<DataGridViewColumn>().Where(column => column.Width > MaxAutoGenerateColumnWidth))
-        column.Width = MaxAutoGenerateColumnWidth;
-      searchToolBar.SetColumns(dataGridViewEnumerable.Columns);
-      toolStripButtonUnPage.Visible = Paging();
     }
 
     private void dataGridViewEnumerable_FilterStringChanged(object sender, EventArgs e)
@@ -855,6 +858,26 @@ namespace AW.Winforms.Helpers.Controls
           SourceEnumerable.GetType().FriendlyName(), ItemType.FriendlyName(), Environment.NewLine),
         "Choose Properties To Exclude", Helper.Properties.Settings.Default.PropertiesToExclude);
       return Helper.Properties.Settings.Default.PropertiesToExclude;
+    }
+
+    public void BeginInit()
+    {
+      ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnumerable)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorPaging)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.bindingSourcePaging)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridEnumerable)).BeginInit();
+    }
+
+    public void EndInit()
+    {
+      ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnumerable)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorPaging)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.bindingSourcePaging)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridEnumerable)).EndInit();
     }
   }
 }

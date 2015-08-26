@@ -199,7 +199,7 @@ namespace Chaliy.Windows.Forms
           else
             propertyName = value;
         }
-        this.ResetData();
+     //   this.ResetData();
     }
 
     /// <summary>
@@ -549,7 +549,9 @@ namespace Chaliy.Windows.Forms
       BeginUpdate();
 
       Clear();
-      if (!_reseting && !_initializing)
+      if (!_reseting 
+      //  && !_initializing
+        )
         try
         {
           _reseting = true;
@@ -835,7 +837,7 @@ namespace Chaliy.Windows.Forms
     public void EndInit()
     {
       _initializing = false;
-      ResetData();
+      //ResetData();
     }
 
   }
