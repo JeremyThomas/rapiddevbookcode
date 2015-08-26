@@ -26,13 +26,15 @@ namespace Chaliy.Windows.Forms
   ///   uses DataMemberListEditor and DataMemberFieldEditor
   /// </remarks>
   [ComplexBindingProperties("DataSource", "DataMember")]
-  public class DataTreeView : TreeView
+  public class DataTreeView : TreeView, ISupportInitialize
   {
     private const int SbHorz = 0;
 
     #region Fields
 
-    private readonly BindingSource _bindingSource;
+    private object _dataSource;
+    private string _dataMember;
+    private bool _initializing;
     private CurrencyManager _listManager;
 
     private string _idPropertyName;
@@ -50,7 +52,6 @@ namespace Chaliy.Windows.Forms
     private PropertyDescriptor _parentIdProperty;
     private PropertyDescriptor _childCollectionProperty;
 
-
     private FieldsToPropertiesTypeDescriptionProvider _fieldsToPropertiesTypeDescriptionProvider;
 
     private TypeConverter _valueConverter;
@@ -66,22 +67,30 @@ namespace Chaliy.Windows.Forms
     /// </summary>
     public DataTreeView()
     {
+      InitializeComponent();
       _idPropertyName = string.Empty;
       _namePropertyName = string.Empty;
       _parentIdPropertyName = string.Empty;
       _selectionChanging = false;
-
-      _bindingSource = new BindingSource();
-
+      BindingContextChanged += DataTreeView_BindingContextChanged;
       FullRowSelect = true;
       HideSelection = false;
       HotTracking = true;
       AfterSelect += DataTreeView_AfterSelect;
-      BindingContextChanged += DataTreeView_BindingContextChanged;
       AfterLabelEdit += DataTreeView_AfterLabelEdit;
       DragDrop += DataTreeView_DragDrop;
       DragOver += DataTreeView_DragOver;
       ItemDrag += DataTreeView_ItemDrag;
+    }
+
+    private void InitializeComponent()
+    {
+      this.SuspendLayout();
+      // 
+      // DataTreeView
+      // 
+      this.BindingContextChanged += new System.EventHandler(this.DataTreeView_BindingContextChanged);
+      this.ResumeLayout(false);
     }
 
     /// <summary>
@@ -113,12 +122,12 @@ namespace Chaliy.Windows.Forms
      Description("Data source of the tree.")]
     public object DataSource
     {
-      get { return _bindingSource.DataSource; }
+      get { return _dataSource; }
       set
       {
-        if (_bindingSource.DataSource != value)
+        if (_dataSource != value)
         {
-          _bindingSource.DataSource = value;
+          _dataSource = value;
           ResetData();
         }
       }
@@ -130,12 +139,14 @@ namespace Chaliy.Windows.Forms
      Description("Data member of the tree.")]
     public string DataMember
     {
-      get { return _bindingSource.DataMember; }
+      get { return _dataMember; }
       set
       {
-        if (_bindingSource.DataMember != value)
-          _bindingSource.DataMember = value;
-        //this.ResetData();
+        if (_dataMember != value)
+        {
+          _dataMember = value;
+          this.ResetData();
+        }
       }
     }
 
@@ -188,7 +199,7 @@ namespace Chaliy.Windows.Forms
           else
             propertyName = value;
         }
-      //  this.ResetData();
+        this.ResetData();
     }
 
     /// <summary>
@@ -334,6 +345,11 @@ namespace Chaliy.Windows.Forms
       }
     }
 
+    private void BindingSourceOnBindingComplete(object sender, BindingCompleteEventArgs bindingCompleteEventArgs)
+    {
+      ResetData();
+    }
+
     private void DataTreeView_BindingContextChanged(object sender, EventArgs e)
     {
       if (Visible)
@@ -423,9 +439,9 @@ namespace Chaliy.Windows.Forms
     private bool PrepareDataSource()
     {
       if (BindingContext != null)
-        if (_bindingSource.DataSource != null)
+        if (_dataSource != null)
         {
-          _listManager = BindingContext[_bindingSource.DataSource, _bindingSource.DataMember] as CurrencyManager;
+          _listManager = BindingContext[_dataSource, _dataMember] as CurrencyManager;
           return _listManager != null;
         }
         else
@@ -463,12 +479,6 @@ namespace Chaliy.Windows.Forms
             if (propertyDescriptorCollection.Count > 0)
               break;
           }
-        if (propertyDescriptorCollection.Count == 0)
-        {
-          _fieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(enumerableItemType, BindingFlags.Instance | BindingFlags.NonPublic);
-          TypeDescriptor.AddProvider(_fieldsToPropertiesTypeDescriptionProvider, enumerableItemType);
-          propertyDescriptorCollection = TypeDescriptor.GetProperties(enumerableItemType);
-        }
       }
       if (_isSelfCollection & _listManager.Count > 0)
       {
@@ -539,7 +549,7 @@ namespace Chaliy.Windows.Forms
       BeginUpdate();
 
       Clear();
-      if (!_reseting)
+      if (!_reseting && !_initializing)
         try
         {
           _reseting = true;
@@ -816,5 +826,17 @@ namespace Chaliy.Windows.Forms
     }
 
     #endregion
+
+    public void BeginInit()
+    {
+      _initializing = true;
+    }
+
+    public void EndInit()
+    {
+      _initializing = false;
+      ResetData();
+    }
+
   }
 }
