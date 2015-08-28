@@ -648,7 +648,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void dataGridViewEnumerable_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
     {
-      if (!IsBinding)
+      if (dataGridViewEnumerable.Visible && (!IsBinding || e.ListChangedType == ListChangedType.PropertyDescriptorChanged))
       {
         if (dataGridViewEnumerable.Columns.Count > 0 && dataGridViewEnumerable.Columns.Cast<DataGridViewColumn>().Any(c => !c.IsDataBound))
         {

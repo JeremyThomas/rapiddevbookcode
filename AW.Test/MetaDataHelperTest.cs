@@ -82,7 +82,10 @@ namespace AW.Tests
       Assert.AreEqual(typeof (XmlSchemaObject), actual);
       Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType(new List<int>()));
       Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType((new List<int> {1, 2, 3, 4}).Where(i => i > 2)));
-      Assert.AreEqual(typeof (AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(new AddressTypeCollection()));
+      var addressTypeCollection = new AddressTypeCollection();
+      Assert.AreEqual(typeof (AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(addressTypeCollection));
+      addressTypeCollection.AddNew();
+      Assert.AreEqual(typeof(AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(addressTypeCollection.Cast<object>().ToList()));
       Assert.AreEqual(typeof (AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(MetaSingletons.MetaData.AddressType));
       Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType(new ArrayList {1, 2, 3}));
       Assert.AreEqual(typeof (object), MetaDataHelper.GetEnumerableItemType(new ArrayList()));
