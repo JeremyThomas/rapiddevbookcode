@@ -306,10 +306,19 @@ namespace AW.Winforms.Helpers
     {
       try
       {
+        bindingSource.SuspendBinding();
+ //       bindingSource.RaiseListChangedEvents
+        try
+        {
         if (bindingSource.SupportsSorting)
           bindingSource.RemoveSort();
         if (bindingSource.SupportsFiltering)
           bindingSource.RemoveFilter();
+        }
+        finally
+        {
+          bindingSource.ResumeBinding();
+        }
       }
       catch (Exception e)
       {

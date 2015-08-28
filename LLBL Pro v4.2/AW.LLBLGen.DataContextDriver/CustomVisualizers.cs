@@ -89,6 +89,11 @@ namespace AW.LLBLGen.DataContextDriver
       return enumerable.DisplayHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
     }
 
+    public static IEnumerable<T> DisplaySelfServicingHierarchyInTree<T>(this IEnumerable<T> enumerable, string nameColumn, string childCollectionPropertyName) where T : EntityBase
+    {
+      return enumerable.DisplayHierarchyInTree(nameColumn, childCollectionPropertyName, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
+    }
+
     public static IEnumerable<T> DisplaySelfServicingHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
       Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression) where T : EntityBase
     {
@@ -117,6 +122,16 @@ namespace AW.LLBLGen.DataContextDriver
     public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
     {
       return enumerable.DisplayHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter));
+    }
+
+    public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, string nameColumn, string childCollectionPropertyName) where T : EntityBase2
+    {
+      return enumerable.DisplayHierarchyInTree(nameColumn, childCollectionPropertyName, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter));
+    }
+
+    public static IEnumerable<T> DisplayAdapterHierarchyInTree<T>(this IQueryable<T> query, string nameColumn, string childCollectionPropertyName) where T : EntityBase2
+    {
+      return query.DisplayHierarchyInTree(EntityHelper.GetDataAccessAdapter(query), nameColumn, childCollectionPropertyName);
     }
 
     public static IEnumerable<T> DisplayAdapterHierarchyInTree<T>(this IQueryable<T> query, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2

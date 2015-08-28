@@ -245,18 +245,18 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Gets the type, case insensitive, if it can't find it it then looks in the loaded assemblies.
+    ///   Gets the type, case insensitive, if it can't find it it then looks in the loaded assemblies.
     /// </summary>
     /// <param name="typeName">Name of the type.</param>
     /// <returns></returns>
     public static Type GetType(string typeName)
     {
-      var type =Type.GetType(typeName, false, true);
+      var type = Type.GetType(typeName, false, true);
       return type ?? Type.GetType(typeName, GetAssembly, TypeResolver);
     }
 
     /// <summary>
-    /// Resolves a type by stripping off the assembly name
+    ///   Resolves a type by stripping off the assembly name
     /// </summary>
     /// <param name="assembly">The assembly.</param>
     /// <param name="typeName">Name of the type.</param>
@@ -496,7 +496,7 @@ namespace AW.Helper
       Type itemType;
       var enumerableType = enumerable.GetType();
       var elementType = GetElementType(enumerableType);
-      if (elementType != enumerableType)
+      if (elementType != enumerableType && elementType != typeof (object))
         return elementType;
       try
       {
