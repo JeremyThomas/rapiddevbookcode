@@ -148,17 +148,6 @@ namespace LINQPad
 
     #region HierarchyEditor
 
-    public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
-    {
-      if (enumerable != null)
-      {
-        var panelTitle = GetPanelTitle(enumerable);
-        var outputPanel = PanelManager.DisplayControl(new HierarchyEditor(enumerable, iDPropertyName, parentIDPropertyName, nameColumn, dataEditorPersister, membersToExclude), TrimTitle(panelTitle));
-        outputPanel.ToolTip = panelTitle;
-      }
-      return enumerable;
-    }
-
     public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, string nameColumn, string childCollectionPropertyName, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
     {
       return (IEnumerable<T>) DisplayHierarchyInTreeInternal(enumerable, nameColumn, childCollectionPropertyName, dataEditorPersister, membersToExclude);
@@ -169,33 +158,59 @@ namespace LINQPad
       return DisplayHierarchyInTreeInternal(enumerable, nameColumn, childCollectionPropertyName, dataEditorPersister, membersToExclude);
     }
 
+    public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
+    {
+      return DisplayEnumerableControl(enumerable, new HierarchyEditor(enumerable, iDPropertyName, parentIDPropertyName, nameColumn, dataEditorPersister, membersToExclude));
+    }
+    
     private static IEnumerable DisplayHierarchyInTreeInternal(IEnumerable enumerable, string nameColumn, string childCollectionPropertyName, IDataEditorPersister dataEditorPersister, string[] membersToExclude)
     {
-      if (enumerable != null)
-      {
-        var panelTitle = GetPanelTitle(enumerable);
-        var outputPanel = PanelManager.DisplayControl(new HierarchyEditor(enumerable, nameColumn, childCollectionPropertyName, dataEditorPersister, membersToExclude), TrimTitle(panelTitle));
-        outputPanel.ToolTip = panelTitle;
-      }
-      return enumerable;
+      return (IEnumerable) DisplayControl(enumerable, new HierarchyEditor(enumerable, nameColumn, childCollectionPropertyName, dataEditorPersister, membersToExclude));
     }
 
     public static IEnumerable<T> DisplayHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
       Expression<Func<T, TParentId>> parentIDPropertyExpression,
       Expression<Func<T, TName>> namePropertyExpression, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
     {
-      if (enumerable != null)
-      {
-        var panelTitle = GetPanelTitle(enumerable);
-        var outputPanel = PanelManager.DisplayControl(HierarchyEditor.HierarchyEditorFactory(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, dataEditorPersister, membersToExclude), TrimTitle(panelTitle));
-        outputPanel.ToolTip = panelTitle;
-      }
-      return enumerable;
+      return DisplayEnumerableControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, dataEditorPersister, membersToExclude));
+    }
+
+    public static IEnumerable<T> DisplayHierarchyInTree<T, TName, TChildCollection>(this IEnumerable<T> enumerable, Expression<Func<T, TName>> namePropertyExpression,
+      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression, IDataEditorPersister dataEditorPersister, params string[] membersToExclude)
+    {
+      return DisplayEnumerableControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, namePropertyExpression, childCollectionPropertyExpression, dataEditorPersister, membersToExclude));
+    }
+
+    private static IEnumerable<T> DisplayEnumerableControl<T>(IEnumerable<T> enumerable, HierarchyEditor control)
+    {
+      return (IEnumerable<T>)DisplayControl(enumerable, control);
     }
 
     #endregion
 
-    private static string GetPanelTitle(object o, GridOptions options = null)
+    private static object DisplayControl(object o, Control control)
+    {
+      if (o != null)
+      {
+        var panelTitle = GetPanelTitle(o);
+        var outputPanel = PanelManager.DisplayControl(control, TrimTitle(panelTitle));
+        outputPanel.ToolTip = panelTitle;
+      }
+      return o;
+    }
+
+    private static object DisplayForm(object o, Form form)
+    {
+      if (o != null)
+      {
+        form.TopLevel = false;
+        form.FormBorderStyle = FormBorderStyle.None;
+        DisplayControl(o, form);
+      }
+      return 0;
+    }
+
+  private static string GetPanelTitle(object o, GridOptions options = null)
     {
       return options == null || options.PanelTitle == null ? GetFriendlyObjectTypeName(o) : options.PanelTitle;
     }
@@ -228,13 +243,7 @@ namespace LINQPad
     /// <returns>The object to browse.</returns>
     public static object Inspect(this object objectToBrowse)
     {
-      if (objectToBrowse != null)
-      {
-        var panelTitle = GetPanelTitle(objectToBrowse);
-        var outputPanel = PanelManager.DisplayControl(new FrmEntityViewer(objectToBrowse) {TopLevel = false, FormBorderStyle = FormBorderStyle.None}, TrimTitle(panelTitle));
-        outputPanel.ToolTip = panelTitle;
-      }
-      return objectToBrowse;
+      return DisplayForm(objectToBrowse, new FrmEntityViewer(objectToBrowse));
     }
 
     // ReSharper restore PossibleMultipleEnumeration

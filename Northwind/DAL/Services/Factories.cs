@@ -1,5 +1,6 @@
 ﻿using System.Data.OleDb;
 using AW.Helper;
+using Northwind.DAL.Linq;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -24,6 +25,11 @@ namespace Northwind.DAL.Services
     public static DataAccessAdapterBase CreateDataAccessAdapter()
     {
       return new DataAccessAdapter();
+    }
+
+    public static LinqMetaData CreateLINQMetaData()
+    {
+      return new LinqMetaData(new DataAccessAdapter());
     }
   }
 }

@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Winforms.Helpers.Properties;
@@ -14,7 +15,7 @@ namespace AW.Winforms.Helpers
     {
       private get
       {
-        if (string.IsNullOrEmpty(_windowSettingsName))
+        if (String.IsNullOrEmpty(_windowSettingsName))
           _windowSettingsName = GetType().Name + "WindowSettings";
         return _windowSettingsName;
       }
@@ -24,6 +25,20 @@ namespace AW.Winforms.Helpers
     public FrmPersistantLocation()
     {
       InitializeComponent();
+    }
+
+    public static FrmPersistantLocation ShowControlInForm(Control control, string formTitle = null, Form parentForm = null, string windowSettingsName = null)
+    {
+      var form = new FrmPersistantLocation
+      {
+        WindowSettingsName = windowSettingsName,
+        Text = formTitle,
+        Icon = parentForm == null ? null : parentForm.Icon,
+      };
+      control.Dock = DockStyle.Fill;
+    form.Controls.Add(control);
+      AWHelper.ShowForm(form, parentForm);
+      return form;
     }
 
     private WindowSettings WindowSettings
