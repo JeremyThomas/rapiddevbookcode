@@ -62,11 +62,31 @@ namespace AW.Winforms.Helpers.Controls
       dataTreeView.ChildCollectionPropertyName = childCollectionPropertyName;
     }
 
+    /// <summary>
+    ///   HierarchyEditor constructor, needs to be a static method because of the generic paramaters
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TId">The type of the identifier.</typeparam>
+    /// <typeparam name="TParentId">The type of the parent identifier.</typeparam>
+    /// <typeparam name="TName">The type of the name.</typeparam>
+    /// <param name="enumerable">The enumerable.</param>
+    /// <param name="iDPropertyExpression">The ID property expression.</param>
+    /// <param name="parentIDPropertyExpression">The parent identifier property expression.</param>
+    /// <param name="namePropertyExpression">The name property expression.</param>
+    /// <param name="dataEditorPersister">The data editor persister.</param>
+    /// <param name="membersToExclude">The members to exclude.</param>
+    /// <returns></returns>
     public static HierarchyEditor HierarchyEditorFactory<T, TId, TParentId, TName>(IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
       Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression,
       IDataEditorPersister dataEditorPersister, params string[] membersToExclude)
     {
       return new HierarchyEditor(enumerable, MemberName.For(iDPropertyExpression), MemberName.For(parentIDPropertyExpression), MemberName.For(namePropertyExpression), dataEditorPersister, membersToExclude);
+    }
+
+    public static HierarchyEditor HierarchyEditorFactory<T, TName, TChildCollection>(IEnumerable<T> enumerable, Expression<Func<T, TName>> namePropertyExpression,
+      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression, IDataEditorPersister dataEditorPersister, params string[] membersToExclude)
+    {
+      return new HierarchyEditor(enumerable, MemberName.For(namePropertyExpression), MemberName.For(childCollectionPropertyExpression), dataEditorPersister, membersToExclude);
     }
 
     private void dataTreeView1_AfterSelect(object sender, TreeViewEventArgs e)

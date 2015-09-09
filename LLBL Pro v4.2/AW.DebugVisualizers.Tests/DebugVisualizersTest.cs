@@ -36,6 +36,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Web.Administration;
 using Northwind.DAL.HelperClasses;
 using Northwind.DAL.Linq;
+using Northwind.DAL.Services;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using AddressType = AW.Data.AddressType;
@@ -306,7 +307,7 @@ namespace AW.DebugVisualizers.Tests
 
     private static LinqMetaData GetNorthwindLinqMetaData()
     {
-      return new LinqMetaData {AdapterToUse = new DataAccessAdapter()};
+      return Factories.CreateLINQMetaData();
     }
 
     [TestMethod]

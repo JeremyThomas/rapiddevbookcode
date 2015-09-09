@@ -1,7 +1,6 @@
 ﻿using System.Data.Services;
 using System.Data.Services.Common;
 using Northwind.DAL.Linq;
-using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ODataSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -20,7 +19,7 @@ namespace Northwind.DAL.Services
 
     protected override LinqMetaData CreateLinqMetaDataInstance()
     {
-      var linqMetaDataInstance = new LinqMetaData(Factories.CreateDataAccessAdapter());
+      var linqMetaDataInstance = Factories.CreateLINQMetaData();
       return linqMetaDataInstance;
     }
 
@@ -38,7 +37,7 @@ namespace Northwind.DAL.Services
     #region Overrides of LLBLGenProODataServiceBase<LinqMetaData>
 
     /// <summary>
-    /// Gets the container namespace. This is used in the $metadata response. By default it returns the namespace of the TLinqMetaData type.
+    ///   Gets the container namespace. This is used in the $metadata response. By default it returns the namespace of the TLinqMetaData type.
     /// </summary>
     protected override string ContainerNamespace
     {

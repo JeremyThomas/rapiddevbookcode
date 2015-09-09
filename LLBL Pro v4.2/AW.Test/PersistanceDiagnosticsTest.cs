@@ -6,6 +6,7 @@ using AW.Helper.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.FactoryClasses;
 using Northwind.DAL.Linq;
+using Northwind.DAL.Services;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -60,7 +61,7 @@ namespace AW.Tests
 
     private static LinqMetaData GetNorthwindLinqMetaData()
     {
-      return new LinqMetaData {AdapterToUse = new DataAccessAdapter()};
+      return Factories.CreateLINQMetaData();
     }
 
     /// <summary>

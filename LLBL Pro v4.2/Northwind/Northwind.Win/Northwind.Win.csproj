@@ -59,6 +59,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -131,6 +132,10 @@
     <ProjectReference Include="..\DAL\Northwind.DAL.csproj">
       <Project>{24fa312c-06e0-462d-97fa-709ac20d09ef}</Project>
       <Name>Northwind.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\Services\Northwind.DAL.Services.csproj">
+      <Project>{d2cbe87c-3efc-40fa-ae82-1ed67c226ae5}</Project>
+      <Name>Northwind.DAL.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\DAL\SQL Server %28SqlClient%29\Northwind.DAL.SqlServer.csproj">
       <Project>{0aad790b-15c7-4119-9987-3137a0bb20b9}</Project>

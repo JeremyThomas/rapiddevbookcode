@@ -18,16 +18,8 @@ namespace AW.Winforms.Helpers.LLBL
     public static FrmPersistantLocation ShowDataBrowser(ILinqMetaData linqMetaData, Form parentForm = null,
       bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
     {
-      var form = new FrmPersistantLocation
-      {
-        WindowSettingsName = "DataBrowser",
-        Text = "Data Browser",
-        Icon = parentForm == null ? null : parentForm.Icon,
-      };
-
-      form.Controls.Add(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, membersToExclude) {Dock = DockStyle.Fill});
-      AWHelper.ShowForm(form, parentForm);
-      return form;
+      return FrmPersistantLocation.ShowControlInForm(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, membersToExclude) 
+        , "Data Browser", parentForm, "DataBrowser");
     }
 
     public UsrCntrlEntityBrowser()

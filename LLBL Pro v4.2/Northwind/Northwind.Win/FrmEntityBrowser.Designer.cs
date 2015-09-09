@@ -32,6 +32,7 @@
       this.usrCntrlEntityBrowser1 = new AW.Winforms.Helpers.LLBL.UsrCntrlEntityBrowser();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.toolStripButtonRemote = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonShowEmployeeHierarchyInTree = new System.Windows.Forms.ToolStripButton();
       this.toolStrip1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -46,7 +47,8 @@
       // toolStrip1
       // 
       this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonRemote});
+            this.toolStripButtonRemote,
+            this.toolStripButtonShowEmployeeHierarchyInTree});
       this.toolStrip1.Location = new System.Drawing.Point(0, 0);
       this.toolStrip1.Name = "toolStrip1";
       this.toolStrip1.Size = new System.Drawing.Size(643, 25);
@@ -62,6 +64,16 @@
       this.toolStripButtonRemote.Size = new System.Drawing.Size(52, 22);
       this.toolStripButtonRemote.Text = "Remote";
       this.toolStripButtonRemote.Click += new System.EventHandler(this.toolStripButtonRemote_Click);
+      // 
+      // toolStripButtonShowEmployeeHierarchyInTree
+      // 
+      this.toolStripButtonShowEmployeeHierarchyInTree.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonShowEmployeeHierarchyInTree.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonShowEmployeeHierarchyInTree.Image")));
+      this.toolStripButtonShowEmployeeHierarchyInTree.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonShowEmployeeHierarchyInTree.Name = "toolStripButtonShowEmployeeHierarchyInTree";
+      this.toolStripButtonShowEmployeeHierarchyInTree.Size = new System.Drawing.Size(187, 22);
+      this.toolStripButtonShowEmployeeHierarchyInTree.Text = "Show Employee Hierarchy In Tree";
+      this.toolStripButtonShowEmployeeHierarchyInTree.Click += new System.EventHandler(this.toolStripButtonShowEmployeeHierarchyInTree_Click);
       // 
       // FrmEntityBrowser
       // 
@@ -85,6 +97,7 @@
     private AW.Winforms.Helpers.LLBL.UsrCntrlEntityBrowser usrCntrlEntityBrowser1;
     private System.Windows.Forms.ToolStrip toolStrip1;
     private System.Windows.Forms.ToolStripButton toolStripButtonRemote;
+    private System.Windows.Forms.ToolStripButton toolStripButtonShowEmployeeHierarchyInTree;
   }
 }
 
