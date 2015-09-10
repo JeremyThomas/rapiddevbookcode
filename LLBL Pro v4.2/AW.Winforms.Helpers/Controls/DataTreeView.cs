@@ -610,6 +610,7 @@ namespace Chaliy.Windows.Forms
     {
       var treeNode = treeNodeCollection.Add(GetNodeText(item));
       treeNode.Tag = item;
+      treeNode.Name = treeNode.Text;
       var children = (_childCollectionProperty == null ? item : _childCollectionProperty.GetValue(item)) as IEnumerable;
       if (children != null)
         foreach (var child in children)
@@ -648,7 +649,7 @@ namespace Chaliy.Windows.Forms
 
     private object GetCurrentID(int index)
     {
-      return _idProperty.GetValue(_listManager.List[index]);
+      return GetDataID(_listManager.List[index]);
     }
 
     private TreeNode GetCurrentNodeFromData()
@@ -658,8 +659,13 @@ namespace Chaliy.Windows.Forms
 
     private TreeNode GetDataAsNode(object dataObject)
     {
-      var dataID = _idProperty.GetValue(dataObject);
+      var dataID = GetDataID(dataObject);
       return FindFirst(dataID);
+    }
+
+    private object GetDataID(object dataObject)
+    {
+      return _idProperty == null ? _nameProperty.GetValue(dataObject) : _idProperty.GetValue(dataObject);
     }
 
     private TreeNode GetDataAsNode(int position)
@@ -679,7 +685,7 @@ namespace Chaliy.Windows.Forms
       if (dataParentID != null)
       {
         if (node.Parent != null)
-          currentParentID = _idProperty.GetValue(node.Parent.Tag);
+          currentParentID = GetDataID(node.Parent.Tag);
         if (!dataParentID.Equals(currentParentID))
           if (HasParent(node, dataParentID) || node.Parent != null)
           {
@@ -697,7 +703,7 @@ namespace Chaliy.Windows.Forms
     {
       if (childnode != null && parentNode != null)
       {
-        var parentID = _idProperty.GetValue(parentNode.Tag);
+        var parentID = GetDataID(parentNode.Tag);
         if (parentID != null)
         {
           _parentIdProperty.SetValue(
@@ -711,7 +717,7 @@ namespace Chaliy.Windows.Forms
 
     private object GetID(TreeNode node)
     {
-      return _idProperty.GetValue(node.Tag);
+      return GetDataID(node.Tag);
     }
 
     private void RefreshData(TreeNode node, object data)
