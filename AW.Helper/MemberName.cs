@@ -47,10 +47,12 @@ namespace AW.Helper
 
     private static string FindMember(Expression expression)
     {
-      if (expression is MethodCallExpression)
-        return (expression as MethodCallExpression).Method.Name;
-      if (expression is MemberExpression)
-        return (expression as MemberExpression).Member.Name;
+      var methodCallExpression = expression as MethodCallExpression;
+      if (methodCallExpression != null)
+        return methodCallExpression.Method.Name;
+      var memberExpression = expression as MemberExpression;
+      if (memberExpression != null)
+        return memberExpression.Member.Name;
       throw new ArgumentException("Invalid expression [" + expression + "]");
     }
   }

@@ -299,19 +299,21 @@ namespace Chaliy.Windows.Forms
     private void DataTreeView_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
     {
       if (e.Node != null && e.Label != null)
-        if (PrepareValueConvertor()
-            && _valueConverter.IsValid(e.Label)
-            && !_nameProperty.IsReadOnly
-          )
+        if (CanEdit            && _valueConverter.IsValid(e.Label))
         {
-          _nameProperty.SetValue(
-            e.Node.Tag,
-            _valueConverter.ConvertFromString(e.Label)
-            );
+          _nameProperty.SetValue(e.Node.Tag,_valueConverter.ConvertFromString(e.Label));
           _listManager.EndCurrentEdit();
           return;
         }
       e.CancelEdit = true;
+    }
+
+    public bool CanEdit
+    {
+      get
+      {
+        return PrepareValueConvertor()&& !_nameProperty.IsReadOnly;
+      }
     }
 
     private void DataTreeView_ItemDrag(object sender, ItemDragEventArgs e)
@@ -610,35 +612,42 @@ namespace Chaliy.Windows.Forms
     {
       var treeNode = treeNodeCollection.Add(GetNodeText(item));
       treeNode.Tag = item;
-      treeNode.Name = treeNode.Text;
-      var children = (_childCollectionProperty == null ? item : _childCollectionProperty.GetValue(item)) as IEnumerable;
+      treeNode.Name = GetIdWithoutIdProperty(item);
+      var children = Children(item);
       if (children != null)
         foreach (var child in children)
           AddChildren(treeNode.Nodes, child);
     }
 
+    private IEnumerable Children(object item)
+    {
+      return (_childCollectionProperty == null ? item : _childCollectionProperty.GetValue(item)) as IEnumerable;
+    }
+
+    private static string GetIdWithoutIdProperty(object item)
+    {
+      return item.GetHashCode().ToString();
+    }
+
     private bool TryAddNode(TreeNode node)
     {
+      if (node.Parent != null)
+        return true;
       if (HasParent(node))
       {
         var parentNode = GetDataParent(node);
         if (parentNode != null && !parentNode.Nodes.Contains(node))
         {
-          AddNode(parentNode.Nodes, node);
+          parentNode.Nodes.AddDistinct(node);
           return true;
         }
       }
       else
       {
-        AddNode(Nodes, node);
+        Nodes.AddDistinct(node);
         return true;
       }
       return false;
-    }
-
-    private static void AddNode(TreeNodeCollection nodes, TreeNode node)
-    {
-      nodes.Add(node);
     }
 
     private TreeNode FindFirst(object iD)
@@ -665,7 +674,7 @@ namespace Chaliy.Windows.Forms
 
     private object GetDataID(object dataObject)
     {
-      return _idProperty == null ? _nameProperty.GetValue(dataObject) : _idProperty.GetValue(dataObject);
+      return _idProperty == null ? GetIdWithoutIdProperty(dataObject) : _idProperty.GetValue(dataObject);
     }
 
     private TreeNode GetDataAsNode(int position)
@@ -681,21 +690,29 @@ namespace Chaliy.Windows.Forms
     private void ChangeParent(TreeNode node)
     {
       object currentParentID = null;
-      var dataParentID = _parentIdProperty.GetValue(node.Tag);
-      if (dataParentID != null)
+      if (_parentIdProperty == null)
       {
-        if (node.Parent != null)
-          currentParentID = GetDataID(node.Parent.Tag);
-        if (!dataParentID.Equals(currentParentID))
-          if (HasParent(node, dataParentID) || node.Parent != null)
-          {
-            node.Remove();
-            if (node.Nodes.Find(dataParentID.ToString(), true).Length > 0)
-              throw new ApplicationException("A Parent can't be the child of a child!");
-            var newParentNode = FindFirst(dataParentID);
-            if (newParentNode != null)
-              newParentNode.Nodes.Add(node);
-          }
+        if (SelectedNode != null && SelectedNode!= node)
+          SelectedNode.Nodes.AddDistinct(node);
+      }
+      else
+      {
+        var dataParentID = _parentIdProperty.GetValue(node.Tag);
+        if (dataParentID != null)
+        {
+          if (node.Parent != null)
+            currentParentID = GetDataID(node.Parent.Tag);
+          if (!dataParentID.Equals(currentParentID))
+            if (HasParent(node, dataParentID) || node.Parent != null)
+            {
+              node.Remove();
+              if (node.Nodes.Find(dataParentID.ToString(), true).Length > 0)
+                throw new ApplicationException("A Parent can't be the child of a child!");
+              var newParentNode = FindFirst(dataParentID);
+              if (newParentNode != null)
+                newParentNode.Nodes.Add(node);
+            }
+        }
       }
     }
 
@@ -703,15 +720,19 @@ namespace Chaliy.Windows.Forms
     {
       if (childnode != null && parentNode != null)
       {
-        var parentID = GetDataID(parentNode.Tag);
-        if (parentID != null)
+        if (_parentIdProperty == null)
         {
-          _parentIdProperty.SetValue(
-            childnode.Tag,
-            parentID
-            );
-          _listManager.EndCurrentEdit();
+          var children = Children(parentNode) as IList;
+          if (children != null)
+            children.Add(childnode.Tag);
         }
+        else
+        { 
+          var parentID = GetDataID(parentNode.Tag);
+          if (parentID != null)
+            _parentIdProperty.SetValue(childnode.Tag, parentID);
+        }
+        _listManager.EndCurrentEdit();
       }
     }
 
@@ -820,6 +841,8 @@ namespace Chaliy.Windows.Forms
 
     private bool HasParent(TreeNode node)
     {
+      if (_parentIdProperty == null)
+        return false;
       return HasParent(node, _parentIdProperty.GetValue(node.Tag));
     }
 

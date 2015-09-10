@@ -658,6 +658,13 @@ namespace AW.Helper
       return list;
     }
 
+    public static IList AddDistinct(this IList list, object item)
+    {
+      if (!list.Contains(item))
+        list.Add(item);
+      return list;
+    }
+
     #region Settings
 
     public static IEnumerable<string> GetStringCollection(SettingValueElement element)
