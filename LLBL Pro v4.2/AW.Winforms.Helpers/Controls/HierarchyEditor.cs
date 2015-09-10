@@ -25,6 +25,7 @@ namespace AW.Winforms.Helpers.Controls
       bindingNavigatorDeleteItem.Enabled = bindingSourceHierarchicalData.AllowRemove;
       dataTreeView.NameColumn = nameColumn;
       dataTreeView.Sorted = true;
+      bindingNavigatorAddNewItem.Enabled = dataTreeView.CanEdit;
     }
 
     private HierarchyEditor(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn)
