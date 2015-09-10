@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Linq;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.LLBL;
@@ -44,12 +45,12 @@ namespace Northwind.Win
     {
       var linqMetaData = Factories.CreateLINQMetaData();
       var employeeEntities = EmployeeEntity.WireUpSelfJoin(linqMetaData.Employee.ToEntityCollection2());
-      // employeeEntities.ShowHierarchyInTree(linqMetaData.AdapterToUse, "EmployeeId", "ReportsTo", "FirstName");
-      // var hierarchyEditor = new HierarchyEditor(employeeEntities, "FirstName", "Staff",(IDataEditorPersister)null);
-      //ShowControlInForm(new HierarchyEditor(employeeEntities, "EmployeeId", "ReportsTo", "FirstName",  
-      //  new LLBLWinformHelper.DataEditorLLBLAdapterPersister(linqMetaData.AdapterToUse)), "EmployeeHierarchyInTree", this);
-      ShowControlInForm(HierarchyEditor.HierarchyEditorFactory(employeeEntities, em => em.FirstName, em => em.Staff,
+     // employeeEntities.ShowHierarchyInTree(linqMetaData.AdapterToUse, "EmployeeId", "ReportsTo", "FirstName");
+      //  var hierarchyEditor = new HierarchyEditor(employeeEntities, "FirstName", "Staff", new LLBLWinformHelper.DataEditorLLBLAdapterPersister(linqMetaData.AdapterToUse));
+      ShowControlInForm(new HierarchyEditor(employeeEntities, "EmployeeId", "ReportsTo", "FirstName",
         new LLBLWinformHelper.DataEditorLLBLAdapterPersister(linqMetaData.AdapterToUse)), "EmployeeHierarchyInTree", this);
+      //ShowControlInForm(HierarchyEditor.HierarchyEditorFactory(employeeEntities.Where(em => em.ReportsTo == null), em => em.FirstName, em => em.Staff,
+      //  new LLBLWinformHelper.DataEditorLLBLAdapterPersister(linqMetaData.AdapterToUse)), "EmployeeHierarchyInTree", this);
     }
   }
 }
