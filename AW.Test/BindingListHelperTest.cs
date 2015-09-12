@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -234,6 +235,17 @@ namespace AW.Tests
     }
 
     [TestMethod]
+    public void ObjectToBindingListViewTest()
+    {
+      var serializableClasses = SerializableClass.GenerateList();
+      var bindingListView = serializableClasses.Cast<object>().ToBindingListView();
+      var enumerableItemType = MetaDataHelper.GetEnumerableItemType(bindingListView);
+      Assert.AreEqual(typeof(SerializableClass), enumerableItemType);
+      Assert.AreEqual(4,ListBindingHelper.GetListItemProperties(bindingListView).Count);
+      Assert.AreEqual(ListBindingHelper.GetListItemProperties(serializableClasses), ListBindingHelper.GetListItemProperties(bindingListView));
+    }
+
+    [TestMethod]
     public void ListSourceToBindingListViewTest()
     {
       var dataTable = TestData.GetAddressTypeDataTable();
@@ -247,5 +259,6 @@ namespace AW.Tests
       Assert.IsTrue(bindingListView.Count > 0);
       return bindingListView;
     }
+
   }
 }

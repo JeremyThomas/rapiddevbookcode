@@ -501,12 +501,33 @@ namespace AW.Helper
       try
       {
         itemType = ListBindingHelper.GetListItemType(enumerable);
+        if (itemType == typeof (object))
+          itemType = GetEnumerableItemTypeWithFirst(enumerable, itemType);
       }
       catch (NotImplementedException)
       {
-        itemType = null;
+        // ListBindingHelper.GetFirstItemByEnumerable catches NotSupportedException but doesn't catch NotImplementedException  - WTF
+        itemType = GetEnumerableItemTypeWithFirst(enumerable, null);
       }
       return itemType;
+    }
+
+    private static Type GetEnumerableItemTypeWithFirst(IEnumerable enumerable, Type itemType)
+    {
+      try
+      {
+        return GetEnumerableItemTypeWithFirst(enumerable) ?? itemType;
+      }
+      catch (Exception)
+      {
+        return itemType;
+      }
+    }
+
+    private static Type GetEnumerableItemTypeWithFirst(IEnumerable enumerable)
+    {
+      var first = enumerable.Cast<object>().FirstOrDefault();
+      return first == null ? null : first.GetType();
     }
 
     /// <summary>

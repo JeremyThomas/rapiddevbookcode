@@ -122,6 +122,8 @@ namespace AW.Winforms.Helpers
 
     private static IBindingListView CreateBindingListView<T>(IEnumerable<T> enumerable, bool ensureFilteringEnabled = false)
     {
+      if (typeof (T) == typeof (object))
+        return CreateBindingListView((IEnumerable) enumerable, ensureFilteringEnabled); //else ListBindingHelper.GetListItemProperties doesn't get the properties
       foreach (var iBindingListView in
         from bindingListViewCreator in BindingListViewCreaters
         where bindingListViewCreator.Key.IsAssignableFrom(typeof (T))
