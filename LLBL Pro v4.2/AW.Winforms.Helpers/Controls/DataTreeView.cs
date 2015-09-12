@@ -440,8 +440,11 @@ namespace Chaliy.Windows.Forms
             {
               var dataObject = bindingList[e.NewIndex];
               if (!IsIDNull(GetDataID(dataObject)))
-                if (TryAddNode(CreateNode(dataObject)))
+              {
+                var changedNode = GetDataAsNode(dataObject);
+                if (changedNode==null && TryAddNode(CreateNode(dataObject)))
                   Trace.Write(e);
+              }
             }
             catch (ArgumentException ae)
             {
@@ -678,9 +681,9 @@ namespace Chaliy.Windows.Forms
       var children = Children(item);
       if (children != null)
       {
-        var bindingListView = children.ToBindingListView();
-        if (bindingListView != null)
-          bindingListView.ListChanged += DataTreeView_ChildListChanged;
+        var childBindingListView = children.ToBindingListView();
+        if (childBindingListView != null)
+          childBindingListView.ListChanged += DataTreeView_ChildListChanged;
         foreach (var child in children)
           AddChildren(treeNode.Nodes, child);}
     }
@@ -694,7 +697,12 @@ namespace Chaliy.Windows.Forms
     {
      var children = Children(e.Node.Tag);
       if (children == null)
-        return e.Node.Nodes.Cast<TreeNode>().Select(tn => tn.Tag).ToList().ToBindingListView();
+      {
+        var childBindingListView = e.Node.Nodes.Cast<TreeNode>().Select(tn => tn.Tag).ToBindingListView();
+        if (childBindingListView != null)
+          childBindingListView.ListChanged += DataTreeView_ChildListChanged;
+        return childBindingListView;
+      }
       var bindingListView = children.ToBindingListView();
       return bindingListView;
     }
@@ -807,7 +815,7 @@ namespace Chaliy.Windows.Forms
       {
         if (_parentIdProperty == null)
         {
-          var children = Children(parentNode) as IList;
+          var children = Children(parentNode.Tag) as IList;
           if (children != null)
             children.Add(childnode.Tag);
         }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Data;
 using System.Xml.Schema;
 using AW.Data;
 using AW.Data.CollectionClasses;
@@ -81,11 +82,15 @@ namespace AW.Tests
       var actual = MetaDataHelper.GetEnumerableItemType(xmlSchema.Items);
       Assert.AreEqual(typeof (XmlSchemaObject), actual);
       Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType(new List<int>()));
-      Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType((new List<int> {1, 2, 3, 4}).Where(i => i > 2)));
+      var ints1To4 = (new List<int> {1, 2, 3, 4});
+      var intsGreaterThan2 = ints1To4.Where(i => i > 2);
+      Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType(intsGreaterThan2));
+      Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType(ints1To4.Cast<object>()));
+      Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType(ints1To4.Cast<object>().Where(o => o != null)));
       var addressTypeCollection = new AddressTypeCollection();
       Assert.AreEqual(typeof (AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(addressTypeCollection));
       addressTypeCollection.AddNew();
-      Assert.AreEqual(typeof(AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(addressTypeCollection.Cast<object>().ToList()));
+      Assert.AreEqual(typeof (AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(addressTypeCollection.Cast<object>().ToList()));
       Assert.AreEqual(typeof (AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(MetaSingletons.MetaData.AddressType));
       Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType(new ArrayList {1, 2, 3}));
       Assert.AreEqual(typeof (object), MetaDataHelper.GetEnumerableItemType(new ArrayList()));
@@ -341,9 +346,9 @@ namespace AW.Tests
     [TestMethod, Microsoft.VisualStudio.TestTools.UnitTesting.Description("")]
     public void GetTypeTest()
     {
-      var collectionViewType = typeof(System.Windows.Data.CollectionView);
+      var collectionViewType = typeof (CollectionView);
       Assert.IsNull(MetaDataHelper.GetType(collectionViewType.FullName));
-      Assert.IsNotNull( MetaDataHelper.GetType(MetaDataHelper.GetShortAssemblyQualifiedName(collectionViewType)));
+      Assert.IsNotNull(MetaDataHelper.GetType(MetaDataHelper.GetShortAssemblyQualifiedName(collectionViewType)));
     }
   }
 }
