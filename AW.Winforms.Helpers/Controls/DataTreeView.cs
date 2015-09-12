@@ -1,13 +1,16 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using AW.Helper;
+using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.EntityViewer;
 
 namespace Chaliy.Windows.Forms
@@ -85,12 +88,12 @@ namespace Chaliy.Windows.Forms
 
     private void InitializeComponent()
     {
-      this.SuspendLayout();
+      SuspendLayout();
       // 
       // DataTreeView
       // 
-      this.BindingContextChanged += new System.EventHandler(this.DataTreeView_BindingContextChanged);
-      this.ResumeLayout(false);
+      BindingContextChanged += DataTreeView_BindingContextChanged;
+      ResumeLayout(false);
     }
 
     /// <summary>
@@ -145,7 +148,7 @@ namespace Chaliy.Windows.Forms
         if (_dataMember != value)
         {
           _dataMember = value;
-          this.ResetData();
+          ResetData();
         }
       }
     }
@@ -199,7 +202,7 @@ namespace Chaliy.Windows.Forms
           else
             propertyName = value;
         }
-     //   this.ResetData();
+      //   this.ResetData();
     }
 
     /// <summary>
@@ -299,9 +302,9 @@ namespace Chaliy.Windows.Forms
     private void DataTreeView_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
     {
       if (e.Node != null && e.Label != null)
-        if (CanEdit            && _valueConverter.IsValid(e.Label))
+        if (CanEdit && _valueConverter.IsValid(e.Label))
         {
-          _nameProperty.SetValue(e.Node.Tag,_valueConverter.ConvertFromString(e.Label));
+          _nameProperty.SetValue(e.Node.Tag, _valueConverter.ConvertFromString(e.Label));
           _listManager.EndCurrentEdit();
           return;
         }
@@ -310,10 +313,7 @@ namespace Chaliy.Windows.Forms
 
     public bool CanEdit
     {
-      get
-      {
-        return PrepareValueConvertor()&& !_nameProperty.IsReadOnly;
-      }
+      get { return PrepareValueConvertor() && !_nameProperty.IsReadOnly; }
     }
 
     private void DataTreeView_ItemDrag(object sender, ItemDragEventArgs e)
@@ -412,6 +412,68 @@ namespace Chaliy.Windows.Forms
           case ListChangedType.ItemDeleted:
             if (SelectedNode != null && ((_listManager.List.IndexOf(SelectedNode.Tag) == -1)
                                          || _listManager.List.IndexOf(SelectedNode.Tag) == e.NewIndex))
+            {
+              SelectedNode.Remove();
+              RefreshAllData(e.NewIndex);
+            }
+            break;
+
+          case ListChangedType.Reset:
+            ResetIfEmpty();
+            break;
+
+          case ListChangedType.ItemMoved:
+            break;
+        }
+      else
+        ResetIfEmpty();
+    }
+
+    private void DataTreeView_ChildListChanged(object sender, ListChangedEventArgs e)
+    {
+      var bindingList = sender as IBindingList;
+      if (bindingList!=null)
+        switch (e.ListChangedType)
+        {
+          case ListChangedType.ItemAdded:
+            try
+            {
+              var dataObject = bindingList[e.NewIndex];
+              if (!IsIDNull(GetDataID(dataObject)))
+                if (TryAddNode(CreateNode(dataObject)))
+                  Trace.Write(e);
+            }
+            catch (ArgumentException ae)
+            {
+              Trace.Write(ae);
+            }
+            break;
+
+          case ListChangedType.ItemChanged:
+            if (!_handelingItemChanged)
+              try
+              {
+                _handelingItemChanged = true;
+                var dataObject = bindingList[e.NewIndex];
+                var changedNode = GetDataAsNode(dataObject);
+                if (changedNode != null)
+                  RefreshData(changedNode, dataObject);
+                else if (IsIDNull(GetDataID(dataObject)))
+                  throw new ApplicationException("Item not found or wrong type.");
+                else if (TryAddNode(CreateNode(dataObject)))
+                  ResetData();
+                else
+                  throw new ApplicationException("Item not found or wrong type.");
+              }
+              finally
+              {
+                _handelingItemChanged = false;
+              }
+            break;
+
+          case ListChangedType.ItemDeleted:
+            if (SelectedNode != null && ((bindingList.IndexOf(SelectedNode.Tag) == -1)
+                                         || bindingList.IndexOf(SelectedNode.Tag) == e.NewIndex))
             {
               SelectedNode.Remove();
               RefreshAllData(e.NewIndex);
@@ -557,8 +619,8 @@ namespace Chaliy.Windows.Forms
       BeginUpdate();
 
       Clear();
-      if (!_reseting 
-      //  && !_initializing
+      if (!_reseting
+        //  && !_initializing
         )
         try
         {
@@ -615,13 +677,26 @@ namespace Chaliy.Windows.Forms
       treeNode.Name = GetIdWithoutIdProperty(item);
       var children = Children(item);
       if (children != null)
+      {
+        var bindingListView = children.ToBindingListView();
+        if (bindingListView != null)
+          bindingListView.ListChanged += DataTreeView_ChildListChanged;
         foreach (var child in children)
-          AddChildren(treeNode.Nodes, child);
+          AddChildren(treeNode.Nodes, child);}
     }
 
     private IEnumerable Children(object item)
     {
       return (_childCollectionProperty == null ? item : _childCollectionProperty.GetValue(item)) as IEnumerable;
+    }
+
+    public IBindingListView GetChildEnumerable(TreeViewEventArgs e)
+    {
+     var children = Children(e.Node.Tag);
+      if (children == null)
+        return e.Node.Nodes.Cast<TreeNode>().Select(tn => tn.Tag).ToList().ToBindingListView();
+      var bindingListView = children.ToBindingListView();
+      return bindingListView;
     }
 
     private static string GetIdWithoutIdProperty(object item)
@@ -644,6 +719,16 @@ namespace Chaliy.Windows.Forms
       }
       else
       {
+        if (SelectedNode != null)
+        {
+          var selectedData = SelectedNode.Tag;
+          var children = Children(selectedData);
+          if (children != null && children.Cast<object>().Any(child => child == node.Tag))
+          {
+            SelectedNode.Nodes.Add(node);
+            return true;
+          }
+        }
         Nodes.AddDistinct(node);
         return true;
       }
@@ -692,8 +777,8 @@ namespace Chaliy.Windows.Forms
       object currentParentID = null;
       if (_parentIdProperty == null)
       {
-        if (SelectedNode != null && SelectedNode!= node)
-          SelectedNode.Nodes.AddDistinct(node);
+        //if (SelectedNode != null && SelectedNode!= node)
+        //  SelectedNode.Nodes.AddDistinct(node);
       }
       else
       {
@@ -727,7 +812,7 @@ namespace Chaliy.Windows.Forms
             children.Add(childnode.Tag);
         }
         else
-        { 
+        {
           var parentID = GetDataID(parentNode.Tag);
           if (parentID != null)
             _parentIdProperty.SetValue(childnode.Tag, parentID);
@@ -813,6 +898,13 @@ namespace Chaliy.Windows.Forms
       return node;
     }
 
+    private TreeNode CreateNode(object data)
+    {
+      var node = new TreeNode();
+      RefreshData(node, data);
+      return node;
+    }
+   
     private static bool IsIDNull(object id)
     {
       if (id == null
@@ -874,6 +966,5 @@ namespace Chaliy.Windows.Forms
       _initializing = false;
       //ResetData();
     }
-
   }
 }

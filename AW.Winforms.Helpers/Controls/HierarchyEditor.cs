@@ -26,6 +26,7 @@ namespace AW.Winforms.Helpers.Controls
       dataTreeView.NameColumn = nameColumn;
       dataTreeView.Sorted = true;
       bindingNavigatorAddNewItem.Enabled = dataTreeView.CanEdit;
+      dataTreeView.LabelEdit= dataTreeView.CanEdit;
     }
 
     private HierarchyEditor(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn)
@@ -98,7 +99,7 @@ namespace AW.Winforms.Helpers.Controls
       if (splitContainerHorizontal.Panel2Collapsed)
         gridDataEditor.DataSource = null;
       else
-        gridDataEditor.BindEnumerable(e.Node.Nodes.Cast<TreeNode>().Select(tn => tn.Tag).ToList());
+        gridDataEditor.BindEnumerable(dataTreeView.GetChildEnumerable(e));
     }
 
     private void toolStripButtonExpandAll_Click(object sender, EventArgs e)
