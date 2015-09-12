@@ -52,5 +52,13 @@ namespace Northwind.Win
       ShowControlInForm(HierarchyEditor.HierarchyEditorFactory(employeeEntities.Where(em => em.ReportsTo == null), em => em.FirstName, em => em.Staff,
         new LLBLWinformHelper.DataEditorLLBLAdapterPersister(linqMetaData.AdapterToUse)), "EmployeeHierarchyInTree", this);
     }
+
+    private void toolStripButtonShowEmployeeHierarchyInTreeByID_Click(object sender, EventArgs e)
+    {
+      var linqMetaData = Factories.CreateLINQMetaData();
+      var employeeEntities = EmployeeEntity.WireUpSelfJoin(linqMetaData.Employee.ToEntityCollection2());
+      ShowControlInForm(new HierarchyEditor(employeeEntities, "EmployeeId", "ReportsTo", "FirstName",
+        new LLBLWinformHelper.DataEditorLLBLAdapterPersister(linqMetaData.AdapterToUse)), "EmployeeHierarchyInTree", this);
+    }
   }
 }

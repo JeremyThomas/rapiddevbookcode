@@ -301,6 +301,7 @@ namespace AW.Winforms.Helpers.Controls
       this.dataTreeView.HideSelection = false;
       this.dataTreeView.HotTracking = true;
       this.dataTreeView.IgnoreErrors = true;
+      this.dataTreeView.LabelEdit = true;
       this.dataTreeView.Location = new System.Drawing.Point(0, 0);
       this.dataTreeView.Name = "dataTreeView";
       this.dataTreeView.Size = new System.Drawing.Size(200, 561);

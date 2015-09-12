@@ -33,6 +33,7 @@
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.toolStripButtonRemote = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonShowEmployeeHierarchyInTree = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonShowEmployeeHierarchyInTreeByID = new System.Windows.Forms.ToolStripButton();
       this.toolStrip1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -48,6 +49,7 @@
       // 
       this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonRemote,
+            this.toolStripButtonShowEmployeeHierarchyInTreeByID,
             this.toolStripButtonShowEmployeeHierarchyInTree});
       this.toolStrip1.Location = new System.Drawing.Point(0, 0);
       this.toolStrip1.Name = "toolStrip1";
@@ -75,6 +77,16 @@
       this.toolStripButtonShowEmployeeHierarchyInTree.Text = "Show Employee Hierarchy In Tree";
       this.toolStripButtonShowEmployeeHierarchyInTree.Click += new System.EventHandler(this.toolStripButtonShowEmployeeHierarchyInTree_Click);
       // 
+      // toolStripButtonShowEmployeeHierarchyInTreeByID
+      // 
+      this.toolStripButtonShowEmployeeHierarchyInTreeByID.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonShowEmployeeHierarchyInTreeByID.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonShowEmployeeHierarchyInTreeByID.Image")));
+      this.toolStripButtonShowEmployeeHierarchyInTreeByID.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonShowEmployeeHierarchyInTreeByID.Name = "toolStripButtonShowEmployeeHierarchyInTreeByID";
+      this.toolStripButtonShowEmployeeHierarchyInTreeByID.Size = new System.Drawing.Size(217, 22);
+      this.toolStripButtonShowEmployeeHierarchyInTreeByID.Text = "Show Employee Hierarchy In Tree By ID";
+      this.toolStripButtonShowEmployeeHierarchyInTreeByID.Click += new System.EventHandler(this.toolStripButtonShowEmployeeHierarchyInTreeByID_Click);
+      // 
       // FrmEntityBrowser
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -98,6 +110,7 @@
     private System.Windows.Forms.ToolStrip toolStrip1;
     private System.Windows.Forms.ToolStripButton toolStripButtonRemote;
     private System.Windows.Forms.ToolStripButton toolStripButtonShowEmployeeHierarchyInTree;
+    private System.Windows.Forms.ToolStripButton toolStripButtonShowEmployeeHierarchyInTreeByID;
   }
 }
 
