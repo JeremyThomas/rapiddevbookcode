@@ -58,6 +58,7 @@ namespace AW.Winforms.Helpers.Controls
       this.splitContainerHorizontal = new System.Windows.Forms.SplitContainer();
       this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
       this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
+      this.toolStripButtonUnSelectNodes = new System.Windows.Forms.ToolStripButton();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceHierarchicalData)).BeginInit();
       this.statusStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorHierarchicalData)).BeginInit();
@@ -113,6 +114,7 @@ namespace AW.Winforms.Helpers.Controls
             this.bindingNavigatorSeparator2,
             this.toolStripButtonCollapseAll,
             this.toolStripButtonExpandAll,
+            this.toolStripButtonUnSelectNodes,
             this.toolStripSeparator,
             this.bindingNavigatorAddNewItem,
             this.bindingNavigatorDeleteItem,
@@ -349,6 +351,16 @@ namespace AW.Winforms.Helpers.Controls
       this.gridDataEditor.Size = new System.Drawing.Size(691, 257);
       this.gridDataEditor.TabIndex = 0;
       // 
+      // toolStripButtonUnSelectNodes
+      // 
+      this.toolStripButtonUnSelectNodes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.toolStripButtonUnSelectNodes.Image = global::AW.Winforms.Helpers.Properties.Resources.layer__minus;
+      this.toolStripButtonUnSelectNodes.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonUnSelectNodes.Name = "toolStripButtonUnSelectNodes";
+      this.toolStripButtonUnSelectNodes.Size = new System.Drawing.Size(23, 20);
+      this.toolStripButtonUnSelectNodes.Text = "UnSelectNodes";
+      this.toolStripButtonUnSelectNodes.Click += new System.EventHandler(this.toolStripButtonUnSelectNodes_Click);
+      // 
       // HierarchyEditor
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -407,6 +419,6 @@ namespace AW.Winforms.Helpers.Controls
 		private System.Windows.Forms.SplitContainer splitContainerHorizontal;
 		private GridDataEditor gridDataEditor;
 		private System.Windows.Forms.PropertyGrid propertyGrid1;
-
-	}
+    private System.Windows.Forms.ToolStripButton toolStripButtonUnSelectNodes;
+  }
 }

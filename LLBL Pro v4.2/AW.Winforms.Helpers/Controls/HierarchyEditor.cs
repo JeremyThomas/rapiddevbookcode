@@ -93,13 +93,26 @@ namespace AW.Winforms.Helpers.Controls
 
     private void dataTreeView1_AfterSelect(object sender, TreeViewEventArgs e)
     {
-      toolStripStatusLabelSelectePath.Text = ((dataTreeView).SelectedNode).FullPath;
+      var selectedNode = (dataTreeView).SelectedNode;
+      if (selectedNode != null) toolStripStatusLabelSelectePath.Text = selectedNode.FullPath;
       propertyGrid1.SelectedObject = e.Node.Tag;
       splitContainerHorizontal.Panel2Collapsed = e.Node.Nodes.Count == 0;
       if (splitContainerHorizontal.Panel2Collapsed)
         gridDataEditor.DataSource = null;
       else
         gridDataEditor.BindEnumerable(dataTreeView.GetChildEnumerable(e));
+    }
+
+    private void toolStripButtonUnSelectNodes_Click(object sender, EventArgs e)
+    {
+      dataTreeView.SelectedNode = null;
+      toolStripStatusLabelSelectePath.Text = "";
+      propertyGrid1.SelectedObject = null;
+      splitContainerHorizontal.Panel2Collapsed = bindingSourceHierarchicalData.Count == 0;
+      if (splitContainerHorizontal.Panel2Collapsed)
+        gridDataEditor.DataSource = null;
+      else
+        gridDataEditor.BindEnumerable(bindingSourceHierarchicalData);
     }
 
     private void toolStripButtonExpandAll_Click(object sender, EventArgs e)
@@ -144,5 +157,7 @@ namespace AW.Winforms.Helpers.Controls
       ((ISupportInitialize) (dataTreeView)).EndInit();
       ((ISupportInitialize) (gridDataEditor)).EndInit();
     }
+
+
   }
 }
