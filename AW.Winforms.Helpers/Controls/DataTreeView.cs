@@ -369,6 +369,7 @@ namespace Chaliy.Windows.Forms
     private bool _handelingItemChanged;
     private bool _isSelfCollection;
     private bool _reseting;
+    private bool _changingParent;
 
     private void DataTreeView_ListChanged(object sender, ListChangedEventArgs e)
     {
@@ -416,6 +417,13 @@ namespace Chaliy.Windows.Forms
               SelectedNode.Remove();
               RefreshAllData(e.NewIndex);
             }
+            else
+            {
+              foreach (var node in Nodes.OfType<TreeNode>().Where(node => _listManager.List.IndexOf(node.Tag) == -1))
+              {
+                node.Remove();
+              }
+            }
             break;
 
           case ListChangedType.Reset:
@@ -432,7 +440,7 @@ namespace Chaliy.Windows.Forms
     private void DataTreeView_ChildListChanged(object sender, ListChangedEventArgs e)
     {
       var bindingList = sender as IBindingList;
-      if (bindingList!=null)
+      if (bindingList!=null && !_changingParent)
         switch (e.ListChangedType)
         {
           case ListChangedType.ItemAdded:
@@ -798,26 +806,40 @@ namespace Chaliy.Windows.Forms
           if (!dataParentID.Equals(currentParentID))
             if (HasParent(node, dataParentID) || node.Parent != null)
             {
-              node.Remove();
               if (node.Nodes.Find(dataParentID.ToString(), true).Length > 0)
                 throw new ApplicationException("A Parent can't be the child of a child!");
               var newParentNode = FindFirst(dataParentID);
-              if (newParentNode != null)
-                newParentNode.Nodes.Add(node);
+              MoveNode(node, newParentNode);
             }
         }
       }
     }
 
+    private static void MoveNode(TreeNode node, TreeNode newParentNode)
+    {
+      node.Remove();
+      if (newParentNode != null)
+        newParentNode.Nodes.Add(node);
+    }
+
     private void ChangeParent(TreeNode childnode, TreeNode parentNode)
     {
-      if (childnode != null && parentNode != null)
+      if (childnode != null && parentNode != null && parentNode!= childnode.Parent)
       {
         if (_parentIdProperty == null)
         {
           var children = Children(parentNode.Tag) as IList;
           if (children != null)
-            children.Add(childnode.Tag);
+            try
+            {
+              _changingParent = true;
+              children.AddDistinct(childnode.Tag);
+              MoveNode(childnode, parentNode);
+            }
+           finally 
+            {
+              _changingParent=false;
+            }
         }
         else
         {
@@ -886,6 +908,9 @@ namespace Chaliy.Windows.Forms
         try
         {
           SelectedNode = GetCurrentNodeFromData();
+        }
+        catch (Exception)
+        {
         }
         finally
         {

@@ -661,7 +661,7 @@ namespace AW.Helper.LLBL
         var modifyCount = 0;
         if (entityCollection.RemovedEntitiesTracker != null)
           modifyCount = dataAccessAdapter.DeleteEntityCollection(entityCollection.RemovedEntitiesTracker);
-        return modifyCount + dataAccessAdapter.SaveEntityCollection(collectionToSave);
+        return modifyCount + dataAccessAdapter.SaveEntityCollection(collectionToSave,false, true);
       }
       return SaveEntities(entitiesToSave.Cast<IEntity2>(), dataAccessAdapter);
     }
