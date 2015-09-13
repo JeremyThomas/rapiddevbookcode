@@ -16,4 +16,7 @@ rem  The final part of the directory is the name of the assembly plus its public
 echo 4.0 4ed8595102af593c
 xcopy /i/y *.dll "C:\Documents and Settings\All Users\Application Data\LINQPad\Drivers\DataContext\4.0\AW.LLBLGen.DataContextDriver.42 (4ed8595102af593c)"
 xcopy /i/y *.pdb "C:\Documents and Settings\All Users\Application Data\LINQPad\Drivers\DataContext\4.0\AW.LLBLGen.DataContextDriver.42 (4ed8595102af593c)"
+echo %LOCALAPPDATA%
+xcopy /i/y *.dll %LOCALAPPDATA%"\LINQPad\Drivers\DataContext\4.6\AW.LLBLGen.DataContextDriver.42 (4ed8595102af593c)"
+xcopy /i/y *.pdb %LOCALAPPDATA%"\LINQPad\Drivers\DataContext\4.6\AW.LLBLGen.DataContextDriver.42 (4ed8595102af593c)"
 pause
