@@ -195,11 +195,7 @@ namespace Chaliy.Windows.Forms
                 }
               }
             }
-
-            if (property != null)
-              propertyName = value;
           }
-          else
             propertyName = value;
         }
       //   this.ResetData();
@@ -522,7 +518,18 @@ namespace Chaliy.Windows.Forms
       if (BindingContext != null)
         if (_dataSource != null)
         {
-          _listManager = BindingContext[_dataSource, _dataMember] as CurrencyManager;
+          var bindingManagerBase = BindingContext[_dataSource, _dataMember];
+          _listManager = bindingManagerBase as CurrencyManager;
+          if (_listManager == null)
+          {
+            var propertyManager = bindingManagerBase as PropertyManager;
+            if (propertyManager != null)
+            {
+              var enumerable = propertyManager.Current as IEnumerable;
+              _dataSource = enumerable.ToBindingListView();
+              _listManager = BindingContext[_dataSource, _dataMember] as CurrencyManager;
+            }
+          }
           return _listManager != null && !_listManager.IsBindingSuspended;
         }
         else

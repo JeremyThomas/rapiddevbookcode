@@ -845,7 +845,7 @@ namespace AW.Winforms.Helpers.Controls
     private void toolStripButtonCSharp_Click(object sender, EventArgs e)
     {
       var cSharp = SourceEnumerable.SerializeToCSharp(SerializeToCSharpOutputFormat, PromptForPropertiesToExclude());
-      var frmQueryRunner = new FrmQueryRunner(DataEditorPersister.Save, DataEditorPersister.Delete);
+      var frmQueryRunner = DataEditorPersister==null? new FrmQueryRunner(): new FrmQueryRunner(DataEditorPersister.Save, DataEditorPersister.Delete);
       frmQueryRunner.ViewText(cSharp);
       frmQueryRunner.ShowDialog();
       Settings.Default.Save();

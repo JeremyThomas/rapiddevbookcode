@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AW.Helper;
 using Northwind.DAL.EntityClasses;
 using Northwind.DAL.HelperClasses;
@@ -9,7 +11,7 @@ namespace Northwind.DAL.Linq.Filters
   {
     public static IQueryable<CustomerEntity> FilterByCountry(this IQueryable<CustomerEntity> customerQuery, string country = null)
     {
-      return string.IsNullOrEmpty(country) ? customerQuery : customerQuery.Where(c => c.Country.EqualsIgnoreCase(country));
+      return String.IsNullOrEmpty(country) ? customerQuery : customerQuery.Where(c => c.Country.EqualsIgnoreCase(country));
     }
 
     public static IQueryable<CustomerEntity> FilterByEmployeeId(this IQueryable<CustomerEntity> customerQuery, params int[] employees)
@@ -68,7 +70,7 @@ namespace Northwind.DAL.Linq.Filters
 
     public static IQueryable<T> FilterByProductName<T>(this IQueryable<T> products, string productName) where T : class, IProduct
     {
-      return string.IsNullOrEmpty(productName) ? products : products.Where(r => productName.EqualsIgnoreCase(r.ProductName));
+      return String.IsNullOrEmpty(productName) ? products : products.Where(r => productName.EqualsIgnoreCase(r.ProductName));
     }
 
     public static IQueryable<T> FilterByUnitsInStock<T>(this IQueryable<T> products, short? unitsInStock) where T : class, IProduct
@@ -212,5 +214,14 @@ namespace Northwind.DAL.Linq.Filters
              select s;
     }
 
+    public static IQueryable<IGrouping<string, CustomerEntity>> GroupByCountry(this IQueryable<CustomerEntity> customerEntities)
+    {
+      return customerEntities.GroupBy(c => c.Country);
+    }
+
+    public static IEnumerable<IGrouping<string, CustomerEntity>> GroupByCountry(this IEnumerable<CustomerEntity> customerEntities)
+    {
+      return customerEntities.GroupBy(c => c.Country);
+    }
   }
 }
