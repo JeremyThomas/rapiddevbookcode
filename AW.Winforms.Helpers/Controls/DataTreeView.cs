@@ -610,7 +610,7 @@ namespace Chaliy.Windows.Forms
 
     private bool PrepareValueConvertor()
     {
-      if (_valueConverter == null)
+      if (_valueConverter == null && _nameProperty != null)
         _valueConverter = TypeDescriptor.GetConverter(_nameProperty.PropertyType);
 
       return (_valueConverter != null && _valueConverter.CanConvertFrom(typeof (string)));
