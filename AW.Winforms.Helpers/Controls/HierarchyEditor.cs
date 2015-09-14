@@ -17,7 +17,7 @@ namespace AW.Winforms.Helpers.Controls
       InitializeComponent();
     }
 
-    private HierarchyEditor(IEnumerable hierarchicalData, string nameColumn)
+    public HierarchyEditor(IEnumerable hierarchicalData, string nameColumn)
       : this()
     {
       if (hierarchicalData == null) throw new ArgumentNullException("hierarchicalData");
@@ -100,7 +100,10 @@ namespace AW.Winforms.Helpers.Controls
       if (splitContainerHorizontal.Panel2Collapsed)
         gridDataEditor.DataSource = null;
       else
+      {
+        splitContainerHorizontal.Panel1Collapsed = ListBindingHelper.GetListItemProperties(propertyGrid1.SelectedObject.GetType()).Count < 2;
         gridDataEditor.BindEnumerable(dataTreeView.GetChildEnumerable(e));
+      }
     }
 
     private void toolStripButtonUnSelectNodes_Click(object sender, EventArgs e)
@@ -112,7 +115,10 @@ namespace AW.Winforms.Helpers.Controls
       if (splitContainerHorizontal.Panel2Collapsed)
         gridDataEditor.DataSource = null;
       else
+      {
+        splitContainerHorizontal.Panel1Collapsed = true;
         gridDataEditor.BindEnumerable(bindingSourceHierarchicalData);
+      }
     }
 
     private void toolStripButtonExpandAll_Click(object sender, EventArgs e)

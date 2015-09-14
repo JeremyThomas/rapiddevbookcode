@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
@@ -45,10 +46,6 @@ namespace Northwind.Win
     {
       var linqMetaData = Factories.CreateLINQMetaData();
       var employeeEntities = EmployeeEntity.WireUpSelfJoin(linqMetaData.Employee.ToEntityCollection2());
-      // employeeEntities.ShowHierarchyInTree(linqMetaData.AdapterToUse, "EmployeeId", "ReportsTo", "FirstName");
-      //  var hierarchyEditor = new HierarchyEditor(employeeEntities, "FirstName", "Staff", new LLBLWinformHelper.DataEditorLLBLAdapterPersister(linqMetaData.AdapterToUse));
-      //ShowControlInForm(new HierarchyEditor(employeeEntities, "EmployeeId", "ReportsTo", "FirstName",
-      //  new LLBLWinformHelper.DataEditorLLBLAdapterPersister(linqMetaData.AdapterToUse)), "EmployeeHierarchyInTree", this);
       ShowControlInForm(HierarchyEditor.HierarchyEditorFactory(employeeEntities.Where(em => em.ReportsTo == null), em => em.FirstName, em => em.Staff,
         new LLBLWinformHelper.DataEditorLLBLAdapterPersister(linqMetaData.AdapterToUse)), "EmployeeHierarchyInTree", this);
     }
@@ -56,9 +53,18 @@ namespace Northwind.Win
     private void toolStripButtonShowEmployeeHierarchyInTreeByID_Click(object sender, EventArgs e)
     {
       var linqMetaData = Factories.CreateLINQMetaData();
-      var employeeEntities = EmployeeEntity.WireUpSelfJoin(linqMetaData.Employee.ToEntityCollection2());
+      var employeeEntities =linqMetaData.Employee.ToEntityCollection2();
       ShowControlInForm(new HierarchyEditor(employeeEntities, "EmployeeId", "ReportsTo", "FirstName",
         new LLBLWinformHelper.DataEditorLLBLAdapterPersister(linqMetaData.AdapterToUse)), "EmployeeHierarchyInTree", this);
+    }
+
+    private void toolStripButtonCustomerGroupedByCountry_Click(object sender, EventArgs e)
+    {
+      var linqMetaData = Factories.CreateLINQMetaData();
+      var groupBy = linqMetaData.Customer
+        .ToEntityCollection2()
+        .GroupBy(c => c.Country);
+      ShowControlInForm(new HierarchyEditor(groupBy, "CompanyName"));
     }
   }
 }

@@ -7,11 +7,13 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper.LLBL;
+using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.LLBL;
 using Chaliy.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Northwind.DAL.Linq.Filters;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using CustomerEntity = Northwind.DAL.EntityClasses.CustomerEntity;
 
@@ -27,7 +29,7 @@ namespace AW.Tests
       var employeeEntities = MetaSingletons.MetaData.Employee.ToEntityCollection();
       return EmployeeEntity.WireUpSelfJoin(employeeEntities).OrderBy(e => e.EmployeeDisplayName).ToEntityCollection();
     }
-    
+
     [TestMethod]
     public void TestDataTreeView()
     {
@@ -49,7 +51,7 @@ namespace AW.Tests
     public void TestDataTreeViewWithChildCollectionProperty()
     {
       var employeeEntities = Employees.Value;
-      var managers = employeeEntities.Where(e=>e.ManagerID==null).ToEntityCollection();
+      var managers = employeeEntities.Where(e => e.ManagerID == null).ToEntityCollection();
       var dataTreeView = new DataTreeView
       {
         Sorted = true,
@@ -65,10 +67,14 @@ namespace AW.Tests
     [TestMethod]
     public void TestDataTreeViewGroup()
     {
-      var groupBy = NorthwindTest.GetNorthwindLinqMetaData().Customer.GroupBy(c => c.Country);
+      var groupBy = NorthwindTest.GetNorthwindLinqMetaData().Customer.GroupByCountry();
       TestDataTreeViewGroup(groupBy.ToList());
-      TestDataTreeViewGroup(AW.Winforms.Helpers.BindingListHelper.ToBindingListView(groupBy));
-      TestDataTreeViewGroup(AW.Winforms.Helpers.BindingListHelper.ToBindingListView((IEnumerable)groupBy));
+      TestDataTreeViewGroup(groupBy.ToBindingListView());
+      TestDataTreeViewGroup(((IEnumerable) groupBy).ToBindingListView());
+      var customerGroupedByCountry = NorthwindTest.GetNorthwindLinqMetaData().Customer.ToEntityCollection2().GroupByCountry();
+      TestDataTreeViewGroup(customerGroupedByCountry.ToBindingListView());
+  //    TestDataTreeViewGroup(((IEnumerable)customerGroupedByCountry).ToBindingListView());
+      TestDataTreeViewGroup(customerGroupedByCountry);
     }
 
     private static void TestDataTreeViewGroup(IEnumerable customerGroupedByCountry)
@@ -76,8 +82,8 @@ namespace AW.Tests
       var dataTreeView = new DataTreeView
       {
         Sorted = true,
-        NameColumn = "CompanyName",
         DataSource = customerGroupedByCountry,
+        NameColumn = "CompanyName",
         BindingContext = new BindingContext()
       };
       AssertCustomerGroupedByCountryInTree(dataTreeView);
@@ -96,9 +102,14 @@ namespace AW.Tests
     [TestMethod]
     public void TestHierarchyEditorGroup()
     {
-      var customerGroupedByCountry = NorthwindTest.GetNorthwindLinqMetaData().Customer.GroupBy(c => c.Country).ToList();
+      TestHierarchyEditorGroup(NorthwindTest.GetNorthwindLinqMetaData().Customer.GroupByCountry().ToList());
+      TestHierarchyEditorGroup(NorthwindTest.GetNorthwindLinqMetaData().Customer.ToEntityCollection2().GroupByCountry().ToList());
+    }
+
+    private static void TestHierarchyEditorGroup(IEnumerable<IGrouping<string, CustomerEntity>> customerGroupedByCountry)
+    {
       var hierarchyEditor = new HierarchyEditor(customerGroupedByCountry, "CompanyName", null) {BindingContext = new BindingContext()};
-      var dataTreeView = hierarchyEditor.Controls.Find("dataTreeView",true).Single() as TreeView;
+      var dataTreeView = hierarchyEditor.Controls.Find("dataTreeView", true).Single() as TreeView;
       AssertCustomerGroupedByCountryInTree(dataTreeView);
     }
 
