@@ -196,7 +196,7 @@ namespace Chaliy.Windows.Forms
               }
             }
           }
-            propertyName = value;
+          propertyName = value;
         }
       //   this.ResetData();
     }
@@ -436,7 +436,7 @@ namespace Chaliy.Windows.Forms
     private void DataTreeView_ChildListChanged(object sender, ListChangedEventArgs e)
     {
       var bindingList = sender as IBindingList;
-      if (bindingList!=null && !_changingParent)
+      if (bindingList != null && !_changingParent)
         switch (e.ListChangedType)
         {
           case ListChangedType.ItemAdded:
@@ -446,7 +446,7 @@ namespace Chaliy.Windows.Forms
               if (!IsIDNull(GetDataID(dataObject)))
               {
                 var changedNode = GetDataAsNode(dataObject);
-                if (changedNode==null && TryAddNode(CreateNode(dataObject)))
+                if (changedNode == null && TryAddNode(CreateNode(dataObject)))
                   Trace.Write(e);
               }
             }
@@ -479,16 +479,46 @@ namespace Chaliy.Windows.Forms
             break;
 
           case ListChangedType.ItemDeleted:
-            if (SelectedNode != null && ((bindingList.IndexOf(SelectedNode.Tag) == -1)
-                                         || bindingList.IndexOf(SelectedNode.Tag) == e.NewIndex))
-            {
-              SelectedNode.Remove();
-              RefreshAllData(e.NewIndex);
-            }
+            if (!_handelingItemChanged)
+              try
+              {
+                _handelingItemChanged = true;
+                if (SelectedNode != null && SelectedNode.Nodes.Count > e.NewIndex)
+                {
+                  foreach (TreeNode node in SelectedNode.Nodes)
+                  {
+                    if (node != null && !bindingList.Contains(node.Tag))
+                    {
+                      var children = Children(node.Tag);
+                      if (children == null)
+                      {
+                        foreach (var childTag in ChildTags(node).Where(childTag => _listManager.List != null && _listManager.List.Contains(childTag)))
+                        {
+                          _listManager.List.Remove(childTag);
+                        }
+                      }
+                      else
+                      {
+                        var bindingListView = children.ToBindingListView();
+                        while (bindingListView.Count > 0)
+                          bindingListView.Remove(bindingListView[0]);
+                      }
+                      node.Remove();
+                    }
+                  }
+                }
+              }
+              finally
+              {
+                _handelingItemChanged = false;
+              }
             break;
 
           case ListChangedType.Reset:
-            ResetIfEmpty();
+            if (SelectedNode != null)
+              if (SelectedNode.Nodes.Count == 0 //|| SelectedNode.Nodes.Count != bindingList.Count
+                )
+                ResetData();
             break;
 
           case ListChangedType.ItemMoved:
@@ -700,7 +730,8 @@ namespace Chaliy.Windows.Forms
         if (childBindingListView != null)
           childBindingListView.ListChanged += DataTreeView_ChildListChanged;
         foreach (var child in children)
-          AddChildren(treeNode.Nodes, child);}
+          AddChildren(treeNode.Nodes, child);
+      }
     }
 
     private IEnumerable Children(object item)
@@ -710,16 +741,26 @@ namespace Chaliy.Windows.Forms
 
     public IBindingListView GetChildEnumerable(TreeViewEventArgs e)
     {
-     var children = Children(e.Node.Tag);
+      return GetChildEnumerable(e.Node);
+    }
+
+    private IBindingListView GetChildEnumerable(TreeNode treeNode)
+    {
+      var children = Children(treeNode.Tag);
       if (children == null)
       {
-        var childBindingListView = e.Node.Nodes.Cast<TreeNode>().Select(tn => tn.Tag).ToBindingListView();
+        var childBindingListView = ChildTags(treeNode).ToBindingListView();
         if (childBindingListView != null)
           childBindingListView.ListChanged += DataTreeView_ChildListChanged;
         return childBindingListView;
       }
       var bindingListView = children.ToBindingListView();
       return bindingListView;
+    }
+
+    private static IEnumerable<object> ChildTags(TreeNode treeNode)
+    {
+      return treeNode.Nodes.Cast<TreeNode>().Select(tn => tn.Tag);
     }
 
     private static string GetIdWithoutIdProperty(object item)
@@ -831,7 +872,7 @@ namespace Chaliy.Windows.Forms
 
     private void ChangeParent(TreeNode childnode, TreeNode parentNode)
     {
-      if (childnode != null && parentNode != null && parentNode!= childnode.Parent)
+      if (childnode != null && parentNode != null && parentNode != childnode.Parent)
       {
         if (_parentIdProperty == null)
         {
@@ -843,9 +884,9 @@ namespace Chaliy.Windows.Forms
               children.AddDistinct(childnode.Tag);
               MoveNode(childnode, parentNode);
             }
-           finally 
+            finally
             {
-              _changingParent=false;
+              _changingParent = false;
             }
         }
         else
@@ -944,7 +985,7 @@ namespace Chaliy.Windows.Forms
       RefreshData(node, data);
       return node;
     }
-   
+
     private static bool IsIDNull(object id)
     {
       if (id == null

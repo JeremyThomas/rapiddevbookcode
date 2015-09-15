@@ -19,7 +19,7 @@ namespace Northwind.DAL.Services
 
     protected override LinqMetaData CreateLinqMetaDataInstance()
     {
-      var linqMetaDataInstance = Factories.CreateLINQMetaData();
+      var linqMetaDataInstance = Factories.CreateLinqMetaData();
       return linqMetaDataInstance;
     }
 

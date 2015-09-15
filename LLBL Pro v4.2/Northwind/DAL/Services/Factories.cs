@@ -27,9 +27,9 @@ namespace Northwind.DAL.Services
       return new DataAccessAdapter();
     }
 
-    public static LinqMetaData CreateLINQMetaData()
+    public static LinqMetaData CreateLinqMetaData()
     {
-      return new LinqMetaData(new DataAccessAdapter());
+      return new LinqMetaData(CreateDataAccessAdapter());
     }
   }
 }

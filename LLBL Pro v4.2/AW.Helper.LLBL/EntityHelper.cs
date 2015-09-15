@@ -1052,6 +1052,21 @@ namespace AW.Helper.LLBL
         where fkEntityFieldCoreObject.Name.Equals(fieldName)
         select entityRelation.MappedFieldName;
     }
+
+    public static string GetPkIdStringFromFields(List<IEntityField2> primaryKeyFields)
+    {
+      if (primaryKeyFields.Count == 1 && primaryKeyFields[0].CurrentValue == null)
+        return null;
+
+
+      return String.Join("/", primaryKeyFields.Select(pk => (pk.CurrentValue ?? "").ToString()).ToArray());
+    }
+
+    public static string GetPkIdStringFromEntity(EntityBase2 entity)
+    {
+      return GetPkIdStringFromFields(((IEntity2)entity).PrimaryKeyFields);
+    }
+
   }
 
   public enum LLBLQueryType

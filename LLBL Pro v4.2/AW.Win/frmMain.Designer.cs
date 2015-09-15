@@ -55,6 +55,7 @@ namespace AW.Win
       this.viewMetadataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.viewEntitiesAndFieldsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.easyQueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.dataBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tileVerticalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,7 +68,7 @@ namespace AW.Win
       this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
       this.mruHandlerProject = new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler(this.components);
-      this.dataBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.organizationStructureEditorSelfJoinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.mruHandlerProject)).BeginInit();
       this.SuspendLayout();
@@ -161,7 +162,8 @@ namespace AW.Win
             this.customersToolStripMenuItem,
             this.organizationToolStripMenuItem,
             this.organizationStructureToolStripMenuItem,
-            this.organizationStructureEditorToolStripMenuItem});
+            this.organizationStructureEditorToolStripMenuItem,
+            this.organizationStructureEditorSelfJoinToolStripMenuItem});
       this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
       this.reportsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
       this.reportsToolStripMenuItem.Text = "&Reports";
@@ -169,28 +171,28 @@ namespace AW.Win
       // customersToolStripMenuItem
       // 
       this.customersToolStripMenuItem.Name = "customersToolStripMenuItem";
-      this.customersToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
+      this.customersToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
       this.customersToolStripMenuItem.Text = "&Customers";
       this.customersToolStripMenuItem.Click += new System.EventHandler(this.customersToolStripMenuItem_Click);
       // 
       // organizationToolStripMenuItem
       // 
       this.organizationToolStripMenuItem.Name = "organizationToolStripMenuItem";
-      this.organizationToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
+      this.organizationToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
       this.organizationToolStripMenuItem.Text = "&Organization";
       this.organizationToolStripMenuItem.Click += new System.EventHandler(this.organizationToolStripMenuItem_Click);
       // 
       // organizationStructureToolStripMenuItem
       // 
       this.organizationStructureToolStripMenuItem.Name = "organizationStructureToolStripMenuItem";
-      this.organizationStructureToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
+      this.organizationStructureToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
       this.organizationStructureToolStripMenuItem.Text = "Organization Structure";
       this.organizationStructureToolStripMenuItem.Click += new System.EventHandler(this.organizationStructureToolStripMenuItem_Click);
       // 
       // organizationStructureEditorToolStripMenuItem
       // 
       this.organizationStructureEditorToolStripMenuItem.Name = "organizationStructureEditorToolStripMenuItem";
-      this.organizationStructureEditorToolStripMenuItem.Size = new System.Drawing.Size(227, 22);
+      this.organizationStructureEditorToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
       this.organizationStructureEditorToolStripMenuItem.Text = "Organization Structure Editor";
       this.organizationStructureEditorToolStripMenuItem.Click += new System.EventHandler(this.organizationStructureEditorToolStripMenuItem_Click);
       // 
@@ -249,6 +251,13 @@ namespace AW.Win
       this.easyQueryToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
       this.easyQueryToolStripMenuItem.Text = "Easy Query";
       this.easyQueryToolStripMenuItem.Click += new System.EventHandler(this.easyQueryToolStripMenuItem_Click);
+      // 
+      // dataBrowserToolStripMenuItem
+      // 
+      this.dataBrowserToolStripMenuItem.Name = "dataBrowserToolStripMenuItem";
+      this.dataBrowserToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+      this.dataBrowserToolStripMenuItem.Text = "Data Browser";
+      this.dataBrowserToolStripMenuItem.Click += new System.EventHandler(this.dataBrowserToolStripMenuItem_Click);
       // 
       // windowsMenu
       // 
@@ -392,12 +401,12 @@ namespace AW.Win
       this.mruHandlerProject.StorageName = "mru";
       this.mruHandlerProject.MRUItemClicked += new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUItemClickedHandler(this.mruHandlerProject_MRUItemClicked);
       // 
-      // dataBrowserToolStripMenuItem
+      // organizationStructureEditorSelfJoinToolStripMenuItem
       // 
-      this.dataBrowserToolStripMenuItem.Name = "dataBrowserToolStripMenuItem";
-      this.dataBrowserToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-      this.dataBrowserToolStripMenuItem.Text = "Data Browser";
-      this.dataBrowserToolStripMenuItem.Click += new System.EventHandler(this.dataBrowserToolStripMenuItem_Click);
+      this.organizationStructureEditorSelfJoinToolStripMenuItem.Name = "organizationStructureEditorSelfJoinToolStripMenuItem";
+      this.organizationStructureEditorSelfJoinToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
+      this.organizationStructureEditorSelfJoinToolStripMenuItem.Text = "Organization Structure Editor Self Join";
+      this.organizationStructureEditorSelfJoinToolStripMenuItem.Click += new System.EventHandler(this.organizationStructureEditorSelfJoinToolStripMenuItem_Click);
       // 
       // FrmMain
       // 
@@ -465,5 +474,6 @@ namespace AW.Win
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dataBrowserToolStripMenuItem;
-    }
+    private System.Windows.Forms.ToolStripMenuItem organizationStructureEditorSelfJoinToolStripMenuItem;
+  }
 }

@@ -22,6 +22,13 @@ namespace Northwind.DAL.EntityClasses
 {
   // __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
   using AW.Helper;
+  using AW.Helper.LLBL;
+  using System.Linq;
+  using System.Xml.Serialization;
+  using System.Diagnostics;
+
+  [DebuggerDisplay("{Identity}")]
+
   // __LLBLGENPRO_USER_CODE_REGION_END
 
   /// <summary>Common base class which is the base class for all generated entities which aren't a subtype of another entity.</summary>
@@ -128,6 +135,59 @@ namespace Northwind.DAL.EntityClasses
     //    base.AuditorToUse = value;
     //  }
     //}
+
+    #region Identity
+
+    /// <summary>
+    /// Gets or sets the string representation of the primary key.
+    /// </summary>
+    /// <value>The primary key.</value>
+    [Browsable(false)]
+    [XmlIgnore]
+    public virtual string PkId
+    {
+      get { return EntityHelper.GetPkIdStringFromEntity(this); }
+    }
+
+    /// <summary>
+    /// Gets the identity of the entity.
+    /// </summary>
+    /// <value>The identity.</value>
+    [Browsable(false)]
+    [XmlIgnore]
+    public virtual string Identity
+    {
+      get { return String.Format("{0}<{1}>", (EntityType)LLBLGenProEntityTypeValue, PkId); }
+    }
+
+    /// <summary>
+    /// Gets the DisplayName of the entity.
+    /// </summary>
+    [Browsable(false)]
+    [XmlIgnore]
+    public virtual string EntityName
+    {
+      get
+      {
+        var displayName = MetaDataHelper.GetDisplayName(GetType());
+        return string.IsNullOrWhiteSpace(displayName) ? EntityHelper.GetNameFromEntityName(((IEntityCore)this).LLBLGenProEntityName) : displayName;
+      }
+    }
+
+    /// <summary>
+    /// DisplayName + LogValue
+    /// </summary>
+    [Browsable(false)]
+    [XmlIgnore]
+    public virtual string EntityNameAndValue
+    {
+      get
+      {
+        return GeneralHelper.Join(" ", EntityName, PkId);
+      }
+    }
+
+    #endregion
 
     // __LLBLGENPRO_USER_CODE_REGION_END
     #endregion

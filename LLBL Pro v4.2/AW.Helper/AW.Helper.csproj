@@ -87,6 +87,7 @@
       <Link>ToolsAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Annotations\Annotations.cs" />
+    <Compile Include="AnonymousComparer.cs" />
     <Compile Include="AssemblyFileInfo.cs">
       <SubType>Code</SubType>
     </Compile>

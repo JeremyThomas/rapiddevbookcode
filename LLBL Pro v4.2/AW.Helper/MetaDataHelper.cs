@@ -797,6 +797,11 @@ namespace AW.Helper
       return GetCustomAttributes<DisplayNameAttribute>(type);
     }
 
+    public static IEnumerable<DisplayAttribute> GetDisplayAttributes(Type type, string fieldName)
+    {
+      return GetAttributes<DisplayAttribute>(type, fieldName);
+    }
+
     public static IEnumerable<DescriptionAttribute> GetDescriptionAttributes(Type type, string fieldName)
     {
       return GetAttributes<DescriptionAttribute>(type, fieldName);
@@ -880,6 +885,79 @@ namespace AW.Helper
     {
       var propertyInfo = obj.GetType().GetProperty(propertyName);
       return propertyInfo == null ? null : propertyInfo.GetValue(obj, null);
+    }
+
+    /// <summary>
+    ///   Gets the display name of a field from the first DisplayNameAttribute found otherwise it returns the fieldName.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="propertySpecifier">The property specifier.</param>
+    /// <returns></returns>
+    public static string GetDisplayName<T>(Expression<Func<T, object>> propertySpecifier)
+    {
+      return GetDisplayName(typeof(T), MemberName.For(propertySpecifier));
+    }
+
+    public static string GetDisplayName(Type type)
+    {
+      var displayAttributes = Attribute.GetCustomAttribute(type, typeof(DisplayAttribute)) as DisplayAttribute;
+      if (displayAttributes == null)
+      {
+        var displayNameAttributes = Attribute.GetCustomAttribute(type, typeof(DisplayNameAttribute)) as DisplayNameAttribute;
+        if (displayNameAttributes != null) return displayNameAttributes.DisplayName;
+      }
+      else
+      {
+        return displayAttributes.Name;
+      }
+      return null;
+    }
+
+    private static readonly IComparer<DisplayNameAttribute> DisplayNameAttributePrecedence = AnonymousComparer.Create<DisplayNameAttribute>(DisplayNameAttributeComparer);
+
+    /// <summary>
+    ///   Gets the display name of a field from the first DisplayNameAttribute found otherwise it returns the fieldName.
+    /// </summary>
+    /// <param name="type">The type.</param>
+    /// <param name="fieldName">Name of the field.</param>
+    /// <returns></returns>
+    public static string GetDisplayName(Type type, string fieldName)
+    {
+      var displayAttributes = GetDisplayAttributes(type, fieldName);
+      foreach (var displayName in displayAttributes.Select(displayNameAttribute => GetDisplayName(displayNameAttribute, fieldName)).Where(displayName => displayName != fieldName))
+        return displayName;
+      var displayNameAttributes = GetDisplayNameAttributes(type, fieldName);
+
+      foreach (var displayName in displayNameAttributes.OrderBy(dna => dna, DisplayNameAttributePrecedence).Select(displayNameAttribute => GetDisplayName(displayNameAttribute, fieldName)).Where(displayName => displayName != fieldName))
+        return displayName;
+      return fieldName;
+    }
+
+    /// <summary>
+    ///   DisplayNameAttribute comparer that gives precedent to LocalizedDisplayNameAttributeover others.
+    /// </summary>
+    /// <param name="displayNameAttributeX">The display name attribute X.</param>
+    /// <param name="displayNameAttributeY">The display name attribute Y.</param>
+    /// <returns></returns>
+    private static int DisplayNameAttributeComparer(DisplayNameAttribute displayNameAttributeX, DisplayNameAttribute displayNameAttributeY)
+    {
+      return displayNameAttributeX.GetType() == displayNameAttributeY.GetType() ? 0 : 1;
+    }
+
+    public static string GetDisplayName(DisplayAttribute displayNameAttribute, string fieldName)
+    {
+      if (displayNameAttribute == null)
+        return fieldName;
+      var displayName = displayNameAttribute.GetName();
+      return String.IsNullOrEmpty(displayName) ? fieldName : displayName;
+    }
+
+    public static string GetDisplayName(DisplayNameAttribute displayNameAttribute, string fieldName)
+    {
+      if (displayNameAttribute == null)
+        return fieldName;
+      var displayName = displayNameAttribute.DisplayName;
+      return String.IsNullOrEmpty(displayName) ? fieldName : displayName;
     }
   }
 }

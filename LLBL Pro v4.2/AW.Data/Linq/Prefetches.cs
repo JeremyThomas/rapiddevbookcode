@@ -33,5 +33,11 @@ namespace AW.Data.Linq
       return employeeEntities.With(o => o.PurchaseOrderHeaders, e => e.Manager, e => e.Contact, e => e.Manages, 
         e => e.JobCandidates, e => e.EmployeePayHistories, e => e.EmployeeDepartmentHistories, e => e.EmployeeAddresses);
     }
+
+    public static IQueryable<EmployeeEntity> PrefetchAllButManages(this IQueryable<EmployeeEntity> employeeEntities)
+    {
+      return employeeEntities.With(o => o.PurchaseOrderHeaders, e => e.Manager, e => e.Contact, 
+        e => e.JobCandidates, e => e.EmployeePayHistories, e => e.EmployeeDepartmentHistories, e => e.EmployeeAddresses);
+    }
   }
 }

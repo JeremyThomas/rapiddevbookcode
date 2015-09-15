@@ -21,7 +21,7 @@ namespace Northwind.Win
     {
       InitializeComponent();
 
-      var linqMetaData = Factories.CreateLINQMetaData();
+      var linqMetaData = Factories.CreateLinqMetaData();
       usrCntrlEntityBrowser1.Initialize(linqMetaData);
       //Done in CommonEntityBase  CacheController.RegisterCache(dataAccessAdapter.ConnectionString, new ResultsetCache()); 
       Text += string.Format(" - {0}", ProfilerHelper.OrmProfilerStatus);
@@ -44,7 +44,7 @@ namespace Northwind.Win
 
     private void toolStripButtonShowEmployeeHierarchyInTree_Click(object sender, EventArgs e)
     {
-      var linqMetaData = Factories.CreateLINQMetaData();
+      var linqMetaData = Factories.CreateLinqMetaData();
       var employeeEntities = EmployeeEntity.WireUpSelfJoin(linqMetaData.Employee.ToEntityCollection2());
       ShowControlInForm(HierarchyEditor.HierarchyEditorFactory(employeeEntities.Where(em => em.ReportsTo == null), em => em.FirstName, em => em.Staff,
         new LLBLWinformHelper.DataEditorLLBLAdapterPersister(linqMetaData.AdapterToUse)), "EmployeeHierarchyInTree", this);
@@ -52,7 +52,7 @@ namespace Northwind.Win
 
     private void toolStripButtonShowEmployeeHierarchyInTreeByID_Click(object sender, EventArgs e)
     {
-      var linqMetaData = Factories.CreateLINQMetaData();
+      var linqMetaData = Factories.CreateLinqMetaData();
       var employeeEntities =linqMetaData.Employee.ToEntityCollection2();
       ShowControlInForm(new HierarchyEditor(employeeEntities, "EmployeeId", "ReportsTo", "FirstName",
         new LLBLWinformHelper.DataEditorLLBLAdapterPersister(linqMetaData.AdapterToUse)), "EmployeeHierarchyInTree", this);
@@ -60,7 +60,7 @@ namespace Northwind.Win
 
     private void toolStripButtonCustomerGroupedByCountry_Click(object sender, EventArgs e)
     {
-      var linqMetaData = Factories.CreateLINQMetaData();
+      var linqMetaData = Factories.CreateLinqMetaData();
       var groupBy = linqMetaData.Customer
         .ToEntityCollection2()
         .GroupBy(c => c.Country);
