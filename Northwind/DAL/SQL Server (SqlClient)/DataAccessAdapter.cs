@@ -194,6 +194,7 @@ namespace Northwind.DAL.SqlServer
 
     static DataAccessAdapter()
     {
+      ProfilerHelper.InitializeOrmProfiler();
       StaticCustomFunctionMappings = new FunctionMappingStore();
       StaticCustomFunctionMappings.Add(new FunctionMapping(typeof(string), "IsNullOrEmpty", 1, "{0} IS NULL OR LEN({0}) = 0"));
       StaticCustomFunctionMappings.Add(new FunctionMapping(typeof(GeneralHelper), "ContainsIgnoreCase", 2, "{0} LIKE '%' + {1} + '%'"));

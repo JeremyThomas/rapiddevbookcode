@@ -307,7 +307,7 @@ namespace AW.DebugVisualizers.Tests
 
     private static LinqMetaData GetNorthwindLinqMetaData()
     {
-      return Factories.CreateLINQMetaData();
+      return Factories.CreateLinqMetaData();
     }
 
     [TestMethod]

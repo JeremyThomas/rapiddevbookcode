@@ -11,6 +11,7 @@ using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
+using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.Forms;
 using AW.Winforms.Helpers.LLBL;
 using AW.Winforms.Helpers.LLBL.PropGridEx;
@@ -279,6 +280,13 @@ namespace AW.Win
     {
       MetaSingletons.MetaData.Employee.PrefetchAll().ToEntityCollection().ShowSelfServicingHierarchyInTree("EmployeeID", "ManagerID", "EmployeeDisplayName");
     }
+    private void organizationStructureEditorSelfJoinToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      //var employeeEntities = EmployeeEntity.WireUpSelfJoin(MetaSingletons.MetaData.Employee.PrefetchAllButManages().ToEntityCollection());  
+      var employeeEntities = MetaSingletons.MetaData.Employee.PrefetchAll().ToEntityCollection();
+      ShowControlInForm(HierarchyEditor.HierarchyEditorFactory(employeeEntities.Where(em => em.ManagerID == null), em => em.EmployeeDisplayName, em => em.Manages,
+        new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister()), "EmployeeHierarchyInTree", this);
+    }
 
     private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
     {
@@ -293,5 +301,7 @@ namespace AW.Win
       var ab = new AboutBox(moreInfo);
       ab.ShowDialog(this);
     }
+
+
   }
 }
