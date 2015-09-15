@@ -443,12 +443,9 @@ namespace Chaliy.Windows.Forms
             try
             {
               var dataObject = bindingList[e.NewIndex];
-              if (!IsIDNull(GetDataID(dataObject)))
-              {
-                var changedNode = GetDataAsNode(dataObject);
-                if (changedNode == null && TryAddNode(CreateNode(dataObject)))
-                  Trace.Write(e);
-              }
+              var changedNode = GetDataAsNode(dataObject);
+              if (changedNode == null && TryAddNode(CreateNode(dataObject)))
+                Trace.Write(e);
             }
             catch (ArgumentException ae)
             {
@@ -462,15 +459,22 @@ namespace Chaliy.Windows.Forms
               {
                 _handelingItemChanged = true;
                 var dataObject = bindingList[e.NewIndex];
-                var changedNode = GetDataAsNode(dataObject);
-                if (changedNode != null)
-                  RefreshData(changedNode, dataObject);
-                else if (IsIDNull(GetDataID(dataObject)))
-                  throw new ApplicationException("Item not found or wrong type.");
-                else if (TryAddNode(CreateNode(dataObject)))
-                  ResetData();
+                TreeNode changedNode;
+                if (SelectedNode != null && SelectedNode.Tag == dataObject)
+                  changedNode = SelectedNode;
                 else
-                  throw new ApplicationException("Item not found or wrong type.");
+                {
+                  changedNode = GetDataAsNode(dataObject);
+                  if (changedNode == null && SelectedNode != null)
+                    changedNode = SelectedNode.Nodes.AsEnumerable().FirstOrDefault(tn => tn.Tag == dataObject);
+                }
+                if (changedNode == null)
+                  if (TryAddNode(CreateNode(dataObject)))
+                    ResetData();
+                  else
+                    throw new ApplicationException("Item not found or wrong type.");
+                else
+                  RefreshData(changedNode, dataObject);
               }
               finally
               {
@@ -491,18 +495,14 @@ namespace Chaliy.Windows.Forms
                     {
                       var children = Children(node.Tag);
                       if (children == null)
-                      {
-                        foreach (var childTag in ChildTags(node).Where(childTag => _listManager.List != null && _listManager.List.Contains(childTag)))
-                        {
+                        foreach (var childTag in DescendantTags(node).Where(childTag => _listManager.List != null && _listManager.List.Contains(childTag)))
                           _listManager.List.Remove(childTag);
-                        }
-                      }
-                      else
-                      {
-                        var bindingListView = children.ToBindingListView();
-                        while (bindingListView.Count > 0)
-                          bindingListView.Remove(bindingListView[0]);
-                      }
+                      //else
+                      //{
+                      //  var bindingListView = children.ToBindingListView();
+                      //  while (bindingListView.Count > 0)
+                      //    bindingListView.Remove(bindingListView[0]);
+                      //}
                       node.Remove();
                     }
                   }
@@ -555,6 +555,7 @@ namespace Chaliy.Windows.Forms
             var propertyManager = bindingManagerBase as PropertyManager;
             if (propertyManager != null)
             {
+              var list = ListBindingHelper.GetList(_dataSource, _dataMember);
               var enumerable = propertyManager.Current as IEnumerable;
               _dataSource = enumerable.ToBindingListView();
               _listManager = BindingContext[_dataSource, _dataMember] as CurrencyManager;
@@ -760,7 +761,12 @@ namespace Chaliy.Windows.Forms
 
     private static IEnumerable<object> ChildTags(TreeNode treeNode)
     {
-      return treeNode.Nodes.Cast<TreeNode>().Select(tn => tn.Tag);
+      return treeNode.Nodes.AsEnumerable().Select(tn => tn.Tag);
+    }
+
+    private static IEnumerable<object> DescendantTags(TreeNode treeNode)
+    {
+      return treeNode.Descendants(tn => tn.Nodes.AsEnumerable()).Select(tn => tn.Tag);
     }
 
     private static string GetIdWithoutIdProperty(object item)
@@ -823,7 +829,10 @@ namespace Chaliy.Windows.Forms
 
     private object GetDataID(object dataObject)
     {
-      return _idProperty == null ? GetIdWithoutIdProperty(dataObject) : _idProperty.GetValue(dataObject);
+      if (_idProperty == null)
+        return GetIdWithoutIdProperty(dataObject);
+      var dataID = _idProperty.GetValue(dataObject);
+      return IsIDNull(dataID)? GetIdWithoutIdProperty(dataObject) : dataID;
     }
 
     private TreeNode GetDataAsNode(int position)

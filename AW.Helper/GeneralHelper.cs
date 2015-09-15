@@ -8,6 +8,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -964,6 +965,34 @@ namespace AW.Helper
       if (value.Last() != surroundingChar)
         value = value + surroundingChar;
       return value;
+    }
+
+    public static IQueryable WhereDynamic(this IQueryable source, Expression lambdaExpression)
+    {
+      if (source == null)
+        throw new ArgumentNullException("source");
+      if (lambdaExpression == null)
+        throw new ArgumentNullException("lambdaExpression");
+      return source.Provider.CreateQuery(Expression.Call(typeof(Queryable), "Where", new[]
+      {
+        source.ElementType
+      }, source.Expression, (Expression)Expression.Quote(lambdaExpression)));
+    }
+
+    public static IQueryable OrderByDynamic(this IQueryable source, Expression expression, bool ascending = true)
+    {
+      if (source == null)
+        throw new ArgumentNullException("source");
+      if (expression == null)
+        throw new ArgumentNullException("expression");
+      const string str1 = "OrderBy";
+      const string str2 = "OrderByDescending";
+      var newExpression = (Expression)Expression.Call(typeof(Queryable), ascending ? str1 : str2, new[]
+      {
+        source.ElementType,
+        expression.Type
+      }, source.Expression, Expression.Quote(expression));
+      return source.Provider.CreateQuery(newExpression);
     }
   }
 }
