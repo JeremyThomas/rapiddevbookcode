@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Windows.Forms;
+using AW.Data;
 using AW.Helper;
 using AW.Winforms.Helpers.LLBL;
 
@@ -36,6 +37,7 @@ namespace AW.Win
       Application.ThreadException += Application_ThreadException;
       LLBLWinformHelper.ForceInitialization();
       ProfilerHelper.InitializeOrmProfiler();
+    //  MetaSingletons.AddContext();
       Application.Run(new FrmMain());
     }
   }

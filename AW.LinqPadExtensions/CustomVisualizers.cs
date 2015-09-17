@@ -127,8 +127,7 @@ namespace LINQPad
     {
       return DisplayInGrid(table, table.Context, pageSize);
     }
-
-
+    
     /// <summary>
     ///   Edits the DataQuery in a DataGridView.
     /// </summary>

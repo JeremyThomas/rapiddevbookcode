@@ -177,7 +177,6 @@
     <Compile Include="Controls\CSharpEditor.Designer.cs">
       <DependentUpon>CSharpEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataEditor\DataEditorExtensions.cs" />
     <Compile Include="DataEditor\FrmDataEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,12 +184,6 @@
       <DependentUpon>FrmDataEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="BindingListHelper.cs" />
-    <Compile Include="DataEditor\FrmHierarchyEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DataEditor\FrmHierarchyEditor.Designer.cs">
-      <DependentUpon>FrmHierarchyEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -332,9 +325,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataEditor\FrmDataEditor.resx">
       <DependentUpon>FrmDataEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataEditor\FrmHierarchyEditor.resx">
-      <DependentUpon>FrmHierarchyEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>

@@ -14,12 +14,12 @@ namespace AW.Win
   {
     private readonly SalesOrderHeaderEntity _order;
 
-    private FrmOrderEdit(DataGridViewTextBoxColumn productNameColumn)
+    public FrmOrderEdit()
     {
       InitializeComponent();
     }
 
-    public FrmOrderEdit(SalesOrderHeaderEntity order, DataGridViewTextBoxColumn productNameColumn) : this(productNameColumn)
+    public FrmOrderEdit(SalesOrderHeaderEntity order) : this()
     {
       _order = order;
     }

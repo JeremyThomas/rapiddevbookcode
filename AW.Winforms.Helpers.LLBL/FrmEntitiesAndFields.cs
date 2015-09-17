@@ -6,6 +6,7 @@ using System.Linq.Dynamic;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.LLBL;
+using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.EntityViewer;
 using SD.LLBLGen.Pro.LinqSupportClasses;
@@ -161,7 +162,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     private void openPagedToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      Open(DataEditorExtensions.DefaultPageSize);
+      Open(GridDataEditor.DefaultPageSize);
     }
 
     private void getCountToolStripMenuItem_Click(object sender, EventArgs e)

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using AW.Data.EntityClasses;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.Linq
 {
@@ -8,6 +9,16 @@ namespace AW.Data.Linq
     static LinqMetaData()
     {
       CommonEntityBase.Initialize();
+    }
+
+    public LinqMetaData(Context context)
+    {
+      ContextToUse = context;
+    }
+
+    public static LinqMetaData CreateWithContext()
+    {
+      return new LinqMetaData(new Context());
     }
 
     public static void Initialize()

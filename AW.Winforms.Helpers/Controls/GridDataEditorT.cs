@@ -17,7 +17,7 @@ namespace AW.Winforms.Helpers.Controls
       OnSetItemType();
     }
 
-    public static GridDataEditor GridDataEditorFactory(IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister = null, ushort pageSize = DataEditorExtensions.DefaultPageSize, bool readOnly = true)
+    public static GridDataEditor GridDataEditorFactory(IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister = null, ushort pageSize = DefaultPageSize, bool readOnly = true)
     {
       GridDataEditor gridDataEditor;
       if (ValueTypeWrapper<T>.TypeNeedsWrappingForBinding())

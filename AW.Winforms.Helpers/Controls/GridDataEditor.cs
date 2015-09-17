@@ -21,12 +21,15 @@ using AW.Winforms.Helpers.Properties;
 using AW.Winforms.Helpers.QueryRunner;
 using AW.Winforms.Helpers.Reporting;
 using JesseJohnston;
+using Microsoft.VisualBasic;
 
 namespace AW.Winforms.Helpers.Controls
 {
   public partial class GridDataEditor : UserControl, ISupportInitialize
   {
     public string[] MembersToExclude { get; set; }
+
+    public const int DefaultPageSize = 30;
 
     /// <summary>
     ///   The maximum automatic generate column width - 300
@@ -72,7 +75,7 @@ namespace AW.Winforms.Helpers.Controls
     /// <summary>
     ///   Initializes a new instance of the <see cref="T:System.Windows.Forms.UserControl" /> class.
     /// </summary>
-    public GridDataEditor(IEnumerable enumerable, IDataEditorPersister dataEditorPersister = null, ushort pageSize = DataEditorExtensions.DefaultPageSize, bool readOnly = true, params string[] membersToExclude)
+    public GridDataEditor(IEnumerable enumerable, IDataEditorPersister dataEditorPersister = null, ushort pageSize = DefaultPageSize, bool readOnly = true, params string[] membersToExclude)
       : this()
     {
       MembersToExclude = membersToExclude;
@@ -176,9 +179,15 @@ namespace AW.Winforms.Helpers.Controls
       frm.Show();
     }
 
+    public static void CopyEntireDataGridViewToClipboard(DataGridView dataGridView)
+    {
+      dataGridView.SelectAll();
+      Clipboard.SetDataObject(dataGridView.GetClipboardContent());
+    }
+
     private void copyToolStripButton_Click(object sender, EventArgs e)
     {
-      dataGridViewEnumerable.CopyEntireDataGridViewToClipboard();
+      CopyEntireDataGridViewToClipboard(dataGridViewEnumerable);
     }
 
     private void toolStripComboBoxClipboardCopyMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -669,7 +678,7 @@ namespace AW.Winforms.Helpers.Controls
       if (bindingSourceEnumerable.SupportsFiltering)
       {
         bindingSourceEnumerable.Filter = dataGridViewEnumerable.FilterString;
-        toolStripButtonClearFilters.Visible = !string.IsNullOrWhiteSpace(dataGridViewEnumerable.FilterString);
+        toolStripButtonClearFilters.Visible = !String.IsNullOrWhiteSpace(dataGridViewEnumerable.FilterString);
         toolStripButtonClearFilters.ToolTipText = dataGridViewEnumerable.FilterString;
       }
     }
@@ -853,8 +862,8 @@ namespace AW.Winforms.Helpers.Controls
 
     private string PromptForPropertiesToExclude()
     {
-      Helper.Properties.Settings.Default.PropertiesToExclude = Microsoft.VisualBasic.Interaction.InputBox(
-        string.Format("Enter the properties to exclude from {0} and {1};{2}seperated by commas.",
+      Helper.Properties.Settings.Default.PropertiesToExclude = Interaction.InputBox(
+        String.Format("Enter the properties to exclude from {0} and {1};{2}seperated by commas.",
           SourceEnumerable.GetType().FriendlyName(), ItemType.FriendlyName(), Environment.NewLine),
         "Choose Properties To Exclude", Helper.Properties.Settings.Default.PropertiesToExclude);
       return Helper.Properties.Settings.Default.PropertiesToExclude;
@@ -862,22 +871,22 @@ namespace AW.Winforms.Helpers.Controls
 
     public void BeginInit()
     {
-      ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnumerable)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorPaging)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.bindingSourcePaging)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.dataGridEnumerable)).BeginInit();
+      ((ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
+      ((ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
+      ((ISupportInitialize)(this.dataGridViewEnumerable)).BeginInit();
+      ((ISupportInitialize)(this.bindingNavigatorPaging)).BeginInit();
+      ((ISupportInitialize)(this.bindingSourcePaging)).BeginInit();
+      ((ISupportInitialize)(this.dataGridEnumerable)).BeginInit();
     }
 
     public void EndInit()
     {
-      ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnumerable)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorPaging)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.bindingSourcePaging)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.dataGridEnumerable)).EndInit();
+      ((ISupportInitialize)(this.bindingSourceEnumerable)).EndInit();
+      ((ISupportInitialize)(this.bindingNavigatorData)).EndInit();
+      ((ISupportInitialize)(this.dataGridViewEnumerable)).EndInit();
+      ((ISupportInitialize)(this.bindingNavigatorPaging)).EndInit();
+      ((ISupportInitialize)(this.bindingSourcePaging)).EndInit();
+      ((ISupportInitialize)(this.dataGridEnumerable)).EndInit();
     }
   }
 }

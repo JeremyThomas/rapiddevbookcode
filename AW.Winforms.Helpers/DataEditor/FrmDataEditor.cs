@@ -34,7 +34,7 @@ namespace AW.Winforms.Helpers.DataEditor
 
     public static Form CreateDataViewForm(IEnumerable enumerable)
     {
-      return CreateDataEditorForm(enumerable, null, DataEditorExtensions.DefaultPageSize, true);
+      return CreateDataEditorForm(enumerable, null, GridDataEditor.DefaultPageSize, true);
     }
 
     public static Form CreateDataEditorForm(IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)

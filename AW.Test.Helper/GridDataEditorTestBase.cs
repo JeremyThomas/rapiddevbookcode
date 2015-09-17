@@ -10,6 +10,7 @@ using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using GridDataEditorTestBase = AW.Test.Helpers.GridDataEditorTestBase;
 
 namespace AW.Test.Helpers
 {
@@ -19,12 +20,27 @@ namespace AW.Test.Helpers
     protected int ActualColumnCount;
     private const BindingFlags FieldBindingFlags = BindingFlags.Instance | BindingFlags.Public;
 
+    /// <summary>
+    ///   Edits the enumerable in a DataGridView.
+    /// </summary>
+    /// <typeparam name="T"> </typeparam>
+    /// <param name="enumerable"> The enumerable. </param>
+    /// <param name="dataEditorPersister"> The grid data editor persister. </param>
+    /// <param name="pageSize"> Size of the page. </param>
+    /// <returns> </returns>
+    public static IEnumerable<T> ShowInGrid<T>(IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize = GridDataEditor.DefaultPageSize)
+    {
+      if (enumerable != null)
+        FrmDataEditor.CreateDataEditorForm(enumerable, dataEditorPersister, pageSize, false).ShowDialog();
+      return enumerable;
+    }
+
     protected void TestShowInGrid<T>(IEnumerable<T> enumerable, int numProperties = -1, int numFieldsToShow = 0, IDataEditorPersister dataEditorPersister = null)
     {
       ModalFormHandler = Handler;
       numProperties = GetNumberOfColumns<T>(numProperties, ref numFieldsToShow);
-      var actual = enumerable.ShowInGrid(dataEditorPersister);
-      Assert.AreEqual(enumerable, actual);
+      var actual = GridDataEditorTestBase.ShowInGrid(enumerable, dataEditorPersister);
+      Assert.AreEqual<IEnumerable<T>>(enumerable, actual);
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
       TestEditInDataGridView(enumerable, numProperties, numFieldsToShow, dataEditorPersister);
     }
@@ -41,13 +57,20 @@ namespace AW.Test.Helpers
       return numProperties;
     }
 
+    public static IEnumerable ShowInGrid(IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize = GridDataEditor.DefaultPageSize)
+    {
+      if (enumerable != null)
+        FrmDataEditor.CreateDataEditorForm(enumerable, dataEditorPersister, pageSize).ShowDialog();
+      return enumerable;
+    }
+
     protected void TestEditInDataGridView(IEnumerable enumerable, int numProperties = -1, int numFieldsToShow = 0, IDataEditorPersister dataEditorPersister = null)
     {
       if (enumerable != null)
         ModalFormHandler = Handler;
       ExpectedColumnCount = numProperties + numFieldsToShow;
-      var actual = enumerable.ShowInGrid(dataEditorPersister);
-      Assert.AreEqual(enumerable, actual);
+      var actual = ShowInGrid(enumerable, dataEditorPersister);
+      Assert.AreEqual<IEnumerable>(enumerable, actual);
       if (enumerable != null)
       {
         var displayPropertyCount = MetaDataHelper.GetPropertiesToDisplay(enumerable).Count();
