@@ -278,14 +278,17 @@ namespace AW.Win
 
     private void organizationStructureEditorToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      MetaSingletons.MetaData.Employee.PrefetchAll().ToEntityCollection().ShowSelfServicingHierarchyInTree("EmployeeID", "ManagerID", "EmployeeDisplayName");
+      var employeeEntities =LinqMetaData.CreateWithContext().Employee.PrefetchAll();
+      ShowControlInForm(HierarchyEditor.HierarchyEditorFactory(employeeEntities, em => em.EmployeeID, em => em.ManagerID, em => em.EmployeeDisplayName,
+        new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister()), "Employee Hierarchy In Tree " + employeeEntities, this);
+   //   LinqMetaData.CreateWithContext().Employee.PrefetchAll().ToEntityCollection().ShowSelfServicingHierarchyInTree("EmployeeID", "ManagerID", "EmployeeDisplayName");
     }
     private void organizationStructureEditorSelfJoinToolStripMenuItem_Click(object sender, EventArgs e)
     {
       //var employeeEntities = EmployeeEntity.WireUpSelfJoin(MetaSingletons.MetaData.Employee.PrefetchAllButManages().ToEntityCollection());  
-      var employeeEntities = MetaSingletons.MetaData.Employee.PrefetchAll().ToEntityCollection();
+      var employeeEntities = EmployeeEntity.WireUpSelfJoin(LinqMetaData.CreateWithContext().Employee.PrefetchAll());
       ShowControlInForm(HierarchyEditor.HierarchyEditorFactory(employeeEntities.Where(em => em.ManagerID == null), em => em.EmployeeDisplayName, em => em.Manages,
-        new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister()), "EmployeeHierarchyInTree", this);
+        new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister()), "Employee Hierarchy In Tree "+ employeeEntities, this);
     }
 
     private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

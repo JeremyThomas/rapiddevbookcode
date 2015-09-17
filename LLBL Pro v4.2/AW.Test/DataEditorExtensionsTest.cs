@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Data.Linq;
 using System.DirectoryServices;
 using System.Linq;
 using System.Reflection;
@@ -17,9 +18,7 @@ using AW.LinqToSQL;
 using AW.Test.Helpers;
 using AW.Tests.Properties;
 using AW.Winforms.Helpers.Controls;
-using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.EntityViewer;
-using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -56,14 +55,14 @@ namespace AW.Tests
     //}
     //
     //Use TestInitialize to run code before running each test
-    [TestInitialize()]
+    [TestInitialize]
     public void MyTestInitialize()
     {
       Init();
     }
 
     //Use TestCleanup to run code after each test has run
-    [TestCleanup()]
+    [TestCleanup]
     public void MyTestCleanup()
     {
       Verify();
@@ -208,37 +207,10 @@ namespace AW.Tests
     }
 
     [TestCategory("Winforms"), TestMethod]
-    public void EditPagedQueryInDataGridViewTest()
-    {
-      var addressEntities = MetaSingletons.MetaData.Address.SkipTake(1, 40);
-      ModalFormHandler = Handler;
-      ExpectedColumnCount = TestData.BrowseableAddressProperties;
-      addressEntities.ShowSelfServicingInGrid(20);
-      Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
-      ModalFormHandler = Handler;
-      addressEntities.ShowSelfServicingInGrid(0);
-      Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
-    }
-
-    [TestCategory("Winforms"), TestMethod]
     public void QueryInGridIsReadonlyTest()
     {
       TestShowInGrid(MetaSingletons.MetaData.Address);
       TestShowInGrid(MetaSingletons.MetaData.AddressType);
-    }
-
-    [TestCategory("Winforms"), TestMethod]
-    public void ShowSelfServicingInGridTest()
-    {
-      ModalFormHandler = Handler;
-      ExpectedColumnCount = TestData.BrowseableAddressProperties;
-      MetaSingletons.MetaData.Address.ShowSelfServicingInGrid();
-      Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
-      ModalFormHandler = Handler;
-      ExpectedColumnCount = 4;
-      MetaSingletons.MetaData.AddressType.ShowSelfServicingInGrid();
-      Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
-      TestShowInGrid(MetaSingletons.MetaData.Address, TestData.BrowseableAddressProperties, 0, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
     }
 
     [TestCategory("Winforms"), TestMethod]
@@ -247,6 +219,36 @@ namespace AW.Tests
       TestShowInGrid(MetaSingletons.MetaData.Address.ToEntityCollection());
       var addressTypeEntities = MetaSingletons.MetaData.AddressType.ToEntityCollection();
       TestShowInGrid(addressTypeEntities);
+    }
+
+    public static IEnumerable<T> ShowInGrid<T>(IEnumerable<T> enumerable)
+    {
+      var contextField = enumerable.GetType().GetField("context", BindingFlags.Instance | BindingFlags.NonPublic);
+      if (contextField != null)
+      {
+        var queryContext = contextField.GetValue(enumerable) as DataContext;
+        if (queryContext != null)
+          return ShowInGrid(enumerable, queryContext);
+      }
+      return GridDataEditorTestBase.ShowInGrid(enumerable, null);
+    }
+
+    public static IEnumerable<T> ShowInGrid<T>(Table<T> table, ushort pageSize = GridDataEditor.DefaultPageSize) where T : class
+    {
+      return ShowInGrid(table, table.Context, pageSize);
+    }
+
+    /// <summary>
+    ///   Edits the DataQuery in a DataGridView.
+    /// </summary>
+    /// <typeparam name="T"> </typeparam>
+    /// <param name="dataQuery"> The data query (System.Data.Linq.DataQuery`1). </param>
+    /// <param name="dataContext"> The data context. </param>
+    /// <param name="pageSize"> Size of the page. </param>
+    /// <returns> </returns>
+    public static IEnumerable<T> ShowInGrid<T>(IEnumerable<T> dataQuery, DataContext dataContext, ushort pageSize = GridDataEditor.DefaultPageSize)
+    {
+      return ShowInGrid(dataQuery, new DataEditorLinqtoSQLPersister(dataContext), pageSize);
     }
 
     [TestCategory("Winforms"), TestMethod]
@@ -258,13 +260,13 @@ namespace AW.Tests
       TestShowInGrid(awDataClassesDataContext.AddressTypes, 4);
       var addressTypesQuery = awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID);
       ModalFormHandler = Handler;
-      addressTypesQuery.ShowInGrid(awDataClassesDataContext);
+      ShowInGrid(addressTypesQuery, awDataClassesDataContext);
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
       ModalFormHandler = Handler;
-      addressTypesQuery.ShowInGrid();
+      ShowInGrid(addressTypesQuery);
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
       ModalFormHandler = Handler;
-      var actual = awDataClassesDataContext.AddressTypes.ShowInGrid();
+      var actual = ShowInGrid(awDataClassesDataContext.AddressTypes);
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
       Assert.AreEqual(awDataClassesDataContext.AddressTypes, actual);
     }
@@ -291,14 +293,14 @@ namespace AW.Tests
       {
         searcher.Filter = "(uid=" + "tesla" + ")";
         var searchResult = searcher.FindOne();
-         SingleValueCollectionConverter.AddConverter(typeof(ICollection));
+        SingleValueCollectionConverter.AddConverter(typeof (ICollection));
         var dictionaryEntries = searchResult.Properties.OfType<DictionaryEntry>();
         var dictionaryEntry = dictionaryEntries.First();
         var typeConverter = TypeDescriptor.GetConverter(dictionaryEntry.Value.GetType());
         var convertToString = typeConverter.ConvertToString(dictionaryEntry.Value);
         //dictionaryEntry.Value
         //TestShowInGrid(dictionaryEntries);
-       // searchResult.Properties.ShowInGrid();
+        // searchResult.Properties.ShowInGrid();
       }
     }
   }

@@ -7,12 +7,15 @@ using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Test.Helpers;
+using AW.Winforms.Helpers.Controls;
+using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.LLBL;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using CustomerEntity = Northwind.DAL.EntityClasses.CustomerEntity;
+using GridDataEditorTestBase = AW.Test.Helpers.GridDataEditorTestBase;
 
 namespace AW.Tests
 {
@@ -65,6 +68,43 @@ namespace AW.Tests
 
     #endregion
 
+    public static IEnumerable<T> ShowSelfServicingInGrid<T>(IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
+    {
+      return GridDataEditorTestBase.ShowInGrid(enumerable, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister(), pageSize);
+    }
+
+    [TestCategory("Winforms"), TestMethod]
+    public void EditPagedQueryInDataGridViewTest()
+    {
+      var addressEntities = MetaSingletons.MetaData.Address.SkipTake(1, 40);
+      ModalFormHandler = Handler;
+      ExpectedColumnCount = TestData.BrowseableAddressProperties;
+      ShowSelfServicingInGrid(addressEntities, 20);
+      Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
+      ModalFormHandler = Handler;
+      ShowSelfServicingInGrid(addressEntities, 0);
+      Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
+    }
+
+    public static IEnumerable<T> ShowSelfServicingInGrid<T>(IEnumerable<T> enumerable) where T : EntityBase
+    {
+      return ShowSelfServicingInGrid(enumerable, GridDataEditor.DefaultPageSize);
+    }
+
+    [TestCategory("Winforms"), TestMethod]
+    public void ShowSelfServicingInGridTestFromDataEditorExtensions()
+    {
+      ModalFormHandler = Handler;
+      ExpectedColumnCount = TestData.BrowseableAddressProperties;
+      ShowSelfServicingInGrid(MetaSingletons.MetaData.Address);
+      Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
+      ModalFormHandler = Handler;
+      ExpectedColumnCount = 4;
+      ShowSelfServicingInGrid(MetaSingletons.MetaData.AddressType);
+      Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
+      TestShowInGrid(MetaSingletons.MetaData.Address, TestData.BrowseableAddressProperties, 0, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
+    }
+
     /// <summary>
     ///   A test for ShowInGrid
     /// </summary>
@@ -74,9 +114,14 @@ namespace AW.Tests
       var enumerable = MetaSingletons.MetaData.GetQueryableForEntity<T>().AsEnumerable();
       var expected = enumerable;
       numProperties = GetNumberOfColumns<T>(numProperties, ref numFieldsToShow);
-      var actual = enumerable.ShowSelfServicingInGrid(pageSize);
+      var actual = ShowSelfServicingInGrid(enumerable, pageSize);
       Assert.AreEqual(expected, actual);
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
+    }
+
+    public static IEnumerable<T> ShowInGrid<T>(IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize) where T : EntityBase2
+    {
+      return GridDataEditorTestBase.ShowInGrid(enumerable, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
     }
 
     private void EditAdapterInDataGridViewTestHelper<T>(ushort pageSize, int numProperties = -1, int numFieldsToShow = 0) where T : EntityBase2
@@ -85,7 +130,7 @@ namespace AW.Tests
       var enumerable = NorthwindTest.GetNorthwindLinqMetaData().GetQueryableForEntity<T>().AsEnumerable();
       var expected = enumerable;
       numProperties = GetNumberOfColumns<T>(numProperties, ref numFieldsToShow);
-      var actual = enumerable.ShowInGrid(null, pageSize);
+      var actual = ShowInGrid(enumerable, null, pageSize);
       Assert.AreEqual(expected, actual);
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
     }
@@ -94,7 +139,7 @@ namespace AW.Tests
     {
       ModalFormHandler = Handler;
       GetNumberOfColumns<T>(numProperties, ref numFieldsToShow);
-      var actual = enumerable.ShowSelfServicingInGrid(pageSize);
+      var actual = ShowSelfServicingInGrid(enumerable, pageSize);
       Assert.AreEqual(enumerable, actual);
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
     }
@@ -103,7 +148,7 @@ namespace AW.Tests
     {
       ModalFormHandler = Handler;
       GetNumberOfColumns<T>(numProperties, ref numFieldsToShow);
-      var actual = enumerable.ShowInGrid(null, pageSize);
+      var actual = ShowInGrid(enumerable, null, pageSize);
       Assert.AreEqual(enumerable, actual);
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
     }

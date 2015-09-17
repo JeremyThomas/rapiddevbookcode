@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Data.Linq;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.Controls;
@@ -51,6 +52,18 @@ namespace AW.Tests
     public void TestDataTreeViewWithChildCollectionProperty()
     {
       var employeeEntities = Employees.Value;
+      TestDataTreeViewWithChildCollectionProperty(employeeEntities);
+    }
+
+    [TestMethod]
+    public void TestDataTreeViewWithChildCollectionPropertyPrefetched()
+    {
+      var employeeEntities = EmployeeEntity.WireUpSelfJoin(LinqMetaData.CreateWithContext().Employee.PrefetchAll());
+      TestDataTreeViewWithChildCollectionProperty(employeeEntities);
+    }
+
+    private static void TestDataTreeViewWithChildCollectionProperty(IEnumerable<EmployeeEntity> employeeEntities)
+    {
       var managers = employeeEntities.Where(e => e.ManagerID == null).ToEntityCollection();
       var dataTreeView = new DataTreeView
       {
@@ -142,27 +155,34 @@ namespace AW.Tests
       Assert.AreNotEqual(danWilsonsManagerID, employeeEntitiesWithWilsonManagerChanged.Single(e => e.EmployeeID == danWilsonsID).ManagerID);
     }
 
-    [TestProperty("Winforms", "Interactive"), TestMethod]
-    public void TestShowSelfServicingInTree()
+    public static IEnumerable<T> ShowHierarchyInTree<T>(IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister = null)
     {
-      var employeeEntities = Employees.Value;
-      employeeEntities.ShowSelfServicingHierarchyInTree(EmployeeFieldIndex.EmployeeID.ToString(), EmployeeFieldIndex.ManagerID.ToString(), "EmployeeDisplayName");
+      FrmPersistantLocation.ShowControlInForm(new HierarchyEditor(enumerable, iDPropertyName, parentIDPropertyName, nameColumn, dataEditorPersister), enumerable.ToString());
+      return enumerable;
     }
 
+    public static IEnumerable<T> ShowHierarchyInTree<T, TId, TParentId, TName>(IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
+      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression,
+      IDataEditorPersister dataEditorPersister = null)
+    {
+      FrmPersistantLocation.ShowControlInForm(HierarchyEditor.HierarchyEditorFactory(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, dataEditorPersister));
+      return enumerable;
+    }
+    
     private static IEnumerable<T> TestShowInTree<T>(IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn)
     {
-      var actual = enumerable.ShowHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn);
-      Assert.AreEqual(enumerable, actual);
-      CollectionAssert.AreEqual(enumerable.ToList(), actual.ToList());
+      var actual = ShowHierarchyInTree(enumerable, iDPropertyName, parentIDPropertyName, nameColumn);
+      Assert.AreEqual<IEnumerable<T>>(enumerable, actual);
+      CollectionAssert.AreEqual(enumerable.ToList(), Enumerable.ToList<T>(actual));
       return actual;
     }
 
     private static IEnumerable<T> TestShowInTree<T, TId, TParentId, TName>(IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
       Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression)
     {
-      var actual = enumerable.ShowHierarchyInTree(iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression);
-      Assert.AreEqual(enumerable, actual);
-      CollectionAssert.AreEqual(enumerable.ToList(), actual.ToList());
+      var actual = ShowHierarchyInTree(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression);
+      Assert.AreEqual<IEnumerable<T>>(enumerable, actual);
+      CollectionAssert.AreEqual(enumerable.ToList(), Enumerable.ToList<T>(actual));
       return actual;
     }
   }
