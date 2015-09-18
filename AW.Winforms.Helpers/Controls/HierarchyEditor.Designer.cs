@@ -49,6 +49,7 @@ namespace AW.Winforms.Helpers.Controls
       this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonCollapseAll = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonExpandAll = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonUnSelectNodes = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonCancelEdit = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -58,7 +59,6 @@ namespace AW.Winforms.Helpers.Controls
       this.splitContainerHorizontal = new System.Windows.Forms.SplitContainer();
       this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
       this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
-      this.toolStripButtonUnSelectNodes = new System.Windows.Forms.ToolStripButton();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceHierarchicalData)).BeginInit();
       this.statusStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorHierarchicalData)).BeginInit();
@@ -97,10 +97,10 @@ namespace AW.Winforms.Helpers.Controls
       // 
       // bindingNavigatorHierarchicalData
       // 
-      this.bindingNavigatorHierarchicalData.AddNewItem = this.bindingNavigatorAddNewItem;
+      this.bindingNavigatorHierarchicalData.AddNewItem = null;
       this.bindingNavigatorHierarchicalData.BindingSource = this.bindingSourceHierarchicalData;
       this.bindingNavigatorHierarchicalData.CountItem = this.bindingNavigatorCountItem;
-      this.bindingNavigatorHierarchicalData.DeleteItem = this.bindingNavigatorDeleteItem;
+      this.bindingNavigatorHierarchicalData.DeleteItem = null;
       this.bindingNavigatorHierarchicalData.Dock = System.Windows.Forms.DockStyle.Bottom;
       this.bindingNavigatorHierarchicalData.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem,
@@ -141,6 +141,7 @@ namespace AW.Winforms.Helpers.Controls
       this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
       this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 20);
       this.bindingNavigatorAddNewItem.Text = "Add new";
+      this.bindingNavigatorAddNewItem.Click += new System.EventHandler(this.bindingNavigatorAddNewItem_Click);
       // 
       // bindingNavigatorCountItem
       // 
@@ -158,6 +159,7 @@ namespace AW.Winforms.Helpers.Controls
       this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
       this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 20);
       this.bindingNavigatorDeleteItem.Text = "Delete";
+      this.bindingNavigatorDeleteItem.Click += new System.EventHandler(this.bindingNavigatorDeleteItem_Click);
       // 
       // bindingNavigatorMoveFirstItem
       // 
@@ -242,6 +244,16 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonExpandAll.Text = "+";
       this.toolStripButtonExpandAll.ToolTipText = "Expand All";
       this.toolStripButtonExpandAll.Click += new System.EventHandler(this.toolStripButtonExpandAll_Click);
+      // 
+      // toolStripButtonUnSelectNodes
+      // 
+      this.toolStripButtonUnSelectNodes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.toolStripButtonUnSelectNodes.Image = global::AW.Winforms.Helpers.Properties.Resources.layer__minus;
+      this.toolStripButtonUnSelectNodes.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonUnSelectNodes.Name = "toolStripButtonUnSelectNodes";
+      this.toolStripButtonUnSelectNodes.Size = new System.Drawing.Size(23, 20);
+      this.toolStripButtonUnSelectNodes.Text = "UnSelectNodes";
+      this.toolStripButtonUnSelectNodes.Click += new System.EventHandler(this.toolStripButtonUnSelectNodes_Click);
       // 
       // toolStripSeparator
       // 
@@ -350,16 +362,6 @@ namespace AW.Winforms.Helpers.Controls
       this.gridDataEditor.Readonly = false;
       this.gridDataEditor.Size = new System.Drawing.Size(691, 257);
       this.gridDataEditor.TabIndex = 0;
-      // 
-      // toolStripButtonUnSelectNodes
-      // 
-      this.toolStripButtonUnSelectNodes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.toolStripButtonUnSelectNodes.Image = global::AW.Winforms.Helpers.Properties.Resources.layer__minus;
-      this.toolStripButtonUnSelectNodes.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonUnSelectNodes.Name = "toolStripButtonUnSelectNodes";
-      this.toolStripButtonUnSelectNodes.Size = new System.Drawing.Size(23, 20);
-      this.toolStripButtonUnSelectNodes.Text = "UnSelectNodes";
-      this.toolStripButtonUnSelectNodes.Click += new System.EventHandler(this.toolStripButtonUnSelectNodes_Click);
       // 
       // HierarchyEditor
       // 

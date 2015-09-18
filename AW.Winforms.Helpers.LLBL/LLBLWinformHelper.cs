@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.Controls;
-using AW.Winforms.Helpers.DataEditor;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -88,12 +88,12 @@ namespace AW.Winforms.Helpers.LLBL
 
     public class DataEditorLLBLSelfServicingPersister : IDataEditorPersister
     {
-      public int Save(object dataToSave)
+      public virtual int Save(object dataToSave)
       {
         return EntityHelper.Save(dataToSave);
       }
 
-      public int Delete(object dataToDelete)
+      public virtual int Delete(object dataToDelete)
       {
         return EntityHelper.Delete(dataToDelete);
       }
@@ -109,6 +109,75 @@ namespace AW.Winforms.Helpers.LLBL
         return true;
       }
     }
+    
+    private class DataEditorLLBLSelfServicingDataScopePersister<T> : DataEditorLLBLSelfServicingPersister, IDataEditorEventHandlers where T : EntityBase
+    {
+      public SelfServicingGenericDataScope<T> SelfServicingGenericDataScope { get; set; }
+
+      public DataEditorLLBLSelfServicingDataScopePersister(SelfServicingGenericDataScope<T> selfServicingGenericDataScope)
+      {
+        SelfServicingGenericDataScope = selfServicingGenericDataScope;
+      }
+      
+      #region Events
+      /// <summary>
+      /// Raised when the data of an entity in the scope changed. Ignored during fetches. Sender is the entity which data was changed
+      /// </summary>
+      public event EventHandler ContainedDataChanged
+      {
+        add { SelfServicingGenericDataScope.ContainedDataChanged += value; }
+        remove { SelfServicingGenericDataScope.ContainedDataChanged -= value; }
+      }
+      /// <summary>
+      /// Raised when an entity has been added to the scope. Ignored during fetches. Sender is the entity which was added.
+      /// </summary>
+      public event EventHandler EntityAdded
+      {
+        add { SelfServicingGenericDataScope.EntityAdded += value; }
+        remove { SelfServicingGenericDataScope.EntityAdded -= value; }
+      }
+
+      #endregion
+
+      //public void CommitChanges()
+      //{
+      //  using (var trans = new Transaction(System.Data.IsolationLevel.ReadCommitted, "DataScopeTrans"))
+      //  {
+      //    this.CommitChanges(trans);
+      //  }
+      //}
+
+      //public override int Save(object dataToSave)
+      //{
+      //  return SelfServicingGenericDataScope.CommitChanges()
+      //}
+
+      public override int Delete(object dataToDelete)
+      {
+        return base.Delete(dataToDelete);
+      }
+    }
+
+    public static HierarchyEditor HierarchyEditorFactoryServicing<T, TId, TParentId, TName>(IQueryable<T> query, Expression<Func<T, TId>> iDPropertyExpression,
+      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression) where T : EntityBase
+    {
+      var dataScope = new SelfServicingGenericDataScope<T>(query);
+      dataScope.FetchData();
+      return HierarchyEditor.HierarchyEditorFactory(dataScope.EntityCollection, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, new DataEditorLLBLSelfServicingDataScopePersister<T>(dataScope));
+    }
+
+    public static HierarchyEditor HierarchyEditorFactoryServicing<T, TId, TParentId, TName>(IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
+      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression) where T : EntityBase
+    {
+      return HierarchyEditor.HierarchyEditorFactory(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, new DataEditorLLBLSelfServicingPersister());
+    }
+
+    public static HierarchyEditor HierarchyEditorFactoryServicing<T, TName, TChildCollection>(IEnumerable<T> enumerable, Expression<Func<T, TName>> namePropertyExpression,
+      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : EntityBase
+    {
+      return HierarchyEditor.HierarchyEditorFactory(enumerable, namePropertyExpression, childCollectionPropertyExpression, new DataEditorLLBLSelfServicingPersister());
+    }
+
 
     public class DataEditorLLBLAdapterPersister : IDataEditorPersister
     {
@@ -510,7 +579,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     private static TreeNode CreateSimpleTypeTreeNode(PropertyDescriptor childProp, int imageIndex)
     {
-      return new TreeNode(CreateTreeNodeText(childProp)) {ImageIndex = imageIndex, Name = childProp.Name, Tag = childProp, ToolTipText = FormatTypeName(childProp.PropertyType),};
+      return new TreeNode(CreateTreeNodeText(childProp)) {ImageIndex = imageIndex, Name = childProp.Name, Tag = childProp, ToolTipText = FormatTypeName(childProp.PropertyType)};
     }
 
     private static string CreateTreeNodeText(PropertyDescriptor childProp)

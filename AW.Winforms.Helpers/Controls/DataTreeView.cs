@@ -275,7 +275,12 @@ namespace Chaliy.Windows.Forms
     private void MoveToItem(object itemToSelect)
     {
       if (itemToSelect != null && _listManager != null)
-        _listManager.Position = _listManager.List.IndexOf(itemToSelect);
+        _listManager.Position = IndexOf(itemToSelect);
+    }
+
+    private int IndexOf(object itemToSelect)
+    {
+      return _listManager.List.IndexOf(itemToSelect);
     }
 
     private void DataTreeView_AfterSelect(object sender, TreeViewEventArgs e)
@@ -366,6 +371,7 @@ namespace Chaliy.Windows.Forms
     private bool _isSelfCollection;
     private bool _reseting;
     private bool _changingParent;
+    private IBindingList _bindingList;
 
     private void DataTreeView_ListChanged(object sender, ListChangedEventArgs e)
     {
@@ -407,15 +413,15 @@ namespace Chaliy.Windows.Forms
             break;
 
           case ListChangedType.ItemDeleted:
-            if (SelectedNode != null && ((_listManager.List.IndexOf(SelectedNode.Tag) == -1)
-                                         || _listManager.List.IndexOf(SelectedNode.Tag) == e.NewIndex))
+            if (SelectedNode != null && ((IndexOf(SelectedNode.Tag) == -1)
+                                         || IndexOf(SelectedNode.Tag) == e.NewIndex))
             {
               SelectedNode.Remove();
               RefreshAllData(e.NewIndex);
             }
             else
             {
-              foreach (var node in Nodes.OfType<TreeNode>().Where(node => _listManager.List.IndexOf(node.Tag) == -1))
+              foreach (var node in Nodes.OfType<TreeNode>().Where(node => IndexOf(node.Tag) == -1))
               {
                 node.Remove();
               }
@@ -659,8 +665,8 @@ namespace Chaliy.Windows.Forms
     private void WireDataSource()
     {
       _listManager.PositionChanged += ListManagerPositionChanged;
-      var bindingList = _listManager.List as IBindingList;
-      if (bindingList != null) bindingList.ListChanged += DataTreeView_ListChanged;
+      _bindingList = _listManager.List as IBindingList;
+      if (_bindingList != null) _bindingList.ListChanged += DataTreeView_ListChanged;
     }
 
     public void ResetData()
@@ -759,6 +765,68 @@ namespace Chaliy.Windows.Forms
       return bindingListView;
     }
 
+    public void RemoveSelectedNode()
+    {
+      var nodeToRemove = SelectedNode;
+      if (nodeToRemove == null)
+      {
+        if (_listManager.Position > -1)
+          _listManager.RemoveAt(_listManager.Position);
+      }
+      else
+      {
+        var indexOfSelectedNode = IndexOf(nodeToRemove.Tag);
+        if (indexOfSelectedNode>-1)
+          _listManager.RemoveAt(indexOfSelectedNode);
+        else
+        {
+          var children = Children(nodeToRemove.Parent.Tag);
+          var bindingListView = children.ToBindingListView();
+          if (bindingListView != null)
+          {
+            bindingListView.Remove(nodeToRemove.Tag);
+            nodeToRemove.Remove();
+          }
+        }
+      }
+    }
+
+    public object AddNodeAndData()
+    {
+      var parentNode = SelectedNode;
+      if (parentNode == null)
+      {
+        if (_bindingList != null) return _bindingList.AddNew();
+      }
+      else
+      {
+        var children = Children(parentNode.Tag);
+        if (children == null)
+        {
+          if (_bindingList != null)
+          {
+            var newData = _bindingList.AddNew();
+            SetParent(newData, parentNode);
+            return newData;
+          }
+        }
+        var bindingListView = children.ToBindingListView();
+        if (bindingListView != null) return bindingListView.AddNew();
+      }
+      return null;
+    }
+
+    public TreeNode AddNode()
+    {
+      var treeNode = new TreeNode();
+      if (SelectedNode == null)
+        Nodes.Add(treeNode);
+      else
+        SelectedNode.Nodes.Add(treeNode);
+      SelectedNode = treeNode;
+      return treeNode;
+    }
+
     private static IEnumerable<object> ChildTags(TreeNode treeNode)
     {
       return treeNode.Nodes.AsEnumerable().Select(tn => tn.Tag);
@@ -842,7 +910,12 @@ namespace Chaliy.Windows.Forms
 
     private TreeNode GetDataParent(TreeNode node)
     {
-      return FindFirst(_parentIdProperty.GetValue(node.Tag));
+      return FindFirst(GetParent(node.Tag));
+    }
+
+    private object GetParent(object nodeObject)
+    {
+      return _parentIdProperty.GetValue(nodeObject);
     }
 
     private void ChangeParent(TreeNode node)
@@ -855,7 +928,7 @@ namespace Chaliy.Windows.Forms
       }
       else
       {
-        var dataParentID = _parentIdProperty.GetValue(node.Tag);
+        var dataParentID = GetParent(node.Tag);
         if (dataParentID != null)
         {
           if (node.Parent != null)
@@ -900,12 +973,17 @@ namespace Chaliy.Windows.Forms
         }
         else
         {
-          var parentID = GetDataID(parentNode.Tag);
-          if (parentID != null)
-            _parentIdProperty.SetValue(childnode.Tag, parentID);
+          SetParent(childnode.Tag, parentNode);
         }
         _listManager.EndCurrentEdit();
       }
+    }
+
+    private void SetParent(object childnodeTag, TreeNode parentNode)
+    {
+      var parentID = GetDataID(parentNode.Tag);
+      if (parentID != null)
+        _parentIdProperty.SetValue(childnodeTag, parentID);
     }
 
     private object GetID(TreeNode node)
@@ -1025,7 +1103,7 @@ namespace Chaliy.Windows.Forms
     {
       if (_parentIdProperty == null)
         return false;
-      return HasParent(node, _parentIdProperty.GetValue(node.Tag));
+      return HasParent(node, GetParent(node.Tag));
     }
 
     protected override void InitLayout()
@@ -1056,5 +1134,7 @@ namespace Chaliy.Windows.Forms
       _initializing = false;
       //ResetData();
     }
+
+
   }
 }
