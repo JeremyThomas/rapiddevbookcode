@@ -11,6 +11,7 @@ namespace AW.Winforms.Helpers.Controls
 {
   public partial class HierarchyEditor : UserControl, ISupportInitialize
   {
+    private bool _canDetectDirty;
 // ReSharper disable once MemberCanBePrivate.Global
     public HierarchyEditor()
     {
@@ -46,8 +47,18 @@ namespace AW.Winforms.Helpers.Controls
       : this(hierarchicalData, nameColumn)
     {
       gridDataEditor.DataEditorPersister = dataEditorPersister;
+      var dataEditorEventHandlers = dataEditorPersister as IDataEditorEventHandlers;
+      if (dataEditorEventHandlers != null)
+      {
+        dataEditorEventHandlers.ContainedDataChanged += DataEditorEventHandlers_ContainedDataChanged;
+        dataEditorEventHandlers.EntityAdded += DataEditorEventHandlers_ContainedDataChanged;
+        _canDetectDirty = true;
+      }
+      else
+      {
+        saveToolStripButton.Enabled = gridDataEditor.DataEditorPersister != null;
+      }
       gridDataEditor.MembersToExclude = membersToExclude;
-      saveToolStripButton.Enabled = gridDataEditor.DataEditorPersister != null;
       toolStripButtonCancelEdit.Enabled = saveToolStripButton.Enabled;
     }
 
@@ -131,10 +142,19 @@ namespace AW.Winforms.Helpers.Controls
       dataTreeView.CollapseAll();
     }
 
+    private void DataEditorEventHandlers_ContainedDataChanged(object sender, EventArgs e)
+    {
+      saveToolStripButton.Enabled = true;
+      toolStripButtonCancelEdit.Enabled = saveToolStripButton.Enabled;
+    }
+
     private void saveToolStripButton_Click(object sender, EventArgs e)
     {
       if (gridDataEditor.DataEditorPersister != null)
+      {
         gridDataEditor.DataEditorPersister.Save(bindingSourceHierarchicalData.DataSource);
+        SetSaveButtons();
+      }
     }
 
     private void toolStripButtonCancelEdit_Click(object sender, EventArgs e)
@@ -143,9 +163,14 @@ namespace AW.Winforms.Helpers.Controls
       if (gridDataEditor.DataEditorPersister != null && gridDataEditor.DataEditorPersister.Undo(bindingSourceHierarchicalData.List))
       {
         bindingSourceHierarchicalData.ResetBindings(false);
-        //saveToolStripButton.Enabled = false;
+        SetSaveButtons();
       }
-      //toolStripButtonCancelEdit.Enabled = false;
+    }
+
+    private void SetSaveButtons()
+    {
+      saveToolStripButton.Enabled = !_canDetectDirty;
+      toolStripButtonCancelEdit.Enabled = saveToolStripButton.Enabled;
     }
 
     public void BeginInit()
@@ -164,6 +189,15 @@ namespace AW.Winforms.Helpers.Controls
       ((ISupportInitialize) (gridDataEditor)).EndInit();
     }
 
+    private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
+    {
+      dataTreeView.AddNodeAndData();
+    }
 
+    private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e)
+    {
+      dataTreeView.RemoveSelectedNode();
+
+    }
   }
 }

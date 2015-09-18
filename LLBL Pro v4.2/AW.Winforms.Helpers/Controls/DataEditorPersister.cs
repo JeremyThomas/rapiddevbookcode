@@ -12,6 +12,19 @@ namespace AW.Winforms.Helpers.Controls
     bool Undo(object modifiedData);
   }
 
+  public interface IDataEditorEventHandlers
+  {
+    /// <summary>
+    /// Raised when the data of an entity in the scope changed. Ignored during fetches. Sender is the entity which data was changed
+    /// </summary>
+    event EventHandler ContainedDataChanged;
+
+    /// <summary>
+    /// Raised when an entity has been added to the scope. Ignored during fetches. Sender is the entity which was added.
+    /// </summary>
+    event EventHandler EntityAdded;
+  }
+
   public class DataEditorPersister : IDataEditorPersister
   {
     private readonly Type[] _saveableTypes;

@@ -222,6 +222,7 @@ namespace AW.Helper.LLBL
     /// <summary>
     ///   Gets the factory of the entity with the .NET type specified
     /// </summary>
+    /// <remarks>See DataScope.GetEntityFactory</remarks>
     /// <typeparam name="T">The type of entity.</typeparam>
     /// <returns>factory to use or null if not found</returns>
     public static IEntityFactoryCore GetFactoryCore<T>() where T : class, IEntityCore
