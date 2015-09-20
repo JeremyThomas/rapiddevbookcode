@@ -45,26 +45,22 @@ namespace Northwind.Win
     private void toolStripButtonShowEmployeeHierarchyInTree_Click(object sender, EventArgs e)
     {
       var linqMetaData = Factories.CreateLinqMetaData();
-      var employeeEntities = EmployeeEntity.WireUpSelfJoin(linqMetaData.Employee.ToEntityCollection2());
-      ShowControlInForm(HierarchyEditor.HierarchyEditorFactory(employeeEntities.Where(em => em.ReportsTo == null), em => em.FirstName, em => em.Staff,
-        new LLBLWinformHelper.DataEditorLLBLAdapterPersister(linqMetaData.AdapterToUse)), "EmployeeHierarchyInTree", this);
+      ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactory(linqMetaData.Employee, EmployeeEntity.WireUpSelfJoinAndRemoveChildren, em => em.FirstName, em => em.Staff), "EmployeeHierarchyInTree", this);
     }
 
     private void toolStripButtonShowEmployeeHierarchyInTreeByID_Click(object sender, EventArgs e)
     {
       var linqMetaData = Factories.CreateLinqMetaData();
-      var employeeEntities =linqMetaData.Employee.ToEntityCollection2();
-      ShowControlInForm(new HierarchyEditor(employeeEntities, "EmployeeId", "ReportsTo", "FirstName",
-        new LLBLWinformHelper.DataEditorLLBLAdapterPersister(linqMetaData.AdapterToUse)), "EmployeeHierarchyInTree", this);
+      ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactory(linqMetaData.Employee, "EmployeeId", "ReportsTo", "FirstName"), "EmployeeHierarchyInTree", this);
     }
 
     private void toolStripButtonCustomerGroupedByCountry_Click(object sender, EventArgs e)
     {
       var linqMetaData = Factories.CreateLinqMetaData();
-      var groupBy = linqMetaData.Customer
+      var groupBy = linqMetaData.Customer.PrefetchOrders()
         .ToEntityCollection2()
         .GroupBy(c => c.Country);
-      ShowControlInForm(new HierarchyEditor(groupBy, "CompanyName"));
+      ShowControlInForm(new HierarchyEditor(groupBy, "CompanyName", "Orders"));
     }
   }
 }

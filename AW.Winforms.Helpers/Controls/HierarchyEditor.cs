@@ -11,7 +11,8 @@ namespace AW.Winforms.Helpers.Controls
 {
   public partial class HierarchyEditor : UserControl, ISupportInitialize
   {
-    private bool _canDetectDirty;
+    private readonly bool _canDetectDirty;
+
 // ReSharper disable once MemberCanBePrivate.Global
     public HierarchyEditor()
     {
@@ -69,7 +70,7 @@ namespace AW.Winforms.Helpers.Controls
       dataTreeView.ParentIDColumn = parentIDPropertyName;
     }
 
-    public HierarchyEditor(IEnumerable hierarchicalData, string nameColumn, string childCollectionPropertyName, IDataEditorPersister dataEditorPersister, params string[] membersToExclude)
+    public HierarchyEditor(IEnumerable hierarchicalData, string nameColumn, string childCollectionPropertyName, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
       : this(hierarchicalData, nameColumn, dataEditorPersister, membersToExclude)
     {
       dataTreeView.ChildCollectionPropertyName = childCollectionPropertyName;
