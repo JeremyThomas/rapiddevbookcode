@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 #endif
 using System.Xml.Serialization;
+using AW.Helper.LLBL;
 using Northwind.DAL;
 using Northwind.DAL.HelperClasses;
 using Northwind.DAL.FactoryClasses;
@@ -983,6 +984,13 @@ namespace Northwind.DAL.EntityClasses
           employeeEntity.Manager = parent;
         }
       return edDictionary.Values;
+    }
+
+    public static void WireUpSelfJoinAndRemoveChildren(EntityCollectionBase2<EmployeeEntity> employeeEntities)
+    {
+      WireUpSelfJoin(employeeEntities);
+      var workers = employeeEntities.Where(em => em.ReportsTo != null).ToEntityCollection2();
+      employeeEntities.RemoveRange(workers);
     }
 
     // __LLBLGENPRO_USER_CODE_REGION_END

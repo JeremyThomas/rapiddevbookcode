@@ -152,9 +152,9 @@ namespace AW.LLBLGen.DataContextDriver
     }
 
     public static IEnumerable<T> DisplayAdapterHierarchyInTree<T, TId, TParentId, TName>(this IQueryable<T> query, Expression<Func<T, TId>> iDPropertyExpression,
-      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression)
+      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression) where T : EntityBase2
     {
-      return query.DisplayHierarchyInTree(EntityHelper.GetDataAccessAdapter(query), iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression);
+      return LINQPad.CustomVisualizers.DisplayEnumerableControl(query, LLBLWinformHelper.HierarchyEditorFactory(query, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression));
     }
 
     public static IEnumerable<T> DisplayHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, Expression<Func<T, TId>> iDPropertyExpression,

@@ -84,6 +84,7 @@ namespace Chaliy.Windows.Forms
       DragDrop += DataTreeView_DragDrop;
       DragOver += DataTreeView_DragOver;
       ItemDrag += DataTreeView_ItemDrag;
+      _bindingLists = new Dictionary<object, IBindingList>();
     }
 
     private void InitializeComponent()
@@ -101,11 +102,21 @@ namespace Chaliy.Windows.Forms
     /// </summary>
     protected override void Dispose(bool disposing)
     {
-      if (_fieldsToPropertiesTypeDescriptionProvider != null && _idProperty != null)
+      try
       {
-        TypeDescriptor.RemoveProvider(_fieldsToPropertiesTypeDescriptionProvider, _idProperty.ComponentType);
-        _fieldsToPropertiesTypeDescriptionProvider = null;
+        if (_fieldsToPropertiesTypeDescriptionProvider != null && _idProperty != null)
+        {
+          TypeDescriptor.RemoveProvider(_fieldsToPropertiesTypeDescriptionProvider, _idProperty.ComponentType);
+          _fieldsToPropertiesTypeDescriptionProvider = null;
+        }
+        foreach (var bindingList in _bindingLists.Values)
+          bindingList.ListChanged -= DataTreeView_ChildListChanged;
       }
+      catch (Exception e)
+      {
+        e.TraceOut();
+      }
+
       base.Dispose(disposing);
     }
 
@@ -372,6 +383,7 @@ namespace Chaliy.Windows.Forms
     private bool _reseting;
     private bool _changingParent;
     private IBindingList _bindingList;
+    private readonly Dictionary<object, IBindingList> _bindingLists;
 
     private void DataTreeView_ListChanged(object sender, ListChangedEventArgs e)
     {
@@ -605,10 +617,11 @@ namespace Chaliy.Windows.Forms
               break;
           }
       }
+      PropertyDescriptorCollection childPropertyDescriptorCollection = null;
       if (_isSelfCollection & _listManager.Count > 0)
       {
         var childItemType = MetaDataHelper.GetEnumerableItemType(_listManager.Current as IEnumerable);
-        var childPropertyDescriptorCollection = TypeDescriptor.GetProperties(childItemType);
+        childPropertyDescriptorCollection = TypeDescriptor.GetProperties(childItemType);
         if (!string.IsNullOrEmpty(_namePropertyName))
           _childNameProperty = childPropertyDescriptorCollection[_namePropertyName];
       }
@@ -646,6 +659,10 @@ namespace Chaliy.Windows.Forms
           if (_childCollectionProperty == null)
           {
             _childCollectionProperty = propertyDescriptorCollection[_childCollectionPropertyName];
+            if (_childCollectionProperty == null && childPropertyDescriptorCollection!=null)
+            {
+              _childCollectionProperty = childPropertyDescriptorCollection[_childCollectionPropertyName];
+            }
           }
       }
 
@@ -735,7 +752,10 @@ namespace Chaliy.Windows.Forms
       {
         var childBindingListView = children.ToBindingListView();
         if (childBindingListView != null)
+        {
           childBindingListView.ListChanged += DataTreeView_ChildListChanged;
+          _bindingLists.Add(item, childBindingListView);
+        }
         foreach (var child in children)
           AddChildren(treeNode.Nodes, child);
       }
@@ -743,7 +763,10 @@ namespace Chaliy.Windows.Forms
 
     private IEnumerable Children(object item)
     {
-      return (_childCollectionProperty == null ? item : _childCollectionProperty.GetValue(item)) as IEnumerable;
+      IBindingList bindingList;
+      if (_bindingLists.TryGetValue(item, out bindingList))
+        return bindingList;
+      return (_childCollectionProperty == null || _childCollectionProperty .ComponentType!= item.GetType() ? item : _childCollectionProperty.GetValue(item)) as IEnumerable;
     }
 
     public IBindingListView GetChildEnumerable(TreeViewEventArgs e)
@@ -758,7 +781,10 @@ namespace Chaliy.Windows.Forms
       {
         var childBindingListView = ChildTags(treeNode).ToBindingListView();
         if (childBindingListView != null)
+        {
           childBindingListView.ListChanged += DataTreeView_ChildListChanged;
+          _bindingLists.Add(treeNode.Tag, childBindingListView);
+        }
         return childBindingListView;
       }
       var bindingListView = children.ToBindingListView();
@@ -776,7 +802,7 @@ namespace Chaliy.Windows.Forms
       else
       {
         var indexOfSelectedNode = IndexOf(nodeToRemove.Tag);
-        if (indexOfSelectedNode>-1)
+        if (indexOfSelectedNode > -1)
           _listManager.RemoveAt(indexOfSelectedNode);
         else
         {
@@ -900,7 +926,7 @@ namespace Chaliy.Windows.Forms
       if (_idProperty == null)
         return GetIdWithoutIdProperty(dataObject);
       var dataID = _idProperty.GetValue(dataObject);
-      return IsIDNull(dataID)? GetIdWithoutIdProperty(dataObject) : dataID;
+      return IsIDNull(dataID) ? GetIdWithoutIdProperty(dataObject) : dataID;
     }
 
     private TreeNode GetDataAsNode(int position)
@@ -1003,10 +1029,13 @@ namespace Chaliy.Windows.Forms
     {
       try
       {
-        if (_childNameProperty != null && component.GetType().IsAssignableTo(_childNameProperty.ComponentType))
+        var type = component.GetType();
+        if (_childNameProperty != null && type.IsAssignableTo(_childNameProperty.ComponentType))
           return Convert.ToString(_childNameProperty.GetValue(component));
         //_childNameProperty
-        return Convert.ToString(_nameProperty.GetValue(component));
+        if (type.IsAssignableTo(_nameProperty.ComponentType))
+          return Convert.ToString(_nameProperty.GetValue(component));
+        return Convert.ToString(component);
       }
       catch (Exception e)
       {
@@ -1134,7 +1163,5 @@ namespace Chaliy.Windows.Forms
       _initializing = false;
       //ResetData();
     }
-
-
   }
 }

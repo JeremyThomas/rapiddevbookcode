@@ -84,6 +84,7 @@
     <Compile Include="..\Ancillary\ToolsAssemblyInfo.cs">
       <Link>ToolsAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AdapterGenericDataScope.cs" />
     <Compile Include="SelfServicingGenericDataScope.cs" />
     <Compile Include="UsrCntrlEntityBrowser.cs">
       <SubType>UserControl</SubType>

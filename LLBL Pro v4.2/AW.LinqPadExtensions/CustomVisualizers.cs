@@ -180,7 +180,7 @@ namespace LINQPad
       return DisplayEnumerableControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, namePropertyExpression, childCollectionPropertyExpression, dataEditorPersister, membersToExclude));
     }
 
-    private static IEnumerable<T> DisplayEnumerableControl<T>(IEnumerable<T> enumerable, HierarchyEditor control)
+    public static IEnumerable<T> DisplayEnumerableControl<T>(IEnumerable<T> enumerable, Control control)
     {
       return (IEnumerable<T>)DisplayControl(enumerable, control);
     }
