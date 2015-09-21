@@ -445,6 +445,16 @@ namespace AW.Helper
     }
 
     /// <summary>
+    ///   Gets the data row from a data row view.
+    /// </summary>
+    /// <param name="dataRowView">The data row view.</param>
+    /// <returns></returns>
+    public static T GetDataRowFromDataRowView<T>(DataRowView dataRowView) where T : DataRow
+    {
+      return dataRowView == null ? null : dataRowView.Row as T;
+    }
+
+    /// <summary>
     ///   Inserts the rows of the tables into the DB.
     /// </summary>
     /// <param name="tablesForInsert"> The tables for insert, the names of the tables must be the DB table names. </param>
