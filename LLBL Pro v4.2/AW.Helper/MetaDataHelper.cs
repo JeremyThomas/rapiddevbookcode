@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -472,6 +473,18 @@ namespace AW.Helper
     {
       var collection = enumerable as ICollection;
       return ConvertToArray(collection ?? ConvertToList(enumerable));
+    }
+
+    public static IEnumerable AsEnumerable(object potentialEnumerable)
+    {
+      var enumerable = potentialEnumerable as IEnumerable;
+      if (enumerable == null)
+      {
+        var dataTable = potentialEnumerable as DataTable;
+        if (dataTable != null)
+          enumerable = dataTable.DefaultView;
+      }
+      return enumerable;
     }
 
     private static Array ConvertToArray(ICollection collection)

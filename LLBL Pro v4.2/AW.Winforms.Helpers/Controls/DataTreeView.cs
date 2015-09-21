@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
@@ -751,12 +752,12 @@ namespace Chaliy.Windows.Forms
       if (children != null)
       {
         var childBindingListView = children.ToBindingListView();
-        if (childBindingListView != null)
+        if (childBindingListView != null && (!childBindingListView.IsReadOnly && childBindingListView.AllowEdit))
         {
           childBindingListView.ListChanged += DataTreeView_ChildListChanged;
           _bindingLists.Add(item, childBindingListView);
         }
-        foreach (var child in children)
+        foreach (var child in childBindingListView ?? children)
           AddChildren(treeNode.Nodes, child);
       }
     }
@@ -766,7 +767,8 @@ namespace Chaliy.Windows.Forms
       IBindingList bindingList;
       if (_bindingLists.TryGetValue(item, out bindingList))
         return bindingList;
-      return (_childCollectionProperty == null || _childCollectionProperty .ComponentType!= item.GetType() ? item : _childCollectionProperty.GetValue(item)) as IEnumerable;
+      var childCollectionPropertyValue = (_childCollectionProperty == null || _childCollectionProperty .ComponentType!= item.GetType() ? item : _childCollectionProperty.GetValue(item));
+      return MetaDataHelper.AsEnumerable(childCollectionPropertyValue);
     }
 
     public IBindingListView GetChildEnumerable(TreeViewEventArgs e)
@@ -780,7 +782,7 @@ namespace Chaliy.Windows.Forms
       if (children == null)
       {
         var childBindingListView = ChildTags(treeNode).ToBindingListView();
-        if (childBindingListView != null)
+        if (childBindingListView != null && (!childBindingListView.IsReadOnly && childBindingListView.AllowEdit))
         {
           childBindingListView.ListChanged += DataTreeView_ChildListChanged;
           _bindingLists.Add(treeNode.Tag, childBindingListView);
@@ -1025,17 +1027,18 @@ namespace Chaliy.Windows.Forms
       ChangeParent(node);
     }
 
-    private string GetNodeText(object component)
+    private string GetNodeText(object data)
     {
       try
       {
-        var type = component.GetType();
+        var type = data.GetType();
         if (_childNameProperty != null && type.IsAssignableTo(_childNameProperty.ComponentType))
-          return Convert.ToString(_childNameProperty.GetValue(component));
+          return Convert.ToString(_childNameProperty.GetValue(data));
         //_childNameProperty
         if (type.IsAssignableTo(_nameProperty.ComponentType))
-          return Convert.ToString(_nameProperty.GetValue(component));
-        return Convert.ToString(component);
+          return Convert.ToString(_nameProperty.GetValue(data));
+        var dataRowView = data as DataRowView;
+        return dataRowView == null ? Convert.ToString(data) : dataRowView.Row.ItemArray.JoinAsString();
       }
       catch (Exception e)
       {
