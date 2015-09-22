@@ -36,9 +36,7 @@ namespace AW.Winforms.Helpers.Controls
       this.statusStrip1 = new System.Windows.Forms.StatusStrip();
       this.toolStripStatusLabelSelectePath = new System.Windows.Forms.ToolStripStatusLabel();
       this.bindingNavigatorHierarchicalData = new System.Windows.Forms.BindingNavigator(this.components);
-      this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
-      this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
@@ -51,6 +49,8 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonExpandAll = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonUnSelectNodes = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+      this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
+      this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonCancelEdit = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -133,33 +133,12 @@ namespace AW.Winforms.Helpers.Controls
       this.bindingNavigatorHierarchicalData.TabIndex = 4;
       this.bindingNavigatorHierarchicalData.Text = "bindingNavigator1";
       // 
-      // bindingNavigatorAddNewItem
-      // 
-      this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
-      this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
-      this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 20);
-      this.bindingNavigatorAddNewItem.Text = "Add new";
-      this.bindingNavigatorAddNewItem.Click += new System.EventHandler(this.bindingNavigatorAddNewItem_Click);
-      // 
       // bindingNavigatorCountItem
       // 
       this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
       this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 15);
       this.bindingNavigatorCountItem.Text = "of {0}";
       this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
-      // 
-      // bindingNavigatorDeleteItem
-      // 
-      this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.bindingNavigatorDeleteItem.Enabled = false;
-      this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
-      this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
-      this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 20);
-      this.bindingNavigatorDeleteItem.Text = "Delete";
-      this.bindingNavigatorDeleteItem.Click += new System.EventHandler(this.bindingNavigatorDeleteItem_Click);
       // 
       // bindingNavigatorMoveFirstItem
       // 
@@ -260,6 +239,27 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripSeparator.Name = "toolStripSeparator";
       this.toolStripSeparator.Size = new System.Drawing.Size(6, 23);
       // 
+      // bindingNavigatorAddNewItem
+      // 
+      this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
+      this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
+      this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
+      this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 20);
+      this.bindingNavigatorAddNewItem.Text = "Add new";
+      this.bindingNavigatorAddNewItem.Click += new System.EventHandler(this.bindingNavigatorAddNewItem_Click);
+      // 
+      // bindingNavigatorDeleteItem
+      // 
+      this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.bindingNavigatorDeleteItem.Enabled = false;
+      this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
+      this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
+      this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
+      this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 20);
+      this.bindingNavigatorDeleteItem.Text = "Delete";
+      this.bindingNavigatorDeleteItem.Click += new System.EventHandler(this.bindingNavigatorDeleteItem_Click);
+      // 
       // toolStripButtonCancelEdit
       // 
       this.toolStripButtonCancelEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -318,6 +318,7 @@ namespace AW.Winforms.Helpers.Controls
       this.dataTreeView.LabelEdit = true;
       this.dataTreeView.Location = new System.Drawing.Point(0, 0);
       this.dataTreeView.Name = "dataTreeView";
+      this.dataTreeView.ShowNodeToolTips = true;
       this.dataTreeView.Size = new System.Drawing.Size(200, 561);
       this.dataTreeView.TabIndex = 3;
       this.dataTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.dataTreeView1_AfterSelect);

@@ -991,6 +991,13 @@ namespace Chaliy.Windows.Forms
             try
             {
               _changingParent = true;
+              var bindingList = children as IBindingList;
+              if (bindingList != null)
+              {
+                var sourceList = BindingListHelper.GetDataSource(bindingList) as IList;
+                if (sourceList != null)
+                  children = sourceList;
+              }
               children.AddDistinct(childnode.Tag);
               MoveNode(childnode, parentNode);
             }

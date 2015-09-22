@@ -121,56 +121,6 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-    private class DataEditorLLBLSelfServicingDataScopePersister<T> : DataEditorLLBLSelfServicingPersister, IDataEditorEventHandlers where T : EntityBase
-    {
-      private SelfServicingGenericDataScope<T> SelfServicingGenericDataScope { get; }
-
-      public DataEditorLLBLSelfServicingDataScopePersister(SelfServicingGenericDataScope<T> selfServicingGenericDataScope)
-      {
-        SelfServicingGenericDataScope = selfServicingGenericDataScope;
-      }
-
-      #region Events
-
-      /// <summary>
-      ///   Raised when the data of an entity in the scope changed. Ignored during fetches. Sender is the entity which data was changed
-      /// </summary>
-      public event EventHandler ContainedDataChanged
-      {
-        add { SelfServicingGenericDataScope.ContainedDataChanged += value; }
-        remove { SelfServicingGenericDataScope.ContainedDataChanged -= value; }
-      }
-
-      /// <summary>
-      ///   Raised when an entity has been added to the scope. Ignored during fetches. Sender is the entity which was added.
-      /// </summary>
-      public event EventHandler EntityAdded
-      {
-        add { SelfServicingGenericDataScope.EntityAdded += value; }
-        remove { SelfServicingGenericDataScope.EntityAdded -= value; }
-      }
-
-      #endregion
-
-      //public void CommitChanges()
-      //{
-      //  using (var trans = new Transaction(System.Data.IsolationLevel.ReadCommitted, "DataScopeTrans"))
-      //  {
-      //    this.CommitChanges(trans);
-      //  }
-      //}
-
-      //public override int Save(object dataToSave)
-      //{
-      //  return SelfServicingGenericDataScope.CommitChanges()
-      //}
-
-      public override int Delete(object dataToDelete)
-      {
-        return base.Delete(dataToDelete);
-      }
-    }
-
     public static HierarchyEditor HierarchyEditorFactoryServicing<T, TId, TParentId, TName>(IQueryable<T> query, Expression<Func<T, TId>> iDPropertyExpression,
       Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression) where T : EntityBase
     {
@@ -226,61 +176,24 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-    private class DataEditorLLBLAdapterDataScopePersister<T> : DataEditorLLBLPersister, IDataEditorEventHandlers where T : EntityBase2
-    {
-      private AdapterGenericDataScope<T> AdapterGenericDataScope { get; }
-
-      public DataEditorLLBLAdapterDataScopePersister(AdapterGenericDataScope<T> adapterGenericDataScope)
-      {
-        AdapterGenericDataScope = adapterGenericDataScope;
-      }
-
-      #region Events
-
-      /// <summary>
-      ///   Raised when the data of an entity in the scope changed. Ignored during fetches. Sender is the entity which data was changed
-      /// </summary>
-      public event EventHandler ContainedDataChanged
-      {
-        add { AdapterGenericDataScope.ContainedDataChanged += value; }
-        remove { AdapterGenericDataScope.ContainedDataChanged -= value; }
-      }
-
-      /// <summary>
-      ///   Raised when an entity has been added to the scope. Ignored during fetches. Sender is the entity which was added.
-      /// </summary>
-      public event EventHandler EntityAdded
-      {
-        add { AdapterGenericDataScope.EntityAdded += value; }
-        remove { AdapterGenericDataScope.EntityAdded -= value; }
-      }
-
-      #endregion
-
-      public override int Save(object dataToSave)
-      {
-        return Convert.ToInt32(AdapterGenericDataScope.CommitChanges());
-      }
-
-      public override int Delete(object dataToDelete)
-      {
-        return Convert.ToInt32(AdapterGenericDataScope.CommitChanges());
-      }
-
-      public override bool CanSave(Type typeToSave)
-      {
-        return typeof (EntityBase2).IsAssignableFrom(typeToSave);
-      }
-    }
-
     public static HierarchyEditor HierarchyEditorFactory<T>(IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
     {
-      return new HierarchyEditor(enumerable, iDPropertyName, parentIDPropertyName, nameColumn, new DataEditorLLBLAdapterPersister(dataAccessAdapter));
+      return new HierarchyEditor(enumerable, iDPropertyName, parentIDPropertyName, nameColumn, new DataEditorLLBLAdapterDataScopePersister<T>(enumerable, dataAccessAdapter));
     }
 
     public static HierarchyEditor HierarchyEditorFactory<T>(IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, string nameColumn, string childCollectionPropertyName) where T : EntityBase2
     {
-      return new HierarchyEditor(enumerable, nameColumn, childCollectionPropertyName, new DataEditorLLBLAdapterPersister(dataAccessAdapter));
+      return new HierarchyEditor(enumerable, nameColumn, childCollectionPropertyName, new DataEditorLLBLAdapterDataScopePersister<T>(enumerable, dataAccessAdapter));
+    }
+
+    public static HierarchyEditor HierarchyEditorFactory<T, TI, TName, TChildCollection>(IQueryable<T> query, Func<T, TI> iDFunc, Func<T, bool> isChildFunc, Func<T, TI> parentIDFunc, Action<T, T> assignToParentFunc,
+      Expression<Func<T, TName>> namePropertyExpression,
+      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : EntityBase2
+    {
+      var dataScope = new AdapterGenericDataScope<T>(query);
+      dataScope.FetchData();
+      return HierarchyEditor.HierarchyEditorFactory(dataScope.EntityCollection, iDFunc, isChildFunc, parentIDFunc, assignToParentFunc,
+        namePropertyExpression, childCollectionPropertyExpression, new DataEditorLLBLAdapterDataScopePersister<T>(dataScope));
     }
 
     public static HierarchyEditor HierarchyEditorFactory<T, TName, TChildCollection>(IQueryable<T> query, Action<EntityCollectionBase2<T>> postProcessing, Expression<Func<T, TName>> namePropertyExpression,
@@ -292,9 +205,9 @@ namespace AW.Winforms.Helpers.LLBL
     }
 
     public static HierarchyEditor HierarchyEditorFactory<T, TName, TChildCollection>(IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, Expression<Func<T, TName>> namePropertyExpression,
-      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression)
+      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : EntityBase2
     {
-      return HierarchyEditor.HierarchyEditorFactory(enumerable, namePropertyExpression, childCollectionPropertyExpression, new DataEditorLLBLAdapterPersister(dataAccessAdapter));
+      return HierarchyEditor.HierarchyEditorFactory(enumerable, namePropertyExpression, childCollectionPropertyExpression, new DataEditorLLBLAdapterDataScopePersister<T>(enumerable, dataAccessAdapter));
     }
 
     public static HierarchyEditor HierarchyEditorFactory<T>(IQueryable<T> query, string nameColumn, string childCollectionPropertyName) where T : EntityBase2
@@ -320,9 +233,9 @@ namespace AW.Winforms.Helpers.LLBL
     }
 
     public static HierarchyEditor HierarchyEditorFactory<T, TId, TParentId, TName>(IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, Expression<Func<T, TId>> iDPropertyExpression,
-      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression)
+      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression) where T : EntityBase2
     {
-      return HierarchyEditor.HierarchyEditorFactory(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, new DataEditorLLBLAdapterPersister(dataAccessAdapter));
+      return HierarchyEditor.HierarchyEditorFactory(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, new DataEditorLLBLAdapterDataScopePersister<T>(enumerable, dataAccessAdapter));
     }
 
     #endregion

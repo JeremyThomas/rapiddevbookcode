@@ -10,10 +10,12 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 #if !CF
 using System.Runtime.Serialization;
 #endif
 using System.Xml.Serialization;
+using AW.Helper;
 using AW.Helper.LLBL;
 using Northwind.DAL;
 using Northwind.DAL.HelperClasses;
@@ -975,22 +977,9 @@ namespace Northwind.DAL.EntityClasses
     /// </summary>
     /// <param name="employeeEntities">The employee entities.</param>
     /// <returns></returns>
-    public static IEnumerable<EmployeeEntity> WireUpSelfJoin(IEnumerable<EmployeeEntity> employeeEntities)
+    public static IEnumerable<EmployeeEntity> WireUpSelfJoinAndRemoveChildren(IEnumerable<EmployeeEntity> employeeEntities)
     {
-      var edDictionary = employeeEntities.ToDictionary(ed => ed.EmployeeId);
-      foreach (var employeeEntity in edDictionary.Values.Where(e => e.ReportsTo.HasValue))
-        {
-          var parent = edDictionary[employeeEntity.ReportsTo.Value];
-          employeeEntity.Manager = parent;
-        }
-      return edDictionary.Values;
-    }
-
-    public static void WireUpSelfJoinAndRemoveChildren(EntityCollectionBase2<EmployeeEntity> employeeEntities)
-    {
-      WireUpSelfJoin(employeeEntities);
-      var workers = employeeEntities.Where(em => em.ReportsTo != null).ToEntityCollection2();
-      employeeEntities.RemoveRange(workers);
+      return GeneralHelper.WireUpSelfJoinAndRemoveChildren(employeeEntities, e => e.EmployeeId, e => e.ReportsTo.HasValue, e => e.ReportsTo.Value, (e, m) => e.Manager = m);
     }
 
     // __LLBLGENPRO_USER_CODE_REGION_END
@@ -999,5 +988,5 @@ namespace Northwind.DAL.EntityClasses
     #region Included code
 
     #endregion
-  }
+	}
 }

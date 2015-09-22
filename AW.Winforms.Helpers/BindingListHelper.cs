@@ -421,7 +421,7 @@ namespace AW.Winforms.Helpers
       return objectListViewSource == null ? objectListView.List : GetDataSource(objectListViewSource);
     }
 
-    private static IEnumerable GetDataSource(IBindingList bindingList)
+    public static IEnumerable GetDataSource(IBindingList bindingList)
     {
       if (bindingList == null)
         return null;

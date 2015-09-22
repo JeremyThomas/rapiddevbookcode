@@ -117,7 +117,7 @@ namespace AW.LLBLGen.DataContextDriver
 
     public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize) where T : EntityBase2
     {
-      return enumerable.DisplayInGrid(new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
+      return enumerable.DisplayInGrid(new DataEditorLLBLAdapterDataScopePersister<T>(enumerable, dataAccessAdapter), pageSize);
     }
 
     public static IEnumerable<T> DisplayAdapterInGrid<T>(this IQueryable<T> query, ushort pageSize = LINQPad.CustomVisualizers.DefaultPageSize) where T : EntityBase2
@@ -127,18 +127,18 @@ namespace AW.LLBLGen.DataContextDriver
 
     public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
     {
-      return enumerable.DisplayHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter));
+      return enumerable.DisplayHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new DataEditorLLBLAdapterDataScopePersister<T>(enumerable, dataAccessAdapter));
     }
 
     public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, string nameColumn, string childCollectionPropertyName) where T : EntityBase2
     {
-      return enumerable.DisplayHierarchyInTree(nameColumn, childCollectionPropertyName, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter));
+      return enumerable.DisplayHierarchyInTree(nameColumn, childCollectionPropertyName, new DataEditorLLBLAdapterDataScopePersister<T>(enumerable, dataAccessAdapter));
     }
 
     public static IEnumerable<T> DisplayHierarchyInTree<T, TName, TChildCollection>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, Expression<Func<T, TName>> namePropertyExpression,
-      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression)
+      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : EntityBase2
     {
-      return enumerable.DisplayHierarchyInTree(namePropertyExpression, childCollectionPropertyExpression, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter));
+      return enumerable.DisplayHierarchyInTree(namePropertyExpression, childCollectionPropertyExpression, new DataEditorLLBLAdapterDataScopePersister<T>(enumerable, dataAccessAdapter));
     }
 
     public static IEnumerable<T> DisplayAdapterHierarchyInTree<T>(this IQueryable<T> query, string nameColumn, string childCollectionPropertyName) where T : EntityBase2
@@ -158,9 +158,9 @@ namespace AW.LLBLGen.DataContextDriver
     }
 
     public static IEnumerable<T> DisplayHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, Expression<Func<T, TId>> iDPropertyExpression,
-      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression)
+      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression) where T : EntityBase2
     {
-      return enumerable.DisplayHierarchyInTree(iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter));
+      return enumerable.DisplayHierarchyInTree(iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, new DataEditorLLBLAdapterDataScopePersister<T>(enumerable, dataAccessAdapter));
     }
 
     #endregion
