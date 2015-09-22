@@ -243,43 +243,43 @@ namespace AW.Helper
       switch (typeCode)
       {
         case TypeCode.Byte:
-          maxValue = byte.MaxValue;
+          maxValue = Byte.MaxValue;
           break;
         case TypeCode.Char:
-          maxValue = char.MaxValue;
+          maxValue = Char.MaxValue;
           break;
         case TypeCode.DateTime:
           maxValue = DateTime.MaxValue;
           break;
         case TypeCode.Decimal:
-          maxValue = decimal.MaxValue;
+          maxValue = Decimal.MaxValue;
           break;
         case TypeCode.Double:
-          maxValue = decimal.MaxValue;
+          maxValue = Decimal.MaxValue;
           break;
         case TypeCode.Int16:
-          maxValue = short.MaxValue;
+          maxValue = Int16.MaxValue;
           break;
         case TypeCode.Int32:
-          maxValue = int.MaxValue;
+          maxValue = Int32.MaxValue;
           break;
         case TypeCode.Int64:
-          maxValue = long.MaxValue;
+          maxValue = Int64.MaxValue;
           break;
         case TypeCode.SByte:
-          maxValue = sbyte.MaxValue;
+          maxValue = SByte.MaxValue;
           break;
         case TypeCode.Single:
-          maxValue = float.MaxValue;
+          maxValue = Single.MaxValue;
           break;
         case TypeCode.UInt16:
-          maxValue = ushort.MaxValue;
+          maxValue = UInt16.MaxValue;
           break;
         case TypeCode.UInt32:
-          maxValue = uint.MaxValue;
+          maxValue = UInt32.MaxValue;
           break;
         case TypeCode.UInt64:
-          maxValue = ulong.MaxValue;
+          maxValue = UInt64.MaxValue;
           break;
         default:
           maxValue = 0;
@@ -987,12 +987,31 @@ namespace AW.Helper
         throw new ArgumentNullException("expression");
       const string str1 = "OrderBy";
       const string str2 = "OrderByDescending";
-      var newExpression = (Expression)Expression.Call(typeof(Queryable), ascending ? str1 : str2, new[]
+      var newExpression = (Expression)Expression.Call(typeof(Queryable), @ascending ? str1 : str2, new[]
       {
         source.ElementType,
         expression.Type
       }, source.Expression, Expression.Quote(expression));
       return source.Provider.CreateQuery(newExpression);
+    }
+
+    public static IEnumerable<T> WireUpSelfJoin<T,TI>(IEnumerable<T> employeeEntities,
+      Func<T, TI> iDFunc, Func<T, bool> isChildFunc, Func<T, TI> parentIDFunc, Action<T, T> assignToParentFunc)
+    {
+      var edDictionary = employeeEntities.ToDictionary(iDFunc);
+      foreach (var employeeEntity in edDictionary.Values.Where(isChildFunc))
+      {
+        var parent = edDictionary[parentIDFunc(employeeEntity)];
+        assignToParentFunc(employeeEntity, parent);
+      }
+      return employeeEntities;
+    }
+
+    public static IEnumerable<T> WireUpSelfJoinAndRemoveChildren<T, TI>(IEnumerable<T> employeeEntities,
+      Func<T, TI> iDFunc, Func<T, bool> isChildFunc, Func<T, TI> parentIDFunc, Action<T, T> assignToParentFunc)
+    {
+      WireUpSelfJoin(employeeEntities, iDFunc,  isChildFunc,  parentIDFunc,  assignToParentFunc);
+      return employeeEntities.Where(employeeEntity => !isChildFunc(employeeEntity));
     }
   }
 }

@@ -44,8 +44,14 @@ namespace Northwind.Win
 
     private void toolStripButtonShowEmployeeHierarchyInTree_Click(object sender, EventArgs e)
     {
+      ShowEmployeeHierarchyInTree();
+    }
+
+    private void ShowEmployeeHierarchyInTree()
+    {
       var linqMetaData = Factories.CreateLinqMetaData();
-      ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactory(linqMetaData.Employee, EmployeeEntity.WireUpSelfJoinAndRemoveChildren, em => em.FirstName, em => em.Staff), "EmployeeHierarchyInTree", this);
+      ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactory(linqMetaData.Employee, e => e.EmployeeId, e => e.ReportsTo.HasValue, 
+        e => e.ReportsTo.GetValueOrDefault(), (e, m) => e.Manager = m, em => em.FirstName, em => em.Staff), "EmployeeHierarchyInTree", this);
     }
 
     private void toolStripButtonShowEmployeeHierarchyInTreeByID_Click(object sender, EventArgs e)

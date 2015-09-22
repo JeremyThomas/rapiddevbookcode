@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Windows.Forms;
 using AW.Helper;
@@ -28,7 +27,7 @@ namespace AW.Winforms.Helpers.Controls
       dataTreeView.NameColumn = nameColumn;
       dataTreeView.Sorted = true;
       bindingNavigatorAddNewItem.Enabled = dataTreeView.CanEdit;
-      dataTreeView.LabelEdit= dataTreeView.CanEdit;
+      dataTreeView.LabelEdit = dataTreeView.CanEdit;
     }
 
     private HierarchyEditor(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn)
@@ -97,6 +96,14 @@ namespace AW.Winforms.Helpers.Controls
       return new HierarchyEditor(enumerable, MemberName.For(iDPropertyExpression), MemberName.For(parentIDPropertyExpression), MemberName.For(namePropertyExpression), dataEditorPersister, membersToExclude);
     }
 
+    public static HierarchyEditor HierarchyEditorFactory<T, TI, TName, TChildCollection>(IEnumerable<T> enumerable, Func<T, TI> iDFunc, Func<T, bool> isChildFunc, Func<T, TI> parentIDFunc, Action<T, T> assignToParentFunc,
+      Expression<Func<T, TName>> namePropertyExpression,
+      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression, IDataEditorPersister dataEditorPersister, params string[] membersToExclude)
+    {
+      var topMostEntities = GeneralHelper.WireUpSelfJoinAndRemoveChildren(enumerable, iDFunc, isChildFunc, parentIDFunc, assignToParentFunc);
+      return HierarchyEditorFactory(topMostEntities, namePropertyExpression, childCollectionPropertyExpression, dataEditorPersister, membersToExclude);
+    }
+
     public static HierarchyEditor HierarchyEditorFactory<T, TName, TChildCollection>(IEnumerable<T> enumerable, Expression<Func<T, TName>> namePropertyExpression,
       Expression<Func<T, TChildCollection>> childCollectionPropertyExpression, IDataEditorPersister dataEditorPersister, params string[] membersToExclude)
     {
@@ -116,6 +123,8 @@ namespace AW.Winforms.Helpers.Controls
         splitContainerHorizontal.Panel1Collapsed = ListBindingHelper.GetListItemProperties(propertyGrid1.SelectedObject.GetType()).Count < 2;
         gridDataEditor.BindEnumerable(dataTreeView.GetChildEnumerable(e));
       }
+      if (selectedNode != null && (selectedNode.Level==0 && selectedNode.TreeView.Nodes.Count==1))
+        selectedNode.Expand();
     }
 
     private void toolStripButtonUnSelectNodes_Click(object sender, EventArgs e)
@@ -198,7 +207,6 @@ namespace AW.Winforms.Helpers.Controls
     private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e)
     {
       dataTreeView.RemoveSelectedNode();
-
     }
   }
 }
