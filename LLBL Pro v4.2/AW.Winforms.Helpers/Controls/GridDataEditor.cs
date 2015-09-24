@@ -581,6 +581,7 @@ namespace AW.Winforms.Helpers.Controls
     private void UnBindGrids()
     {
       //  dataGridViewEnumerable.DataSource = null;
+      dataGridViewEnumerable.ClearFilter();
       dataGridEnumerable.DataSource = null;
     }
 
@@ -685,7 +686,20 @@ namespace AW.Winforms.Helpers.Controls
 
     private void dataGridViewEnumerable_SortStringChanged(object sender, EventArgs e)
     {
-      bindingSourceEnumerable.Sort = dataGridViewEnumerable.SortString;
+      //  if (bindingSourceEnumerable.SortProperty==null || !string.IsNullOrWhiteSpace(bindingSourceEnumerable.Sort))
+      if (dataGridViewEnumerable.SortedColumn == null || dataGridViewEnumerable.SortedColumn.SortMode != DataGridViewColumnSortMode.Automatic)
+      {
+        var isBinding = IsBinding;
+        IsBinding = true;
+        try
+        {
+          bindingSourceEnumerable.Sort = dataGridViewEnumerable.SortString;
+        }
+        finally
+        {
+          IsBinding = isBinding;
+        }
+      }
     }
 
     private void toolStripButtonUnPage_Click(object sender, EventArgs e)

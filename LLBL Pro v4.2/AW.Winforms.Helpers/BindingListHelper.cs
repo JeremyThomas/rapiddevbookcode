@@ -309,17 +309,19 @@ namespace AW.Winforms.Helpers
       try
       {
         bindingSource.SuspendBinding();
- //       bindingSource.RaiseListChangedEvents
+        var raiseListChangedEvents = bindingSource.RaiseListChangedEvents;
+        bindingSource.RaiseListChangedEvents = false;
         try
         {
-        if (bindingSource.SupportsSorting)
-          bindingSource.RemoveSort();
-        if (bindingSource.SupportsFiltering)
+        if (bindingSource.SupportsSorting && bindingSource.IsSorted)
+          bindingSource.RemoveSort(); 
+        if (bindingSource.SupportsFiltering && !string.IsNullOrWhiteSpace(bindingSource.Filter))
           bindingSource.RemoveFilter();
         }
         finally
         {
           bindingSource.ResumeBinding();
+          bindingSource.RaiseListChangedEvents = raiseListChangedEvents;
         }
       }
       catch (Exception e)
