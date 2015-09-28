@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 using Microsoft.CSharp.RuntimeBinder;
 using SD.LLBLGen.Pro.LinqSupportClasses;
@@ -107,17 +108,17 @@ namespace AW.Helper.LLBL
       {
         elementType = expression.Type.GetGenericArguments()[0];
       }
-      var queryableType = typeof (IQueryable<>).MakeGenericType(new[] {elementType});
+      var queryableType = typeof (IQueryable<>).MakeGenericType(elementType);
       if (queryableType.IsAssignableFrom(expression.Type))
       {
         provider.CreateQuery(expression);
       }
-      var enumerableType = typeof (IEnumerable<>).MakeGenericType(new[] {elementType});
+      var enumerableType = typeof (IEnumerable<>).MakeGenericType(elementType);
       if (!enumerableType.IsAssignableFrom(expression.Type))
       {
         throw new ArgumentException("expression isn't enumerable");
       }
-      return (IQueryable) Activator.CreateInstance(typeof (LLBLGenProQuery<>).MakeGenericType(new[] {elementType}), new object[] {provider, expression});
+      return (IQueryable) Activator.CreateInstance(typeof (LLBLGenProQuery<>).MakeGenericType(elementType), provider, expression);
     }
 
     public static Tuple<Expression, Expression, Expression> GetMethodCallExpressionParts(MethodCallExpression methodCallExpression)
@@ -377,7 +378,7 @@ namespace AW.Helper.LLBL
     /// <returns>the entity field</returns>
     public static IEntityField GetFieldFromFieldName(IEntity entity, string fieldName)
     {
-      return entity.Fields[fieldName] ?? entity.Fields.Cast<IEntityField>().FirstOrDefault(ef => ef.Name.Equals(fieldName, StringComparison.InvariantCultureIgnoreCase));
+      return entity.Fields[fieldName] ?? entity.Fields.AsEnumerable().FirstOrDefault(ef => ef.Name.Equals(fieldName, StringComparison.InvariantCultureIgnoreCase));
     }
 
     public static IEnumerable<IEntityCore> AsEnumerable(this IEntityCollectionCore entityCollection)
@@ -419,6 +420,7 @@ namespace AW.Helper.LLBL
     {
       foreach (var changedField in entity.GetChangedFields())
         changedField.ForcedCurrentValueWrite(changedField.DbValue, changedField.DbValue);
+      ResetErrors(entity);
       entity.IsDirty = false;
     }
 
@@ -426,7 +428,14 @@ namespace AW.Helper.LLBL
     {
       foreach (var dirtyEntity in entityCollection.DirtyEntities)
         dirtyEntity.RevertChangesToDBValue();
-      var newEntities = entityCollection.Cast<IEntity>().Where(e => e.IsNew).ToList();
+      ResetErrorsAndRemoveNew(entityCollection);
+    }
+
+    private static void ResetErrorsAndRemoveNew(IEntityCollectionCore entityCollection)
+    {
+      foreach (var entity in entityCollection.AsEnumerable())
+        ResetErrors(entity);
+      var newEntities = entityCollection.AsEnumerable().Where(e => e.IsNew).ToList();
       foreach (var newEntity in newEntities)
         entityCollection.Remove(newEntity);
     }
@@ -435,9 +444,7 @@ namespace AW.Helper.LLBL
     {
       foreach (var dirtyEntity in entityCollection.DirtyEntities)
         dirtyEntity.RevertChangesToDBValue();
-      var newEntities = entityCollection.Cast<IEntity2>().Where(e => e.IsNew).ToList();
-      foreach (var newEntity in newEntities)
-        entityCollection.Remove(newEntity);
+      ResetErrorsAndRemoveNew(entityCollection);
     }
 
     public static void RevertChangesToDBValue(IEntityCollectionCore entityCollection)
@@ -552,6 +559,30 @@ namespace AW.Helper.LLBL
       }
     }
 
+    public static bool IsDirty(object data)
+    {
+      var entity = data as IEntityCore;
+      if (entity == null)
+      {
+        var entityCollection = data as IEntityCollection;
+        if (entityCollection == null)
+        {
+          var entityCollection2 = data as IEntityCollection2;
+          return entityCollection2 != null && entityCollection2.ContainsDirtyContents || ContainsEntityFieldsErrors(entityCollection2);
+        }
+        return entityCollection.ContainsDirtyContents || ContainsEntityFieldsErrors(entityCollection);
+      }
+      return entity.IsDirty || !string.IsNullOrWhiteSpace(GetEntityFieldsErrors(entity));
+    }
+
+    public static bool ContainsEntityFieldsErrors(IEntityCollectionCore entityCollection)
+    {
+      for (var i = 0; i < entityCollection.Count; i++)
+        if (!string.IsNullOrWhiteSpace(GetEntityFieldsErrors(entityCollection[i])))
+          return true;
+      return false;
+    }
+
     private static Type GetListItemType(object modifiedData)
     {
       return ListBindingHelper.GetListItemType(modifiedData);
@@ -662,7 +693,7 @@ namespace AW.Helper.LLBL
         var modifyCount = 0;
         if (entityCollection.RemovedEntitiesTracker != null)
           modifyCount = dataAccessAdapter.DeleteEntityCollection(entityCollection.RemovedEntitiesTracker);
-        return modifyCount + dataAccessAdapter.SaveEntityCollection(collectionToSave,false, true);
+        return modifyCount + dataAccessAdapter.SaveEntityCollection(collectionToSave, false, true);
       }
       return SaveEntities(entitiesToSave.Cast<IEntity2>(), dataAccessAdapter);
     }
@@ -903,6 +934,66 @@ namespace AW.Helper.LLBL
     #endregion
 
     /// <summary>
+    ///   Gets the entity fields errors.
+    /// </summary>
+    /// <returns>
+    ///   A separator-by-semicolon errors in string representation of the
+    ///   error (if exist).
+    ///   This could be useful if you want to obtain the errors list at some GUI.
+    /// </returns>
+    public static string GetEntityFieldsErrors(IEntityCore entity)
+    {
+      // variables to construct the message
+      var sbErrors = new StringBuilder();
+      var toReturn = String.Empty;
+
+      // iterate over fields and get their errorInfo
+      foreach (var field in entity.Fields.AsEnumerable())
+        // IEntity implements IDataErrorInfo, and it contains a collections of field errors already set. 
+        // For more info read the docs (LLBLGen Pro Help -> Using generated code -> Validation per field or per entity -> IDataErrorInfo implementation).
+        if (!String.IsNullOrEmpty(((IDataErrorInfo)entity)[field.Name]))
+          sbErrors.Append(((IDataErrorInfo)entity)[field.Name] + ";");
+
+      // determine if there was errors and cut off the extra ';'
+      if (sbErrors.ToString() != String.Empty)
+      {
+        toReturn = sbErrors.ToString();
+        toReturn = toReturn.Substring(0, toReturn.Length - 2);
+      }
+
+      return toReturn;
+    }
+    public static void ResetErrors(IEntityCore entity)
+    {
+      // reset the field errors
+      foreach (var field in entity.Fields.AsEnumerable())
+        entity.SetEntityFieldError(field.Name, String.Empty, false);
+
+      // reset entity error
+      entity.SetEntityError(String.Empty);
+    }
+
+    /// <summary>
+    ///   Called right at the beginning of SetValue(), which is called from an entity field property setter
+    /// </summary>
+    /// <param name="fieldIndex">Index of the field to set.</param>
+    /// <param name="valueToSet">The value to set.</param>
+    /// <param name="cancel">if set to true, the setvalue is cancelled and the set action is terminated</param>
+    /// <remarks>
+    ///   This code fixes the flaw of the IDataErrorInfo + Refresh field value in controls.
+    ///   For more explanation on this issue, please visit this forum's post:
+    ///   http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=12166
+    /// </remarks>
+    public static void SetEntityFieldErrorIfNeeded(IEntityCore entity, int fieldIndex, object valueToSet)
+    {
+      var entityField = entity.Fields[fieldIndex];
+      if (entityField.CurrentValue != null)
+        if (entityField.CurrentValue.Equals(valueToSet)
+            && !String.IsNullOrEmpty(((IDataErrorInfo)entity)[entityField.Name]))
+          entity.SetEntityFieldError(entityField.Name, String.Empty, false);
+    }
+
+    /// <summary>
     ///   Gets the properties of type entity since sometimes these properties are not browseable so they need to be handled as
     ///   a special case.
     /// </summary>
@@ -1065,8 +1156,9 @@ namespace AW.Helper.LLBL
 
     public static string GetPkIdStringFromEntity(EntityBase2 entity)
     {
-      return GetPkIdStringFromFields(((IEntity2)entity).PrimaryKeyFields);
+      return GetPkIdStringFromFields(((IEntity2) entity).PrimaryKeyFields);
     }
+
 
   }
 

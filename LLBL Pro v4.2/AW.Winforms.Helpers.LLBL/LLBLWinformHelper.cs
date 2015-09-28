@@ -101,6 +101,11 @@ namespace AW.Winforms.Helpers.LLBL
         EntityHelper.Undo(modifiedData);
         return true;
       }
+
+      public bool IsDirty(object data)
+      {
+        return EntityHelper.IsDirty(data);
+      }
     }
 
     public class DataEditorLLBLSelfServicingPersister : DataEditorLLBLPersister

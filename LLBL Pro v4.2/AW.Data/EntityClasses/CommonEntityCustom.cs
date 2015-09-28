@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Text;
 using AW.Helper;
+using AW.Helper.LLBL;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.EntityClasses
@@ -26,35 +27,9 @@ namespace AW.Data.EntityClasses
       //Not needed as setup using DI ConcurrencyPredicateFactoryToUse = GeneralConcurrencyPredicateFactory.ConcurrencyPredicateFactory;
     }
 
-    /// <summary>
-    ///   Gets the entity fields errors.
-    /// </summary>
-    /// <returns>
-    ///   A separator-by-semicolon errors in string representation of the
-    ///   error (if exist).
-    ///   This could be useful if you want to obtain the errors list at some GUI.
-    /// </returns>
     public string GetEntityFieldsErrors()
     {
-      // variables to construct the message
-      var sbErrors = new StringBuilder();
-      var toReturn = string.Empty;
-
-      // iterate over fields and get their errorInfo
-      foreach (IEntityField field in Fields)
-        // IEntity implements IDataErrorInfo, and it contains a collections of field errors already set. 
-        // For more info read the docs (LLBLGen Pro Help -> Using generated code -> Validation per field or per entity -> IDataErrorInfo implementation).
-        if (!string.IsNullOrEmpty(((IDataErrorInfo) this)[field.Name]))
-          sbErrors.Append(((IDataErrorInfo) this)[field.Name] + ";");
-
-      // determine if there was errors and cut off the extra ';'
-      if (sbErrors.ToString() != string.Empty)
-      {
-        toReturn = sbErrors.ToString();
-        toReturn = toReturn.Substring(0, toReturn.Length - 2);
-      }
-
-      return toReturn;
+     return EntityHelper.GetEntityFieldsErrors(this);
     }
 
     /// <summary>
@@ -63,12 +38,7 @@ namespace AW.Data.EntityClasses
     /// </summary>
     public void ResetErrors()
     {
-      // reset the field errors
-      foreach (EntityField field in Fields)
-        SetEntityFieldError(field.Name, string.Empty, false);
-
-      // reset entity error
-      SetEntityError(string.Empty);
+      EntityHelper.ResetErrors(this);
     }
 
     /// <summary>
@@ -84,10 +54,7 @@ namespace AW.Data.EntityClasses
     /// </remarks>
     protected override void OnSetValue(int fieldIndex, object valueToSet, out bool cancel)
     {
-      if (Fields[fieldIndex].CurrentValue != null)
-        if (Fields[fieldIndex].CurrentValue.Equals(valueToSet)
-            && !string.IsNullOrEmpty(((IDataErrorInfo) this)[Fields[fieldIndex].Name]))
-          SetEntityFieldError(Fields[fieldIndex].Name, string.Empty, false);
+      EntityHelper.SetEntityFieldErrorIfNeeded(this, fieldIndex, valueToSet);
 
       base.OnSetValue(fieldIndex, valueToSet, out cancel);
     }

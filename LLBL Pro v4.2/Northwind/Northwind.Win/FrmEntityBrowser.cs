@@ -22,7 +22,7 @@ namespace Northwind.Win
       InitializeComponent();
 
       var linqMetaData = Factories.CreateLinqMetaData();
-      usrCntrlEntityBrowser1.Initialize(linqMetaData);
+      usrCntrlEntityBrowser1.Initialize(linqMetaData,ensureFilteringEnabled:false);
       //Done in CommonEntityBase  CacheController.RegisterCache(dataAccessAdapter.ConnectionString, new ResultsetCache()); 
       Text += string.Format(" - {0}", ProfilerHelper.OrmProfilerStatus);
     }
