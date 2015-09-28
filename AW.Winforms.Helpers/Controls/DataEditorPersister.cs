@@ -10,17 +10,19 @@ namespace AW.Winforms.Helpers.Controls
     int Delete(object dataToDelete);
     bool CanSave(Type typeToSave);
     bool Undo(object modifiedData);
+
+    bool IsDirty(object modifiedData);
   }
 
   public interface IDataEditorEventHandlers
   {
     /// <summary>
-    /// Raised when the data of an entity in the scope changed. Ignored during fetches. Sender is the entity which data was changed
+    ///   Raised when the data of an entity in the scope changed. Ignored during fetches. Sender is the entity which data was changed
     /// </summary>
     event EventHandler ContainedDataChanged;
 
     /// <summary>
-    /// Raised when an entity has been added to the scope. Ignored during fetches. Sender is the entity which was added.
+    ///   Raised when an entity has been added to the scope. Ignored during fetches. Sender is the entity which was added.
     /// </summary>
     event EventHandler EntityAdded;
   }
@@ -58,6 +60,11 @@ namespace AW.Winforms.Helpers.Controls
     public bool Undo(object modifiedData)
     {
       return _undoMethod != null && _undoMethod(modifiedData);
+    }
+
+    public bool IsDirty(object modifiedData)
+    {
+      return false;
     }
   }
 
@@ -99,7 +106,54 @@ namespace AW.Winforms.Helpers.Controls
 
     public bool Undo(object modifiedData)
     {
-      return false;
+      _dataContext.DiscardPendingChanges();
+      return true;
+    }
+
+    public bool IsDirty(object modifiedData)
+    {
+      var changeSet = _dataContext. GetChangeSet();
+      return changeSet.Updates.Count > 0;
+    }
+  }
+
+  /// <summary>
+  ///   http://stackoverflow.com/questions/259219/how-can-i-reject-all-changes-in-a-linq-to-sqls-datacontext
+  /// </summary>
+  internal static class DataContextExtensions
+  {
+    /// <summary>
+    ///   Discard all pending changes of current DataContext.
+    ///   All un-submitted changes, including insert/delete/modify will lost.
+    /// </summary>
+    /// <param name="context"></param>
+    public static void DiscardPendingChanges(this DataContext context)
+    {
+      context.RefreshPendingChanges(RefreshMode.OverwriteCurrentValues);
+      var changeSet = context.GetChangeSet();
+      //Undo inserts
+      foreach (var objToInsert in changeSet.Inserts)
+      {
+        context.GetTable(objToInsert.GetType()).DeleteOnSubmit(objToInsert);
+      }
+      //Undo deletes
+      foreach (var objToDelete in changeSet.Deletes)
+      {
+        context.GetTable(objToDelete.GetType()).InsertOnSubmit(objToDelete);
+      }
+    }
+
+    /// <summary>
+    ///   Refreshes all pending Delete/Update entity objects of current DataContext according to the specified mode.
+    ///   Nothing will do on Pending Insert entity objects.
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="refreshMode">A value that specifies how optimistic concurrency conflicts are handled.</param>
+    public static void RefreshPendingChanges(this DataContext context, RefreshMode refreshMode)
+    {
+      var changeSet = context.GetChangeSet();
+      context.Refresh(refreshMode, changeSet.Deletes);
+      context.Refresh(refreshMode, changeSet.Updates);
     }
   }
 }

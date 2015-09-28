@@ -238,6 +238,10 @@ namespace AW.Winforms.Helpers.Controls
     private void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
     {
       e.Exception.TraceOut();
+      if (_canSave && !toolStripButtonCancelEdit.Enabled && DataEditorPersister.IsDirty(SourceEnumerable))
+      {
+        toolStripButtonCancelEdit.Enabled = true;
+      }
     }
 
     private void bindingSourceEnumerable_DataSourceChanged(object sender, EventArgs e)
