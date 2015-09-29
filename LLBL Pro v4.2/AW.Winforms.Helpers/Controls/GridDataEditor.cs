@@ -379,12 +379,14 @@ namespace AW.Winforms.Helpers.Controls
       {
         IsBinding = true;
         if (GetPageIndex() > 0)
+        {
           BindEnumerable();
+          SetRemovingItem();
+        }
         else
         {
           GetFirstPage();
         }
-        SetRemovingItem();
       }
       finally
       {
@@ -432,6 +434,12 @@ namespace AW.Winforms.Helpers.Controls
         saveToolStripButton.Enabled = false;
       if (DataSourceIsObjectListView)
         ((ObjectListView) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
+
+      if (_canSave && !saveToolStripButton.Enabled && DataEditorPersister.IsDirty(SourceEnumerable))
+      {
+        toolStripButtonCancelEdit.Enabled = true;
+        saveToolStripButton.Enabled = true;
+      }
     }
 
     private bool DataSourceIsObjectListView
@@ -584,6 +592,8 @@ namespace AW.Winforms.Helpers.Controls
 
     private void UnBindGrids()
     {
+      if (DataSourceIsObjectListView)
+        ((ObjectListView)bindingSourceEnumerable.DataSource).RemovingItem -= GridDataEditor_RemovingItem;
       //  dataGridViewEnumerable.DataSource = null;
       dataGridViewEnumerable.ClearFilter();
       dataGridEnumerable.DataSource = null;
@@ -643,12 +653,13 @@ namespace AW.Winforms.Helpers.Controls
 
     private void dataGridViewEnumerable_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
     {
-      var valueType = MetaDataHelper.GetCoreType(dataGridViewEnumerable.Columns[e.ColumnIndex].ValueType);
+      var dataGridViewColumn = dataGridViewEnumerable.Columns[e.ColumnIndex];
+      var valueType = MetaDataHelper.GetCoreType(dataGridViewColumn.ValueType);
       if (valueType != null && valueType.IsEnum)
       {
         if (e.Value == null || MetaDataHelper.GetCoreType(e.Value.GetType()).IsEnum && !Enum.IsDefined(valueType, e.Value))
         {
-          e.Value = "";
+          e.Value = ""; //e.CellStyle.NullValue
           e.FormattingApplied = true;
         } //e.Value = e.Value.ToString();
         //else
@@ -658,6 +669,16 @@ namespace AW.Winforms.Helpers.Controls
         //    e.FormattingApplied = true;
         //  }//e.Value = e.Value.ToString();
       }
+      else if (dataGridViewColumn is DataGridViewImageColumn)
+      {
+        if (e.Value == null || e.Value is ICollection && GeneralHelper.IsNullOrEmpty( (ICollection) e.Value))
+        {
+        //  e.Value = dataGridViewColumn.CellTemplate.DefaultNewRowValue;
+          e.Value = e.CellStyle.NullValue;
+          e.FormattingApplied = true;
+        }
+      }
+     
     }
 
     private void dataGridViewEnumerable_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
