@@ -568,7 +568,7 @@ namespace AW.Helper.LLBL
         if (entityCollection == null)
         {
           var entityCollection2 = data as IEntityCollection2;
-          return entityCollection2 != null && entityCollection2.ContainsDirtyContents || ContainsEntityFieldsErrors(entityCollection2);
+          return entityCollection2 != null && (entityCollection2.ContainsDirtyContents || ContainsEntityFieldsErrors(entityCollection2));
         }
         return entityCollection.ContainsDirtyContents || ContainsEntityFieldsErrors(entityCollection);
       }
