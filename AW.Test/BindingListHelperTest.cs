@@ -76,7 +76,14 @@ namespace AW.Tests
       var listofNonSerializableClasses = SerializableClass.GenerateListWithBothSerializableClasses();
       var bindingSource = new BindingSource();
       Assert.IsTrue(bindingSource.BindEnumerable((IEnumerable) listofNonSerializableClasses, false));
-      Assert.AreEqual(listofNonSerializableClasses, bindingSource.List);
+      if (bindingSource.SupportsSorting)
+      {
+        Assert.IsInstanceOfType(bindingSource.List, typeof(ObjectListView<SerializableBaseClass>));
+        var objectListView = (ObjectListView<SerializableBaseClass>)bindingSource.List;
+        Assert.AreEqual(listofNonSerializableClasses, objectListView.List);
+      }
+      else
+        Assert.AreEqual(listofNonSerializableClasses, bindingSource.List);
 
       TestBindEnumerable(listofNonSerializableClasses, true, 1, false);
       TestBindEnumerable(SerializableClass.GenerateListWithBoth(), true, 3, false);
@@ -141,9 +148,7 @@ namespace AW.Tests
       var list = bindingSource.List;
       if (isObjectListView)
       {
-        Assert.IsInstanceOfType(bindingSource.List, typeof (ObjectListView<T>));
-        var objectListView = (ObjectListView<T>) list;
-        Assert.IsInstanceOfType(objectListView.List, typeof (List<T>));
+        MaybeAssertObjectListView(list);
       }
       if (numProperties > 0)
       {
@@ -153,6 +158,18 @@ namespace AW.Tests
       if (testNonGeneric)
         TestBindEnumerable((IEnumerable) enumerable, isObjectListView, numProperties);
       return (IEnumerable<T>) list;
+    }
+
+    private static void MaybeAssertObjectListView(dynamic list)
+    {
+      AssertObjectListView(list);
+    }
+
+    private static void AssertObjectListView<T>(IList<T> list)
+    {
+      Assert.IsInstanceOfType(list, typeof (ObjectListView<T>));
+      var objectListView = (ObjectListView<T>) list;
+      Assert.IsInstanceOfType(objectListView.List, typeof (List<T>));
     }
 
     private static BindingSource TestBindEnumerableReadonly<T>(IEnumerable<T> enumerable, bool setReadonly)
@@ -168,7 +185,14 @@ namespace AW.Tests
       TestBindEnumerableReadonly(enumerable, true);
       var bindingSource = TestBindEnumerableReadonly(enumerable, false);
       var list = bindingSource.List;
-      if (isObjectListView) Assert.IsInstanceOfType(bindingSource.List, typeof (ObjectListView));
+      if (isObjectListView)
+        // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+        if (list.GetType().IsGenericType)
+        {
+          MaybeAssertObjectListView(list);
+        }
+        else
+          Assert.IsInstanceOfType(list, typeof (ObjectListView));
       if (numProperties > 0)
       {
         var properties = MetaDataHelper.GetPropertiesToDisplay(enumerable);
