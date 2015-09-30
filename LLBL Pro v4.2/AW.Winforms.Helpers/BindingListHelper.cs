@@ -49,7 +49,7 @@ namespace AW.Winforms.Helpers
           if (bindingListView != null && (!ensureFilteringEnabled || bindingListView.SupportsFiltering))
             return bindingListView;
         }
-        return CreateBindingListView(enumerable, ensureFilteringEnabled);
+        return MaybeCreateBindingListView(enumerable, ensureFilteringEnabled);
       }
       return null;
     }
@@ -85,56 +85,26 @@ namespace AW.Winforms.Helpers
       return null;
     }
 
-    private static ObjectListView ToObjectListView(this IList list)
-    {
-      if (list != null)
-      {
-        var objectListView = new ObjectListView(list);
-        if (objectListView.ItemType != null)
-          return objectListView;
-      }
-      return null;
-    }
-
-    private static ObjectListView ToObjectListView(this ICollection collection)
-    {
-      if (collection != null)
-      {
-        var list = collection as IList;
-        if (list != null)
-          return ToObjectListView(list);
-        var objectListView = CreateObjectListView(collection);
-        if (objectListView.ItemType != null)
-          return objectListView;
-      }
-      return null;
-    }
-
-    private static ObjectListView<T> ToObjectListView<T>(this IList<T> list)
-    {
-      if (list != null)
-      {
-        var objectListView = new ObjectListView<T>(list);
-        return objectListView;
-      }
-      return null;
-    }
-
     private static IBindingListView CreateBindingListView<T>(IEnumerable<T> enumerable, bool ensureFilteringEnabled = false)
     {
-      if (typeof (T) == typeof (object))
+      var type = typeof (T);
+      if (type == typeof (object))
         return CreateBindingListView((IEnumerable) enumerable, ensureFilteringEnabled); //else ListBindingHelper.GetListItemProperties doesn't get the properties
-      foreach (var iBindingListView in
-        from bindingListViewCreator in BindingListViewCreaters
-        where bindingListViewCreator.Key.IsAssignableFrom(typeof (T))
-        select bindingListViewCreator.Value(enumerable, typeof (T))
+      var bindingListViews = from bindingListViewCreator in BindingListViewCreaters
+        where bindingListViewCreator.Key.IsAssignableFrom(type)
+        select bindingListViewCreator.Value(enumerable, type)
         into iBindingListView
         where iBindingListView != null && (!ensureFilteringEnabled || iBindingListView.SupportsFiltering)
-        select iBindingListView)
-      {
+        select iBindingListView;
+
+      foreach (var iBindingListView in bindingListViews)
         return iBindingListView;
-      }
       return ToObjectListView(enumerable);
+    }
+
+    private static IBindingListView MaybeCreateBindingListView(dynamic enumerable, bool ensureFilteringEnabled = false)
+    {
+      return CreateBindingListView(enumerable, ensureFilteringEnabled);
     }
 
     private static IBindingListView CreateBindingListView(IEnumerable enumerable, bool ensureFilteringEnabled = false)
@@ -176,6 +146,22 @@ namespace AW.Winforms.Helpers
       return CreateObjectListViewDirect(enumerable, itemType);
     }
 
+    private static IBindingListView ToObjectListView<T>(IEnumerable<T> enumerable)
+    {
+      enumerable = (IEnumerable<T>)ListBindingHelper.GetList(enumerable);
+      return ToObjectListView(enumerable as IList<T>??enumerable.ToList());
+    }
+
+    private static ObjectListView<T> ToObjectListView<T>(IList<T> list)
+    {
+      if (list != null)
+      {
+        var objectListView = new ObjectListView<T>(list);
+        return objectListView;
+      }
+      return null;
+    }
+
     private static ObjectListView CreateObjectListViewDirect(IEnumerable enumerable, Type itemType)
     {
       var bindingList = enumerable as IBindingList;
@@ -186,14 +172,14 @@ namespace AW.Winforms.Helpers
         if (list == null)
         {
           var collection = enumerable as ICollection;
-          if (collection != null)
-            objectListView = CreateObjectListView(collection);
-          else
+          if (collection == null)
           {
             objectListView = CreateObjectListView();
             foreach (var item in enumerable)
               objectListView.Add(item);
           }
+          else
+            objectListView = CreateObjectListView(collection);
         }
         else
           objectListView = new ObjectListView(list);
@@ -226,12 +212,6 @@ namespace AW.Winforms.Helpers
     private static ObjectListView CreateObjectListView()
     {
       return new ObjectListView(new ArrayList());
-    }
-
-    private static IBindingListView ToObjectListView<T>(this IEnumerable<T> enumerable)
-    {
-      enumerable = (IEnumerable<T>) ListBindingHelper.GetList(enumerable);
-      return ToObjectListView((IList<T>) enumerable.ToList());
     }
 
     public static bool BindEnumerable<T>(this BindingSource bindingSource, IEnumerable<T> enumerable, bool setReadonly)
