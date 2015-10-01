@@ -18,7 +18,7 @@ namespace AW.Winforms.Helpers.LLBL
     public static FrmPersistantLocation ShowDataBrowser(ILinqMetaData linqMetaData, Form parentForm = null,
       bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
     {
-      return FrmPersistantLocation.ShowControlInForm(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, membersToExclude) 
+      return FrmPersistantLocation.ShowControlInForm(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, membersToExclude)
         , "Data Browser", parentForm, "DataBrowser");
     }
 
@@ -40,7 +40,7 @@ namespace AW.Winforms.Helpers.LLBL
       Initialize(linqMetaData, null, useSchema, prefixDelimiter, ensureFilteringEnabled, membersToExclude);
     }
 
-    public void Initialize(ILinqMetaData linqMetaData, EntityHelper.GetQueryableForEntityDelegate getQueryableForEntityDelegate=null, bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
+    public void Initialize(ILinqMetaData linqMetaData, EntityHelper.GetQueryableForEntityDelegate getQueryableForEntityDelegate = null, bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
     {
       _linqMetaData = linqMetaData;
       _getQueryableForEntityDelegate = getQueryableForEntityDelegate;
@@ -108,23 +108,76 @@ namespace AW.Winforms.Helpers.LLBL
 
     private IQueryable GetEntityQueryable()
     {
-      return _getQueryableForEntityDelegate==null ? 
-        EntityHelper.GetQueryableForEntityIgnoreIfNull(_linqMetaData, treeViewEntities.SelectedNode.Tag as Type) 
+      return _getQueryableForEntityDelegate == null ?
+        EntityHelper.GetQueryableForEntityIgnoreIfNull(_linqMetaData, treeViewEntities.SelectedNode.Tag as Type)
         : _getQueryableForEntityDelegate(_linqMetaData, treeViewEntities.SelectedNode.Tag as Type);
     }
 
     private void ViewEntities(IQueryable entityQueryable)
     {
-      if (gridDataEditor.DataEditorPersister == null)
-        if (typeof (IEntity).IsAssignableFrom(entityQueryable.ElementType))
+      if (typeof (IEntity).IsAssignableFrom(entityQueryable.ElementType))
+      {
+        if (gridDataEditor.DataEditorPersister == null)
           gridDataEditor.DataEditorPersister = new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister();
-        else
-        {
-          var provider = entityQueryable.Provider as LLBLGenProProvider2;
-          if (provider != null)
-            gridDataEditor.DataEditorPersister = new LLBLWinformHelper.DataEditorLLBLAdapterPersister(provider.AdapterToUse);
-        }
-      gridDataEditor.BindEnumerable(entityQueryable);
+      }
+      //  MaybeViewEntities(entityQueryable);
+      else
+      {
+        var provider = entityQueryable.Provider as LLBLGenProProvider2;
+        if (provider != null && gridDataEditor.DataEditorPersister == null)
+          gridDataEditor.DataEditorPersister = new LLBLWinformHelper.DataEditorLLBLAdapterPersister(provider.AdapterToUse);
+      }
+      gridDataEditor.BindEnumerable(CacheResultset(entityQueryable));
+    }
+
+    private static dynamic CacheResultset(dynamic entityQueryable, int durationInSeconds =20)
+    {
+     return QueryableExtensionMethods.CacheResultset(entityQueryable, durationInSeconds);
+    }
+
+    private void MaybeBindAdapterCached(dynamic entityQueryable)
+    {
+      BindAdapterCached(entityQueryable);
+    }
+
+    private void MaybeBindSelfServicingCached(dynamic entityQueryable)
+    {
+      BindSelfServicingCached(entityQueryable);
+    }
+
+    private void BindSelfServicingCached<T>(IQueryable<T> entityQueryable) where T : class, IEntityCore
+    {
+      var queryableCached = QueryableExtensionMethods.CacheResultset(entityQueryable, 20);
+      gridDataEditor.BindEnumerable(queryableCached);
+    }
+
+    private void BindAdapterCached<T>(IQueryable<T> entityQueryable) where T : EntityBase2
+    {
+      var queryableCached = entityQueryable.CacheResultset(20);
+      gridDataEditor.BindEnumerable(queryableCached);
+    }
+
+    private void MaybeViewEntities(dynamic entityQueryable)
+    {
+      ViewSelfServicingEntities(entityQueryable);
+    }
+
+    private void ViewSelfServicingEntities<T>(IQueryable<T> entityQueryable) where T : EntityBase
+    {
+      var queryableCached = entityQueryable.CacheResultset(10);
+      var dataScope = new SelfServicingGenericDataScope<T>(queryableCached);
+      dataScope.FetchData();
+      gridDataEditor.DataEditorPersister = new DataEditorLLBLSelfServicingDataScopePersister<T>(dataScope);
+      gridDataEditor.BindEnumerable(dataScope.EntityCollection);
+    }
+
+    private void ViewAdapterEntities<T>(IQueryable<T> entityQueryable) where T : EntityBase2
+    {
+      var queryableCached = entityQueryable.CacheResultset(10);
+      var dataScope = new AdapterGenericDataScope<T>(queryableCached);
+      dataScope.FetchData();
+      gridDataEditor.DataEditorPersister = new DataEditorLLBLAdapterDataScopePersister<T>(dataScope);
+      gridDataEditor.BindEnumerable(dataScope.EntityCollection);
     }
 
     private void openPagedToolStripMenuItem_Click()

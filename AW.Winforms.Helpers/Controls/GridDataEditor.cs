@@ -36,6 +36,8 @@ namespace AW.Winforms.Helpers.Controls
     /// </summary>
     private const int MaxAutoGenerateColumnWidth = 300;
 
+    private const bool AllowPagingWhenEditing = true;
+
     private readonly ArrayList _deleteItems = new ArrayList();
     protected bool IsBinding = true;
     private bool _loaded;
@@ -206,7 +208,7 @@ namespace AW.Winforms.Helpers.Controls
     private void saveToolStripButton_Click(object sender, EventArgs e)
     {
       dataGridViewEnumerable.EndEdit();
-      var numSaved = DataEditorPersister.Save(bindingSourceEnumerable.List);
+      var numSaved = DataEditorPersister.Save(BindingSourceEnumerableList);
       toolStripLabelSaveResult.Text = @"numSaved: " + numSaved;
       if (HasDeletes)
       {
@@ -238,7 +240,7 @@ namespace AW.Winforms.Helpers.Controls
     private void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
     {
       e.Exception.TraceOut();
-      if (_canSave && !toolStripButtonCancelEdit.Enabled && DataEditorPersister.IsDirty(SourceEnumerable))
+      if (_canSave && !toolStripButtonCancelEdit.Enabled && DataEditorPersister.IsDirty(PageSourceEnumerable))
       {
         toolStripButtonCancelEdit.Enabled = true;
       }
@@ -268,11 +270,6 @@ namespace AW.Winforms.Helpers.Controls
       }
       toolStripLabelSaveResult.Text = "";
       toolStripLabelDeleteCount.Text = "";
-    }
-
-    protected virtual bool IsObjectListView()
-    {
-      return bindingSourceEnumerable.List is ObjectListView || bindingSourceEnumerable.List.GetType() == typeof (ObjectListView<>);
     }
 
     protected bool EnumerableShouldBeReadonly(IEnumerable enumerable, Type typeToEdit)
@@ -369,7 +366,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void bindingSourcePaging_PositionChanged(object sender, EventArgs e)
     {
-      if (bindingSourcePaging.Count != 0)
+      if (Paging())
         BindPage();
     }
 
@@ -412,7 +409,7 @@ namespace AW.Winforms.Helpers.Controls
       bindingSourcePaging.DataSource = null;
       bindingSourcePaging.DataSource = CreatePageDataSource(pageSize, enumerable);
       if (Paging())
-        return bindingSourceEnumerable.List != null;
+        return BindingSourceEnumerableList != null;
       return GetFirstPage(enumerable);
     }
 
@@ -432,19 +429,59 @@ namespace AW.Winforms.Helpers.Controls
     {
       if (SupportsNotifyPropertyChanged)
         saveToolStripButton.Enabled = false;
-      if (DataSourceIsObjectListView)
-        ((ObjectListView) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
-
-      if (_canSave && !saveToolStripButton.Enabled && DataEditorPersister.IsDirty(SourceEnumerable))
+      MaybeSetRemovingItem(bindingSourceEnumerable.DataSource);
+      if (_canSave && !saveToolStripButton.Enabled && DataEditorPersister.IsDirty(PageSourceEnumerable))
       {
         toolStripButtonCancelEdit.Enabled = true;
         saveToolStripButton.Enabled = true;
       }
     }
+    private void MaybeSetRemovingItem(dynamic dataSource)
+    {
+      SetRemovingItem(dataSource);
+    }
+
+    private void SetRemovingItem<T>(ObjectListView<T> objectListView)
+    {
+        objectListView.RemovingItem += GridDataEditor_RemovingItem;
+    }
+
+    private void SetRemovingItem(ObjectListView objectListView)
+    {
+      objectListView.RemovingItem += GridDataEditor_RemovingItem;
+    }
+
+    private void SetRemovingItem(object ignore)
+    {
+    }
+
+    private void MaybeUnSetRemovingItem(dynamic dataSource)
+    {
+      if (dataSource != null) SetUnRemovingItem(dataSource);
+    }
+
+    private void SetUnRemovingItem<T>(ObjectListView<T> objectListView)
+    {
+      objectListView.RemovingItem -= GridDataEditor_RemovingItem;
+    }
+
+    private void SetUnRemovingItem(ObjectListView objectListView)
+    {
+      objectListView.RemovingItem -= GridDataEditor_RemovingItem;
+    }
+
+    private void SetUnRemovingItem(object ignore)
+    {
+    }
+
+    protected virtual bool IsObjectListView()
+    {
+      return BindingListHelper.IsObjectListView(bindingSourceEnumerable.DataSource);
+    }
 
     private bool DataSourceIsObjectListView
     {
-      get { return bindingSourceEnumerable.DataSource is ObjectListView; }
+      get { return IsObjectListView(); }
     }
 
     protected void GridDataEditor_RemovingItem(object sender, RemovingItemEventArgs e)
@@ -488,7 +525,7 @@ namespace AW.Winforms.Helpers.Controls
       get
       {
         if (_itemType == null && bindingSourceEnumerable.DataSource != null)
-          ItemType = MetaDataHelper.GetEnumerableItemType(bindingSourceEnumerable.List);
+          ItemType = MetaDataHelper.GetEnumerableItemType(BindingSourceEnumerableList);
         return _itemType;
       }
       set
@@ -536,14 +573,14 @@ namespace AW.Winforms.Helpers.Controls
           case ListChangedType.ItemDeleted:
             saveToolStripButton.Enabled = _canSave && (!DataSourceIsObjectListView || HasDeletes);
             toolStripButtonCancelEdit.Enabled = true;
-            bindingNavigatorPaging.Enabled = false;
+            bindingNavigatorPaging.Enabled = AllowPagingWhenEditing;
             break;
 
           case ListChangedType.ItemChanged:
           case ListChangedType.ItemAdded:
             saveToolStripButton.Enabled = _canSave;
             toolStripButtonCancelEdit.Enabled = true;
-            bindingNavigatorPaging.Enabled = false;
+            bindingNavigatorPaging.Enabled = AllowPagingWhenEditing;
             break;
         }
     }
@@ -551,7 +588,7 @@ namespace AW.Winforms.Helpers.Controls
     private void toolStripButtonCancelEdit_Click(object sender, EventArgs e)
     {
       bindingSourceEnumerable.CancelEdit();
-      if (DataEditorPersister != null && DataEditorPersister.Undo(bindingSourceEnumerable.List))
+      if (DataEditorPersister != null && DataEditorPersister.Undo(BindingSourceEnumerableList))
       {
         bindingSourceEnumerable.ResetBindings(false);
         saveToolStripButton.Enabled = false;
@@ -561,14 +598,14 @@ namespace AW.Winforms.Helpers.Controls
 
     private void toolStripButtonObjectListViewVisualizer_Click(object sender, EventArgs e)
     {
-      var visualizerForm = ObjectListViewHelper.CreateVisualizerForm(bindingSourceEnumerable.List);
+      var visualizerForm = ObjectListViewHelper.CreateVisualizerForm(BindingSourceEnumerableList);
       if (visualizerForm != null)
         visualizerForm.ShowDialog();
     }
 
     private void toolStripButtonObjectBrowser_Click(object sender, EventArgs e)
     {
-      FrmEntityViewer.LaunchAsChildForm(bindingSourceEnumerable.List, DataEditorPersister);
+      FrmEntityViewer.LaunchAsChildForm(BindingSourceEnumerableList, DataEditorPersister);
     }
 
     private void tabControlGrids_SelectedIndexChanged(object sender, EventArgs e)
@@ -592,9 +629,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void UnBindGrids()
     {
-      if (DataSourceIsObjectListView)
-        ((ObjectListView)bindingSourceEnumerable.DataSource).RemovingItem -= GridDataEditor_RemovingItem;
-      //  dataGridViewEnumerable.DataSource = null;
+      MaybeUnSetRemovingItem(bindingSourceEnumerable.DataSource);
       dataGridViewEnumerable.ClearFilter();
       dataGridEnumerable.DataSource = null;
     }
@@ -753,14 +788,24 @@ namespace AW.Winforms.Helpers.Controls
         EnsureFilteringEnabled = true;
         BindEnumerable(SourceEnumerable);
 
-        //BindEnumerable(new Csla.ObjectListView(bindingSourceEnumerable.List));
+        //BindEnumerable(new Csla.ObjectListView(BindingSourceEnumerableList));
         toolStripButtonEnableFilter.Visible = false;
       }
     }
 
+    private IList BindingSourceEnumerableList
+    {
+      get { return bindingSourceEnumerable.List; }
+    }
+
     protected virtual IEnumerable SourceEnumerable
     {
-      get { return _superset ?? bindingSourceEnumerable.GetDataSource(); }
+      get { return _superset ?? PageSourceEnumerable; }
+    }
+
+    private IEnumerable PageSourceEnumerable
+    {
+      get { return bindingSourceEnumerable.GetDataSource(); }
     }
 
     public bool EnsureFilteringEnabled { get; set; }

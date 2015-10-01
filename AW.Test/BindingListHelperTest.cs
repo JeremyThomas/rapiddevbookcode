@@ -168,8 +168,6 @@ namespace AW.Tests
     private static void AssertObjectListView<T>(IList<T> list)
     {
       Assert.IsInstanceOfType(list, typeof (ObjectListView<T>));
-      var objectListView = (ObjectListView<T>) list;
-      Assert.IsInstanceOfType(objectListView.List, typeof (List<T>));
     }
 
     private static BindingSource TestBindEnumerableReadonly<T>(IEnumerable<T> enumerable, bool setReadonly)
@@ -250,9 +248,39 @@ namespace AW.Tests
       Assert.IsInstanceOfType(addressTypeEntityCollectionQueryableAsBindingListView, addressTypeEntityCollection.DefaultView.GetType());
     }
 
-    private static IBindingListView TestToBindingListView(IEnumerable enumerable)
+    [TestMethod]
+    public void LLBLQueryToBindingListViewTest()
     {
-      var bindingListView = enumerable.ToBindingListView();
+      TestLLBLQueryToBindingListView(MetaSingletons.MetaData.AddressType);
+      TestLLBLQueryToBindingListView(MetaSingletons.MetaData.AddressType, true);
+    }
+
+    private static void TestLLBLQueryToBindingListView(IEnumerable enumerable, bool ensureFilteringEnabled = false)
+    {
+      var list = TestToBindingListView(enumerable, ensureFilteringEnabled);
+      Assert.IsInstanceOfType(list, typeof (ICollection));
+      if (ensureFilteringEnabled)
+        MaybeAssertObjectListView(list);
+      else
+        Assert.IsInstanceOfType(list, typeof (IEntityView));
+      var dataSource = (ICollection) BindingListHelper.GetDataSource(list);
+      Assert.IsInstanceOfType(dataSource, typeof (IEntityCollection));
+    }
+
+    [TestMethod]
+    public void GetDataSourceTest()
+    {
+      var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
+      var list = TestToBindingListView(addressTypeEntityCollection, true);
+      Assert.IsInstanceOfType(list, typeof(ICollection));
+      var dataSource = (ICollection)BindingListHelper.GetDataSource(list);
+      CollectionAssert.AreEqual(addressTypeEntityCollection, dataSource);
+      Assert.AreEqual(addressTypeEntityCollection, dataSource);
+    }
+
+    private static IBindingListView TestToBindingListView(IEnumerable enumerable, bool ensureFilteringEnabled = false)
+    {
+      var bindingListView = enumerable.ToBindingListView(ensureFilteringEnabled);
       Assert.IsInstanceOfType(bindingListView, typeof (IBindingListView));
       Assert.IsTrue(bindingListView.Count > 0);
       return bindingListView;

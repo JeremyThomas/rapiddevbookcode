@@ -85,16 +85,6 @@ namespace AW.Winforms.Helpers.Controls
       return _superSetCount.Value;
     }
 
-    protected override void SetRemovingItem()
-    {
-      if (SupportsNotifyPropertyChanged)
-        saveToolStripButton.Enabled = false;
-      if (bindingSourceEnumerable.DataSource is ObjectListView<T>)
-        ((ObjectListView<T>) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
-      else
-        base.SetRemovingItem();
-    }
-
     protected override void BindEnumerable()
     {
       bindingSourceEnumerable.BindEnumerable(SkipTake(), false);

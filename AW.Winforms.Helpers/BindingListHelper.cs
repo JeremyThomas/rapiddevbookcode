@@ -87,19 +87,22 @@ namespace AW.Winforms.Helpers
 
     private static IBindingListView CreateBindingListView<T>(IEnumerable<T> enumerable, bool ensureFilteringEnabled = false)
     {
-      var type = typeof (T);
-      if (type == typeof (object))
+      var itemType = typeof (T);
+      if (itemType == typeof (object))
         return CreateBindingListView((IEnumerable) enumerable, ensureFilteringEnabled); //else ListBindingHelper.GetListItemProperties doesn't get the properties
-      var bindingListViews = from bindingListViewCreator in BindingListViewCreaters
-        where bindingListViewCreator.Key.IsAssignableFrom(type)
-        select bindingListViewCreator.Value(enumerable, type)
-        into iBindingListView
-        where iBindingListView != null && (!ensureFilteringEnabled || iBindingListView.SupportsFiltering)
-        select iBindingListView;
 
-      foreach (var iBindingListView in bindingListViews)
-        return iBindingListView;
-      return ToObjectListView(enumerable);
+      var potentialBindingListViews = BindingListViewCreaters
+  .Where(bindingListViewCreator => bindingListViewCreator.Key.IsAssignableFrom(itemType))
+  .Select(bindingListViewCreator => bindingListViewCreator.Value(enumerable, itemType)).ToList();
+
+      var validBindingListViews = from bindingListViewCreator in potentialBindingListViews
+                                  where bindingListViewCreator != null && (!ensureFilteringEnabled || bindingListViewCreator.SupportsFiltering)
+                                  select bindingListViewCreator;
+
+      foreach (var iBindingListView in validBindingListViews)
+        return iBindingListView; //Return first
+
+      return ToObjectListView((IEnumerable<T>)GetDataSource(potentialBindingListViews.FirstOrDefault()) ?? enumerable);
     }
 
     private static IBindingListView MaybeCreateBindingListView(dynamic enumerable, bool ensureFilteringEnabled = false)
@@ -148,8 +151,11 @@ namespace AW.Winforms.Helpers
 
     private static IBindingListView ToObjectListView<T>(IEnumerable<T> enumerable)
     {
-      enumerable = (IEnumerable<T>)ListBindingHelper.GetList(enumerable);
-      return ToObjectListView(enumerable as IList<T>??enumerable.ToList());
+      var list = enumerable as IList<T>;
+      if (list != null)
+        return ToObjectListView(list);
+      enumerable = (IEnumerable<T>) ListBindingHelper.GetList(enumerable);
+      return ToObjectListView(enumerable as IList<T> ?? enumerable.ToList());
     }
 
     private static ObjectListView<T> ToObjectListView<T>(IList<T> list)
@@ -293,10 +299,10 @@ namespace AW.Winforms.Helpers
         bindingSource.RaiseListChangedEvents = false;
         try
         {
-        if (bindingSource.SupportsSorting && bindingSource.IsSorted)
-          bindingSource.RemoveSort(); 
-        if (bindingSource.SupportsFiltering && !string.IsNullOrWhiteSpace(bindingSource.Filter))
-          bindingSource.RemoveFilter();
+          if (bindingSource.SupportsSorting && bindingSource.IsSorted)
+            bindingSource.RemoveSort();
+          if (bindingSource.SupportsFiltering && !string.IsNullOrWhiteSpace(bindingSource.Filter))
+            bindingSource.RemoveFilter();
         }
         finally
         {
@@ -385,6 +391,11 @@ namespace AW.Winforms.Helpers
       return result && !bindingList.AllowEdit;
     }
 
+    public static bool IsObjectListView(object anObject)
+    {
+      return anObject != null && (anObject is ObjectListView || anObject.GetType().GetGenericTypeDefinition() == typeof (ObjectListView<>));
+    }
+
     public static IEnumerable GetDataSource(this BindingSource bindingSource)
     {
       var dataSource = bindingSource.List as BindingSource;
@@ -394,15 +405,6 @@ namespace AW.Winforms.Helpers
       return bindingList == null ? bindingSource.List : GetDataSource(bindingList);
     }
 
-    private static IEnumerable GetDataSource(this ObjectListView objectListView)
-    {
-      var bindingSource = objectListView.List as BindingSource;
-      if (bindingSource != null)
-        return GetDataSource(bindingSource);
-      var objectListViewSource = objectListView.List as ObjectListView;
-      return objectListViewSource == null ? objectListView.List : GetDataSource(objectListViewSource);
-    }
-
     public static IEnumerable GetDataSource(IBindingList bindingList)
     {
       if (bindingList == null)
@@ -410,15 +412,35 @@ namespace AW.Winforms.Helpers
       var bindingSource = bindingList as BindingSource;
       if (bindingSource != null)
         return GetDataSource(bindingSource);
-      var objectListViewSource = bindingList as ObjectListView;
-      if (objectListViewSource == null)
-      {
-        var bindingListSourceProvider = BindingListViewSources.FirstOrDefault(b => b.Key.IsInstanceOfType(bindingList)).Value;
-        if (bindingListSourceProvider != null)
-          return bindingListSourceProvider(bindingList);
-        return bindingList;
-      }
-      return GetDataSource(objectListViewSource);
+      return MaybeGetObjectListViewDataSourcedynamic(bindingList);
+    }
+
+    private static IEnumerable GetObjectListViewDataSource(IBindingList bindingList)
+    {
+      var bindingListSourceProvider = BindingListViewSources.FirstOrDefault(b => b.Key.IsInstanceOfType(bindingList)).Value;
+      if (bindingListSourceProvider != null)
+        return bindingListSourceProvider(bindingList);
+      return bindingList;
+    }
+
+    private static IEnumerable MaybeGetObjectListViewDataSourcedynamic(dynamic dataSource)
+    {
+      return GetObjectListViewDataSource(dataSource);
+    }
+
+    private static IEnumerable GetObjectListViewDataSource<T>(ObjectListView<T> objectListView)
+    {
+      var objectListViewSource = objectListView.List as ObjectListView<T>;
+      return objectListViewSource == null ? objectListView.List : GetObjectListViewDataSource(objectListViewSource);
+    }
+
+    private static IEnumerable GetObjectListViewDataSource(ObjectListView objectListView)
+    {
+      var bindingSource = objectListView.List as BindingSource;
+      if (bindingSource != null)
+        return GetDataSource(bindingSource);
+      var objectListViewSource = objectListView.List as ObjectListView;
+      return objectListViewSource == null ? objectListView.List : GetObjectListViewDataSource(objectListViewSource);
     }
   }
 }

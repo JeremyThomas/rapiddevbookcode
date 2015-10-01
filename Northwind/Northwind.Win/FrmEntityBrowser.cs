@@ -12,6 +12,7 @@ using Northwind.DAL.EntityClasses;
 using Northwind.DAL.Linq;
 using Northwind.DAL.Services;
 using Northwind.Win.NorthwindODataSRSharedTypes;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.Win
 {
@@ -22,6 +23,7 @@ namespace Northwind.Win
       InitializeComponent();
 
       var linqMetaData = Factories.CreateLinqMetaData();
+      linqMetaData.ContextToUse=new Context();
       usrCntrlEntityBrowser1.Initialize(linqMetaData,ensureFilteringEnabled:false);
       //Done in CommonEntityBase  CacheController.RegisterCache(dataAccessAdapter.ConnectionString, new ResultsetCache()); 
       Text += string.Format(" - {0}", ProfilerHelper.OrmProfilerStatus);
