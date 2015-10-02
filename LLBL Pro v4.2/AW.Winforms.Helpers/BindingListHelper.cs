@@ -92,17 +92,17 @@ namespace AW.Winforms.Helpers
         return CreateBindingListView((IEnumerable) enumerable, ensureFilteringEnabled); //else ListBindingHelper.GetListItemProperties doesn't get the properties
 
       var potentialBindingListViews = BindingListViewCreaters
-  .Where(bindingListViewCreator => bindingListViewCreator.Key.IsAssignableFrom(itemType))
-  .Select(bindingListViewCreator => bindingListViewCreator.Value(enumerable, itemType)).ToList();
+        .Where(bindingListViewCreator => bindingListViewCreator.Key.IsAssignableFrom(itemType))
+        .Select(bindingListViewCreator => bindingListViewCreator.Value(enumerable, itemType)).ToList();
 
       var validBindingListViews = from bindingListViewCreator in potentialBindingListViews
-                                  where bindingListViewCreator != null && (!ensureFilteringEnabled || bindingListViewCreator.SupportsFiltering)
-                                  select bindingListViewCreator;
+        where bindingListViewCreator != null && (!ensureFilteringEnabled || bindingListViewCreator.SupportsFiltering)
+        select bindingListViewCreator;
 
       foreach (var iBindingListView in validBindingListViews)
         return iBindingListView; //Return first
 
-      return ToObjectListView((IEnumerable<T>)GetDataSource(potentialBindingListViews.FirstOrDefault()) ?? enumerable);
+      return ToObjectListView((IEnumerable<T>) GetDataSource(potentialBindingListViews.FirstOrDefault()) ?? enumerable);
     }
 
     private static IBindingListView MaybeCreateBindingListView(dynamic enumerable, bool ensureFilteringEnabled = false)
@@ -393,7 +393,7 @@ namespace AW.Winforms.Helpers
 
     public static bool IsObjectListView(object anObject)
     {
-      return anObject != null && (anObject is ObjectListView || anObject.GetType().GetGenericTypeDefinition() == typeof (ObjectListView<>));
+      return anObject != null && (anObject is ObjectListView || anObject.GetType().HasGenericTypeDefinition(typeof (ObjectListView<>)));
     }
 
     public static IEnumerable GetDataSource(this BindingSource bindingSource)

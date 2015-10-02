@@ -20,8 +20,7 @@ namespace AW.Winforms.Helpers.LLBL
     /// </summary>
     static LLBLWinformHelper()
     {
-      BindingListHelper.RegisterbindingListViewCreater(typeof (IEntity), EntityHelper.CreateEntityView);
-      BindingListHelper.RegisterbindingListViewCreater(typeof (IEntity2), EntityHelper.CreateEntityView2);
+      BindingListHelper.RegisterbindingListViewCreater(typeof (IEntityCore), EntityHelper.CreateEntityView);
       BindingListHelper.RegisterBindingListSourceProvider(typeof (IEntityView), EntityHelper.GetRelatedCollection);
       BindingListHelper.RegisterBindingListSourceProvider(typeof (IEntityView2), EntityHelper.GetRelatedCollection);
     }

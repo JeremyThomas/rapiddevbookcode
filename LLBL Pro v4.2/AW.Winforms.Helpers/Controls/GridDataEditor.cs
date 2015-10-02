@@ -438,7 +438,7 @@ namespace AW.Winforms.Helpers.Controls
     }
     private void MaybeSetRemovingItem(dynamic dataSource)
     {
-      SetRemovingItem(dataSource);
+      if (dataSource != null) SetRemovingItem(dataSource);
     }
 
     private void SetRemovingItem<T>(ObjectListView<T> objectListView)

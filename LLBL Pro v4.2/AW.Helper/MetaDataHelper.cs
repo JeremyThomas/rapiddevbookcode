@@ -348,6 +348,11 @@ namespace AW.Helper
       return type.GetInterface(interfaceName) != null;
     }
 
+    public static bool HasGenericTypeDefinition(this Type type, Type genericTypeDefinition)
+    {
+      return type.IsGenericType && type.GetGenericTypeDefinition() == genericTypeDefinition;
+    }
+
     public static IEnumerable<Type> FilterByImplements(this IEnumerable<Type> types, string interfaceName)
     {
       return from type in types

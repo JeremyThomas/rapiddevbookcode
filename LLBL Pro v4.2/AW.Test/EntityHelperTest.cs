@@ -81,7 +81,10 @@ namespace AW.Tests
       var actualQueryable = actual.AsQueryable().ToEntityCollection();
       CollectionAssert.AreEqual(expected, actualQueryable); //IQueryable not ILLBLGenProQuery
 
-      CollectionAssert.AreEqual(expected, (EntityCollectionBase<T>) EntityHelper.ToEntityCollection(expected, typeof (T))); //IEnumerable
+      Assert.AreEqual(expected, expected.ToEntityCollection());
+      var entityCollectionBase = (EntityCollectionBase<T>) EntityHelper.ToEntityCollection(expected, typeof (T));
+      CollectionAssert.AreEqual(expected, entityCollectionBase); //IEnumerable
+      Assert.AreEqual(expected, entityCollectionBase);
 
       var emptyCollection = FactoryHelper.CreateEntityCollection<T>();
       CollectionAssert.AreEqual(emptyCollection, emptyCollection.Distinct().ToEntityCollection()); //IEnumerable<T> 
