@@ -151,7 +151,8 @@ namespace AW.Tests
     private static T TestSerializerLlbltoCSharp<T>(T obj)
     {
       var result = obj.SerializeToCSharp(OutputFormat.Compileable, "Fields,EntityFactoryToUse,Picture,Photo");
-      var rootVariable = CompilableSource<T>(result, typeof (EntityBase2), typeof (IEditableObject), typeof (XmlEntity), typeof (GeneralHelper));
+      var rootVariable = CompilableSource<T>(result, typeof (EntityBase2), typeof (IEditableObject), typeof (XmlEntity), 
+        typeof (GeneralHelper), typeof(System.Data.DataRow));
       return rootVariable;
     }
 

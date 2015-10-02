@@ -465,17 +465,25 @@ namespace AW.Helper
     ///   Determines whether the specified IEnumerable is null or empty.
     /// </summary>
     /// <see cref="http://haacked.com/archive/2010/06/10/checking-for-empty-enumerations.aspx" />
-    /// <typeparam name="T"> </typeparam>
-    /// <param name="items"> The items. </param>
     /// <returns> <c>true</c> if specified IEnumerable is null or empty; otherwise, <c>false</c> . </returns>
-    public static bool IsNullOrEmpty<T>(this IEnumerable<T> items)
+    public static bool IsNullOrEmpty(this IEnumerable enumerable)
     {
-      return items is ICollection ? ((ICollection) items).Count == 0 : items.AsNullIfEmpty() == null;
+      return TryIsNullOrEmpty(enumerable);
     }
 
-    public static bool IsNullOrEmpty(ICollection collection)
+    private static bool TryIsNullOrEmpty(dynamic enumerable)
     {
-      return collection == null || collection.Count == 0;
+      return enumerable == null || MaybeIsNullOrEmpty(enumerable);
+    }
+
+    private static bool MaybeIsNullOrEmpty<T>(IEnumerable<T> items)
+    {
+      return items is ICollection ? ((ICollection)items).Count == 0 : items.AsNullIfEmpty() == null;
+    }
+
+    private static bool MaybeIsNullOrEmpty(IEnumerable enumerable)
+    {
+      return !Any(enumerable);
     }
 
     /// <summary>

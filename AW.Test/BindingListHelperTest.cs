@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -78,8 +77,8 @@ namespace AW.Tests
       Assert.IsTrue(bindingSource.BindEnumerable((IEnumerable) listofNonSerializableClasses, false));
       if (bindingSource.SupportsSorting)
       {
-        Assert.IsInstanceOfType(bindingSource.List, typeof(ObjectListView<SerializableBaseClass>));
-        var objectListView = (ObjectListView<SerializableBaseClass>)bindingSource.List;
+        Assert.IsInstanceOfType(bindingSource.List, typeof (ObjectListView<SerializableBaseClass>));
+        var objectListView = (ObjectListView<SerializableBaseClass>) bindingSource.List;
         Assert.AreEqual(listofNonSerializableClasses, objectListView.List);
       }
       else
@@ -272,9 +271,12 @@ namespace AW.Tests
     {
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
       var list = TestToBindingListView(addressTypeEntityCollection, true);
-      Assert.IsInstanceOfType(list, typeof(ICollection));
-      var dataSource = (ICollection)BindingListHelper.GetDataSource(list);
+      Assert.IsInstanceOfType(list, typeof (ICollection));
+      Assert.IsInstanceOfType(list, typeof (ObjectListView<AddressTypeEntity>));
+      var dataSource = (ICollection) BindingListHelper.GetDataSource(list);
       CollectionAssert.AreEqual(addressTypeEntityCollection, dataSource);
+      var objectListView = (ObjectListView<AddressTypeEntity>) list;
+      Assert.AreEqual(addressTypeEntityCollection, objectListView.List);
       Assert.AreEqual(addressTypeEntityCollection, dataSource);
     }
 
@@ -292,8 +294,8 @@ namespace AW.Tests
       var serializableClasses = SerializableClass.GenerateList();
       var bindingListView = serializableClasses.Cast<object>().ToBindingListView();
       var enumerableItemType = MetaDataHelper.GetEnumerableItemType(bindingListView);
-      Assert.AreEqual(typeof(SerializableClass), enumerableItemType);
-      Assert.AreEqual(4,ListBindingHelper.GetListItemProperties(bindingListView).Count);
+      Assert.AreEqual(typeof (SerializableClass), enumerableItemType);
+      Assert.AreEqual(4, ListBindingHelper.GetListItemProperties(bindingListView).Count);
       Assert.AreEqual(ListBindingHelper.GetListItemProperties(serializableClasses), ListBindingHelper.GetListItemProperties(bindingListView));
     }
 
@@ -311,6 +313,5 @@ namespace AW.Tests
       Assert.IsTrue(bindingListView.Count > 0);
       return bindingListView;
     }
-
   }
 }

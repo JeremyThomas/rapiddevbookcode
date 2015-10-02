@@ -231,14 +231,24 @@ namespace AW.Helper.LLBL
       return GetFactoryCore(CreateEntity<T>());
     }
 
+    public static IEntityFactoryCore GetFactoryCore(Type type)
+    {
+      return GetFactoryCore(CreateEntity(type));
+    }
+
     private static IEntityFactoryCore GetFactoryCore<T>(IEnumerable<T> enumerable) where T : class, IEntityCore
+    {
+      return GetFactoryCore(enumerable, typeof (T));
+    }
+
+    private static IEntityFactoryCore GetFactoryCore(IEnumerable enumerable, Type type)
     {
       if (!enumerable.IsNullOrEmpty())
       {
-        var first = enumerable.FirstOrDefault(e => e.GetType() == typeof (T)) as IEntityCore;
+        var first = enumerable.OfType<object>().FirstOrDefault(e => e.GetType() == type) as IEntityCore;
         if (first != null) return GetFactoryCore(first);
       }
-      return GetFactoryCore<T>();
+      return GetFactoryCore(type);
     }
 
     #endregion
@@ -294,66 +304,41 @@ namespace AW.Helper.LLBL
 
     #endregion
 
-    #region Self Servicing
-
-    /// <summary>
-    ///   Converts an entity enumeration to an entity collection. If the enumeration is a ILLBLGenProQuery then executes
-    ///   the query this object represents and returns its results in its native container - an entity collection.
-    /// </summary>
-    /// <typeparam name="T">EntityBase2</typeparam>
-    /// <param name="enumerable">The enumerable.</param>
-    /// <returns></returns>
-    public static EntityCollectionBase<T> ToEntityCollection<T>(this IEnumerable<T> enumerable) where T : EntityBase
+    public static IEntityCollectionCore ToEntityCollection(IEnumerable enumerable, Type itemType)
     {
-      var llblQuery = enumerable as ILLBLGenProQuery;
-      if (llblQuery != null)
-        return llblQuery.Execute<EntityCollectionBase<T>>();
-      var entities = ((IEntityFactory) GetFactoryCore(enumerable)).CreateEntityCollection() as EntityCollectionBase<T>;
+      var entities = enumerable as IEntityCollectionCore;
       if (entities != null)
-        entities.AddRange(enumerable);
-      return entities;
-    }
-
-    public static IEntityCollection ToEntityCollection(IEnumerable enumerable, Type itemType)
-    {
-      IEntityCollection entities = null;
+        return entities;
       var llblQuery = enumerable as ILLBLGenProQuery;
       if (llblQuery != null)
-        entities = llblQuery.Execute() as IEntityCollection;
+        entities = llblQuery.Execute() as IEntityCollectionCore;
       if (entities == null)
       {
-        var enumerator = enumerable.GetEnumerator();
-        while (enumerator.MoveNext())
-        {
-          var firstEntity = ((IEntity) enumerator.Current);
-          if (firstEntity == null || !(itemType == firstEntity.GetType())) continue;
-          entities = firstEntity.GetEntityFactory().CreateEntityCollection();
-          if (entities == null)
-            return null;
-          foreach (IEntity item in enumerable)
-            entities.Add(item);
-          break;
-        }
-      }
-      if (entities == null)
-      {
-        entities = ((IEntity) CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection();
-        if (entities == null)
-          return null;
+        var entityFactoryCore = GetFactoryCore(enumerable, itemType);
+        var entityFactory = (entityFactoryCore as IEntityFactory);
+        entities = entityFactory == null? (IEntityCollectionCore) ((IEntityFactory2) entityFactoryCore).CreateEntityCollection():entityFactory.CreateEntityCollection();
         foreach (IEntity item in enumerable)
           entities.Add(item);
       }
-      if (entities.Count > 0)
+      if (!entities.IsNullOrEmpty())
         entities.RemovedEntitiesTracker = entities.EntityFactoryToUse.CreateEntityCollection();
       return entities;
     }
 
     public static IBindingListView CreateEntityView(IEnumerable enumerable, Type itemType)
     {
-      var entityCollection = ToEntityCollection(enumerable, itemType);
-      if (entityCollection == null) return null;
-      entityCollection.DefaultView.DataChangeAction = PostCollectionChangeAction.NoAction;
-      return entityCollection.DefaultView as IBindingListView;
+      var entityCollectionCore = ToEntityCollection(enumerable, itemType);
+      if (entityCollectionCore == null) return null;
+      var entityCollection = entityCollectionCore as IEntityCollection;
+      if (entityCollection == null)
+      {
+        var defaultView2 = ((IEntityCollection2) entityCollectionCore).DefaultView;
+        defaultView2.DataChangeAction = PostCollectionChangeAction.NoAction;
+        return defaultView2 as IBindingListView;
+      }
+      var defaultView = entityCollection.DefaultView;
+      defaultView.DataChangeAction = PostCollectionChangeAction.NoAction;
+      return defaultView as IBindingListView;
     }
 
     public static IEntityCollectionCore GetRelatedCollection(IBindingList entityView)
@@ -368,6 +353,29 @@ namespace AW.Helper.LLBL
       else
         return view.RelatedCollection;
       return null;
+    }
+
+    #region Self Servicing
+
+    /// <summary>
+    ///   Converts an entity enumeration to an entity collection. If the enumeration is a ILLBLGenProQuery then executes
+    ///   the query this object represents and returns its results in its native container - an entity collection.
+    /// </summary>
+    /// <typeparam name="T">EntityBase2</typeparam>
+    /// <param name="enumerable">The enumerable.</param>
+    /// <returns></returns>
+    public static EntityCollectionBase<T> ToEntityCollection<T>(this IEnumerable<T> enumerable) where T : EntityBase
+    {
+      var entityCollectionBase = enumerable as EntityCollectionBase<T>;
+      if (entityCollectionBase != null)
+        return entityCollectionBase;
+      var llblQuery = enumerable as ILLBLGenProQuery;
+      if (llblQuery != null)
+        return llblQuery.Execute<EntityCollectionBase<T>>();
+      var entities = ((IEntityFactory) GetFactoryCore(enumerable)).CreateEntityCollection() as EntityCollectionBase<T>;
+      if (entities != null)
+        entities.AddRange(enumerable);
+      return entities;
     }
 
     /// <summary>
@@ -869,49 +877,7 @@ namespace AW.Helper.LLBL
       return null;
     }
 
-    public static IEntityCollection2 ToEntityCollection2(IEnumerable enumerable, Type itemType)
-    {
-      IEntityCollection2 entities = null;
-      var llblQuery = enumerable as ILLBLGenProQuery;
-      if (llblQuery != null)
-        entities = llblQuery.Execute() as IEntityCollection2;
-      if (entities == null)
-      {
-        var enumerator = enumerable.GetEnumerator();
-        while (enumerator.MoveNext())
-        {
-          var firstEntity = ((IEntity2) enumerator.Current);
-          if (firstEntity == null || !(itemType == firstEntity.GetType())) continue;
-          entities = firstEntity.GetEntityFactory().CreateEntityCollection();
-          if (entities == null)
-            return null;
-          foreach (IEntity2 item in enumerable)
-            entities.Add(item);
-          break;
-        }
-      }
-      if (entities == null)
-      {
-        entities = ((IEntity2) CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection();
-        if (entities == null)
-          return null;
-        foreach (IEntity2 item in enumerable)
-          entities.Add(item);
-      }
-      if (entities.Count > 0)
-        entities.RemovedEntitiesTracker = entities.EntityFactoryToUse.CreateEntityCollection();
-      return entities;
-    }
-
     #endregion
-
-    public static IBindingListView CreateEntityView2(IEnumerable enumerable, Type itemType)
-    {
-      var entityCollection = ToEntityCollection2(enumerable, itemType);
-      if (entityCollection == null) return null;
-      entityCollection.DefaultView.DataChangeAction = PostCollectionChangeAction.NoAction;
-      return entityCollection.DefaultView as IBindingListView;
-    }
 
     public static IRelationPredicateBucket GetRelationInfo(IEntity2 entity, string fieldName, IEnumerable<string> primaryKeyColumnNames)
     {
@@ -951,8 +917,8 @@ namespace AW.Helper.LLBL
       foreach (var field in entity.Fields.AsEnumerable())
         // IEntity implements IDataErrorInfo, and it contains a collections of field errors already set. 
         // For more info read the docs (LLBLGen Pro Help -> Using generated code -> Validation per field or per entity -> IDataErrorInfo implementation).
-        if (!String.IsNullOrEmpty(((IDataErrorInfo)entity)[field.Name]))
-          sbErrors.Append(((IDataErrorInfo)entity)[field.Name] + ";");
+        if (!String.IsNullOrEmpty(((IDataErrorInfo) entity)[field.Name]))
+          sbErrors.Append(((IDataErrorInfo) entity)[field.Name] + ";");
 
       // determine if there was errors and cut off the extra ';'
       if (sbErrors.ToString() != String.Empty)
@@ -963,6 +929,7 @@ namespace AW.Helper.LLBL
 
       return toReturn;
     }
+
     public static void ResetErrors(IEntityCore entity)
     {
       // reset the field errors
@@ -989,7 +956,7 @@ namespace AW.Helper.LLBL
       var entityField = entity.Fields[fieldIndex];
       if (entityField.CurrentValue != null)
         if (entityField.CurrentValue.Equals(valueToSet)
-            && !String.IsNullOrEmpty(((IDataErrorInfo)entity)[entityField.Name]))
+            && !String.IsNullOrEmpty(((IDataErrorInfo) entity)[entityField.Name]))
           entity.SetEntityFieldError(entityField.Name, String.Empty, false);
     }
 
@@ -1158,8 +1125,6 @@ namespace AW.Helper.LLBL
     {
       return GetPkIdStringFromFields(((IEntity2) entity).PrimaryKeyFields);
     }
-
-
   }
 
   public enum LLBLQueryType
