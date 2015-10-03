@@ -172,9 +172,24 @@ namespace AW.Helper
 
     public object Value { get; private set; }
 
-    public static List<ValueTypeWrapper> CreateWrapperForBinding(IEnumerable values)
+    public static IEnumerable CreateWrapperForBinding(IEnumerable values)
+    {
+      return TryCreateWrapperForBinding(values);
+    }
+
+    private static IEnumerable TryCreateWrapperForBinding(dynamic values)
+    {
+      return MaybeCreateWrapperForBinding(values);
+    }
+
+    private static IEnumerable<ValueTypeWrapper> MaybeCreateWrapperForBinding(IEnumerable values)
     {
       return values.Cast<object>().Select(data => new ValueTypeWrapper(data)).ToList();
+    }
+
+    private static IEnumerable<ValueTypeWrapper<T>> MaybeCreateWrapperForBinding<T>(IEnumerable<T> values)
+    {
+      return ValueTypeWrapper<T>.CreateWrapperForBinding(values).ToList();
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Forms;
@@ -131,9 +132,8 @@ namespace AW.Tests
     {
       var strings = new[] {"one", "two", "a string"};
       var stringWrapperForBinding = strings.CreateStringWrapperForBinding().ToList();
-      var stringWrapperProperties = ListBindingHelper.GetListItemProperties(stringWrapperForBinding);
-      Assert.AreEqual(1, stringWrapperProperties.Count);
-      Assert.AreEqual(typeof (string), stringWrapperProperties[0].PropertyType);
+      AssertStringWrapperProperties(stringWrapperForBinding);
+      AssertStringWrapperProperties(ValueTypeWrapper.CreateWrapperForBinding(strings));
       //stringWrapperForBinding.ShowInGrid(null);
       //strings.ShowInGrid(null);
 
@@ -142,6 +142,13 @@ namespace AW.Tests
       //Assert.AreEqual(1, stringProperties.Count);
       //Assert.AreEqual(typeof(string), stringProperties[0].PropertyType);
       //strings.ShowInGrid(null);
+    }
+
+    private static void AssertStringWrapperProperties(IEnumerable stringWrapperForBinding)
+    {
+      var stringWrapperProperties = ListBindingHelper.GetListItemProperties(stringWrapperForBinding);
+      Assert.AreEqual(1, stringWrapperProperties.Count);
+      Assert.AreEqual(typeof (string), stringWrapperProperties[0].PropertyType);
     }
   }
 }

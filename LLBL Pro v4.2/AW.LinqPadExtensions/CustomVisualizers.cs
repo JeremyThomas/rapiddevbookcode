@@ -113,7 +113,7 @@ namespace LINQPad
       if (enumerable != null)
       {
         var panelTitle = GetPanelTitle(enumerable);
-        var outputPanel = PanelManager.DisplayControl(GridDataEditorT<T>.GridDataEditorFactory(enumerable, dataEditorPersister, pageSize, false), TrimTitle(panelTitle));
+        var outputPanel = PanelManager.DisplayControl(new GridDataEditor(enumerable, dataEditorPersister, pageSize, false), TrimTitle(panelTitle));
         outputPanel.ToolTip = panelTitle;
       }
       return Enumerable.Empty<T>(); //So can be used in a linqpad expression

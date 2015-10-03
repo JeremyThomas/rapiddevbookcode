@@ -7,6 +7,7 @@ using System.Data.Linq;
 using System.DirectoryServices;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using AW.Data;
@@ -176,8 +177,10 @@ namespace AW.Tests
     public void ShowStringEnumerationInGridTest()
     {
       var enumerable = new[] {"s1", "s2", "s3"};
+      //      GridDataEditorTestBase.ShowInGrid(enumerable);
       TestShowInGrid(enumerable, 1);
       enumerable = null;
+      // ReSharper disable once ExpressionIsAlwaysNull
       TestShowInGrid(enumerable, 1);
       TestEditInDataGridView(new string[0], 1);
       //TestShowInGrid(new string[0], 0);
@@ -221,7 +224,7 @@ namespace AW.Tests
       TestShowInGrid(addressTypeEntities);
     }
 
-    public static IEnumerable<T> ShowInGrid<T>(IEnumerable<T> enumerable)
+    public static IEnumerable ShowInGrid<T>(IEnumerable<T> enumerable)
     {
       var contextField = enumerable.GetType().GetField("context", BindingFlags.Instance | BindingFlags.NonPublic);
       if (contextField != null)
@@ -233,7 +236,7 @@ namespace AW.Tests
       return GridDataEditorTestBase.ShowInGrid(enumerable, null);
     }
 
-    public static IEnumerable<T> ShowInGrid<T>(Table<T> table, ushort pageSize = GridDataEditor.DefaultPageSize) where T : class
+    public static IEnumerable ShowInGrid<T>(Table<T> table, ushort pageSize = GridDataEditor.DefaultPageSize) where T : class
     {
       return ShowInGrid(table, table.Context, pageSize);
     }
@@ -246,7 +249,7 @@ namespace AW.Tests
     /// <param name="dataContext"> The data context. </param>
     /// <param name="pageSize"> Size of the page. </param>
     /// <returns> </returns>
-    public static IEnumerable<T> ShowInGrid<T>(IEnumerable<T> dataQuery, DataContext dataContext, ushort pageSize = GridDataEditor.DefaultPageSize)
+    public static IEnumerable ShowInGrid<T>(IEnumerable<T> dataQuery, DataContext dataContext, ushort pageSize = GridDataEditor.DefaultPageSize)
     {
       return ShowInGrid(dataQuery, new DataEditorLinqtoSQLPersister(dataContext), pageSize);
     }

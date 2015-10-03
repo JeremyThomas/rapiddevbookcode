@@ -16,7 +16,7 @@ namespace AW.Winforms.Helpers.WPF
     protected override object InstanceConvert(object value, Type targetType, object parameter, CultureInfo culture)
     {
       var enumerable = value as IEnumerable;
-      return enumerable != null && GeneralHelper.Any(enumerable);
+      return enumerable != null && LinqHelper.Any(enumerable);
     }
 
     /// <summary>

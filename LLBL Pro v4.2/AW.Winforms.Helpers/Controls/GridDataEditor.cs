@@ -42,9 +42,10 @@ namespace AW.Winforms.Helpers.Controls
     protected bool IsBinding = true;
     private bool _loaded;
     private bool _canSave;
-    private IQueryable _superset;
+    private IEnumerable _superset;
     public IDataEditorPersister DataEditorPersister;
-    private static readonly Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider> FieldsToPropertiesTypeDescriptionProviders = new Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider>();
+    private static readonly Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider> FieldsToPropertiesTypeDescriptionProviders 
+      = new Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider>();
 
     static GridDataEditor()
     {
@@ -81,10 +82,12 @@ namespace AW.Winforms.Helpers.Controls
       : this()
     {
       MembersToExclude = membersToExclude;
-      if (ValueTypeWrapper.TypeNeedsWrappingForBinding(MetaDataHelper.GetEnumerableItemType(enumerable)))
+      SetItemType(enumerable);
+      if (ValueTypeWrapper.TypeNeedsWrappingForBinding(_itemType))
       {
         enumerable = ValueTypeWrapper.CreateWrapperForBinding(enumerable);
-        readOnly = true;
+        SetItemType(enumerable);
+        readOnly = readOnly || !_itemType.IsGenericType;
       }
       InitialiseAndBindGridDataEditor(enumerable, dataEditorPersister, pageSize, readOnly);
     }
@@ -297,7 +300,10 @@ namespace AW.Winforms.Helpers.Controls
     {
       var firstPageEnumerable = enumerable;
       if (Paging())
-        firstPageEnumerable = firstPageEnumerable.AsQueryable().Take(PageSize);
+      {
+        var queryable = enumerable as IQueryable;
+        firstPageEnumerable = queryable == null ? LinqHelper.Take(firstPageEnumerable, PageSize) : queryable.Take(PageSize);
+      }
       UnBindGrids();
 
       var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null), EnsureFilteringEnabled);
@@ -327,8 +333,8 @@ namespace AW.Winforms.Helpers.Controls
           _superset = null;
           return Enumerable.Empty<int>();
         }
-        _superset = enumerable.AsQueryable();
-        if (ValueTypeWrapper.TypeNeedsWrappingForBinding(_superset.ElementType))
+        _superset = enumerable;
+        if (ValueTypeWrapper.TypeNeedsWrappingForBinding(ItemType))
           _superset = ValueTypeWrapper.CreateWrapperForBinding(enumerable).AsQueryable();
       }
       catch (ArgumentException)
@@ -349,7 +355,7 @@ namespace AW.Winforms.Helpers.Controls
 
     protected int GetPageCount()
     {
-      return GeneralHelper.GetPageCount(PageSize, SuperSetCount());
+      return LinqHelper.GetPageCount(PageSize, SuperSetCount());
     }
 
     protected int? _superSetCount;
@@ -358,7 +364,8 @@ namespace AW.Winforms.Helpers.Controls
     {
       if (!_superSetCount.HasValue)
       {
-        _superSetCount = _superset.Count();
+        var queryable = _superset as IQueryable;
+        _superSetCount = queryable == null ? _superset.Cast<object>().Count() : queryable.Count();
         toolStripLabelSuperSetCount.Text = _superSetCount.ToString();
       }
       return _superSetCount.Value;
@@ -415,7 +422,8 @@ namespace AW.Winforms.Helpers.Controls
 
     private IEnumerable SkipTake()
     {
-      return _superset.SkipTakeDynamic(GetPageIndex(), PageSize);
+      var queryable = _superset as IQueryable;
+      return  queryable == null ? LinqHelper.SkipTake(_superset, GetPageIndex(), PageSize) : AWHelper.SkipTakeDynamic(queryable, GetPageIndex(), PageSize);
     }
 
     protected int GetPageIndex()
@@ -531,15 +539,16 @@ namespace AW.Winforms.Helpers.Controls
       set
       {
         if (_itemType == value) return;
+        TidyUp();
         _itemType = value;
         OnSetItemType();
       }
     }
 
-    private void SetItemType(IEnumerable list)
+    private void SetItemType(IEnumerable enumerable)
     {
-      if (ItemType == null & list != null)
-        ItemType = MetaDataHelper.GetEnumerableItemType(list);
+      if (enumerable != null)
+        ItemType = MetaDataHelper.GetEnumerableItemType(enumerable);
     }
 
     protected void OnSetItemType()
@@ -706,7 +715,7 @@ namespace AW.Winforms.Helpers.Controls
       }
       else if (dataGridViewColumn is DataGridViewImageColumn)
       {
-        if (e.Value == null || e.Value is ICollection && GeneralHelper.IsNullOrEmpty( (ICollection) e.Value))
+        if (e.Value == null || e.Value is ICollection && ((ICollection) e.Value).IsNullOrEmpty())
         {
         //  e.Value = dataGridViewColumn.CellTemplate.DefaultNewRowValue;
           e.Value = e.CellStyle.NullValue;
