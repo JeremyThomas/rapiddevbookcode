@@ -317,7 +317,7 @@ namespace AW.Helper.LLBL
         var entityFactoryCore = GetFactoryCore(enumerable, itemType);
         var entityFactory = (entityFactoryCore as IEntityFactory);
         entities = entityFactory == null? (IEntityCollectionCore) ((IEntityFactory2) entityFactoryCore).CreateEntityCollection():entityFactory.CreateEntityCollection();
-        foreach (IEntity item in enumerable)
+        foreach (IEntityCore item in enumerable)
           entities.Add(item);
       }
       if (!entities.IsNullOrEmpty())

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -68,7 +69,7 @@ namespace AW.Tests
 
     #endregion
 
-    public static IEnumerable<T> ShowSelfServicingInGrid<T>(IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
+    public static IEnumerable ShowSelfServicingInGrid<T>(IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
     {
       return GridDataEditorTestBase.ShowInGrid(enumerable, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister(), pageSize);
     }
@@ -86,7 +87,7 @@ namespace AW.Tests
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
     }
 
-    public static IEnumerable<T> ShowSelfServicingInGrid<T>(IEnumerable<T> enumerable) where T : EntityBase
+    public static IEnumerable ShowSelfServicingInGrid<T>(IEnumerable<T> enumerable) where T : EntityBase
     {
       return ShowSelfServicingInGrid(enumerable, GridDataEditor.DefaultPageSize);
     }
@@ -119,7 +120,7 @@ namespace AW.Tests
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
     }
 
-    public static IEnumerable<T> ShowInGrid<T>(IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize) where T : EntityBase2
+    public static IEnumerable ShowInGrid<T>(IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize) where T : EntityBase2
     {
       return GridDataEditorTestBase.ShowInGrid(enumerable, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
     }

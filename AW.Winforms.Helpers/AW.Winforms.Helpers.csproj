@@ -156,12 +156,6 @@
     <Compile Include="Controls\HierarchyEditor.Designer.cs">
       <DependentUpon>HierarchyEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\GridDataEditorT.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\GridDataEditorT.Designer.cs">
-      <DependentUpon>GridDataEditorT.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\DataTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -310,9 +304,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\HierarchyEditor.resx">
       <DependentUpon>HierarchyEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\GridDataEditorT.resx">
-      <DependentUpon>GridDataEditorT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DataTreeView.resx">
       <DependentUpon>DataTreeView.cs</DependentUpon>

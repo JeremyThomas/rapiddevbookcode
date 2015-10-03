@@ -96,6 +96,7 @@
     <Compile Include="CSharpSerializer.cs" />
     <Compile Include="DataHelper.cs" />
     <Compile Include="DataSetSurrogate.cs" />
+    <Compile Include="LinqHelper.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

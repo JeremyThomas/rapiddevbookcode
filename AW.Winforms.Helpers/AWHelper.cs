@@ -259,7 +259,7 @@ namespace AW.Winforms.Helpers
     /// <param name="pageIndex">Index of the page.</param>
     /// <param name="pageSize">Size of the page.</param>
     /// <returns></returns>
-    public static IQueryable SkipTakeDynamic(this IQueryable queryable, int pageIndex, int pageSize)
+    public static IQueryable SkipTakeDynamic(IQueryable queryable, int pageIndex, int pageSize)
     {
       return queryable.Skip(pageIndex * pageSize).Take(pageSize);
     }
