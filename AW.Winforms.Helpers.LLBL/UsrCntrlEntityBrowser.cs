@@ -10,15 +10,39 @@ namespace AW.Winforms.Helpers.LLBL
 {
   public partial class UsrCntrlEntityBrowser : UserControl
   {
-    private Type BaseType { get; set; }
+    public const int DefaultCacheDurationInSeconds = 20;
+
+    public bool UseContext
+    {
+      get { return ContextToUse != null; }
+      private set
+      {
+        if (value)
+        {
+          if (!UseContext)
+            ContextToUse = new Context();
+        }
+      }
+    }
+
+    private dynamic ContextToUse
+    {
+      get { return _linqMetaData != null && ((dynamic) _linqMetaData).ContextToUse; }
+      set { if (_linqMetaData != null) ((dynamic) _linqMetaData).ContextToUse = value; }
+    }
+
+    public int CacheDurationInSeconds { get; private set; }
+    private readonly Type _baseType;
     private ILinqMetaData _linqMetaData;
     private bool _userHasInteracted;
     private EntityHelper.GetQueryableForEntityDelegate _getQueryableForEntityDelegate;
 
     public static FrmPersistantLocation ShowDataBrowser(ILinqMetaData linqMetaData, Form parentForm = null,
-      bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
+      bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, bool useContext = true, int cacheDurationInSeconds = DefaultCacheDurationInSeconds,
+      params string[] membersToExclude)
     {
-      return FrmPersistantLocation.ShowControlInForm(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, membersToExclude)
+      return FrmPersistantLocation.ShowControlInForm(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter,
+        ensureFilteringEnabled, useContext, cacheDurationInSeconds, membersToExclude)
         , "Data Browser", parentForm, "DataBrowser");
     }
 
@@ -30,23 +54,45 @@ namespace AW.Winforms.Helpers.LLBL
     public UsrCntrlEntityBrowser(Type baseType, bool useSchema = true, string prefixDelimiter = "_")
       : this()
     {
-      BaseType = baseType;
+      _baseType = baseType;
       LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, EntityHelper.GetEntitiesTypes(baseType, _linqMetaData), useSchema, prefixDelimiter);
     }
 
-    public UsrCntrlEntityBrowser(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
+    public UsrCntrlEntityBrowser(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = "_",
+      bool ensureFilteringEnabled = true, bool useContext = true, int cacheDurationInSeconds = DefaultCacheDurationInSeconds, params string[] membersToExclude)
       : this()
     {
-      Initialize(linqMetaData, null, useSchema, prefixDelimiter, ensureFilteringEnabled, membersToExclude);
+      Initialize(linqMetaData, null, useSchema, prefixDelimiter, ensureFilteringEnabled, useContext, cacheDurationInSeconds, membersToExclude);
     }
 
-    public void Initialize(ILinqMetaData linqMetaData, EntityHelper.GetQueryableForEntityDelegate getQueryableForEntityDelegate = null, bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
+    /// <summary>
+    /// Initializes the specified linq meta data.
+    /// </summary>
+    /// <param name="linqMetaData">The linq meta data.</param>
+    /// <param name="getQueryableForEntityDelegate">The get queryable for entity delegate.</param>
+    /// <param name="useSchema">if set to <c>true</c> [use schema].</param>
+    /// <param name="prefixDelimiter">The prefix delimiter.</param>
+    /// <param name="ensureFilteringEnabled">if set to <c>true</c> [ensure filtering enabled].</param>
+    /// <param name="useContext">if set to <c>true</c> [use context].</param>
+    /// <param name="cacheDurationInSeconds">The cache duration in seconds, 0 means don't cache.</param>
+    /// <param name="membersToExclude">The members to exclude.</param>
+    public void Initialize(ILinqMetaData linqMetaData, EntityHelper.GetQueryableForEntityDelegate getQueryableForEntityDelegate = null,
+      bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true,
+      bool useContext = true, int cacheDurationInSeconds = DefaultCacheDurationInSeconds, params string[] membersToExclude)
     {
       _linqMetaData = linqMetaData;
       _getQueryableForEntityDelegate = getQueryableForEntityDelegate;
-      gridDataEditor.EnsureFilteringEnabled = ensureFilteringEnabled;
+      EnsureFilteringEnabled = ensureFilteringEnabled;
+      UseContext = useContext;
+      CacheDurationInSeconds = cacheDurationInSeconds;
       gridDataEditor.MembersToExclude = membersToExclude;
       LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, linqMetaData, null, useSchema, prefixDelimiter);
+    }
+
+    public bool EnsureFilteringEnabled
+    {
+      get { return gridDataEditor.EnsureFilteringEnabled; }
+      set { gridDataEditor.EnsureFilteringEnabled = value; }
     }
 
     #region Overrides of UserControl
@@ -57,7 +103,7 @@ namespace AW.Winforms.Helpers.LLBL
     protected override void OnCreateControl()
     {
       if (treeViewEntities.Nodes.Count == 0)
-        LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, EntityHelper.GetEntitiesTypes(BaseType, _linqMetaData));
+        LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, EntityHelper.GetEntitiesTypes(_baseType, _linqMetaData));
       base.OnCreateControl();
     }
 
@@ -98,7 +144,6 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-
     private void Open()
     {
       var entityQueryable = GetEntityQueryable();
@@ -130,9 +175,9 @@ namespace AW.Winforms.Helpers.LLBL
       gridDataEditor.BindEnumerable(CacheResultset(entityQueryable));
     }
 
-    private static dynamic CacheResultset(dynamic entityQueryable, int durationInSeconds =20)
+    private dynamic CacheResultset(dynamic entityQueryable)
     {
-     return QueryableExtensionMethods.CacheResultset(entityQueryable, durationInSeconds);
+      return CacheDurationInSeconds>0 ? QueryableExtensionMethods.CacheResultset(entityQueryable, CacheDurationInSeconds) : entityQueryable;
     }
 
     private void MaybeBindAdapterCached(dynamic entityQueryable)
@@ -147,13 +192,13 @@ namespace AW.Winforms.Helpers.LLBL
 
     private void BindSelfServicingCached<T>(IQueryable<T> entityQueryable) where T : class, IEntityCore
     {
-      var queryableCached = QueryableExtensionMethods.CacheResultset(entityQueryable, 20);
+      var queryableCached = entityQueryable.CacheResultset(DefaultCacheDurationInSeconds);
       gridDataEditor.BindEnumerable(queryableCached);
     }
 
     private void BindAdapterCached<T>(IQueryable<T> entityQueryable) where T : EntityBase2
     {
-      var queryableCached = entityQueryable.CacheResultset(20);
+      var queryableCached = entityQueryable.CacheResultset(DefaultCacheDurationInSeconds);
       gridDataEditor.BindEnumerable(queryableCached);
     }
 

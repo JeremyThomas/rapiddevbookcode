@@ -23,8 +23,8 @@ namespace Northwind.Win
       InitializeComponent();
 
       var linqMetaData = Factories.CreateLinqMetaData();
-      linqMetaData.ContextToUse=new Context();
-      usrCntrlEntityBrowser1.Initialize(linqMetaData,ensureFilteringEnabled:false);
+     // linqMetaData.ContextToUse=new Context();
+      usrCntrlEntityBrowser1.Initialize(linqMetaData,ensureFilteringEnabled:false,useContext:true);
       //Done in CommonEntityBase  CacheController.RegisterCache(dataAccessAdapter.ConnectionString, new ResultsetCache()); 
       Text += string.Format(" - {0}", ProfilerHelper.OrmProfilerStatus);
     }

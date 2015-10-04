@@ -27,10 +27,7 @@ namespace AW.Winforms.Helpers
 
     public static void RegisterBindingListSourceProvider(Type itemType, Func<IBindingList, IEnumerable> bindingListViewCreater)
     {
-      if (BindingListViewCreaters.ContainsKey(itemType))
-        BindingListViewSources[itemType] = bindingListViewCreater;
-      else
-        BindingListViewSources.Add(itemType, bindingListViewCreater);
+      BindingListViewSources[itemType] = bindingListViewCreater;
     }
 
     //&& enumerable.ToString() != "System.Collections.Hashtable+KeyCollection"
