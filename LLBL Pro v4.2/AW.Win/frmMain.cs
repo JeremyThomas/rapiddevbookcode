@@ -11,7 +11,6 @@ using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
-using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.Forms;
 using AW.Winforms.Helpers.LLBL;
 using AW.Winforms.Helpers.LLBL.PropGridEx;
@@ -278,15 +277,16 @@ namespace AW.Win
 
     private void organizationStructureEditorToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      var employeeEntities =LinqMetaData.CreateWithContext().Employee.PrefetchAll();
+      var employeeEntities = LinqMetaData.CreateWithContext().Employee.PrefetchAll();
       var form = ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactoryServicing(employeeEntities, em => em.EmployeeID, em => em.ManagerID, em => em.EmployeeDisplayName), "Employee Hierarchy In Tree " + employeeEntities, this);
       form.Tag = true;
     }
+
     private void organizationStructureEditorSelfJoinToolStripMenuItem_Click(object sender, EventArgs e)
     {
       //var employeeEntities = EmployeeEntity.WireUpSelfJoin(MetaSingletons.MetaData.Employee.PrefetchAllButManages().ToEntityCollection());  
       var employeeEntities = EmployeeEntity.WireUpSelfJoin(LinqMetaData.CreateWithContext().Employee.PrefetchAll());
-      var form = ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactoryServicing(employeeEntities.Where(em => em.ManagerID == null), em => em.EmployeeDisplayName, em => em.Manages), "Employee Hierarchy In Tree "+ employeeEntities, this);
+      var form = ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactoryServicing(employeeEntities.Where(em => em.ManagerID == null), em => em.EmployeeDisplayName, em => em.Manages), "Employee Hierarchy In Tree " + employeeEntities, this);
       form.Tag = true;
     }
 
@@ -303,7 +303,5 @@ namespace AW.Win
       var ab = new AboutBox(moreInfo);
       ab.ShowDialog(this);
     }
-
-
   }
 }

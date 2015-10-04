@@ -14,6 +14,9 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.LLBLGen.DataContextDriver
 {
+  /// <summary>
+  /// 
+  /// </summary>
   public static class CustomVisualizers
   {
     static CustomVisualizers()
@@ -31,7 +34,7 @@ namespace AW.LLBLGen.DataContextDriver
     /// <param name="options">The options.</param>
     /// <returns></returns>
 // ReSharper disable UnusedMethodReturnValue.Global
-    public static IEnumerable DisplayInGrid(IEnumerable enumerable, ushort pageSize, GridOptions options = null)
+    public static object DisplayInGrid(IEnumerable enumerable, ushort pageSize, GridOptions options = null)
     {
       IDataEditorPersister dataEditorPersister = null;
       if (enumerable != null)
@@ -49,37 +52,43 @@ namespace AW.LLBLGen.DataContextDriver
     }
 
     /// <summary>
-    ///   Browses the data as LLBL Entities from a LINQPad like Treeview.
+    /// Browses the data as LLBL Entities from a LINQPad like Treeview.
     /// </summary>
     /// <param name="linqMetaData">The linq meta data.</param>
     /// <param name="useSchema">if set to <c>true</c> group by schema.</param>
     /// <param name="prefixDelimiter">The prefix delimiter to group by table prefixes. e.g "_"</param>
     /// <param name="ensureFilteringEnabled">if set to <c>true</c> ensure filtering enabled, i.e. use ObjectListView rather than native LLBL EntityView.</param>
-    /// <returns>True if succeeded rather than void so can be passed to LINQPads Dump method.</returns>
+    /// <param name="useContext">if set to <c>true</c> [use context].</param>
+    /// <param name="cacheDurationInSeconds">The cache duration in seconds.</param>
+    /// <returns>
+    /// True if succeeded rather than void so can be passed to LINQPads Dump method.
+    /// </returns>
     /// <example>LinqPad: this.BrowseData()</example>
 // ReSharper disable UnusedMember.Global
-    public static bool BrowseData(this ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = null, bool ensureFilteringEnabled = true)
+    public static bool BrowseData(this ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = null, 
+      bool ensureFilteringEnabled = true, bool useContext = true, int cacheDurationInSeconds = UsrCntrlEntityBrowser.DefaultCacheDurationInSeconds)
     {
       if (linqMetaData == null)
         return false;
-      PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, MembersToExcludeCache.GetMembersToExclude(typeof (EntityBase))), "Data Browser");
+      PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, useContext , cacheDurationInSeconds 
+        , MembersToExcludeCache.GetMembersToExclude(typeof (EntityBase))), "Data Browser");
       return true;
     }
 
     #region Self Servicing
 
 // ReSharper disable MemberCanBePrivate.Global
-    public static IEnumerable<T> DisplaySelfServicingInGrid<T>(this IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
+    public static object DisplaySelfServicingInGrid<T>(this IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
     {
       return enumerable.DisplayInGrid(new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister(), pageSize);
     }
 
-    public static IEnumerable<T> DisplaySelfServicingInGrid<T>(this IEnumerable<T> enumerable) where T : EntityBase
+    public static object DisplaySelfServicingInGrid<T>(this IEnumerable<T> enumerable) where T : EntityBase
     {
       return enumerable.DisplaySelfServicingInGrid(LINQPad.CustomVisualizers.DefaultPageSize);
     }
 
-    public static IEnumerable DisplaySelfServicingInGrid(this IEnumerable enumerable, ushort pageSize)
+    public static object DisplaySelfServicingInGrid(this IEnumerable enumerable, ushort pageSize)
     {
       return enumerable.DisplayInGrid(new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister(), pageSize);
     }
@@ -110,17 +119,17 @@ namespace AW.LLBLGen.DataContextDriver
 
     #region Adapter
 
-    public static IEnumerable DisplayInGrid(this IEnumerable enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize)
+    public static object DisplayInGrid(this IEnumerable enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize)
     {
       return enumerable.DisplayInGrid(new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
     }
 
-    public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize) where T : EntityBase2
+    public static object DisplayInGrid<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize) where T : EntityBase2
     {
       return enumerable.DisplayInGrid(new DataEditorLLBLAdapterDataScopePersister<T>(enumerable, dataAccessAdapter), pageSize);
     }
 
-    public static IEnumerable<T> DisplayAdapterInGrid<T>(this IQueryable<T> query, ushort pageSize = LINQPad.CustomVisualizers.DefaultPageSize) where T : EntityBase2
+    public static object DisplayAdapterInGrid<T>(this IQueryable<T> query, ushort pageSize = LINQPad.CustomVisualizers.DefaultPageSize) where T : EntityBase2
     {
       return DisplayInGrid(query, EntityHelper.GetDataAccessAdapter(query), pageSize);
     }
