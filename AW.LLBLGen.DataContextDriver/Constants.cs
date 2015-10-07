@@ -21,7 +21,7 @@ namespace AW.LLBLGen.DataContextDriver
     private const string MajorVersion = "3";
     private const string MinorVersion = "0";
     private const string Version = MajorVersion + "." + MinorVersion;
-    public const string AssemblyVersion = Version + ".10.0";
+    public const string AssemblyVersion = Version + ".11.0";
   }
 
   public enum DisplayInGrid

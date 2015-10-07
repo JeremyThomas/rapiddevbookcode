@@ -291,12 +291,12 @@ namespace AW.Winforms.Helpers.Controls
       return _shouldBeReadonly;
     }
 
-    protected virtual bool GetFirstPage()
+    private bool GetFirstPage()
     {
       return GetFirstPage(_superset);
     }
 
-    protected virtual bool GetFirstPage(IEnumerable enumerable)
+    private bool GetFirstPage(IEnumerable enumerable)
     {
       var firstPageEnumerable = enumerable;
       if (Paging())
@@ -317,7 +317,7 @@ namespace AW.Winforms.Helpers.Controls
       return bindingSourcePaging.Count > 1;
     }
 
-    protected virtual IEnumerable<int> CreatePageDataSource(ushort pageSize, IEnumerable enumerable)
+    private IEnumerable<int> CreatePageDataSource(ushort pageSize, IEnumerable enumerable)
     {
       _superSetCount = null;
       if (pageSize == 0 || enumerable == null)
@@ -358,9 +358,9 @@ namespace AW.Winforms.Helpers.Controls
       return LinqHelper.GetPageCount(PageSize, SuperSetCount());
     }
 
-    protected int? _superSetCount;
+    private int? _superSetCount;
 
-    protected virtual int SuperSetCount()
+    private int SuperSetCount()
     {
       if (!_superSetCount.HasValue)
       {
@@ -398,7 +398,7 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
-    protected virtual void BindEnumerable()
+    private void BindEnumerable()
     {
       UnBindGrids();
       bindingSourceEnumerable.BindEnumerable(SkipTake(), false, EnsureFilteringEnabled);
@@ -433,7 +433,7 @@ namespace AW.Winforms.Helpers.Controls
       return (int) bindingSourcePaging.Current - 1;
     }
 
-    protected virtual void SetRemovingItem()
+    private void SetRemovingItem()
     {
       if (SupportsNotifyPropertyChanged)
         saveToolStripButton.Enabled = false;
@@ -482,7 +482,7 @@ namespace AW.Winforms.Helpers.Controls
     {
     }
 
-    protected virtual bool IsObjectListView()
+    private bool IsObjectListView()
     {
       return BindingListHelper.IsObjectListView(bindingSourceEnumerable.DataSource);
     }
@@ -528,7 +528,7 @@ namespace AW.Winforms.Helpers.Controls
     private ushort _pageSize;
     public static OutputFormat SerializeToCSharpOutputFormat = OutputFormat.Compileable;
 
-    protected virtual Type ItemType
+    private Type ItemType
     {
       get
       {
@@ -640,6 +640,7 @@ namespace AW.Winforms.Helpers.Controls
     {
       MaybeUnSetRemovingItem(bindingSourceEnumerable.DataSource);
       dataGridViewEnumerable.ClearFilter();
+      dataGridViewEnumerable.ClearSort();
       dataGridEnumerable.DataSource = null;
     }
 
@@ -807,7 +808,7 @@ namespace AW.Winforms.Helpers.Controls
       get { return bindingSourceEnumerable.List; }
     }
 
-    protected virtual IEnumerable SourceEnumerable
+    private IEnumerable SourceEnumerable
     {
       get { return _superset ?? PageSourceEnumerable; }
     }
@@ -817,6 +818,7 @@ namespace AW.Winforms.Helpers.Controls
       get { return bindingSourceEnumerable.GetDataSource(); }
     }
 
+    [Category("GridDataEditor"), Description("Gets or sets wether filtering is enabled in the grid, even if the underlying collection doesn't support it.")]
     public bool EnsureFilteringEnabled { get; set; }
 
     private void toolStripButtonClearFilters_Click(object sender, EventArgs e)

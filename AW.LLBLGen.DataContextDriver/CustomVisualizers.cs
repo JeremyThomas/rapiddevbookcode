@@ -15,7 +15,6 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 namespace AW.LLBLGen.DataContextDriver
 {
   /// <summary>
-  /// 
   /// </summary>
   public static class CustomVisualizers
   {
@@ -52,7 +51,7 @@ namespace AW.LLBLGen.DataContextDriver
     }
 
     /// <summary>
-    /// Browses the data as LLBL Entities from a LINQPad like Treeview.
+    ///   Browses the data as LLBL Entities from a LINQPad like Treeview.
     /// </summary>
     /// <param name="linqMetaData">The linq meta data.</param>
     /// <param name="useSchema">if set to <c>true</c> group by schema.</param>
@@ -61,16 +60,16 @@ namespace AW.LLBLGen.DataContextDriver
     /// <param name="useContext">if set to <c>true</c> [use context].</param>
     /// <param name="cacheDurationInSeconds">The cache duration in seconds.</param>
     /// <returns>
-    /// True if succeeded rather than void so can be passed to LINQPads Dump method.
+    ///   True if succeeded rather than void so can be passed to LINQPads Dump method.
     /// </returns>
     /// <example>LinqPad: this.BrowseData()</example>
 // ReSharper disable UnusedMember.Global
-    public static bool BrowseData(this ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = null, 
+    public static bool BrowseData(this ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = UsrCntrlEntityBrowser.DefaultPrefixDelimiter,
       bool ensureFilteringEnabled = true, bool useContext = true, int cacheDurationInSeconds = UsrCntrlEntityBrowser.DefaultCacheDurationInSeconds)
     {
       if (linqMetaData == null)
         return false;
-      PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, useContext , cacheDurationInSeconds 
+      PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, useContext, cacheDurationInSeconds
         , MembersToExcludeCache.GetMembersToExclude(typeof (EntityBase))), "Data Browser");
       return true;
     }
@@ -109,7 +108,7 @@ namespace AW.LLBLGen.DataContextDriver
       return enumerable.DisplayHierarchyInTree(iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
     }
 
-   public static IEnumerable<T> DisplaySelfServicingHierarchyInTree<T, TName, TChildCollection>(IEnumerable<T> enumerable, Expression<Func<T, TName>> namePropertyExpression,
+    public static IEnumerable<T> DisplaySelfServicingHierarchyInTree<T, TName, TChildCollection>(IEnumerable<T> enumerable, Expression<Func<T, TName>> namePropertyExpression,
       Expression<Func<T, TChildCollection>> childCollectionPropertyExpression)
     {
       return enumerable.DisplayHierarchyInTree(namePropertyExpression, childCollectionPropertyExpression, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
