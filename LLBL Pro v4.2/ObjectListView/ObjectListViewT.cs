@@ -1213,7 +1213,7 @@ namespace JesseJohnston
 
     int IList.IndexOf(object value)
     {
-      return IndexOf((T) value);
+      return value is T ? IndexOf((T)value) : -1;
     }
 
     void IList.Insert(int index, object value)

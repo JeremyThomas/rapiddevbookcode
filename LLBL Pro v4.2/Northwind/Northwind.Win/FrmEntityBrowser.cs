@@ -21,10 +21,14 @@ namespace Northwind.Win
     public FrmEntityBrowser()
     {
       InitializeComponent();
-
       var linqMetaData = Factories.CreateLinqMetaData();
-     // linqMetaData.ContextToUse=new Context();
-      usrCntrlEntityBrowser1.Initialize(linqMetaData,ensureFilteringEnabled:false,useContext:true);
+      //linqMetaData.ContextToUse=new Context();
+      usrCntrlEntityBrowser1.Initialize(linqMetaData);
+      ensureFilteringEnabledCheckBox.Checked = usrCntrlEntityBrowser1.EnsureFilteringEnabled;
+      useContextCheckBox.Checked = usrCntrlEntityBrowser1.UseContext;
+      useSchemaCheckBox.Checked = usrCntrlEntityBrowser1.UseSchema;
+      prefixDelimiterTextBox.Text = usrCntrlEntityBrowser1.PrefixDelimiter;
+      cacheDurationInSecondsNumericUpDown.Value = usrCntrlEntityBrowser1.CacheDurationInSeconds;
       //Done in CommonEntityBase  CacheController.RegisterCache(dataAccessAdapter.ConnectionString, new ResultsetCache()); 
       Text += string.Format(" - {0}", ProfilerHelper.OrmProfilerStatus);
     }
@@ -69,6 +73,16 @@ namespace Northwind.Win
         .ToEntityCollection2()
         .GroupBy(c => c.Country);
       ShowControlInForm(new HierarchyEditor(groupBy, "CompanyName", "Orders"));
+    }
+
+    private void cacheDurationInSecondsNumericUpDown_ValueChanged(object sender, EventArgs e)
+    {
+      usrCntrlEntityBrowser1.CacheDurationInSeconds = (int) cacheDurationInSecondsNumericUpDown.Value;
+    }
+
+    private void useContextCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+      usrCntrlEntityBrowser1.UseContext= useContextCheckBox.Checked;
     }
   }
 }
