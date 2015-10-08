@@ -58,7 +58,7 @@ namespace AW.Winforms.Helpers.LLBL
 
   public class DataEditorLLBLAdapterDataScopePersister<T> : LLBLWinformHelper.DataEditorLLBLPersister, IDataEditorEventHandlers where T : EntityBase2
   {
-    private AdapterGenericDataScope<T> AdapterGenericDataScope { get; }
+    private AdapterGenericDataScope<T> AdapterGenericDataScope { get; set; }
 
     public DataEditorLLBLAdapterDataScopePersister(AdapterGenericDataScope<T> adapterGenericDataScope)
     {

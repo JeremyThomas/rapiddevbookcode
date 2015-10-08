@@ -34,7 +34,7 @@ namespace AW.Winforms.Helpers.LLBL
 
   public class DataEditorLLBLSelfServicingDataScopePersister<T> : LLBLWinformHelper.DataEditorLLBLSelfServicingPersister, IDataEditorEventHandlers where T : EntityBase
   {
-    private SelfServicingGenericDataScope<T> SelfServicingGenericDataScope { get; }
+    private SelfServicingGenericDataScope<T> SelfServicingGenericDataScope { get; set; }
 
     public DataEditorLLBLSelfServicingDataScopePersister(SelfServicingGenericDataScope<T> selfServicingGenericDataScope)
     {
