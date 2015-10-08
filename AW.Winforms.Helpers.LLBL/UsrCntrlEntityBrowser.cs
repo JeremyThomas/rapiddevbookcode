@@ -57,8 +57,9 @@ namespace AW.Winforms.Helpers.LLBL
 
     /// <summary>
     /// </summary>
-    private dynamic ContextToUse
+    private Context ContextToUse
     {
+      //IContextAwareElement contextAwareElement = (object) query as IContextAwareElement;
       get { return HasLinqMetaData ? ((dynamic) _linqMetaData).ContextToUse : null; }
       set
       {

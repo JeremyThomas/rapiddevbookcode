@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
+using AW.Helper.LLBL;
 using AW.Helper.TypeConverters;
 using AW.Test.Helpers;
 using Humanizer;
@@ -153,6 +154,29 @@ namespace AW.Tests
         HumanizedEnumConverter.AddEnumerationConverter(enumType);
         Assert.IsInstanceOfType(TypeDescriptor.GetConverter(enumType), typeof (HumanizedEnumConverter), enumType.ToString());
       }
+    }
+
+    [TestMethod, Microsoft.VisualStudio.TestTools.UnitTesting.Description("A test for WireUpSelfJoin")]
+    public void WireUpSelfJoinTest()
+    {
+      var employeeEntities = MetaSingletons.MetaData.Employee.ToEntityCollection();
+      EmployeeEntity.WireUpSelfJoin(employeeEntities);
+      Assert.AreEqual(employeeEntities[0].Manager, employeeEntities[15]);
+      var employeeEntitiesQuery = EmployeeEntity.WireUpSelfJoin(MetaSingletons.MetaData.Employee).ToEntityCollection();
+      Assert.AreEqual(employeeEntitiesQuery[0].Manager, employeeEntitiesQuery[15]);
+    }
+
+    [TestMethod, Microsoft.VisualStudio.TestTools.UnitTesting.Description("A test for WireUpSelfJoinAndRemoveChildren")]
+    public void WireUpSelfJoinAndRemoveChildrenTest()
+    {
+      var northwindLinqMetaData = NorthwindTest.GetNorthwindLinqMetaData();
+      var employeeEntities = northwindLinqMetaData.Employee.ToEntityCollection2();
+      var root = Northwind.DAL.EntityClasses.EmployeeEntity.WireUpSelfJoinAndRemoveChildren(employeeEntities);
+      Assert.AreEqual(employeeEntities[0].Manager, employeeEntities[1]);
+      Assert.AreEqual(1, root.Count());
+      var employeeEntitiesQueryRoot = Northwind.DAL.EntityClasses.EmployeeEntity.WireUpSelfJoinAndRemoveChildren(northwindLinqMetaData.Employee).ToEntityCollection2();
+      Assert.AreEqual(1, root.Count());
+      Assert.AreEqual(5, employeeEntitiesQueryRoot.Single().Staff.Count);
     }
   }
 
