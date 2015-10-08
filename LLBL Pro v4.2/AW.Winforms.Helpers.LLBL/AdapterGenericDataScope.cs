@@ -7,10 +7,35 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.LLBL
 {
-  public class AdapterGenericDataScope<T> : DataScope where T : EntityBase2
+  public class AdapterGenericDataScopeBase<T> : DataScope where T : EntityBase2
   {
-    private readonly IQueryable<T> _query;
-    private readonly IDataAccessAdapter _dataAccessAdapter;
+    protected IQueryable<T> Query;
+    protected IDataAccessAdapter DataAccessAdapter;
+
+    public AdapterGenericDataScopeBase()
+    {
+    }
+
+    public AdapterGenericDataScopeBase(IQueryable<T> query)
+    {
+      Query = TrackQuery(query);
+      DataAccessAdapter = EntityHelper.GetDataAccessAdapter(query);
+    }
+
+    protected override bool FetchDataImpl(params object[] fetchMethodParameters)
+    {
+      return false;
+    }
+
+    public bool CommitChanges()
+    {
+      return CommitChanges(DataAccessAdapter);
+    }
+  }
+
+  public class AdapterGenericDataScope<T> : AdapterGenericDataScopeBase<T> where T : EntityBase2
+  {
+
     private readonly Action<EntityCollectionBase2<T>> _postProcessing;
     private EntityCollectionBase2<T> _entityCollection;
 
@@ -19,55 +44,54 @@ namespace AW.Winforms.Helpers.LLBL
       get { return _entityCollection; }
       set
       {
-        if (value!=null)
+        if (value != null)
           Attach(value);
         _entityCollection = value;
       }
     }
 
-    public AdapterGenericDataScope(IQueryable<T> query, Action<EntityCollectionBase2<T>> postProcessing = null)
+    public AdapterGenericDataScope(IQueryable<T> query, Action<EntityCollectionBase2<T>> postProcessing = null) : base(query)
     {
-      _query = query;
       _postProcessing = postProcessing;
-      _dataAccessAdapter = EntityHelper.GetDataAccessAdapter(query);
+
     }
 
     public AdapterGenericDataScope(IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter)
     {
       EntityCollection = enumerable.ToEntityCollection2();
-      _dataAccessAdapter = dataAccessAdapter;
+      DataAccessAdapter = dataAccessAdapter;
     }
 
     protected override bool FetchDataImpl(params object[] fetchMethodParameters)
     {
-      if (_query == null)
+      if (Query == null)
         return false;
-      var trackQuery = TrackQuery(_query);
-      _entityCollection = trackQuery.ToEntityCollection2();
+      _entityCollection = Query.ToEntityCollection2();
       var anyData = EntityCollection.Count > 0;
       if (_postProcessing != null && anyData)
         _postProcessing(EntityCollection);
       return anyData;
     }
 
-    public bool CommitChanges()
-    {
-      return CommitChanges(_dataAccessAdapter);
-    }
   }
 
   public class DataEditorLLBLAdapterDataScopePersister<T> : LLBLWinformHelper.DataEditorLLBLPersister, IDataEditorEventHandlers where T : EntityBase2
   {
-    private AdapterGenericDataScope<T> AdapterGenericDataScope { get; set; }
+    private AdapterGenericDataScopeBase<T> AdapterGenericDataScope { get; set; }
 
-    public DataEditorLLBLAdapterDataScopePersister(AdapterGenericDataScope<T> adapterGenericDataScope)
+    public DataEditorLLBLAdapterDataScopePersister(IQueryable<T> query)
+    {
+      AdapterGenericDataScope = new AdapterGenericDataScopeBase<T>(query);
+    }
+
+    public DataEditorLLBLAdapterDataScopePersister(AdapterGenericDataScopeBase<T> adapterGenericDataScope)
     {
       AdapterGenericDataScope = adapterGenericDataScope;
     }
 
-    public DataEditorLLBLAdapterDataScopePersister(IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter):this(new AdapterGenericDataScope<T>(enumerable, dataAccessAdapter))
+    public DataEditorLLBLAdapterDataScopePersister(IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter) : this(new AdapterGenericDataScope<T>(enumerable, dataAccessAdapter))
     {
-     }
+    }
 
     #region Events
 
@@ -105,10 +129,10 @@ namespace AW.Winforms.Helpers.LLBL
     {
       return CommitAllChanges();
     }
-    
+
     public override bool CanSave(Type typeToSave)
     {
-      return typeof(EntityBase2).IsAssignableFrom(typeToSave);
+      return typeof (EntityBase2).IsAssignableFrom(typeToSave);
     }
   }
 }

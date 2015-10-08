@@ -6,7 +6,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.Linq
 {
-  partial class LinqMetaData: INorthwindLinqMetaData
+  partial class LinqMetaData: INorthwindLinqMetaData, IContextAwareElement
   {
     static LinqMetaData()
     {

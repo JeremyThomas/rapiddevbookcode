@@ -23,6 +23,7 @@ using AW.Data.RelationClasses;
 using AW.Data.HelperClasses;
 using AW.Data.CollectionClasses;
 using System.ComponentModel.DataAnnotations;
+using AW.Helper;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.EntityClasses
@@ -1910,15 +1911,9 @@ namespace AW.Data.EntityClasses
     /// </summary>
     /// <param name="employeeEntities">The employee entities.</param>
     /// <returns></returns>
-    public static IEnumerable<EmployeeEntity> WireUpSelfJoin(IEnumerable<EmployeeEntity> employeeEntities)
+    public static ICollection<EmployeeEntity> WireUpSelfJoin(IEnumerable<EmployeeEntity> employeeEntities)
     {
-      var edDictionary = employeeEntities.ToDictionary(ed => ed.EmployeeID);
-      foreach (var employeeEntity in edDictionary.Values.Where(e => e.ManagerID.HasValue))
-        {
-          var parent = edDictionary[employeeEntity.ManagerID.Value];
-          employeeEntity.Manager = parent;
-        }
-      return edDictionary.Values;
+      return GeneralHelper.WireUpSelfJoin(employeeEntities, e => e.EmployeeID, e => e.ManagerID.HasValue, e => e.ManagerID.Value, (e, m) => e.Manager = m);
     }
 
     // __LLBLGENPRO_USER_CODE_REGION_END

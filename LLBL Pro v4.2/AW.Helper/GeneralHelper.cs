@@ -867,23 +867,23 @@ namespace AW.Helper
       return value;
     }
 
-    public static IEnumerable<T> WireUpSelfJoin<T,TI>(IEnumerable<T> employeeEntities,
+    public static ICollection<T> WireUpSelfJoin<T,TI>(IEnumerable<T> entities,
       Func<T, TI> iDFunc, Func<T, bool> isChildFunc, Func<T, TI> parentIDFunc, Action<T, T> assignToParentFunc)
     {
-      var edDictionary = employeeEntities.ToDictionary(iDFunc);
-      foreach (var employeeEntity in edDictionary.Values.Where(isChildFunc))
+      var edDictionary = entities.ToDictionary(iDFunc);
+      foreach (var entity in edDictionary.Values.Where(isChildFunc))
       {
-        var parent = edDictionary[parentIDFunc(employeeEntity)];
-        assignToParentFunc(employeeEntity, parent);
+        var parent = edDictionary[parentIDFunc(entity)];
+        assignToParentFunc(entity, parent);
       }
-      return employeeEntities;
+      return edDictionary.Values;
     }
 
-    public static IEnumerable<T> WireUpSelfJoinAndRemoveChildren<T, TI>(IEnumerable<T> employeeEntities,
+    public static IEnumerable<T> WireUpSelfJoinAndRemoveChildren<T, TI>(IEnumerable<T> entities,
       Func<T, TI> iDFunc, Func<T, bool> isChildFunc, Func<T, TI> parentIDFunc, Action<T, T> assignToParentFunc)
     {
-      WireUpSelfJoin(employeeEntities, iDFunc,  isChildFunc,  parentIDFunc,  assignToParentFunc);
-      return employeeEntities.Where(employeeEntity => !isChildFunc(employeeEntity));
+     var entityCollection = WireUpSelfJoin(entities, iDFunc,  isChildFunc,  parentIDFunc,  assignToParentFunc);
+      return entityCollection.Where(employeeEntity => !isChildFunc(employeeEntity));
     }
   }
 }
