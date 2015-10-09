@@ -37,13 +37,14 @@
       this.toolStripButtonShowEmployeeHierarchyInTree = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonCustomerGroupedByCountry = new System.Windows.Forms.ToolStripButton();
       this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-      this.usrCntrlEntityBrowser1 = new AW.Winforms.Helpers.LLBL.UsrCntrlEntityBrowser();
       this.panel1 = new System.Windows.Forms.Panel();
       this.cacheDurationInSecondsNumericUpDown = new System.Windows.Forms.NumericUpDown();
       this.prefixDelimiterTextBox = new System.Windows.Forms.TextBox();
       this.useSchemaCheckBox = new System.Windows.Forms.CheckBox();
       this.useContextCheckBox = new System.Windows.Forms.CheckBox();
       this.ensureFilteringEnabledCheckBox = new System.Windows.Forms.CheckBox();
+      this.usrCntrlEntityBrowser1 = new AW.Winforms.Helpers.LLBL.UsrCntrlEntityBrowser();
+      this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing = new System.Windows.Forms.ToolStripButton();
       cacheDurationInSecondsLabel = new System.Windows.Forms.Label();
       prefixDelimiterLabel = new System.Windows.Forms.Label();
       this.toolStrip1.SuspendLayout();
@@ -74,6 +75,7 @@
       this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonRemote,
             this.toolStripButtonShowEmployeeHierarchyInTreeByID,
+            this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing,
             this.toolStripButtonShowEmployeeHierarchyInTree,
             this.toolStripButtonCustomerGroupedByCountry,
             this.toolStripButton1});
@@ -131,16 +133,6 @@
       this.toolStripButton1.Name = "toolStripButton1";
       this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
       this.toolStripButton1.Text = "toolStripButton1";
-      // 
-      // usrCntrlEntityBrowser1
-      // 
-      this.usrCntrlEntityBrowser1.CacheDurationInSeconds = 30;
-      this.usrCntrlEntityBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.usrCntrlEntityBrowser1.EnsureFilteringEnabled = true;
-      this.usrCntrlEntityBrowser1.Location = new System.Drawing.Point(0, 54);
-      this.usrCntrlEntityBrowser1.Name = "usrCntrlEntityBrowser1";
-      this.usrCntrlEntityBrowser1.Size = new System.Drawing.Size(1080, 525);
-      this.usrCntrlEntityBrowser1.TabIndex = 0;
       // 
       // panel1
       // 
@@ -200,6 +192,26 @@
       this.ensureFilteringEnabledCheckBox.Text = "Ensure Filtering Enabled:";
       this.ensureFilteringEnabledCheckBox.UseVisualStyleBackColor = true;
       // 
+      // usrCntrlEntityBrowser1
+      // 
+      this.usrCntrlEntityBrowser1.CacheDurationInSeconds = 30;
+      this.usrCntrlEntityBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.usrCntrlEntityBrowser1.EnsureFilteringEnabled = true;
+      this.usrCntrlEntityBrowser1.Location = new System.Drawing.Point(0, 54);
+      this.usrCntrlEntityBrowser1.Name = "usrCntrlEntityBrowser1";
+      this.usrCntrlEntityBrowser1.Size = new System.Drawing.Size(1080, 525);
+      this.usrCntrlEntityBrowser1.TabIndex = 0;
+      // 
+      // toolStripButtonShowEmployeeHierarchyInTreePostProcessing
+      // 
+      this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Image")));
+      this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Name = "toolStripButtonShowEmployeeHierarchyInTreePostProcessing";
+      this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Size = new System.Drawing.Size(270, 22);
+      this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Text = "Show Employee Hierarchy In Tree PostProcessing";
+      this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Click += new System.EventHandler(this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing_Click);
+      // 
       // FrmEntityBrowser
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -236,6 +248,7 @@
     private System.Windows.Forms.CheckBox ensureFilteringEnabledCheckBox;
     private System.Windows.Forms.ToolStripButton toolStripButton1;
     private System.Windows.Forms.NumericUpDown cacheDurationInSecondsNumericUpDown;
+    private System.Windows.Forms.ToolStripButton toolStripButtonShowEmployeeHierarchyInTreePostProcessing;
   }
 }
 

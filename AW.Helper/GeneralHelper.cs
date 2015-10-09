@@ -885,5 +885,10 @@ namespace AW.Helper
      var entityCollection = WireUpSelfJoin(entities, iDFunc,  isChildFunc,  parentIDFunc,  assignToParentFunc);
       return entityCollection.Where(employeeEntity => !isChildFunc(employeeEntity));
     }
+
+    public static Action<T> FuncToAction<T, TResult>(Func<T, TResult> func)
+    {
+      return t => { func(t); };
+    }
   }
 }

@@ -36,7 +36,7 @@ namespace AW.Winforms.Helpers.LLBL
   public class AdapterGenericDataScope<T> : AdapterGenericDataScopeBase<T> where T : EntityBase2
   {
 
-    private readonly Action<EntityCollectionBase2<T>> _postProcessing;
+    private readonly Action<IEnumerable<T>> _postProcessing;
     private EntityCollectionBase2<T> _entityCollection;
 
     public EntityCollectionBase2<T> EntityCollection
@@ -50,7 +50,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-    public AdapterGenericDataScope(IQueryable<T> query, Action<EntityCollectionBase2<T>> postProcessing = null) : base(query)
+    public AdapterGenericDataScope(IQueryable<T> query, Action<IEnumerable<T>> postProcessing = null) : base(query)
     {
       _postProcessing = postProcessing;
 
@@ -72,7 +72,6 @@ namespace AW.Winforms.Helpers.LLBL
         _postProcessing(EntityCollection);
       return anyData;
     }
-
   }
 
   public class DataEditorLLBLAdapterDataScopePersister<T> : LLBLWinformHelper.DataEditorLLBLPersister, IDataEditorEventHandlers where T : EntityBase2
