@@ -132,7 +132,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     public override bool CanSave(Type typeToSave)
     {
-      return typeof (EntityBase2).IsAssignableFrom(typeToSave);
+      return typeof (T).IsAssignableFrom(typeToSave);
     }
   }
 }
