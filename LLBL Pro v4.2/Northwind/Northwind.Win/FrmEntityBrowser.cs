@@ -12,7 +12,6 @@ using Northwind.DAL.EntityClasses;
 using Northwind.DAL.Linq;
 using Northwind.DAL.Services;
 using Northwind.Win.NorthwindODataSRSharedTypes;
-using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.Win
 {
@@ -56,7 +55,7 @@ namespace Northwind.Win
     private void ShowEmployeeHierarchyInTree()
     {
       var linqMetaData = Factories.CreateLinqMetaData();
-      ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactory(linqMetaData.Employee, e => e.EmployeeId, e => e.ReportsTo.HasValue, 
+      ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactory(linqMetaData.Employee, e => e.EmployeeId, e => e.ReportsTo.HasValue,
         e => e.ReportsTo.GetValueOrDefault(), (e, m) => e.Manager = m, em => em.FirstName, em => em.Staff), "EmployeeHierarchyInTree", this);
     }
 
@@ -82,7 +81,15 @@ namespace Northwind.Win
 
     private void useContextCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-      usrCntrlEntityBrowser1.UseContext= useContextCheckBox.Checked;
+      usrCntrlEntityBrowser1.UseContext = useContextCheckBox.Checked;
+    }
+
+    private void toolStripButtonShowEmployeeHierarchyInTreePostProcessing_Click(object sender, EventArgs e)
+    {
+      var linqMetaData = Factories.CreateLinqMetaData();
+      ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactory(linqMetaData.Employee,
+        GeneralHelper.FuncToAction<IEnumerable<EmployeeEntity>, IEnumerable<EmployeeEntity>>(EmployeeEntity.WireUpSelfJoinAndRemoveChildren),
+        em => em.FirstName, em => em.Staff));
     }
   }
 }
