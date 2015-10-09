@@ -35,7 +35,7 @@
             </td>
             <td>
                 @{
-                    if (!GeneralHelper.IsNullOrEmpty(item.AppSettings))
+                    if (!item.AppSettings.IsNullOrEmpty())
                     {
                         @item.AppSettings[0]
                     }

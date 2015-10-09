@@ -220,9 +220,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     public static HierarchyEditor HierarchyEditorFactory<T>(IQueryable<T> query, string nameColumn, string childCollectionPropertyName) where T : EntityBase2
     {
-      var dataScope = new AdapterGenericDataScope<T>(query);
-      dataScope.FetchData();
-      return new HierarchyEditor(dataScope.EntityCollection, nameColumn, childCollectionPropertyName, new DataEditorLLBLAdapterDataScopePersister<T>(dataScope));
+      return new HierarchyEditor(query, nameColumn, childCollectionPropertyName, new DataEditorLLBLAdapterDataScopePersister<T>(query));
     }
 
     public static HierarchyEditor HierarchyEditorFactory<T>(IQueryable<T> query, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
@@ -233,10 +231,8 @@ namespace AW.Winforms.Helpers.LLBL
     public static HierarchyEditor HierarchyEditorFactory<T, TId, TParentId, TName>(IQueryable<T> query, Expression<Func<T, TId>> iDPropertyExpression,
       Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression) where T : EntityBase2
     {
-      var dataScope = new AdapterGenericDataScope<T>(query);
-      dataScope.FetchData();
-      return HierarchyEditor.HierarchyEditorFactory(dataScope.EntityCollection, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, 
-        new DataEditorLLBLAdapterDataScopePersister<T>(dataScope));
+      return HierarchyEditor.HierarchyEditorFactory(query, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, 
+        new DataEditorLLBLAdapterDataScopePersister<T>(query));
     }
 
     public static HierarchyEditor HierarchyEditorFactory<T, TId, TParentId, TName>(IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, Expression<Func<T, TId>> iDPropertyExpression,

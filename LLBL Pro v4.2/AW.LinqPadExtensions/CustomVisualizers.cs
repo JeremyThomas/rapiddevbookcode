@@ -53,7 +53,7 @@ namespace LINQPad
     /// <param name="pageSize"> Size of the page. </param>
     /// <returns> </returns>
 // ReSharper disable MemberCanBePrivate.Global
-    public static object DisplayInGrid(this IEnumerable enumerable, ushort pageSize)
+    public static IEnumerable DisplayInGrid(this IEnumerable enumerable, ushort pageSize)
     {
       return DisplayInGrid(enumerable, null, pageSize);
     }
@@ -68,7 +68,7 @@ namespace LINQPad
     /// <param name="pageSize">Size of the page.</param>
     /// <param name="options">The options.</param>
     /// <returns>Null so can be used in a linqpad expression</returns>
-    public static object DisplayInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize = DefaultPageSize, GridOptions options = null)
+    public static IEnumerable DisplayInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize = DefaultPageSize, GridOptions options = null)
     {
       if (enumerable != null)
       {
@@ -83,7 +83,7 @@ namespace LINQPad
 
     #region LinqtoSQL
 
-    public static object DisplayInGrid<T>(this Table<T> table, ushort pageSize = DefaultPageSize) where T : class
+    public static IEnumerable DisplayInGrid<T>(this Table<T> table, ushort pageSize = DefaultPageSize) where T : class
     {
       return DisplayInGrid(table, table.Context, pageSize);
     }
@@ -95,7 +95,7 @@ namespace LINQPad
     /// <param name="dataContext"> The data context. </param>
     /// <param name="pageSize"> Size of the page. </param>
     /// <returns> </returns>
-    public static object DisplayInGrid(this IEnumerable dataQuery, DataContext dataContext, ushort pageSize = DefaultPageSize)
+    public static IEnumerable DisplayInGrid(this IEnumerable dataQuery, DataContext dataContext, ushort pageSize = DefaultPageSize)
     {
       return DisplayInGrid(dataQuery, new DataEditorLinqtoSQLPersister(dataContext), pageSize);
     }
@@ -106,47 +106,45 @@ namespace LINQPad
 
     #region HierarchyEditor
 
-    public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, string nameColumn, string childCollectionPropertyName = null, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
+    public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, string nameColumn, string childCollectionPropertyName = null, 
+      IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
     {
       return (IEnumerable<T>) DisplayHierarchyInTreeInternal(enumerable, nameColumn, childCollectionPropertyName, dataEditorPersister, membersToExclude);
     }
 
-    public static IEnumerable DisplayHierarchyInTree(this IEnumerable enumerable, string nameColumn, string childCollectionPropertyName, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
+    public static IEnumerable DisplayHierarchyInTree(this IEnumerable enumerable, string nameColumn, string childCollectionPropertyName, 
+      IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
     {
       return DisplayHierarchyInTreeInternal(enumerable, nameColumn, childCollectionPropertyName, dataEditorPersister, membersToExclude);
     }
 
-    public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
-    {
-      return DisplayEnumerableControl(enumerable, new HierarchyEditor(enumerable, iDPropertyName, parentIDPropertyName, nameColumn, dataEditorPersister, membersToExclude));
-    }
-
     private static IEnumerable DisplayHierarchyInTreeInternal(IEnumerable enumerable, string nameColumn, string childCollectionPropertyName, IDataEditorPersister dataEditorPersister, string[] membersToExclude)
     {
-      return (IEnumerable) DisplayControl(enumerable, new HierarchyEditor(enumerable, nameColumn, childCollectionPropertyName, dataEditorPersister, membersToExclude));
+      return DisplayControl(enumerable, new HierarchyEditor(enumerable, nameColumn, childCollectionPropertyName, dataEditorPersister, membersToExclude));
     }
 
+    public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn, 
+      IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
+    {
+      return DisplayControl(enumerable, new HierarchyEditor(enumerable, iDPropertyName, parentIDPropertyName, nameColumn, dataEditorPersister, membersToExclude));
+    }
+    
     public static IEnumerable<T> DisplayHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
       Expression<Func<T, TParentId>> parentIDPropertyExpression,
       Expression<Func<T, TName>> namePropertyExpression, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
     {
-      return DisplayEnumerableControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, dataEditorPersister, membersToExclude));
+      return DisplayControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, dataEditorPersister, membersToExclude));
     }
 
     public static IEnumerable<T> DisplayHierarchyInTree<T, TName, TChildCollection>(this IEnumerable<T> enumerable, Expression<Func<T, TName>> namePropertyExpression,
       Expression<Func<T, TChildCollection>> childCollectionPropertyExpression, IDataEditorPersister dataEditorPersister, params string[] membersToExclude)
     {
-      return DisplayEnumerableControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, namePropertyExpression, childCollectionPropertyExpression, dataEditorPersister, membersToExclude));
-    }
-
-    public static IEnumerable<T> DisplayEnumerableControl<T>(IEnumerable<T> enumerable, Control control)
-    {
-      return (IEnumerable<T>) DisplayControl(enumerable, control);
+      return DisplayControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, namePropertyExpression, childCollectionPropertyExpression, dataEditorPersister, membersToExclude));
     }
 
     #endregion
 
-    private static object DisplayControl(object o, Control control)
+    public static T DisplayControl<T>(T o, Control control)
     {
       if (o != null)
       {
@@ -154,10 +152,10 @@ namespace LINQPad
         var outputPanel = PanelManager.DisplayControl(control, TrimTitle(panelTitle));
         outputPanel.ToolTip = panelTitle;
       }
-      return o;
+      return o; //So can be used in a linqpad expression ala LINQPad.Extensions.Dump
     }
 
-    private static object DisplayForm(object o, Form form)
+    private static T DisplayForm<T>(T o, Form form)
     {
       if (o != null)
       {
@@ -165,7 +163,7 @@ namespace LINQPad
         form.FormBorderStyle = FormBorderStyle.None;
         DisplayControl(o, form);
       }
-      return 0;
+      return o; //So can be used in a linqpad expression
     }
 
     private static string GetPanelTitle(object o, GridOptions options = null)
