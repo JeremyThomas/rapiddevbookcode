@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.Controls;
@@ -10,18 +11,29 @@ namespace AW.Winforms.Helpers.LLBL
   {
     private readonly IQueryable<T> _query;
     private readonly Func<TransactionBase> _getTransaction;
+    private readonly Func<IEnumerable<T>, IEnumerable<T>> _postProcessingFunction;
 
     public SelfServicingGenericDataScope(IQueryable<T> query,Func<TransactionBase> getTransaction=null)
     {
-      _query = query;
+      _query = TrackQuery(query); 
       _getTransaction = getTransaction;
+    }
+    public SelfServicingGenericDataScope(IQueryable<T> query, Func<IEnumerable<T>, IEnumerable<T>> postProcessingFunction) : this(query)
+    {
+      _postProcessingFunction = postProcessingFunction;
     }
 
     protected override bool FetchDataImpl(params object[] fetchMethodParameters)
     {
-      var trackQuery = TrackQuery(_query);
-      EntityCollection = trackQuery.ToEntityCollection();
-      return EntityCollection.Count > 0;
+      EntityCollection = _query.ToEntityCollection();
+
+      if (_postProcessingFunction == null)
+        EntityCollection = _query.ToEntityCollection();
+      else
+        EntityCollection = _postProcessingFunction(_query).ToEntityCollection();
+      var anyData = EntityCollection.Count > 0;
+
+      return anyData;
     }
 
     public EntityCollectionBase<T> EntityCollection { get; set; }
@@ -34,11 +46,17 @@ namespace AW.Winforms.Helpers.LLBL
 
   public class DataEditorLLBLSelfServicingDataScopePersister<T> : LLBLWinformHelper.DataEditorLLBLSelfServicingPersister, IDataEditorEventHandlers where T : EntityBase
   {
+   
     private SelfServicingGenericDataScope<T> SelfServicingGenericDataScope { get; set; }
 
     public DataEditorLLBLSelfServicingDataScopePersister(SelfServicingGenericDataScope<T> selfServicingGenericDataScope)
     {
       SelfServicingGenericDataScope = selfServicingGenericDataScope;
+    }
+
+    public DataEditorLLBLSelfServicingDataScopePersister(IQueryable<T> query)
+    {
+      SelfServicingGenericDataScope = new SelfServicingGenericDataScope<T>(query);
     }
 
     #region Events

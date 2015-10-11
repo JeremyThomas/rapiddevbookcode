@@ -35,9 +35,9 @@ namespace AW.Winforms.Helpers.LLBL
 
   public class AdapterGenericDataScope<T> : AdapterGenericDataScopeBase<T> where T : EntityBase2
   {
-
     private readonly Action<IEnumerable<T>> _postProcessing;
     private EntityCollectionBase2<T> _entityCollection;
+    private readonly Func<IEnumerable<T>, IEnumerable<T>> _postProcessingFunction;
 
     public EntityCollectionBase2<T> EntityCollection
     {
@@ -50,10 +50,18 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-    public AdapterGenericDataScope(IQueryable<T> query, Action<IEnumerable<T>> postProcessing = null) : base(query)
+    public AdapterGenericDataScope(IQueryable<T> query) : base(query)
+    {
+    }
+
+    public AdapterGenericDataScope(IQueryable<T> query, Action<IEnumerable<T>> postProcessing = null) : this(query)
     {
       _postProcessing = postProcessing;
+    }
 
+    public AdapterGenericDataScope(IQueryable<T> query, Func<IEnumerable<T>, IEnumerable<T>> postProcessingFunction) : this(query)
+    {
+      _postProcessingFunction = postProcessingFunction;
     }
 
     public AdapterGenericDataScope(IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter)
@@ -66,10 +74,16 @@ namespace AW.Winforms.Helpers.LLBL
     {
       if (Query == null)
         return false;
-      _entityCollection = Query.ToEntityCollection2();
+      if (_postProcessingFunction == null)
+        _entityCollection = Query.ToEntityCollection2();
+      else
+        EntityCollection = _postProcessingFunction(Query).ToEntityCollection2();
       var anyData = EntityCollection.Count > 0;
-      if (_postProcessing != null && anyData)
-        _postProcessing(EntityCollection);
+      if (anyData)
+      {
+        if (_postProcessing != null)
+          _postProcessing(EntityCollection); 
+      }
       return anyData;
     }
   }
