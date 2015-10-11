@@ -88,7 +88,7 @@ namespace Northwind.Win
     {
       var linqMetaData = Factories.CreateLinqMetaData();
       ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactory(linqMetaData.Employee,
-        GeneralHelper.FuncToAction<IEnumerable<EmployeeEntity>, IEnumerable<EmployeeEntity>>(EmployeeEntity.WireUpSelfJoinAndRemoveChildren),
+        EmployeeEntity.WireUpSelfJoinAndRemoveChildren,
         em => em.FirstName, em => em.Staff));
     }
   }
