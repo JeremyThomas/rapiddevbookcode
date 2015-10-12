@@ -310,8 +310,7 @@ namespace AW.Helper.LLBL
       if (entities != null)
         return entities;
       var llblQuery = enumerable as ILLBLGenProQuery;
-      if (llblQuery != null)
-        entities = llblQuery.Execute() as IEntityCollectionCore;
+      entities = ToEntityCollectionCore(llblQuery);
       if (entities == null)
       {
         var entityFactoryCore = GetFactoryCore(enumerable, itemType);
@@ -323,6 +322,13 @@ namespace AW.Helper.LLBL
       if (!entities.IsNullOrEmpty())
         entities.RemovedEntitiesTracker = entities.EntityFactoryToUse.CreateEntityCollection();
       return entities;
+    }
+
+    public static IEntityCollectionCore ToEntityCollectionCore(ILLBLGenProQuery llblQuery)
+    {
+      if (llblQuery != null)
+        return llblQuery.Execute() as IEntityCollectionCore;
+      return null;
     }
 
     public static IBindingListView CreateEntityView(IEnumerable enumerable, Type itemType)
@@ -895,6 +901,54 @@ namespace AW.Helper.LLBL
       foreach (var entityField2 in entity.PrimaryKeyFields)
         bucket.PredicateExpression.Add(new FieldCompareValuePredicate(entityField2, null, ComparisonOperator.Equal, entityField2.CurrentValue, entity.LLBLGenProEntityName + "__"));
       return bucket;
+    }
+
+    #endregion
+
+    #region GetTransactionController
+
+    /// <summary>
+    ///   Gets the data access adapter from a query.
+    /// </summary>
+    /// <param name="query">The query.</param>
+    /// <returns></returns>
+    public static ITransactionController GetTransactionController(IQueryable query)
+    {
+      return GetDataAccessAdapter(query.Provider);
+    }
+
+    public static ITransactionController GetTransactionController(IEnumerable enumerable)
+    {
+      var queryable = enumerable as IQueryable;
+      return queryable == null ? null : GetDataAccessAdapter(queryable);
+    }
+
+    /// <summary>
+    ///   Gets the data access adapter from a LLBLGenProProvider2.
+    /// </summary>
+    /// <param name="provider">The provider.</param>
+    /// <returns></returns>
+    public static ITransactionController GetTransactionController(IQueryProvider provider)
+    {
+      var llblGenProProvider2 = provider as LLBLGenProProvider2;
+      if (llblGenProProvider2 == null)
+      {
+        var llblGenProProvider = provider as LLBLGenProProvider;
+        if (llblGenProProvider == null)
+          return null;
+        return llblGenProProvider.TransactionToUse;
+      }
+      return llblGenProProvider2.AdapterToUse;
+    }
+
+    /// <summary>
+    ///   Gets the IDataAccessAdapter from a ILinqMetaData Via the provider.
+    /// </summary>
+    /// <param name="linqMetaData">The ILinqMetaData.</param>
+    /// <returns></returns>
+    public static ITransactionController GetTransactionController(ILinqMetaData linqMetaData)
+    {
+      return GetTransactionController(GetProvider(linqMetaData));
     }
 
     #endregion

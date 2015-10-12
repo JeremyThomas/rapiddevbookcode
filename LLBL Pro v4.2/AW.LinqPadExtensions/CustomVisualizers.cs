@@ -29,21 +29,7 @@ namespace LINQPad
 // ReSharper disable UnusedMember.Global
     public static object DisplayInGrid(this IEnumerable enumerable)
     {
-      if (enumerable != null)
-      {
-        var dataContext = GetDataContext(enumerable);
-        if (dataContext != null)
-          return DisplayInGrid(enumerable, new DataEditorLinqtoSQLPersister(dataContext));
-      }
       return DisplayInGrid(enumerable, DefaultPageSize);
-    }
-
-    private static DataContext GetDataContext(object enumerable)
-    {
-      var contextField = enumerable.GetType().GetField("context", BindingFlags.Instance | BindingFlags.NonPublic);
-      if (contextField != null)
-        return contextField.GetValue(enumerable) as DataContext;
-      return null;
     }
 
     /// <summary>
@@ -73,7 +59,8 @@ namespace LINQPad
       if (enumerable != null)
       {
         var panelTitle = GetPanelTitle(enumerable, options);
-        var outputPanel = PanelManager.DisplayControl(new GridDataEditor(enumerable, dataEditorPersister, pageSize, false, options == null ? null : options.MembersToExclude), TrimTitle(panelTitle));
+        var outputPanel = PanelManager.DisplayControl(new GridDataEditor(enumerable, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), pageSize, 
+          false, options == null ? null : options.MembersToExclude), TrimTitle(panelTitle));
         outputPanel.ToolTip = panelTitle;
       }
       return null; //So can be used in a linqpad expression
@@ -111,14 +98,15 @@ namespace LINQPad
     public static IEnumerable DisplayHierarchyInTree(this IEnumerable enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn,
       IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
     {
-      return DisplayControl(enumerable, new HierarchyEditor(enumerable, iDPropertyName, parentIDPropertyName, nameColumn, dataEditorPersister, membersToExclude));
+      return DisplayControl(enumerable, new HierarchyEditor(enumerable, iDPropertyName, parentIDPropertyName, nameColumn, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), membersToExclude));
     }
 
     public static IEnumerable<T> DisplayHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
       Expression<Func<T, TParentId>> parentIDPropertyExpression,
       Expression<Func<T, TName>> namePropertyExpression, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
     {
-      return DisplayControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, dataEditorPersister, membersToExclude));
+      return DisplayControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, 
+        DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), membersToExclude));
     }
 
     #endregion
@@ -126,13 +114,14 @@ namespace LINQPad
     public static IEnumerable DisplayHierarchyInTree(this IEnumerable enumerable, string nameColumn, string childCollectionPropertyName, 
       IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
     {
-      return DisplayControl(enumerable, new HierarchyEditor(enumerable, nameColumn, childCollectionPropertyName, dataEditorPersister, membersToExclude));
+      return DisplayControl(enumerable, new HierarchyEditor(enumerable, nameColumn, childCollectionPropertyName, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), membersToExclude));
     }
 
     public static IEnumerable<T> DisplayHierarchyInTree<T, TName, TChildCollection>(this IEnumerable<T> enumerable, Expression<Func<T, TName>> namePropertyExpression,
       Expression<Func<T, TChildCollection>> childCollectionPropertyExpression, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
     {
-      return DisplayControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, namePropertyExpression, childCollectionPropertyExpression, dataEditorPersister, membersToExclude));
+      return DisplayControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, namePropertyExpression, childCollectionPropertyExpression, 
+        DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), membersToExclude));
     }
 
     #endregion

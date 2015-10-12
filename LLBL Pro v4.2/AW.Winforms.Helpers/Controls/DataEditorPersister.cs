@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data.Linq;
+using System.Linq;
+using System.Reflection;
+using System.ServiceModel.PeerResolvers;
 using AW.Helper;
 
 namespace AW.Winforms.Helpers.Controls
@@ -25,6 +30,47 @@ namespace AW.Winforms.Helpers.Controls
     ///   Raised when an entity has been added to the scope. Ignored during fetches. Sender is the entity which was added.
     /// </summary>
     event EventHandler EntityAdded;
+  }
+
+  public static class DataEditorPersisterFactory
+  {
+    private static readonly List<Func<object, IDataEditorPersister>>  Factories = new List<Func<object, IDataEditorPersister>>();
+
+    static DataEditorPersisterFactory()
+    {
+      Register(CreateDataEditorLinqtoSQLPersister);
+    }
+
+    public static IDataEditorPersister CreateDataEditorLinqtoSQLPersister(object data)
+    {
+      var context = data as DataContext;
+      if (context == null)
+      {
+        context = GetDataContext(data);
+        if (context == null)
+          return null;
+      }
+      return new DataEditorLinqtoSQLPersister(context);
+    }
+
+    private static DataContext GetDataContext(object enumerable)
+    {
+      var contextField = enumerable.GetType().GetField("context", BindingFlags.Instance | BindingFlags.NonPublic);
+      if (contextField != null)
+        return contextField.GetValue(enumerable) as DataContext;
+      return null;
+    }
+
+    public static void Register(Func<object,IDataEditorPersister> factory)
+    {
+      Factories.Add(factory);
+    }
+
+    public static IDataEditorPersister Create(object data, IDataEditorPersister persister = null)
+    {
+      return persister ?? Factories.Select(factory => factory(data)).FirstOrDefault(dataEditorPersister => dataEditorPersister != null);
+    }
+
   }
 
   public class DataEditorPersister : IDataEditorPersister
