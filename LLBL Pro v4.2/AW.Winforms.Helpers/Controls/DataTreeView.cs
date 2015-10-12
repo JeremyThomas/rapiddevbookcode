@@ -767,7 +767,7 @@ namespace Chaliy.Windows.Forms
       IBindingList bindingList;
       if (_bindingLists.TryGetValue(item, out bindingList))
         return bindingList;
-      var childCollectionPropertyValue = (_childCollectionProperty == null || _childCollectionProperty .ComponentType!= item.GetType() ? item : _childCollectionProperty.GetValue(item));
+      var childCollectionPropertyValue = (_childCollectionProperty == null || !item.GetType().IsAssignableTo(_childCollectionProperty.ComponentType) ? item : _childCollectionProperty.GetValue(item));
       return MetaDataHelper.AsEnumerable(childCollectionPropertyValue);
     }
 
