@@ -4,7 +4,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.Linq
 {
-  partial class LinqMetaData
+  partial class LinqMetaData: IContextAwareElement
   {
     static LinqMetaData()
     {
