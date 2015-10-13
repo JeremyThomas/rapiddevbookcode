@@ -59,7 +59,7 @@ namespace LINQPad
       if (enumerable != null)
       {
         var panelTitle = GetPanelTitle(enumerable, options);
-        var outputPanel = PanelManager.DisplayControl(new GridDataEditor(enumerable, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), pageSize, 
+        var outputPanel = PanelManager.DisplayControl(new GridDataEditor(enumerable, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), pageSize,
           false, options == null ? null : options.MembersToExclude), TrimTitle(panelTitle));
         outputPanel.ToolTip = panelTitle;
       }
@@ -105,13 +105,13 @@ namespace LINQPad
       Expression<Func<T, TParentId>> parentIDPropertyExpression,
       Expression<Func<T, TName>> namePropertyExpression, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
     {
-      return DisplayControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, 
+      return DisplayControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression,
         DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), membersToExclude));
     }
 
     #endregion
 
-    public static IEnumerable DisplayHierarchyInTree(this IEnumerable enumerable, string nameColumn, string childCollectionPropertyName, 
+    public static IEnumerable DisplayHierarchyInTree(this IEnumerable enumerable, string nameColumn, string childCollectionPropertyName,
       IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
     {
       return DisplayControl(enumerable, new HierarchyEditor(enumerable, nameColumn, childCollectionPropertyName, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), membersToExclude));
@@ -120,8 +120,17 @@ namespace LINQPad
     public static IEnumerable<T> DisplayHierarchyInTree<T, TName, TChildCollection>(this IEnumerable<T> enumerable, Expression<Func<T, TName>> namePropertyExpression,
       Expression<Func<T, TChildCollection>> childCollectionPropertyExpression, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
     {
-      return DisplayControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, namePropertyExpression, childCollectionPropertyExpression, 
+      return DisplayControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, namePropertyExpression, childCollectionPropertyExpression,
         DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), membersToExclude));
+    }
+
+    public static IEnumerable<T> DisplayHierarchyInTree<T, TI, TName, TChildCollection>(this IEnumerable<T> enumerable, Func<T, TI> iDFunc, Func<T, bool> isChildFunc,
+      Func<T, TI> parentIDFunc, Action<T, T> assignToParentFunc,
+      Expression<Func<T, TName>> namePropertyExpression,
+      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
+    {
+      return DisplayControl(enumerable, HierarchyEditor.HierarchyEditorFactory(enumerable, iDFunc, isChildFunc, parentIDFunc, assignToParentFunc,
+        namePropertyExpression, childCollectionPropertyExpression, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister)));
     }
 
     #endregion
@@ -170,7 +179,7 @@ namespace LINQPad
         if (explorerGridType != null)
           _objectToStringMethodInfo = explorerGridType.GetMethod("ObjectToString", BindingFlags.Public | BindingFlags.Static);
       }
-      return _objectToStringMethodInfo == null ? o.GetType().FriendlyName() : 
+      return _objectToStringMethodInfo == null ? o.GetType().FriendlyName() :
         Convert.ToString(_objectToStringMethodInfo.Invoke(null, BindingFlags.InvokeMethod, null, new[] {o}, null));
     }
 

@@ -586,13 +586,13 @@ namespace AW.Helper.LLBL
         }
         return entityCollection.ContainsDirtyContents || ContainsEntityFieldsErrors(entityCollection);
       }
-      return entity.IsDirty || !string.IsNullOrWhiteSpace(GetEntityFieldsErrors(entity));
+      return entity.IsDirty || !String.IsNullOrWhiteSpace(GetEntityFieldsErrors(entity));
     }
 
     public static bool ContainsEntityFieldsErrors(IEntityCollectionCore entityCollection)
     {
       for (var i = 0; i < entityCollection.Count; i++)
-        if (!string.IsNullOrWhiteSpace(GetEntityFieldsErrors(entityCollection[i])))
+        if (!String.IsNullOrWhiteSpace(GetEntityFieldsErrors(entityCollection[i])))
           return true;
       return false;
     }
@@ -1178,6 +1178,27 @@ namespace AW.Helper.LLBL
     public static string GetPkIdStringFromEntity(EntityBase2 entity)
     {
       return GetPkIdStringFromFields(((IEntity2) entity).PrimaryKeyFields);
+    }
+
+    public static Context GetContextToUse(object potentialContextAwareElement)
+    {
+      if (potentialContextAwareElement != null)
+      {
+        var contextAwareElement = potentialContextAwareElement as IContextAwareElement;
+        if (contextAwareElement == null)
+        {
+          var queryable = potentialContextAwareElement as IQueryable;
+          if (queryable != null)
+            contextAwareElement = queryable.Provider as IContextAwareElement;
+        }
+        if (contextAwareElement == null)
+        {
+          var contextToUse = ((dynamic)potentialContextAwareElement).ContextToUse as Context;
+          return contextToUse;
+        }
+        return contextAwareElement.ContextToUse;
+      }
+      return null;
     }
   }
 

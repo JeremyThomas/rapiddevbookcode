@@ -8,7 +8,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.LLBL
 {
-  public partial class UsrCntrlEntityBrowser : UserControl
+  public partial class UsrCntrlEntityBrowser : UserControl, IContextAwareElement
   {
     public const int DefaultCacheDurationInSeconds = 20;
     public const string DefaultPrefixDelimiter = "_";
@@ -57,10 +57,10 @@ namespace AW.Winforms.Helpers.LLBL
 
     /// <summary>
     /// </summary>
-    private Context ContextToUse
+    public Context ContextToUse
     {
       //IContextAwareElement contextAwareElement = (object) query as IContextAwareElement;
-      get { return HasLinqMetaData ? ((dynamic) _linqMetaData).ContextToUse : null; }
+      get { return HasLinqMetaData ? EntityHelper.GetContextToUse(_linqMetaData) : null; }
       set
       {
         if (HasLinqMetaData)
@@ -91,14 +91,23 @@ namespace AW.Winforms.Helpers.LLBL
         if (value)
         {
           if (!UseContext)
-            ContextToUse = new Context();
+          {
+            var dataEditorLLBLDataScopePersister = new DataEditorLLBLDataScopePersister(this, EntityHelper.GetTransactionController(_linqMetaData));
+            gridDataEditor.DataEditorPersister = dataEditorLLBLDataScopePersister;
+            dataEditorLLBLDataScopePersister.ContainedDataChanged += DataEditorEventHandlers_ContainedDataChanged;
+            dataEditorLLBLDataScopePersister.EntityAdded += DataEditorEventHandlers_ContainedDataChanged;
+          }
         }
         else
+        {
           ContextToUse = null;
+          gridDataEditor.DataEditorPersister = null;
+        }
       }
       else
         _useContext = value;
     }
+
 
     [Category("EntityBrowser"), Description("Gets or sets wether filtering is enabled in the grid, even if the underlying collection doesn't support it.")]
     public bool EnsureFilteringEnabled
@@ -244,7 +253,6 @@ namespace AW.Winforms.Helpers.LLBL
         if (gridDataEditor.DataEditorPersister == null)
           gridDataEditor.DataEditorPersister = new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister();
       }
-      //  MaybeViewEntities(entityQueryable);
       else
       {
         var provider = entityQueryable.Provider as LLBLGenProProvider2;
@@ -257,51 +265,6 @@ namespace AW.Winforms.Helpers.LLBL
     private dynamic CacheResultset(dynamic entityQueryable)
     {
       return CacheDurationInSeconds > 0 ? QueryableExtensionMethods.CacheResultset(entityQueryable, CacheDurationInSeconds) : entityQueryable;
-    }
-
-    private void MaybeBindAdapterCached(dynamic entityQueryable)
-    {
-      BindAdapterCached(entityQueryable);
-    }
-
-    private void MaybeBindSelfServicingCached(dynamic entityQueryable)
-    {
-      BindSelfServicingCached(entityQueryable);
-    }
-
-    private void BindSelfServicingCached<T>(IQueryable<T> entityQueryable) where T : class, IEntityCore
-    {
-      var queryableCached = entityQueryable.CacheResultset(DefaultCacheDurationInSeconds);
-      gridDataEditor.BindEnumerable(queryableCached);
-    }
-
-    private void BindAdapterCached<T>(IQueryable<T> entityQueryable) where T : EntityBase2
-    {
-      var queryableCached = entityQueryable.CacheResultset(DefaultCacheDurationInSeconds);
-      gridDataEditor.BindEnumerable(queryableCached);
-    }
-
-    private void MaybeViewEntities(dynamic entityQueryable)
-    {
-      ViewSelfServicingEntities(entityQueryable);
-    }
-
-    private void ViewSelfServicingEntities<T>(IQueryable<T> entityQueryable) where T : EntityBase
-    {
-      var queryableCached = entityQueryable.CacheResultset(10);
-      var dataScope = new SelfServicingGenericDataScope<T>(queryableCached);
-      dataScope.FetchData();
-      gridDataEditor.DataEditorPersister = new DataEditorLLBLSelfServicingDataScopePersister<T>(dataScope);
-      gridDataEditor.BindEnumerable(dataScope.EntityCollection);
-    }
-
-    private void ViewAdapterEntities<T>(IQueryable<T> entityQueryable) where T : EntityBase2
-    {
-      var queryableCached = entityQueryable.CacheResultset(10);
-      var dataScope = new AdapterGenericDataScope<T>(queryableCached);
-      dataScope.FetchData();
-      gridDataEditor.DataEditorPersister = new DataEditorLLBLAdapterDataScopePersister<T>(dataScope);
-      gridDataEditor.BindEnumerable(dataScope.EntityCollection);
     }
 
     private void openPagedToolStripMenuItem_Click()
@@ -317,6 +280,36 @@ namespace AW.Winforms.Helpers.LLBL
     private void treeViewEntities_KeyDown(object sender, KeyEventArgs e)
     {
       _userHasInteracted = true;
+    }
+
+    private void saveToolStripButton_Click(object sender, EventArgs e)
+    {
+      if (gridDataEditor.DataEditorPersister != null)
+      {
+        gridDataEditor.DataEditorPersister.Save(null);
+        SetSaveButtons();
+      }
+    }
+
+    private void toolStripButtonCancelEdit_Click(object sender, EventArgs e)
+    {
+      if (gridDataEditor.DataEditorPersister != null)
+      {
+     //   bindingSourceHierarchicalData.ResetBindings(false);
+        SetSaveButtons();
+      }
+    }
+
+    private void SetSaveButtons()
+    {
+      saveToolStripButton.Enabled = false;
+      toolStripButtonCancelEdit.Enabled = saveToolStripButton.Enabled;
+    }
+
+    private void DataEditorEventHandlers_ContainedDataChanged(object sender, EventArgs e)
+    {
+      saveToolStripButton.Enabled = true;
+      toolStripButtonCancelEdit.Enabled = saveToolStripButton.Enabled;
     }
   }
 }

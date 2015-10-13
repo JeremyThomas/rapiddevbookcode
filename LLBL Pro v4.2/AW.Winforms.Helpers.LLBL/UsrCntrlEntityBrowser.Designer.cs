@@ -44,6 +44,9 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+      this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonCancelEdit = new System.Windows.Forms.ToolStripButton();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
@@ -51,6 +54,7 @@ namespace AW.Winforms.Helpers.LLBL
       ((System.ComponentModel.ISupportInitialize)(this.gridDataEditor)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorPaging)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
+      this.toolStrip1.SuspendLayout();
       this.SuspendLayout();
       // 
       // treeViewEntities
@@ -89,6 +93,7 @@ namespace AW.Winforms.Helpers.LLBL
       // 
       // splitContainer1.Panel1
       // 
+      this.splitContainer1.Panel1.Controls.Add(this.toolStrip1);
       this.splitContainer1.Panel1.Controls.Add(this.treeViewEntities);
       // 
       // splitContainer1.Panel2
@@ -148,6 +153,40 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorData.TabIndex = 2;
       this.bindingNavigatorData.Text = "bindingNavigator1";
       // 
+      // toolStrip1
+      // 
+      this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonCancelEdit,
+            this.saveToolStripButton});
+      this.toolStrip1.Location = new System.Drawing.Point(0, 560);
+      this.toolStrip1.Name = "toolStrip1";
+      this.toolStrip1.Size = new System.Drawing.Size(167, 25);
+      this.toolStrip1.TabIndex = 2;
+      this.toolStrip1.Text = "toolStrip1";
+      // 
+      // saveToolStripButton
+      // 
+      this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.saveToolStripButton.Enabled = false;
+      this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
+      this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.saveToolStripButton.Name = "saveToolStripButton";
+      this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
+      this.saveToolStripButton.Text = "&Save";
+      this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
+      // 
+      // toolStripButtonCancelEdit
+      // 
+      this.toolStripButtonCancelEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.toolStripButtonCancelEdit.Enabled = false;
+      this.toolStripButtonCancelEdit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCancelEdit.Image")));
+      this.toolStripButtonCancelEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonCancelEdit.Name = "toolStripButtonCancelEdit";
+      this.toolStripButtonCancelEdit.Size = new System.Drawing.Size(23, 22);
+      this.toolStripButtonCancelEdit.Text = "Cancel";
+      this.toolStripButtonCancelEdit.Click += new System.EventHandler(this.toolStripButtonCancelEdit_Click);
+      // 
       // UsrCntrlEntityBrowser
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -156,12 +195,15 @@ namespace AW.Winforms.Helpers.LLBL
       this.Name = "UsrCntrlEntityBrowser";
       this.Size = new System.Drawing.Size(502, 585);
       this.splitContainer1.Panel1.ResumeLayout(false);
+      this.splitContainer1.Panel1.PerformLayout();
       this.splitContainer1.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
       this.splitContainer1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.gridDataEditor)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorPaging)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).EndInit();
+      this.toolStrip1.ResumeLayout(false);
+      this.toolStrip1.PerformLayout();
       this.ResumeLayout(false);
 
     }
@@ -175,5 +217,8 @@ namespace AW.Winforms.Helpers.LLBL
     private BindingNavigator bindingNavigatorPaging;
     private BindingNavigator bindingNavigatorData;
     private ToolTip toolTip1;
+    private ToolStrip toolStrip1;
+    private ToolStripButton saveToolStripButton;
+    public ToolStripButton toolStripButtonCancelEdit;
   }
 }

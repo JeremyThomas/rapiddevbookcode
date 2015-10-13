@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.Controls;
 using SD.LLBLGen.Pro.LinqSupportClasses;
@@ -9,9 +10,9 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.LLBL
 {
-  public class GenericDataScopeBase : DataScope 
+  public class GenericDataScopeBase : DataScope
   {
-    protected ITransactionController TransactionController;
+    protected ITransactionController TransactionController { get; set; }
 
     public GenericDataScopeBase()
     {
@@ -27,10 +28,11 @@ namespace AW.Winforms.Helpers.LLBL
       TransactionController = EntityHelper.GetTransactionController(query);
     }
 
-    public GenericDataScopeBase(IContextAwareElement contextAwareElement)
+    public GenericDataScopeBase(IContextAwareElement contextAwareElement, ITransactionController transactionController = null)
     {
       TryTrackQuery(contextAwareElement);
       var linqMetaData = contextAwareElement as ILinqMetaData;
+      if (transactionController==null)
       if (linqMetaData != null)
         TransactionController = EntityHelper.GetTransactionController(linqMetaData);
       else
@@ -39,6 +41,18 @@ namespace AW.Winforms.Helpers.LLBL
         if (queryProvider != null)
           TransactionController = EntityHelper.GetTransactionController(queryProvider);
       }
+      else
+      {
+        TransactionController = transactionController;
+      }
+    }
+
+    public GenericDataScopeBase(IEnumerable enumerable, ITransactionController transactionController)
+    {
+      var entityCollection = EntityHelper.ToEntityCollection(enumerable, MetaDataHelper.GetEnumerableItemType(enumerable));
+      if (entityCollection != null)
+        Attach(entityCollection);
+      TransactionController = transactionController;
     }
 
     public IQueryable Query { get; set; }
@@ -56,10 +70,29 @@ namespace AW.Winforms.Helpers.LLBL
 
     public bool CommitChanges()
     {
-      return CommitChanges(TransactionController);
+      return TransactionController != null && CommitChanges(TransactionController);
+    }
+
+    protected int CommitAllChanges()
+    {
+      return Convert.ToInt32(CommitChanges());
+    }
+
+    public int Save(object dataToSave)
+    {
+      if (dataToSave == null) return CommitAllChanges();
+      var dataAccessAdapter = TransactionController as IDataAccessAdapter;
+      return dataAccessAdapter == null ? EntityHelper.Save(dataToSave) : EntityHelper.Save(dataToSave, dataAccessAdapter);
+    }
+
+    public int Delete(object dataToDelete)
+    {
+      if (dataToDelete == null) return CommitAllChanges();
+      var dataAccessAdapter = TransactionController as IDataAccessAdapter;
+      return dataAccessAdapter == null ? EntityHelper.Delete(dataToDelete) : EntityHelper.Delete(dataToDelete, dataAccessAdapter);
     }
   }
-  
+
   public class AdapterGenericDataScope<T> : GenericDataScopeBase where T : EntityBase2
   {
     private readonly Action<IEnumerable<T>> _postProcessing;
@@ -104,12 +137,12 @@ namespace AW.Winforms.Helpers.LLBL
       if (_postProcessingFunction == null)
         _entityCollection = (EntityCollectionBase2<T>) EntityHelper.ToEntityCollectionCore(Query as ILLBLGenProQuery);
       else
-        EntityCollection = _postProcessingFunction((IQueryable<T>)Query).ToEntityCollection2();
+        EntityCollection = _postProcessingFunction((IQueryable<T>) Query).ToEntityCollection2();
       var anyData = EntityCollection.Count > 0;
       if (anyData)
       {
         if (_postProcessing != null)
-          _postProcessing(EntityCollection); 
+          _postProcessing(EntityCollection);
       }
       return anyData;
     }
@@ -117,29 +150,39 @@ namespace AW.Winforms.Helpers.LLBL
 
   public class DataEditorLLBLDataScopePersister : LLBLWinformHelper.DataEditorLLBLPersister, IDataEditorEventHandlers
   {
-    private readonly GenericDataScopeBase _adapterGenericDataScope;
+    protected GenericDataScopeBase GenericDataScope;
+
+    protected DataEditorLLBLDataScopePersister()
+    {
+    }
 
     public DataEditorLLBLDataScopePersister(IQueryable query)
     {
-      _adapterGenericDataScope = new GenericDataScopeBase(query);
+      GenericDataScope = new GenericDataScopeBase(query);
     }
 
-    public DataEditorLLBLDataScopePersister(GenericDataScopeBase adapterGenericDataScope)
+    public DataEditorLLBLDataScopePersister(GenericDataScopeBase genericDataScope)
     {
-      _adapterGenericDataScope = adapterGenericDataScope;
+      GenericDataScope = genericDataScope;
     }
 
-    //public DataEditorLLBLDataScopePersiste(IEnumerable enumerable, IDataAccessAdapter dataAccessAdapter) : this(new GenericDataScopeBase(enumerable, dataAccessAdapter))
-    //{
-    //}
+
+    public DataEditorLLBLDataScopePersister(IEnumerable enumerable, ITransactionController transactionController) : this(new GenericDataScopeBase(enumerable, transactionController))
+    {
+    }
+
+    public DataEditorLLBLDataScopePersister(IContextAwareElement contextAwareElement, ITransactionController transactionController = null) : this(new GenericDataScopeBase(contextAwareElement, transactionController))
+    {
+      
+    }
 
     /// <summary>
     ///   Raised when the data of an entity in the scope changed. Ignored during fetches. Sender is the entity which data was changed
     /// </summary>
     public event EventHandler ContainedDataChanged
     {
-      add { _adapterGenericDataScope.ContainedDataChanged += value; }
-      remove { _adapterGenericDataScope.ContainedDataChanged -= value; }
+      add { GenericDataScope.ContainedDataChanged += value; }
+      remove { GenericDataScope.ContainedDataChanged -= value; }
     }
 
     /// <summary>
@@ -147,56 +190,19 @@ namespace AW.Winforms.Helpers.LLBL
     /// </summary>
     public event EventHandler EntityAdded
     {
-      add { _adapterGenericDataScope.EntityAdded += value; }
-      remove { _adapterGenericDataScope.EntityAdded -= value; }
-    }
-
-    private int CommitAllChanges()
-    {
-      return Convert.ToInt32(_adapterGenericDataScope.CommitChanges());
+      add { GenericDataScope.EntityAdded += value; }
+      remove { GenericDataScope.EntityAdded -= value; }
     }
 
     public override int Save(object dataToSave)
     {
-      return CommitAllChanges();
+      return GenericDataScope.Save(dataToSave);
     }
 
     public override int Delete(object dataToDelete)
     {
-      return CommitAllChanges();
-    }
-
-    public override bool CanSave(Type typeToSave)
-    {
-      return typeof(IEntityCore).IsAssignableFrom(typeToSave);
+      return GenericDataScope.Delete(dataToDelete);
     }
   }
 
-  public class DataEditorLLBLAdapterDataScopePersister<T> : DataEditorLLBLDataScopePersister where T : EntityBase2
-  {
-    private AdapterGenericDataScope<T> AdapterGenericDataScope { get; set; }
-
-    public DataEditorLLBLAdapterDataScopePersister(IQueryable<T> query):base(query)
-    {
-      AdapterGenericDataScope = new AdapterGenericDataScope<T>(query);
-    }
-
-    public DataEditorLLBLAdapterDataScopePersister(AdapterGenericDataScope<T> adapterGenericDataScope) : base(adapterGenericDataScope)
-    {
-      AdapterGenericDataScope = adapterGenericDataScope;
-    }
-
-    public DataEditorLLBLAdapterDataScopePersister(IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter) : this(new AdapterGenericDataScope<T>(enumerable, dataAccessAdapter))
-    {
-    }
-
-    #region Events
-
-    #endregion
-
-    public override bool CanSave(Type typeToSave)
-    {
-      return typeof (T).IsAssignableFrom(typeToSave);
-    }
-  }
 }

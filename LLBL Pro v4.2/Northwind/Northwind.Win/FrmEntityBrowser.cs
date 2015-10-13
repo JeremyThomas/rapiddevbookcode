@@ -55,14 +55,16 @@ namespace Northwind.Win
     private void ShowEmployeeHierarchyInTree()
     {
       var linqMetaData = Factories.CreateLinqMetaData();
-      ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactory(linqMetaData.Employee, e => e.EmployeeId, e => e.ReportsTo.HasValue,
-        e => e.ReportsTo.GetValueOrDefault(), (e, m) => e.Manager = m, em => em.FirstName, em => em.Staff), "EmployeeHierarchyInTree", this);
+      ShowControlInForm(
+        HierarchyEditor.HierarchyEditorFactory(linqMetaData.Employee, e => e.EmployeeId, e => e.ReportsTo.HasValue,
+        e => e.ReportsTo.GetValueOrDefault(), (e, m) => e.Manager = m, em => em.FirstName, em => em.Staff, new DataEditorLLBLDataScopePersister(linqMetaData.Employee))
+        , "EmployeeHierarchyInTree", this);
     }
 
     private void toolStripButtonShowEmployeeHierarchyInTreeByID_Click(object sender, EventArgs e)
     {
       var linqMetaData = Factories.CreateLinqMetaData();
-      ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactory(linqMetaData.Employee, "EmployeeId", "ReportsTo", "FirstName"), "EmployeeHierarchyInTree", this);
+      ShowControlInForm(new HierarchyEditor(linqMetaData.Employee, "EmployeeId", "ReportsTo", new DataEditorLLBLDataScopePersister(linqMetaData.Employee)),"EmployeeHierarchyInTree", this);
     }
 
     private void toolStripButtonCustomerGroupedByCountry_Click(object sender, EventArgs e)
