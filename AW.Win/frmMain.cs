@@ -279,7 +279,9 @@ namespace AW.Win
     private void organizationStructureEditorToolStripMenuItem_Click(object sender, EventArgs e)
     {
       var employeeEntities = LinqMetaData.CreateWithContext().Employee.PrefetchAll();
-      var form = ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactoryServicing(employeeEntities, em => em.EmployeeID, em => em.ManagerID, em => em.EmployeeDisplayName), "Employee Hierarchy In Tree " + employeeEntities, this);
+      var form = ShowControlInForm(
+        HierarchyEditor.HierarchyEditorFactory(employeeEntities, em => em.EmployeeID, em => em.ManagerID, em => em.EmployeeDisplayName, new DataEditorLLBLDataScopePersister(employeeEntities)),
+        "Employee Hierarchy In Tree " + employeeEntities, this);
       form.Tag = true;
     }
 

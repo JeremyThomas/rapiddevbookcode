@@ -33,22 +33,16 @@ namespace AW.Winforms.Helpers.LLBL
     {
     }
 
-    //public static IDataEditorPersister DataEditorPersisterFactory(IEnumerable data )
-    //{
-    //  return TryCreateDataEditorPersister(data);
-    //}
-
-    //private static IDataEditorPersister TryCreateDataEditorPersister(dynamic data)
-    //{
-    //  return MaybeCreateDataEditorPersister(data);
-    //}
-
     private static IDataEditorPersister DataEditorLLBLDataScopePersisterFactory(object data)
     {
       var queryable = data as IQueryable<IEntityCore>;
-      return queryable == null ? null : new DataEditorLLBLDataScopePersister(queryable);
+      if (queryable == null)
+      {
+        var selfServcingData = data as IEnumerable<IEntity>;
+        return selfServcingData == null ? null : new DataEditorLLBLSelfServicingPersister();
+      }
+      return new DataEditorLLBLDataScopePersister(queryable);
     }
-
 
     #region Validatation
 
@@ -110,7 +104,7 @@ namespace AW.Winforms.Helpers.LLBL
 
       public virtual bool CanSave(Type typeToSave)
       {
-        return typeof (IEntity).IsAssignableFrom(typeToSave);
+        return typeof (IEntityCore).IsAssignableFrom(typeToSave);
       }
 
       public bool Undo(object modifiedData)
@@ -143,33 +137,14 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-    public static HierarchyEditor HierarchyEditorFactoryServicing<T>(IQueryable<T> query, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase
-    {
-      return new HierarchyEditor(query, iDPropertyName, parentIDPropertyName, nameColumn, new DataEditorLLBLDataScopePersister(query));
-    }
-
-    public static HierarchyEditor HierarchyEditorFactoryServicing<T, TId, TParentId, TName>(IQueryable<T> query, Expression<Func<T, TId>> iDPropertyExpression,
-      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression) where T : EntityBase
-    {
-      var dataScope = new SelfServicingGenericDataScope<T>(query);
-      dataScope.FetchData();
-      return HierarchyEditor.HierarchyEditorFactory(dataScope.EntityCollection, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, new DataEditorLLBLSelfServicingDataScopePersister<T>(dataScope));
-    }
-    
     public static HierarchyEditor HierarchyEditorFactoryServicing<T, TName, TChildCollection>(IQueryable<T> query, Func<IEnumerable<T>, IEnumerable<T>> postProcessing,
-  Expression<Func<T, TName>> namePropertyExpression,
-  Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : EntityBase
+      Expression<Func<T, TName>> namePropertyExpression,
+      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : EntityBase
     {
       var dataScope = new SelfServicingGenericDataScope<T>(query, postProcessing);
       dataScope.FetchData();
       return HierarchyEditor.HierarchyEditorFactory(dataScope.EntityCollection, namePropertyExpression, childCollectionPropertyExpression,
-        new DataEditorLLBLSelfServicingDataScopePersister<T>(dataScope));
-    }
-
-    public static HierarchyEditor HierarchyEditorFactoryServicing<T, TName, TChildCollection>(IEnumerable<T> enumerable, Expression<Func<T, TName>> namePropertyExpression,
-      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : EntityBase
-    {
-      return HierarchyEditor.HierarchyEditorFactory(enumerable, namePropertyExpression, childCollectionPropertyExpression, new DataEditorLLBLSelfServicingPersister());
+        new DataEditorLLBLDataScopePersister(dataScope));
     }
 
     #region Adapter
@@ -199,46 +174,16 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-    public static HierarchyEditor HierarchyEditorFactory<T, TI, TName, TChildCollection>(IQueryable<T> query, Func<T, TI> iDFunc, Func<T, bool> isChildFunc, 
-      Func<T, TI> parentIDFunc, Action<T, T> assignToParentFunc,
-      Expression<Func<T, TName>> namePropertyExpression,
-      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : EntityBase2
-    {
-      return HierarchyEditor.HierarchyEditorFactory(query, iDFunc, isChildFunc, parentIDFunc, assignToParentFunc,
-        namePropertyExpression, childCollectionPropertyExpression, new DataEditorLLBLDataScopePersister(query));
-    }
-
-    public static HierarchyEditor HierarchyEditorFactory<T, TName, TChildCollection>(IQueryable<T> query, Func<IEnumerable<T>, IEnumerable<T>> postProcessing, 
+    public static HierarchyEditor HierarchyEditorFactory<T, TName, TChildCollection>(IQueryable<T> query, Func<IEnumerable<T>, IEnumerable<T>> postProcessing,
       Expression<Func<T, TName>> namePropertyExpression,
       Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : EntityBase2
     {
       var dataScope = new AdapterGenericDataScope<T>(query, postProcessing);
       dataScope.FetchData();
-      return HierarchyEditor.HierarchyEditorFactory(dataScope.EntityCollection, namePropertyExpression, childCollectionPropertyExpression, 
-        new DataEditorLLBLAdapterDataScopePersister<T>(dataScope));
+      return HierarchyEditor.HierarchyEditorFactory(dataScope.EntityCollection, namePropertyExpression, childCollectionPropertyExpression,
+        new DataEditorLLBLDataScopePersister(dataScope));
     }
 
-    public static HierarchyEditor HierarchyEditorFactory<T>(IQueryable<T> query, string nameColumn, string childCollectionPropertyName) where T : EntityBase2
-    {
-      return new HierarchyEditor(query, nameColumn, childCollectionPropertyName, new DataEditorLLBLDataScopePersister(query));
-    }
-
-    #region ByID
-
-    public static HierarchyEditor HierarchyEditorFactory(IQueryable query, string iDPropertyName, string parentIDPropertyName, string nameColumn) 
-    {
-      return new HierarchyEditor(query, iDPropertyName, parentIDPropertyName, nameColumn, new DataEditorLLBLDataScopePersister(query));
-    }
-
-    public static HierarchyEditor HierarchyEditorFactory<T, TId, TParentId, TName>(IQueryable<T> query, Expression<Func<T, TId>> iDPropertyExpression,
-      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression) where T : EntityBase2
-    {
-      return HierarchyEditor.HierarchyEditorFactory(query, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression,
-        new DataEditorLLBLDataScopePersister(query));
-    }
-
-    #endregion
-    
     #endregion
 
     #region PopulateTreeViewWithSchema
