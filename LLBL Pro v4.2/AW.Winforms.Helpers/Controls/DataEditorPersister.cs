@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
 using System.Reflection;
-using System.ServiceModel.PeerResolvers;
 using AW.Helper;
 
 namespace AW.Winforms.Helpers.Controls
 {
   public interface IDataEditorPersister
   {
-    int Save(object dataToSave);
-    int Delete(object dataToDelete);
+    int Save(object dataToSave = null);
+    int Delete(object dataToDelete = null);
     bool CanSave(Type typeToSave);
-    bool Undo(object modifiedData);
-
-    bool IsDirty(object modifiedData);
+    bool Undo(object modifiedData = null);
+    bool IsDirty(object modifiedData = null);
   }
 
   public interface IDataEditorEventHandlers
@@ -34,7 +31,7 @@ namespace AW.Winforms.Helpers.Controls
 
   public static class DataEditorPersisterFactory
   {
-    private static readonly List<Func<object, IDataEditorPersister>>  Factories = new List<Func<object, IDataEditorPersister>>();
+    private static readonly List<Func<object, IDataEditorPersister>> Factories = new List<Func<object, IDataEditorPersister>>();
 
     static DataEditorPersisterFactory()
     {
@@ -61,7 +58,7 @@ namespace AW.Winforms.Helpers.Controls
       return null;
     }
 
-    public static void Register(Func<object,IDataEditorPersister> factory)
+    public static void Register(Func<object, IDataEditorPersister> factory)
     {
       Factories.Add(factory);
     }
@@ -70,7 +67,6 @@ namespace AW.Winforms.Helpers.Controls
     {
       return persister ?? Factories.Select(factory => factory(data)).FirstOrDefault(dataEditorPersister => dataEditorPersister != null);
     }
-
   }
 
   public class DataEditorPersister : IDataEditorPersister
@@ -158,7 +154,7 @@ namespace AW.Winforms.Helpers.Controls
 
     public bool IsDirty(object modifiedData)
     {
-      var changeSet = _dataContext. GetChangeSet();
+      var changeSet = _dataContext.GetChangeSet();
       return changeSet.Updates.Count > 0;
     }
   }

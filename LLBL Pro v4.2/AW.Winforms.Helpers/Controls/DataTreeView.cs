@@ -692,6 +692,7 @@ namespace Chaliy.Windows.Forms
       BeginUpdate();
 
       Clear();
+      _bindingLists.Clear();
       if (!_reseting
         //  && !_initializing
         )
@@ -755,7 +756,7 @@ namespace Chaliy.Windows.Forms
         if (childBindingListView != null && (!childBindingListView.IsReadOnly && childBindingListView.AllowEdit))
         {
           childBindingListView.ListChanged += DataTreeView_ChildListChanged;
-          _bindingLists.Add(item, childBindingListView);
+          _bindingLists[item]= childBindingListView;
         }
         foreach (var child in childBindingListView ?? children)
           AddChildren(treeNode.Nodes, child);

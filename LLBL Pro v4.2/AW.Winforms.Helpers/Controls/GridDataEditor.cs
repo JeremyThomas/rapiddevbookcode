@@ -210,6 +210,11 @@ namespace AW.Winforms.Helpers.Controls
 
     private void saveToolStripButton_Click(object sender, EventArgs e)
     {
+      SaveEdits();
+    }
+
+    public void SaveEdits()
+    {
       dataGridViewEnumerable.EndEdit();
       var numSaved = DataEditorPersister.Save(BindingSourceEnumerableList);
       toolStripLabelSaveResult.Text = @"numSaved: " + numSaved;
@@ -596,6 +601,11 @@ namespace AW.Winforms.Helpers.Controls
 
     private void toolStripButtonCancelEdit_Click(object sender, EventArgs e)
     {
+      CancelEdits();
+    }
+
+    public bool CancelEdits()
+    {
       bindingSourceEnumerable.CancelEdit();
       if (DataEditorPersister != null && DataEditorPersister.Undo(BindingSourceEnumerableList))
       {
@@ -603,6 +613,7 @@ namespace AW.Winforms.Helpers.Controls
         saveToolStripButton.Enabled = false;
       }
       SetButtonsOnEditEnded();
+      return !saveToolStripButton.Enabled;
     }
 
     private void toolStripButtonObjectListViewVisualizer_Click(object sender, EventArgs e)

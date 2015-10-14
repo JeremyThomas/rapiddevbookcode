@@ -12,6 +12,7 @@ using Northwind.DAL.EntityClasses;
 using Northwind.DAL.Linq;
 using Northwind.DAL.Services;
 using Northwind.Win.NorthwindODataSRSharedTypes;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 
 namespace Northwind.Win
 {
@@ -55,16 +56,18 @@ namespace Northwind.Win
     private void ShowEmployeeHierarchyInTree()
     {
       var linqMetaData = Factories.CreateLinqMetaData();
+      var query = linqMetaData.Employee;
       ShowControlInForm(
-        HierarchyEditor.HierarchyEditorFactory(linqMetaData.Employee, e => e.EmployeeId, e => e.ReportsTo.HasValue,
-        e => e.ReportsTo.GetValueOrDefault(), (e, m) => e.Manager = m, em => em.FirstName, em => em.Staff, new DataEditorLLBLDataScopePersister(linqMetaData.Employee))
+        HierarchyEditor.HierarchyEditorFactory(query, e => e.EmployeeId, e => e.ReportsTo.HasValue,
+        e => e.ReportsTo.GetValueOrDefault(), (e, m) => e.Manager = m, em => em.FirstName, em => em.Staff, new DataEditorLLBLDataScopePersister(query))
         , "EmployeeHierarchyInTree", this);
     }
 
     private void toolStripButtonShowEmployeeHierarchyInTreeByID_Click(object sender, EventArgs e)
     {
       var linqMetaData = Factories.CreateLinqMetaData();
-      ShowControlInForm(new HierarchyEditor(linqMetaData.Employee, "EmployeeId", "ReportsTo", new DataEditorLLBLDataScopePersister(linqMetaData.Employee)),"EmployeeHierarchyInTree", this);
+      var query = linqMetaData.Employee;
+      ShowControlInForm(new HierarchyEditor(query, "EmployeeId", "ReportsTo", "FirstName", new DataEditorLLBLDataScopePersister(query)),"EmployeeHierarchyInTree", this);
     }
 
     private void toolStripButtonCustomerGroupedByCountry_Click(object sender, EventArgs e)
