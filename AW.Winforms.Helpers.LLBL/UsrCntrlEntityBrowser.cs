@@ -286,7 +286,8 @@ namespace AW.Winforms.Helpers.LLBL
     {
       if (gridDataEditor.DataEditorPersister != null)
       {
-        gridDataEditor.DataEditorPersister.Save(null);
+        gridDataEditor.DataEditorPersister.Save();
+        gridDataEditor.SaveEdits();
         SetSaveButtons();
       }
     }
@@ -295,21 +296,21 @@ namespace AW.Winforms.Helpers.LLBL
     {
       if (gridDataEditor.DataEditorPersister != null)
       {
-     //   bindingSourceHierarchicalData.ResetBindings(false);
+        gridDataEditor.CancelEdits();
+        if (gridDataEditor.DataEditorPersister.Undo())
         SetSaveButtons();
       }
     }
 
-    private void SetSaveButtons()
+    private void SetSaveButtons(bool enabled = false)
     {
-      saveToolStripButton.Enabled = false;
+      saveToolStripButton.Enabled = enabled;
       toolStripButtonCancelEdit.Enabled = saveToolStripButton.Enabled;
     }
 
     private void DataEditorEventHandlers_ContainedDataChanged(object sender, EventArgs e)
     {
-      saveToolStripButton.Enabled = true;
-      toolStripButtonCancelEdit.Enabled = saveToolStripButton.Enabled;
+      SetSaveButtons(true);
     }
   }
 }

@@ -107,7 +107,7 @@ namespace AW.Winforms.Helpers.LLBL
         return typeof (IEntityCore).IsAssignableFrom(typeToSave);
       }
 
-      public bool Undo(object modifiedData)
+      public virtual bool Undo(object modifiedData)
       {
         EntityHelper.Undo(modifiedData);
         return true;

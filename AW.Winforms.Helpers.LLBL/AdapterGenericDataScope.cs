@@ -32,15 +32,15 @@ namespace AW.Winforms.Helpers.LLBL
     {
       TryTrackQuery(contextAwareElement);
       var linqMetaData = contextAwareElement as ILinqMetaData;
-      if (transactionController==null)
-      if (linqMetaData != null)
-        TransactionController = EntityHelper.GetTransactionController(linqMetaData);
-      else
-      {
-        var queryProvider = contextAwareElement as IQueryProvider;
-        if (queryProvider != null)
-          TransactionController = EntityHelper.GetTransactionController(queryProvider);
-      }
+      if (transactionController == null)
+        if (linqMetaData != null)
+          TransactionController = EntityHelper.GetTransactionController(linqMetaData);
+        else
+        {
+          var queryProvider = contextAwareElement as IQueryProvider;
+          if (queryProvider != null)
+            TransactionController = EntityHelper.GetTransactionController(queryProvider);
+        }
       else
       {
         TransactionController = transactionController;
@@ -78,18 +78,29 @@ namespace AW.Winforms.Helpers.LLBL
       return Convert.ToInt32(CommitChanges());
     }
 
-    public int Save(object dataToSave)
+    public int Save(object dataToSave = null)
     {
       if (dataToSave == null) return CommitAllChanges();
       var dataAccessAdapter = TransactionController as IDataAccessAdapter;
       return dataAccessAdapter == null ? EntityHelper.Save(dataToSave) : EntityHelper.Save(dataToSave, dataAccessAdapter);
     }
 
-    public int Delete(object dataToDelete)
+    public int Delete(object dataToDelete = null)
     {
       if (dataToDelete == null) return CommitAllChanges();
       var dataAccessAdapter = TransactionController as IDataAccessAdapter;
       return dataAccessAdapter == null ? EntityHelper.Delete(dataToDelete) : EntityHelper.Delete(dataToDelete, dataAccessAdapter);
+    }
+
+    public void Undo(object modifiedData = null)
+    {
+      if (modifiedData == null)
+      {
+        var unitOfWorkCore = BuildWorkForCommit();
+        EntityHelper.Undo(unitOfWorkCore);
+      }
+      else
+        EntityHelper.Undo(modifiedData);
     }
   }
 
@@ -173,7 +184,6 @@ namespace AW.Winforms.Helpers.LLBL
 
     public DataEditorLLBLDataScopePersister(IContextAwareElement contextAwareElement, ITransactionController transactionController = null) : this(new GenericDataScopeBase(contextAwareElement, transactionController))
     {
-      
     }
 
     /// <summary>
@@ -203,6 +213,11 @@ namespace AW.Winforms.Helpers.LLBL
     {
       return GenericDataScope.Delete(dataToDelete);
     }
-  }
 
+    public override bool Undo(object dataToDelete)
+    {
+      GenericDataScope.Undo(dataToDelete);
+      return true;
+    }
+  }
 }

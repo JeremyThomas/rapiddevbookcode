@@ -361,63 +361,9 @@ namespace AW.Helper.LLBL
       return null;
     }
 
-    #region Self Servicing
-
-    /// <summary>
-    ///   Converts an entity enumeration to an entity collection. If the enumeration is a ILLBLGenProQuery then executes
-    ///   the query this object represents and returns its results in its native container - an entity collection.
-    /// </summary>
-    /// <typeparam name="T">EntityBase2</typeparam>
-    /// <param name="enumerable">The enumerable.</param>
-    /// <returns></returns>
-    public static EntityCollectionBase<T> ToEntityCollection<T>(this IEnumerable<T> enumerable) where T : EntityBase
-    {
-      var entityCollectionBase = enumerable as EntityCollectionBase<T>;
-      if (entityCollectionBase != null)
-        return entityCollectionBase;
-      var llblQuery = enumerable as ILLBLGenProQuery;
-      if (llblQuery != null)
-        return llblQuery.Execute<EntityCollectionBase<T>>();
-      var entities = ((IEntityFactory) GetFactoryCore(enumerable)).CreateEntityCollection() as EntityCollectionBase<T>;
-      if (entities != null)
-        entities.AddRange(enumerable);
-      return entities;
-    }
-
-    /// <summary>
-    ///   Gets the entity field from the name of the field.
-    /// </summary>
-    /// <param name="entity">The entity.</param>
-    /// <param name="fieldName">Name of the field.</param>
-    /// <returns>the entity field</returns>
-    public static IEntityField GetFieldFromFieldName(IEntity entity, string fieldName)
-    {
-      return entity.Fields[fieldName] ?? entity.Fields.AsEnumerable().FirstOrDefault(ef => ef.Name.Equals(fieldName, StringComparison.InvariantCultureIgnoreCase));
-    }
-
     public static IEnumerable<IEntityCore> AsEnumerable(this IEntityCollectionCore entityCollection)
     {
       return entityCollection.Cast<IEntityCore>();
-    }
-
-    /// <summary>
-    ///   Gets a entity field enumeration from entity fields.
-    /// </summary>
-    /// <param name="entityFields">The entity fields.</param>
-    /// <returns>entity field enumeration</returns>
-    public static IEnumerable<IEntityField> AsEnumerable(this IEntityFields entityFields)
-    {
-      return entityFields.Cast<IEntityField>();
-    }
-
-    /// <summary>
-    ///   Gets a entity field enumeration from entity fields.
-    /// </summary>
-    /// <param name="entityFields">The entity fields.</param>
-    /// <returns>entity field enumeration</returns>
-    public static IEnumerable<IEntityField2> AsEnumerable(this IEntityFields2 entityFields)
-    {
-      return entityFields.Cast<IEntityField2>();
     }
 
     public static IEnumerable<IEntityFieldCore> GetFields(this IEntityCore entityCore)
@@ -438,13 +384,6 @@ namespace AW.Helper.LLBL
       entity.IsDirty = false;
     }
 
-    public static void RevertChangesToDBValue(this IEntityCollection entityCollection)
-    {
-      foreach (var dirtyEntity in entityCollection.DirtyEntities)
-        dirtyEntity.RevertChangesToDBValue();
-      ResetErrorsAndRemoveNew(entityCollection);
-    }
-
     private static void ResetErrorsAndRemoveNew(IEntityCollectionCore entityCollection)
     {
       foreach (var entity in entityCollection.AsEnumerable())
@@ -452,13 +391,6 @@ namespace AW.Helper.LLBL
       var newEntities = entityCollection.AsEnumerable().Where(e => e.IsNew).ToList();
       foreach (var newEntity in newEntities)
         entityCollection.Remove(newEntity);
-    }
-
-    public static void RevertChangesToDBValue(this IEntityCollection2 entityCollection)
-    {
-      foreach (var dirtyEntity in entityCollection.DirtyEntities)
-        dirtyEntity.RevertChangesToDBValue();
-      ResetErrorsAndRemoveNew(entityCollection);
     }
 
     public static void RevertChangesToDBValue(IEntityCollectionCore entityCollection)
@@ -504,12 +436,12 @@ namespace AW.Helper.LLBL
       }
       if (view != null)
       {
-        modifiedEntities = ((IEntityView) modifiedEntities).RelatedCollection;
+        modifiedEntities = ((IEntityView)modifiedEntities).RelatedCollection;
         postCollectionChangeActionNoAction = view.DataChangeAction == PostCollectionChangeAction.NoAction;
       }
       if (view2 != null)
       {
-        modifiedEntities = ((IEntityView2) modifiedEntities).RelatedCollection;
+        modifiedEntities = ((IEntityView2)modifiedEntities).RelatedCollection;
         postCollectionChangeActionNoAction = view2.DataChangeAction == PostCollectionChangeAction.NoAction;
       }
       var entities = modifiedEntities as IEntityCollectionCore;
@@ -530,10 +462,10 @@ namespace AW.Helper.LLBL
             {
               var entityCollection2 = modifiedEntities as IEntityCollection2;
               if (entityCollection2 != null)
-                entityCollection2.AddRange((IEntityCollection2) entityCollection.RemovedEntitiesTracker);
+                entityCollection2.AddRange((IEntityCollection2)entityCollection.RemovedEntitiesTracker);
             }
             else
-              collection.AddRange((IEntityCollection) entityCollection.RemovedEntitiesTracker);
+              collection.AddRange((IEntityCollection)entityCollection.RemovedEntitiesTracker);
           }
           finally
           {
@@ -556,6 +488,12 @@ namespace AW.Helper.LLBL
 
     public static void Undo(object modifiedData)
     {
+      var unitOfWorkCore = modifiedData as IUnitOfWorkCore;
+      if (unitOfWorkCore != null)
+      {
+        Undo(unitOfWorkCore);
+        return;
+      }
       var listItemType = GetListItemType(modifiedData);
       if (IsEntityCore(listItemType))
       {
@@ -566,11 +504,43 @@ namespace AW.Helper.LLBL
           if (entity != null)
             RevertChangesToDBValue(entity);
           else
-            RevertChangesToDBValue((IEntity2) modifiedData);
+            RevertChangesToDBValue((IEntity2)modifiedData);
         }
         else
           RevertChangesToDBValue(enumerable);
       }
+    }
+
+    private static void Undo(IUnitOfWorkCore unitOfWorkCore)
+    {
+      var unitOfWork = unitOfWorkCore as UnitOfWork;
+      if (unitOfWork == null)
+      {
+        var unitOfWork2 = unitOfWorkCore as UnitOfWork2;
+        if (unitOfWork2 != null)
+        {
+          foreach (var unitOfWorkCollectionElement2 in unitOfWork2.GetCollectionElementsToSave())
+          {
+            Undo(unitOfWorkCollectionElement2.Collection);
+          }
+          foreach (var unitOfWorkElement2 in unitOfWork2.GetEntityElementsToUpdate())
+          {
+            Undo(unitOfWorkElement2.Entity);
+          }
+        }
+      }
+      else
+      {
+        foreach (var unitOfWorkCollectionElement in unitOfWork.GetCollectionElementsToSave())
+        {
+          Undo(unitOfWorkCollectionElement.Collection);
+        }
+        foreach (var unitOfWorkElement in unitOfWork.GetEntityElementsToUpdate())
+        {
+          Undo(unitOfWorkElement.Entity);
+        }
+      }
+ 
     }
 
     public static bool IsDirty(object data)
@@ -602,6 +572,57 @@ namespace AW.Helper.LLBL
       return ListBindingHelper.GetListItemType(modifiedData);
     }
 
+    #region Self Servicing
+
+    /// <summary>
+    ///   Converts an entity enumeration to an entity collection. If the enumeration is a ILLBLGenProQuery then executes
+    ///   the query this object represents and returns its results in its native container - an entity collection.
+    /// </summary>
+    /// <typeparam name="T">EntityBase2</typeparam>
+    /// <param name="enumerable">The enumerable.</param>
+    /// <returns></returns>
+    public static EntityCollectionBase<T> ToEntityCollection<T>(this IEnumerable<T> enumerable) where T : EntityBase
+    {
+      var entityCollectionBase = enumerable as EntityCollectionBase<T>;
+      if (entityCollectionBase != null)
+        return entityCollectionBase;
+      var llblQuery = enumerable as ILLBLGenProQuery;
+      if (llblQuery != null)
+        return llblQuery.Execute<EntityCollectionBase<T>>();
+      var entities = ((IEntityFactory) GetFactoryCore(enumerable)).CreateEntityCollection() as EntityCollectionBase<T>;
+      if (entities != null)
+        entities.AddRange(enumerable);
+      return entities;
+    }
+
+    /// <summary>
+    ///   Gets the entity field from the name of the field.
+    /// </summary>
+    /// <param name="entity">The entity.</param>
+    /// <param name="fieldName">Name of the field.</param>
+    /// <returns>the entity field</returns>
+    public static IEntityField GetFieldFromFieldName(IEntity entity, string fieldName)
+    {
+      return entity.Fields[fieldName] ?? entity.Fields.AsEnumerable().FirstOrDefault(ef => ef.Name.Equals(fieldName, StringComparison.InvariantCultureIgnoreCase));
+    }
+    
+    /// <summary>
+    ///   Gets a entity field enumeration from entity fields.
+    /// </summary>
+    /// <param name="entityFields">The entity fields.</param>
+    /// <returns>entity field enumeration</returns>
+    public static IEnumerable<IEntityField> AsEnumerable(this IEntityFields entityFields)
+    {
+      return entityFields.Cast<IEntityField>();
+    }  
+
+    public static void RevertChangesToDBValue(this IEntityCollection entityCollection)
+    {
+      foreach (var dirtyEntity in entityCollection.DirtyEntities)
+        dirtyEntity.RevertChangesToDBValue();
+      ResetErrorsAndRemoveNew(entityCollection);
+    }
+    
     /// <summary>
     ///   Gets the factory of the entity with the .NET type specified
     /// </summary>
@@ -689,6 +710,23 @@ namespace AW.Helper.LLBL
     #endregion
 
     #region Adapter
+
+    public static void RevertChangesToDBValue(this IEntityCollection2 entityCollection)
+    {
+      foreach (var dirtyEntity in entityCollection.DirtyEntities)
+        dirtyEntity.RevertChangesToDBValue();
+      ResetErrorsAndRemoveNew(entityCollection);
+    }
+
+    /// <summary>
+    ///   Gets a entity field enumeration from entity fields.
+    /// </summary>
+    /// <param name="entityFields">The entity fields.</param>
+    /// <returns>entity field enumeration</returns>
+    public static IEnumerable<IEntityField2> AsEnumerable(this IEntityFields2 entityFields)
+    {
+      return entityFields.Cast<IEntityField2>();
+    }
 
     /// <summary>
     ///   Saves all dirty objects inside the enumeration passed to the persistent storage.

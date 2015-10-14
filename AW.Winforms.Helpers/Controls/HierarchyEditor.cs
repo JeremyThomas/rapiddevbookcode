@@ -162,7 +162,8 @@ namespace AW.Winforms.Helpers.Controls
     {
       if (gridDataEditor.DataEditorPersister != null)
       {
-        gridDataEditor.DataEditorPersister.Save(bindingSourceHierarchicalData.DataSource);
+        gridDataEditor.DataEditorPersister.Save();
+        gridDataEditor.SaveEdits();
         SetSaveButtons();
       }
     }
@@ -170,9 +171,9 @@ namespace AW.Winforms.Helpers.Controls
     private void toolStripButtonCancelEdit_Click(object sender, EventArgs e)
     {
       bindingSourceHierarchicalData.CancelEdit();
-      if (gridDataEditor.DataEditorPersister != null && gridDataEditor.DataEditorPersister.Undo(bindingSourceHierarchicalData.List))
+      if (gridDataEditor.DataEditorPersister != null && gridDataEditor.DataEditorPersister.Undo())
       {
-        bindingSourceHierarchicalData.ResetBindings(false);
+        gridDataEditor.CancelEdits();
         SetSaveButtons();
       }
     }
