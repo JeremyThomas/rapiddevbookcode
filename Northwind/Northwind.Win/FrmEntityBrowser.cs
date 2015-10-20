@@ -10,6 +10,7 @@ using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.LLBL;
 using Northwind.DAL.EntityClasses;
 using Northwind.DAL.Linq;
+using Northwind.DAL.Linq.Filters;
 using Northwind.DAL.Services;
 using Northwind.Win.NorthwindODataSRSharedTypes;
 using SD.LLBLGen.Pro.LinqSupportClasses;
@@ -95,6 +96,12 @@ namespace Northwind.Win
       ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactory(linqMetaData.Employee,
         EmployeeEntity.WireUpSelfJoinAndRemoveChildren,
         em => em.FirstName, em => em.Staff));
+    }
+
+    private void toolStripButtonFilterByDiscontinued_Click(object sender, EventArgs e)
+    {
+      var linqMetaData = Factories.CreateLinqMetaData();
+      linqMetaData.Product.FilterByDiscontinued(true).ToEntityCollection2();
     }
   }
 }
