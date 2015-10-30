@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
@@ -108,6 +109,15 @@ namespace AW.Winforms.Helpers.LLBL
         _useContext = value;
     }
 
+    private GenericDataScopeBase DataScope
+    {
+      get
+      {
+        var dataEditorLLBLDataScopePersister = gridDataEditor.DataEditorPersister as DataEditorLLBLDataScopePersister;
+        if (dataEditorLLBLDataScopePersister == null) return null; return dataEditorLLBLDataScopePersister.GenericDataScope;
+      }
+    }
+
 
     [Category("EntityBrowser"), Description("Gets or sets wether filtering is enabled in the grid, even if the underlying collection doesn't support it.")]
     public bool EnsureFilteringEnabled
@@ -171,7 +181,19 @@ namespace AW.Winforms.Helpers.LLBL
       SetContextToUse();
       _getQueryableForEntityDelegate = getQueryableForEntityDelegate;
       gridDataEditor.MembersToExclude = membersToExclude;
+      gridDataEditor.BindingListViewCreater = BindingListViewCreater;
       PopulateTreeViewWithSchema();
+    }
+
+    private IBindingListView BindingListViewCreater(IEnumerable enumerable, Type itemType)
+    {
+      var genericDataScopeBase = DataScope;
+      if (genericDataScopeBase != null)
+      {
+        var queryable = enumerable as IQueryable;
+        enumerable =genericDataScopeBase.FetchData(queryable);
+      }
+      return EntityHelper.CreateEntityView(enumerable, itemType);
     }
 
     private void PopulateTreeViewWithSchema()

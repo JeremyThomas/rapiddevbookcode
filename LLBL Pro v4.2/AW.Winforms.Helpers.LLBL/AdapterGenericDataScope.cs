@@ -57,15 +57,31 @@ namespace AW.Winforms.Helpers.LLBL
 
     public IQueryable Query { get; set; }
 
-    private IQueryable TryTrackQuery(dynamic query)
+    private IEntityCollectionCore _entityCollection;
+
+    protected IQueryable TryTrackQuery(dynamic query)
     {
       dynamic tryTrackQuery = TrackQuery(query);
       return tryTrackQuery is IQueryable ? tryTrackQuery : null;
     }
 
+    public IEntityCollectionCore FetchData(IQueryable query)
+    {
+      Query = TryTrackQuery(query);
+      FetchData();
+      return _entityCollection;
+    }
+
     protected override bool FetchDataImpl(params object[] fetchMethodParameters)
     {
-      return false;
+      if (Query == null)
+        return false;
+
+      _entityCollection = EntityHelper.ToEntityCollectionCore(Query as ILLBLGenProQuery);
+
+      var anyData = _entityCollection.Count > 0;
+
+      return anyData;
     }
 
     public bool CommitChanges()
@@ -161,7 +177,7 @@ namespace AW.Winforms.Helpers.LLBL
 
   public class DataEditorLLBLDataScopePersister : LLBLWinformHelper.DataEditorLLBLPersister, IDataEditorEventHandlers
   {
-    protected GenericDataScopeBase GenericDataScope;
+    public GenericDataScopeBase GenericDataScope;
 
     protected DataEditorLLBLDataScopePersister()
     {

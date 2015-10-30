@@ -278,6 +278,13 @@ namespace AW.Tests
       var objectListView = (ObjectListView<AddressTypeEntity>) list;
       Assert.AreEqual(addressTypeEntityCollection, objectListView.List);
       Assert.AreEqual(addressTypeEntityCollection, dataSource);
+      var arrayListAddressType = new ArrayList();
+      arrayListAddressType.AddRange(addressTypeEntityCollection);
+      var listNg = TestToBindingListView(arrayListAddressType, true);
+      Assert.IsInstanceOfType(listNg, typeof(ICollection));
+      Assert.IsInstanceOfType(listNg, typeof(ObjectListView));
+      dataSource = (ICollection)BindingListHelper.GetDataSource(list);
+      CollectionAssert.AreEqual(arrayListAddressType, dataSource);
     }
 
     private static IBindingListView TestToBindingListView(IEnumerable enumerable, bool ensureFilteringEnabled = false)
