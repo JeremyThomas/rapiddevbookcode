@@ -104,7 +104,7 @@ namespace AW.Helper
 
     private static bool MaybeIsNullOrEmpty<T>(IEnumerable<T> items)
     {
-      return items is ICollection ? ((ICollection) items).Count == 0 : items.AsNullIfEmpty() == null;
+      return items is ICollection ? !Any((ICollection)items) : items.AsNullIfEmpty() == null;
     }
 
     private static bool MaybeIsNullOrEmpty(IEnumerable enumerable)
@@ -112,19 +112,9 @@ namespace AW.Helper
       return !Any(enumerable);
     }
 
-    /// <summary>
-    ///   Determines whether the specified enumerable has any items.
-    /// </summary>
-    /// <param name="enumerable"> The enumerable. </param>
-    /// <returns> </returns>
-    public static bool Any(IEnumerable enumerable)
+    private static bool Any(ICollection collection)
     {
-      return Any(enumerable, false);
-    }
-
-    public static bool Any(ICollection collection)
-    {
-      return !IsNullOrEmpty(collection);
+      return collection.Count > 0;
     }
 
     /// <summary>
@@ -133,7 +123,7 @@ namespace AW.Helper
     /// <param name="enumerable"> The enumerable. </param>
     /// <param name="reset"> if set to <c>true</c> reset the enumerator if there are any items found. </param>
     /// <returns> </returns>
-    public static bool Any(IEnumerable enumerable, bool reset)
+    public static bool Any(IEnumerable enumerable, bool reset = false)
     {
       var collection = enumerable as ICollection;
       if (collection != null)
@@ -148,6 +138,10 @@ namespace AW.Helper
         catch (NotSupportedException)
         {
         }
+        catch (NotImplementedException)
+        {
+        }
+      
       return any;
     }
 

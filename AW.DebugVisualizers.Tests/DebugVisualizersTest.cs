@@ -477,7 +477,7 @@ namespace AW.DebugVisualizers.Tests
     [TestCategory("Winforms"), TestMethod]
     public void PropertyCollectionTest()
     {
-      using (var ctx = new PrincipalContext(ContextType.Machine))
+      using (var ctx = new PrincipalContext(ContextType.Machine)) // Wont work with LocalTestRun.testrunconfig
       using (var usr = UserPrincipal.FindByIdentity(ctx, IdentityType.SamAccountName, Environment.UserName))
       {
         var directoryEntry = usr != null ? usr.GetUnderlyingObject() as DirectoryEntry : null;

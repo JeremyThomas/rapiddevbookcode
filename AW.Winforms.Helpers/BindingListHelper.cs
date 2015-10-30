@@ -88,13 +88,8 @@ namespace AW.Winforms.Helpers
       if (itemType == typeof (object))
         return CreateBindingListView((IEnumerable) enumerable, ensureFilteringEnabled); //else ListBindingHelper.GetListItemProperties doesn't get the properties
 
-      var potentialBindingListViews = BindingListViewCreaters
-        .Where(bindingListViewCreator => bindingListViewCreator.Key.IsAssignableFrom(itemType))
-        .Select(bindingListViewCreator => bindingListViewCreator.Value(enumerable, itemType)).ToList();
-
-      var validBindingListViews = from bindingListViewCreator in potentialBindingListViews
-        where bindingListViewCreator != null && (!ensureFilteringEnabled || bindingListViewCreator.SupportsFiltering)
-        select bindingListViewCreator;
+      IEnumerable<IBindingListView> validBindingListViews;
+      var potentialBindingListViews = GetValidAndPotentialBindingListViews(enumerable, itemType, ensureFilteringEnabled, out validBindingListViews, BindingListViewCreaters);
 
       foreach (var iBindingListView in validBindingListViews)
         return iBindingListView; //Return first
@@ -115,18 +110,26 @@ namespace AW.Winforms.Helpers
 
     private static IBindingListView CreateBindingListView(IEnumerable enumerable, Type itemType, bool ensureFilteringEnabled = false)
     {
-      var potentialBindingListViews = BindingListViewCreaters
-        .Where(bindingListViewCreator => bindingListViewCreator.Key.IsAssignableFrom(itemType))
-        .Select(bindingListViewCreator => bindingListViewCreator.Value(enumerable, itemType)).ToList();
-
-      var validBindingListViews = from bindingListViewCreator in potentialBindingListViews
-        where bindingListViewCreator != null && (!ensureFilteringEnabled || bindingListViewCreator.SupportsFiltering)
-        select bindingListViewCreator;
+      IEnumerable<IBindingListView> validBindingListViews;
+      var potentialBindingListViews = GetValidAndPotentialBindingListViews(enumerable, itemType, ensureFilteringEnabled, out validBindingListViews, BindingListViewCreaters);
 
       foreach (var iBindingListView in validBindingListViews)
         return iBindingListView; //Return first
 
       return CreateObjectListView(GetDataSource(potentialBindingListViews.FirstOrDefault()) ?? enumerable, itemType);
+    }
+
+    private static IEnumerable<IBindingListView> GetValidAndPotentialBindingListViews(IEnumerable enumerable, Type itemType, bool ensureFilteringEnabled, 
+      out IEnumerable<IBindingListView> validBindingListViews, Dictionary<Type, Func<IEnumerable, Type, IBindingListView>> bindingListViewCreaters)
+    {
+      var potentialBindingListViews = bindingListViewCreaters
+        .Where(bindingListViewCreator => bindingListViewCreator.Key.IsAssignableFrom(itemType))
+        .Select(bindingListViewCreator => bindingListViewCreator.Value(enumerable, itemType)).ToList();
+
+      validBindingListViews = from bindingListView in potentialBindingListViews
+        where bindingListView != null && (!ensureFilteringEnabled || bindingListView.SupportsFiltering)
+        select bindingListView;
+      return potentialBindingListViews;
     }
 
     private static ObjectListView CreateObjectListView(ICollection collection)
