@@ -311,7 +311,7 @@ namespace AW.Winforms.Helpers.Controls
       }
       UnBindGrids();
 
-      var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null), EnsureFilteringEnabled);
+      var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null), EnsureFilteringEnabled, BindingListViewCreater);
       SetRemovingItem();
       IsBinding = false;
       return isEnumerable;
@@ -406,7 +406,7 @@ namespace AW.Winforms.Helpers.Controls
     private void BindEnumerable()
     {
       UnBindGrids();
-      bindingSourceEnumerable.BindEnumerable(SkipTake(), false, EnsureFilteringEnabled);
+      bindingSourceEnumerable.BindEnumerable(SkipTake(), false, EnsureFilteringEnabled, BindingListViewCreater);
     }
 
     public bool BindEnumerable(IEnumerable enumerable)
@@ -831,6 +831,8 @@ namespace AW.Winforms.Helpers.Controls
 
     [Category("GridDataEditor"), Description("Gets or sets wether filtering is enabled in the grid, even if the underlying collection doesn't support it.")]
     public bool EnsureFilteringEnabled { get; set; }
+
+    public Func<IEnumerable, Type, IBindingListView> BindingListViewCreater;
 
     private void toolStripButtonClearFilters_Click(object sender, EventArgs e)
     {
