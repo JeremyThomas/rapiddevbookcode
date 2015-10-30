@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Resources;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
@@ -67,6 +69,7 @@ namespace AW.Tests
     {
       Assert.IsNotNull(SerializableClass.GenerateList().AsNullIfEmpty());
       Assert.IsNull((new List<SerializableClass>()).AsNullIfEmpty());
+   //   Assert.IsNull(new System.Collections.Specialized.NameValueCollection().AsNullIfEmpty());
     }
 
     [TestMethod]
@@ -74,16 +77,21 @@ namespace AW.Tests
     {
       Assert.IsFalse(SerializableClass.GenerateList().Where(mc => !mc.NullableIntField.Equals(1)).IsNullOrEmpty());
       Assert.IsTrue((new List<SerializableClass>()).IsNullOrEmpty());
+      Assert.IsTrue(LinqHelper.IsNullOrEmpty(null));
+
+      Assert.IsTrue(new System.Collections.Specialized.NameValueCollection().IsNullOrEmpty());
+      Assert.IsTrue(new NonGenericEnumerable().IsNullOrEmpty());
     }
 
-    private void CopyToDataTableAndAssert<T>(IEnumerable<T> source)
+
+    private static void CopyToDataTableAndAssert<T>(IEnumerable<T> source)
     {
       var actual = GeneralHelper.CopyToDataTable(source);
       Assert.AreEqual(source.Count(), actual.Rows.Count);
       AssertCopyToDataTable(typeof (T), actual);
     }
 
-    private void CopyToDataTableAndAssert(ICollection source, Type type)
+    private static void CopyToDataTableAndAssert(ICollection source, Type type)
     {
       var actual = source.CopyToDataTable();
       Assert.AreEqual(source.Count, actual.Rows.Count);
@@ -178,6 +186,8 @@ namespace AW.Tests
       Assert.AreEqual(1, root.Count());
       Assert.AreEqual(5, employeeEntitiesQueryRoot.Single().Staff.Count);
     }
+
+
   }
 
   public class StringPropertyDescriptor : PropertyDescriptor

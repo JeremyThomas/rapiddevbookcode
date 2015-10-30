@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -315,5 +317,27 @@ namespace AW.Test.Helpers
     public SerializableNoDefaultConstructorClass(string someString):base(someString)
     {
     }
+  }
+
+  public class NonGenericEnumerable : IEnumerable
+  {
+    public IEnumerator GetEnumerator()
+    {
+      return new TestEnumerator();
+    }
+  }
+
+  public class TestEnumerator : IEnumerator
+  {
+    public bool MoveNext()
+    {
+    return false;
+    }
+
+    public void Reset()
+    {
+    }
+
+    public object Current { get;  set; }
   }
 }
