@@ -149,9 +149,7 @@
       <DependentUpon>SqlCeConnectionUIControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\DataEditorPersister.cs" />
-    <Compile Include="Controls\DataGridViewDateTimeColumn.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Controls\DataGridViewDateTimeColumn.cs" />
     <Compile Include="Controls\HierarchyEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -172,6 +170,12 @@
     </Compile>
     <Compile Include="Controls\CSharpEditor.Designer.cs">
       <DependentUpon>CSharpEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ToolStripCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ToolStripNumericUpDown.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DataEditor\FrmDataEditor.cs">
       <SubType>Form</SubType>

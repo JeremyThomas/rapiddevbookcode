@@ -2,14 +2,16 @@
 using System.Collections;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using AW.Helper.LLBL;
+using AW.Winforms.Helpers.LLBL.Annotations;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.LLBL
 {
-  public partial class UsrCntrlEntityBrowser : UserControl, IContextAwareElement
+  public partial class UsrCntrlEntityBrowser : UserControl, IContextAwareElement, INotifyPropertyChanged
   {
     public const int DefaultCacheDurationInSeconds = 20;
     public const string DefaultPrefixDelimiter = "_";
@@ -31,7 +33,9 @@ namespace AW.Winforms.Helpers.LLBL
         {
           _prefixDelimiter = value;
           PopulateTreeViewWithSchema();
+          OnPropertyChanged();
         }
+        prefixDelimiterTextBox.Text = value;
       }
     }
 
@@ -47,7 +51,9 @@ namespace AW.Winforms.Helpers.LLBL
         {
           _useSchema = value;
           PopulateTreeViewWithSchema();
+          OnPropertyChanged();
         }
+        useSchemaCheckBox.Checked = value;
       }
     }
 
@@ -70,6 +76,7 @@ namespace AW.Winforms.Helpers.LLBL
     }
 
     private bool _useContext;
+    private int _cacheDurationInSeconds;
 
     [DefaultValue(true),
      Category("EntityBrowser"),
@@ -107,6 +114,9 @@ namespace AW.Winforms.Helpers.LLBL
       }
       else
         _useContext = value;
+      useContextCheckBox.Checked = value;
+      // ReSharper disable once UseNameofExpression
+      OnPropertyChanged("UseContext");
     }
 
     private GenericDataScopeBase DataScope
@@ -123,11 +133,29 @@ namespace AW.Winforms.Helpers.LLBL
     public bool EnsureFilteringEnabled
     {
       get { return gridDataEditor.EnsureFilteringEnabled; }
-      set { gridDataEditor.EnsureFilteringEnabled = value; }
+      set
+      {
+        gridDataEditor.EnsureFilteringEnabled = value;
+        ensureFilteringEnabledCheckBox.Checked = value;
+        OnPropertyChanged();
+      }
     }
 
     [DefaultValue(DefaultCacheDurationInSeconds), Category("EntityBrowser"), Description("Specifies that the query's resultset should be cached for the duration specified, 0 means don't cache at all.")]
-    public int CacheDurationInSeconds { get; set; }
+    public int CacheDurationInSeconds
+    {
+      get { return _cacheDurationInSeconds; }
+      set
+      {
+        if (value == 0)
+        {
+          CacheController.PurgeResultsets(Name);
+        }
+        _cacheDurationInSeconds = value;
+        cacheDurationInSecondsNumericUpDown.Value = value;
+        OnPropertyChanged();
+      }
+    }
 
     public static FrmPersistantLocation ShowDataBrowser(ILinqMetaData linqMetaData, Form parentForm = null,
       bool useSchema = true, string prefixDelimiter = DefaultPrefixDelimiter, bool ensureFilteringEnabled = true, bool useContext = true, int cacheDurationInSeconds = DefaultCacheDurationInSeconds,
@@ -284,9 +312,14 @@ namespace AW.Winforms.Helpers.LLBL
       gridDataEditor.BindEnumerable(CacheResultset(entityQueryable));
     }
 
+    /// <summary>
+    /// Set a Cache on the base query of the gridDataEditor, which means all pageing based off that query will be cached too.
+    /// </summary>
+    /// <param name="entityQueryable">The entity queryable.</param>
+    /// <returns></returns>
     private dynamic CacheResultset(dynamic entityQueryable)
     {
-      return CacheDurationInSeconds > 0 ? QueryableExtensionMethods.CacheResultset(entityQueryable, CacheDurationInSeconds) : entityQueryable;
+      return CacheDurationInSeconds > 0 ? QueryableExtensionMethods.CacheResultset(entityQueryable, CacheDurationInSeconds,false, Name):entityQueryable;
     }
 
     private void openPagedToolStripMenuItem_Click()
@@ -333,6 +366,39 @@ namespace AW.Winforms.Helpers.LLBL
     private void DataEditorEventHandlers_ContainedDataChanged(object sender, EventArgs e)
     {
       SetSaveButtons(true);
+    }
+
+    private void ensureFilteringEnabledCheckBox_Click(object sender, EventArgs e)
+    {
+      EnsureFilteringEnabled = ensureFilteringEnabledCheckBox.Checked;
+    }
+
+    private void toolStripCheckBox1_Click(object sender, EventArgs e)
+    {
+      UseSchema = useSchemaCheckBox.Checked;
+    }
+
+    private void useContextCheckBox_Click(object sender, EventArgs e)
+    {
+      UseContext = useContextCheckBox.Checked;
+    }
+
+    private void cacheDurationInSecondsNumericUpDown_ValueChanged(object sender, EventArgs e)
+    {
+      CacheDurationInSeconds = (int)cacheDurationInSecondsNumericUpDown.Value;
+    }
+
+    private void prefixDelimiterTextBox_Click(object sender, EventArgs e)
+    {
+      PrefixDelimiter = prefixDelimiterTextBox.Text;
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    [NotifyPropertyChangedInvocator]
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
   }
 }
