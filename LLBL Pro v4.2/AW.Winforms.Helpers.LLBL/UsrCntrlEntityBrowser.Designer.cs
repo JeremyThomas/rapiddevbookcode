@@ -43,6 +43,12 @@ namespace AW.Winforms.Helpers.LLBL
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.toolStripButtonCancelEdit = new System.Windows.Forms.ToolStripButton();
       this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
+      this.ensureFilteringEnabledCheckBox = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
+      this.useSchemaCheckBox = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
+      this.useContextCheckBox = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
+      this.prefixDelimiterLabel = new System.Windows.Forms.ToolStripLabel();
+      this.prefixDelimiterTextBox = new System.Windows.Forms.ToolStripTextBox();
+      this.cacheDurationInSecondsNumericUpDown = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
@@ -66,7 +72,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.treeViewEntities.Name = "treeViewEntities";
       this.treeViewEntities.SelectedImageIndex = 4;
       this.treeViewEntities.ShowNodeToolTips = true;
-      this.treeViewEntities.Size = new System.Drawing.Size(167, 560);
+      this.treeViewEntities.Size = new System.Drawing.Size(254, 557);
       this.treeViewEntities.TabIndex = 1;
       this.toolTip1.SetToolTip(this.treeViewEntities, "Entities amd their proerties");
       this.treeViewEntities.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEntities_AfterSelect);
@@ -99,8 +105,8 @@ namespace AW.Winforms.Helpers.LLBL
       // splitContainer1.Panel2
       // 
       this.splitContainer1.Panel2.Controls.Add(this.gridDataEditor);
-      this.splitContainer1.Size = new System.Drawing.Size(502, 585);
-      this.splitContainer1.SplitterDistance = 167;
+      this.splitContainer1.Size = new System.Drawing.Size(764, 585);
+      this.splitContainer1.SplitterDistance = 254;
       this.splitContainer1.TabIndex = 3;
       // 
       // toolStrip1
@@ -108,10 +114,16 @@ namespace AW.Winforms.Helpers.LLBL
       this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
       this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonCancelEdit,
-            this.saveToolStripButton});
-      this.toolStrip1.Location = new System.Drawing.Point(0, 560);
+            this.saveToolStripButton,
+            this.ensureFilteringEnabledCheckBox,
+            this.useSchemaCheckBox,
+            this.useContextCheckBox,
+            this.prefixDelimiterLabel,
+            this.prefixDelimiterTextBox,
+            this.cacheDurationInSecondsNumericUpDown});
+      this.toolStrip1.Location = new System.Drawing.Point(0, 557);
       this.toolStrip1.Name = "toolStrip1";
-      this.toolStrip1.Size = new System.Drawing.Size(167, 25);
+      this.toolStrip1.Size = new System.Drawing.Size(254, 28);
       this.toolStrip1.TabIndex = 2;
       this.toolStrip1.Text = "toolStrip1";
       // 
@@ -122,7 +134,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.toolStripButtonCancelEdit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCancelEdit.Image")));
       this.toolStripButtonCancelEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonCancelEdit.Name = "toolStripButtonCancelEdit";
-      this.toolStripButtonCancelEdit.Size = new System.Drawing.Size(23, 22);
+      this.toolStripButtonCancelEdit.Size = new System.Drawing.Size(23, 25);
       this.toolStripButtonCancelEdit.Text = "Cancel";
       this.toolStripButtonCancelEdit.Click += new System.EventHandler(this.toolStripButtonCancelEdit_Click);
       // 
@@ -133,9 +145,60 @@ namespace AW.Winforms.Helpers.LLBL
       this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
       this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.saveToolStripButton.Name = "saveToolStripButton";
-      this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
+      this.saveToolStripButton.Size = new System.Drawing.Size(23, 25);
       this.saveToolStripButton.Text = "&Save";
       this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
+      // 
+      // ensureFilteringEnabledCheckBox
+      // 
+      this.ensureFilteringEnabledCheckBox.Checked = false;
+      this.ensureFilteringEnabledCheckBox.CheckState = System.Windows.Forms.CheckState.Unchecked;
+      this.ensureFilteringEnabledCheckBox.Name = "ensureFilteringEnabledCheckBox";
+      this.ensureFilteringEnabledCheckBox.Size = new System.Drawing.Size(155, 25);
+      this.ensureFilteringEnabledCheckBox.Text = "Ensure Filtering Enabled:";
+      this.ensureFilteringEnabledCheckBox.Click += new System.EventHandler(this.ensureFilteringEnabledCheckBox_Click);
+      // 
+      // useSchemaCheckBox
+      // 
+      this.useSchemaCheckBox.Checked = false;
+      this.useSchemaCheckBox.CheckState = System.Windows.Forms.CheckState.Unchecked;
+      this.useSchemaCheckBox.Name = "useSchemaCheckBox";
+      this.useSchemaCheckBox.Size = new System.Drawing.Size(93, 19);
+      this.useSchemaCheckBox.Text = "Use Schema:";
+      this.useSchemaCheckBox.Click += new System.EventHandler(this.toolStripCheckBox1_Click);
+      // 
+      // useContextCheckBox
+      // 
+      this.useContextCheckBox.Checked = false;
+      this.useContextCheckBox.CheckState = System.Windows.Forms.CheckState.Unchecked;
+      this.useContextCheckBox.Name = "useContextCheckBox";
+      this.useContextCheckBox.Size = new System.Drawing.Size(92, 19);
+      this.useContextCheckBox.Text = "Use Context:";
+      this.useContextCheckBox.Click += new System.EventHandler(this.useContextCheckBox_Click);
+      // 
+      // prefixDelimiterLabel
+      // 
+      this.prefixDelimiterLabel.Name = "prefixDelimiterLabel";
+      this.prefixDelimiterLabel.Size = new System.Drawing.Size(90, 15);
+      this.prefixDelimiterLabel.Text = "Prefix Delimiter:";
+      // 
+      // prefixDelimiterTextBox
+      // 
+      this.prefixDelimiterTextBox.MaxLength = 25;
+      this.prefixDelimiterTextBox.Name = "prefixDelimiterTextBox";
+      this.prefixDelimiterTextBox.Size = new System.Drawing.Size(20, 23);
+      this.prefixDelimiterTextBox.ToolTipText = "Prefix Delimiter e.g. _";
+      this.prefixDelimiterTextBox.Click += new System.EventHandler(this.prefixDelimiterTextBox_Click);
+      // 
+      // cacheDurationInSecondsNumericUpDown
+      // 
+      this.cacheDurationInSecondsNumericUpDown.BackColor = System.Drawing.Color.Transparent;
+      this.cacheDurationInSecondsNumericUpDown.DecimalPlaces = 0;
+      this.cacheDurationInSecondsNumericUpDown.Name = "cacheDurationInSecondsNumericUpDown";
+      this.cacheDurationInSecondsNumericUpDown.NumBackColor = System.Drawing.SystemColors.Window;
+      this.cacheDurationInSecondsNumericUpDown.Size = new System.Drawing.Size(211, 25);
+      this.cacheDurationInSecondsNumericUpDown.Text = "Cache Duration In Seconds:";
+      this.cacheDurationInSecondsNumericUpDown.ValueChanged += new System.EventHandler(this.cacheDurationInSecondsNumericUpDown_ValueChanged);
       // 
       // gridDataEditor
       // 
@@ -148,7 +211,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.gridDataEditor.Name = "gridDataEditor";
       this.gridDataEditor.PageSize = ((ushort)(15));
       this.gridDataEditor.Readonly = false;
-      this.gridDataEditor.Size = new System.Drawing.Size(331, 585);
+      this.gridDataEditor.Size = new System.Drawing.Size(506, 585);
       this.gridDataEditor.TabIndex = 0;
       this.toolTip1.SetToolTip(this.gridDataEditor, "Data in the Tables");
       // 
@@ -193,7 +256,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.splitContainer1);
       this.Name = "UsrCntrlEntityBrowser";
-      this.Size = new System.Drawing.Size(502, 585);
+      this.Size = new System.Drawing.Size(764, 585);
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel1.PerformLayout();
       this.splitContainer1.Panel2.ResumeLayout(false);
@@ -220,5 +283,11 @@ namespace AW.Winforms.Helpers.LLBL
     private ToolStrip toolStrip1;
     private ToolStripButton saveToolStripButton;
     public ToolStripButton toolStripButtonCancelEdit;
+    private ToolStripCheckBox ensureFilteringEnabledCheckBox;
+    private ToolStripCheckBox useSchemaCheckBox;
+    private ToolStripCheckBox useContextCheckBox;
+    private ToolStripLabel prefixDelimiterLabel;
+    private ToolStripTextBox prefixDelimiterTextBox;
+    private ToolStripNumericUpDown cacheDurationInSecondsNumericUpDown;
   }
 }
