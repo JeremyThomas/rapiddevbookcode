@@ -55,9 +55,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\Microsoft.Data.Services.Client.5.6.4\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
     </Reference>
-    <Reference Include="SD.LLBLGen.Pro.ODataSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+    <Reference Include="SD.LLBLGen.Pro.ODataSupportClasses, Version=5.0.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\LLBL\SD.LLBLGen.Pro.ODataSupportClasses.dll</HintPath>
+      <HintPath>..\..\..\Lib\SD.LLBLGen.Pro.ODataSupportClasses.dll</HintPath>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20151009\lib\net45\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
