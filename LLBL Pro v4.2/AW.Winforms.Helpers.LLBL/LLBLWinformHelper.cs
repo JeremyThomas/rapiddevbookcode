@@ -137,13 +137,13 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-    public static HierarchyEditor HierarchyEditorFactoryServicing<T, TName, TChildCollection>(IQueryable<T> query, Func<IEnumerable<T>, IEnumerable<T>> postProcessing,
+    public static HierarchyEditor HierarchyEditorFactory<T, TName, TChildCollection>(IQueryable<T> query, Func<IEnumerable<T>, IEnumerable<T>> postProcessing,
       Expression<Func<T, TName>> namePropertyExpression,
-      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : EntityBase
+      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : class, IEntityCore
     {
-      var dataScope = new SelfServicingGenericDataScope<T>(query, postProcessing);
-      dataScope.FetchData();
-      return HierarchyEditor.HierarchyEditorFactory(dataScope.EntityCollection, namePropertyExpression, childCollectionPropertyExpression,
+      var dataScope = new GenericDataScopeBase();
+      var processedCollection = postProcessing(dataScope.FetchData(query));
+      return HierarchyEditor.HierarchyEditorFactory(processedCollection, namePropertyExpression, childCollectionPropertyExpression,
         new DataEditorLLBLDataScopePersister(dataScope));
     }
 
@@ -172,16 +172,6 @@ namespace AW.Winforms.Helpers.LLBL
       {
         return typeof (EntityBase2).IsAssignableFrom(typeToSave);
       }
-    }
-
-    public static HierarchyEditor HierarchyEditorFactory<T, TName, TChildCollection>(IQueryable<T> query, Func<IEnumerable<T>, IEnumerable<T>> postProcessing,
-      Expression<Func<T, TName>> namePropertyExpression,
-      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : EntityBase2
-    {
-      var dataScope = new AdapterGenericDataScope<T>(query, postProcessing);
-      dataScope.FetchData();
-      return HierarchyEditor.HierarchyEditorFactory(dataScope.EntityCollection, namePropertyExpression, childCollectionPropertyExpression,
-        new DataEditorLLBLDataScopePersister(dataScope));
     }
 
     #endregion

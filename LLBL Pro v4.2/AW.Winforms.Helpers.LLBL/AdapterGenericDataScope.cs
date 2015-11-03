@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using AW.Helper;
 using AW.Helper.LLBL;
@@ -72,15 +71,18 @@ namespace AW.Winforms.Helpers.LLBL
       return _entityCollection;
     }
 
+    public CollectionCore<T> FetchData<T>(IQueryable<T> query) where T : class, IEntityCore
+    {
+      return (CollectionCore<T>)FetchData((IQueryable)query);
+    }
+
     protected override bool FetchDataImpl(params object[] fetchMethodParameters)
     {
       if (Query == null)
         return false;
 
       _entityCollection = EntityHelper.ToEntityCollectionCore(Query as ILLBLGenProQuery);
-
       var anyData = _entityCollection.Count > 0;
-
       return anyData;
     }
 
@@ -120,61 +122,6 @@ namespace AW.Winforms.Helpers.LLBL
     }
   }
 
-  public class AdapterGenericDataScope<T> : GenericDataScopeBase where T : EntityBase2
-  {
-    private readonly Action<IEnumerable<T>> _postProcessing;
-    private EntityCollectionBase2<T> _entityCollection;
-    private readonly Func<IEnumerable<T>, IEnumerable<T>> _postProcessingFunction;
-
-    public EntityCollectionBase2<T> EntityCollection
-    {
-      get { return _entityCollection; }
-      set
-      {
-        if (value != null)
-          Attach(value);
-        _entityCollection = value;
-      }
-    }
-
-    public AdapterGenericDataScope(IQueryable<T> query) : base(query)
-    {
-    }
-
-    public AdapterGenericDataScope(IQueryable<T> query, Action<IEnumerable<T>> postProcessing = null) : this(query)
-    {
-      _postProcessing = postProcessing;
-    }
-
-    public AdapterGenericDataScope(IQueryable<T> query, Func<IEnumerable<T>, IEnumerable<T>> postProcessingFunction) : this(query)
-    {
-      _postProcessingFunction = postProcessingFunction;
-    }
-
-    public AdapterGenericDataScope(IEnumerable<T> enumerable, ITransactionController transactionController)
-    {
-      EntityCollection = enumerable.ToEntityCollection2();
-      TransactionController = transactionController;
-    }
-
-    protected override bool FetchDataImpl(params object[] fetchMethodParameters)
-    {
-      if (Query == null)
-        return false;
-      if (_postProcessingFunction == null)
-        _entityCollection = (EntityCollectionBase2<T>) EntityHelper.ToEntityCollectionCore(Query as ILLBLGenProQuery);
-      else
-        EntityCollection = _postProcessingFunction((IQueryable<T>) Query).ToEntityCollection2();
-      var anyData = EntityCollection.Count > 0;
-      if (anyData)
-      {
-        if (_postProcessing != null)
-          _postProcessing(EntityCollection);
-      }
-      return anyData;
-    }
-  }
-
   public class DataEditorLLBLDataScopePersister : LLBLWinformHelper.DataEditorLLBLPersister, IDataEditorEventHandlers
   {
     public GenericDataScopeBase GenericDataScope;
@@ -192,8 +139,7 @@ namespace AW.Winforms.Helpers.LLBL
     {
       GenericDataScope = genericDataScope;
     }
-
-
+    
     public DataEditorLLBLDataScopePersister(IEnumerable enumerable, ITransactionController transactionController) : this(new GenericDataScopeBase(enumerable, transactionController))
     {
     }

@@ -92,7 +92,6 @@
     </Compile>
     <Compile Include="AdapterGenericDataScope.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="SelfServicingGenericDataScope.cs" />
     <Compile Include="UsrCntrlEntityBrowser.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -1916,6 +1916,11 @@ namespace AW.Data.EntityClasses
       return GeneralHelper.WireUpSelfJoin(employeeEntities, e => e.EmployeeID, e => e.ManagerID.HasValue, e => e.ManagerID.Value, (e, m) => e.Manager = m);
     }
 
+    public static IEnumerable<EmployeeEntity> WireUpSelfJoinAndRemoveChildren(IEnumerable<EmployeeEntity> employeeEntities)
+    {
+      return GeneralHelper.WireUpSelfJoinAndRemoveChildren(employeeEntities, e => e.EmployeeID, e => e.ManagerID.HasValue, e => e.ManagerID.Value, (e, m) => e.Manager = m);
+    }
+
     // __LLBLGENPRO_USER_CODE_REGION_END
     #endregion
 
