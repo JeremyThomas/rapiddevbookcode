@@ -8,7 +8,7 @@ namespace Northwind.DAL.Services
 {
   public static class Factories
   {
-    public static DataAccessAdapterBase CreateDataAccessAdapter(string oleDbConnectionString)
+    public static DataAccessAdapterBase CreateDataAccessAdapterOleDbConnectionString(string oleDbConnectionString)
     {
       var oleDbConnectionStringBuilder = new OleDbConnectionStringBuilder(oleDbConnectionString);
       var connectionStringBuilder = DataHelper.ConvertConnectionStringBuilder(oleDbConnectionStringBuilder, DataHelper.GetDBSourceType(oleDbConnectionString));
@@ -27,9 +27,19 @@ namespace Northwind.DAL.Services
       return new DataAccessAdapter();
     }
 
+    public static DataAccessAdapterBase CreateDataAccessAdapter(string connectionString)
+    {
+      return new DataAccessAdapter(connectionString);
+    }
+
     public static LinqMetaData CreateLinqMetaData()
     {
       return new LinqMetaData(CreateDataAccessAdapter());
+    }
+
+    public static LinqMetaData CreateLinqMetaData(string connectionString)
+    {
+      return new LinqMetaData(CreateDataAccessAdapter(connectionString));
     }
   }
 }
