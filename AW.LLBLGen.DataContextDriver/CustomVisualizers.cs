@@ -74,35 +74,30 @@ namespace AW.LLBLGen.DataContextDriver
       return true;
     }
 
-    #region Self Servicing
-
-    public static IQueryable<T> DisplaySelfServicingHierarchyInTree<T, TName, TChildCollection>(this IQueryable<T> queryable, Func<IEnumerable<T>, IEnumerable<T>> postProcessing, 
-      Expression<Func<T, TName>> namePropertyExpression,
-      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : EntityBase
+    public static IQueryable<T> DisplayHierarchyInTree<T, TName, TChildCollection>(this IQueryable<T> queryable, Func<IEnumerable<T>, IEnumerable<T>> postProcessing, Expression<Func<T, TName>> namePropertyExpression,
+      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : class, IEntityCore
     {
-      return LINQPad.CustomVisualizers.DisplayControl(queryable, LLBLWinformHelper.HierarchyEditorFactoryServicing(queryable, postProcessing, namePropertyExpression, childCollectionPropertyExpression));
+      return LINQPad.CustomVisualizers.DisplayControl(queryable, LLBLWinformHelper.HierarchyEditorFactory(queryable, postProcessing, namePropertyExpression, childCollectionPropertyExpression));
     }
-    
-    #endregion
-
-    #region Adapter
 
     public static IEnumerable DisplayInGrid(this IEnumerable enumerable, ITransactionController transactionController, ushort pageSize)
     {
       return enumerable.DisplayInGrid(new DataEditorLLBLDataScopePersister(enumerable, transactionController), pageSize);
     }
 
+    #region Adapter
+
     #region ByID
 
-    public static IEnumerable DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, ITransactionController transactionController, string iDPropertyName, string parentIDPropertyName, string nameColumn) 
+    public static IEnumerable DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, ITransactionController transactionController, string iDPropertyName, string parentIDPropertyName, string nameColumn)
     {
       return enumerable.DisplayHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new DataEditorLLBLDataScopePersister(enumerable, transactionController));
     }
 
-    public static IEnumerable<T> DisplayHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, ITransactionController dataAccessAdapter, Expression<Func<T, TId>> iDPropertyExpression,
-      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression) 
+    public static IEnumerable<T> DisplayHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, ITransactionController transactionController, Expression<Func<T, TId>> iDPropertyExpression,
+      Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression)
     {
-      return enumerable.DisplayHierarchyInTree(iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, new DataEditorLLBLDataScopePersister(enumerable, dataAccessAdapter));
+      return enumerable.DisplayHierarchyInTree(iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, new DataEditorLLBLDataScopePersister(enumerable, transactionController));
     }
 
     #endregion
@@ -112,25 +107,19 @@ namespace AW.LLBLGen.DataContextDriver
       return enumerable.DisplayHierarchyInTree(nameColumn, childCollectionPropertyName, new DataEditorLLBLDataScopePersister(enumerable, transactionController));
     }
 
-    public static IEnumerable<T> DisplayHierarchyInTree<T, TName, TChildCollection>(this IEnumerable<T> enumerable, ITransactionController dataAccessAdapter, Expression<Func<T, TName>> namePropertyExpression,
-      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) 
+    public static IEnumerable<T> DisplayHierarchyInTree<T, TName, TChildCollection>(this IEnumerable<T> enumerable, ITransactionController transactionController, Expression<Func<T, TName>> namePropertyExpression,
+      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression)
     {
-      return enumerable.DisplayHierarchyInTree(namePropertyExpression, childCollectionPropertyExpression, new DataEditorLLBLDataScopePersister(enumerable, dataAccessAdapter));
+      return enumerable.DisplayHierarchyInTree(namePropertyExpression, childCollectionPropertyExpression, new DataEditorLLBLDataScopePersister(enumerable, transactionController));
     }
 
-    public static IQueryable<T> DisplayAdapterHierarchyInTree<T, TName, TChildCollection>(this IQueryable<T> queryable, Func<IEnumerable<T>, IEnumerable<T>> postProcessing, Expression<Func<T, TName>> namePropertyExpression,
-      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : EntityBase2
-    {
-      return LINQPad.CustomVisualizers.DisplayControl(queryable, LLBLWinformHelper.HierarchyEditorFactory(queryable, postProcessing, namePropertyExpression, childCollectionPropertyExpression));
-    }
-
-    public static IEnumerable<T> DisplayHierarchyInTree<T, TI, TName, TChildCollection>(this IEnumerable<T> enumerable, ITransactionController dataAccessAdapter, Func<T, TI> iDFunc, Func<T, bool> isChildFunc,
+    public static IEnumerable<T> DisplayHierarchyInTree<T, TI, TName, TChildCollection>(this IEnumerable<T> enumerable, ITransactionController transactionController, Func<T, TI> iDFunc, Func<T, bool> isChildFunc,
       Func<T, TI> parentIDFunc, Action<T, T> assignToParentFunc,
       Expression<Func<T, TName>> namePropertyExpression,
-      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) 
+      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression)
     {
-      return enumerable.DisplayHierarchyInTree(iDFunc, isChildFunc, parentIDFunc, assignToParentFunc,namePropertyExpression, childCollectionPropertyExpression, 
-        new DataEditorLLBLDataScopePersister(enumerable, dataAccessAdapter));
+      return enumerable.DisplayHierarchyInTree(iDFunc, isChildFunc, parentIDFunc, assignToParentFunc, namePropertyExpression, childCollectionPropertyExpression,
+        new DataEditorLLBLDataScopePersister(enumerable, transactionController));
     }
 
     #endregion

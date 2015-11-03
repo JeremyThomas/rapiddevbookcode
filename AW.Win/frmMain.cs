@@ -288,17 +288,21 @@ namespace AW.Win
     private void organizationStructureEditorSelfJoinToolStripMenuItem_Click(object sender, EventArgs e)
     {
       //var employeeEntities = EmployeeEntity.WireUpSelfJoin(MetaSingletons.MetaData.Employee.PrefetchAllButManages().ToEntityCollection());  
-      var employeeEntities = EmployeeEntity.WireUpSelfJoin(LinqMetaData.CreateWithContext().Employee.PrefetchAll()).ToEntityCollection();
-      var form = ShowControlInForm(new HierarchyEditor(employeeEntities.Where(em => em.ManagerID == null),
-       // em => em.EmployeeDisplayName, em => em.Manages  
-        "EmployeeDisplayName", "Manages"
-        ), 
-        "Employee Hierarchy In Tree " + employeeEntities, this);
+      //var employeeEntities = EmployeeEntity.WireUpSelfJoin(LinqMetaData.CreateWithContext().Employee.PrefetchAll()).ToEntityCollection();
+      //var form = ShowControlInForm(new HierarchyEditor(employeeEntities.Where(em => em.ManagerID == null),
+      // // em => em.EmployeeDisplayName, em => em.Manages  
+      //  "EmployeeDisplayName", "Manages"
+      //  ), 
+      //  "Employee Hierarchy In Tree " + employeeEntities, this);
 
-  //    var form = ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactoryServicing(employeeEntities.Where(em => em.ManagerID == null),
-  // em => em.EmployeeDisplayName, em => em.Manages  
-  //),
-  //"Employee Hierarchy In Tree " + employeeEntities, this);
+      var form = ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactory(MetaSingletons.MetaData.Employee.PrefetchAll(),
+        EmployeeEntity.WireUpSelfJoinAndRemoveChildren,
+        em => em.EmployeeDisplayName, em => em.Manages), "Employee Hierarchy In Tree ", this);
+
+      //    var form = ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactoryServicing(employeeEntities.Where(em => em.ManagerID == null),
+      // em => em.EmployeeDisplayName, em => em.Manages  
+      //),
+      //"Employee Hierarchy In Tree " + employeeEntities, this);
 
       form.Tag = true;
     }
