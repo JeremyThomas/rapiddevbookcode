@@ -280,6 +280,37 @@ namespace AW.Helper
       }
     }
 
+    /// <summary>
+    /// Gets the loadable types.
+    /// </summary>
+    /// <remarks>http://haacked.com/archive/2012/07/23/get-all-types-in-an-assembly.aspx/</remarks>
+    /// <param name="assembly">The assembly.</param>
+    /// <returns></returns>
+    /// <exception cref="System.ArgumentNullException">assembly</exception>
+    public static IEnumerable<Type> GetLoadableTypes(this Assembly assembly)
+    {
+      if (assembly == null) throw new ArgumentNullException("assembly");
+      try
+      {
+        return assembly.GetTypes();
+      }
+      catch (ReflectionTypeLoadException e)
+      {
+        return e.Types.Where(t => t != null);
+      }
+    }
+
+    /// <summary>
+    /// Gets the concrete public implementations of the ancestor or interface type.
+    /// </summary>
+    /// <param name="assembly">The assembly.</param>
+    /// <param name="ancestorTypeOrInterface">The ancestor type or interface.</param>
+    /// <returns></returns>
+    public static IEnumerable<Type> GetConcretePublicImplementations(this Assembly assembly, Type ancestorTypeOrInterface)
+    {
+      return ancestorTypeOrInterface.GetAssignable(assembly.GetLoadableTypes());
+    }
+
     public static IEnumerable<Type> GetTypesContaining(Assembly assembly, string typeName)
     {
       return assembly.GetTypes().Where(t => t.AssemblyQualifiedName.ContainsIgnoreCase(typeName));

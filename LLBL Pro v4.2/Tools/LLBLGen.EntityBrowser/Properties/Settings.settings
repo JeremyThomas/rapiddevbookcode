@@ -10,5 +10,11 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Northwind;Integrated Security=True</Value>
     </Setting>
+    <Setting Name="AdapterAssemblyPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\Northwind\Northwind.Win\bin\Debug\Northwind.DAL.SqlServer.dll</Value>
+    </Setting>
+    <Setting Name="LinqMetaDataAssemblyPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\Northwind\Northwind.Win\bin\Debug\Northwind.DAL.dll</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
