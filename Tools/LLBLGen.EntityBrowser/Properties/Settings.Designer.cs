@@ -12,7 +12,7 @@ namespace LLBLGen.EntityBrowser.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -31,6 +31,33 @@ namespace LLBLGen.EntityBrowser.Properties {
         public string Connection0 {
             get {
                 return ((string)(this["Connection0"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Jeremy Thomas\\Documents\\Visual Studio 2010\\Projects\\CodePlex\\RapidDevBoo" +
+            "kCode\\LLBL Pro v4.2\\Northwind\\Northwind.Win\\bin\\Debug\\Northwind.DAL.SqlServer.dl" +
+            "l")]
+        public string AdapterAssemblyPath {
+            get {
+                return ((string)(this["AdapterAssemblyPath"]));
+            }
+            set {
+                this["AdapterAssemblyPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Jeremy Thomas\\Documents\\Visual Studio 2010\\Projects\\CodePlex\\RapidDevBoo" +
+            "kCode\\LLBL Pro v4.2\\Northwind\\Northwind.Win\\bin\\Debug\\Northwind.DAL.dll")]
+        public string LinqMetaDataAssemblyPath {
+            get {
+                return ((string)(this["LinqMetaDataAssemblyPath"]));
+            }
+            set {
+                this["LinqMetaDataAssemblyPath"] = value;
             }
         }
     }
