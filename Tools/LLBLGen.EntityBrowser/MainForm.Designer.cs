@@ -31,12 +31,8 @@
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.toolStripButtonAddConnection = new System.Windows.Forms.ToolStripButton();
-      this.tabPage1 = new System.Windows.Forms.TabPage();
-      this.usrCntrlEntityBrowser1 = new AW.Winforms.Helpers.LLBL.UsrCntrlEntityBrowser();
       this.tabControl = new System.Windows.Forms.TabControl();
       this.toolStrip1.SuspendLayout();
-      this.tabPage1.SuspendLayout();
-      this.tabControl.SuspendLayout();
       this.SuspendLayout();
       // 
       // toolStrip1
@@ -58,30 +54,8 @@
       this.toolStripButtonAddConnection.Text = "Add";
       this.toolStripButtonAddConnection.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
-      // tabPage1
-      // 
-      this.tabPage1.Controls.Add(this.usrCntrlEntityBrowser1);
-      this.tabPage1.Location = new System.Drawing.Point(4, 22);
-      this.tabPage1.Name = "tabPage1";
-      this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage1.Size = new System.Drawing.Size(706, 537);
-      this.tabPage1.TabIndex = 0;
-      this.tabPage1.Text = "tabPage1";
-      this.tabPage1.UseVisualStyleBackColor = true;
-      // 
-      // usrCntrlEntityBrowser1
-      // 
-      this.usrCntrlEntityBrowser1.ContextToUse = null;
-      this.usrCntrlEntityBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.usrCntrlEntityBrowser1.EnsureFilteringEnabled = false;
-      this.usrCntrlEntityBrowser1.Location = new System.Drawing.Point(3, 3);
-      this.usrCntrlEntityBrowser1.Name = "usrCntrlEntityBrowser1";
-      this.usrCntrlEntityBrowser1.Size = new System.Drawing.Size(700, 531);
-      this.usrCntrlEntityBrowser1.TabIndex = 0;
-      // 
       // tabControl
       // 
-      this.tabControl.Controls.Add(this.tabPage1);
       this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tabControl.Location = new System.Drawing.Point(0, 25);
       this.tabControl.Name = "tabControl";
@@ -98,10 +72,9 @@
       this.Controls.Add(this.toolStrip1);
       this.Name = "MainForm";
       this.Text = "Data Browser";
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
       this.toolStrip1.ResumeLayout(false);
       this.toolStrip1.PerformLayout();
-      this.tabPage1.ResumeLayout(false);
-      this.tabControl.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -111,8 +84,6 @@
 
     private System.Windows.Forms.ToolStrip toolStrip1;
     private System.Windows.Forms.ToolStripButton toolStripButtonAddConnection;
-    private System.Windows.Forms.TabPage tabPage1;
-    private AW.Winforms.Helpers.LLBL.UsrCntrlEntityBrowser usrCntrlEntityBrowser1;
     private System.Windows.Forms.TabControl tabControl;
   }
 }
