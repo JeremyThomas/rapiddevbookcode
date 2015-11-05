@@ -16,5 +16,9 @@
     <Setting Name="LinqMetaDataAssemblyPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\Northwind\Northwind.Win\bin\Debug\Northwind.DAL.dll</Value>
     </Setting>
+    <Setting Name="Connections" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
