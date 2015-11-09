@@ -35,7 +35,7 @@ namespace LLBLGen.EntityBrowser
     public MainForm()
     {
       InitializeComponent();
-
+      settingsBindingSource.DataSource = Settings.Default;
       _adapterType = GetAdapterType(Settings.Default.AdapterAssemblyPath);
       if (!File.Exists(Settings.Default.LinqMetaDataAssemblyPath))
         throw new ApplicationException("Adapter assembly: " + Settings.Default.LinqMetaDataAssemblyPath + " not found!" + Environment.NewLine);
