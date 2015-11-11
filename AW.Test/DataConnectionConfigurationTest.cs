@@ -72,12 +72,22 @@ namespace AW.Tests
       Assert.AreEqual(systemDataSqlite, dataSource.Providers.First().Name);
     }
 
-    [TestProperty("Winforms", "Interactive"), TestMethod, Ignore]
+    [TestProperty("Winforms", "Interactive"), TestMethod]
     public void DataConnectionDialogTest()
     {
       var dcd = new DataConnectionDialog();
       var dcs = new DataConnectionConfiguration(null);
       dcs.LoadConfiguration(dcd);
+      DataConnectionDialog.Show(dcd);
+    }
+
+    [TestProperty("Winforms", "Interactive"), TestMethod]
+    public void SelectDataProviderTest()
+    {
+      var dcd = new DataConnectionDialog();
+      var dcs = new DataConnectionConfiguration(null);
+      dcs.LoadConfiguration(dcd);
+      DataConnectionConfiguration.SelectDataProvider(dcd, "System.Data.SqlClient");
       DataConnectionDialog.Show(dcd);
     }
 

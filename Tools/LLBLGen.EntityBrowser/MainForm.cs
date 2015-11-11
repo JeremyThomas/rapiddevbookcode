@@ -38,6 +38,7 @@ namespace LLBLGen.EntityBrowser
 
     static MainForm()
     {
+      ProfilerHelper.InitializeOrmProfiler();
       DataConnectionDialog = new DataConnectionDialog();
       var dataConnectionConfiguration = new DataConnectionConfiguration(null);
       dataConnectionConfiguration.LoadConfiguration(DataConnectionDialog);
@@ -275,10 +276,17 @@ namespace LLBLGen.EntityBrowser
           Provider = SystemDataSqlClient,
           ConnectionString = connectionStringSettings.ConnectionString
         };
-        DataConnectionConfiguration.SelectDataProvider(DataConnectionDialog, browserConnection.Provider);
+        DataConnectionConfiguration.SelectDataProvider(DataConnectionDialog, "System.Data.SqlClient");
 
         if (DataConnectionDialog.SelectedDataProvider != null)
-          DataConnectionDialog.ConnectionString = browserConnection.ConnectionString;
+          try
+          {
+      DataConnectionDialog.ConnectionString = browserConnection.ConnectionString;
+          }
+          catch (Exception)
+          {
+            DataConnectionDialog.SelectedDataProvider = null;
+          }
 
         if (DataConnectionDialog.Show(DataConnectionDialog) == DialogResult.OK)
         {
