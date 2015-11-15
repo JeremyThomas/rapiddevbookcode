@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -43,30 +46,47 @@ namespace LLBLGen.EntityBrowser
       DataConnectionDialog = new DataConnectionDialog();
       var dataConnectionConfiguration = new DataConnectionConfiguration(null);
       dataConnectionConfiguration.LoadConfiguration(DataConnectionDialog);
+      Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+      var configurationSectionGroup = Configuration.GetSectionGroup("userSettings");
+      if (configurationSectionGroup != null && configurationSectionGroup.Sections.Count > 0)
+      {
+        UserSettings = configurationSectionGroup.Sections[0] as ClientSettingsSection;
+      }
+      ConnectionStringSettingsCollection = Configuration.ConnectionStrings.ConnectionStrings;
     }
 
     public MainForm()
     {
       InitializeComponent();
       settingsBindingSource.DataSource = Settings.Default;
+
+      var adapterAssemblyPath = Path.GetDirectoryName(Settings.Default.AdapterAssemblyPath);
+      if (adapterAssemblyPath != null) linqMetaDataAssemblyPathLabel.Links.Add(0, adapterAssemblyPath.Length, adapterAssemblyPath);
+      var linqMetaDataAssemblyPath = Path.GetDirectoryName(Settings.Default.LinqMetaDataAssemblyPath);
+      if (linqMetaDataAssemblyPath != null) adapterAssemblyPathLabel.Links.Add(0, linqMetaDataAssemblyPath.Length, linqMetaDataAssemblyPath);
+    }
+
+    private void MainForm_Load(object sender, EventArgs e)
+    {
+      Text += string.Format(" - {0}", ProfilerHelper.OrmProfilerStatus);
       try
       {
-        Load();
+        LoadAssembliesAndTabs();
       }
-      catch (Exception e)
+      catch (Exception ex)
       {
-        Application.OnThreadException(e.GetBaseException());
+        panelSettings.Visible = true;
+        toolStrip1.Visible = true;
+        Application.OnThreadException(ex.GetBaseException());
       }
-
-      Text += string.Format(" - {0}", ProfilerHelper.OrmProfilerStatus);
     }
 
     private void toolStripButtonLoad_Click(object sender, EventArgs e)
     {
-      Load();
+      LoadAssembliesAndTabs();
     }
 
-    private void Load()
+    private void LoadAssembliesAndTabs()
     {
       _adapterType = GetAdapterType(Settings.Default.AdapterAssemblyPath);
       if (!File.Exists(Settings.Default.LinqMetaDataAssemblyPath))
@@ -80,11 +100,12 @@ namespace LLBLGen.EntityBrowser
     {
       if (_linqMetaDataType != null)
       {
-        foreach (ConnectionStringSettings connectionStringSetting in ConfigurationManager.ConnectionStrings)
-          AddEntityBrowser(connectionStringSetting);
-        InitConnectionStringSettings();
-        foreach (var connectionStringSetting in ConnectionStringSettingsList)
-          AddEntityBrowser(connectionStringSetting);
+        if (UserConnections != null)
+          foreach (var connectionStringSetting in UserConnections)
+            AddEntityBrowser(connectionStringSetting);
+        if (tabControl.TabPages.Count == 0)
+          foreach (ConnectionStringSettings connectionStringSetting in ConnectionStringSettingsCollection)
+            AddEntityBrowser(connectionStringSetting);
       }
     }
 
@@ -92,33 +113,42 @@ namespace LLBLGen.EntityBrowser
     {
       try
       {
-        if (Settings.Default.Connections != null)
+        try
         {
-          Settings.Default.Connections.Clear();
-
-          var configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
-          var connectionStringsSection = configuration.ConnectionStrings;
-
-          foreach (ConnectionStringSettings connectionString in connectionStringsSection.ConnectionStrings)
-          {
-            var x = connectionString.IsReadOnly();
-          }
-
-          // Add the new element to the section.
-
-          if (ConnectionStringSettingsList != null)
-            foreach (var connectionString in ConnectionStringSettingsList.Where(cs => !string.IsNullOrWhiteSpace(cs.ConnectionString)))
-            {
-              connectionStringsSection.ConnectionStrings.Add(connectionString);
-              Settings.Default.Connections.Add(GeneralHelper.Join(",", connectionString.ConnectionString, connectionString.ProviderName));
-            }
-          Settings.Default.Save();
           // Save the configuration file.
-          configuration.Save(ConfigurationSaveMode.Minimal);
-
+          Configuration.Save(ConfigurationSaveMode.Minimal);
           // This is needed. Otherwise the updates do not show up in ConfigurationManager
           ConfigurationManager.RefreshSection("connectionStrings");
+        }
+        catch (Exception)
+        {
+          if (Settings.Default.UserConnections == null)
+            Settings.Default.UserConnections = new ArrayList();
+          {
+            Settings.Default.UserConnections.Clear();
+
+            if (UserConnections != null)
+              foreach (var connectionString in ConnectionStringSettingsCollection.Cast<ConnectionStringSettings>().Where(connectionString => !string.IsNullOrWhiteSpace(connectionString.ConnectionString)))
+              {
+                Settings.Default.UserConnections.Add(connectionString);
+              }
+          }
+        }
+
+        Settings.Default.Save();
+        foreach (SettingElement setting in UserSettings.Settings)
+        {
+          if (setting.Name == "AdapterAssemblyPath" && setting.Value.ValueXml.InnerText != Settings.Default.AdapterAssemblyPath)
+            setting.Value.ValueXml.InnerText = Settings.Default.AdapterAssemblyPath;
+          if (setting.Name == "LinqMetaDataAssemblyPath" && setting.Value.ValueXml.InnerText != Settings.Default.LinqMetaDataAssemblyPath)
+            setting.Value.ValueXml.InnerText = Settings.Default.LinqMetaDataAssemblyPath;
+        }
+        try
+        {
+          Configuration.Save(ConfigurationSaveMode.Minimal);
+        }
+        catch (Exception)
+        {
         }
       }
       catch (Exception ex)
@@ -140,65 +170,48 @@ namespace LLBLGen.EntityBrowser
       usrCntrlEntityBrowser.Initialize(linqMetaData);
     }
 
-    private static void InitConnectionStringSettings()
+    private static IEnumerable<ConnectionStringSettings> UserConnections
     {
-      ConnectionStringSettingsList = new List<ConnectionStringSettings>();
-      if (Settings.Default.Connections != null)
-      {
-        foreach (var connectionStringSettings in from connection
-          in Settings.Default.Connections.Cast<string>()
-            .Where(s => !string.IsNullOrWhiteSpace(s))
-          select connection.Split(',')
-          into parts
-          let cs = parts[0]
-          let provider = parts.Length > 1 ? parts[1] : SystemDataSqlClient
-          select new ConnectionStringSettings(cs, cs, provider))
-        {
-          ConnectionStringSettingsList.Add(connectionStringSettings);
-        }
-      }
+      get { return Settings.Default.UserConnections == null ? null : Settings.Default.UserConnections.Cast<ConnectionStringSettings>(); }
     }
-
-    private static ConnectionStringSettings AddToComboBoxRootDirectory(string connectionString)
-    {
-      var connectionStringSettings = new ConnectionStringSettings(connectionString, connectionString, SystemDataSqlClient);
-      AddToComboBoxRootDirectory(connectionStringSettings);
-      return connectionStringSettings;
-    }
-
-    private static void AddToComboBoxRootDirectory(ConnectionStringSettings connectionString)
-    {
-      if (connectionString != null
-          && (!string.IsNullOrWhiteSpace(connectionString.ConnectionString))
-        //    && !ConnectionStrings.Contains(connectionString)
-          && !ConnectionStringSettingsList.Any(cs => cs.ConnectionString.Equals(connectionString.ConnectionString)))
-      {
-        ConnectionStringSettingsList.Add(connectionString);
-      }
-    }
-
-    public static List<ConnectionStringSettings> ConnectionStringSettingsList { get; set; }
 
     private void toolStripButtonAddConnection_Click(object sender, EventArgs e)
     {
-      var browserConnection = new BrowserConnection {Provider = SystemDataSqlClient};
-      DataConnectionConfiguration.SelectDataProvider(DataConnectionDialog, browserConnection.Provider);
+      DataConnectionConfiguration.SelectDataProvider(DataConnectionDialog, SystemDataSqlClient);
 
-      if (DataConnectionDialog.SelectedDataProvider != null)
-        DataConnectionDialog.ConnectionString = browserConnection.ConnectionString;
       if (DataConnectionDialog.Show(DataConnectionDialog) == DialogResult.OK)
       {
-        browserConnection.ConnectionString = DataConnectionDialog.ConnectionString;
+        var connectionStringSettings = new ConnectionStringSettings(DataConnectionDialog.ConnectionString, DataConnectionDialog.ConnectionString, SystemDataSqlClient);
         if (DataConnectionDialog.SelectedDataProvider != null)
         {
-          browserConnection.Provider = DataConnectionDialog.SelectedDataProvider.Name;
-          var connectionStringSetting = AddToComboBoxRootDirectory(browserConnection.ConnectionString);
-          AddEntityBrowser(connectionStringSetting);
-          //Settings.Default.Connections = ConnectionString;
-          //var connectionStringSettings = new ConnectionStringSettings("connection" + ConfigurationManager.ConnectionStrings.Count, browserConnection.ConnectionString);
-          //ConnectionStringSettingsList.Add(connectionStringSettings);
-          //var linqMetaData = Factories.CreateLinqMetaData(browserConnection.ConnectionString);
-          //usrCntrlEntityBrowser1.Initialize(linqMetaData);
+          connectionStringSettings.ProviderName = DataConnectionDialog.SelectedDataProvider.Name;
+          var adoDotNetConnectionProperties = new AdoDotNetConnectionProperties(connectionStringSettings.ProviderName);
+          var sqlConnectionStringBuilder = adoDotNetConnectionProperties.ConnectionStringBuilder as SqlConnectionStringBuilder;
+          if (sqlConnectionStringBuilder != null)
+          {
+            sqlConnectionStringBuilder.ConnectionString = connectionStringSettings.ConnectionString;
+            var name = sqlConnectionStringBuilder.DataSource + "-" + (sqlConnectionStringBuilder.InitialCatalog ?? sqlConnectionStringBuilder.AttachDBFilename);
+            var existingConnectionStringSetting = ConnectionStringSettingsCollection[connectionStringSettings.Name];
+            if (existingConnectionStringSetting == null)
+              connectionStringSettings.Name = name;
+          }
+        }
+        var stringSettings = ConnectionStringSettingsCollection[connectionStringSettings.Name];
+        if (stringSettings == null)
+        {
+          try
+          {
+            ConnectionStringSettingsCollection.Add(connectionStringSettings);
+          }
+          catch (Exception ex)
+          {
+            Application.OnThreadException(ex.GetBaseException());
+          }
+          AddEntityBrowser(connectionStringSettings);
+        }
+        else
+        {
+          MessageBox.Show("See: " + stringSettings.Name + Environment.NewLine + stringSettings.ConnectionString, "Connection already present");
         }
       }
     }
@@ -223,14 +236,7 @@ namespace LLBLGen.EntityBrowser
       Type dataAccessAdapterType;
       var dataAccessAdapterAssembly = LoadAssembly(adapterAssemblyPath);
 
-      if (String.IsNullOrEmpty(adapterTypeName))
-      {
-        dataAccessAdapterType = dataAccessAdapterAssembly.GetConcretePublicImplementations(typeof (DataAccessAdapterBase)).FirstOrDefault();
-      }
-      else
-      {
-        dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
-      }
+      dataAccessAdapterType = String.IsNullOrEmpty(adapterTypeName) ? dataAccessAdapterAssembly.GetConcretePublicImplementations(typeof (DataAccessAdapterBase)).FirstOrDefault() : dataAccessAdapterAssembly.GetType(adapterTypeName);
       if (dataAccessAdapterType == null)
         throw new ApplicationException("CommonDaoBase or adapter not found!");
 
@@ -270,6 +276,9 @@ namespace LLBLGen.EntityBrowser
     //Variable to store the tabpage which belongs to the headeritem
     //over which the cursor is currently hovering.
     private TabPage _currentTabItem;
+    private static readonly Configuration Configuration;
+    private static readonly ConnectionStringSettingsCollection ConnectionStringSettingsCollection;
+    private static readonly ClientSettingsSection UserSettings;
 
     private void tabControl_MouseMove(object sender, MouseEventArgs e)
     {
@@ -322,17 +331,12 @@ namespace LLBLGen.EntityBrowser
       var connectionStringSettings = CurrentConnectionStringSetting;
       if (connectionStringSettings != null)
       {
-        var browserConnection = new BrowserConnection
-        {
-          Provider = SystemDataSqlClient,
-          ConnectionString = connectionStringSettings.ConnectionString
-        };
-        DataConnectionConfiguration.SelectDataProvider(DataConnectionDialog, "System.Data.SqlClient");
+        DataConnectionConfiguration.SelectDataProvider(DataConnectionDialog, SystemDataSqlClient);
 
         if (DataConnectionDialog.SelectedDataProvider != null)
           try
           {
-            DataConnectionDialog.ConnectionString = browserConnection.ConnectionString;
+            DataConnectionDialog.ConnectionString = connectionStringSettings.ConnectionString;
           }
           catch (Exception)
           {
@@ -365,7 +369,18 @@ namespace LLBLGen.EntityBrowser
     {
       _currentTabItem.Text = Interaction.InputBox("Set the name of this connection", "Title", _currentTabItem.Text);
       if (!CurrentConnectionStringSetting.IsReadOnly())
-      CurrentConnectionStringSetting.Name = _currentTabItem.Text;
+        CurrentConnectionStringSetting.Name = _currentTabItem.Text;
+    }
+
+    private void linqMetaDataAssemblyPathLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+      if (e.Link.LinkData != null) Process.Start(e.Link.LinkData.ToString());
+    }
+
+    private void toggleSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      panelSettings.Visible = !panelSettings.Visible;
+      toolStrip1.Visible = !toolStrip1.Visible;
     }
   }
 
