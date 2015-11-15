@@ -46,6 +46,7 @@
       this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.editConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripButtonLoad = new System.Windows.Forms.ToolStripButton();
       linqMetaDataAssemblyPathLabel = new System.Windows.Forms.Label();
       adapterAssemblyPathLabel = new System.Windows.Forms.Label();
       this.toolStrip1.SuspendLayout();
@@ -76,7 +77,8 @@
       // toolStrip1
       // 
       this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonAddConnection});
+            this.toolStripButtonAddConnection,
+            this.toolStripButtonLoad});
       this.toolStrip1.Location = new System.Drawing.Point(0, 0);
       this.toolStrip1.Name = "toolStrip1";
       this.toolStrip1.Size = new System.Drawing.Size(714, 25);
@@ -85,10 +87,11 @@
       // 
       // toolStripButtonAddConnection
       // 
+      this.toolStripButtonAddConnection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
       this.toolStripButtonAddConnection.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAddConnection.Image")));
       this.toolStripButtonAddConnection.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonAddConnection.Name = "toolStripButtonAddConnection";
-      this.toolStripButtonAddConnection.Size = new System.Drawing.Size(49, 22);
+      this.toolStripButtonAddConnection.Size = new System.Drawing.Size(33, 22);
       this.toolStripButtonAddConnection.Text = "Add";
       this.toolStripButtonAddConnection.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
@@ -192,6 +195,16 @@
       this.renameToolStripMenuItem.Text = "Rename";
       this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
       // 
+      // toolStripButtonLoad
+      // 
+      this.toolStripButtonLoad.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonLoad.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLoad.Image")));
+      this.toolStripButtonLoad.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonLoad.Name = "toolStripButtonLoad";
+      this.toolStripButtonLoad.Size = new System.Drawing.Size(37, 22);
+      this.toolStripButtonLoad.Text = "Load";
+      this.toolStripButtonLoad.Click += new System.EventHandler(this.toolStripButtonLoad_Click);
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -232,6 +245,7 @@
     private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem editConnectionToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
+    private System.Windows.Forms.ToolStripButton toolStripButtonLoad;
   }
 }
 
