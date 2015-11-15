@@ -29,15 +29,16 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      System.Windows.Forms.Label linqMetaDataAssemblyPathLabel;
-      System.Windows.Forms.Label adapterAssemblyPathLabel;
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+      this.linqMetaDataAssemblyPathLabel = new System.Windows.Forms.LinkLabel();
+      this.adapterAssemblyPathLabel = new System.Windows.Forms.LinkLabel();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.toolStripButtonAddConnection = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonLoad = new System.Windows.Forms.ToolStripButton();
       this.tabControl = new System.Windows.Forms.TabControl();
       this.contextMenuStripTabControl = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.addConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.panel1 = new System.Windows.Forms.Panel();
+      this.panelSettings = new System.Windows.Forms.Panel();
       this.adapterAssemblyPathTextBox = new System.Windows.Forms.TextBox();
       this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.linqMetaDataAssemblyPathTextBox = new System.Windows.Forms.TextBox();
@@ -46,33 +47,36 @@
       this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.editConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.toolStripButtonLoad = new System.Windows.Forms.ToolStripButton();
-      linqMetaDataAssemblyPathLabel = new System.Windows.Forms.Label();
-      adapterAssemblyPathLabel = new System.Windows.Forms.Label();
+      this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+      this.toggleSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStrip1.SuspendLayout();
       this.contextMenuStripTabControl.SuspendLayout();
-      this.panel1.SuspendLayout();
+      this.panelSettings.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
       this.contextMenuStripTabPage.SuspendLayout();
       this.SuspendLayout();
       // 
       // linqMetaDataAssemblyPathLabel
       // 
-      linqMetaDataAssemblyPathLabel.AutoSize = true;
-      linqMetaDataAssemblyPathLabel.Location = new System.Drawing.Point(3, 17);
-      linqMetaDataAssemblyPathLabel.Name = "linqMetaDataAssemblyPathLabel";
-      linqMetaDataAssemblyPathLabel.Size = new System.Drawing.Size(155, 13);
-      linqMetaDataAssemblyPathLabel.TabIndex = 0;
-      linqMetaDataAssemblyPathLabel.Text = "Linq Meta Data Assembly Path:";
+      this.linqMetaDataAssemblyPathLabel.AutoSize = true;
+      this.linqMetaDataAssemblyPathLabel.Location = new System.Drawing.Point(3, 17);
+      this.linqMetaDataAssemblyPathLabel.Name = "linqMetaDataAssemblyPathLabel";
+      this.linqMetaDataAssemblyPathLabel.Size = new System.Drawing.Size(155, 13);
+      this.linqMetaDataAssemblyPathLabel.TabIndex = 0;
+      this.linqMetaDataAssemblyPathLabel.TabStop = true;
+      this.linqMetaDataAssemblyPathLabel.Text = "Linq Meta Data Assembly Path:";
+      this.linqMetaDataAssemblyPathLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linqMetaDataAssemblyPathLabel_LinkClicked);
       // 
       // adapterAssemblyPathLabel
       // 
-      adapterAssemblyPathLabel.AutoSize = true;
-      adapterAssemblyPathLabel.Location = new System.Drawing.Point(3, 39);
-      adapterAssemblyPathLabel.Name = "adapterAssemblyPathLabel";
-      adapterAssemblyPathLabel.Size = new System.Drawing.Size(119, 13);
-      adapterAssemblyPathLabel.TabIndex = 2;
-      adapterAssemblyPathLabel.Text = "Adapter Assembly Path:";
+      this.adapterAssemblyPathLabel.AutoSize = true;
+      this.adapterAssemblyPathLabel.Location = new System.Drawing.Point(3, 39);
+      this.adapterAssemblyPathLabel.Name = "adapterAssemblyPathLabel";
+      this.adapterAssemblyPathLabel.Size = new System.Drawing.Size(119, 13);
+      this.adapterAssemblyPathLabel.TabIndex = 2;
+      this.adapterAssemblyPathLabel.TabStop = true;
+      this.adapterAssemblyPathLabel.Text = "Adapter Assembly Path:";
+      this.adapterAssemblyPathLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linqMetaDataAssemblyPathLabel_LinkClicked);
       // 
       // toolStrip1
       // 
@@ -84,6 +88,7 @@
       this.toolStrip1.Size = new System.Drawing.Size(714, 25);
       this.toolStrip1.TabIndex = 0;
       this.toolStrip1.Text = "toolStrip1";
+      this.toolStrip1.Visible = false;
       // 
       // toolStripButtonAddConnection
       // 
@@ -95,14 +100,24 @@
       this.toolStripButtonAddConnection.Text = "Add";
       this.toolStripButtonAddConnection.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
+      // toolStripButtonLoad
+      // 
+      this.toolStripButtonLoad.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonLoad.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLoad.Image")));
+      this.toolStripButtonLoad.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonLoad.Name = "toolStripButtonLoad";
+      this.toolStripButtonLoad.Size = new System.Drawing.Size(37, 22);
+      this.toolStripButtonLoad.Text = "Load";
+      this.toolStripButtonLoad.Click += new System.EventHandler(this.toolStripButtonLoad_Click);
+      // 
       // tabControl
       // 
       this.tabControl.ContextMenuStrip = this.contextMenuStripTabControl;
       this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tabControl.Location = new System.Drawing.Point(0, 93);
+      this.tabControl.Location = new System.Drawing.Point(0, 68);
       this.tabControl.Name = "tabControl";
       this.tabControl.SelectedIndex = 0;
-      this.tabControl.Size = new System.Drawing.Size(714, 495);
+      this.tabControl.Size = new System.Drawing.Size(714, 520);
       this.tabControl.TabIndex = 1;
       this.tabControl.MouseLeave += new System.EventHandler(this.tabControl_MouseLeave);
       this.tabControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabControl_MouseMove);
@@ -110,9 +125,11 @@
       // contextMenuStripTabControl
       // 
       this.contextMenuStripTabControl.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addConnectionToolStripMenuItem});
+            this.addConnectionToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.toggleSettingsToolStripMenuItem});
       this.contextMenuStripTabControl.Name = "contextMenuStripTabControl";
-      this.contextMenuStripTabControl.Size = new System.Drawing.Size(162, 26);
+      this.contextMenuStripTabControl.Size = new System.Drawing.Size(162, 70);
       // 
       // addConnectionToolStripMenuItem
       // 
@@ -121,17 +138,18 @@
       this.addConnectionToolStripMenuItem.Text = "Add Connection";
       this.addConnectionToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
-      // panel1
+      // panelSettings
       // 
-      this.panel1.Controls.Add(adapterAssemblyPathLabel);
-      this.panel1.Controls.Add(this.adapterAssemblyPathTextBox);
-      this.panel1.Controls.Add(linqMetaDataAssemblyPathLabel);
-      this.panel1.Controls.Add(this.linqMetaDataAssemblyPathTextBox);
-      this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-      this.panel1.Location = new System.Drawing.Point(0, 25);
-      this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(714, 68);
-      this.panel1.TabIndex = 2;
+      this.panelSettings.Controls.Add(this.adapterAssemblyPathLabel);
+      this.panelSettings.Controls.Add(this.adapterAssemblyPathTextBox);
+      this.panelSettings.Controls.Add(this.linqMetaDataAssemblyPathLabel);
+      this.panelSettings.Controls.Add(this.linqMetaDataAssemblyPathTextBox);
+      this.panelSettings.Dock = System.Windows.Forms.DockStyle.Top;
+      this.panelSettings.Location = new System.Drawing.Point(0, 0);
+      this.panelSettings.Name = "panelSettings";
+      this.panelSettings.Size = new System.Drawing.Size(714, 68);
+      this.panelSettings.TabIndex = 2;
+      this.panelSettings.Visible = false;
       // 
       // adapterAssemblyPathTextBox
       // 
@@ -195,15 +213,18 @@
       this.renameToolStripMenuItem.Text = "Rename";
       this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
       // 
-      // toolStripButtonLoad
+      // toolStripMenuItem2
       // 
-      this.toolStripButtonLoad.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-      this.toolStripButtonLoad.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLoad.Image")));
-      this.toolStripButtonLoad.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonLoad.Name = "toolStripButtonLoad";
-      this.toolStripButtonLoad.Size = new System.Drawing.Size(37, 22);
-      this.toolStripButtonLoad.Text = "Load";
-      this.toolStripButtonLoad.Click += new System.EventHandler(this.toolStripButtonLoad_Click);
+      this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+      this.toolStripMenuItem2.Size = new System.Drawing.Size(161, 22);
+      this.toolStripMenuItem2.Text = "_";
+      // 
+      // toggleSettingsToolStripMenuItem
+      // 
+      this.toggleSettingsToolStripMenuItem.Name = "toggleSettingsToolStripMenuItem";
+      this.toggleSettingsToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+      this.toggleSettingsToolStripMenuItem.Text = "Toggle Settings";
+      this.toggleSettingsToolStripMenuItem.Click += new System.EventHandler(this.toggleSettingsToolStripMenuItem_Click);
       // 
       // MainForm
       // 
@@ -212,16 +233,17 @@
       this.ClientSize = new System.Drawing.Size(714, 588);
       this.ContextMenuStrip = this.contextMenuStripTabControl;
       this.Controls.Add(this.tabControl);
-      this.Controls.Add(this.panel1);
+      this.Controls.Add(this.panelSettings);
       this.Controls.Add(this.toolStrip1);
       this.Name = "MainForm";
       this.Text = "Data Browser";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+      this.Load += new System.EventHandler(this.MainForm_Load);
       this.toolStrip1.ResumeLayout(false);
       this.toolStrip1.PerformLayout();
       this.contextMenuStripTabControl.ResumeLayout(false);
-      this.panel1.ResumeLayout(false);
-      this.panel1.PerformLayout();
+      this.panelSettings.ResumeLayout(false);
+      this.panelSettings.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
       this.contextMenuStripTabPage.ResumeLayout(false);
       this.ResumeLayout(false);
@@ -234,7 +256,7 @@
     private System.Windows.Forms.ToolStrip toolStrip1;
     private System.Windows.Forms.ToolStripButton toolStripButtonAddConnection;
     private System.Windows.Forms.TabControl tabControl;
-    private System.Windows.Forms.Panel panel1;
+    private System.Windows.Forms.Panel panelSettings;
     private System.Windows.Forms.TextBox adapterAssemblyPathTextBox;
     private System.Windows.Forms.BindingSource settingsBindingSource;
     private System.Windows.Forms.TextBox linqMetaDataAssemblyPathTextBox;
@@ -246,6 +268,10 @@
     private System.Windows.Forms.ToolStripMenuItem editConnectionToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
     private System.Windows.Forms.ToolStripButton toolStripButtonLoad;
+    private System.Windows.Forms.LinkLabel linqMetaDataAssemblyPathLabel;
+    private System.Windows.Forms.LinkLabel adapterAssemblyPathLabel;
+    private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+    private System.Windows.Forms.ToolStripMenuItem toggleSettingsToolStripMenuItem;
   }
 }
 
