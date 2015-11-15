@@ -13,6 +13,7 @@ using AW.Winforms.Helpers.ConnectionUI;
 using AW.Winforms.Helpers.LLBL;
 using LLBLGen.EntityBrowser.Properties;
 using Microsoft.Data.ConnectionUI;
+using Microsoft.VisualBasic;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -22,8 +23,8 @@ namespace LLBLGen.EntityBrowser
 {
   public partial class MainForm : FrmPersistantLocation
   {
-    private readonly Type _linqMetaDataType;
-    private readonly Type _adapterType;
+    private Type _linqMetaDataType;
+    private Type _adapterType;
 
     /// <summary>
     ///   The <see cref="ConnectionString" /> property's name.
@@ -48,18 +49,82 @@ namespace LLBLGen.EntityBrowser
     {
       InitializeComponent();
       settingsBindingSource.DataSource = Settings.Default;
+      try
+      {
+        Load();
+      }
+      catch (Exception e)
+      {
+        Application.OnThreadException(e.GetBaseException());
+      }
+
+      Text += string.Format(" - {0}", ProfilerHelper.OrmProfilerStatus);
+    }
+
+    private void toolStripButtonLoad_Click(object sender, EventArgs e)
+    {
+      Load();
+    }
+
+    private void Load()
+    {
       _adapterType = GetAdapterType(Settings.Default.AdapterAssemblyPath);
       if (!File.Exists(Settings.Default.LinqMetaDataAssemblyPath))
         throw new ApplicationException("Adapter assembly: " + Settings.Default.LinqMetaDataAssemblyPath + " not found!" + Environment.NewLine);
       var linqMetaDataAssemblyPath = LoadAssembly(Settings.Default.LinqMetaDataAssemblyPath);
       _linqMetaDataType = linqMetaDataAssemblyPath.GetConcretePublicImplementations(typeof (ILinqMetaData)).FirstOrDefault();
+      LoadTabs();
+    }
+
+    private void LoadTabs()
+    {
       if (_linqMetaDataType != null)
       {
+        foreach (ConnectionStringSettings connectionStringSetting in ConfigurationManager.ConnectionStrings)
+          AddEntityBrowser(connectionStringSetting);
         InitConnectionStringSettings();
         foreach (var connectionStringSetting in ConnectionStringSettingsList)
           AddEntityBrowser(connectionStringSetting);
       }
-      Text += string.Format(" - {0}", ProfilerHelper.OrmProfilerStatus);
+    }
+
+    private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      try
+      {
+        if (Settings.Default.Connections != null)
+        {
+          Settings.Default.Connections.Clear();
+
+          var configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+          var connectionStringsSection = configuration.ConnectionStrings;
+
+          foreach (ConnectionStringSettings connectionString in connectionStringsSection.ConnectionStrings)
+          {
+            var x = connectionString.IsReadOnly();
+          }
+
+          // Add the new element to the section.
+
+          if (ConnectionStringSettingsList != null)
+            foreach (var connectionString in ConnectionStringSettingsList.Where(cs => !string.IsNullOrWhiteSpace(cs.ConnectionString)))
+            {
+              connectionStringsSection.ConnectionStrings.Add(connectionString);
+              Settings.Default.Connections.Add(GeneralHelper.Join(",", connectionString.ConnectionString, connectionString.ProviderName));
+            }
+          Settings.Default.Save();
+          // Save the configuration file.
+          configuration.Save(ConfigurationSaveMode.Minimal);
+
+          // This is needed. Otherwise the updates do not show up in ConfigurationManager
+          ConfigurationManager.RefreshSection("connectionStrings");
+        }
+      }
+      catch (Exception ex)
+      {
+        Application.OnThreadException(ex.GetBaseException());
+      }
     }
 
     private void AddEntityBrowser(ConnectionStringSettings connectionStringSetting)
@@ -94,14 +159,14 @@ namespace LLBLGen.EntityBrowser
       }
     }
 
-    private ConnectionStringSettings AddToComboBoxRootDirectory(string connectionString)
+    private static ConnectionStringSettings AddToComboBoxRootDirectory(string connectionString)
     {
       var connectionStringSettings = new ConnectionStringSettings(connectionString, connectionString, SystemDataSqlClient);
       AddToComboBoxRootDirectory(connectionStringSettings);
       return connectionStringSettings;
     }
 
-    private void AddToComboBoxRootDirectory(ConnectionStringSettings connectionString)
+    private static void AddToComboBoxRootDirectory(ConnectionStringSettings connectionString)
     {
       if (connectionString != null
           && (!string.IsNullOrWhiteSpace(connectionString.ConnectionString))
@@ -202,20 +267,6 @@ namespace LLBLGen.EntityBrowser
       return adapter;
     }
 
-    private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-    {
-      if (Settings.Default.Connections != null)
-      {
-        Settings.Default.Connections.Clear();
-
-        foreach (var connectionString in ConnectionStringSettingsList.Where(cs => !string.IsNullOrWhiteSpace(cs.ConnectionString)))
-        {
-          Settings.Default.Connections.Add(GeneralHelper.Join(",", connectionString.ConnectionString, connectionString.ProviderName));
-        }
-        Settings.Default.Save();
-      }
-    }
-
     //Variable to store the tabpage which belongs to the headeritem
     //over which the cursor is currently hovering.
     private TabPage _currentTabItem;
@@ -260,15 +311,15 @@ namespace LLBLGen.EntityBrowser
 
     private void tabControl_MouseLeave(object sender, EventArgs e)
     {
-      if (tabControl.TabPages.Count==0)
+      if (tabControl.TabPages.Count == 0)
         tabControl.ContextMenuStrip = contextMenuStripTabControl;
       else
-      tabControl.ContextMenuStrip = null;
+        tabControl.ContextMenuStrip = null;
     }
 
     private void editConnectionToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      var connectionStringSettings = _currentTabItem.Tag as ConnectionStringSettings;
+      var connectionStringSettings = CurrentConnectionStringSetting;
       if (connectionStringSettings != null)
       {
         var browserConnection = new BrowserConnection
@@ -281,7 +332,7 @@ namespace LLBLGen.EntityBrowser
         if (DataConnectionDialog.SelectedDataProvider != null)
           try
           {
-      DataConnectionDialog.ConnectionString = browserConnection.ConnectionString;
+            DataConnectionDialog.ConnectionString = browserConnection.ConnectionString;
           }
           catch (Exception)
           {
@@ -293,6 +344,11 @@ namespace LLBLGen.EntityBrowser
           connectionStringSettings.ConnectionString = DataConnectionDialog.ConnectionString;
         }
       }
+    }
+
+    private ConnectionStringSettings CurrentConnectionStringSetting
+    {
+      get { return _currentTabItem.Tag as ConnectionStringSettings; }
     }
 
     private void removeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -307,7 +363,9 @@ namespace LLBLGen.EntityBrowser
 
     private void renameToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      _currentTabItem.Text= Microsoft.VisualBasic.Interaction.InputBox("Set the name of this connection", "Title", _currentTabItem.Text);
+      _currentTabItem.Text = Interaction.InputBox("Set the name of this connection", "Title", _currentTabItem.Text);
+      if (!CurrentConnectionStringSetting.IsReadOnly())
+      CurrentConnectionStringSetting.Name = _currentTabItem.Text;
     }
   }
 
