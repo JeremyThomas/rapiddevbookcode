@@ -113,6 +113,14 @@ namespace LLBLGen.EntityBrowser
     {
       try
       {
+        foreach (SettingElement setting in UserSettings.Settings)
+        {
+          if (setting.Name == "AdapterAssemblyPath" && setting.Value.ValueXml.InnerText != Settings.Default.AdapterAssemblyPath)
+            setting.Value.ValueXml.InnerText = Settings.Default.AdapterAssemblyPath;
+          if (setting.Name == "LinqMetaDataAssemblyPath" && setting.Value.ValueXml.InnerText != Settings.Default.LinqMetaDataAssemblyPath)
+            setting.Value.ValueXml.InnerText = Settings.Default.LinqMetaDataAssemblyPath;
+        }
+
         try
         {
           // Save the configuration file.
@@ -122,33 +130,13 @@ namespace LLBLGen.EntityBrowser
         }
         catch (Exception)
         {
-          if (Settings.Default.UserConnections == null)
+          if (UserConnections == null)
             Settings.Default.UserConnections = new ArrayList();
-          {
+          else
             Settings.Default.UserConnections.Clear();
-
-            if (UserConnections != null)
-              foreach (var connectionString in ConnectionStringSettingsCollection.Cast<ConnectionStringSettings>().Where(connectionString => !string.IsNullOrWhiteSpace(connectionString.ConnectionString)))
-              {
-                Settings.Default.UserConnections.Add(connectionString);
-              }
-          }
-        }
-
-        Settings.Default.Save();
-        foreach (SettingElement setting in UserSettings.Settings)
-        {
-          if (setting.Name == "AdapterAssemblyPath" && setting.Value.ValueXml.InnerText != Settings.Default.AdapterAssemblyPath)
-            setting.Value.ValueXml.InnerText = Settings.Default.AdapterAssemblyPath;
-          if (setting.Name == "LinqMetaDataAssemblyPath" && setting.Value.ValueXml.InnerText != Settings.Default.LinqMetaDataAssemblyPath)
-            setting.Value.ValueXml.InnerText = Settings.Default.LinqMetaDataAssemblyPath;
-        }
-        try
-        {
-          Configuration.Save(ConfigurationSaveMode.Minimal);
-        }
-        catch (Exception)
-        {
+          foreach (var connectionString in ConnectionStringSettingsCollection.Cast<ConnectionStringSettings>().Where(connectionString => !string.IsNullOrWhiteSpace(connectionString.ConnectionString)))
+            Settings.Default.UserConnections.Add(connectionString);
+          Settings.Default.Save();
         }
       }
       catch (Exception ex)
@@ -162,7 +150,8 @@ namespace LLBLGen.EntityBrowser
       tabControl.TabPages.Add(connectionStringSetting.Name, connectionStringSetting.Name);
       var tabPage = tabControl.TabPages[connectionStringSetting.Name];
       tabPage.Tag = connectionStringSetting;
-      var usrCntrlEntityBrowser = new UsrCntrlEntityBrowser();
+      var usrCntrlEntityBrowser = new UsrCntrlEntityBrowser(null, Settings.Default.UseContext, Settings.Default.PrefixDelimiter,
+        Settings.Default.EnsureFilteringEnabled, Settings.Default.UseContext, Settings.Default.CacheDurationInSeconds);
       tabPage.Controls.Add(usrCntrlEntityBrowser);
       usrCntrlEntityBrowser.Dock = DockStyle.Fill;
       var adapter = GetAdapter(connectionStringSetting, null, Settings.Default.AdapterAssemblyPath, null, _adapterType);

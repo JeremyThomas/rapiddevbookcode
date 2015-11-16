@@ -71,5 +71,65 @@ namespace LLBLGen.EntityBrowser.Properties {
                 this["UserConnections"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseSchema {
+            get {
+                return ((bool)(this["UseSchema"]));
+            }
+            set {
+                this["UseSchema"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnsureFilteringEnabled {
+            get {
+                return ((bool)(this["EnsureFilteringEnabled"]));
+            }
+            set {
+                this["EnsureFilteringEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseContext {
+            get {
+                return ((bool)(this["UseContext"]));
+            }
+            set {
+                this["UseContext"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public int CacheDurationInSeconds {
+            get {
+                return ((int)(this["CacheDurationInSeconds"]));
+            }
+            set {
+                this["CacheDurationInSeconds"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("_")]
+        public string PrefixDelimiter {
+            get {
+                return ((string)(this["PrefixDelimiter"]));
+            }
+            set {
+                this["PrefixDelimiter"] = value;
+            }
+        }
     }
 }

@@ -104,12 +104,16 @@ namespace AW.Winforms.Helpers.LLBL
             gridDataEditor.DataEditorPersister = dataEditorLLBLDataScopePersister;
             dataEditorLLBLDataScopePersister.ContainedDataChanged += DataEditorEventHandlers_ContainedDataChanged;
             dataEditorLLBLDataScopePersister.EntityAdded += DataEditorEventHandlers_ContainedDataChanged;
+            saveToolStripButton.Visible = true;
+            toolStripButtonCancelEdit.Visible = true;
           }
         }
         else
         {
           ContextToUse = null;
           gridDataEditor.DataEditorPersister = null;
+          saveToolStripButton.Visible = false;
+          toolStripButtonCancelEdit.Visible = false;
         }
       }
       else

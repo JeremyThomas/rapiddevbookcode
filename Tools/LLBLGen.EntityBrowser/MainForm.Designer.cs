@@ -38,6 +38,8 @@
       this.tabControl = new System.Windows.Forms.TabControl();
       this.contextMenuStripTabControl = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.addConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+      this.toggleSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.panelSettings = new System.Windows.Forms.Panel();
       this.adapterAssemblyPathTextBox = new System.Windows.Forms.TextBox();
       this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -47,8 +49,6 @@
       this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.editConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-      this.toggleSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStrip1.SuspendLayout();
       this.contextMenuStripTabControl.SuspendLayout();
       this.panelSettings.SuspendLayout();
@@ -138,6 +138,19 @@
       this.addConnectionToolStripMenuItem.Text = "Add Connection";
       this.addConnectionToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
+      // toolStripMenuItem2
+      // 
+      this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+      this.toolStripMenuItem2.Size = new System.Drawing.Size(161, 22);
+      this.toolStripMenuItem2.Text = "_";
+      // 
+      // toggleSettingsToolStripMenuItem
+      // 
+      this.toggleSettingsToolStripMenuItem.Name = "toggleSettingsToolStripMenuItem";
+      this.toggleSettingsToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+      this.toggleSettingsToolStripMenuItem.Text = "Toggle Settings";
+      this.toggleSettingsToolStripMenuItem.Click += new System.EventHandler(this.toggleSettingsToolStripMenuItem_Click);
+      // 
       // panelSettings
       // 
       this.panelSettings.Controls.Add(this.adapterAssemblyPathLabel);
@@ -213,19 +226,6 @@
       this.renameToolStripMenuItem.Text = "Rename";
       this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
       // 
-      // toolStripMenuItem2
-      // 
-      this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-      this.toolStripMenuItem2.Size = new System.Drawing.Size(161, 22);
-      this.toolStripMenuItem2.Text = "_";
-      // 
-      // toggleSettingsToolStripMenuItem
-      // 
-      this.toggleSettingsToolStripMenuItem.Name = "toggleSettingsToolStripMenuItem";
-      this.toggleSettingsToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-      this.toggleSettingsToolStripMenuItem.Text = "Toggle Settings";
-      this.toggleSettingsToolStripMenuItem.Click += new System.EventHandler(this.toggleSettingsToolStripMenuItem_Click);
-      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -235,6 +235,7 @@
       this.Controls.Add(this.tabControl);
       this.Controls.Add(this.panelSettings);
       this.Controls.Add(this.toolStrip1);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "MainForm";
       this.Text = "Data Browser";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
