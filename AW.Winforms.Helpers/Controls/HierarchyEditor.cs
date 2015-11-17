@@ -209,5 +209,15 @@ namespace AW.Winforms.Helpers.Controls
     {
       dataTreeView.RemoveSelectedNode();
     }
+
+    private void dataTreeView_AfterExpand(object sender, TreeViewEventArgs e)
+    {
+      AWHelper.ExpandToFitNodes(e);
+    }
+
+    private void HierarchyEditor_Load(object sender, EventArgs e)
+    {
+
+    }
   }
 }

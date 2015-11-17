@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
@@ -188,6 +189,7 @@ namespace AW.Winforms.Helpers.LLBL
       UseSchema = true;
       UseContext = true;
       CacheDurationInSeconds = DefaultCacheDurationInSeconds;
+      Load += UsrCntrlEntityBrowser_Load;
     }
 
     /// <summary>
@@ -415,5 +417,16 @@ namespace AW.Winforms.Helpers.LLBL
     {
       if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
     }
+
+    private void treeViewEntities_AfterExpand(object sender, TreeViewEventArgs e)
+    {
+      AWHelper.ExpandToFitNodes(e);
+    }
+
+    private void UsrCntrlEntityBrowser_Load(object sender, EventArgs e)
+    {
+      AWHelper.ExpandToFitNodes(treeViewEntities.TopNode);
+    }
+
   }
 }

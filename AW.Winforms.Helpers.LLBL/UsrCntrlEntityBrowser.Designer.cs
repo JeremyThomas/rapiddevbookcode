@@ -75,6 +75,8 @@ namespace AW.Winforms.Helpers.LLBL
       this.treeViewEntities.Size = new System.Drawing.Size(254, 557);
       this.treeViewEntities.TabIndex = 1;
       this.toolTip1.SetToolTip(this.treeViewEntities, "Entities amd their proerties");
+      this.treeViewEntities.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEntities_AfterExpand);
+      this.treeViewEntities.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEntities_AfterExpand);
       this.treeViewEntities.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEntities_AfterSelect);
       this.treeViewEntities.Click += new System.EventHandler(this.treeViewEntities_Click);
       this.treeViewEntities.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewEntities_KeyDown);
@@ -198,6 +200,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.cacheDurationInSecondsNumericUpDown.NumBackColor = System.Drawing.SystemColors.Window;
       this.cacheDurationInSecondsNumericUpDown.Size = new System.Drawing.Size(211, 25);
       this.cacheDurationInSecondsNumericUpDown.Text = "Cache Duration In Seconds:";
+      this.cacheDurationInSecondsNumericUpDown.TextVisible = false;
       this.cacheDurationInSecondsNumericUpDown.ValueChanged += new System.EventHandler(this.cacheDurationInSecondsNumericUpDown_ValueChanged);
       // 
       // gridDataEditor

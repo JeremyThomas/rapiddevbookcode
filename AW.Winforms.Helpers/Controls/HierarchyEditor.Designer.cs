@@ -55,9 +55,9 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-      this.dataTreeView = new Chaliy.Windows.Forms.DataTreeView();
       this.splitContainerHorizontal = new System.Windows.Forms.SplitContainer();
       this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+      this.dataTreeView = new Chaliy.Windows.Forms.DataTreeView();
       this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceHierarchicalData)).BeginInit();
       this.statusStrip1.SuspendLayout();
@@ -67,11 +67,11 @@ namespace AW.Winforms.Helpers.Controls
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.dataTreeView)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerHorizontal)).BeginInit();
       this.splitContainerHorizontal.Panel1.SuspendLayout();
       this.splitContainerHorizontal.Panel2.SuspendLayout();
       this.splitContainerHorizontal.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.dataTreeView)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.gridDataEditor)).BeginInit();
       this.SuspendLayout();
       // 
@@ -304,25 +304,6 @@ namespace AW.Winforms.Helpers.Controls
       this.splitContainer1.SplitterDistance = 200;
       this.splitContainer1.TabIndex = 5;
       // 
-      // dataTreeView
-      // 
-      this.dataTreeView.AllowDrop = true;
-      this.dataTreeView.ChildCollectionPropertyName = null;
-      this.dataTreeView.DataMember = "";
-      this.dataTreeView.DataSource = this.bindingSourceHierarchicalData;
-      this.dataTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.dataTreeView.FullRowSelect = true;
-      this.dataTreeView.HideSelection = false;
-      this.dataTreeView.HotTracking = true;
-      this.dataTreeView.IgnoreErrors = true;
-      this.dataTreeView.LabelEdit = true;
-      this.dataTreeView.Location = new System.Drawing.Point(0, 0);
-      this.dataTreeView.Name = "dataTreeView";
-      this.dataTreeView.ShowNodeToolTips = true;
-      this.dataTreeView.Size = new System.Drawing.Size(200, 561);
-      this.dataTreeView.TabIndex = 3;
-      this.dataTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.dataTreeView1_AfterSelect);
-      // 
       // splitContainerHorizontal
       // 
       this.splitContainerHorizontal.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -350,6 +331,27 @@ namespace AW.Winforms.Helpers.Controls
       this.propertyGrid1.Size = new System.Drawing.Size(691, 300);
       this.propertyGrid1.TabIndex = 0;
       // 
+      // dataTreeView
+      // 
+      this.dataTreeView.AllowDrop = true;
+      this.dataTreeView.ChildCollectionPropertyName = null;
+      this.dataTreeView.DataMember = "";
+      this.dataTreeView.DataSource = this.bindingSourceHierarchicalData;
+      this.dataTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dataTreeView.FullRowSelect = true;
+      this.dataTreeView.HideSelection = false;
+      this.dataTreeView.HotTracking = true;
+      this.dataTreeView.IgnoreErrors = true;
+      this.dataTreeView.LabelEdit = true;
+      this.dataTreeView.Location = new System.Drawing.Point(0, 0);
+      this.dataTreeView.Name = "dataTreeView";
+      this.dataTreeView.ShowNodeToolTips = true;
+      this.dataTreeView.Size = new System.Drawing.Size(200, 561);
+      this.dataTreeView.TabIndex = 3;
+      this.dataTreeView.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.dataTreeView_AfterExpand);
+      this.dataTreeView.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.dataTreeView_AfterExpand);
+      this.dataTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.dataTreeView1_AfterSelect);
+      // 
       // gridDataEditor
       // 
       this.gridDataEditor.DataMember = "";
@@ -373,6 +375,7 @@ namespace AW.Winforms.Helpers.Controls
       this.Controls.Add(this.statusStrip1);
       this.Name = "HierarchyEditor";
       this.Size = new System.Drawing.Size(895, 606);
+      this.Load += new System.EventHandler(this.HierarchyEditor_Load);
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceHierarchicalData)).EndInit();
       this.statusStrip1.ResumeLayout(false);
       this.statusStrip1.PerformLayout();
@@ -383,11 +386,11 @@ namespace AW.Winforms.Helpers.Controls
       this.splitContainer1.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
       this.splitContainer1.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.dataTreeView)).EndInit();
       this.splitContainerHorizontal.Panel1.ResumeLayout(false);
       this.splitContainerHorizontal.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerHorizontal)).EndInit();
       this.splitContainerHorizontal.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.dataTreeView)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.gridDataEditor)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
