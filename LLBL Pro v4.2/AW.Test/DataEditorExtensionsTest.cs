@@ -19,6 +19,7 @@ using AW.LinqToSQL;
 using AW.Test.Helpers;
 using AW.Tests.Properties;
 using AW.Winforms.Helpers.Controls;
+using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.EntityViewer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -233,7 +234,7 @@ namespace AW.Tests
         if (queryContext != null)
           return ShowInGrid(enumerable, queryContext);
       }
-      return GridDataEditorTestBase.ShowInGrid(enumerable, null);
+      return FrmDataEditor.ShowInGrid(enumerable, null);
     }
 
     public static IEnumerable ShowInGrid<T>(Table<T> table, ushort pageSize = GridDataEditor.DefaultPageSize) where T : class
@@ -251,7 +252,7 @@ namespace AW.Tests
     /// <returns> </returns>
     public static IEnumerable ShowInGrid<T>(IEnumerable<T> dataQuery, DataContext dataContext, ushort pageSize = GridDataEditor.DefaultPageSize)
     {
-      return ShowInGrid(dataQuery, new DataEditorLinqtoSQLPersister(dataContext), pageSize);
+      return FrmDataEditor.ShowInGrid(dataQuery, new DataEditorLinqtoSQLPersister(dataContext), pageSize);
     }
 
     [TestCategory("Winforms"), TestMethod]

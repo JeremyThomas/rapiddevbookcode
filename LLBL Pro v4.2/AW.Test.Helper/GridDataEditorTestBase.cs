@@ -19,25 +19,11 @@ namespace AW.Test.Helpers
     protected int ActualColumnCount;
     private const BindingFlags FieldBindingFlags = BindingFlags.Instance | BindingFlags.Public;
 
-    /// <summary>
-    ///   Edits the enumerable in a DataGridView.
-    /// </summary>
-    /// <param name="enumerable"> The enumerable. </param>
-    /// <param name="dataEditorPersister"> The grid data editor persister. </param>
-    /// <param name="pageSize"> Size of the page. </param>
-    /// <returns> </returns>
-    public static IEnumerable ShowInGrid(IEnumerable enumerable, IDataEditorPersister dataEditorPersister = null, ushort pageSize = GridDataEditor.DefaultPageSize)
-    {
-      if (enumerable != null)
-        FrmDataEditor.CreateDataEditorForm(enumerable, dataEditorPersister, pageSize).ShowDialog();
-      return enumerable;
-    }
-
     protected void TestShowInGrid<T>(IEnumerable<T> enumerable, int numProperties = -1, int numFieldsToShow = 0, IDataEditorPersister dataEditorPersister = null)
     {
       ModalFormHandler = Handler;
       numProperties = GetNumberOfColumns<T>(numProperties, ref numFieldsToShow);
-      var actual = ShowInGrid(enumerable, dataEditorPersister);
+      var actual = FrmDataEditor.ShowInGrid(enumerable, dataEditorPersister);
       Assert.AreEqual(enumerable, actual);
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
       TestEditInDataGridView(enumerable, numProperties, numFieldsToShow, dataEditorPersister);
@@ -60,7 +46,7 @@ namespace AW.Test.Helpers
       if (enumerable != null)
         ModalFormHandler = Handler;
       ExpectedColumnCount = numProperties + numFieldsToShow;
-      var actual = ShowInGrid(enumerable, dataEditorPersister);
+      var actual = FrmDataEditor.ShowInGrid(enumerable, dataEditorPersister);
       Assert.AreEqual(enumerable, actual);
       if (enumerable != null)
       {
