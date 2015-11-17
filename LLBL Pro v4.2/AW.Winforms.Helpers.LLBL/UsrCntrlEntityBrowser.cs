@@ -145,6 +145,17 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
+    [Category("EntityBrowser"), Description("Gets or sets the PageSize in the grid.")]
+    public ushort PageSize
+    {
+      get { return gridDataEditor.PageSize; }
+      set
+      {
+        gridDataEditor.PageSize = value;
+        OnPropertyChanged();
+      }
+    }
+
     [DefaultValue(DefaultCacheDurationInSeconds), Category("EntityBrowser"), Description("Specifies that the query's resultset should be cached for the duration specified, 0 means don't cache at all.")]
     public int CacheDurationInSeconds
     {

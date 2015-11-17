@@ -38,6 +38,7 @@
       this.toolStripButtonShowEmployeeHierarchyInTree = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonCustomerGroupedByCountry = new System.Windows.Forms.ToolStripButton();
       this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonFilterByDiscontinued = new System.Windows.Forms.ToolStripButton();
       this.panel1 = new System.Windows.Forms.Panel();
       this.cacheDurationInSecondsNumericUpDown = new System.Windows.Forms.NumericUpDown();
       this.prefixDelimiterTextBox = new System.Windows.Forms.TextBox();
@@ -45,7 +46,6 @@
       this.useContextCheckBox = new System.Windows.Forms.CheckBox();
       this.ensureFilteringEnabledCheckBox = new System.Windows.Forms.CheckBox();
       this.usrCntrlEntityBrowser1 = new AW.Winforms.Helpers.LLBL.UsrCntrlEntityBrowser();
-      this.toolStripButtonFilterByDiscontinued = new System.Windows.Forms.ToolStripButton();
       cacheDurationInSecondsLabel = new System.Windows.Forms.Label();
       prefixDelimiterLabel = new System.Windows.Forms.Label();
       this.toolStrip1.SuspendLayout();
@@ -103,7 +103,7 @@
       this.toolStripButtonShowEmployeeHierarchyInTreeByID.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonShowEmployeeHierarchyInTreeByID.Image")));
       this.toolStripButtonShowEmployeeHierarchyInTreeByID.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonShowEmployeeHierarchyInTreeByID.Name = "toolStripButtonShowEmployeeHierarchyInTreeByID";
-      this.toolStripButtonShowEmployeeHierarchyInTreeByID.Size = new System.Drawing.Size(218, 22);
+      this.toolStripButtonShowEmployeeHierarchyInTreeByID.Size = new System.Drawing.Size(217, 22);
       this.toolStripButtonShowEmployeeHierarchyInTreeByID.Text = "Show Employee Hierarchy In Tree By ID";
       this.toolStripButtonShowEmployeeHierarchyInTreeByID.Click += new System.EventHandler(this.toolStripButtonShowEmployeeHierarchyInTreeByID_Click);
       // 
@@ -113,7 +113,7 @@
       this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Image")));
       this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Name = "toolStripButtonShowEmployeeHierarchyInTreePostProcessing";
-      this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Size = new System.Drawing.Size(271, 22);
+      this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Size = new System.Drawing.Size(270, 22);
       this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Text = "Show Employee Hierarchy In Tree PostProcessing";
       this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Click += new System.EventHandler(this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing_Click);
       // 
@@ -123,7 +123,7 @@
       this.toolStripButtonShowEmployeeHierarchyInTree.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonShowEmployeeHierarchyInTree.Image")));
       this.toolStripButtonShowEmployeeHierarchyInTree.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonShowEmployeeHierarchyInTree.Name = "toolStripButtonShowEmployeeHierarchyInTree";
-      this.toolStripButtonShowEmployeeHierarchyInTree.Size = new System.Drawing.Size(188, 22);
+      this.toolStripButtonShowEmployeeHierarchyInTree.Size = new System.Drawing.Size(187, 22);
       this.toolStripButtonShowEmployeeHierarchyInTree.Text = "Show Employee Hierarchy In Tree";
       this.toolStripButtonShowEmployeeHierarchyInTree.Click += new System.EventHandler(this.toolStripButtonShowEmployeeHierarchyInTree_Click);
       // 
@@ -145,6 +145,16 @@
       this.toolStripButton1.Name = "toolStripButton1";
       this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
       this.toolStripButton1.Text = "toolStripButton1";
+      // 
+      // toolStripButtonFilterByDiscontinued
+      // 
+      this.toolStripButtonFilterByDiscontinued.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonFilterByDiscontinued.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonFilterByDiscontinued.Image")));
+      this.toolStripButtonFilterByDiscontinued.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonFilterByDiscontinued.Name = "toolStripButtonFilterByDiscontinued";
+      this.toolStripButtonFilterByDiscontinued.Size = new System.Drawing.Size(120, 22);
+      this.toolStripButtonFilterByDiscontinued.Text = "FilterByDiscontinued";
+      this.toolStripButtonFilterByDiscontinued.Click += new System.EventHandler(this.toolStripButtonFilterByDiscontinued_Click);
       // 
       // panel1
       // 
@@ -214,16 +224,6 @@
       this.usrCntrlEntityBrowser1.Name = "usrCntrlEntityBrowser1";
       this.usrCntrlEntityBrowser1.Size = new System.Drawing.Size(1080, 525);
       this.usrCntrlEntityBrowser1.TabIndex = 0;
-      // 
-      // toolStripButtonFilterByDiscontinued
-      // 
-      this.toolStripButtonFilterByDiscontinued.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-      this.toolStripButtonFilterByDiscontinued.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonFilterByDiscontinued.Image")));
-      this.toolStripButtonFilterByDiscontinued.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonFilterByDiscontinued.Name = "toolStripButtonFilterByDiscontinued";
-      this.toolStripButtonFilterByDiscontinued.Size = new System.Drawing.Size(120, 22);
-      this.toolStripButtonFilterByDiscontinued.Text = "FilterByDiscontinued";
-      this.toolStripButtonFilterByDiscontinued.Click += new System.EventHandler(this.toolStripButtonFilterByDiscontinued_Click);
       // 
       // FrmEntityBrowser
       // 

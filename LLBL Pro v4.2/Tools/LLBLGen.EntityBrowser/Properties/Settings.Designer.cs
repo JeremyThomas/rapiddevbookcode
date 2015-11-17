@@ -26,8 +26,6 @@ namespace LLBLGen.EntityBrowser.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Northwind;Integrated Security=" +
-            "True")]
         public string Connection0 {
             get {
                 return ((string)(this["Connection0"]));
@@ -110,10 +108,22 @@ namespace LLBLGen.EntityBrowser.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("20")]
-        public int CacheDurationInSeconds {
+        [global::System.Configuration.DefaultSettingValueAttribute("_")]
+        public string PrefixDelimiter {
             get {
-                return ((int)(this["CacheDurationInSeconds"]));
+                return ((string)(this["PrefixDelimiter"]));
+            }
+            set {
+                this["PrefixDelimiter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public decimal CacheDurationInSeconds {
+            get {
+                return ((decimal)(this["CacheDurationInSeconds"]));
             }
             set {
                 this["CacheDurationInSeconds"] = value;
@@ -122,13 +132,13 @@ namespace LLBLGen.EntityBrowser.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("_")]
-        public string PrefixDelimiter {
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public decimal PageSize {
             get {
-                return ((string)(this["PrefixDelimiter"]));
+                return ((decimal)(this["PageSize"]));
             }
             set {
-                this["PrefixDelimiter"] = value;
+                this["PageSize"] = value;
             }
         }
     }
