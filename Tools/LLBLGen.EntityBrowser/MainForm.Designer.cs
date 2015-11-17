@@ -29,6 +29,8 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
+      System.Windows.Forms.Label cacheDurationInSecondsLabel;
+      System.Windows.Forms.Label prefixDelimiterLabel;
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
       this.linqMetaDataAssemblyPathLabel = new System.Windows.Forms.LinkLabel();
       this.adapterAssemblyPathLabel = new System.Windows.Forms.LinkLabel();
@@ -41,6 +43,13 @@
       this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
       this.toggleSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.panelSettings = new System.Windows.Forms.Panel();
+      this.label1 = new System.Windows.Forms.Label();
+      this.numericUpDownPageSize = new System.Windows.Forms.NumericUpDown();
+      this.cacheDurationInSecondsNumericUpDown = new System.Windows.Forms.NumericUpDown();
+      this.ensureFilteringEnabledCheckBox = new System.Windows.Forms.CheckBox();
+      this.prefixDelimiterTextBox = new System.Windows.Forms.TextBox();
+      this.useSchemaCheckBox = new System.Windows.Forms.CheckBox();
+      this.useContextCheckBox = new System.Windows.Forms.CheckBox();
       this.adapterAssemblyPathTextBox = new System.Windows.Forms.TextBox();
       this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.linqMetaDataAssemblyPathTextBox = new System.Windows.Forms.TextBox();
@@ -49,12 +58,34 @@
       this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.editConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      cacheDurationInSecondsLabel = new System.Windows.Forms.Label();
+      prefixDelimiterLabel = new System.Windows.Forms.Label();
       this.toolStrip1.SuspendLayout();
       this.contextMenuStripTabControl.SuspendLayout();
       this.panelSettings.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPageSize)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.cacheDurationInSecondsNumericUpDown)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
       this.contextMenuStripTabPage.SuspendLayout();
       this.SuspendLayout();
+      // 
+      // cacheDurationInSecondsLabel
+      // 
+      cacheDurationInSecondsLabel.AutoSize = true;
+      cacheDurationInSecondsLabel.Location = new System.Drawing.Point(97, 81);
+      cacheDurationInSecondsLabel.Name = "cacheDurationInSecondsLabel";
+      cacheDurationInSecondsLabel.Size = new System.Drawing.Size(141, 13);
+      cacheDurationInSecondsLabel.TabIndex = 6;
+      cacheDurationInSecondsLabel.Text = "Cache Duration In Seconds:";
+      // 
+      // prefixDelimiterLabel
+      // 
+      prefixDelimiterLabel.AutoSize = true;
+      prefixDelimiterLabel.Location = new System.Drawing.Point(455, 77);
+      prefixDelimiterLabel.Name = "prefixDelimiterLabel";
+      prefixDelimiterLabel.Size = new System.Drawing.Size(79, 13);
+      prefixDelimiterLabel.TabIndex = 10;
+      prefixDelimiterLabel.Text = "Prefix Delimiter:";
       // 
       // linqMetaDataAssemblyPathLabel
       // 
@@ -114,10 +145,10 @@
       // 
       this.tabControl.ContextMenuStrip = this.contextMenuStripTabControl;
       this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tabControl.Location = new System.Drawing.Point(0, 68);
+      this.tabControl.Location = new System.Drawing.Point(0, 105);
       this.tabControl.Name = "tabControl";
       this.tabControl.SelectedIndex = 0;
-      this.tabControl.Size = new System.Drawing.Size(714, 520);
+      this.tabControl.Size = new System.Drawing.Size(1181, 483);
       this.tabControl.TabIndex = 1;
       this.tabControl.MouseLeave += new System.EventHandler(this.tabControl_MouseLeave);
       this.tabControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabControl_MouseMove);
@@ -153,6 +184,15 @@
       // 
       // panelSettings
       // 
+      this.panelSettings.Controls.Add(this.label1);
+      this.panelSettings.Controls.Add(this.numericUpDownPageSize);
+      this.panelSettings.Controls.Add(this.cacheDurationInSecondsNumericUpDown);
+      this.panelSettings.Controls.Add(this.ensureFilteringEnabledCheckBox);
+      this.panelSettings.Controls.Add(prefixDelimiterLabel);
+      this.panelSettings.Controls.Add(this.prefixDelimiterTextBox);
+      this.panelSettings.Controls.Add(this.useSchemaCheckBox);
+      this.panelSettings.Controls.Add(cacheDurationInSecondsLabel);
+      this.panelSettings.Controls.Add(this.useContextCheckBox);
       this.panelSettings.Controls.Add(this.adapterAssemblyPathLabel);
       this.panelSettings.Controls.Add(this.adapterAssemblyPathTextBox);
       this.panelSettings.Controls.Add(this.linqMetaDataAssemblyPathLabel);
@@ -160,18 +200,89 @@
       this.panelSettings.Dock = System.Windows.Forms.DockStyle.Top;
       this.panelSettings.Location = new System.Drawing.Point(0, 0);
       this.panelSettings.Name = "panelSettings";
-      this.panelSettings.Size = new System.Drawing.Size(714, 68);
+      this.panelSettings.Size = new System.Drawing.Size(1181, 105);
       this.panelSettings.TabIndex = 2;
       this.panelSettings.Visible = false;
       // 
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Location = new System.Drawing.Point(774, 76);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(52, 13);
+      this.label1.TabIndex = 16;
+      this.label1.Text = "PageSize";
+      // 
+      // numericUpDownPageSize
+      // 
+      this.numericUpDownPageSize.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "PageSize", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.numericUpDownPageSize.Location = new System.Drawing.Point(841, 74);
+      this.numericUpDownPageSize.Name = "numericUpDownPageSize";
+      this.numericUpDownPageSize.Size = new System.Drawing.Size(54, 20);
+      this.numericUpDownPageSize.TabIndex = 15;
+      this.numericUpDownPageSize.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.PageSize;
+      // 
+      // cacheDurationInSecondsNumericUpDown
+      // 
+      this.cacheDurationInSecondsNumericUpDown.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "CacheDurationInSeconds", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.cacheDurationInSecondsNumericUpDown.Location = new System.Drawing.Point(244, 80);
+      this.cacheDurationInSecondsNumericUpDown.Name = "cacheDurationInSecondsNumericUpDown";
+      this.cacheDurationInSecondsNumericUpDown.Size = new System.Drawing.Size(49, 20);
+      this.cacheDurationInSecondsNumericUpDown.TabIndex = 14;
+      this.cacheDurationInSecondsNumericUpDown.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CacheDurationInSeconds;
+      // 
+      // ensureFilteringEnabledCheckBox
+      // 
+      this.ensureFilteringEnabledCheckBox.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.EnsureFilteringEnabled;
+      this.ensureFilteringEnabledCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "EnsureFilteringEnabled", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.ensureFilteringEnabledCheckBox.Location = new System.Drawing.Point(663, 76);
+      this.ensureFilteringEnabledCheckBox.Name = "ensureFilteringEnabledCheckBox";
+      this.ensureFilteringEnabledCheckBox.Size = new System.Drawing.Size(104, 24);
+      this.ensureFilteringEnabledCheckBox.TabIndex = 13;
+      this.ensureFilteringEnabledCheckBox.Text = "Ensure Filtering Enabled";
+      this.ensureFilteringEnabledCheckBox.UseVisualStyleBackColor = true;
+      // 
+      // prefixDelimiterTextBox
+      // 
+      this.prefixDelimiterTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "PrefixDelimiter", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.prefixDelimiterTextBox.Location = new System.Drawing.Point(540, 74);
+      this.prefixDelimiterTextBox.Name = "prefixDelimiterTextBox";
+      this.prefixDelimiterTextBox.Size = new System.Drawing.Size(100, 20);
+      this.prefixDelimiterTextBox.TabIndex = 11;
+      this.prefixDelimiterTextBox.Text = global::LLBLGen.EntityBrowser.Properties.Settings.Default.PrefixDelimiter;
+      // 
+      // useSchemaCheckBox
+      // 
+      this.useSchemaCheckBox.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.UseSchema;
+      this.useSchemaCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.useSchemaCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "UseSchema", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.useSchemaCheckBox.Location = new System.Drawing.Point(345, 76);
+      this.useSchemaCheckBox.Name = "useSchemaCheckBox";
+      this.useSchemaCheckBox.Size = new System.Drawing.Size(104, 24);
+      this.useSchemaCheckBox.TabIndex = 9;
+      this.useSchemaCheckBox.Text = "Use Schema";
+      this.useSchemaCheckBox.UseVisualStyleBackColor = true;
+      // 
+      // useContextCheckBox
+      // 
+      this.useContextCheckBox.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.UseContext;
+      this.useContextCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.useContextCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "UseContext", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.useContextCheckBox.Location = new System.Drawing.Point(6, 78);
+      this.useContextCheckBox.Name = "useContextCheckBox";
+      this.useContextCheckBox.Size = new System.Drawing.Size(104, 24);
+      this.useContextCheckBox.TabIndex = 5;
+      this.useContextCheckBox.Text = "Use Context";
+      this.useContextCheckBox.UseVisualStyleBackColor = true;
+      // 
       // adapterAssemblyPathTextBox
       // 
-      this.adapterAssemblyPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+      this.adapterAssemblyPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.adapterAssemblyPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "AdapterAssemblyPath", true));
-      this.adapterAssemblyPathTextBox.Location = new System.Drawing.Point(128, 36);
+      this.adapterAssemblyPathTextBox.Location = new System.Drawing.Point(128, 39);
       this.adapterAssemblyPathTextBox.Name = "adapterAssemblyPathTextBox";
-      this.adapterAssemblyPathTextBox.Size = new System.Drawing.Size(586, 20);
+      this.adapterAssemblyPathTextBox.Size = new System.Drawing.Size(1053, 20);
       this.adapterAssemblyPathTextBox.TabIndex = 3;
       // 
       // settingsBindingSource
@@ -185,7 +296,7 @@
       this.linqMetaDataAssemblyPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "LinqMetaDataAssemblyPath", true));
       this.linqMetaDataAssemblyPathTextBox.Location = new System.Drawing.Point(164, 10);
       this.linqMetaDataAssemblyPathTextBox.Name = "linqMetaDataAssemblyPathTextBox";
-      this.linqMetaDataAssemblyPathTextBox.Size = new System.Drawing.Size(550, 20);
+      this.linqMetaDataAssemblyPathTextBox.Size = new System.Drawing.Size(1017, 20);
       this.linqMetaDataAssemblyPathTextBox.TabIndex = 1;
       // 
       // contextMenuStripTabPage
@@ -230,7 +341,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(714, 588);
+      this.ClientSize = new System.Drawing.Size(1181, 588);
       this.ContextMenuStrip = this.contextMenuStripTabControl;
       this.Controls.Add(this.tabControl);
       this.Controls.Add(this.panelSettings);
@@ -245,6 +356,8 @@
       this.contextMenuStripTabControl.ResumeLayout(false);
       this.panelSettings.ResumeLayout(false);
       this.panelSettings.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPageSize)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.cacheDurationInSecondsNumericUpDown)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
       this.contextMenuStripTabPage.ResumeLayout(false);
       this.ResumeLayout(false);
@@ -273,6 +386,13 @@
     private System.Windows.Forms.LinkLabel adapterAssemblyPathLabel;
     private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
     private System.Windows.Forms.ToolStripMenuItem toggleSettingsToolStripMenuItem;
+    private System.Windows.Forms.CheckBox ensureFilteringEnabledCheckBox;
+    private System.Windows.Forms.TextBox prefixDelimiterTextBox;
+    private System.Windows.Forms.CheckBox useSchemaCheckBox;
+    private System.Windows.Forms.CheckBox useContextCheckBox;
+    private System.Windows.Forms.NumericUpDown cacheDurationInSecondsNumericUpDown;
+    private System.Windows.Forms.NumericUpDown numericUpDownPageSize;
+    private System.Windows.Forms.Label label1;
   }
 }
 

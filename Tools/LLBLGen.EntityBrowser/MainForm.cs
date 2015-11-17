@@ -72,6 +72,11 @@ namespace LLBLGen.EntityBrowser
       try
       {
         LoadAssembliesAndTabs();
+        if (tabControl.TabPages.Count == 0)
+        {
+          panelSettings.Visible = true;
+          toolStrip1.Visible = true;
+        }
       }
       catch (Exception ex)
       {
@@ -113,20 +118,22 @@ namespace LLBLGen.EntityBrowser
     {
       try
       {
-        foreach (SettingElement setting in UserSettings.Settings)
-        {
-          if (setting.Name == "AdapterAssemblyPath" && setting.Value.ValueXml.InnerText != Settings.Default.AdapterAssemblyPath)
-            setting.Value.ValueXml.InnerText = Settings.Default.AdapterAssemblyPath;
-          if (setting.Name == "LinqMetaDataAssemblyPath" && setting.Value.ValueXml.InnerText != Settings.Default.LinqMetaDataAssemblyPath)
-            setting.Value.ValueXml.InnerText = Settings.Default.LinqMetaDataAssemblyPath;
-        }
-
+        SetProperty("AdapterAssemblyPath");
+        SetProperty("LinqMetaDataAssemblyPath");
+        SetProperty("PageSize");
+        SetProperty("PrefixDelimiter");
+        SetProperty("UseContext");
+        SetProperty("EnsureFilteringEnabled");
+        SetProperty("UseSchema");
+        SetProperty("CacheDurationInSeconds");//, (Settings.Default.CacheDurationInSeconds+1).ToString());
         try
         {
           // Save the configuration file.
-          Configuration.Save(ConfigurationSaveMode.Minimal);
+          Configuration.Save(ConfigurationSaveMode.Minimal, true);
+          Configuration.SaveAs("Test.config", ConfigurationSaveMode.Modified);
           // This is needed. Otherwise the updates do not show up in ConfigurationManager
           ConfigurationManager.RefreshSection("connectionStrings");
+          ConfigurationManager.RefreshSection("userSettings");
         }
         catch (Exception)
         {
@@ -145,17 +152,24 @@ namespace LLBLGen.EntityBrowser
       }
     }
 
+    private static void SetProperty(string propertyName, string value=null)
+    {
+      var adapterAssemblyPathSettingElement = UserSettings.Settings.Get(propertyName);
+      adapterAssemblyPathSettingElement.Value.ValueXml.InnerText = value?? Convert.ToString(Settings.Default[propertyName]);
+    }
+
     private void AddEntityBrowser(ConnectionStringSettings connectionStringSetting)
     {
       tabControl.TabPages.Add(connectionStringSetting.Name, connectionStringSetting.Name);
       var tabPage = tabControl.TabPages[connectionStringSetting.Name];
       tabPage.Tag = connectionStringSetting;
       var usrCntrlEntityBrowser = new UsrCntrlEntityBrowser(null, Settings.Default.UseContext, Settings.Default.PrefixDelimiter,
-        Settings.Default.EnsureFilteringEnabled, Settings.Default.UseContext, Settings.Default.CacheDurationInSeconds);
+        Settings.Default.EnsureFilteringEnabled, Settings.Default.UseContext, (int) Settings.Default.CacheDurationInSeconds);
       tabPage.Controls.Add(usrCntrlEntityBrowser);
       usrCntrlEntityBrowser.Dock = DockStyle.Fill;
       var adapter = GetAdapter(connectionStringSetting, null, Settings.Default.AdapterAssemblyPath, null, _adapterType);
       var linqMetaData = (ILinqMetaData) Activator.CreateInstance(_linqMetaDataType, adapter);
+      usrCntrlEntityBrowser.PageSize = (ushort) Settings.Default.PageSize;
       usrCntrlEntityBrowser.Initialize(linqMetaData);
     }
 
@@ -180,7 +194,7 @@ namespace LLBLGen.EntityBrowser
           {
             sqlConnectionStringBuilder.ConnectionString = connectionStringSettings.ConnectionString;
             var name = sqlConnectionStringBuilder.DataSource + "-" + (sqlConnectionStringBuilder.InitialCatalog ?? sqlConnectionStringBuilder.AttachDBFilename);
-            var existingConnectionStringSetting = ConnectionStringSettingsCollection[connectionStringSettings.Name];
+            var existingConnectionStringSetting = ConnectionStringSettingsCollection[name];
             if (existingConnectionStringSetting == null)
               connectionStringSettings.Name = name;
           }
