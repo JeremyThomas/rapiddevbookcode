@@ -266,14 +266,17 @@ namespace AW.Winforms.Helpers
 
     public static void ExpandToFitNodes(TreeNode treeNode)
     {
-      var treeView = treeNode.TreeView;
-      var maxRight = (from TreeNode node in treeNode.Nodes select node.Bounds.Right).Concat(new[] {treeNode.Bounds.Right}).Max();
-      treeView.ClientSize = new Size(maxRight + 10, treeView.ClientSize.Height);
-      var splitterPanel = treeView.Parent as SplitterPanel;
-      if (splitterPanel != null)
+      if (treeNode != null)
       {
-        var splitContainer = splitterPanel.Parent as SplitContainer;
-        if (splitContainer != null) splitContainer.SplitterDistance = treeView.ClientSize.Width;
+        var treeView = treeNode.TreeView;
+        var maxRight = (from TreeNode node in treeNode.Nodes select node.Bounds.Right).Concat(new[] {treeNode.Bounds.Right}).Max();
+        treeView.ClientSize = new Size(maxRight + 10, treeView.ClientSize.Height);
+        var splitterPanel = treeView.Parent as SplitterPanel;
+        if (splitterPanel != null)
+        {
+          var splitContainer = splitterPanel.Parent as SplitContainer;
+          if (splitContainer != null) splitContainer.SplitterDistance = treeView.ClientSize.Width;
+        }
       }
     }
 

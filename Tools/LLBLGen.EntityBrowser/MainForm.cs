@@ -61,9 +61,9 @@ namespace LLBLGen.EntityBrowser
       settingsBindingSource.DataSource = Settings.Default;
 
       var adapterAssemblyPath = Path.GetDirectoryName(Settings.Default.AdapterAssemblyPath);
-      if (adapterAssemblyPath != null) linqMetaDataAssemblyPathLabel.Links.Add(0, adapterAssemblyPath.Length, adapterAssemblyPath);
+      if (adapterAssemblyPath != null) linqMetaDataAssemblyPathLabel.Links.Add(0, linqMetaDataAssemblyPathLabel.Text.Length, adapterAssemblyPath);
       var linqMetaDataAssemblyPath = Path.GetDirectoryName(Settings.Default.LinqMetaDataAssemblyPath);
-      if (linqMetaDataAssemblyPath != null) adapterAssemblyPathLabel.Links.Add(0, linqMetaDataAssemblyPath.Length, linqMetaDataAssemblyPath);
+      if (linqMetaDataAssemblyPath != null) adapterAssemblyPathLabel.Links.Add(0, adapterAssemblyPathLabel.Text.Length, linqMetaDataAssemblyPath);
     }
 
     private void MainForm_Load(object sender, EventArgs e)
@@ -159,11 +159,16 @@ namespace LLBLGen.EntityBrowser
       tabPage.Tag = connectionStringSetting;
       var usrCntrlEntityBrowser = new UsrCntrlEntityBrowser(null, Settings.Default.UseContext, Settings.Default.PrefixDelimiter,
         Settings.Default.EnsureFilteringEnabled, Settings.Default.UseContext, (int) Settings.Default.CacheDurationInSeconds);
-      tabPage.Controls.Add(usrCntrlEntityBrowser);
       usrCntrlEntityBrowser.Dock = DockStyle.Fill;
+      usrCntrlEntityBrowser.PageSize = (ushort)Settings.Default.PageSize;
+      InitializeEntityBrowser(usrCntrlEntityBrowser, connectionStringSetting);
+      tabPage.Controls.Add(usrCntrlEntityBrowser);
+    }
+
+    private void InitializeEntityBrowser(UsrCntrlEntityBrowser usrCntrlEntityBrowser, ConnectionStringSettings connectionStringSetting)
+    {
       var adapter = GetAdapter(connectionStringSetting, null, Settings.Default.AdapterAssemblyPath, null, _adapterType);
       var linqMetaData = (ILinqMetaData) Activator.CreateInstance(_linqMetaDataType, adapter);
-      usrCntrlEntityBrowser.PageSize = (ushort) Settings.Default.PageSize;
       usrCntrlEntityBrowser.Initialize(linqMetaData);
     }
 
@@ -343,6 +348,8 @@ namespace LLBLGen.EntityBrowser
         if (DataConnectionDialog.Show(DataConnectionDialog) == DialogResult.OK)
         {
           connectionStringSettings.ConnectionString = DataConnectionDialog.ConnectionString;
+          var usrCntrlEntityBrowser = _currentTabItem.Controls[0] as UsrCntrlEntityBrowser;
+          InitializeEntityBrowser(usrCntrlEntityBrowser, connectionStringSettings);
         }
       }
     }

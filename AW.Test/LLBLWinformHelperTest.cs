@@ -71,7 +71,7 @@ namespace AW.Tests
 
     public static IEnumerable ShowSelfServicingInGrid<T>(IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
     {
-      return GridDataEditorTestBase.ShowInGrid(enumerable, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister(), pageSize);
+      return FrmDataEditor.ShowInGrid(enumerable, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister(), pageSize);
     }
 
     [TestCategory("Winforms"), TestMethod]
@@ -122,7 +122,7 @@ namespace AW.Tests
 
     public static IEnumerable ShowInGrid<T>(IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize) where T : EntityBase2
     {
-      return GridDataEditorTestBase.ShowInGrid(enumerable, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
+      return FrmDataEditor.ShowInGrid(enumerable, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
     }
 
     private void EditAdapterInDataGridViewTestHelper<T>(ushort pageSize, int numProperties = -1, int numFieldsToShow = 0) where T : EntityBase2

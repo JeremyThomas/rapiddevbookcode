@@ -50,9 +50,23 @@ namespace AW.Winforms.Helpers.DataEditor
     private static Form InitialiseDataEditorForm(Form frmDataEditor, IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly)
     {
       frmDataEditor.Text = GetEnumerableDescription(enumerable);
-      var gridDataEditor = new GridDataEditor(enumerable, dataEditorPersister, pageSize, readOnly) {Dock = DockStyle.Fill};
+      var gridDataEditor = new GridDataEditor(enumerable, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), pageSize, readOnly) { Dock = DockStyle.Fill };
       frmDataEditor.Controls.Add(gridDataEditor);
       return frmDataEditor;
+    }
+
+    /// <summary>
+    ///   Edits the enumerable in a DataGridView.
+    /// </summary>
+    /// <param name="enumerable"> The enumerable. </param>
+    /// <param name="dataEditorPersister"> The grid data editor persister. </param>
+    /// <param name="pageSize"> Size of the page. </param>
+    /// <returns> </returns>
+    public static IEnumerable ShowInGrid(IEnumerable enumerable, IDataEditorPersister dataEditorPersister = null, ushort pageSize = GridDataEditor.DefaultPageSize)
+    {
+      if (enumerable != null)
+        CreateDataEditorForm(enumerable, dataEditorPersister, pageSize).ShowDialog();
+      return enumerable;
     }
   }
 }

@@ -382,7 +382,9 @@ namespace AW.Winforms.Helpers.LLBL
 
     private void DataEditorEventHandlers_ContainedDataChanged(object sender, EventArgs e)
     {
-      SetSaveButtons(true);
+      var propertyChangedEventArgs = e as PropertyChangedEventArgs;
+      if (propertyChangedEventArgs == null || propertyChangedEventArgs.PropertyName != "IsDirty")
+        SetSaveButtons(true);
     }
 
     private void ensureFilteringEnabledCheckBox_Click(object sender, EventArgs e)
