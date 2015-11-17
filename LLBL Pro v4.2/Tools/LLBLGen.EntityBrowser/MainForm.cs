@@ -118,19 +118,13 @@ namespace LLBLGen.EntityBrowser
     {
       try
       {
-        SetProperty("AdapterAssemblyPath");
-        SetProperty("LinqMetaDataAssemblyPath");
-        SetProperty("PageSize");
-        SetProperty("PrefixDelimiter");
-        SetProperty("UseContext");
-        SetProperty("EnsureFilteringEnabled");
-        SetProperty("UseSchema");
-        SetProperty("CacheDurationInSeconds");//, (Settings.Default.CacheDurationInSeconds+1).ToString());
         try
         {
+          foreach (SettingsPropertyValue settingsPropertyValue in Settings.Default.PropertyValues)
+            SetProperty(settingsPropertyValue.Name, Convert.ToString(settingsPropertyValue.SerializedValue));
+
           // Save the configuration file.
           Configuration.Save(ConfigurationSaveMode.Minimal, true);
-          Configuration.SaveAs("Test.config", ConfigurationSaveMode.Modified);
           // This is needed. Otherwise the updates do not show up in ConfigurationManager
           ConfigurationManager.RefreshSection("connectionStrings");
           ConfigurationManager.RefreshSection("userSettings");
@@ -152,10 +146,10 @@ namespace LLBLGen.EntityBrowser
       }
     }
 
-    private static void SetProperty(string propertyName, string value=null)
+    private static void SetProperty(string propertyName, string value = null)
     {
       var adapterAssemblyPathSettingElement = UserSettings.Settings.Get(propertyName);
-      adapterAssemblyPathSettingElement.Value.ValueXml.InnerText = value?? Convert.ToString(Settings.Default[propertyName]);
+      if (adapterAssemblyPathSettingElement != null) adapterAssemblyPathSettingElement.Value.ValueXml.InnerText = value ?? Convert.ToString(Settings.Default[propertyName]);
     }
 
     private void AddEntityBrowser(ConnectionStringSettings connectionStringSetting)
