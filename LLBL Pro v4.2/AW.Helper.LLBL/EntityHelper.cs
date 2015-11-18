@@ -693,17 +693,32 @@ namespace AW.Helper.LLBL
       return 0;
     }
 
-    public static void SetSelfservicingConnectionString(Type commonDaoBaseType, object context, string connectionString)
+    public static Type GetDaoBaseImplementation(Assembly assembly)
+    {
+      return assembly.GetConcretePublicImplementations(typeof (DaoBase)).FirstOrDefault();
+     //  return assembly.GetTypes().SingleOrDefault(t => t.Name.Contains("CommonDaoBase") && t.IsClass);
+    }
+
+    /// <summary>
+    /// Sets the selfservicing connection string. Note the catalog in the connection string is ignored unless sqlServerCatalogNameOverwrites sets it to blank.
+    /// </summary>
+    /// <remarks>https://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=15107 OverrideCatalogs
+    /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=15875
+    /// </remarks>
+    /// <param name="daoBaseImplementationType">Type of the DAO base implementation.</param>
+    /// <param name="connectionString">The connection string.</param>
+    /// <exception cref="System.InvalidOperationException"></exception>
+    public static void SetSelfservicingConnectionString(Type daoBaseImplementationType, string connectionString)
     {
       if (!String.IsNullOrEmpty(connectionString))
       {
-        var actualConnectionStringField = commonDaoBaseType.GetField("ActualConnectionString");
+        var actualConnectionStringField = daoBaseImplementationType.GetField("ActualConnectionString");
         if (actualConnectionStringField == null)
         {
-          throw new InvalidOperationException(String.Format("The type '{0}' doesn't have a static property ActualConnectionString.", commonDaoBaseType.FullName));
+          throw new InvalidOperationException(String.Format("The type '{0}' doesn't have a static property ActualConnectionString.", daoBaseImplementationType.FullName));
         }
         //CustomCxString overrides config value
-        actualConnectionStringField.SetValue(context, connectionString);
+        actualConnectionStringField.SetValue(null, connectionString);
       }
     }
 
@@ -946,7 +961,7 @@ namespace AW.Helper.LLBL
     #region GetTransactionController
 
     /// <summary>
-    ///   Gets the data access adapter from a query.
+    ///   Gets the transaction controller from a query.
     /// </summary>
     /// <param name="query">The query.</param>
     /// <returns></returns>
@@ -962,7 +977,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    ///   Gets the data access adapter from a LLBLGenProProvider2.
+    /// Gets the transaction controller from a Query Provider.
     /// </summary>
     /// <param name="provider">The provider.</param>
     /// <returns></returns>
@@ -980,7 +995,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    ///   Gets the IDataAccessAdapter from a ILinqMetaData Via the provider.
+    ///   Gets the ITransactionController (IDataAccessAdapter or ITransaction) from a ILinqMetaData Via the provider.
     /// </summary>
     /// <param name="linqMetaData">The ILinqMetaData.</param>
     /// <returns></returns>

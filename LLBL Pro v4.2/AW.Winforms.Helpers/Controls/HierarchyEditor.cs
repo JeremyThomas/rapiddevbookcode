@@ -212,7 +212,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void dataTreeView_AfterExpand(object sender, TreeViewEventArgs e)
     {
-      AWHelper.ExpandToFitNodes(e);
+      AWHelper.ResizeToFitNodes(e);
     }
 
     private void HierarchyEditor_Load(object sender, EventArgs e)

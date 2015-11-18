@@ -40,7 +40,6 @@
       this.tabControl = new System.Windows.Forms.TabControl();
       this.contextMenuStripTabControl = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.addConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
       this.toggleSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.panelSettings = new System.Windows.Forms.Panel();
       this.label1 = new System.Windows.Forms.Label();
@@ -58,6 +57,10 @@
       this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.editConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+      this.toggleSettingsVisibilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+      this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
       cacheDurationInSecondsLabel = new System.Windows.Forms.Label();
       prefixDelimiterLabel = new System.Windows.Forms.Label();
       this.toolStrip1.SuspendLayout();
@@ -157,29 +160,23 @@
       // 
       this.contextMenuStripTabControl.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addConnectionToolStripMenuItem,
-            this.toolStripMenuItem2,
+            this.toolStripSeparator1,
             this.toggleSettingsToolStripMenuItem});
       this.contextMenuStripTabControl.Name = "contextMenuStripTabControl";
-      this.contextMenuStripTabControl.Size = new System.Drawing.Size(162, 70);
+      this.contextMenuStripTabControl.Size = new System.Drawing.Size(203, 54);
       // 
       // addConnectionToolStripMenuItem
       // 
       this.addConnectionToolStripMenuItem.Name = "addConnectionToolStripMenuItem";
-      this.addConnectionToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+      this.addConnectionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
       this.addConnectionToolStripMenuItem.Text = "Add Connection";
       this.addConnectionToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
-      // 
-      // toolStripMenuItem2
-      // 
-      this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-      this.toolStripMenuItem2.Size = new System.Drawing.Size(161, 22);
-      this.toolStripMenuItem2.Text = "_";
       // 
       // toggleSettingsToolStripMenuItem
       // 
       this.toggleSettingsToolStripMenuItem.Name = "toggleSettingsToolStripMenuItem";
-      this.toggleSettingsToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-      this.toggleSettingsToolStripMenuItem.Text = "Toggle Settings";
+      this.toggleSettingsToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.toggleSettingsToolStripMenuItem.Text = "Toggle Settings Visibility";
       this.toggleSettingsToolStripMenuItem.Click += new System.EventHandler(this.toggleSettingsToolStripMenuItem_Click);
       // 
       // panelSettings
@@ -303,39 +300,64 @@
       // 
       this.contextMenuStripTabPage.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addConnectionToolStripMenuItem1,
-            this.removeToolStripMenuItem,
             this.editConnectionToolStripMenuItem,
-            this.renameToolStripMenuItem});
+            this.renameToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.removeToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.toggleSettingsVisibilityToolStripMenuItem});
       this.contextMenuStripTabPage.Name = "contextMenuStripTabPage";
-      this.contextMenuStripTabPage.Size = new System.Drawing.Size(162, 92);
+      this.contextMenuStripTabPage.Size = new System.Drawing.Size(203, 148);
       // 
       // addConnectionToolStripMenuItem1
       // 
       this.addConnectionToolStripMenuItem1.Name = "addConnectionToolStripMenuItem1";
-      this.addConnectionToolStripMenuItem1.Size = new System.Drawing.Size(161, 22);
+      this.addConnectionToolStripMenuItem1.Size = new System.Drawing.Size(202, 22);
       this.addConnectionToolStripMenuItem1.Text = "Add Connection";
       this.addConnectionToolStripMenuItem1.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
       // removeToolStripMenuItem
       // 
       this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-      this.removeToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+      this.removeToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
       this.removeToolStripMenuItem.Text = "Remove";
       this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
       // 
       // editConnectionToolStripMenuItem
       // 
       this.editConnectionToolStripMenuItem.Name = "editConnectionToolStripMenuItem";
-      this.editConnectionToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+      this.editConnectionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
       this.editConnectionToolStripMenuItem.Text = "Edit Connection";
       this.editConnectionToolStripMenuItem.Click += new System.EventHandler(this.editConnectionToolStripMenuItem_Click);
       // 
       // renameToolStripMenuItem
       // 
       this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-      this.renameToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+      this.renameToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
       this.renameToolStripMenuItem.Text = "Rename";
       this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
+      // 
+      // toolStripSeparator1
+      // 
+      this.toolStripSeparator1.Name = "toolStripSeparator1";
+      this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
+      // 
+      // toggleSettingsVisibilityToolStripMenuItem
+      // 
+      this.toggleSettingsVisibilityToolStripMenuItem.Name = "toggleSettingsVisibilityToolStripMenuItem";
+      this.toggleSettingsVisibilityToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.toggleSettingsVisibilityToolStripMenuItem.Text = "Toggle Settings Visibility";
+      this.toggleSettingsVisibilityToolStripMenuItem.Click += new System.EventHandler(this.toggleSettingsToolStripMenuItem_Click);
+      // 
+      // toolStripSeparator2
+      // 
+      this.toolStripSeparator2.Name = "toolStripSeparator2";
+      this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
+      // 
+      // toolStripSeparator3
+      // 
+      this.toolStripSeparator3.Name = "toolStripSeparator3";
+      this.toolStripSeparator3.Size = new System.Drawing.Size(199, 6);
       // 
       // MainForm
       // 
@@ -384,7 +406,6 @@
     private System.Windows.Forms.ToolStripButton toolStripButtonLoad;
     private System.Windows.Forms.LinkLabel linqMetaDataAssemblyPathLabel;
     private System.Windows.Forms.LinkLabel adapterAssemblyPathLabel;
-    private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
     private System.Windows.Forms.ToolStripMenuItem toggleSettingsToolStripMenuItem;
     private System.Windows.Forms.CheckBox ensureFilteringEnabledCheckBox;
     private System.Windows.Forms.TextBox prefixDelimiterTextBox;
@@ -393,6 +414,10 @@
     private System.Windows.Forms.NumericUpDown cacheDurationInSecondsNumericUpDown;
     private System.Windows.Forms.NumericUpDown numericUpDownPageSize;
     private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+    private System.Windows.Forms.ToolStripMenuItem toggleSettingsVisibilityToolStripMenuItem;
   }
 }
 

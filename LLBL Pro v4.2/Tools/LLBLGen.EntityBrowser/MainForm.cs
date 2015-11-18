@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
+using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.ConnectionUI;
 using AW.Winforms.Helpers.LLBL;
@@ -59,11 +60,28 @@ namespace LLBLGen.EntityBrowser
     {
       InitializeComponent();
       settingsBindingSource.DataSource = Settings.Default;
+      if (!String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
+        try
+        {
+          var adapterAssemblyPath = Path.GetDirectoryName(Settings.Default.AdapterAssemblyPath);
+          if (adapterAssemblyPath != null)
+            linqMetaDataAssemblyPathLabel.Links.Add(0, linqMetaDataAssemblyPathLabel.Text.Length, adapterAssemblyPath);
+        }
+        catch (Exception)
+        {
+          // ignored
+        }
 
-      var adapterAssemblyPath = Path.GetDirectoryName(Settings.Default.AdapterAssemblyPath);
-      if (adapterAssemblyPath != null) linqMetaDataAssemblyPathLabel.Links.Add(0, linqMetaDataAssemblyPathLabel.Text.Length, adapterAssemblyPath);
-      var linqMetaDataAssemblyPath = Path.GetDirectoryName(Settings.Default.LinqMetaDataAssemblyPath);
-      if (linqMetaDataAssemblyPath != null) adapterAssemblyPathLabel.Links.Add(0, adapterAssemblyPathLabel.Text.Length, linqMetaDataAssemblyPath);
+      if (!String.IsNullOrWhiteSpace(Settings.Default.LinqMetaDataAssemblyPath))
+        try
+        {
+          var linqMetaDataAssemblyPath = Path.GetDirectoryName(Settings.Default.LinqMetaDataAssemblyPath);
+          if (linqMetaDataAssemblyPath != null) adapterAssemblyPathLabel.Links.Add(0, adapterAssemblyPathLabel.Text.Length, linqMetaDataAssemblyPath);
+        }
+        catch (Exception)
+        {
+          // ignored
+        }
     }
 
     private void MainForm_Load(object sender, EventArgs e)
@@ -93,11 +111,21 @@ namespace LLBLGen.EntityBrowser
 
     private void LoadAssembliesAndTabs()
     {
-      _adapterType = GetAdapterType(Settings.Default.AdapterAssemblyPath);
       if (!File.Exists(Settings.Default.LinqMetaDataAssemblyPath))
-        throw new ApplicationException("Adapter assembly: " + Settings.Default.LinqMetaDataAssemblyPath + " not found!" + Environment.NewLine);
-      var linqMetaDataAssemblyPath = LoadAssembly(Settings.Default.LinqMetaDataAssemblyPath);
-      _linqMetaDataType = linqMetaDataAssemblyPath.GetConcretePublicImplementations(typeof (ILinqMetaData)).FirstOrDefault();
+        throw new ApplicationException("LinqMetaData assembly: " + Settings.Default.LinqMetaDataAssemblyPath + " not found!" + Environment.NewLine);
+      var linqMetaDataAssembly = LoadAssembly(Settings.Default.LinqMetaDataAssemblyPath);
+      _linqMetaDataType = linqMetaDataAssembly.GetConcretePublicImplementations(typeof (ILinqMetaData)).FirstOrDefault();
+      if (_linqMetaDataType == null)
+        throw new ApplicationException("There are no public types in that assembly that implement ILinqMetaData. Wrong Assembly chosen.");
+
+      _daoBaseImplementationType = EntityHelper.GetDaoBaseImplementation(linqMetaDataAssembly);
+
+      if (_daoBaseImplementationType == null && !String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
+      {
+        if (!File.Exists(Settings.Default.AdapterAssemblyPath))
+          throw new ApplicationException("Adapter assembly: " + Settings.Default.AdapterAssemblyPath + " not found!" + Environment.NewLine);
+        _adapterType = GetAdapterType(Settings.Default.AdapterAssemblyPath);
+      }
       LoadTabs();
     }
 
@@ -137,8 +165,8 @@ namespace LLBLGen.EntityBrowser
             Settings.Default.UserConnections.Clear();
           foreach (var connectionString in ConnectionStringSettingsCollection.Cast<ConnectionStringSettings>().Where(connectionString => !string.IsNullOrWhiteSpace(connectionString.ConnectionString)))
             Settings.Default.UserConnections.Add(connectionString);
-          Settings.Default.Save();
         }
+        Settings.Default.Save();
       }
       catch (Exception ex)
       {
@@ -158,17 +186,28 @@ namespace LLBLGen.EntityBrowser
       var tabPage = tabControl.TabPages[connectionStringSetting.Name];
       tabPage.Tag = connectionStringSetting;
       var usrCntrlEntityBrowser = new UsrCntrlEntityBrowser(null, Settings.Default.UseContext, Settings.Default.PrefixDelimiter,
-        Settings.Default.EnsureFilteringEnabled, Settings.Default.UseContext, (int) Settings.Default.CacheDurationInSeconds);
-      usrCntrlEntityBrowser.Dock = DockStyle.Fill;
-      usrCntrlEntityBrowser.PageSize = (ushort)Settings.Default.PageSize;
+        Settings.Default.EnsureFilteringEnabled, Settings.Default.UseContext, (int) Settings.Default.CacheDurationInSeconds)
+      {
+        Dock = DockStyle.Fill,
+        PageSize = (ushort) Settings.Default.PageSize
+      };
       InitializeEntityBrowser(usrCntrlEntityBrowser, connectionStringSetting);
       tabPage.Controls.Add(usrCntrlEntityBrowser);
     }
 
     private void InitializeEntityBrowser(UsrCntrlEntityBrowser usrCntrlEntityBrowser, ConnectionStringSettings connectionStringSetting)
     {
-      var adapter = GetAdapter(connectionStringSetting, null, Settings.Default.AdapterAssemblyPath, null, _adapterType);
-      var linqMetaData = (ILinqMetaData) Activator.CreateInstance(_linqMetaDataType, adapter);
+      ILinqMetaData linqMetaData;
+      if (_daoBaseImplementationType == null)
+      {
+        var adapter = GetAdapter(connectionStringSetting, null, Settings.Default.AdapterAssemblyPath, null, _adapterType);
+        linqMetaData = (ILinqMetaData) Activator.CreateInstance(_linqMetaDataType, adapter);
+      }
+      else
+      {
+        linqMetaData = (ILinqMetaData) Activator.CreateInstance(_linqMetaDataType);
+        EntityHelper.SetSelfservicingConnectionString(_daoBaseImplementationType, connectionStringSetting.ConnectionString);
+      }
       usrCntrlEntityBrowser.Initialize(linqMetaData);
     }
 
@@ -235,10 +274,9 @@ namespace LLBLGen.EntityBrowser
     {
       if (!File.Exists(adapterAssemblyPath))
         throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " not found!" + Environment.NewLine);
-      Type dataAccessAdapterType;
       var dataAccessAdapterAssembly = LoadAssembly(adapterAssemblyPath);
 
-      dataAccessAdapterType = String.IsNullOrEmpty(adapterTypeName) ? dataAccessAdapterAssembly.GetConcretePublicImplementations(typeof (DataAccessAdapterBase)).FirstOrDefault() : dataAccessAdapterAssembly.GetType(adapterTypeName);
+      var dataAccessAdapterType = String.IsNullOrEmpty(adapterTypeName) ? dataAccessAdapterAssembly.GetConcretePublicImplementations(typeof (DataAccessAdapterBase)).FirstOrDefault() : dataAccessAdapterAssembly.GetType(adapterTypeName);
       if (dataAccessAdapterType == null)
         throw new ApplicationException("CommonDaoBase or adapter not found!");
 
@@ -249,7 +287,11 @@ namespace LLBLGen.EntityBrowser
     {
       DataAccessAdapterBase adapter;
       if (dataAccessAdapterAssembly == null)
+      {
+        if (String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
+          return null;
         dataAccessAdapterAssembly = LoadAssembly(adapterAssemblyPath);
+      }
       if (dataAccessAdapterAssembly == null)
         throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " could not be loaded!");
       if (dataAccessAdapterType == null)
@@ -281,6 +323,7 @@ namespace LLBLGen.EntityBrowser
     private static readonly Configuration Configuration;
     private static readonly ConnectionStringSettingsCollection ConnectionStringSettingsCollection;
     private static readonly ClientSettingsSection UserSettings;
+    private static Type _daoBaseImplementationType;
 
     private void tabControl_MouseMove(object sender, MouseEventArgs e)
     {

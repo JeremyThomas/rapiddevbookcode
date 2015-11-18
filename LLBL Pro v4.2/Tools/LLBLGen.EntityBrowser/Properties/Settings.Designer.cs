@@ -23,20 +23,9 @@ namespace LLBLGen.EntityBrowser.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        public string Connection0 {
-            get {
-                return ((string)(this["Connection0"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Jeremy Thomas\\Documents\\Visual Studio 2010\\Projects\\CodePlex\\RapidDevBoo" +
-            "kCode\\LLBL Pro v4.2\\Northwind\\Northwind.Win\\bin\\Debug\\Northwind.DAL.SqlServer.dl" +
-            "l")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string AdapterAssemblyPath {
             get {
                 return ((string)(this["AdapterAssemblyPath"]));
@@ -48,8 +37,7 @@ namespace LLBLGen.EntityBrowser.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Jeremy Thomas\\Documents\\Visual Studio 2010\\Projects\\CodePlex\\RapidDevBoo" +
-            "kCode\\LLBL Pro v4.2\\Northwind\\Northwind.Win\\bin\\Debug\\Northwind.DAL.dll")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string LinqMetaDataAssemblyPath {
             get {
                 return ((string)(this["LinqMetaDataAssemblyPath"]));

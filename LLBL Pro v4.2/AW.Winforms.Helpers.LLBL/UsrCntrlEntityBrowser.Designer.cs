@@ -40,7 +40,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.treeViewEntities = new System.Windows.Forms.TreeView();
       this.imageList1 = new System.Windows.Forms.ImageList(this.components);
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-      this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+      this.toolStrip = new System.Windows.Forms.ToolStrip();
       this.toolStripButtonCancelEdit = new System.Windows.Forms.ToolStripButton();
       this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
       this.ensureFilteringEnabledCheckBox = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
@@ -53,11 +53,12 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.pageSizeNumericUpDown = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
-      this.toolStrip1.SuspendLayout();
+      this.toolStrip.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridDataEditor)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorPaging)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
@@ -102,7 +103,7 @@ namespace AW.Winforms.Helpers.LLBL
       // splitContainer1.Panel1
       // 
       this.splitContainer1.Panel1.Controls.Add(this.treeViewEntities);
-      this.splitContainer1.Panel1.Controls.Add(this.toolStrip1);
+      this.splitContainer1.Panel1.Controls.Add(this.toolStrip);
       // 
       // splitContainer1.Panel2
       // 
@@ -111,10 +112,10 @@ namespace AW.Winforms.Helpers.LLBL
       this.splitContainer1.SplitterDistance = 254;
       this.splitContainer1.TabIndex = 3;
       // 
-      // toolStrip1
+      // toolStrip
       // 
-      this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+      this.toolStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonCancelEdit,
             this.saveToolStripButton,
             this.ensureFilteringEnabledCheckBox,
@@ -122,12 +123,13 @@ namespace AW.Winforms.Helpers.LLBL
             this.useContextCheckBox,
             this.prefixDelimiterLabel,
             this.prefixDelimiterTextBox,
-            this.cacheDurationInSecondsNumericUpDown});
-      this.toolStrip1.Location = new System.Drawing.Point(0, 557);
-      this.toolStrip1.Name = "toolStrip1";
-      this.toolStrip1.Size = new System.Drawing.Size(254, 28);
-      this.toolStrip1.TabIndex = 2;
-      this.toolStrip1.Text = "toolStrip1";
+            this.cacheDurationInSecondsNumericUpDown,
+            this.pageSizeNumericUpDown});
+      this.toolStrip.Location = new System.Drawing.Point(0, 557);
+      this.toolStrip.Name = "toolStrip";
+      this.toolStrip.Size = new System.Drawing.Size(254, 28);
+      this.toolStrip.TabIndex = 2;
+      this.toolStrip.Text = "toolStrip";
       // 
       // toolStripButtonCancelEdit
       // 
@@ -198,7 +200,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.cacheDurationInSecondsNumericUpDown.DecimalPlaces = 0;
       this.cacheDurationInSecondsNumericUpDown.Name = "cacheDurationInSecondsNumericUpDown";
       this.cacheDurationInSecondsNumericUpDown.NumBackColor = System.Drawing.SystemColors.Window;
-      this.cacheDurationInSecondsNumericUpDown.Size = new System.Drawing.Size(211, 25);
+      this.cacheDurationInSecondsNumericUpDown.Size = new System.Drawing.Size(53, 25);
       this.cacheDurationInSecondsNumericUpDown.Text = "Cache Duration In Seconds:";
       this.cacheDurationInSecondsNumericUpDown.TextVisible = false;
       this.cacheDurationInSecondsNumericUpDown.ValueChanged += new System.EventHandler(this.cacheDurationInSecondsNumericUpDown_ValueChanged);
@@ -253,6 +255,17 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorData.TabIndex = 2;
       this.bindingNavigatorData.Text = "bindingNavigator1";
       // 
+      // pageSizeNumericUpDown
+      // 
+      this.pageSizeNumericUpDown.BackColor = System.Drawing.Color.Transparent;
+      this.pageSizeNumericUpDown.DecimalPlaces = 0;
+      this.pageSizeNumericUpDown.Name = "pageSizeNumericUpDown";
+      this.pageSizeNumericUpDown.NumBackColor = System.Drawing.SystemColors.Window;
+      this.pageSizeNumericUpDown.Size = new System.Drawing.Size(112, 25);
+      this.pageSizeNumericUpDown.Text = "PageSize";
+      this.pageSizeNumericUpDown.TextVisible = false;
+      this.pageSizeNumericUpDown.Click += new System.EventHandler(this.pageSizeNumericUpDown_Click);
+      // 
       // UsrCntrlEntityBrowser
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -265,8 +278,8 @@ namespace AW.Winforms.Helpers.LLBL
       this.splitContainer1.Panel2.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
       this.splitContainer1.ResumeLayout(false);
-      this.toolStrip1.ResumeLayout(false);
-      this.toolStrip1.PerformLayout();
+      this.toolStrip.ResumeLayout(false);
+      this.toolStrip.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridDataEditor)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorPaging)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).EndInit();
@@ -283,7 +296,7 @@ namespace AW.Winforms.Helpers.LLBL
     private BindingNavigator bindingNavigatorPaging;
     private BindingNavigator bindingNavigatorData;
     private ToolTip toolTip1;
-    private ToolStrip toolStrip1;
+    private ToolStrip toolStrip;
     private ToolStripButton saveToolStripButton;
     public ToolStripButton toolStripButtonCancelEdit;
     private ToolStripCheckBox ensureFilteringEnabledCheckBox;
@@ -292,5 +305,6 @@ namespace AW.Winforms.Helpers.LLBL
     private ToolStripLabel prefixDelimiterLabel;
     private ToolStripTextBox prefixDelimiterTextBox;
     private ToolStripNumericUpDown cacheDurationInSecondsNumericUpDown;
+    private ToolStripNumericUpDown pageSizeNumericUpDown;
   }
 }

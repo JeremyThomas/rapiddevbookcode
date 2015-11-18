@@ -141,7 +141,7 @@ namespace AW.Winforms.Helpers.LLBL
       Expression<Func<T, TName>> namePropertyExpression,
       Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : class, IEntityCore
     {
-      var dataScope = new GenericDataScopeBase();
+      var dataScope = new GeneralDataScope();
       var processedCollection = postProcessing(dataScope.FetchData(query));
       return HierarchyEditor.HierarchyEditorFactory(processedCollection, namePropertyExpression, childCollectionPropertyExpression,
         new DataEditorLLBLDataScopePersister(dataScope));

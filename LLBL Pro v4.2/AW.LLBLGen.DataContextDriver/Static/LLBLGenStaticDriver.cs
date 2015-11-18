@@ -182,14 +182,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
           }
 
           //baseType.GetProperty("AdapterToUse")
-          var type = assembly.GetTypes().SingleOrDefault(t => t.Name.Contains("CommonDaoBase") && t.IsClass);
-          if (type == null)
+          var daoBaseImplementationType = EntityHelper.GetDaoBaseImplementation(assembly);
+          if (daoBaseImplementationType == null)
           {
             InitializeAdapter(cxInfo, context, executionManager);
           }
           else
           {
-            InitializeSelfservicing(cxInfo, type, context, executionManager);
+            InitializeSelfservicing(cxInfo, daoBaseImplementationType, executionManager);
           }
         }
       }
@@ -315,9 +315,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     #region Initialization
 
-    private void InitializeSelfservicing(IConnectionInfo cxInfo, Type commonDaoBaseType, object context, QueryExecutionManager executionManager)
+    private void InitializeSelfservicing(IConnectionInfo cxInfo, Type commonDaoBaseType, QueryExecutionManager executionManager)
     {
-      EntityHelper.SetSelfservicingConnectionString(commonDaoBaseType, context, cxInfo.DatabaseInfo.CustomCxString);
+      EntityHelper.SetSelfservicingConnectionString(commonDaoBaseType, cxInfo.DatabaseInfo.CustomCxString);
       SetSQLTranslationWriter(commonDaoBaseType, executionManager);
     }
 

@@ -124,12 +124,12 @@ namespace AW.Winforms.Helpers.LLBL
       OnPropertyChanged("UseContext");
     }
 
-    private GenericDataScopeBase DataScope
+    private GeneralDataScope DataScope
     {
       get
       {
         var dataEditorLLBLDataScopePersister = gridDataEditor.DataEditorPersister as DataEditorLLBLDataScopePersister;
-        if (dataEditorLLBLDataScopePersister == null) return null; return dataEditorLLBLDataScopePersister.GenericDataScope;
+        if (dataEditorLLBLDataScopePersister == null) return null; return dataEditorLLBLDataScopePersister.GeneralDataScope;
       }
     }
 
@@ -153,6 +153,7 @@ namespace AW.Winforms.Helpers.LLBL
       set
       {
         gridDataEditor.PageSize = value;
+        pageSizeNumericUpDown.Value = value;
         OnPropertyChanged();
       }
     }
@@ -407,6 +408,11 @@ namespace AW.Winforms.Helpers.LLBL
       CacheDurationInSeconds = (int)cacheDurationInSecondsNumericUpDown.Value;
     }
 
+    private void pageSizeNumericUpDown_Click(object sender, EventArgs e)
+    {
+     PageSize  = (ushort) pageSizeNumericUpDown.Value;
+    }
+
     private void prefixDelimiterTextBox_Click(object sender, EventArgs e)
     {
       PrefixDelimiter = prefixDelimiterTextBox.Text;
@@ -422,12 +428,12 @@ namespace AW.Winforms.Helpers.LLBL
 
     private void treeViewEntities_AfterExpand(object sender, TreeViewEventArgs e)
     {
-      AWHelper.ExpandToFitNodes(e);
+      AWHelper.ResizeToFitNodes(e);
     }
 
     private void UsrCntrlEntityBrowser_Load(object sender, EventArgs e)
     {
-      AWHelper.ExpandToFitNodes(treeViewEntities.TopNode);
+      AWHelper.ResizeToFitNodes(treeViewEntities);
     }
 
   }
