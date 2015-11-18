@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
@@ -99,7 +100,7 @@ namespace AW.Tests
     {
       var treeNodeCollection = GetTreeViewEntitiesFromFrmEntitiesAndFields(form).Nodes;
       _rootNodesCount = treeNodeCollection.Count;
-      _nodesCount = treeNodeCollection.Cast<TreeNode>().Descendants(tn => tn.Nodes.Cast<TreeNode>()).Count();
+      _nodesCount = AWHelper.GetAllNodes(treeNodeCollection).Count();
       form.Close();
     }
 

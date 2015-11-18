@@ -8,6 +8,7 @@ using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Test.Helpers;
+using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.LLBL;
@@ -211,7 +212,7 @@ namespace AW.Tests
       EntityTreeView.Nodes.Clear();
       LLBLWinformHelper.PopulateTreeViewWithSchema(EntityTreeView.Nodes, MetaSingletons.MetaData.GetType());
       EntityHelperTest.NumberOfEntities.Should().BeLessOrEqualTo(EntityTreeView.Nodes.Count);
-      var treeNodes = EntityTreeView.Nodes.Cast<TreeNode>().Descendants(tn => tn.Nodes.Cast<TreeNode>()).ToList();
+      var treeNodes = EntityTreeView.Nodes.GetAllNodes().ToList();
       NumSchemaObjects.Should().BeLessOrEqualTo(treeNodes.Count());
     }
 
@@ -230,7 +231,7 @@ namespace AW.Tests
       LLBLWinformHelper.PopulateTreeViewWithSchema(entityTreeView, entitiesTypes, false);
       Assert.AreEqual(entitiesTypes.Count(), entityTreeView.Nodes.Count, "entityTreeView.Nodes.Count");
       if (entityTreeView.Nodes.Count == EntityHelperTest.NumberOfEntities)
-        Assert.AreEqual(NumSchemaObjects, entityTreeView.Nodes.Cast<TreeNode>().Descendants(tn => tn.Nodes.Cast<TreeNode>()).Count(), "NumSchemaObjects");
+        Assert.AreEqual(NumSchemaObjects, entityTreeView.Nodes.GetAllNodes().Count(), "NumSchemaObjects");
     }
 
     /// <summary>

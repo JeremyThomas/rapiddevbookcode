@@ -2,15 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LLBLGen.EntityBrowser.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Connection0" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)" />
+    <Setting Name="AdapterAssemblyPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="AdapterAssemblyPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\Northwind\Northwind.Win\bin\Debug\Northwind.DAL.SqlServer.dll</Value>
-    </Setting>
     <Setting Name="LinqMetaDataAssemblyPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.2\Northwind\Northwind.Win\bin\Debug\Northwind.DAL.dll</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="UserConnections" Type="System.Collections.ArrayList" Scope="User">
       <Value Profile="(Default)" />

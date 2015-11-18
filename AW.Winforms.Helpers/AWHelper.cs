@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using System.Drawing;
 using System.Linq;
 using System.Linq.Dynamic;
-using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using AW.Helper;
 
@@ -252,25 +252,53 @@ namespace AW.Winforms.Helpers
 
     #endregion
 
-    /// <summary>
-    /// Expands to fit nodes.
-    /// </summary>
-    /// <remarks>http://stackoverflow.com/questions/11429900/how-to-calculate-and-change-treeview-width</remarks>
-    /// <param name="e">The <see cref="TreeViewEventArgs"/> instance containing the event data.</param>
-    public static void ExpandToFitNodes(TreeViewEventArgs e)
+    static ScrollBars GetVisibleScrollbars(ScrollableControl ctl)
     {
-      if (e.Action==TreeViewAction.Unknown)
-        return;
-      ExpandToFitNodes(e.Node);
+      if (ctl.HorizontalScroll.Visible)
+        return ctl.VerticalScroll.Visible ? ScrollBars.Both : ScrollBars.Horizontal;
+      else
+        return ctl.VerticalScroll.Visible ? ScrollBars.Vertical : ScrollBars.None;
     }
 
-    public static void ExpandToFitNodes(TreeNode treeNode)
+    private const int GWL_STYLE = -16;
+    private const int WS_VSCROLL = 0x00200000;
+    [DllImport("user32.dll", ExactSpelling = false, CharSet = CharSet.Auto)]
+    private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+    static bool IsVerticleScrollVisible(Control ctl)
     {
-      if (treeNode != null)
+      int style = GetWindowLong(ctl.Handle, GWL_STYLE);
+      return ((style & WS_VSCROLL) != 0);
+    }
+
+    public static IEnumerable<TreeNode> GetAllNodes(this TreeNodeCollection treeNodeCollection)
+    {
+      return treeNodeCollection.Cast<TreeNode>().Descendants(tn => tn.Nodes.Cast<TreeNode>());
+    }
+
+    /// <summary>
+    ///   Expands to fit nodes.
+    /// </summary>
+    /// <remarks>http://stackoverflow.com/questions/11429900/how-to-calculate-and-change-treeview-width</remarks>
+    /// <param name="e">The <see cref="TreeViewEventArgs" /> instance containing the event data.</param>
+    public static void ResizeToFitNodes(TreeViewEventArgs e)
+    {
+      if (e.Action == TreeViewAction.Unknown)
+        return;
+      ResizeToFitNodes(e.Node.TreeView);
+    }
+
+    public static void ResizeToFitNodes(TreeView treeView)
+    {
+      if (treeView != null)
       {
-        var treeView = treeNode.TreeView;
-        var maxRight = (from TreeNode node in treeNode.Nodes select node.Bounds.Right).Concat(new[] {treeNode.Bounds.Right}).Max();
-        treeView.ClientSize = new Size(maxRight + 10, treeView.ClientSize.Height);
+        var allNodes = treeView.Nodes.GetAllNodes();
+        var maxRight = allNodes.Max(node => node.Bounds.Right);
+        // GetVisibleScrollbars(treeView);
+        var padding = 10;
+        if (IsVerticleScrollVisible(treeView))
+          padding+= SystemInformation.VerticalScrollBarWidth;
+        treeView.ClientSize = new Size(maxRight + padding, treeView.ClientSize.Height);
         var splitterPanel = treeView.Parent as SplitterPanel;
         if (splitterPanel != null)
         {
@@ -289,7 +317,7 @@ namespace AW.Winforms.Helpers
     /// <returns></returns>
     public static IQueryable SkipTakeDynamic(IQueryable queryable, int pageIndex, int pageSize)
     {
-      return queryable.Skip(pageIndex * pageSize).Take(pageSize);
+      return queryable.Skip(pageIndex*pageSize).Take(pageSize);
     }
 
     public static IEnumerable<TreeNode> AsEnumerable(this TreeNodeCollection treeNodeCollection)

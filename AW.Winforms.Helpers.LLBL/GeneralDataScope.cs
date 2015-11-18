@@ -3,31 +3,30 @@ using System.Collections;
 using System.Linq;
 using AW.Helper;
 using AW.Helper.LLBL;
-using AW.Winforms.Helpers.Controls;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.LLBL
 {
-  public class GenericDataScopeBase : DataScope
+  public class GeneralDataScope : DataScope
   {
     protected ITransactionController TransactionController { get; set; }
 
-    public GenericDataScopeBase()
+    public GeneralDataScope()
     {
     }
 
-    public GenericDataScopeBase(DataScopeRefetchStrategyType refetchStrategy) : base(refetchStrategy)
+    public GeneralDataScope(DataScopeRefetchStrategyType refetchStrategy) : base(refetchStrategy)
     {
     }
 
-    public GenericDataScopeBase(IQueryable query)
+    public GeneralDataScope(IQueryable query)
     {
       Query = TryTrackQuery(query);
       TransactionController = EntityHelper.GetTransactionController(query);
     }
 
-    public GenericDataScopeBase(IContextAwareElement contextAwareElement, ITransactionController transactionController = null)
+    public GeneralDataScope(IContextAwareElement contextAwareElement, ITransactionController transactionController = null)
     {
       TryTrackQuery(contextAwareElement);
       var linqMetaData = contextAwareElement as ILinqMetaData;
@@ -46,7 +45,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-    public GenericDataScopeBase(IEnumerable enumerable, ITransactionController transactionController)
+    public GeneralDataScope(IEnumerable enumerable, ITransactionController transactionController)
     {
       var entityCollection = EntityHelper.ToEntityCollection(enumerable, MetaDataHelper.GetEnumerableItemType(enumerable));
       if (entityCollection != null)
@@ -119,67 +118,6 @@ namespace AW.Winforms.Helpers.LLBL
       }
       else
         EntityHelper.Undo(modifiedData);
-    }
-  }
-
-  public class DataEditorLLBLDataScopePersister : LLBLWinformHelper.DataEditorLLBLPersister, IDataEditorEventHandlers
-  {
-    public GenericDataScopeBase GenericDataScope;
-
-    protected DataEditorLLBLDataScopePersister()
-    {
-    }
-
-    public DataEditorLLBLDataScopePersister(IQueryable query)
-    {
-      GenericDataScope = new GenericDataScopeBase(query);
-    }
-
-    public DataEditorLLBLDataScopePersister(GenericDataScopeBase genericDataScope)
-    {
-      GenericDataScope = genericDataScope;
-    }
-    
-    public DataEditorLLBLDataScopePersister(IEnumerable enumerable, ITransactionController transactionController) : this(new GenericDataScopeBase(enumerable, transactionController))
-    {
-    }
-
-    public DataEditorLLBLDataScopePersister(IContextAwareElement contextAwareElement, ITransactionController transactionController = null) : this(new GenericDataScopeBase(contextAwareElement, transactionController))
-    {
-    }
-
-    /// <summary>
-    ///   Raised when the data of an entity in the scope changed. Ignored during fetches. Sender is the entity which data was changed
-    /// </summary>
-    public event EventHandler ContainedDataChanged
-    {
-      add { GenericDataScope.ContainedDataChanged += value; }
-      remove { GenericDataScope.ContainedDataChanged -= value; }
-    }
-
-    /// <summary>
-    ///   Raised when an entity has been added to the scope. Ignored during fetches. Sender is the entity which was added.
-    /// </summary>
-    public event EventHandler EntityAdded
-    {
-      add { GenericDataScope.EntityAdded += value; }
-      remove { GenericDataScope.EntityAdded -= value; }
-    }
-
-    public override int Save(object dataToSave)
-    {
-      return GenericDataScope.Save(dataToSave);
-    }
-
-    public override int Delete(object dataToDelete)
-    {
-      return GenericDataScope.Delete(dataToDelete);
-    }
-
-    public override bool Undo(object dataToDelete)
-    {
-      GenericDataScope.Undo(dataToDelete);
-      return true;
     }
   }
 }
