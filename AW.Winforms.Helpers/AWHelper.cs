@@ -252,22 +252,22 @@ namespace AW.Winforms.Helpers
 
     #endregion
 
-    static ScrollBars GetVisibleScrollbars(ScrollableControl ctl)
+    private static ScrollBars GetVisibleScrollbars(ScrollableControl ctl)
     {
       if (ctl.HorizontalScroll.Visible)
         return ctl.VerticalScroll.Visible ? ScrollBars.Both : ScrollBars.Horizontal;
-      else
-        return ctl.VerticalScroll.Visible ? ScrollBars.Vertical : ScrollBars.None;
+      return ctl.VerticalScroll.Visible ? ScrollBars.Vertical : ScrollBars.None;
     }
 
     private const int GWL_STYLE = -16;
     private const int WS_VSCROLL = 0x00200000;
+
     [DllImport("user32.dll", ExactSpelling = false, CharSet = CharSet.Auto)]
     private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
 
-    static bool IsVerticleScrollVisible(Control ctl)
+    private static bool IsVerticleScrollVisible(Control ctl)
     {
-      int style = GetWindowLong(ctl.Handle, GWL_STYLE);
+      var style = GetWindowLong(ctl.Handle, GWL_STYLE);
       return ((style & WS_VSCROLL) != 0);
     }
 
@@ -290,14 +290,14 @@ namespace AW.Winforms.Helpers
 
     public static void ResizeToFitNodes(TreeView treeView)
     {
-      if (treeView != null)
+      if (treeView != null && treeView.Nodes.Count > 0)
       {
         var allNodes = treeView.Nodes.GetAllNodes();
         var maxRight = allNodes.Max(node => node.Bounds.Right);
         // GetVisibleScrollbars(treeView);
         var padding = 10;
         if (IsVerticleScrollVisible(treeView))
-          padding+= SystemInformation.VerticalScrollBarWidth;
+          padding += SystemInformation.VerticalScrollBarWidth;
         treeView.ClientSize = new Size(maxRight + padding, treeView.ClientSize.Height);
         var splitterPanel = treeView.Parent as SplitterPanel;
         if (splitterPanel != null)

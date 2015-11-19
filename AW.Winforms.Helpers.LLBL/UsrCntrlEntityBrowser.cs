@@ -178,9 +178,11 @@ namespace AW.Winforms.Helpers.LLBL
       bool useSchema = true, string prefixDelimiter = DefaultPrefixDelimiter, bool ensureFilteringEnabled = true, bool useContext = true, int cacheDurationInSeconds = DefaultCacheDurationInSeconds,
       params string[] membersToExclude)
     {
-      return FrmPersistantLocation.ShowControlInForm(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter,
-        ensureFilteringEnabled, useContext, cacheDurationInSeconds, membersToExclude)
-        , "Data Browser", parentForm, "DataBrowser");
+      var usrCntrlEntityBrowser = new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter,
+        ensureFilteringEnabled, useContext, cacheDurationInSeconds, membersToExclude);
+      var dataBrowser = FrmPersistantLocation.ShowControlInForm(usrCntrlEntityBrowser, "Data Browser", parentForm, "DataBrowser");
+      //usrCntrlEntityBrowser.ResizeToFitNodes();
+      return dataBrowser;
     }
 
     public UsrCntrlEntityBrowser()
@@ -190,7 +192,6 @@ namespace AW.Winforms.Helpers.LLBL
       UseSchema = true;
       UseContext = true;
       CacheDurationInSeconds = DefaultCacheDurationInSeconds;
-      Load += UsrCntrlEntityBrowser_Load;
     }
 
     /// <summary>
@@ -229,6 +230,22 @@ namespace AW.Winforms.Helpers.LLBL
       gridDataEditor.MembersToExclude = membersToExclude;
       gridDataEditor.BindingListViewCreater = BindingListViewCreater;
       PopulateTreeViewWithSchema();
+    }
+
+    bool _fullyPainted;
+
+    /// <summary>
+    /// http://stackoverflow.com/questions/7309736/which-event-is-launched-right-after-control-is-fully-loaded
+    /// </summary>
+    /// <param name="m">The Message.</param>
+    protected override void WndProc(ref Message m)
+    {
+      base.WndProc(ref m);
+      if (m.Msg == 15 && !_fullyPainted)
+      {
+        _fullyPainted = true;
+        ResizeToFitNodes();
+      }
     }
 
     private IBindingListView BindingListViewCreater(IEnumerable enumerable, Type itemType)
@@ -431,10 +448,9 @@ namespace AW.Winforms.Helpers.LLBL
       AWHelper.ResizeToFitNodes(e);
     }
 
-    private void UsrCntrlEntityBrowser_Load(object sender, EventArgs e)
+    public void ResizeToFitNodes()
     {
       AWHelper.ResizeToFitNodes(treeViewEntities);
     }
-
   }
 }

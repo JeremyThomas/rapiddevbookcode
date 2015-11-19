@@ -49,11 +49,11 @@ namespace AW.Winforms.Helpers.LLBL
       this.prefixDelimiterLabel = new System.Windows.Forms.ToolStripLabel();
       this.prefixDelimiterTextBox = new System.Windows.Forms.ToolStripTextBox();
       this.cacheDurationInSecondsNumericUpDown = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
+      this.pageSizeNumericUpDown = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.pageSizeNumericUpDown = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
@@ -205,6 +205,17 @@ namespace AW.Winforms.Helpers.LLBL
       this.cacheDurationInSecondsNumericUpDown.TextVisible = false;
       this.cacheDurationInSecondsNumericUpDown.ValueChanged += new System.EventHandler(this.cacheDurationInSecondsNumericUpDown_ValueChanged);
       // 
+      // pageSizeNumericUpDown
+      // 
+      this.pageSizeNumericUpDown.BackColor = System.Drawing.Color.Transparent;
+      this.pageSizeNumericUpDown.DecimalPlaces = 0;
+      this.pageSizeNumericUpDown.Name = "pageSizeNumericUpDown";
+      this.pageSizeNumericUpDown.NumBackColor = System.Drawing.SystemColors.Window;
+      this.pageSizeNumericUpDown.Size = new System.Drawing.Size(53, 25);
+      this.pageSizeNumericUpDown.Text = "PageSize";
+      this.pageSizeNumericUpDown.TextVisible = false;
+      this.pageSizeNumericUpDown.Click += new System.EventHandler(this.pageSizeNumericUpDown_Click);
+      // 
       // gridDataEditor
       // 
       this.gridDataEditor.DataMember = "";
@@ -254,17 +265,6 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorData.Size = new System.Drawing.Size(331, 25);
       this.bindingNavigatorData.TabIndex = 2;
       this.bindingNavigatorData.Text = "bindingNavigator1";
-      // 
-      // pageSizeNumericUpDown
-      // 
-      this.pageSizeNumericUpDown.BackColor = System.Drawing.Color.Transparent;
-      this.pageSizeNumericUpDown.DecimalPlaces = 0;
-      this.pageSizeNumericUpDown.Name = "pageSizeNumericUpDown";
-      this.pageSizeNumericUpDown.NumBackColor = System.Drawing.SystemColors.Window;
-      this.pageSizeNumericUpDown.Size = new System.Drawing.Size(112, 25);
-      this.pageSizeNumericUpDown.Text = "PageSize";
-      this.pageSizeNumericUpDown.TextVisible = false;
-      this.pageSizeNumericUpDown.Click += new System.EventHandler(this.pageSizeNumericUpDown_Click);
       // 
       // UsrCntrlEntityBrowser
       // 

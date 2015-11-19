@@ -11,6 +11,7 @@ namespace AW.Winforms.Helpers.Controls
   public partial class HierarchyEditor : UserControl, ISupportInitialize
   {
     private readonly bool _canDetectDirty;
+    private bool _dontResize;
 
 // ReSharper disable once MemberCanBePrivate.Global
     public HierarchyEditor()
@@ -110,6 +111,27 @@ namespace AW.Winforms.Helpers.Controls
       return new HierarchyEditor(enumerable, MemberName.For(namePropertyExpression), MemberName.For(childCollectionPropertyExpression), dataEditorPersister, membersToExclude);
     }
 
+    private void HierarchyEditor_Load(object sender, EventArgs e)
+    {
+      ExpandIfSingleTopNode();
+    }
+
+    bool _fullyPainted;
+
+    /// <summary>
+    /// http://stackoverflow.com/questions/7309736/which-event-is-launched-right-after-control-is-fully-loaded
+    /// </summary>
+    /// <param name="m">The m.</param>
+    protected override void WndProc(ref Message m)
+    {
+      base.WndProc(ref m);
+      if (m.Msg == 15 && !_fullyPainted)
+      {
+        _fullyPainted = true;
+        ResizeToFitNodes();
+      }
+    }
+
     private void dataTreeView1_AfterSelect(object sender, TreeViewEventArgs e)
     {
       var selectedNode = (dataTreeView).SelectedNode;
@@ -123,8 +145,24 @@ namespace AW.Winforms.Helpers.Controls
         splitContainerHorizontal.Panel1Collapsed = ListBindingHelper.GetListItemProperties(propertyGrid1.SelectedObject.GetType()).Count < 2;
         gridDataEditor.BindEnumerable(dataTreeView.GetChildEnumerable(e));
       }
-      if (selectedNode != null && (selectedNode.Level==0 && selectedNode.TreeView.Nodes.Count==1))
-        selectedNode.Expand();
+      ExpandIfSingleTopNode(selectedNode);
+    }
+
+    private static void ExpandIfSingleTopNode(TreeNode node)
+    {
+      if (node != null && (node.Level == 0 && node.TreeView.Nodes.Count == 1))
+        node.Expand();
+    }
+
+    private void ExpandIfSingleTopNode()
+    {
+      if (dataTreeView.Nodes.Count == 1)
+        dataTreeView.TopNode.Expand();
+    }
+
+    public void ResizeToFitNodes()
+    {
+      AWHelper.ResizeToFitNodes(dataTreeView);
     }
 
     private void toolStripButtonUnSelectNodes_Click(object sender, EventArgs e)
@@ -144,12 +182,47 @@ namespace AW.Winforms.Helpers.Controls
 
     private void toolStripButtonExpandAll_Click(object sender, EventArgs e)
     {
-      dataTreeView.ExpandAll();
+      try
+      {
+        _dontResize = true;
+        dataTreeView.ExpandAll();
+      }
+      finally
+      {
+        _dontResize = false;
+        AWHelper.ResizeToFitNodes(dataTreeView);
+      }
     }
 
     private void toolStripButtonCollapseAll_Click(object sender, EventArgs e)
     {
-      dataTreeView.CollapseAll();
+      try
+      {
+        _dontResize = true;
+        dataTreeView.CollapseAll();
+        ExpandIfSingleTopNode();
+      }
+      finally
+      {
+        _dontResize = false;
+        AWHelper.ResizeToFitNodes(dataTreeView);
+      }
+    }
+
+    private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
+    {
+      dataTreeView.AddNodeAndData();
+    }
+
+    private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e)
+    {
+      dataTreeView.RemoveSelectedNode();
+    }
+
+    private void dataTreeView_AfterExpand(object sender, TreeViewEventArgs e)
+    {
+      if (!_dontResize)
+        AWHelper.ResizeToFitNodes(e);
     }
 
     private void DataEditorEventHandlers_ContainedDataChanged(object sender, EventArgs e)
@@ -200,24 +273,6 @@ namespace AW.Winforms.Helpers.Controls
       ((ISupportInitialize) (gridDataEditor)).EndInit();
     }
 
-    private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
-    {
-      dataTreeView.AddNodeAndData();
-    }
 
-    private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e)
-    {
-      dataTreeView.RemoveSelectedNode();
-    }
-
-    private void dataTreeView_AfterExpand(object sender, TreeViewEventArgs e)
-    {
-      AWHelper.ResizeToFitNodes(e);
-    }
-
-    private void HierarchyEditor_Load(object sender, EventArgs e)
-    {
-
-    }
   }
 }

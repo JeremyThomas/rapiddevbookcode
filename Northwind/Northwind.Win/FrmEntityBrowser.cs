@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,7 +12,6 @@ using Northwind.DAL.Linq;
 using Northwind.DAL.Linq.Filters;
 using Northwind.DAL.Services;
 using Northwind.Win.NorthwindODataSRSharedTypes;
-using SD.LLBLGen.Pro.LinqSupportClasses;
 
 namespace Northwind.Win
 {
@@ -31,7 +29,12 @@ namespace Northwind.Win
       prefixDelimiterTextBox.Text = usrCntrlEntityBrowser1.PrefixDelimiter;
       cacheDurationInSecondsNumericUpDown.Value = usrCntrlEntityBrowser1.CacheDurationInSeconds;
       //Done in CommonEntityBase  CacheController.RegisterCache(dataAccessAdapter.ConnectionString, new ResultsetCache()); 
+    }
+
+    private void FrmEntityBrowser_Load(object sender, EventArgs e)
+    {
       Text += string.Format(" - {0}", ProfilerHelper.OrmProfilerStatus);
+      usrCntrlEntityBrowser1.ResizeToFitNodes();
     }
 
     private void toolStripButtonRemote_Click(object sender, EventArgs e)
@@ -60,7 +63,7 @@ namespace Northwind.Win
       var query = linqMetaData.Employee;
       ShowControlInForm(
         HierarchyEditor.HierarchyEditorFactory(query, e => e.EmployeeId, e => e.ReportsTo.HasValue,
-        e => e.ReportsTo.GetValueOrDefault(), (e, m) => e.Manager = m, em => em.FirstName, em => em.Staff, new DataEditorLLBLDataScopePersister(query))
+          e => e.ReportsTo.GetValueOrDefault(), (e, m) => e.Manager = m, em => em.FirstName, em => em.Staff, new DataEditorLLBLDataScopePersister(query))
         , "EmployeeHierarchyInTree", this);
     }
 
@@ -68,7 +71,7 @@ namespace Northwind.Win
     {
       var linqMetaData = Factories.CreateLinqMetaData();
       var query = linqMetaData.Employee;
-      ShowControlInForm(new HierarchyEditor(query, "EmployeeId", "ReportsTo", "FirstName", new DataEditorLLBLDataScopePersister(query)),"EmployeeHierarchyInTree", this);
+      ShowControlInForm(new HierarchyEditor(query, "EmployeeId", "ReportsTo", "FirstName", new DataEditorLLBLDataScopePersister(query)), "EmployeeHierarchyInTree", this);
     }
 
     private void toolStripButtonCustomerGroupedByCountry_Click(object sender, EventArgs e)

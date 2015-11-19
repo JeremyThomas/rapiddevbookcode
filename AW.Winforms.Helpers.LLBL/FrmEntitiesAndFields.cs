@@ -263,5 +263,15 @@ namespace AW.Winforms.Helpers.LLBL
         FrmEntityViewer.LaunchAsChildForm(entityQueryable, gridDataEditor.DataEditorPersister);
       }
     }
+
+    private void treeViewEntities_AfterExpand(object sender, TreeViewEventArgs e)
+    {
+      AWHelper.ResizeToFitNodes(treeViewEntities);
+    }
+
+    private void FrmEntitiesAndFields_Load(object sender, EventArgs e)
+    {
+      AWHelper.ResizeToFitNodes(treeViewEntities);
+    }
   }
 }
