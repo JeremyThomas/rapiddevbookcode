@@ -222,6 +222,7 @@
       this.usrCntrlEntityBrowser1.EnsureFilteringEnabled = true;
       this.usrCntrlEntityBrowser1.Location = new System.Drawing.Point(0, 54);
       this.usrCntrlEntityBrowser1.Name = "usrCntrlEntityBrowser1";
+      this.usrCntrlEntityBrowser1.PageSize = ((ushort)(15));
       this.usrCntrlEntityBrowser1.Size = new System.Drawing.Size(1080, 525);
       this.usrCntrlEntityBrowser1.TabIndex = 0;
       // 
@@ -236,6 +237,7 @@
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "FrmEntityBrowser";
       this.Text = "Northwind Data Browser";
+      this.Load += new System.EventHandler(this.FrmEntityBrowser_Load);
       this.toolStrip1.ResumeLayout(false);
       this.toolStrip1.PerformLayout();
       this.panel1.ResumeLayout(false);

@@ -106,7 +106,6 @@ namespace AW.Winforms.Helpers.LLBL.PropGridEx
       // splitContainerHorizontal
       // 
       splitContainerHorizontal.Size = new Size(684, 619);
-      splitContainerHorizontal.SplitterDistance = 343;
       // 
       // FrmLLBLEntityViewer
       // 
