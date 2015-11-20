@@ -710,16 +710,12 @@ namespace AW.Helper.LLBL
     /// <exception cref="System.InvalidOperationException"></exception>
     public static void SetSelfservicingConnectionString(Type daoBaseImplementationType, string connectionString)
     {
-      if (!String.IsNullOrEmpty(connectionString))
+           if (daoBaseImplementationType != null) {
+        if (!String.IsNullOrEmpty(connectionString))
       {
-        var actualConnectionStringField = daoBaseImplementationType.GetField("ActualConnectionString");
-        if (actualConnectionStringField == null)
-        {
-          throw new InvalidOperationException(String.Format("The type '{0}' doesn't have a static property ActualConnectionString.", daoBaseImplementationType.FullName));
-        }
-        //CustomCxString overrides config value
-        actualConnectionStringField.SetValue(null, connectionString);
-      }
+
+          daoBaseImplementationType.StaticMembers().ActualConnectionString = connectionString;
+      }}
     }
 
     #endregion

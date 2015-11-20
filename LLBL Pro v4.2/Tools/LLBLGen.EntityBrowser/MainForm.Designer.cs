@@ -40,6 +40,7 @@
       this.tabControl = new System.Windows.Forms.TabControl();
       this.contextMenuStripTabControl = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.addConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.toggleSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.panelSettings = new System.Windows.Forms.Panel();
       this.label1 = new System.Windows.Forms.Label();
@@ -54,13 +55,14 @@
       this.linqMetaDataAssemblyPathTextBox = new System.Windows.Forms.TextBox();
       this.contextMenuStripTabPage = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.addConnectionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-      this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.editConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-      this.toggleSettingsVisibilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+      this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+      this.toggleSettingsVisibilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.numericUpDownCommandTimeOut = new System.Windows.Forms.NumericUpDown();
+      this.label2 = new System.Windows.Forms.Label();
       cacheDurationInSecondsLabel = new System.Windows.Forms.Label();
       prefixDelimiterLabel = new System.Windows.Forms.Label();
       this.toolStrip1.SuspendLayout();
@@ -70,6 +72,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.cacheDurationInSecondsNumericUpDown)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
       this.contextMenuStripTabPage.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCommandTimeOut)).BeginInit();
       this.SuspendLayout();
       // 
       // cacheDurationInSecondsLabel
@@ -172,6 +175,11 @@
       this.addConnectionToolStripMenuItem.Text = "Add Connection";
       this.addConnectionToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
+      // toolStripSeparator1
+      // 
+      this.toolStripSeparator1.Name = "toolStripSeparator1";
+      this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
+      // 
       // toggleSettingsToolStripMenuItem
       // 
       this.toggleSettingsToolStripMenuItem.Name = "toggleSettingsToolStripMenuItem";
@@ -181,6 +189,8 @@
       // 
       // panelSettings
       // 
+      this.panelSettings.Controls.Add(this.label2);
+      this.panelSettings.Controls.Add(this.numericUpDownCommandTimeOut);
       this.panelSettings.Controls.Add(this.label1);
       this.panelSettings.Controls.Add(this.numericUpDownPageSize);
       this.panelSettings.Controls.Add(this.cacheDurationInSecondsNumericUpDown);
@@ -307,7 +317,7 @@
             this.toolStripSeparator2,
             this.toggleSettingsVisibilityToolStripMenuItem});
       this.contextMenuStripTabPage.Name = "contextMenuStripTabPage";
-      this.contextMenuStripTabPage.Size = new System.Drawing.Size(203, 148);
+      this.contextMenuStripTabPage.Size = new System.Drawing.Size(203, 126);
       // 
       // addConnectionToolStripMenuItem1
       // 
@@ -315,13 +325,6 @@
       this.addConnectionToolStripMenuItem1.Size = new System.Drawing.Size(202, 22);
       this.addConnectionToolStripMenuItem1.Text = "Add Connection";
       this.addConnectionToolStripMenuItem1.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
-      // 
-      // removeToolStripMenuItem
-      // 
-      this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-      this.removeToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-      this.removeToolStripMenuItem.Text = "Remove";
-      this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
       // 
       // editConnectionToolStripMenuItem
       // 
@@ -337,10 +340,22 @@
       this.renameToolStripMenuItem.Text = "Rename";
       this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
       // 
-      // toolStripSeparator1
+      // toolStripSeparator3
       // 
-      this.toolStripSeparator1.Name = "toolStripSeparator1";
-      this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
+      this.toolStripSeparator3.Name = "toolStripSeparator3";
+      this.toolStripSeparator3.Size = new System.Drawing.Size(199, 6);
+      // 
+      // removeToolStripMenuItem
+      // 
+      this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+      this.removeToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.removeToolStripMenuItem.Text = "Remove";
+      this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+      // 
+      // toolStripSeparator2
+      // 
+      this.toolStripSeparator2.Name = "toolStripSeparator2";
+      this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
       // 
       // toggleSettingsVisibilityToolStripMenuItem
       // 
@@ -349,15 +364,23 @@
       this.toggleSettingsVisibilityToolStripMenuItem.Text = "Toggle Settings Visibility";
       this.toggleSettingsVisibilityToolStripMenuItem.Click += new System.EventHandler(this.toggleSettingsToolStripMenuItem_Click);
       // 
-      // toolStripSeparator2
+      // numericUpDownCommandTimeOut
       // 
-      this.toolStripSeparator2.Name = "toolStripSeparator2";
-      this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
+      this.numericUpDownCommandTimeOut.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "CommandTimeOut", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.numericUpDownCommandTimeOut.Location = new System.Drawing.Point(1024, 74);
+      this.numericUpDownCommandTimeOut.Name = "numericUpDownCommandTimeOut";
+      this.numericUpDownCommandTimeOut.Size = new System.Drawing.Size(42, 20);
+      this.numericUpDownCommandTimeOut.TabIndex = 17;
+      this.numericUpDownCommandTimeOut.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CommandTimeOut;
       // 
-      // toolStripSeparator3
+      // label2
       // 
-      this.toolStripSeparator3.Name = "toolStripSeparator3";
-      this.toolStripSeparator3.Size = new System.Drawing.Size(199, 6);
+      this.label2.AutoSize = true;
+      this.label2.Location = new System.Drawing.Point(924, 76);
+      this.label2.Name = "label2";
+      this.label2.Size = new System.Drawing.Size(94, 13);
+      this.label2.TabIndex = 18;
+      this.label2.Text = "CommandTimeOut";
       // 
       // MainForm
       // 
@@ -382,6 +405,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.cacheDurationInSecondsNumericUpDown)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
       this.contextMenuStripTabPage.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCommandTimeOut)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -418,6 +442,8 @@
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     private System.Windows.Forms.ToolStripMenuItem toggleSettingsVisibilityToolStripMenuItem;
+    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.NumericUpDown numericUpDownCommandTimeOut;
   }
 }
 

@@ -27,8 +27,8 @@ namespace LLBLGen.EntityBrowser
 {
   public partial class MainForm : FrmPersistantLocation
   {
-    private Type _linqMetaDataType;
-    private Type _adapterType;
+    private static Type _linqMetaDataType;
+    private static Type _adapterType;
 
     /// <summary>
     ///   The <see cref="ConnectionString" /> property's name.
@@ -48,11 +48,7 @@ namespace LLBLGen.EntityBrowser
       var dataConnectionConfiguration = new DataConnectionConfiguration(null);
       dataConnectionConfiguration.LoadConfiguration(DataConnectionDialog);
       Configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-      var configurationSectionGroup = Configuration.GetSectionGroup("userSettings");
-      if (configurationSectionGroup != null && configurationSectionGroup.Sections.Count > 0)
-      {
-        UserSettings = configurationSectionGroup.Sections[0] as ClientSettingsSection;
-      }
+      UserSettings = GeneralHelper.GetClientSettingsSection(Configuration, "userSettings");
       ConnectionStringSettingsCollection = Configuration.ConnectionStrings.ConnectionStrings;
     }
 
@@ -148,8 +144,7 @@ namespace LLBLGen.EntityBrowser
       {
         try
         {
-          foreach (SettingsPropertyValue settingsPropertyValue in Settings.Default.PropertyValues)
-            SetProperty(settingsPropertyValue.Name, Convert.ToString(settingsPropertyValue.SerializedValue));
+          GeneralHelper.CopySettings(Settings.Default, UserSettings);
 
           // Save the configuration file.
           Configuration.Save(ConfigurationSaveMode.Minimal, true);
@@ -174,12 +169,6 @@ namespace LLBLGen.EntityBrowser
       }
     }
 
-    private static void SetProperty(string propertyName, string value = null)
-    {
-      var adapterAssemblyPathSettingElement = UserSettings.Settings.Get(propertyName);
-      if (adapterAssemblyPathSettingElement != null) adapterAssemblyPathSettingElement.Value.ValueXml.InnerText = value ?? Convert.ToString(Settings.Default[propertyName]);
-    }
-
     private void AddEntityBrowser(ConnectionStringSettings connectionStringSetting)
     {
       tabControl.TabPages.Add(connectionStringSetting.Name, connectionStringSetting.Name);
@@ -195,18 +184,20 @@ namespace LLBLGen.EntityBrowser
       tabPage.Controls.Add(usrCntrlEntityBrowser);
     }
 
-    private void InitializeEntityBrowser(UsrCntrlEntityBrowser usrCntrlEntityBrowser, ConnectionStringSettings connectionStringSetting)
+    private static void InitializeEntityBrowser(UsrCntrlEntityBrowser usrCntrlEntityBrowser, ConnectionStringSettings connectionStringSetting)
     {
       ILinqMetaData linqMetaData;
       if (_daoBaseImplementationType == null)
       {
         var adapter = GetAdapter(connectionStringSetting, null, Settings.Default.AdapterAssemblyPath, null, _adapterType);
+        adapter.CommandTimeOut = (int) Settings.Default.CommandTimeOut;
         linqMetaData = (ILinqMetaData) Activator.CreateInstance(_linqMetaDataType, adapter);
       }
       else
       {
         linqMetaData = (ILinqMetaData) Activator.CreateInstance(_linqMetaDataType);
         EntityHelper.SetSelfservicingConnectionString(_daoBaseImplementationType, connectionStringSetting.ConnectionString);
+        _daoBaseImplementationType.StaticMembers().CommandTimeOut = (int)Settings.Default.CommandTimeOut;
       }
       usrCntrlEntityBrowser.Initialize(linqMetaData);
     }
