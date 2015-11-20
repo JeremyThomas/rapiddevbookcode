@@ -658,10 +658,16 @@ namespace AW.Helper
       return GetUserSetting(configuration, settingName);
     }
 
-    private static SettingValueElement GetUserSetting(Configuration configuration, string settingName)
+    public static SettingValueElement GetUserSetting(Configuration configuration, string settingName)
+    {
+      var configurationSectionGroup = GetUserSettingConfigurationSectionGroup(configuration);
+      return GetSetting(configurationSectionGroup, settingName);
+    }
+
+    private static ConfigurationSectionGroup GetUserSettingConfigurationSectionGroup(Configuration configuration)
     {
       var configurationSectionGroup = configuration.SectionGroups[@"userSettings"];
-      return GetSetting(configurationSectionGroup, settingName);
+      return configurationSectionGroup;
     }
 
     private static SettingValueElement GetSetting(ConfigurationSectionGroup configurationSectionGroup, string settingName)
@@ -670,12 +676,23 @@ namespace AW.Helper
       return settingElement == null ? null : settingElement.Value;
     }
 
-    private static SettingElement GetSettingElement(ConfigurationSectionGroup @group, string settingName)
+    public static ClientSettingsSection GetClientSettingsSection(Configuration configuration, string sectionGroup)
     {
-      if (@group == null)
+      var configurationSectionGroup = configuration.GetSectionGroup(sectionGroup);
+      return GetClientSettingsSection(configurationSectionGroup);
+    }
+
+    public static ClientSettingsSection GetClientSettingsSection(ConfigurationSectionGroup configurationSectionGroup)
+    {
+      if (configurationSectionGroup == null || configurationSectionGroup.Sections.Count == 0)
         return null;
       // find client section
-      var clientSection = @group.Sections[0] as ClientSettingsSection;
+      return configurationSectionGroup.Sections[0] as ClientSettingsSection;
+    }
+
+    private static SettingElement GetSettingElement(ConfigurationSectionGroup configurationSectionGroup, string settingName)
+    {
+      var clientSection = GetClientSettingsSection(configurationSectionGroup);
       return clientSection == null ? null : clientSection.Settings.Get(settingName);
     }
 
@@ -727,6 +744,18 @@ namespace AW.Helper
       };
       settingsProperty.Attributes.Add(typeof (UserScopedSettingAttribute), new UserScopedSettingAttribute());
       applicationSettingsBase.Properties.Add(settingsProperty);
+    }
+
+    public static void CopySettings(SettingsBase settings, ClientSettingsSection clientSettingsSection)
+    {
+      foreach (SettingsPropertyValue settingsPropertyValue in settings.PropertyValues)
+        SetProperty(clientSettingsSection, settingsPropertyValue.Name, settings, Convert.ToString(settingsPropertyValue.SerializedValue));
+    }
+
+    private static void SetProperty(ClientSettingsSection clientSettingsSection, string propertyName, SettingsBase settings, string value = null)
+    {
+      var settingElement = clientSettingsSection.Settings.Get(propertyName);
+      if (settingElement != null) settingElement.Value.ValueXml.InnerText = value ?? Convert.ToString(settings[propertyName]);
     }
 
     #endregion

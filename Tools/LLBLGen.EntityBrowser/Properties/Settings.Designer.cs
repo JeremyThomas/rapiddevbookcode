@@ -129,5 +129,17 @@ namespace LLBLGen.EntityBrowser.Properties {
                 this["PageSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public decimal CommandTimeOut {
+            get {
+                return ((decimal)(this["CommandTimeOut"]));
+            }
+            set {
+                this["CommandTimeOut"] = value;
+            }
+        }
     }
 }
