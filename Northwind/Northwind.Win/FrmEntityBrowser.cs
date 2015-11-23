@@ -106,5 +106,10 @@ namespace Northwind.Win
       var linqMetaData = Factories.CreateLinqMetaData();
       linqMetaData.Product.FilterByDiscontinued(true).ToEntityCollection2();
     }
+
+    private void ensureFilteringEnabledCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+      usrCntrlEntityBrowser1.EnsureFilteringEnabled = ensureFilteringEnabledCheckBox.Checked;
+    }
   }
 }

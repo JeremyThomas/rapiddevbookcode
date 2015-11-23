@@ -196,8 +196,25 @@ namespace LLBLGen.EntityBrowser
       else
       {
         linqMetaData = (ILinqMetaData) Activator.CreateInstance(_linqMetaDataType);
+        _daoBaseImplementationType = EntityHelper.GetDaoBaseImplementation(_linqMetaDataType.Assembly);
         EntityHelper.SetSelfservicingConnectionString(_daoBaseImplementationType, connectionStringSetting.ConnectionString);
-        _daoBaseImplementationType.StaticMembers().CommandTimeOut = (int)Settings.Default.CommandTimeOut;
+        DaoBase.CommandTimeOut = (int)Settings.Default.CommandTimeOut;
+        var sqlServerDqeAssemblyName = _daoBaseImplementationType.Assembly.GetReferencedAssemblies().FirstOrDefault(a => a.Name.Contains("SD.LLBLGen.Pro.DQE.SqlServer"));
+        if (sqlServerDqeAssemblyName != null)
+        {
+         var x= Activator.CreateInstance(_daoBaseImplementationType);
+          var sqlServerDqeAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.FullName == sqlServerDqeAssemblyName.FullName);
+          if (sqlServerDqeAssembly != null)
+          {
+            var dynamicQueryEnginetype = sqlServerDqeAssembly.GetConcretePublicImplementations(typeof (DynamicQueryEngineBase)).FirstOrDefault();
+            if (dynamicQueryEnginetype != null)
+            {
+              var obj = dynamicQueryEnginetype.InvokeMember("_catalogOverwrites", BindingFlags.GetField | BindingFlags.NonPublic | BindingFlags.Static, null, null, null);
+              var overrides =  obj as Dictionary<string, string>;
+              overrides["ad"] = "";
+            }
+          }
+        }
       }
       usrCntrlEntityBrowser.Initialize(linqMetaData);
     }
