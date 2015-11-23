@@ -59,14 +59,21 @@ namespace AW.Winforms.Helpers.LLBL
 
     protected IQueryable TryTrackQuery(dynamic query)
     {
-      dynamic tryTrackQuery = TrackQuery(query);
-      return tryTrackQuery is IQueryable ? tryTrackQuery : null;
+      if (query != null)
+      {
+        dynamic tryTrackQuery = TrackQuery(query);
+        return tryTrackQuery is IQueryable ? tryTrackQuery : null;
+      }
+      return null;
     }
 
     public IEntityCollectionCore FetchData(IQueryable query)
     {
       Query = TryTrackQuery(query);
-      FetchData();
+      if (Query != null)
+      {
+        FetchData();
+      }
       return _entityCollection;
     }
 
