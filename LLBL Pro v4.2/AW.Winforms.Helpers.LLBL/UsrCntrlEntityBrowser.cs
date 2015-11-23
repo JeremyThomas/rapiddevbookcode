@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
@@ -129,7 +128,8 @@ namespace AW.Winforms.Helpers.LLBL
       get
       {
         var dataEditorLLBLDataScopePersister = gridDataEditor.DataEditorPersister as DataEditorLLBLDataScopePersister;
-        if (dataEditorLLBLDataScopePersister == null) return null; return dataEditorLLBLDataScopePersister.GeneralDataScope;
+        if (dataEditorLLBLDataScopePersister == null) return null;
+        return dataEditorLLBLDataScopePersister.GeneralDataScope;
       }
     }
 
@@ -158,7 +158,8 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-    [DefaultValue(DefaultCacheDurationInSeconds), Category("EntityBrowser"), Description("Specifies that the query's resultset should be cached for the duration specified, 0 means don't cache at all.")]
+    [DefaultValue(DefaultCacheDurationInSeconds), Category("EntityBrowser"),
+     Description("Specifies that the query's resultset should be cached for the duration specified, 0 means don't cache at all.")]
     public int CacheDurationInSeconds
     {
       get { return _cacheDurationInSeconds; }
@@ -232,10 +233,10 @@ namespace AW.Winforms.Helpers.LLBL
       PopulateTreeViewWithSchema();
     }
 
-    bool _fullyPainted;
+    private bool _fullyPainted;
 
     /// <summary>
-    /// http://stackoverflow.com/questions/7309736/which-event-is-launched-right-after-control-is-fully-loaded
+    ///   http://stackoverflow.com/questions/7309736/which-event-is-launched-right-after-control-is-fully-loaded
     /// </summary>
     /// <param name="m">The Message.</param>
     protected override void WndProc(ref Message m)
@@ -251,10 +252,11 @@ namespace AW.Winforms.Helpers.LLBL
     private IBindingListView BindingListViewCreater(IEnumerable enumerable, Type itemType)
     {
       var genericDataScopeBase = DataScope;
-      if (genericDataScopeBase != null)
+      if (genericDataScopeBase != null && enumerable != null)
       {
         var queryable = enumerable as IQueryable;
-        enumerable =genericDataScopeBase.FetchData(queryable);
+        if (queryable != null) 
+          enumerable = genericDataScopeBase.FetchData(queryable);
       }
       return EntityHelper.CreateEntityView(enumerable, itemType);
     }
@@ -326,8 +328,8 @@ namespace AW.Winforms.Helpers.LLBL
 
     private IQueryable GetEntityQueryable()
     {
-      return _getQueryableForEntityDelegate == null ?
-        EntityHelper.GetQueryableForEntityIgnoreIfNull(_linqMetaData, treeViewEntities.SelectedNode.Tag as Type)
+      return _getQueryableForEntityDelegate == null
+        ? EntityHelper.GetQueryableForEntityIgnoreIfNull(_linqMetaData, treeViewEntities.SelectedNode.Tag as Type)
         : _getQueryableForEntityDelegate(_linqMetaData, treeViewEntities.SelectedNode.Tag as Type);
     }
 
@@ -348,13 +350,13 @@ namespace AW.Winforms.Helpers.LLBL
     }
 
     /// <summary>
-    /// Set a Cache on the base query of the gridDataEditor, which means all pageing based off that query will be cached too.
+    ///   Set a Cache on the base query of the gridDataEditor, which means all pageing based off that query will be cached too.
     /// </summary>
     /// <param name="entityQueryable">The entity queryable.</param>
     /// <returns></returns>
     private dynamic CacheResultset(dynamic entityQueryable)
     {
-      return CacheDurationInSeconds > 0 ? QueryableExtensionMethods.CacheResultset(entityQueryable, CacheDurationInSeconds,false, Name):entityQueryable;
+      return CacheDurationInSeconds > 0 ? QueryableExtensionMethods.CacheResultset(entityQueryable, CacheDurationInSeconds, false, Name) : entityQueryable;
     }
 
     private void openPagedToolStripMenuItem_Click()
@@ -388,7 +390,7 @@ namespace AW.Winforms.Helpers.LLBL
       {
         gridDataEditor.CancelEdits();
         if (gridDataEditor.DataEditorPersister.Undo())
-        SetSaveButtons();
+          SetSaveButtons();
       }
     }
 
@@ -422,12 +424,12 @@ namespace AW.Winforms.Helpers.LLBL
 
     private void cacheDurationInSecondsNumericUpDown_ValueChanged(object sender, EventArgs e)
     {
-      CacheDurationInSeconds = (int)cacheDurationInSecondsNumericUpDown.Value;
+      CacheDurationInSeconds = (int) cacheDurationInSecondsNumericUpDown.Value;
     }
 
     private void pageSizeNumericUpDown_Click(object sender, EventArgs e)
     {
-     PageSize  = (ushort) pageSizeNumericUpDown.Value;
+      PageSize = (ushort) pageSizeNumericUpDown.Value;
     }
 
     private void prefixDelimiterTextBox_Click(object sender, EventArgs e)
