@@ -5,7 +5,6 @@ using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -170,18 +169,6 @@ namespace AW.Test.Helpers
       get { return ThreeStrings.Distinct(); }
     }
 
-    private static readonly Dictionary<Type, StaticMembersDynamicWrapper> TypeLookup = new Dictionary<Type, StaticMembersDynamicWrapper>();
-
-    public static dynamic StaticMembersProxy(this Type type)
-    {
-      StaticMembersDynamicWrapper smdw;
-
-      if (!TypeLookup.TryGetValue(type, out smdw))
-
-        TypeLookup[type] = smdw = new StaticMembersDynamicWrapper(type);
-
-      return smdw;
-    }
   }
 
   [Serializable]

@@ -213,6 +213,7 @@
       this.ensureFilteringEnabledCheckBox.TabIndex = 1;
       this.ensureFilteringEnabledCheckBox.Text = "Ensure Filtering Enabled:";
       this.ensureFilteringEnabledCheckBox.UseVisualStyleBackColor = true;
+      this.ensureFilteringEnabledCheckBox.CheckedChanged += new System.EventHandler(this.ensureFilteringEnabledCheckBox_CheckedChanged);
       // 
       // usrCntrlEntityBrowser1
       // 

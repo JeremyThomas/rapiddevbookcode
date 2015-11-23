@@ -315,7 +315,7 @@ namespace AW.Helper.LLBL
       {
         var entityFactoryCore = GetFactoryCore(enumerable, itemType);
         var entityFactory = (entityFactoryCore as IEntityFactory);
-        entities = entityFactory == null? (IEntityCollectionCore) ((IEntityFactory2) entityFactoryCore).CreateEntityCollection():entityFactory.CreateEntityCollection();
+        entities = entityFactory == null ? (IEntityCollectionCore) ((IEntityFactory2) entityFactoryCore).CreateEntityCollection() : entityFactory.CreateEntityCollection();
         foreach (IEntityCore item in enumerable)
           entities.Add(item);
       }
@@ -436,12 +436,12 @@ namespace AW.Helper.LLBL
       }
       if (view != null)
       {
-        modifiedEntities = ((IEntityView)modifiedEntities).RelatedCollection;
+        modifiedEntities = ((IEntityView) modifiedEntities).RelatedCollection;
         postCollectionChangeActionNoAction = view.DataChangeAction == PostCollectionChangeAction.NoAction;
       }
       if (view2 != null)
       {
-        modifiedEntities = ((IEntityView2)modifiedEntities).RelatedCollection;
+        modifiedEntities = ((IEntityView2) modifiedEntities).RelatedCollection;
         postCollectionChangeActionNoAction = view2.DataChangeAction == PostCollectionChangeAction.NoAction;
       }
       var entities = modifiedEntities as IEntityCollectionCore;
@@ -462,10 +462,10 @@ namespace AW.Helper.LLBL
             {
               var entityCollection2 = modifiedEntities as IEntityCollection2;
               if (entityCollection2 != null)
-                entityCollection2.AddRange((IEntityCollection2)entityCollection.RemovedEntitiesTracker);
+                entityCollection2.AddRange((IEntityCollection2) entityCollection.RemovedEntitiesTracker);
             }
             else
-              collection.AddRange((IEntityCollection)entityCollection.RemovedEntitiesTracker);
+              collection.AddRange((IEntityCollection) entityCollection.RemovedEntitiesTracker);
           }
           finally
           {
@@ -504,7 +504,7 @@ namespace AW.Helper.LLBL
           if (entity != null)
             RevertChangesToDBValue(entity);
           else
-            RevertChangesToDBValue((IEntity2)modifiedData);
+            RevertChangesToDBValue((IEntity2) modifiedData);
         }
         else
           RevertChangesToDBValue(enumerable);
@@ -540,7 +540,6 @@ namespace AW.Helper.LLBL
           Undo(unitOfWorkElement.Entity);
         }
       }
- 
     }
 
     public static bool IsDirty(object data)
@@ -605,7 +604,7 @@ namespace AW.Helper.LLBL
     {
       return entity.Fields[fieldName] ?? entity.Fields.AsEnumerable().FirstOrDefault(ef => ef.Name.Equals(fieldName, StringComparison.InvariantCultureIgnoreCase));
     }
-    
+
     /// <summary>
     ///   Gets a entity field enumeration from entity fields.
     /// </summary>
@@ -614,7 +613,7 @@ namespace AW.Helper.LLBL
     public static IEnumerable<IEntityField> AsEnumerable(this IEntityFields entityFields)
     {
       return entityFields.Cast<IEntityField>();
-    }  
+    }
 
     public static void RevertChangesToDBValue(this IEntityCollection entityCollection)
     {
@@ -622,7 +621,7 @@ namespace AW.Helper.LLBL
         dirtyEntity.RevertChangesToDBValue();
       ResetErrorsAndRemoveNew(entityCollection);
     }
-    
+
     /// <summary>
     ///   Gets the factory of the entity with the .NET type specified
     /// </summary>
@@ -696,26 +695,28 @@ namespace AW.Helper.LLBL
     public static Type GetDaoBaseImplementation(Assembly assembly)
     {
       return assembly.GetConcretePublicImplementations(typeof (DaoBase)).FirstOrDefault();
-     //  return assembly.GetTypes().SingleOrDefault(t => t.Name.Contains("CommonDaoBase") && t.IsClass);
+      //  return assembly.GetTypes().SingleOrDefault(t => t.Name.Contains("CommonDaoBase") && t.IsClass);
     }
 
     /// <summary>
-    /// Sets the selfservicing connection string. Note the catalog in the connection string is ignored unless sqlServerCatalogNameOverwrites sets it to blank.
+    ///   Sets the selfservicing connection string. Note the catalog in the connection string is ignored unless sqlServerCatalogNameOverwrites sets it to blank.
     /// </summary>
-    /// <remarks>https://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=15107 OverrideCatalogs
-    /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=15875
+    /// <remarks>
+    ///   https://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=15107 OverrideCatalogs
+    ///   http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=15875
     /// </remarks>
     /// <param name="daoBaseImplementationType">Type of the DAO base implementation.</param>
     /// <param name="connectionString">The connection string.</param>
     /// <exception cref="System.InvalidOperationException"></exception>
     public static void SetSelfservicingConnectionString(Type daoBaseImplementationType, string connectionString)
     {
-           if (daoBaseImplementationType != null) {
-        if (!String.IsNullOrEmpty(connectionString))
+      if (daoBaseImplementationType != null)
       {
-
+        if (!String.IsNullOrEmpty(connectionString))
+        {
           daoBaseImplementationType.StaticMembers().ActualConnectionString = connectionString;
-      }}
+        }
+      }
     }
 
     #endregion
@@ -973,7 +974,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Gets the transaction controller from a Query Provider.
+    ///   Gets the transaction controller from a Query Provider.
     /// </summary>
     /// <param name="provider">The provider.</param>
     /// <returns></returns>
@@ -1242,7 +1243,7 @@ namespace AW.Helper.LLBL
         }
         if (contextAwareElement == null)
         {
-          var contextToUse = ((dynamic)potentialContextAwareElement).ContextToUse as Context;
+          var contextToUse = ((dynamic) potentialContextAwareElement).ContextToUse as Context;
           return contextToUse;
         }
         return contextAwareElement.ContextToUse;
