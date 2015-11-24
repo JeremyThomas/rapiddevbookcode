@@ -95,33 +95,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
         if (dataAccessAdapterType == null)
           throw new ApplicationException(String.Format("Adapter type: {0} could not be loaded from: {1}!", adapterTypeName, adapterAssemblyPath));
-        if (String.IsNullOrEmpty(cxInfo.DatabaseInfo.CustomCxString))
-        {
-          adapter = dataAccessAdapterAssembly.CreateInstance(adapterTypeName) as DataAccessAdapterBase;
-        }
-        else
-        {
-          if (cxInfo.DatabaseInfo.IsSqlServer)
-            adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-            {
-              cxInfo.DatabaseInfo.CustomCxString,
-              true, CatalogNameUsage.Clear, null
-            }) as DataAccessAdapterBase;
-          else
-          {
-            if (cxInfo.DatabaseInfo.CustomCxString.Contains("Oracle"))
-              adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-              {
-                cxInfo.DatabaseInfo.CustomCxString,
-                true, SchemaNameUsage.Default, null
-              }) as DataAccessAdapterBase;
-            else
-              adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-              {
-                cxInfo.DatabaseInfo.CustomCxString
-              }) as DataAccessAdapterBase;
-          }
-        }
+        adapter = CreateDataAccessAdapterInstance(dataAccessAdapterType, cxInfo.DatabaseInfo);
       }
       else
       {
@@ -151,6 +125,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
             throw;
           }
       }
+      return adapter;
+    }
+
+    private static DataAccessAdapterBase CreateDataAccessAdapterInstance(Type dataAccessAdapterType, IDatabaseInfo databaseInfo)
+    {
+      var adapter = EntityHelper.CreateDataAccessAdapterInstance(dataAccessAdapterType, databaseInfo.CustomCxString
+        , () => databaseInfo.IsSqlServer
+        , () => databaseInfo.CustomCxString.Contains("Oracle"));
       return adapter;
     }
 

@@ -352,6 +352,16 @@ namespace AW.Helper
       return LocalDBInstancePrefix + localDbInstanceDataSource.Name;
     }
 
+    public static string GetSqlDatabaseName(string connectionString)
+    {
+      // ReSharper disable once CollectionNeverQueried.Local
+      var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
+      var newCatalog = sqlConnectionStringBuilder.InitialCatalog;
+      if (string.IsNullOrWhiteSpace(newCatalog))
+        newCatalog = sqlConnectionStringBuilder.AttachDBFilename;
+      return newCatalog;
+    }
+
     #region DbCommand
 
     /// <summary>

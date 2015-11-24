@@ -28,7 +28,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public static readonly string[] AdditionalAssemblies =
     {
       "SD.LLBLGen.Pro.ORMSupportClasses.dll",
-      "AW.Helper.dll", "AW.Helper.LLBL.dll", "System.Windows.Forms.dll",
+      "AW.Helper.dll", "AW.Helper.LLBL.dll", 
       "AW.Winforms.Helpers.dll", "AW.Winforms.Helpers.LLBL.dll",
       "AW.LinqPadExtensions.dll"
     };
@@ -174,7 +174,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           var assembly = baseType.Assembly;
           try
           {
-            ProfilerHelper.InitializeOrmProfiler();
+            ProfilerHelper.InitializeOrmProfiler("LinqPad " + (string.IsNullOrWhiteSpace(cxInfo.DisplayName)? cxInfo.ToString(): cxInfo.DisplayName)); //+ " "+Util.CurrentQueryPath
           }
           catch (Exception e)
           {
@@ -320,7 +320,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
       EntityHelper.SetSelfservicingConnectionString(commonDaoBaseType, cxInfo.DatabaseInfo.CustomCxString);
       SetSQLTranslationWriter(commonDaoBaseType, executionManager);
     }
-
 
 
     /// <summary>

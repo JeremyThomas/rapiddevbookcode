@@ -183,42 +183,7 @@ namespace LLBLGen.EntityBrowser
       InitializeEntityBrowser(usrCntrlEntityBrowser, connectionStringSetting);
       tabPage.Controls.Add(usrCntrlEntityBrowser);
     }
-
-    private static void InitializeEntityBrowser(UsrCntrlEntityBrowser usrCntrlEntityBrowser, ConnectionStringSettings connectionStringSetting)
-    {
-      ILinqMetaData linqMetaData;
-      if (_daoBaseImplementationType == null)
-      {
-        var adapter = GetAdapter(connectionStringSetting, null, Settings.Default.AdapterAssemblyPath, null, _adapterType);
-        adapter.CommandTimeOut = (int) Settings.Default.CommandTimeOut;
-        linqMetaData = (ILinqMetaData) Activator.CreateInstance(_linqMetaDataType, adapter);
-      }
-      else
-      {
-        linqMetaData = (ILinqMetaData) Activator.CreateInstance(_linqMetaDataType);
-        _daoBaseImplementationType = EntityHelper.GetDaoBaseImplementation(_linqMetaDataType.Assembly);
-        EntityHelper.SetSelfservicingConnectionString(_daoBaseImplementationType, connectionStringSetting.ConnectionString);
-        DaoBase.CommandTimeOut = (int)Settings.Default.CommandTimeOut;
-        var sqlServerDqeAssemblyName = _daoBaseImplementationType.Assembly.GetReferencedAssemblies().FirstOrDefault(a => a.Name.Contains("SD.LLBLGen.Pro.DQE.SqlServer"));
-        if (sqlServerDqeAssemblyName != null)
-        {
-         var x= Activator.CreateInstance(_daoBaseImplementationType);
-          var sqlServerDqeAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.FullName == sqlServerDqeAssemblyName.FullName);
-          if (sqlServerDqeAssembly != null)
-          {
-            var dynamicQueryEnginetype = sqlServerDqeAssembly.GetConcretePublicImplementations(typeof (DynamicQueryEngineBase)).FirstOrDefault();
-            if (dynamicQueryEnginetype != null)
-            {
-              var obj = dynamicQueryEnginetype.InvokeMember("_catalogOverwrites", BindingFlags.GetField | BindingFlags.NonPublic | BindingFlags.Static, null, null, null);
-              var overrides =  obj as Dictionary<string, string>;
-              overrides["ad"] = "";
-            }
-          }
-        }
-      }
-      usrCntrlEntityBrowser.Initialize(linqMetaData);
-    }
-
+   
     private static IEnumerable<ConnectionStringSettings> UserConnections
     {
       get { return Settings.Default.UserConnections == null ? null : Settings.Default.UserConnections.Cast<ConnectionStringSettings>(); }
@@ -273,6 +238,53 @@ namespace LLBLGen.EntityBrowser
       [Description("Adapter Factory")] AdapterFactory
     }
 
+    private static void InitializeEntityBrowser(UsrCntrlEntityBrowser usrCntrlEntityBrowser, ConnectionStringSettings connectionStringSetting)
+    {
+      ILinqMetaData linqMetaData;
+      if (_daoBaseImplementationType == null)
+      {
+        var adapter = GetAdapter(connectionStringSetting, null, Settings.Default.AdapterAssemblyPath, null, _adapterType);
+        adapter.CommandTimeOut = (int)Settings.Default.CommandTimeOut;
+        linqMetaData = (ILinqMetaData)Activator.CreateInstance(_linqMetaDataType, adapter);
+      }
+      else
+      {
+        linqMetaData = (ILinqMetaData)Activator.CreateInstance(_linqMetaDataType);
+        EntityHelper.SetSelfservicingConnectionString(_daoBaseImplementationType, connectionStringSetting.ConnectionString);
+        DaoBase.CommandTimeOut = (int)Settings.Default.CommandTimeOut;
+        var sqlServerDqeAssemblyName = _daoBaseImplementationType.Assembly.GetReferencedAssemblies().FirstOrDefault(a => a.Name.Contains("SD.LLBLGen.Pro.DQE.SqlServer"));
+        if (sqlServerDqeAssemblyName != null)
+        {
+          var x = Activator.CreateInstance(_daoBaseImplementationType);
+          var sqlServerDqeAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.FullName == sqlServerDqeAssemblyName.FullName);
+          if (sqlServerDqeAssembly != null)
+          {
+
+            var newCatalog = DataHelper.GetSqlDatabaseName(connectionStringSetting.ConnectionString);
+            if (!string.IsNullOrWhiteSpace(newCatalog))
+            {
+              var dynamicQueryEnginetype = sqlServerDqeAssembly.GetConcretePublicImplementations(typeof(DynamicQueryEngineBase)).FirstOrDefault();
+              if (dynamicQueryEnginetype != null)
+              {
+                var obj = dynamicQueryEnginetype.InvokeMember("_catalogOverwrites", BindingFlags.GetField | BindingFlags.NonPublic | BindingFlags.Static, null, null, null);
+                var overrides = obj as Dictionary<string, string>;
+                var entityType = _linqMetaDataType.Assembly.GetConcretePublicImplementations(typeof(EntityBase)).FirstOrDefault();
+                var elementCreator = EntityHelper.CreateElementCreator(entityType);
+                var entity = LinqUtils.CreateEntityInstanceFromEntityType(entityType, elementCreator);
+                if (entity != null && overrides != null)
+                {
+                  var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafely(entity);
+                  if (fieldPersistenceInfo != null && fieldPersistenceInfo.SourceCatalogName != newCatalog)
+                    overrides[fieldPersistenceInfo.SourceCatalogName] = newCatalog;
+                }
+              }
+            }
+          }
+        }
+      }
+      usrCntrlEntityBrowser.Initialize(linqMetaData);
+    }
+
     private static Assembly LoadAssembly(string assemblyPath)
     {
       return Assembly.LoadFrom(assemblyPath);
@@ -293,7 +305,6 @@ namespace LLBLGen.EntityBrowser
 
     private static DataAccessAdapterBase GetAdapter(ConnectionStringSettings connectionStringSettings, string adapterTypeName, string adapterAssemblyPath, Assembly dataAccessAdapterAssembly, Type dataAccessAdapterType)
     {
-      DataAccessAdapterBase adapter;
       if (dataAccessAdapterAssembly == null)
       {
         if (String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
@@ -306,25 +317,18 @@ namespace LLBLGen.EntityBrowser
         dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
       if (dataAccessAdapterType == null)
         throw new ApplicationException(String.Format("Adapter type: {0} could not be loaded from: {1}!", adapterTypeName, adapterAssemblyPath));
-      if (String.IsNullOrEmpty(connectionStringSettings.ConnectionString))
-      {
-        adapter = dataAccessAdapterAssembly.CreateInstance(adapterTypeName) as DataAccessAdapterBase;
-      }
-      else
-      {
-        if (connectionStringSettings.ProviderName.Contains("SqlClient"))
-          adapter = Activator.CreateInstance(dataAccessAdapterType, connectionStringSettings.ConnectionString, true, CatalogNameUsage.Clear, null) as DataAccessAdapterBase;
-        else
-        {
-          if (connectionStringSettings.ProviderName.Contains("Oracle"))
-            adapter = Activator.CreateInstance(dataAccessAdapterType, connectionStringSettings.ConnectionString, true, SchemaNameUsage.Default, null) as DataAccessAdapterBase;
-          else
-            adapter = Activator.CreateInstance(dataAccessAdapterType, connectionStringSettings.ConnectionString) as DataAccessAdapterBase;
-        }
-      }
+      var adapter = CreateDataAccessAdapterInstance(dataAccessAdapterType, connectionStringSettings);
       return adapter;
     }
 
+    private static DataAccessAdapterBase CreateDataAccessAdapterInstance(Type dataAccessAdapterType, ConnectionStringSettings connectionStringSettings)
+    {
+      var adapter = EntityHelper.CreateDataAccessAdapterInstance(dataAccessAdapterType, connectionStringSettings.ConnectionString
+        , () => connectionStringSettings.ProviderName.Contains("SqlClient")
+        , () => connectionStringSettings.ProviderName.Contains("Oracle"));
+      return adapter;
+    }
+    
     //Variable to store the tabpage which belongs to the headeritem
     //over which the cursor is currently hovering.
     private TabPage _currentTabItem;

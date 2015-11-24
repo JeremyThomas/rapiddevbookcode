@@ -900,6 +900,42 @@ namespace AW.Helper.LLBL
       return adapter;
     }
 
+    public static DataAccessAdapterBase CreateDataAccessAdapterInstance(Type dataAccessAdapterType, string connectionString
+      , Func<bool> isSqlServer = null, Func<bool> isOracle = null)
+    {
+      object adapter;
+      if (String.IsNullOrWhiteSpace(connectionString))
+      {
+        adapter = Activator.CreateInstance(dataAccessAdapterType);
+      }
+      else
+      {
+        if (isSqlServer != null && isSqlServer())
+        {
+          var newCatalog = DataHelper.GetSqlDatabaseName(connectionString);
+          adapter = string.IsNullOrWhiteSpace(newCatalog) 
+            ? Activator.CreateInstance(dataAccessAdapterType, connectionString) 
+            : Activator.CreateInstance(dataAccessAdapterType, connectionString, true, CatalogNameUsage.Clear, newCatalog);
+          // <param name="connectionString">The connection string to use when connecting to the database.</param>
+          // <param name="keepConnectionOpen">when true, the DataAccessAdapter will not close an opened connection. Use this for multi action usage.</param>
+          // <param name="catalogNameUsageSetting"> Configures this data access adapter object how to threat catalog names in persistence information.</param>
+          // <param name="catalogNameToUse"> The name to use if catalogNameUsageSetting is set to ForceName. Ignored otherwise.</param>
+        }
+        else
+        {
+          if (isOracle != null && isOracle())
+            adapter = Activator.CreateInstance(dataAccessAdapterType, connectionString, true, SchemaNameUsage.Default, null) ;
+          // <param name="connectionString">The connection string to use when connecting to the database.</param>
+          // <param name="keepConnectionOpen">when true, the DataAccessAdapter will not close an opened connection. Use this for multi action usage.</param>
+          // <param name="schemaNameUsageSetting">Configures this data access adapter object how to threat schema names in persistence information.</param>
+          // <param name="schemaNameToUse">Oracle specific. The name to use if schemaNameUsageSetting is set to ForceName. Ignored otherwise.</param>
+          else
+            adapter = Activator.CreateInstance(dataAccessAdapterType, connectionString);
+        }
+      }
+      return adapter as DataAccessAdapterBase; ;
+    }
+
     #endregion
 
     #region ToEntityCollection2

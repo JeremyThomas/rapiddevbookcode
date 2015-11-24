@@ -70,13 +70,13 @@ namespace AW.Helper
     ///   SD.Tools.Algorithmia.dll need to be able to be loaded
     /// </remarks>
     /// <returns> true if Initialize took place </returns>
-    public static bool InitializeOrmProfiler()
+    public static bool InitializeOrmProfiler(string applicationName = null)
     {
       try
       {
         var interceptorType = GetInterceptorType();
         OrmProfilerStatus = null;
-        var interceptorCoreInitialize = InterceptorCoreInitialize(interceptorType);
+        var interceptorCoreInitialize = InterceptorCoreInitialize(interceptorType, applicationName);
         if (!string.IsNullOrWhiteSpace(OrmProfilerStatus))
           return interceptorCoreInitialize;
         string interceptorTypeName = null;
@@ -138,8 +138,10 @@ namespace AW.Helper
     /// <summary>
     ///   Initializes the ORM Profiler. Reflected version of InterceptorCore.Initialize(ApplicationName);
     /// </summary>
-    /// <param name="interceptorType"> The interceptorType type. </param>
-    public static bool InterceptorCoreInitialize(Type interceptorType)
+    /// <param name="interceptorType">The interceptorType type.</param>
+    /// <param name="applicationName">Name of the application.</param>
+    /// <returns></returns>
+    public static bool InterceptorCoreInitialize(Type interceptorType, string applicationName = null)
     {
       if (interceptorType == null)
       {
@@ -151,7 +153,7 @@ namespace AW.Helper
         BindingFlags.Public |
         BindingFlags.InvokeMethod |
         BindingFlags.Static,
-        null, null, new object[] {ApplicationName}, CultureInfo.CurrentUICulture);
+        null, null, new object[] {applicationName ?? ApplicationName}, CultureInfo.CurrentUICulture);
       MetaDataHelper.AddSelfAssemblyResolverIfNeeded(interceptorType);
       if (result is bool)
         return (bool) result;
