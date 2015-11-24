@@ -353,8 +353,8 @@ namespace AW.Helper
     public static IEnumerable<Type> GetAssignable(this Type ancestorType, IEnumerable<Type> descendantTypes)
     {
       return from type in descendantTypes
-        where type.IsPublic && !type.IsAbstract && ancestorType.IsAssignableFrom(type)
-        select type;
+        where type.IsPublic && !type.IsAbstract && ancestorType.IsAssignableFrom(type)  && ancestorType!= type
+             select type;
     }
 
     public static bool IsAssignableTo(this Type type, params Type[] ancestorTypes)
