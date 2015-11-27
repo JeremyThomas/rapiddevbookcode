@@ -228,6 +228,10 @@ namespace AW.Winforms.Helpers.Controls
           toolStripLabelDeleteCount.Text = "";
           saveToolStripButton.Enabled = !SupportsNotifyPropertyChanged;
         }
+        else
+        {
+          toolStripButtonCancelEdit.Enabled = true;
+        }
       }
       else
         saveToolStripButton.Enabled = numSaved == 0 || !SupportsNotifyPropertyChanged;
@@ -612,6 +616,7 @@ namespace AW.Winforms.Helpers.Controls
         bindingSourceEnumerable.ResetBindings(false);
         saveToolStripButton.Enabled = false;
       }
+      _deleteItems.Clear();
       SetButtonsOnEditEnded();
       return !saveToolStripButton.Enabled;
     }

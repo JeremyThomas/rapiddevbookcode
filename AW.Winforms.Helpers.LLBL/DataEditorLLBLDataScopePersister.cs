@@ -48,8 +48,16 @@ namespace AW.Winforms.Helpers.LLBL
     /// </summary>
     public event EventHandler EntityAdded
     {
-      add { GeneralDataScope.EntityAdded += value; }
-      remove { GeneralDataScope.EntityAdded -= value; }
+      add
+      {
+        GeneralDataScope.EntityAdded += value;
+        GeneralDataScope.EntityRemoved += value;
+      }
+      remove
+      {
+        GeneralDataScope.EntityAdded -= value;
+        GeneralDataScope.EntityRemoved -= value;
+      }
     }
 
     public override int Save(object dataToSave)

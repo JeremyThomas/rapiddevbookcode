@@ -520,13 +520,10 @@ namespace AW.Helper.LLBL
         if (unitOfWork2 != null)
         {
           foreach (var unitOfWorkCollectionElement2 in unitOfWork2.GetCollectionElementsToSave())
-          {
             Undo(unitOfWorkCollectionElement2.Collection);
-          }
           foreach (var unitOfWorkElement2 in unitOfWork2.GetEntityElementsToUpdate())
-          {
             Undo(unitOfWorkElement2.Entity);
-          }
+          unitOfWork2.GetEntityElementsToDelete().Clear();
         }
       }
       else
@@ -539,6 +536,7 @@ namespace AW.Helper.LLBL
         {
           Undo(unitOfWorkElement.Entity);
         }
+        unitOfWork.GetEntityElementsToDelete().Clear();
       }
     }
 
@@ -670,7 +668,10 @@ namespace AW.Helper.LLBL
         var entityCollection = collection;
         var modifyCount = 0;
         if (entityCollection.RemovedEntitiesTracker != null)
+        {
           modifyCount = entityCollection.RemovedEntitiesTracker.DeleteMulti();
+          entityCollection.RemovedEntitiesTracker.Clear();
+        }
         return modifyCount + entityCollection.SaveMulti();
       }
       return entitiesToSave.Cast<EntityBase>().Count(entity => entity.IsDirty && entity.Save());
@@ -756,7 +757,13 @@ namespace AW.Helper.LLBL
         var entityCollection = collectionToSave;
         var modifyCount = 0;
         if (entityCollection.RemovedEntitiesTracker != null)
+        {
+          foreach (IEntityCore entity in entityCollection.RemovedEntitiesTracker)
+            if (!entity.MarkedForDeletion)
+              entityCollection.RemovedEntitiesTracker.Remove(entity);
           modifyCount = dataAccessAdapter.DeleteEntityCollection(entityCollection.RemovedEntitiesTracker);
+          entityCollection.RemovedEntitiesTracker.Clear();
+        }
         return modifyCount + dataAccessAdapter.SaveEntityCollection(collectionToSave, false, true);
       }
       return SaveEntities(entitiesToSave.Cast<IEntity2>(), dataAccessAdapter);
