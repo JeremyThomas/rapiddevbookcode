@@ -1001,5 +1001,32 @@ namespace AW.Winforms.Helpers.Controls
       ((ISupportInitialize)(this.bindingSourcePaging)).EndInit();
       ((ISupportInitialize)(this.dataGridEnumerable)).EndInit();
     }
+
+    private void toolStripButtonRelatedCounts_Click(object sender, EventArgs e)
+    {
+      var existingRelatedCounts = GetExistingRelatedCounts();
+      if (existingRelatedCounts.Any())
+      {
+        //toolStripLabelNumChildren.Text = existingRelatedCounts.JoinAsString(Environment.NewLine);
+     //   MessageBox.Show(toolStripLabelNumChildren.Text, "Number of references to this staff member record");
+      }
+      else
+      {
+        //  toolStripLabelNumChildren.Text = "Not used";
+      }
+    }
+
+    private Dictionary<string, int> GetExistingRelatedCounts()
+    {
+      //var staffMemberEntity = BindingSource.Current as StaffMemberEntity;
+      //return EntityHelper.GetRelatedCounts(DataAccessAdapterRead, entity, entityTypesToExclude);
+      return new Dictionary<string, int>();
+    }
+
+    private void bindingNavigatorDeleteItem1_Click(object sender, EventArgs e)
+    {
+
+    }
+    
   }
 }

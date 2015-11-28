@@ -833,6 +833,116 @@ namespace AW.Helper.LLBL
       return 0;
     }
 
+    public static void MakeCascadeDeletesForAllChildren(UnitOfWork2 uow, IEntity2 entity, bool deleteDirectly = true, params string[] entityTypesToExclude)
+    {
+      // Delete children of Entity
+
+      foreach (var relationPredicateBucket in GetAllRelationsWhereStartEntityIsPkSide(entity)
+        .Select(entityRelation => CreateRelationPredicateBucket(entityRelation, entity.PrimaryKeyFields))
+        .Where(relationPredicateBucket => !entityTypesToExclude.Contains(relationPredicateBucket.Item1)))
+      {
+        uow.AddDeleteEntitiesDirectlyCall(relationPredicateBucket.Item1, relationPredicateBucket.Item2);
+      }
+
+      if (deleteDirectly)
+        ChangeDeleteToDirect(uow, entity);
+    }
+
+    private static void MakeCascadeDeletesForSpecifiedChildren(UnitOfWork2 uow, IEntity2 entity, IEnumerable<string> entityTypesToDelete, bool deleteDirectly = true)
+    {
+      // Delete children of Entity
+
+      foreach (var relationPredicateBucket in GetAllRelationsWhereStartEntityIsPkSide(entity)
+        .Select(entityRelation => CreateRelationPredicateBucket(entityRelation, entity.PrimaryKeyFields))
+        .Where(relationPredicateBucket => entityTypesToDelete.Contains(relationPredicateBucket.Item1)))
+      {
+        uow.AddDeleteEntitiesDirectlyCall(relationPredicateBucket.Item1, relationPredicateBucket.Item2);
+      }
+
+      if (deleteDirectly)
+        ChangeDeleteToDirect(uow, entity);
+    }
+
+    private static void ChangeDeleteToDirect(UnitOfWork2 uow, IEntity2 entity)
+    {
+      // Delete Entity directly
+      uow.AddDeleteEntitiesDirectlyCall(entity.LLBLGenProEntityName, CreatePKRelationPredicateBucket(entity));
+
+      // Remove Entity as it now being delete directly
+      uow.RemoveFromUoW(entity);
+    }
+
+    private static IRelationPredicateBucket CreatePKRelationPredicateBucket(IEntity2 entity)
+    {
+      return new RelationPredicateBucket(CreatePKPredicateExpression(entity));
+    }
+
+    private static IPredicateExpression CreatePKPredicateExpression(IEntity2 entity)
+    {
+      IPredicateExpression predicateExpression = new PredicateExpression();
+      foreach (var primaryKeyField in entity.PrimaryKeyFields.OfType<EntityField2>())
+        predicateExpression.Add(primaryKeyField == primaryKeyField.CurrentValue);
+      return predicateExpression;
+    }
+
+    public static IEnumerable<Tuple<string, int>> GetChildCounts(IDataAccessAdapter dataAccessAdapter, EntityBase2 entity, params string[] entityTypesToExclude)
+    {
+      return GetChildCounts(dataAccessAdapter, entity, (IEnumerable<string>)entityTypesToExclude);
+    }
+
+    public static IEnumerable<Tuple<string, int>> GetChildCounts(IDataAccessAdapter dataAccessAdapter, EntityBase2 entity, IEnumerable<string> entityTypesToExclude)
+    {
+      var allRelationsWhereStartEntityIsPkSide = GetAllRelationsWhereStartEntityIsPkSide(entity);
+      return allRelationsWhereStartEntityIsPkSide.Select(entityRelation => GetChildCount(dataAccessAdapter, entity, entityRelation, entityTypesToExclude)).Where(childCount => childCount != null);
+    }
+
+    public static IEnumerable<IEntityRelation> GetAllRelationsWhereStartEntityIsPkSide(IEntityCore entity)
+    {
+      return entity.GetAllRelations().Where(entityRelation => entityRelation.StartEntityIsPkSide);
+    }
+
+    private static Tuple<string, int> GetChildCount(IDataAccessAdapter dataAccessAdapter, IEntityCore entity, IEntityRelation entityRelation, IEnumerable<string> entityTypesToExclude)
+    {
+      var entityTypeRelationPredicateBucketTuple = CreateRelationPredicateBucket(entityRelation, entity.PrimaryKeyFields);
+      if (entityTypeRelationPredicateBucketTuple != null && !entityTypesToExclude.Contains(entityTypeRelationPredicateBucketTuple.Item1))
+      {
+        var entityFields2 = new EntityFields2(entityRelation.GetAllFKEntityFieldCoreObjects().ToArray(), null, null);
+        var count = dataAccessAdapter.GetDbCount(entityFields2, entityTypeRelationPredicateBucketTuple.Item2);
+        return new Tuple<string, int>(entityTypeRelationPredicateBucketTuple.Item1, count);
+      }
+      return null;
+    }
+
+    public static Tuple<string, IRelationPredicateBucket> CreateRelationPredicateBucket(IEntityRelation entityRelation, IList foreignKeyFieldValues, bool useActualName = true)
+    {
+      string typeOfEntity = null;
+      var bucket = new RelationPredicateBucket();
+      var index = 0;
+      foreach (var foreignKeyField in entityRelation.GetAllFKEntityFieldCoreObjects())
+      {
+        if (String.IsNullOrEmpty(typeOfEntity))
+          typeOfEntity = useActualName ? foreignKeyField.ActualContainingObjectName : foreignKeyField.ContainingObjectName;
+        var fkValue = foreignKeyFieldValues[index];
+        index++;
+        if (fkValue == null) return null;
+        if (fkValue is IEntityField2)
+          fkValue = ((IEntityField2)fkValue).CurrentValue;
+        bucket.PredicateExpression.Add(new FieldCompareValuePredicate(foreignKeyField, null, ComparisonOperator.Equal, fkValue));
+      }
+      return new Tuple<string, IRelationPredicateBucket>(typeOfEntity, bucket);
+    }
+
+    public static IEnumerable<Tuple<string, int>> GetRelatedCounts(IDataAccessAdapter dataAccessAdapter, EntityBase2 entity, params string[] entityTypesToExclude)
+    {
+      return GetRelatedCounts(dataAccessAdapter, entity, (IEnumerable<string>)entityTypesToExclude);
+    }
+
+    public static IEnumerable<Tuple<string, int>> GetRelatedCounts(IDataAccessAdapter dataAccessAdapter, IEntityCore entity, IEnumerable<string> entityTypesToExclude)
+    {
+      var allRelationsWhereStartEntityIsPkSide = entity.GetAllRelations();
+      return allRelationsWhereStartEntityIsPkSide.Select(entityRelation => GetChildCount(dataAccessAdapter, entity, entityRelation, entityTypesToExclude)).Where(childCount => childCount != null);
+    }
+
     #region GetDataAccessAdapter
 
     /// <summary>
@@ -1293,6 +1403,8 @@ namespace AW.Helper.LLBL
       }
       return null;
     }
+
+
   }
 
   public enum LLBLQueryType
