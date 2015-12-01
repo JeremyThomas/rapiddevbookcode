@@ -18,7 +18,7 @@ namespace AW.Winforms.Helpers.Controls
 
   public interface IDataEditorPersisterWithCounts : IDataEditorPersister
   {
-  IEnumerable<Tuple<string, int>> GetChildCounts(object entityThatMayHaveChildren);
+    IEnumerable<Tuple<string, int>> GetChildCounts(object entityThatMayHaveChildren);
   }
 
   public interface IDataEditorEventHandlers
