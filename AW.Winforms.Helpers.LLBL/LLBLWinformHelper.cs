@@ -97,7 +97,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     #endregion
 
-    public abstract class DataEditorLLBLPersister : IDataEditorPersister
+    public abstract class DataEditorLLBLPersister : IDataEditorPersisterWithCounts
     {
       public abstract int Save(object dataToSave);
       public abstract int Delete(object dataToDelete);
@@ -117,6 +117,8 @@ namespace AW.Winforms.Helpers.LLBL
       {
         return EntityHelper.IsDirty(data);
       }
+
+      public abstract IEnumerable<Tuple<string, int>> GetChildCounts(object entityThatMayHaveChildren);
     }
 
     public class DataEditorLLBLSelfServicingPersister : DataEditorLLBLPersister
@@ -135,13 +137,18 @@ namespace AW.Winforms.Helpers.LLBL
       {
         return typeof (EntityBase).IsAssignableFrom(typeToSave);
       }
+
+      public override IEnumerable<Tuple<string, int>> GetChildCounts(object entityThatMayHaveChildren)
+      {
+        return EntityHelper.GetChildCounts(null, entityThatMayHaveChildren as EntityBase2);
+      }
     }
 
     public static HierarchyEditor HierarchyEditorFactory<T, TName, TChildCollection>(IQueryable<T> query, Func<IEnumerable<T>, IEnumerable<T>> postProcessing,
       Expression<Func<T, TName>> namePropertyExpression,
       Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : class, IEntityCore
     {
-      var dataScope = new GeneralDataScope();
+      var dataScope = new GeneralEntityCollectionDataScope();
       var processedCollection = postProcessing(dataScope.FetchData(query));
       return HierarchyEditor.HierarchyEditorFactory(processedCollection, namePropertyExpression, childCollectionPropertyExpression,
         new DataEditorLLBLDataScopePersister(dataScope));
@@ -171,6 +178,11 @@ namespace AW.Winforms.Helpers.LLBL
       public override bool CanSave(Type typeToSave)
       {
         return typeof (EntityBase2).IsAssignableFrom(typeToSave);
+      }
+
+      public override IEnumerable<Tuple<string, int>> GetChildCounts(object entityThatMayHaveChildren)
+      {
+        return EntityHelper.GetChildCounts(_dataAccessAdapter, entityThatMayHaveChildren as EntityBase2);
       }
     }
 

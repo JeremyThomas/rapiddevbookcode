@@ -12,6 +12,7 @@ using Northwind.DAL.Linq;
 using Northwind.DAL.Linq.Filters;
 using Northwind.DAL.Services;
 using Northwind.Win.NorthwindODataSRSharedTypes;
+using Northwind.Win.Properties;
 
 namespace Northwind.Win
 {
@@ -23,7 +24,7 @@ namespace Northwind.Win
       var linqMetaData = Factories.CreateLinqMetaData();
       //linqMetaData.ContextToUse=new Context();
       usrCntrlEntityBrowser1.Initialize(linqMetaData);
-      ensureFilteringEnabledCheckBox.Checked = usrCntrlEntityBrowser1.EnsureFilteringEnabled;
+    //  ensureFilteringEnabledCheckBox.Checked = usrCntrlEntityBrowser1.EnsureFilteringEnabled;
       useContextCheckBox.Checked = usrCntrlEntityBrowser1.UseContext;
       useSchemaCheckBox.Checked = usrCntrlEntityBrowser1.UseSchema;
       prefixDelimiterTextBox.Text = usrCntrlEntityBrowser1.PrefixDelimiter;
@@ -35,6 +36,12 @@ namespace Northwind.Win
     {
       Text += string.Format(" - {0}", ProfilerHelper.OrmProfilerStatus);
       usrCntrlEntityBrowser1.ResizeToFitNodes();
+      ensureFilteringEnabledCheckBox_CheckedChanged(null, null);
+    }
+
+    private void FrmEntityBrowser_FormClosed(object sender, FormClosedEventArgs e)
+    {
+      Settings.Default.Save();
     }
 
     private void toolStripButtonRemote_Click(object sender, EventArgs e)
@@ -111,5 +118,7 @@ namespace Northwind.Win
     {
       usrCntrlEntityBrowser1.EnsureFilteringEnabled = ensureFilteringEnabledCheckBox.Checked;
     }
+
+
   }
 }

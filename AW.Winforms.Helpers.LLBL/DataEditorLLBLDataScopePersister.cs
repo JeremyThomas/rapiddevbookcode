@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using AW.Winforms.Helpers.Controls;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -8,7 +9,7 @@ namespace AW.Winforms.Helpers.LLBL
 {
   public class DataEditorLLBLDataScopePersister : LLBLWinformHelper.DataEditorLLBLPersister, IDataEditorEventHandlers
   {
-    public GeneralDataScope GeneralDataScope;
+    public GeneralEntityCollectionDataScope GeneralEntityCollectionDataScope;
 
     protected DataEditorLLBLDataScopePersister()
     {
@@ -16,21 +17,21 @@ namespace AW.Winforms.Helpers.LLBL
 
     public DataEditorLLBLDataScopePersister(IQueryable query)
     {
-      GeneralDataScope = new GeneralDataScope(query);
+      GeneralEntityCollectionDataScope = new GeneralEntityCollectionDataScope(query);
     }
 
-    public DataEditorLLBLDataScopePersister(GeneralDataScope generalDataScope)
+    public DataEditorLLBLDataScopePersister(GeneralEntityCollectionDataScope generalEntityCollectionDataScope)
     {
-      GeneralDataScope = generalDataScope;
+      GeneralEntityCollectionDataScope = generalEntityCollectionDataScope;
     }
     
     public DataEditorLLBLDataScopePersister(IEnumerable enumerable, ITransactionController transactionController) 
-      : this(new GeneralDataScope(enumerable, transactionController))
+      : this(new GeneralEntityCollectionDataScope(enumerable, transactionController))
     {
     }
 
     public DataEditorLLBLDataScopePersister(IContextAwareElement contextAwareElement, ITransactionController transactionController = null) 
-      : this(new GeneralDataScope(contextAwareElement, transactionController))
+      : this(new GeneralEntityCollectionDataScope(contextAwareElement, transactionController))
     {
     }
 
@@ -39,8 +40,8 @@ namespace AW.Winforms.Helpers.LLBL
     /// </summary>
     public event EventHandler ContainedDataChanged
     {
-      add { GeneralDataScope.ContainedDataChanged += value; }
-      remove { GeneralDataScope.ContainedDataChanged -= value; }
+      add { GeneralEntityCollectionDataScope.ContainedDataChanged += value; }
+      remove { GeneralEntityCollectionDataScope.ContainedDataChanged -= value; }
     }
 
     /// <summary>
@@ -50,30 +51,35 @@ namespace AW.Winforms.Helpers.LLBL
     {
       add
       {
-        GeneralDataScope.EntityAdded += value;
-        GeneralDataScope.EntityRemoved += value;
+        GeneralEntityCollectionDataScope.EntityAdded += value;
+        GeneralEntityCollectionDataScope.EntityRemoved += value;
       }
       remove
       {
-        GeneralDataScope.EntityAdded -= value;
-        GeneralDataScope.EntityRemoved -= value;
+        GeneralEntityCollectionDataScope.EntityAdded -= value;
+        GeneralEntityCollectionDataScope.EntityRemoved -= value;
       }
     }
 
     public override int Save(object dataToSave)
     {
-      return GeneralDataScope.Save(dataToSave);
+      return GeneralEntityCollectionDataScope.Save(dataToSave);
     }
 
     public override int Delete(object dataToDelete)
     {
-      return GeneralDataScope.Delete(dataToDelete);
+      return GeneralEntityCollectionDataScope.Delete(dataToDelete);
     }
 
     public override bool Undo(object dataToDelete)
     {
-      GeneralDataScope.Undo(dataToDelete);
+      GeneralEntityCollectionDataScope.Undo(dataToDelete);
       return true;
+    }
+
+    public override IEnumerable<Tuple<string, int>> GetChildCounts(object entityThatMayHaveChildren)
+    {
+      return GeneralEntityCollectionDataScope.GetChildCounts(entityThatMayHaveChildren);
     }
   }
 }

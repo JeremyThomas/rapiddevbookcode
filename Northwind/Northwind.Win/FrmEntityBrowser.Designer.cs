@@ -207,6 +207,8 @@
       // 
       // ensureFilteringEnabledCheckBox
       // 
+      this.ensureFilteringEnabledCheckBox.Checked = global::Northwind.Win.Properties.Settings.Default.EnsureFilteringEnabled;
+      this.ensureFilteringEnabledCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Northwind.Win.Properties.Settings.Default, "EnsureFilteringEnabled", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.ensureFilteringEnabledCheckBox.Location = new System.Drawing.Point(4, 3);
       this.ensureFilteringEnabledCheckBox.Name = "ensureFilteringEnabledCheckBox";
       this.ensureFilteringEnabledCheckBox.Size = new System.Drawing.Size(148, 24);
@@ -238,6 +240,7 @@
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "FrmEntityBrowser";
       this.Text = "Northwind Data Browser";
+      this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmEntityBrowser_FormClosed);
       this.Load += new System.EventHandler(this.FrmEntityBrowser_Load);
       this.toolStrip1.ResumeLayout(false);
       this.toolStrip1.PerformLayout();

@@ -123,13 +123,13 @@ namespace AW.Winforms.Helpers.LLBL
       OnPropertyChanged("UseContext");
     }
 
-    private GeneralDataScope DataScope
+    private GeneralEntityCollectionDataScope EntityCollectionDataScope
     {
       get
       {
         var dataEditorLLBLDataScopePersister = gridDataEditor.DataEditorPersister as DataEditorLLBLDataScopePersister;
         if (dataEditorLLBLDataScopePersister == null) return null;
-        return dataEditorLLBLDataScopePersister.GeneralDataScope;
+        return dataEditorLLBLDataScopePersister.GeneralEntityCollectionDataScope;
       }
     }
 
@@ -251,7 +251,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     private IBindingListView BindingListViewCreater(IEnumerable enumerable, Type itemType)
     {
-      var genericDataScopeBase = DataScope;
+      var genericDataScopeBase = EntityCollectionDataScope;
       if (genericDataScopeBase != null && enumerable != null)
       {
         var queryable = enumerable as IQueryable;
