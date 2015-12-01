@@ -43,7 +43,8 @@ namespace AW.Winforms.Helpers.Controls
     private bool _loaded;
     private bool _canSave;
     private IEnumerable _superset;
-    public IDataEditorPersister DataEditorPersister;
+    private IDataEditorPersister _dataEditorPersister;
+    private IDataEditorPersisterWithCounts _dataEditorPersisterWithCounts;
     private static readonly Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider> FieldsToPropertiesTypeDescriptionProviders 
       = new Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider>();
 
@@ -837,6 +838,17 @@ namespace AW.Winforms.Helpers.Controls
     [Category("GridDataEditor"), Description("Gets or sets wether filtering is enabled in the grid, even if the underlying collection doesn't support it.")]
     public bool EnsureFilteringEnabled { get; set; }
 
+    public IDataEditorPersister DataEditorPersister
+    {
+      get { return _dataEditorPersister; }
+      set
+      {
+        _dataEditorPersister = value;
+        _dataEditorPersisterWithCounts = value as IDataEditorPersisterWithCounts;
+        toolStripButtonRelatedCounts.Enabled = _dataEditorPersisterWithCounts != null;
+      }
+    }
+
     public Func<IEnumerable, Type, IBindingListView> BindingListViewCreater;
 
     private void toolStripButtonClearFilters_Click(object sender, EventArgs e)
@@ -1004,28 +1016,33 @@ namespace AW.Winforms.Helpers.Controls
 
     private void toolStripButtonRelatedCounts_Click(object sender, EventArgs e)
     {
-      var existingRelatedCounts = GetExistingRelatedCounts();
-      if (existingRelatedCounts.Any())
+      if (bindingSourceEnumerable.Current != null)
       {
-        //toolStripLabelNumChildren.Text = existingRelatedCounts.JoinAsString(Environment.NewLine);
-     //   MessageBox.Show(toolStripLabelNumChildren.Text, "Number of references to this staff member record");
-      }
-      else
-      {
-        //  toolStripLabelNumChildren.Text = "Not used";
+        var existingRelatedCounts = GetExistingRelatedCounts(bindingSourceEnumerable.Current);
+        if (existingRelatedCounts.Any())
+        {
+          //toolStripLabelNumChildren.Text = existingRelatedCounts.JoinAsString(Environment.NewLine);
+          MessageBox.Show(existingRelatedCounts.JoinAsString(Environment.NewLine), string.Format("Number of references to {0}", bindingSourceEnumerable.Current));
+        }
+        else
+        {
+          //  toolStripLabelNumChildren.Text = "Not used";
+        }
       }
     }
 
-    private Dictionary<string, int> GetExistingRelatedCounts()
+    private IEnumerable<Tuple<string, int>> GetExistingRelatedCounts(object entityThatMayHaveChildren)
     {
-      //var staffMemberEntity = BindingSource.Current as StaffMemberEntity;
-      //return EntityHelper.GetRelatedCounts(DataAccessAdapterRead, entity, entityTypesToExclude);
-      return new Dictionary<string, int>();
+      return _dataEditorPersisterWithCounts.GetChildCounts(entityThatMayHaveChildren);
     }
 
     private void bindingNavigatorDeleteItem1_Click(object sender, EventArgs e)
     {
-
+      if (dataGridViewEnumerable.SelectedRows.Count > 1)
+      {
+        dataGridViewEnumerable.Focus();
+        SendKeys.Send("{DEL}");
+      }
     }
     
   }

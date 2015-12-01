@@ -9,32 +9,34 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.LLBL
 {
-  public class GeneralDataScope : DataScope
+  public class GeneralEntityCollectionDataScope : DataScope
   {
     protected ITransactionController TransactionController { get; set; }
 
     #region Events
+
     /// <summary>
-    /// Raised when an entity has been Removed from the scope. Ignored during fetches. Sender is the entity which was Removed.
+    ///   Raised when an entity has been Removed from the scope. Ignored during fetches. Sender is the entity which was Removed.
     /// </summary>
     public event EventHandler EntityRemoved;
+
     #endregion
 
-    public GeneralDataScope()
+    public GeneralEntityCollectionDataScope()
     {
     }
 
-    public GeneralDataScope(DataScopeRefetchStrategyType refetchStrategy) : base(refetchStrategy)
+    public GeneralEntityCollectionDataScope(DataScopeRefetchStrategyType refetchStrategy) : base(refetchStrategy)
     {
     }
 
-    public GeneralDataScope(IQueryable query)
+    public GeneralEntityCollectionDataScope(IQueryable query)
     {
       Query = TryTrackQuery(query);
       TransactionController = EntityHelper.GetTransactionController(query);
     }
 
-    public GeneralDataScope(IContextAwareElement contextAwareElement, ITransactionController transactionController = null)
+    public GeneralEntityCollectionDataScope(IContextAwareElement contextAwareElement, ITransactionController transactionController = null)
     {
       TryTrackQuery(contextAwareElement);
       var linqMetaData = contextAwareElement as ILinqMetaData;
@@ -53,7 +55,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-    public GeneralDataScope(IEnumerable enumerable, ITransactionController transactionController)
+    public GeneralEntityCollectionDataScope(IEnumerable enumerable, ITransactionController transactionController)
     {
       var entityCollection = EntityHelper.ToEntityCollection(enumerable, MetaDataHelper.GetEnumerableItemType(enumerable));
       if (entityCollection != null)
@@ -101,7 +103,7 @@ namespace AW.Winforms.Helpers.LLBL
         return false;
 
       _entityCollection = EntityHelper.ToEntityCollectionCore(Query as ILLBLGenProQuery);
-      if (_entityCollection == null) 
+      if (_entityCollection == null)
         return false;
       SetRemovedEntitiesTracker(_entityCollection);
       var anyData = _entityCollection.Count > 0;
@@ -114,27 +116,28 @@ namespace AW.Winforms.Helpers.LLBL
       {
         entityCollectionCore.RemovedEntitiesTracker = entityCollectionCore.EntityFactoryToUse.CreateEntityCollection();
         entityCollectionCore.RemovedEntitiesTracker.EntityAdded += RemovedEntitiesTracker_EntityAdded;
-        foreach (IEntityCore entity in entityCollectionCore)
+        for (var i = entityCollectionCore.Count - 1; i > -1; i--)
         {
-          if (entity.MarkedForDeletion) //This wont be true as its reset in CollectionCore.PerformAdd
+          var entity = entityCollectionCore[i];
+          if (entity.MarkedForDeletion || _entitiesRemovalTracker.Contains(entity)) //This wont be true as its reset in CollectionCore.PerformAdd
             entityCollectionCore.Remove(entity);
         }
       }
     }
 
-    private List<IEntityCore> _manualAddedEntitiesRemovalTracker = new List<IEntityCore>();
+    private readonly List<IEntityCore> _entitiesRemovalTracker = new List<IEntityCore>();
 
     /// <summary>
-    /// Handles the EntityAdded event of a removedEntitiesTracker.
+    ///   Handles the EntityAdded event of a removedEntitiesTracker.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="SD.LLBLGen.Pro.ORMSupportClasses.CollectionChangedEventArgs"/> instance containing the event data.</param>
+    /// <param name="e">The <see cref="SD.LLBLGen.Pro.ORMSupportClasses.CollectionChangedEventArgs" /> instance containing the event data.</param>
     private void RemovedEntitiesTracker_EntityAdded(object sender, CollectionChangedEventArgs e)
     {
       if (EntityRemoved != null)
       {
         EntityRemoved(sender, e);
-        _manualAddedEntitiesRemovalTracker.Add(e.InvolvedEntity);
+        _entitiesRemovalTracker.AddDistinct(e.InvolvedEntity);
       }
     }
 
@@ -162,6 +165,12 @@ namespace AW.Winforms.Helpers.LLBL
       return dataAccessAdapter == null ? EntityHelper.Delete(dataToDelete) : EntityHelper.Delete(dataToDelete, dataAccessAdapter);
     }
 
+    public IEnumerable<Tuple<string, int>> GetChildCounts(object entityThatMayHaveChildren)
+    {
+      var dataAccessAdapter = TransactionController as IDataAccessAdapter;
+      return EntityHelper.GetChildCounts(dataAccessAdapter, entityThatMayHaveChildren as EntityBase2);
+    }
+
     public void Undo(object modifiedData = null)
     {
       if (modifiedData == null)
@@ -171,7 +180,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
       else
         EntityHelper.Undo(modifiedData);
-      _manualAddedEntitiesRemovalTracker.Clear();
+      _entitiesRemovalTracker.Clear();
     }
 
     /// <summary>
@@ -189,7 +198,7 @@ namespace AW.Winforms.Helpers.LLBL
     protected override IUnitOfWorkCore BuildWorkForCommit()
     {
       var unitOfWorkCore = base.BuildWorkForCommit();
-      foreach (var entity in _manualAddedEntitiesRemovalTracker.Where(e => e.MarkedForDeletion))
+      foreach (var entity in _entitiesRemovalTracker.Where(e => e.MarkedForDeletion))
       {
         //AddDeleteActionsForDependingEntitiesToUoW(entity, unitOfWorkCore);
         unitOfWorkCore.AddForDelete(entity);
@@ -199,7 +208,8 @@ namespace AW.Winforms.Helpers.LLBL
 
     protected override void OnAfterCommitChanges()
     {
-      _manualAddedEntitiesRemovalTracker.Clear();
+      _entitiesRemovalTracker.Clear();
     }
+
   }
 }

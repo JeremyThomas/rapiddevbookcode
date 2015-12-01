@@ -90,7 +90,7 @@
     <Compile Include="..\Ancillary\ToolsAssemblyInfo.cs">
       <Link>ToolsAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="GeneralDataScope.cs" />
+    <Compile Include="GeneralEntityCollectionDataScope.cs" />
     <Compile Include="DataEditorLLBLDataScopePersister.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="UsrCntrlEntityBrowser.cs">

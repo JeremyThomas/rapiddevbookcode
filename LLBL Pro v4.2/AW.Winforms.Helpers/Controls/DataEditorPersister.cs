@@ -16,6 +16,11 @@ namespace AW.Winforms.Helpers.Controls
     bool IsDirty(object modifiedData = null);
   }
 
+  public interface IDataEditorPersisterWithCounts : IDataEditorPersister
+  {
+  IEnumerable<Tuple<string, int>> GetChildCounts(object entityThatMayHaveChildren);
+  }
+
   public interface IDataEditorEventHandlers
   {
     /// <summary>

@@ -833,19 +833,26 @@ namespace AW.Helper.LLBL
       return 0;
     }
 
-    public static void MakeCascadeDeletesForAllChildren(UnitOfWork2 uow, IEntity2 entity, bool deleteDirectly = true, params string[] entityTypesToExclude)
+    public static void MakeCascadeDeletesForAllChildren(UnitOfWork2 uow, IEntity2 entity, bool deleteDirectly = false, bool onlyDeleteComponents = true, params string[] entityTypesToExclude)
     {
       // Delete children of Entity
 
-      foreach (var relationPredicateBucket in GetAllRelationsWhereStartEntityIsPkSide(entity)
-        .Select(entityRelation => CreateRelationPredicateBucket(entityRelation, entity.PrimaryKeyFields))
-        .Where(relationPredicateBucket => !entityTypesToExclude.Contains(relationPredicateBucket.Item1)))
+      foreach (var entityRelation in GetAllRelationsWhereStartEntityIsPkSide(entity))
       {
-        uow.AddDeleteEntitiesDirectlyCall(relationPredicateBucket.Item1, relationPredicateBucket.Item2);
+        var allFkEntityFieldCoreObjects = entityRelation.GetAllFKEntityFieldCoreObjects();
+        if (!(onlyDeleteComponents && allFkEntityFieldCoreObjects.Any(f => f.IsPrimaryKey)))
+        {
+          AddDeleteRelatedEntitiesDirectlyCall(uow, entity, allFkEntityFieldCoreObjects);
+        }
       }
-
       if (deleteDirectly)
         ChangeDeleteToDirect(uow, entity);
+    }
+
+    private static void AddDeleteRelatedEntitiesDirectlyCall(UnitOfWork2 uow, IEntity2 entity, IEnumerable<IEntityFieldCore> allFkEntityFieldCoreObjects)
+    {
+      var relationPredicateBucket = CreateRelationPredicateBucket(allFkEntityFieldCoreObjects, entity.PrimaryKeyFields);
+      uow.AddDeleteEntitiesDirectlyCall(relationPredicateBucket.Item1, relationPredicateBucket.Item2);
     }
 
     private static void MakeCascadeDeletesForSpecifiedChildren(UnitOfWork2 uow, IEntity2 entity, IEnumerable<string> entityTypesToDelete, bool deleteDirectly = true)
@@ -903,22 +910,48 @@ namespace AW.Helper.LLBL
 
     private static Tuple<string, int> GetChildCount(IDataAccessAdapter dataAccessAdapter, IEntityCore entity, IEntityRelation entityRelation, IEnumerable<string> entityTypesToExclude)
     {
-      var entityTypeRelationPredicateBucketTuple = CreateRelationPredicateBucket(entityRelation, entity.PrimaryKeyFields);
+      var allFkEntityFieldCoreObjects = entityRelation.GetAllFKEntityFieldCoreObjects();
+      return GetChildCount(dataAccessAdapter, entity, allFkEntityFieldCoreObjects, entityTypesToExclude);
+    }
+
+    private static Tuple<string, int> GetChildCount(IDataAccessAdapter dataAccessAdapter, IEntityCore entity, List<IEntityFieldCore> allFkEntityFieldCoreObjects, IEnumerable<string> entityTypesToExclude)
+    {
+      var entityTypeRelationPredicateBucketTuple = CreateRelationPredicateBucket(allFkEntityFieldCoreObjects, entity.PrimaryKeyFields);
       if (entityTypeRelationPredicateBucketTuple != null && !entityTypesToExclude.Contains(entityTypeRelationPredicateBucketTuple.Item1))
       {
-        var entityFields2 = new EntityFields2(entityRelation.GetAllFKEntityFieldCoreObjects().ToArray(), null, null);
+        var entityFields2 = new EntityFields2(allFkEntityFieldCoreObjects.ToArray(), null, null);
         var count = dataAccessAdapter.GetDbCount(entityFields2, entityTypeRelationPredicateBucketTuple.Item2);
         return new Tuple<string, int>(entityTypeRelationPredicateBucketTuple.Item1, count);
       }
       return null;
     }
 
+    //private static Tuple<string, int> GetChildCount(IDao dao, IEntity entity, IEntityRelation entityRelation, IEnumerable<string> entityTypesToExclude)
+    //{
+    //  var entityTypeRelationPredicateBucketTuple = CreateRelationPredicateBucket(entityRelation, entity.PrimaryKeyFields);
+    //  if (entityTypeRelationPredicateBucketTuple != null && !entityTypesToExclude.Contains(entityTypeRelationPredicateBucketTuple.Item1))
+    //  {
+    //    var entityFields2 = new EntityFields(entityRelation.GetAllFKEntityFieldCoreObjects().ToArray(), null, null);
+    //    new entity
+    //    var count = dao.GetDbCount(entityFields2,null, entityTypeRelationPredicateBucketTuple.Item2.);
+    //    return new Tuple<string, int>(entityTypeRelationPredicateBucketTuple.Item1, count);
+    //  }
+    //  return null;
+    //}
+    
     public static Tuple<string, IRelationPredicateBucket> CreateRelationPredicateBucket(IEntityRelation entityRelation, IList foreignKeyFieldValues, bool useActualName = true)
+    {
+      var allFkEntityFieldCoreObjects = entityRelation.GetAllFKEntityFieldCoreObjects();
+      return CreateRelationPredicateBucket(allFkEntityFieldCoreObjects, foreignKeyFieldValues, useActualName);
+    }
+
+    private static Tuple<string, IRelationPredicateBucket> CreateRelationPredicateBucket(IEnumerable<IEntityFieldCore> allFkEntityFieldCoreObjects, IList foreignKeyFieldValues, bool useActualName = true)
     {
       string typeOfEntity = null;
       var bucket = new RelationPredicateBucket();
       var index = 0;
-      foreach (var foreignKeyField in entityRelation.GetAllFKEntityFieldCoreObjects())
+
+      foreach (var foreignKeyField in allFkEntityFieldCoreObjects)
       {
         if (String.IsNullOrEmpty(typeOfEntity))
           typeOfEntity = useActualName ? foreignKeyField.ActualContainingObjectName : foreignKeyField.ContainingObjectName;
@@ -926,7 +959,7 @@ namespace AW.Helper.LLBL
         index++;
         if (fkValue == null) return null;
         if (fkValue is IEntityField2)
-          fkValue = ((IEntityField2)fkValue).CurrentValue;
+          fkValue = ((IEntityField2) fkValue).CurrentValue;
         bucket.PredicateExpression.Add(new FieldCompareValuePredicate(foreignKeyField, null, ComparisonOperator.Equal, fkValue));
       }
       return new Tuple<string, IRelationPredicateBucket>(typeOfEntity, bucket);
