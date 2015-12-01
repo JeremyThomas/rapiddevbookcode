@@ -837,13 +837,10 @@ namespace AW.Helper.LLBL
     {
       // Delete children of Entity
 
-      foreach (var entityRelation in GetAllRelationsWhereStartEntityIsPkSide(entity))
+      var allFkEntityFieldCoreObjectList = GetAllFkEntityFieldCoreObjectsWhereStartEntityIsPkSide(entity, onlyDeleteComponents);
+      foreach (var allFkEntityFieldCoreObjects in allFkEntityFieldCoreObjectList)
       {
-        var allFkEntityFieldCoreObjects = entityRelation.GetAllFKEntityFieldCoreObjects();
-        if (!(onlyDeleteComponents && allFkEntityFieldCoreObjects.Any(f => f.IsPrimaryKey)))
-        {
-          AddDeleteRelatedEntitiesDirectlyCall(uow, entity, allFkEntityFieldCoreObjects);
-        }
+        AddDeleteRelatedEntitiesDirectlyCall(uow, entity, allFkEntityFieldCoreObjects);
       }
       if (deleteDirectly)
         ChangeDeleteToDirect(uow, entity);
@@ -894,13 +891,26 @@ namespace AW.Helper.LLBL
 
     public static IEnumerable<Tuple<string, int>> GetChildCounts(IDataAccessAdapter dataAccessAdapter, EntityBase2 entity, params string[] entityTypesToExclude)
     {
-      return GetChildCounts(dataAccessAdapter, entity, (IEnumerable<string>)entityTypesToExclude);
+      return GetChildCounts(dataAccessAdapter, entity, (IEnumerable<string>) entityTypesToExclude);
     }
 
     public static IEnumerable<Tuple<string, int>> GetChildCounts(IDataAccessAdapter dataAccessAdapter, EntityBase2 entity, IEnumerable<string> entityTypesToExclude)
     {
       var allRelationsWhereStartEntityIsPkSide = GetAllRelationsWhereStartEntityIsPkSide(entity);
       return allRelationsWhereStartEntityIsPkSide.Select(entityRelation => GetChildCount(dataAccessAdapter, entity, entityRelation, entityTypesToExclude)).Where(childCount => childCount != null);
+    }
+
+    private static IEnumerable<List<IEntityFieldCore>> GetAllFkEntityFieldCoreObjectsWhereStartEntityIsPkSide(IEntityCore entity, bool onlyComponentsRelationShips = false)
+    {
+      return GetAllRelationsWhereStartEntityIsPkSide(entity)
+        .Select(entityRelation => entityRelation.GetAllFKEntityFieldCoreObjects())
+        .Where(allFkEntityFieldCoreObjects => !(onlyComponentsRelationShips && allFkEntityFieldCoreObjects.Any(f => f.IsPrimaryKey)));
+    }
+
+    public static IEnumerable<IEntityRelation> GetAllRelationsWhereStartEntityIsPkSide(IEntityCore entity, bool onlyComponentsRelationShips)
+    {
+      return GetAllRelationsWhereStartEntityIsPkSide(entity)
+        .Where(entityRelation => !(onlyComponentsRelationShips && entityRelation.GetAllFKEntityFieldCoreObjects().Any(f => f.IsPrimaryKey)));
     }
 
     public static IEnumerable<IEntityRelation> GetAllRelationsWhereStartEntityIsPkSide(IEntityCore entity)
@@ -938,7 +948,7 @@ namespace AW.Helper.LLBL
     //  }
     //  return null;
     //}
-    
+
     public static Tuple<string, IRelationPredicateBucket> CreateRelationPredicateBucket(IEntityRelation entityRelation, IList foreignKeyFieldValues, bool useActualName = true)
     {
       var allFkEntityFieldCoreObjects = entityRelation.GetAllFKEntityFieldCoreObjects();
@@ -967,7 +977,7 @@ namespace AW.Helper.LLBL
 
     public static IEnumerable<Tuple<string, int>> GetRelatedCounts(IDataAccessAdapter dataAccessAdapter, EntityBase2 entity, params string[] entityTypesToExclude)
     {
-      return GetRelatedCounts(dataAccessAdapter, entity, (IEnumerable<string>)entityTypesToExclude);
+      return GetRelatedCounts(dataAccessAdapter, entity, (IEnumerable<string>) entityTypesToExclude);
     }
 
     public static IEnumerable<Tuple<string, int>> GetRelatedCounts(IDataAccessAdapter dataAccessAdapter, IEntityCore entity, IEnumerable<string> entityTypesToExclude)
@@ -1063,8 +1073,8 @@ namespace AW.Helper.LLBL
         if (isSqlServer != null && isSqlServer())
         {
           var newCatalog = DataHelper.GetSqlDatabaseName(connectionString);
-          adapter = string.IsNullOrWhiteSpace(newCatalog) 
-            ? Activator.CreateInstance(dataAccessAdapterType, connectionString) 
+          adapter = string.IsNullOrWhiteSpace(newCatalog)
+            ? Activator.CreateInstance(dataAccessAdapterType, connectionString)
             : Activator.CreateInstance(dataAccessAdapterType, connectionString, true, CatalogNameUsage.Clear, newCatalog);
           // <param name="connectionString">The connection string to use when connecting to the database.</param>
           // <param name="keepConnectionOpen">when true, the DataAccessAdapter will not close an opened connection. Use this for multi action usage.</param>
@@ -1074,7 +1084,7 @@ namespace AW.Helper.LLBL
         else
         {
           if (isOracle != null && isOracle())
-            adapter = Activator.CreateInstance(dataAccessAdapterType, connectionString, true, SchemaNameUsage.Default, null) ;
+            adapter = Activator.CreateInstance(dataAccessAdapterType, connectionString, true, SchemaNameUsage.Default, null);
           // <param name="connectionString">The connection string to use when connecting to the database.</param>
           // <param name="keepConnectionOpen">when true, the DataAccessAdapter will not close an opened connection. Use this for multi action usage.</param>
           // <param name="schemaNameUsageSetting">Configures this data access adapter object how to threat schema names in persistence information.</param>
@@ -1083,7 +1093,8 @@ namespace AW.Helper.LLBL
             adapter = Activator.CreateInstance(dataAccessAdapterType, connectionString);
         }
       }
-      return adapter as DataAccessAdapterBase; ;
+      return adapter as DataAccessAdapterBase;
+      ;
     }
 
     #endregion
@@ -1436,8 +1447,6 @@ namespace AW.Helper.LLBL
       }
       return null;
     }
-
-
   }
 
   public enum LLBLQueryType

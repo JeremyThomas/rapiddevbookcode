@@ -193,6 +193,10 @@ namespace AW.Winforms.Helpers.LLBL
     /// <param name="workData">The work data.</param>
     protected override void OnEntityDelete(IEntityCore toDelete, WorkDataCollector workData)
     {
+      foreach (var entityRelation in EntityHelper.GetAllRelationsWhereStartEntityIsPkSide(toDelete, true))
+      {
+        workData.Add(entityRelation);
+      }
     }
 
     protected override IUnitOfWorkCore BuildWorkForCommit()
@@ -210,6 +214,5 @@ namespace AW.Winforms.Helpers.LLBL
     {
       _entitiesRemovalTracker.Clear();
     }
-
   }
 }
