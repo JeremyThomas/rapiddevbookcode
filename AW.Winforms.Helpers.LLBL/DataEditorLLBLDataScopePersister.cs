@@ -66,9 +66,9 @@ namespace AW.Winforms.Helpers.LLBL
       return GeneralEntityCollectionDataScope.Save(dataToSave);
     }
 
-    public override int Delete(object dataToDelete)
+    public override int Delete(object dataToDelete, bool cascade = false)
     {
-      return GeneralEntityCollectionDataScope.Delete(dataToDelete);
+      return GeneralEntityCollectionDataScope.Delete(dataToDelete, cascade);
     }
 
     public override bool Undo(object dataToDelete)

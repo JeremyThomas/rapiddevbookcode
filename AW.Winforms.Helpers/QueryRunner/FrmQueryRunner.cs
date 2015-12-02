@@ -12,7 +12,7 @@ namespace AW.Winforms.Helpers.QueryRunner
   {
     private readonly Type[] _saveableTypes;
     public event Func<object, int> SaveFunction;
-    public event Func<object, int> DeleteFunction;
+    public event Func<object, bool, int> DeleteFunction;
     private readonly SplitContainer[] _splitContainers;
 
 // ReSharper disable once MemberCanBePrivate.Global
@@ -22,7 +22,7 @@ namespace AW.Winforms.Helpers.QueryRunner
       _splitContainers = new[] {queryRunner1.splitContainerScript};
     }
 
-    public FrmQueryRunner(Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
+    public FrmQueryRunner(Func<object, int> saveFunction, Func<object, bool, int> deleteFunction, params Type[] saveableTypes)
       : this()
     {
       _saveableTypes = saveableTypes;

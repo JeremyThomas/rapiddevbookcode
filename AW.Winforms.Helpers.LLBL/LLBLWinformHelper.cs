@@ -100,7 +100,7 @@ namespace AW.Winforms.Helpers.LLBL
     public abstract class DataEditorLLBLPersister : IDataEditorPersisterWithCounts
     {
       public abstract int Save(object dataToSave);
-      public abstract int Delete(object dataToDelete);
+      public abstract int Delete(object dataToDelete, bool cascade = false);
 
       public virtual bool CanSave(Type typeToSave)
       {
@@ -128,7 +128,7 @@ namespace AW.Winforms.Helpers.LLBL
         return EntityHelper.Save(dataToSave);
       }
 
-      public override int Delete(object dataToDelete)
+      public override int Delete(object dataToDelete, bool cascade = false)
       {
         return EntityHelper.Delete(dataToDelete);
       }
@@ -170,7 +170,7 @@ namespace AW.Winforms.Helpers.LLBL
         return EntityHelper.Save(dataToSave, _dataAccessAdapter);
       }
 
-      public override int Delete(object dataToDelete)
+      public override int Delete(object dataToDelete, bool cascade = false)
       {
         return EntityHelper.Delete(dataToDelete, _dataAccessAdapter);
       }

@@ -158,11 +158,11 @@ namespace AW.Winforms.Helpers.LLBL
       return dataAccessAdapter == null ? EntityHelper.Save(dataToSave) : EntityHelper.Save(dataToSave, dataAccessAdapter);
     }
 
-    public int Delete(object dataToDelete = null)
+    public int Delete(object dataToDelete = null, bool cascade = false)
     {
       if (dataToDelete == null) return CommitAllChanges();
       var dataAccessAdapter = TransactionController as IDataAccessAdapter;
-      return dataAccessAdapter == null ? EntityHelper.Delete(dataToDelete) : EntityHelper.Delete(dataToDelete, dataAccessAdapter);
+      return dataAccessAdapter == null ? EntityHelper.Delete(dataToDelete) : EntityHelper.Delete(dataToDelete, dataAccessAdapter, cascade);
     }
 
     public IEnumerable<Tuple<string, int>> GetChildCounts(object entityThatMayHaveChildren)

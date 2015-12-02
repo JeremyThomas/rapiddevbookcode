@@ -7,12 +7,45 @@ using AW.Helper;
 
 namespace AW.Winforms.Helpers.Controls
 {
+  /// <summary>
+  ///   If an implementation of this is supplied to GridDataEditor it will be able to persist CUD changes
+  /// </summary>
   public interface IDataEditorPersister
   {
+    /// <summary>
+    ///   Saves (persist CUD changes) the specified data.
+    /// </summary>
+    /// <param name="dataToSave">The data to save.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
+    /// <returns></returns>
     int Save(object dataToSave = null);
-    int Delete(object dataToDelete = null);
+
+    /// <summary>
+    ///   Deletes the specified data, may not be needed if 'Save' can handle deletes.
+    /// </summary>
+    /// <param name="dataToDelete">The data to delete.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
+    /// <param name="cascade">if set to <c>true</c> [cascade].</param>
+    /// <returns></returns>
+    int Delete(object dataToDelete = null, bool cascade = false);
+
+    /// <summary>
+    ///   Determines whether this instance can save the specified type.
+    /// </summary>
+    /// <param name="typeToSave">The type to save.</param>
+    /// <returns></returns>
     bool CanSave(Type typeToSave);
+
+    /// <summary>
+    ///   Undoes any changes to the specified data.
+    /// </summary>
+    /// <param name="modifiedData">The modified data.</param>
+    /// <returns></returns>
     bool Undo(object modifiedData = null);
+
+    /// <summary>
+    ///   Determines whether the specified data is dirty (Has a CUD)
+    /// </summary>
+    /// <param name="modifiedData">The modified data.</param>
+    /// <returns></returns>
     bool IsDirty(object modifiedData = null);
   }
 
@@ -78,10 +111,10 @@ namespace AW.Winforms.Helpers.Controls
   {
     private readonly Type[] _saveableTypes;
     private readonly Func<object, int> _saveFunction;
-    private readonly Func<object, int> _deleteFunction;
+    private readonly Func<object, bool, int> _deleteFunction;
     private readonly Func<object, bool> _undoMethod;
 
-    public DataEditorPersister(Func<object, int> saveFunction, Func<object, int> deleteFunction, Func<object, bool> undoMethod, params Type[] saveableTypes)
+    public DataEditorPersister(Func<object, int> saveFunction, Func<object, bool, int> deleteFunction, Func<object, bool> undoMethod, params Type[] saveableTypes)
     {
       _saveableTypes = saveableTypes;
       _saveFunction = saveFunction;
@@ -94,9 +127,9 @@ namespace AW.Winforms.Helpers.Controls
       return _saveFunction != null ? _saveFunction(dataToSave) : 0;
     }
 
-    public int Delete(object dataToDelete)
+    public int Delete(object dataToDelete, bool cascade = false)
     {
-      return _deleteFunction != null ? _deleteFunction(dataToDelete) : 0;
+      return _deleteFunction != null ? _deleteFunction(dataToDelete, cascade) : 0;
     }
 
     public bool CanSave(Type typeToSave)
@@ -131,7 +164,7 @@ namespace AW.Winforms.Helpers.Controls
       return changeSet.Inserts.Count + changeSet.Updates.Count;
     }
 
-    public int Delete(object dataToDelete)
+    public int Delete(object dataToDelete, bool cascade = false)
     {
       _dataContext.SubmitChanges();
       return _dataContext.GetChangeSet().Deletes.Count;
