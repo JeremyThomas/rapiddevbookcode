@@ -376,6 +376,10 @@ namespace AW.Helper.LLBL
       return entity.IsDirty ? GetFields(entity).Where(f => f.IsChanged) : Enumerable.Empty<IEntityFieldCore>();
     }
 
+    /// <summary>
+    ///   Reverts the changes to database value.
+    /// </summary>
+    /// <param name="entity">The entity.</param>
     public static void RevertChangesToDBValue(this IEntityCore entity)
     {
       foreach (var changedField in entity.GetChangedFields())
@@ -384,6 +388,10 @@ namespace AW.Helper.LLBL
       entity.IsDirty = false;
     }
 
+    /// <summary>
+    ///   Resets the errors and remove any new entities.
+    /// </summary>
+    /// <param name="entityCollection">The entity collection.</param>
     private static void ResetErrorsAndRemoveNew(IEntityCollectionCore entityCollection)
     {
       foreach (var entity in entityCollection.AsEnumerable())
@@ -393,6 +401,10 @@ namespace AW.Helper.LLBL
         entityCollection.Remove(newEntity);
     }
 
+    /// <summary>
+    ///   Reverts the changes to database value and removes any new entities
+    /// </summary>
+    /// <param name="entityCollection">The entity collection.</param>
     public static void RevertChangesToDBValue(IEntityCollectionCore entityCollection)
     {
       var collection = entityCollection as IEntityCollection;
@@ -406,12 +418,21 @@ namespace AW.Helper.LLBL
         collection.RevertChangesToDBValue();
     }
 
+    /// <summary>
+    ///   Reverts the changes to database value.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="entities">The entities.</param>
     public static void RevertChangesToDBValue<T>(IEnumerable<T> entities) where T : class, IEntityCore
     {
       foreach (var dirtyEntity in entities.Where(e => e.IsDirty))
         dirtyEntity.RevertChangesToDBValue();
     }
 
+    /// <summary>
+    ///   Reverts the changes to database value, removes any new entities and restores any deleted ones from RemovedEntitiesTracker.
+    /// </summary>
+    /// <param name="modifiedEntities">The modified entities, which can be an IEntityView,IEntityView2,IBindingListView,IEntityCollectionCore or IEnumerable[IEntityCore].</param>
     public static void RevertChangesToDBValue(IEnumerable modifiedEntities)
     {
       var postCollectionChangeActionNoAction = false;
@@ -486,6 +507,10 @@ namespace AW.Helper.LLBL
       }
     }
 
+    /// <summary>
+    ///   Reverts the changes to database values, removes any new entities and restores any deleted ones from any RemovedEntitiesTracker.
+    /// </summary>
+    /// <param name="modifiedData">The modified data, which can be an IEntityCore,IUnitOfWorkCore,IEntityView,IEntityView2,IBindingListView,IEntityCollectionCore or IEnumerable[IEntityCore].</param>
     public static void Undo(object modifiedData)
     {
       var unitOfWorkCore = modifiedData as IUnitOfWorkCore;
@@ -540,6 +565,11 @@ namespace AW.Helper.LLBL
       }
     }
 
+    /// <summary>
+    ///   Determines whether the specified data is dirty (Has a CUD) or has field errors from an attempted edit.
+    /// </summary>
+    /// <param name="data">The data, which can be an IEntityCore or IEntityCollectionCore.</param>
+    /// <returns></returns>
     public static bool IsDirty(object data)
     {
       var entity = data as IEntityCore;
@@ -613,6 +643,10 @@ namespace AW.Helper.LLBL
       return entityFields.Cast<IEntityField>();
     }
 
+    /// <summary>
+    ///   Reverts the changes to database value  and removes any new entities.
+    /// </summary>
+    /// <param name="entityCollection">The entity collection.</param>
     public static void RevertChangesToDBValue(this IEntityCollection entityCollection)
     {
       foreach (var dirtyEntity in entityCollection.DirtyEntities)
@@ -641,8 +675,9 @@ namespace AW.Helper.LLBL
     ///   Deletes the specified data from the DB.
     /// </summary>
     /// <param name="dataToDelete">The data to delete.</param>
+    /// <param name="cascade">if set to <c>true</c> [cascade].</param>
     /// <returns></returns>
-    public static int Delete(object dataToDelete)
+    public static int Delete(object dataToDelete, bool cascade = false)
     {
       var listItemType = GetListItemType(dataToDelete);
       if (typeof (IEntity).IsAssignableFrom(listItemType))
@@ -724,6 +759,10 @@ namespace AW.Helper.LLBL
 
     #region Adapter
 
+    /// <summary>
+    ///   Reverts the changes to database value  and removes any new entities.
+    /// </summary>
+    /// <param name="entityCollection">The entity collection.</param>
     public static void RevertChangesToDBValue(this IEntityCollection2 entityCollection)
     {
       foreach (var dirtyEntity in entityCollection.DirtyEntities)
@@ -802,9 +841,23 @@ namespace AW.Helper.LLBL
     /// </summary>
     /// <param name="entitiesToDelete">The entities to delete.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
-    /// <returns>the amount of persisted entities</returns>
-    public static int DeleteEntities(IEnumerable<IEntity2> entitiesToDelete, IDataAccessAdapter dataAccessAdapter)
+    /// <param name="cascade">if set to <c>true</c> [cascade].</param>
+    /// <returns>
+    ///   the amount of persisted entities
+    /// </returns>
+    private static int DeleteEntities(IEnumerable<IEntity2> entitiesToDelete, IDataAccessAdapter dataAccessAdapter, bool cascade = false)
     {
+      if (cascade)
+      {
+        var unitOfWork2 = new UnitOfWork2();
+        foreach (var entityToDelete in entitiesToDelete)
+        {
+          unitOfWork2.AddForDelete(entityToDelete);
+          MakeCascadeDeletesForAllChildren(unitOfWork2, entityToDelete);
+        }
+        return unitOfWork2.Commit(dataAccessAdapter);
+      }
+
       return entitiesToDelete.Count(dataAccessAdapter.DeleteEntity);
     }
 
@@ -813,24 +866,37 @@ namespace AW.Helper.LLBL
     /// </summary>
     /// <param name="entitiesToDelete">The entities to delete.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
+    /// <param name="cascade">if set to <c>true</c> [cascade].</param>
     /// <returns></returns>
-    public static int DeleteEntities(IEnumerable entitiesToDelete, IDataAccessAdapter dataAccessAdapter)
+    public static int DeleteEntities(IEnumerable entitiesToDelete, IDataAccessAdapter dataAccessAdapter, bool cascade = false)
     {
       var collectionToDelete = entitiesToDelete as IEntityCollection2;
       if (collectionToDelete != null)
         return dataAccessAdapter.DeleteEntityCollection(collectionToDelete);
-      return DeleteEntities(entitiesToDelete.Cast<IEntity2>(), dataAccessAdapter);
+      return DeleteEntities(entitiesToDelete.Cast<IEntity2>(), dataAccessAdapter, cascade);
     }
 
-    public static int Delete(object dataToDelete, IDataAccessAdapter dataAccessAdapter)
+    public static int Delete(object dataToDelete, IDataAccessAdapter dataAccessAdapter, bool cascade = false)
     {
       var listItemType = GetListItemType(dataToDelete);
       if (typeof (IEntity2).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToDelete as IEnumerable;
-        return enumerable == null ? Convert.ToInt32(dataAccessAdapter.DeleteEntity((IEntity2) dataToDelete)) : DeleteEntities(enumerable, dataAccessAdapter);
+        return enumerable == null ? Convert.ToInt32(DeleteEntity((IEntity2) dataToDelete, dataAccessAdapter, cascade)) : DeleteEntities(enumerable, dataAccessAdapter, cascade);
       }
       return 0;
+    }
+
+    private static bool DeleteEntity(IEntity2 entityToDelete, IDataAccessAdapter dataAccessAdapter, bool cascade = false)
+    {
+      if (cascade)
+      {
+        var unitOfWork2 = new UnitOfWork2();
+        unitOfWork2.AddForDelete(entityToDelete);
+        MakeCascadeDeletesForAllChildren(unitOfWork2, entityToDelete);
+        return Convert.ToBoolean(unitOfWork2.Commit(dataAccessAdapter));
+      }
+      return dataAccessAdapter.DeleteEntity(entityToDelete);
     }
 
     public static void MakeCascadeDeletesForAllChildren(UnitOfWork2 uow, IEntity2 entity, bool deleteDirectly = false, bool onlyDeleteComponents = true, params string[] entityTypesToExclude)
@@ -902,9 +968,13 @@ namespace AW.Helper.LLBL
 
     private static IEnumerable<List<IEntityFieldCore>> GetAllFkEntityFieldCoreObjectsWhereStartEntityIsPkSide(IEntityCore entity, bool onlyComponentsRelationShips = false)
     {
-      return GetAllRelationsWhereStartEntityIsPkSide(entity)
-        .Select(entityRelation => entityRelation.GetAllFKEntityFieldCoreObjects())
-        .Where(allFkEntityFieldCoreObjects => !(onlyComponentsRelationShips && allFkEntityFieldCoreObjects.Any(f => f.IsPrimaryKey)));
+      foreach (var entityRelation in GetAllRelationsWhereStartEntityIsPkSide(entity))
+      {
+        List<IEntityFieldCore> allFkEntityFieldCoreObjects = entityRelation.GetAllFKEntityFieldCoreObjects();
+        var anyIsPrimaryKeys = allFkEntityFieldCoreObjects.Any(f => f.IsPrimaryKey);
+        if (!onlyComponentsRelationShips || anyIsPrimaryKeys) 
+          yield return allFkEntityFieldCoreObjects;
+      }
     }
 
     public static IEnumerable<IEntityRelation> GetAllRelationsWhereStartEntityIsPkSide(IEntityCore entity, bool onlyComponentsRelationShips)

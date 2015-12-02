@@ -40,8 +40,8 @@ namespace AW.Winforms.Helpers.Controls
     {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GridDataEditor));
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
       this.bindingSourceEnumerable = new System.Windows.Forms.BindingSource(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorAddNewItem1 = new System.Windows.Forms.ToolStripButton();
@@ -106,6 +106,7 @@ namespace AW.Winforms.Helpers.Controls
       this.tabPageDataGrid = new System.Windows.Forms.TabPage();
       this.tabPageDataGridView = new System.Windows.Forms.TabPage();
       this.searchToolBar = new ADGV.SearchToolBar();
+      this.toolStripCheckBoxDeletesAreCascading = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
       this.bindingNavigatorData.SuspendLayout();
@@ -129,6 +130,7 @@ namespace AW.Winforms.Helpers.Controls
       // bindingNavigatorData
       // 
       this.bindingNavigatorData.AddNewItem = this.bindingNavigatorAddNewItem1;
+      this.bindingNavigatorData.AllowItemReorder = true;
       this.bindingNavigatorData.BindingSource = this.bindingSourceEnumerable;
       this.bindingNavigatorData.CountItem = this.bindingNavigatorCountItem1;
       this.bindingNavigatorData.DeleteItem = this.bindingNavigatorDeleteItem1;
@@ -169,7 +171,8 @@ namespace AW.Winforms.Helpers.Controls
             this.toolStripButtonObjectBrowser,
             this.toolStripButtonObjectListViewVisualizer,
             this.toolStripSeparator5,
-            this.toolStripButtonRelatedCounts});
+            this.toolStripButtonRelatedCounts,
+            this.toolStripCheckBoxDeletesAreCascading});
       this.bindingNavigatorData.Location = new System.Drawing.Point(0, 0);
       this.bindingNavigatorData.MoveFirstItem = this.bindingNavigatorMoveFirstItem1;
       this.bindingNavigatorData.MoveLastItem = this.bindingNavigatorMoveLastItem1;
@@ -477,38 +480,38 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonRelatedCounts.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRelatedCounts.Image")));
       this.toolStripButtonRelatedCounts.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonRelatedCounts.Name = "toolStripButtonRelatedCounts";
-      this.toolStripButtonRelatedCounts.Size = new System.Drawing.Size(125, 19);
-      this.toolStripButtonRelatedCounts.Text = "Related object counts";
+      this.toolStripButtonRelatedCounts.Size = new System.Drawing.Size(129, 19);
+      this.toolStripButtonRelatedCounts.Text = "Related Object Counts";
       this.toolStripButtonRelatedCounts.Click += new System.EventHandler(this.toolStripButtonRelatedCounts_Click);
       // 
       // dataGridViewEnumerable
       // 
       this.dataGridViewEnumerable.AllowUserToOrderColumns = true;
       this.dataGridViewEnumerable.AutoGenerateColumns = false;
-      dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-      dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-      dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-      dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-      dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-      this.dataGridViewEnumerable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+      dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+      dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+      dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+      dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+      dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+      this.dataGridViewEnumerable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
       this.dataGridViewEnumerable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dataGridViewEnumerable.DataSource = this.bindingSourceEnumerable;
       this.dataGridViewEnumerable.DefaultCellBehavior = ADGV.ADGVColumnHeaderCellBehavior.SortingFiltering;
-      dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-      dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-      dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-      dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-      dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-      this.dataGridViewEnumerable.DefaultCellStyle = dataGridViewCellStyle2;
+      dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+      dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+      dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+      dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+      dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+      this.dataGridViewEnumerable.DefaultCellStyle = dataGridViewCellStyle4;
       this.dataGridViewEnumerable.DefaultDateTimeGrouping = ADGV.ADGVFilterMenuDateTimeGrouping.Second;
       this.dataGridViewEnumerable.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridViewEnumerable.Location = new System.Drawing.Point(3, 3);
       this.dataGridViewEnumerable.Name = "dataGridViewEnumerable";
-      this.dataGridViewEnumerable.Size = new System.Drawing.Size(1321, 516);
+      this.dataGridViewEnumerable.Size = new System.Drawing.Size(1498, 516);
       this.dataGridViewEnumerable.TabIndex = 4;
       this.dataGridViewEnumerable.SortStringChanged += new System.EventHandler(this.dataGridViewEnumerable_SortStringChanged);
       this.dataGridViewEnumerable.FilterStringChanged += new System.EventHandler(this.dataGridViewEnumerable_FilterStringChanged);
@@ -728,7 +731,7 @@ namespace AW.Winforms.Helpers.Controls
       this.tabPageDataGridView.Location = new System.Drawing.Point(4, 22);
       this.tabPageDataGridView.Name = "tabPageDataGridView";
       this.tabPageDataGridView.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageDataGridView.Size = new System.Drawing.Size(1327, 522);
+      this.tabPageDataGridView.Size = new System.Drawing.Size(1504, 522);
       this.tabPageDataGridView.TabIndex = 1;
       this.tabPageDataGridView.Text = "DataGridView";
       this.tabPageDataGridView.UseVisualStyleBackColor = true;
@@ -748,6 +751,14 @@ namespace AW.Winforms.Helpers.Controls
       this.searchToolBar.Visible = false;
       this.searchToolBar.Search += new ADGV.SearchToolBarSearchEventHandler(this.searchToolBar_Search);
       this.searchToolBar.VisibleChanged += new System.EventHandler(this.searchToolBar_VisibleChanged);
+      // 
+      // toolStripCheckBoxDeletesAreCascading
+      // 
+      this.toolStripCheckBoxDeletesAreCascading.Checked = false;
+      this.toolStripCheckBoxDeletesAreCascading.CheckState = System.Windows.Forms.CheckState.Unchecked;
+      this.toolStripCheckBoxDeletesAreCascading.Name = "toolStripCheckBoxDeletesAreCascading";
+      this.toolStripCheckBoxDeletesAreCascading.Size = new System.Drawing.Size(143, 19);
+      this.toolStripCheckBoxDeletesAreCascading.Text = "Deletes Are Cascading";
       // 
       // GridDataEditor
       // 
@@ -842,5 +853,6 @@ namespace AW.Winforms.Helpers.Controls
     private ToolStripButton toolStripButtonCellPopOut;
     private ToolStripButton toolStripButtonCSharp;
     private ToolStripButton toolStripButtonRelatedCounts;
+    private ToolStripCheckBox toolStripCheckBoxDeletesAreCascading;
   }
 }
