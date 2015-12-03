@@ -178,7 +178,8 @@ namespace LLBLGen.EntityBrowser
         Settings.Default.EnsureFilteringEnabled, Settings.Default.UseContext, (int) Settings.Default.CacheDurationInSeconds)
       {
         Dock = DockStyle.Fill,
-        PageSize = (ushort) Settings.Default.PageSize
+        PageSize = (ushort) Settings.Default.PageSize,
+        CascadeDeletes = checkBoxCascadeDeletes.Checked
       };
       InitializeEntityBrowser(usrCntrlEntityBrowser, connectionStringSetting);
       tabPage.Controls.Add(usrCntrlEntityBrowser);

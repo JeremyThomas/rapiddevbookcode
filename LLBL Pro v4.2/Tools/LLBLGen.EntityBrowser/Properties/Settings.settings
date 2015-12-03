@@ -32,5 +32,8 @@
     <Setting Name="CommandTimeOut" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">30</Value>
     </Setting>
+    <Setting Name="CascadeDeletes" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
