@@ -77,7 +77,7 @@ namespace AW.Winforms.Helpers.LLBL
       return true;
     }
 
-    public override IEnumerable<Tuple<string, int>> GetChildCounts(object entityThatMayHaveChildren)
+    public override IDictionary<string, int> GetChildCounts(object entityThatMayHaveChildren)
     {
       return GeneralEntityCollectionDataScope.GetChildCounts(entityThatMayHaveChildren);
     }

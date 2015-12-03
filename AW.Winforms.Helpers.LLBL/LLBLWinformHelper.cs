@@ -118,7 +118,7 @@ namespace AW.Winforms.Helpers.LLBL
         return EntityHelper.IsDirty(data);
       }
 
-      public abstract IEnumerable<Tuple<string, int>> GetChildCounts(object entityThatMayHaveChildren);
+      public abstract IDictionary<string, int> GetChildCounts(object entityThatMayHaveChildren);
     }
 
     public class DataEditorLLBLSelfServicingPersister : DataEditorLLBLPersister
@@ -138,9 +138,9 @@ namespace AW.Winforms.Helpers.LLBL
         return typeof (EntityBase).IsAssignableFrom(typeToSave);
       }
 
-      public override IEnumerable<Tuple<string, int>> GetChildCounts(object entityThatMayHaveChildren)
+      public override IDictionary<string, int> GetChildCounts(object entityThatMayHaveChildren)
       {
-        return EntityHelper.GetChildCounts(null, entityThatMayHaveChildren as EntityBase2);
+        return EntityHelper.GetExistingChildCounts(null, entityThatMayHaveChildren as EntityBase2);
       }
     }
 
@@ -180,9 +180,9 @@ namespace AW.Winforms.Helpers.LLBL
         return typeof (EntityBase2).IsAssignableFrom(typeToSave);
       }
 
-      public override IEnumerable<Tuple<string, int>> GetChildCounts(object entityThatMayHaveChildren)
+      public override IDictionary<string, int> GetChildCounts(object entityThatMayHaveChildren)
       {
-        return EntityHelper.GetChildCounts(_dataAccessAdapter, entityThatMayHaveChildren as EntityBase2);
+        return EntityHelper.GetExistingChildCounts(_dataAccessAdapter, entityThatMayHaveChildren as EntityBase2);
       }
     }
 

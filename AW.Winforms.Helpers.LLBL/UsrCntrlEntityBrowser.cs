@@ -237,16 +237,25 @@ namespace AW.Winforms.Helpers.LLBL
 
     /// <summary>
     ///   http://stackoverflow.com/questions/7309736/which-event-is-launched-right-after-control-is-fully-loaded
+    ///   TCM_SETCURSEL==32
     /// </summary>
     /// <param name="m">The Message.</param>
     protected override void WndProc(ref Message m)
     {
       base.WndProc(ref m);
-      if (m.Msg == 15 && !_fullyPainted)
+      if ((m.Msg == 15 || m.Msg == 32) && !_fullyPainted)
       {
         _fullyPainted = true;
-        ResizeToFitNodes();
+        ResizeToFitNodes(); //Also want to do it when tab for the first time
       }
+    }
+
+    private void UsrCntrlEntityBrowser_VisibleChanged(object sender, EventArgs e)
+    {
+    }
+
+    private void UsrCntrlEntityBrowser_Load(object sender, EventArgs e)
+    {
     }
 
     private IBindingListView BindingListViewCreater(IEnumerable enumerable, Type itemType)
@@ -255,7 +264,7 @@ namespace AW.Winforms.Helpers.LLBL
       if (genericDataScopeBase != null && enumerable != null)
       {
         var queryable = enumerable as IQueryable;
-        if (queryable != null) 
+        if (queryable != null)
           enumerable = genericDataScopeBase.FetchData(queryable);
       }
       return EntityHelper.CreateEntityView(enumerable, itemType);
@@ -378,8 +387,8 @@ namespace AW.Winforms.Helpers.LLBL
     {
       if (gridDataEditor.DataEditorPersister != null)
       {
-        gridDataEditor.DataEditorPersister.Save();
-        gridDataEditor.SaveEdits();
+        if (gridDataEditor.DataEditorPersister.Save() == 0)
+          gridDataEditor.SaveEdits();
         SetSaveButtons();
       }
     }
@@ -435,6 +444,18 @@ namespace AW.Winforms.Helpers.LLBL
     private void prefixDelimiterTextBox_Click(object sender, EventArgs e)
     {
       PrefixDelimiter = prefixDelimiterTextBox.Text;
+    }
+
+    public bool CascadeDeletes
+    {
+      get { return toolStripCheckBoxDeletesAreCascading.Checked; }
+      set { toolStripCheckBoxDeletesAreCascading.Checked = value; }
+    }
+
+    private void toolStripCheckBoxDeletesAreCascading_Click(object sender, EventArgs e)
+    {
+      gridDataEditor.CascadeDeletes = toolStripCheckBoxDeletesAreCascading.Checked;
+      OnPropertyChanged();
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

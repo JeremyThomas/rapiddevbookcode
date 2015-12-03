@@ -221,7 +221,7 @@ namespace AW.Winforms.Helpers.Controls
       toolStripLabelSaveResult.Text = @"numSaved: " + numSaved;
       if (HasDeletes)
       {
-        var numDeleted = DataEditorPersister.Delete(_deleteItems, toolStripCheckBoxDeletesAreCascading.Checked);
+        var numDeleted = DataEditorPersister.Delete(_deleteItems, CascadeDeletes);
         toolStripLabelSaveResult.Text += @" numDeleted: " + numDeleted;
         if (_deleteItems.Count == numDeleted)
         {
@@ -237,6 +237,12 @@ namespace AW.Winforms.Helpers.Controls
       else
         saveToolStripButton.Enabled = numSaved == 0 || !SupportsNotifyPropertyChanged;
       SetButtonsOnEditEnded();
+    }
+
+    public bool CascadeDeletes
+    {
+      get { return toolStripCheckBoxDeletesAreCascading.Checked; }
+      set { toolStripCheckBoxDeletesAreCascading.Checked = value; }
     }
 
     private bool HasDeletes
@@ -1031,9 +1037,9 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
-    private IEnumerable<Tuple<string, int>> GetExistingRelatedCounts(object entityThatMayHaveChildren)
+    private IDictionary<string, int> GetExistingRelatedCounts(object entityThatMayHaveChildren)
     {
-      return _dataEditorPersisterWithCounts.GetChildCounts(entityThatMayHaveChildren).Where(t=>t.Item2>0);
+      return _dataEditorPersisterWithCounts.GetChildCounts(entityThatMayHaveChildren);
     }
 
     private void bindingNavigatorDeleteItem1_Click(object sender, EventArgs e)

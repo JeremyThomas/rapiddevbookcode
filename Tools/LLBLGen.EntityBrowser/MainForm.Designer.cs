@@ -43,6 +43,8 @@
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.toggleSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.panelSettings = new System.Windows.Forms.Panel();
+      this.label2 = new System.Windows.Forms.Label();
+      this.numericUpDownCommandTimeOut = new System.Windows.Forms.NumericUpDown();
       this.label1 = new System.Windows.Forms.Label();
       this.numericUpDownPageSize = new System.Windows.Forms.NumericUpDown();
       this.cacheDurationInSecondsNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -61,24 +63,23 @@
       this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.toggleSettingsVisibilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.numericUpDownCommandTimeOut = new System.Windows.Forms.NumericUpDown();
-      this.label2 = new System.Windows.Forms.Label();
+      this.checkBoxCascadeDeletes = new System.Windows.Forms.CheckBox();
       cacheDurationInSecondsLabel = new System.Windows.Forms.Label();
       prefixDelimiterLabel = new System.Windows.Forms.Label();
       this.toolStrip1.SuspendLayout();
       this.contextMenuStripTabControl.SuspendLayout();
       this.panelSettings.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCommandTimeOut)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPageSize)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.cacheDurationInSecondsNumericUpDown)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
       this.contextMenuStripTabPage.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCommandTimeOut)).BeginInit();
       this.SuspendLayout();
       // 
       // cacheDurationInSecondsLabel
       // 
       cacheDurationInSecondsLabel.AutoSize = true;
-      cacheDurationInSecondsLabel.Location = new System.Drawing.Point(97, 81);
+      cacheDurationInSecondsLabel.Location = new System.Drawing.Point(97, 78);
       cacheDurationInSecondsLabel.Name = "cacheDurationInSecondsLabel";
       cacheDurationInSecondsLabel.Size = new System.Drawing.Size(141, 13);
       cacheDurationInSecondsLabel.TabIndex = 6;
@@ -87,7 +88,7 @@
       // prefixDelimiterLabel
       // 
       prefixDelimiterLabel.AutoSize = true;
-      prefixDelimiterLabel.Location = new System.Drawing.Point(455, 77);
+      prefixDelimiterLabel.Location = new System.Drawing.Point(388, 78);
       prefixDelimiterLabel.Name = "prefixDelimiterLabel";
       prefixDelimiterLabel.Size = new System.Drawing.Size(79, 13);
       prefixDelimiterLabel.TabIndex = 10;
@@ -166,29 +167,30 @@
             this.toolStripSeparator1,
             this.toggleSettingsToolStripMenuItem});
       this.contextMenuStripTabControl.Name = "contextMenuStripTabControl";
-      this.contextMenuStripTabControl.Size = new System.Drawing.Size(203, 54);
+      this.contextMenuStripTabControl.Size = new System.Drawing.Size(204, 54);
       // 
       // addConnectionToolStripMenuItem
       // 
       this.addConnectionToolStripMenuItem.Name = "addConnectionToolStripMenuItem";
-      this.addConnectionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.addConnectionToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
       this.addConnectionToolStripMenuItem.Text = "Add Connection";
       this.addConnectionToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
       // toolStripSeparator1
       // 
       this.toolStripSeparator1.Name = "toolStripSeparator1";
-      this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
+      this.toolStripSeparator1.Size = new System.Drawing.Size(200, 6);
       // 
       // toggleSettingsToolStripMenuItem
       // 
       this.toggleSettingsToolStripMenuItem.Name = "toggleSettingsToolStripMenuItem";
-      this.toggleSettingsToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.toggleSettingsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
       this.toggleSettingsToolStripMenuItem.Text = "Toggle Settings Visibility";
       this.toggleSettingsToolStripMenuItem.Click += new System.EventHandler(this.toggleSettingsToolStripMenuItem_Click);
       // 
       // panelSettings
       // 
+      this.panelSettings.Controls.Add(this.checkBoxCascadeDeletes);
       this.panelSettings.Controls.Add(this.label2);
       this.panelSettings.Controls.Add(this.numericUpDownCommandTimeOut);
       this.panelSettings.Controls.Add(this.label1);
@@ -211,10 +213,28 @@
       this.panelSettings.TabIndex = 2;
       this.panelSettings.Visible = false;
       // 
+      // label2
+      // 
+      this.label2.AutoSize = true;
+      this.label2.Location = new System.Drawing.Point(852, 77);
+      this.label2.Name = "label2";
+      this.label2.Size = new System.Drawing.Size(94, 13);
+      this.label2.TabIndex = 18;
+      this.label2.Text = "CommandTimeOut";
+      // 
+      // numericUpDownCommandTimeOut
+      // 
+      this.numericUpDownCommandTimeOut.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "CommandTimeOut", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.numericUpDownCommandTimeOut.Location = new System.Drawing.Point(952, 73);
+      this.numericUpDownCommandTimeOut.Name = "numericUpDownCommandTimeOut";
+      this.numericUpDownCommandTimeOut.Size = new System.Drawing.Size(42, 20);
+      this.numericUpDownCommandTimeOut.TabIndex = 17;
+      this.numericUpDownCommandTimeOut.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CommandTimeOut;
+      // 
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(774, 76);
+      this.label1.Location = new System.Drawing.Point(722, 77);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(52, 13);
       this.label1.TabIndex = 16;
@@ -223,7 +243,7 @@
       // numericUpDownPageSize
       // 
       this.numericUpDownPageSize.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "PageSize", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.numericUpDownPageSize.Location = new System.Drawing.Point(841, 74);
+      this.numericUpDownPageSize.Location = new System.Drawing.Point(789, 73);
       this.numericUpDownPageSize.Name = "numericUpDownPageSize";
       this.numericUpDownPageSize.Size = new System.Drawing.Size(54, 20);
       this.numericUpDownPageSize.TabIndex = 15;
@@ -232,7 +252,7 @@
       // cacheDurationInSecondsNumericUpDown
       // 
       this.cacheDurationInSecondsNumericUpDown.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "CacheDurationInSeconds", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.cacheDurationInSecondsNumericUpDown.Location = new System.Drawing.Point(244, 80);
+      this.cacheDurationInSecondsNumericUpDown.Location = new System.Drawing.Point(244, 74);
       this.cacheDurationInSecondsNumericUpDown.Name = "cacheDurationInSecondsNumericUpDown";
       this.cacheDurationInSecondsNumericUpDown.Size = new System.Drawing.Size(49, 20);
       this.cacheDurationInSecondsNumericUpDown.TabIndex = 14;
@@ -242,9 +262,9 @@
       // 
       this.ensureFilteringEnabledCheckBox.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.EnsureFilteringEnabled;
       this.ensureFilteringEnabledCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "EnsureFilteringEnabled", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.ensureFilteringEnabledCheckBox.Location = new System.Drawing.Point(663, 76);
+      this.ensureFilteringEnabledCheckBox.Location = new System.Drawing.Point(579, 70);
       this.ensureFilteringEnabledCheckBox.Name = "ensureFilteringEnabledCheckBox";
-      this.ensureFilteringEnabledCheckBox.Size = new System.Drawing.Size(104, 24);
+      this.ensureFilteringEnabledCheckBox.Size = new System.Drawing.Size(142, 24);
       this.ensureFilteringEnabledCheckBox.TabIndex = 13;
       this.ensureFilteringEnabledCheckBox.Text = "Ensure Filtering Enabled";
       this.ensureFilteringEnabledCheckBox.UseVisualStyleBackColor = true;
@@ -252,7 +272,7 @@
       // prefixDelimiterTextBox
       // 
       this.prefixDelimiterTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "PrefixDelimiter", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.prefixDelimiterTextBox.Location = new System.Drawing.Point(540, 74);
+      this.prefixDelimiterTextBox.Location = new System.Drawing.Point(473, 74);
       this.prefixDelimiterTextBox.Name = "prefixDelimiterTextBox";
       this.prefixDelimiterTextBox.Size = new System.Drawing.Size(100, 20);
       this.prefixDelimiterTextBox.TabIndex = 11;
@@ -263,9 +283,9 @@
       this.useSchemaCheckBox.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.UseSchema;
       this.useSchemaCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
       this.useSchemaCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "UseSchema", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.useSchemaCheckBox.Location = new System.Drawing.Point(345, 76);
+      this.useSchemaCheckBox.Location = new System.Drawing.Point(299, 71);
       this.useSchemaCheckBox.Name = "useSchemaCheckBox";
-      this.useSchemaCheckBox.Size = new System.Drawing.Size(104, 24);
+      this.useSchemaCheckBox.Size = new System.Drawing.Size(88, 24);
       this.useSchemaCheckBox.TabIndex = 9;
       this.useSchemaCheckBox.Text = "Use Schema";
       this.useSchemaCheckBox.UseVisualStyleBackColor = true;
@@ -275,9 +295,9 @@
       this.useContextCheckBox.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.UseContext;
       this.useContextCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
       this.useContextCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "UseContext", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.useContextCheckBox.Location = new System.Drawing.Point(6, 78);
+      this.useContextCheckBox.Location = new System.Drawing.Point(6, 72);
       this.useContextCheckBox.Name = "useContextCheckBox";
-      this.useContextCheckBox.Size = new System.Drawing.Size(104, 24);
+      this.useContextCheckBox.Size = new System.Drawing.Size(85, 24);
       this.useContextCheckBox.TabIndex = 5;
       this.useContextCheckBox.Text = "Use Context";
       this.useContextCheckBox.UseVisualStyleBackColor = true;
@@ -317,70 +337,64 @@
             this.toolStripSeparator2,
             this.toggleSettingsVisibilityToolStripMenuItem});
       this.contextMenuStripTabPage.Name = "contextMenuStripTabPage";
-      this.contextMenuStripTabPage.Size = new System.Drawing.Size(203, 126);
+      this.contextMenuStripTabPage.Size = new System.Drawing.Size(204, 126);
       // 
       // addConnectionToolStripMenuItem1
       // 
       this.addConnectionToolStripMenuItem1.Name = "addConnectionToolStripMenuItem1";
-      this.addConnectionToolStripMenuItem1.Size = new System.Drawing.Size(202, 22);
+      this.addConnectionToolStripMenuItem1.Size = new System.Drawing.Size(203, 22);
       this.addConnectionToolStripMenuItem1.Text = "Add Connection";
       this.addConnectionToolStripMenuItem1.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
       // editConnectionToolStripMenuItem
       // 
       this.editConnectionToolStripMenuItem.Name = "editConnectionToolStripMenuItem";
-      this.editConnectionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.editConnectionToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
       this.editConnectionToolStripMenuItem.Text = "Edit Connection";
       this.editConnectionToolStripMenuItem.Click += new System.EventHandler(this.editConnectionToolStripMenuItem_Click);
       // 
       // renameToolStripMenuItem
       // 
       this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-      this.renameToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.renameToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
       this.renameToolStripMenuItem.Text = "Rename";
       this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
       // 
       // toolStripSeparator3
       // 
       this.toolStripSeparator3.Name = "toolStripSeparator3";
-      this.toolStripSeparator3.Size = new System.Drawing.Size(199, 6);
+      this.toolStripSeparator3.Size = new System.Drawing.Size(200, 6);
       // 
       // removeToolStripMenuItem
       // 
       this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-      this.removeToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.removeToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
       this.removeToolStripMenuItem.Text = "Remove";
       this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
       // 
       // toolStripSeparator2
       // 
       this.toolStripSeparator2.Name = "toolStripSeparator2";
-      this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
+      this.toolStripSeparator2.Size = new System.Drawing.Size(200, 6);
       // 
       // toggleSettingsVisibilityToolStripMenuItem
       // 
       this.toggleSettingsVisibilityToolStripMenuItem.Name = "toggleSettingsVisibilityToolStripMenuItem";
-      this.toggleSettingsVisibilityToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.toggleSettingsVisibilityToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
       this.toggleSettingsVisibilityToolStripMenuItem.Text = "Toggle Settings Visibility";
       this.toggleSettingsVisibilityToolStripMenuItem.Click += new System.EventHandler(this.toggleSettingsToolStripMenuItem_Click);
       // 
-      // numericUpDownCommandTimeOut
+      // checkBoxCascadeDeletes
       // 
-      this.numericUpDownCommandTimeOut.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "CommandTimeOut", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.numericUpDownCommandTimeOut.Location = new System.Drawing.Point(1024, 74);
-      this.numericUpDownCommandTimeOut.Name = "numericUpDownCommandTimeOut";
-      this.numericUpDownCommandTimeOut.Size = new System.Drawing.Size(42, 20);
-      this.numericUpDownCommandTimeOut.TabIndex = 17;
-      this.numericUpDownCommandTimeOut.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CommandTimeOut;
-      // 
-      // label2
-      // 
-      this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(924, 76);
-      this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(94, 13);
-      this.label2.TabIndex = 18;
-      this.label2.Text = "CommandTimeOut";
+      this.checkBoxCascadeDeletes.AutoSize = true;
+      this.checkBoxCascadeDeletes.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CascadeDeletes;
+      this.checkBoxCascadeDeletes.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "CascadeDeletes", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.checkBoxCascadeDeletes.Location = new System.Drawing.Point(1018, 72);
+      this.checkBoxCascadeDeletes.Name = "checkBoxCascadeDeletes";
+      this.checkBoxCascadeDeletes.Size = new System.Drawing.Size(107, 17);
+      this.checkBoxCascadeDeletes.TabIndex = 19;
+      this.checkBoxCascadeDeletes.Text = "Cascade Deletes";
+      this.checkBoxCascadeDeletes.UseVisualStyleBackColor = true;
       // 
       // MainForm
       // 
@@ -401,11 +415,11 @@
       this.contextMenuStripTabControl.ResumeLayout(false);
       this.panelSettings.ResumeLayout(false);
       this.panelSettings.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCommandTimeOut)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPageSize)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.cacheDurationInSecondsNumericUpDown)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
       this.contextMenuStripTabPage.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCommandTimeOut)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -444,6 +458,7 @@
     private System.Windows.Forms.ToolStripMenuItem toggleSettingsVisibilityToolStripMenuItem;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.NumericUpDown numericUpDownCommandTimeOut;
+    private System.Windows.Forms.CheckBox checkBoxCascadeDeletes;
   }
 }
 

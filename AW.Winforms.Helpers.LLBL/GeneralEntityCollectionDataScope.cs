@@ -165,10 +165,10 @@ namespace AW.Winforms.Helpers.LLBL
       return dataAccessAdapter == null ? EntityHelper.Delete(dataToDelete) : EntityHelper.Delete(dataToDelete, dataAccessAdapter, cascade);
     }
 
-    public IEnumerable<Tuple<string, int>> GetChildCounts(object entityThatMayHaveChildren)
+    public Dictionary<string, int> GetChildCounts(object entityThatMayHaveChildren)
     {
       var dataAccessAdapter = TransactionController as IDataAccessAdapter;
-      return EntityHelper.GetChildCounts(dataAccessAdapter, entityThatMayHaveChildren as EntityBase2);
+      return EntityHelper.GetExistingChildCounts(dataAccessAdapter, entityThatMayHaveChildren as EntityBase2);
     }
 
     public void Undo(object modifiedData = null)
@@ -201,12 +201,11 @@ namespace AW.Winforms.Helpers.LLBL
 
     protected override IUnitOfWorkCore BuildWorkForCommit()
     {
-      var unitOfWorkCore = base.BuildWorkForCommit();
       foreach (var entity in _entitiesRemovalTracker.Where(e => e.MarkedForDeletion))
       {
-        //AddDeleteActionsForDependingEntitiesToUoW(entity, unitOfWorkCore);
-        unitOfWorkCore.AddForDelete(entity);
+        MarkForDeletion(entity);
       }
+      var unitOfWorkCore = base.BuildWorkForCommit();
       return unitOfWorkCore;
     }
 

@@ -50,6 +50,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.prefixDelimiterTextBox = new System.Windows.Forms.ToolStripTextBox();
       this.cacheDurationInSecondsNumericUpDown = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.pageSizeNumericUpDown = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
+      this.toolStripCheckBoxDeletesAreCascading = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
@@ -124,7 +125,8 @@ namespace AW.Winforms.Helpers.LLBL
             this.prefixDelimiterLabel,
             this.prefixDelimiterTextBox,
             this.cacheDurationInSecondsNumericUpDown,
-            this.pageSizeNumericUpDown});
+            this.pageSizeNumericUpDown,
+            this.toolStripCheckBoxDeletesAreCascading});
       this.toolStrip.Location = new System.Drawing.Point(0, 557);
       this.toolStrip.Name = "toolStrip";
       this.toolStrip.Size = new System.Drawing.Size(254, 28);
@@ -216,8 +218,19 @@ namespace AW.Winforms.Helpers.LLBL
       this.pageSizeNumericUpDown.TextVisible = false;
       this.pageSizeNumericUpDown.Click += new System.EventHandler(this.pageSizeNumericUpDown_Click);
       // 
+      // toolStripCheckBoxDeletesAreCascading
+      // 
+      this.toolStripCheckBoxDeletesAreCascading.Checked = false;
+      this.toolStripCheckBoxDeletesAreCascading.CheckState = System.Windows.Forms.CheckState.Unchecked;
+      this.toolStripCheckBoxDeletesAreCascading.Name = "toolStripCheckBoxDeletesAreCascading";
+      this.toolStripCheckBoxDeletesAreCascading.Size = new System.Drawing.Size(143, 19);
+      this.toolStripCheckBoxDeletesAreCascading.Text = "Deletes Are Cascading";
+      this.toolStripCheckBoxDeletesAreCascading.Click += new System.EventHandler(this.toolStripCheckBoxDeletesAreCascading_Click);
+      // 
       // gridDataEditor
       // 
+      this.gridDataEditor.CascadeDeletes = true;
+      this.gridDataEditor.DataEditorPersister = null;
       this.gridDataEditor.DataMember = "";
       this.gridDataEditor.DataSource = null;
       this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -273,6 +286,8 @@ namespace AW.Winforms.Helpers.LLBL
       this.Controls.Add(this.splitContainer1);
       this.Name = "UsrCntrlEntityBrowser";
       this.Size = new System.Drawing.Size(764, 585);
+      this.Load += new System.EventHandler(this.UsrCntrlEntityBrowser_Load);
+      this.VisibleChanged += new System.EventHandler(this.UsrCntrlEntityBrowser_VisibleChanged);
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel1.PerformLayout();
       this.splitContainer1.Panel2.ResumeLayout(false);
@@ -306,5 +321,6 @@ namespace AW.Winforms.Helpers.LLBL
     private ToolStripTextBox prefixDelimiterTextBox;
     private ToolStripNumericUpDown cacheDurationInSecondsNumericUpDown;
     private ToolStripNumericUpDown pageSizeNumericUpDown;
+    private ToolStripCheckBox toolStripCheckBoxDeletesAreCascading;
   }
 }

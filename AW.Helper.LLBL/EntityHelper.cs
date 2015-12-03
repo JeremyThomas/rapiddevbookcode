@@ -483,7 +483,11 @@ namespace AW.Helper.LLBL
             {
               var entityCollection2 = modifiedEntities as IEntityCollection2;
               if (entityCollection2 != null)
-                entityCollection2.AddRange((IEntityCollection2) entityCollection.RemovedEntitiesTracker);
+                foreach (var entity in entityCollection.RemovedEntitiesTracker.AsEnumerable().Where(entity => entity.Fields.State != EntityState.Deleted))
+                {
+                  entityCollection2.Add(entity);
+                }
+                //entityCollection2.AddRange((IEntityCollection2) entityCollection.RemovedEntitiesTracker);
             }
             else
               collection.AddRange((IEntityCollection) entityCollection.RemovedEntitiesTracker);
@@ -850,6 +854,7 @@ namespace AW.Helper.LLBL
       if (cascade)
       {
         var unitOfWork2 = new UnitOfWork2();
+        MakeDirectDeletesPerformBeforeEntityDeletes(unitOfWork2);
         foreach (var entityToDelete in entitiesToDelete)
         {
           unitOfWork2.AddForDelete(entityToDelete);
@@ -859,6 +864,17 @@ namespace AW.Helper.LLBL
       }
 
       return entitiesToDelete.Count(dataAccessAdapter.DeleteEntity);
+    }
+
+    /// <summary>
+    ///   Makes the deletes perform first.
+    /// </summary>
+    /// <param name="unitOfWork">The unit of work.</param>
+    public static void MakeDirectDeletesPerformBeforeEntityDeletes(UnitOfWork2 unitOfWork)
+    {
+      var unitOfWorkDeletesBlockType = unitOfWork.CommitOrder.Single(bt => bt == UnitOfWorkBlockType.Deletes);
+      unitOfWork.CommitOrder.Remove(unitOfWorkDeletesBlockType);
+      unitOfWork.CommitOrder.Add(unitOfWorkDeletesBlockType);
     }
 
     /// <summary>
@@ -955,6 +971,19 @@ namespace AW.Helper.LLBL
       return predicateExpression;
     }
 
+
+    public static Dictionary<string, int> GetExistingChildCounts(IDataAccessAdapter dataAccessAdapter, EntityBase2 entity, params string[] entityTypesToExclude)
+    {
+      return GetExistingChildCounts(dataAccessAdapter, entity, (IEnumerable<string>)entityTypesToExclude);
+    }
+
+    public static Dictionary<string, int> GetExistingChildCounts(IDataAccessAdapter dataAccessAdapter, EntityBase2 entity, IEnumerable<string> entityTypesToExclude)
+    {
+      return GetChildCounts(dataAccessAdapter, entity, entityTypesToExclude).Where(childCount => childCount.Item2 > 0).GroupBy(kvp => kvp.Item1)
+        .ToDictionary(grp => grp.Key, grp => grp.Sum(kvp => kvp.Item2));
+    }
+
+
     public static IEnumerable<Tuple<string, int>> GetChildCounts(IDataAccessAdapter dataAccessAdapter, EntityBase2 entity, params string[] entityTypesToExclude)
     {
       return GetChildCounts(dataAccessAdapter, entity, (IEnumerable<string>) entityTypesToExclude);
@@ -968,19 +997,18 @@ namespace AW.Helper.LLBL
 
     private static IEnumerable<List<IEntityFieldCore>> GetAllFkEntityFieldCoreObjectsWhereStartEntityIsPkSide(IEntityCore entity, bool onlyComponentsRelationShips = false)
     {
-      foreach (var entityRelation in GetAllRelationsWhereStartEntityIsPkSide(entity))
-      {
-        List<IEntityFieldCore> allFkEntityFieldCoreObjects = entityRelation.GetAllFKEntityFieldCoreObjects();
-        var anyIsPrimaryKeys = allFkEntityFieldCoreObjects.Any(f => f.IsPrimaryKey);
-        if (!onlyComponentsRelationShips || anyIsPrimaryKeys) 
-          yield return allFkEntityFieldCoreObjects;
-      }
+      return from entityRelation in GetAllRelationsWhereStartEntityIsPkSide(entity) 
+             select entityRelation.GetAllFKEntityFieldCoreObjects() 
+             into allFkEntityFieldCoreObjects 
+             let anyIsPrimaryKeys = allFkEntityFieldCoreObjects.Any(f => f.IsPrimaryKey) 
+             where !onlyComponentsRelationShips || anyIsPrimaryKeys 
+             select allFkEntityFieldCoreObjects;
     }
 
     public static IEnumerable<IEntityRelation> GetAllRelationsWhereStartEntityIsPkSide(IEntityCore entity, bool onlyComponentsRelationShips)
     {
       return GetAllRelationsWhereStartEntityIsPkSide(entity)
-        .Where(entityRelation => !(onlyComponentsRelationShips && entityRelation.GetAllFKEntityFieldCoreObjects().Any(f => f.IsPrimaryKey)));
+        .Where(entityRelation => !onlyComponentsRelationShips || entityRelation.GetAllFKEntityFieldCoreObjects().Any(f => f.IsPrimaryKey));
     }
 
     public static IEnumerable<IEntityRelation> GetAllRelationsWhereStartEntityIsPkSide(IEntityCore entity)
