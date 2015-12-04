@@ -16,8 +16,9 @@ namespace AW.Winforms.Helpers.Controls
     ///   Saves (persist CUD changes) the specified data.
     /// </summary>
     /// <param name="dataToSave">The data to save.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
+    /// <param name="cascadeDeletes"></param>
     /// <returns></returns>
-    int Save(object dataToSave = null);
+    int Save(object dataToSave = null, bool cascadeDeletes = false);
 
     /// <summary>
     ///   Deletes the specified data, may not be needed if 'Save' can handle deletes.
@@ -122,7 +123,7 @@ namespace AW.Winforms.Helpers.Controls
       _undoMethod = undoMethod;
     }
 
-    public int Save(object dataToSave)
+    public int Save(object dataToSave = null, bool cascadeDeletes = false)
     {
       return _saveFunction != null ? _saveFunction(dataToSave) : 0;
     }
@@ -157,7 +158,7 @@ namespace AW.Winforms.Helpers.Controls
       _dataContext = dataContext;
     }
 
-    public int Save(object dataToSave)
+    public int Save(object dataToSave = null, bool cascadeDeletes = false)
     {
       var changeSet = _dataContext.GetChangeSet();
       _dataContext.SubmitChanges();

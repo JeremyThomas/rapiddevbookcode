@@ -126,6 +126,7 @@ namespace AW.Winforms.Helpers.LLBL
     }
 
     private readonly List<IEntityCore> _entitiesRemovalTracker = new List<IEntityCore>();
+    private bool _cascadeDeletes;
 
     /// <summary>
     ///   Handles the EntityAdded event of a removedEntitiesTracker.
@@ -151,16 +152,29 @@ namespace AW.Winforms.Helpers.LLBL
       return Convert.ToInt32(CommitChanges());
     }
 
-    public int Save(object dataToSave = null)
+    public int Save(object dataToSave = null, bool cascadeDeletes = false)
     {
-      if (dataToSave == null) return CommitAllChanges();
+      if (dataToSave == null) return CommitAllChanges(cascadeDeletes);
       var dataAccessAdapter = TransactionController as IDataAccessAdapter;
-      return dataAccessAdapter == null ? EntityHelper.Save(dataToSave) : EntityHelper.Save(dataToSave, dataAccessAdapter);
+      return dataAccessAdapter == null ? EntityHelper.Save(dataToSave) : EntityHelper.Save(dataToSave, dataAccessAdapter, cascadeDeletes);
+    }
+
+    private int CommitAllChanges(bool cascadeDeletes)
+    {
+      try
+      {
+        _cascadeDeletes = cascadeDeletes;
+        return CommitAllChanges();
+      }
+      finally
+      {
+        _cascadeDeletes = false;
+      }
     }
 
     public int Delete(object dataToDelete = null, bool cascade = false)
     {
-      if (dataToDelete == null) return CommitAllChanges();
+      if (dataToDelete == null) return CommitAllChanges(cascade);
       var dataAccessAdapter = TransactionController as IDataAccessAdapter;
       return dataAccessAdapter == null ? EntityHelper.Delete(dataToDelete) : EntityHelper.Delete(dataToDelete, dataAccessAdapter, cascade);
     }
@@ -193,10 +207,11 @@ namespace AW.Winforms.Helpers.LLBL
     /// <param name="workData">The work data.</param>
     protected override void OnEntityDelete(IEntityCore toDelete, WorkDataCollector workData)
     {
-      foreach (var entityRelation in EntityHelper.GetAllRelationsWhereStartEntityIsPkSide(toDelete, true))
-      {
-        workData.Add(entityRelation);
-      }
+      if (_cascadeDeletes)
+        foreach (var entityRelation in EntityHelper.GetAllRelationsWhereStartEntityIsPkSide(toDelete, true))
+        {
+          workData.Add(entityRelation);
+        }
     }
 
     protected override IUnitOfWorkCore BuildWorkForCommit()

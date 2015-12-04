@@ -679,7 +679,7 @@ namespace AW.Helper.LLBL
     ///   Deletes the specified data from the DB.
     /// </summary>
     /// <param name="dataToDelete">The data to delete.</param>
-    /// <param name="cascade">if set to <c>true</c> [cascade].</param>
+    /// <param name="cascade">if set to <c>true</c> [cascadeDeletes].</param>
     /// <returns></returns>
     public static int Delete(object dataToDelete, bool cascade = false)
     {
@@ -785,12 +785,15 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    ///   Saves all dirty objects inside the enumeration passed to the persistent storage.
+    /// Saves all dirty objects inside the enumeration passed to the persistent storage.
     /// </summary>
     /// <param name="entitiesToSave">The entities to save.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
-    /// <returns>the amount of persisted entities</returns>
-    public static int SaveEntities(IEnumerable entitiesToSave, IDataAccessAdapter dataAccessAdapter)
+    /// <param name="cascade">if set to <c>true</c> [cascadeDeletes].</param>
+    /// <returns>
+    /// the amount of persisted entities
+    /// </returns>
+    public static int SaveEntities(IEnumerable entitiesToSave, IDataAccessAdapter dataAccessAdapter, bool cascade = false)
     {
       if (entitiesToSave is IEntityView2)
         entitiesToSave = ((IEntityView2) entitiesToSave).RelatedCollection;
@@ -804,38 +807,44 @@ namespace AW.Helper.LLBL
           foreach (IEntityCore entity in entityCollection.RemovedEntitiesTracker)
             if (!entity.MarkedForDeletion)
               entityCollection.RemovedEntitiesTracker.Remove(entity);
-          modifyCount = dataAccessAdapter.DeleteEntityCollection(entityCollection.RemovedEntitiesTracker);
+          modifyCount = DeleteEntities(entityCollection.RemovedEntitiesTracker, dataAccessAdapter, cascade);
           entityCollection.RemovedEntitiesTracker.Clear();
         }
         return modifyCount + dataAccessAdapter.SaveEntityCollection(collectionToSave, false, true);
       }
-      return SaveEntities(entitiesToSave.Cast<IEntity2>(), dataAccessAdapter);
+      return SaveEntities(entitiesToSave.Cast<IEntity2>(), dataAccessAdapter, cascade);
     }
 
     /// <summary>
-    ///   Saves all dirty objects inside the enumeration passed to the persistent storage.
+    /// Saves all dirty objects inside the enumeration passed to the persistent storage.
     /// </summary>
     /// <param name="entitiesToSave">The entities to save.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
-    /// <returns>the amount of persisted entities</returns>
-    public static int SaveEntities(IEnumerable<IEntity2> entitiesToSave, IDataAccessAdapter dataAccessAdapter)
+    /// <param name="cascade">if set to <c>true</c> [cascadeDeletes].</param>
+    /// <returns>
+    /// the amount of persisted entities
+    /// </returns>
+    public static int SaveEntities(IEnumerable<IEntity2> entitiesToSave, IDataAccessAdapter dataAccessAdapter, bool cascade = false)
     {
       return entitiesToSave.Count(entity => entity.IsDirty && dataAccessAdapter.SaveEntity(entity));
     }
 
     /// <summary>
-    ///   Saves any changes to the specified data to the DB.
+    /// Saves any changes to the specified data to the DB.
     /// </summary>
     /// <param name="dataToSave">The data to save, must be a CommonEntityBase or a list of CommonEntityBase's.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
-    /// <returns>The number of persisted entities.</returns>
-    public static int Save(object dataToSave, IDataAccessAdapter dataAccessAdapter)
+    /// <param name="cascadeDeletes">if set to <c>true</c> [cascadeDeletes].</param>
+    /// <returns>
+    /// The number of persisted entities.
+    /// </returns>
+    public static int Save(object dataToSave, IDataAccessAdapter dataAccessAdapter, bool cascadeDeletes = false)
     {
       var listItemType = GetListItemType(dataToSave);
       if (typeof (IEntity2).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToSave as IEnumerable;
-        return enumerable == null ? Convert.ToInt32(dataAccessAdapter.SaveEntity((IEntity2) dataToSave)) : SaveEntities(enumerable, dataAccessAdapter);
+        return enumerable == null ? Convert.ToInt32(dataAccessAdapter.SaveEntity((IEntity2) dataToSave)) : SaveEntities(enumerable, dataAccessAdapter, cascadeDeletes);
       }
       return 0;
     }
@@ -845,7 +854,7 @@ namespace AW.Helper.LLBL
     /// </summary>
     /// <param name="entitiesToDelete">The entities to delete.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
-    /// <param name="cascade">if set to <c>true</c> [cascade].</param>
+    /// <param name="cascade">if set to <c>true</c> [cascadeDeletes].</param>
     /// <returns>
     ///   the amount of persisted entities
     /// </returns>
@@ -882,13 +891,24 @@ namespace AW.Helper.LLBL
     /// </summary>
     /// <param name="entitiesToDelete">The entities to delete.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
-    /// <param name="cascade">if set to <c>true</c> [cascade].</param>
+    /// <param name="cascade">if set to <c>true</c> [cascadeDeletes].</param>
     /// <returns></returns>
     public static int DeleteEntities(IEnumerable entitiesToDelete, IDataAccessAdapter dataAccessAdapter, bool cascade = false)
     {
       var collectionToDelete = entitiesToDelete as IEntityCollection2;
       if (collectionToDelete != null)
+      {
+        if (cascade)
+        {
+          var unitOfWork2 = new UnitOfWork2();
+          MakeDirectDeletesPerformBeforeEntityDeletes(unitOfWork2); 
+          unitOfWork2.AddCollectionForDelete(collectionToDelete);
+          foreach (var entityToDelete in collectionToDelete.OfType<IEntity2>())
+            MakeCascadeDeletesForAllChildren(unitOfWork2, entityToDelete);
+          return unitOfWork2.Commit(dataAccessAdapter);
+        }
         return dataAccessAdapter.DeleteEntityCollection(collectionToDelete);
+      }
       return DeleteEntities(entitiesToDelete.Cast<IEntity2>(), dataAccessAdapter, cascade);
     }
 
