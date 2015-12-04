@@ -217,7 +217,7 @@ namespace AW.Winforms.Helpers.Controls
     public void SaveEdits()
     {
       dataGridViewEnumerable.EndEdit();
-      var numSaved = DataEditorPersister.Save(BindingSourceEnumerableList);
+      var numSaved = DataEditorPersister.Save(BindingSourceEnumerableList, CascadeDeletes);
       toolStripLabelSaveResult.Text = @"numSaved: " + numSaved;
       if (HasDeletes)
       {
@@ -985,7 +985,7 @@ namespace AW.Winforms.Helpers.Controls
     private void toolStripButtonCSharp_Click(object sender, EventArgs e)
     {
       var cSharp = SourceEnumerable.SerializeToCSharp(SerializeToCSharpOutputFormat, PromptForPropertiesToExclude());
-      var frmQueryRunner = DataEditorPersister==null? new FrmQueryRunner(): new FrmQueryRunner(DataEditorPersister.Save, DataEditorPersister.Delete);
+      var frmQueryRunner = DataEditorPersister==null? new FrmQueryRunner(): new FrmQueryRunner(dataToSave => DataEditorPersister.Save(dataToSave), DataEditorPersister.Delete);
       frmQueryRunner.ViewText(cSharp);
       frmQueryRunner.ShowDialog();
       Settings.Default.Save();
