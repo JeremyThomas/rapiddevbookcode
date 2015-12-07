@@ -389,6 +389,8 @@ namespace AW.Winforms.Helpers.LLBL
       {
         if (gridDataEditor.DataEditorPersister.Save(null, CascadeDeletes) == 0)
           gridDataEditor.SaveEdits();
+        else
+          gridDataEditor.CancelEdits();
         SetSaveButtons();
       }
     }

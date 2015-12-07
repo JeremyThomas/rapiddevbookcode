@@ -84,9 +84,7 @@ namespace AW.Winforms.Helpers.LLBL
     {
       Query = TryTrackQuery(query);
       if (Query != null)
-      {
         FetchData();
-      }
       var entityCollectionCore = _entityCollection;
       _entityCollection = null;
       return entityCollectionCore;
@@ -119,12 +117,22 @@ namespace AW.Winforms.Helpers.LLBL
         for (var i = entityCollectionCore.Count - 1; i > -1; i--)
         {
           var entity = entityCollectionCore[i];
-          if (entity.MarkedForDeletion || _entitiesRemovalTracker.Contains(entity)) //This wont be true as its reset in CollectionCore.PerformAdd
+          if (entity.MarkedForDeletion  //This wont be true as its reset in CollectionCore.PerformAdd
+            || _entitiesRemovalTracker.Contains(entity))
             entityCollectionCore.Remove(entity);
         }
       }
     }
 
+    /// <summary>
+    /// The _entities removal tracker, this is used instead doing MarkForDeletion directly to enable undo, since there is no way to clear DataScopeContext._manualAddedEntitiesRemovalTracker
+    /// except, perhaps calling DataScopeContext.PerformPostCommitActions
+    /// also need to remove entities when opening and old page of data
+    /// e.g
+    /// DataScope.BuildWorkForCommit
+    /// DataScope.PerformPostCommitActions
+    /// except that will also remove them from the context
+    /// </summary>
     private readonly List<IEntityCore> _entitiesRemovalTracker = new List<IEntityCore>();
     private bool _cascadeDeletes;
 
@@ -138,25 +146,8 @@ namespace AW.Winforms.Helpers.LLBL
       if (EntityRemoved != null)
       {
         EntityRemoved(sender, e);
-        _entitiesRemovalTracker.AddDistinct(e.InvolvedEntity);
+        _entitiesRemovalTracker.AddDistinct(e.InvolvedEntity); 
       }
-    }
-
-    public bool CommitChanges()
-    {
-      return TransactionController != null && CommitChanges(TransactionController);
-    }
-
-    protected int CommitAllChanges()
-    {
-      return Convert.ToInt32(CommitChanges());
-    }
-
-    public int Save(object dataToSave = null, bool cascadeDeletes = false)
-    {
-      if (dataToSave == null) return CommitAllChanges(cascadeDeletes);
-      var dataAccessAdapter = TransactionController as IDataAccessAdapter;
-      return dataAccessAdapter == null ? EntityHelper.Save(dataToSave) : EntityHelper.Save(dataToSave, dataAccessAdapter, cascadeDeletes);
     }
 
     private int CommitAllChanges(bool cascadeDeletes)
@@ -164,7 +155,7 @@ namespace AW.Winforms.Helpers.LLBL
       try
       {
         _cascadeDeletes = cascadeDeletes;
-        return CommitAllChanges();
+        return Convert.ToInt32(TransactionController != null && CommitChanges(TransactionController));
       }
       finally
       {
@@ -172,6 +163,49 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
+    protected override void OnBeforeCommitChanges()
+    {
+      foreach (var entity in _entitiesRemovalTracker.Where(e => e.MarkedForDeletion))
+      {
+        MarkForDeletion(entity);
+      }
+    }
+
+    protected override IUnitOfWorkCore BuildWorkForCommit()
+    {
+      var unitOfWorkCore = base.BuildWorkForCommit();
+      return unitOfWorkCore; //AddForSave contains all entites in context
+    }
+
+    protected override void OnAfterCommitChanges()
+    {
+      _entitiesRemovalTracker.Clear();
+    }
+
+    /// <summary>
+    ///   Called when toDelete is about to be deleted. Use this method to specify work to be done by the scope to
+    ///   avoid FK constraint issues. workData is meant to collect this work. It can either be additional entities to
+    ///   delete prior to 'toDelete', or a list of relations which are used to create cascading delete actions executed
+    ///   prior to the delete action of toDelete.
+    /// </summary>
+    /// <param name="toDelete">To delete.</param>
+    /// <param name="workData">The work data.</param>
+    protected override void OnEntityDelete(IEntityCore toDelete, WorkDataCollector workData)
+    {
+      if (_cascadeDeletes)
+        foreach (var entityRelation in EntityHelper.GetAllRelationsWhereStartEntityIsPkSide(toDelete, true))
+        {
+          workData.Add(entityRelation);
+        }
+    }
+    
+    public int Save(object dataToSave = null, bool cascadeDeletes = false)
+    {
+      if (dataToSave == null) return CommitAllChanges(cascadeDeletes);
+      var dataAccessAdapter = TransactionController as IDataAccessAdapter;
+      return dataAccessAdapter == null ? EntityHelper.Save(dataToSave) : EntityHelper.Save(dataToSave, dataAccessAdapter, cascadeDeletes);
+    }
+    
     public int Delete(object dataToDelete = null, bool cascade = false)
     {
       if (dataToDelete == null) return CommitAllChanges(cascade);
@@ -197,36 +231,6 @@ namespace AW.Winforms.Helpers.LLBL
       _entitiesRemovalTracker.Clear();
     }
 
-    /// <summary>
-    ///   Called when toDelete is about to be deleted. Use this method to specify work to be done by the scope to
-    ///   avoid FK constraint issues. workData is meant to collect this work. It can either be additional entities to
-    ///   delete prior to 'toDelete', or a list of relations which are used to create cascading delete actions executed
-    ///   prior to the delete action of toDelete.
-    /// </summary>
-    /// <param name="toDelete">To delete.</param>
-    /// <param name="workData">The work data.</param>
-    protected override void OnEntityDelete(IEntityCore toDelete, WorkDataCollector workData)
-    {
-      if (_cascadeDeletes)
-        foreach (var entityRelation in EntityHelper.GetAllRelationsWhereStartEntityIsPkSide(toDelete, true))
-        {
-          workData.Add(entityRelation);
-        }
-    }
 
-    protected override IUnitOfWorkCore BuildWorkForCommit()
-    {
-      foreach (var entity in _entitiesRemovalTracker.Where(e => e.MarkedForDeletion))
-      {
-        MarkForDeletion(entity);
-      }
-      var unitOfWorkCore = base.BuildWorkForCommit();
-      return unitOfWorkCore;
-    }
-
-    protected override void OnAfterCommitChanges()
-    {
-      _entitiesRemovalTracker.Clear();
-    }
   }
 }
