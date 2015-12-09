@@ -568,5 +568,23 @@ namespace AW.Tests
       Assert.AreEqual(29, northwindLinqMetaData.Supplier.FilterByIProductJoinQuery(northwindLinqMetaData.Product).ToList().Count());
       //Assert.AreEqual(53, northwindLinqMetaData.Order.FilterByIProductFullQuery(northwindLinqMetaData.Product).ToEntityCollection2().Count());
     }
+
+    [TestMethod, Description("LINQ - Invalid SQL with Linq on interface query join")]
+    public void TestSupplierCrossJoinProduct()
+    {
+      var northwindLinqMetaData = GetNorthwindLinqMetaData();
+      Assert.AreEqual(29, northwindLinqMetaData.Supplier.FilterByIProductGenericQuery(northwindLinqMetaData.Product).ToEntityCollection2().Count());
+    }
+
+    [TestMethod, TestProperty("Bug", "UnFixed"), Description("Blowup filtering on 2 1:M related tables and a n:m table.")]
+    //http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=23591
+    public void TestEmployeeCrossJoinTerritory()
+    {
+      var northwindLinqMetaData = GetNorthwindLinqMetaData();
+      Assert.AreEqual(0,
+        northwindLinqMetaData.Employee.FilterByOrder(1)
+        .Where(p => p.Staff.Any())
+        .FilterByTerritories(northwindLinqMetaData.Territory.Where(t => t.RegionId != 1)).Count());
+    }
   }
 }

@@ -2,7 +2,6 @@ using System.Linq;
 using System.Linq.Dynamic;
 using AW.Data;
 using AW.Data.EntityClasses;
-using AW.Data.Filters;
 using AW.Data.Linq;
 using AW.Data.Linq.Filters;
 using AW.Data.Queries;
@@ -86,7 +85,9 @@ namespace AW.Tests
     }
 
     [TestProperty("Bug", "UnFixed"), TestMethod, TestCategory("Failing"),
-     Description("Fails with: SD.LLBLGen.Pro.ORMSupportClasses.ORMQueryConstructionException: A nested query relies on a correlation filter which refers to the field 'EmployeeID', however this field wasn't found in the projection of the entity..	")]
+     Description(
+       "Fails with: SD.LLBLGen.Pro.ORMSupportClasses.ORMQueryConstructionException: A nested query relies on a correlation filter which refers to the field 'EmployeeID', however this field wasn't found in the projection of the entity..	"
+       )]
     public void EmployeeAddressesEmployeeContactIndividualsTest()
     {
       Bugs.EmployeeAddressesEmployeeContactIndividuals();
@@ -165,7 +166,7 @@ namespace AW.Tests
             where p.ProductID == sod.ProductID
             join pm in MetaSingletons.MetaData.ProductModel on p.ProductID equals pm.ProductModelID
             select pm
-            ).First().CatalogDescription			                                    		
+            ).First().CatalogDescription
           //MetaSingletons.MetaData.Product.Where(p => p.ProductID == sod.ProductID)
           //.Join(MetaSingletons.MetaData.ProductModel, p => p.ProductID, pm => pm.ProductModelID, (p, pm) => pm).First().CatalogDescription
         });
@@ -184,7 +185,8 @@ namespace AW.Tests
       //SD.LLBLGen.Pro.ORMSupportClasses.ORMQueryExecutionException: An exception was caught during the execution of a retrieval query: The multi-part identifier "LPLA_6.CatalogDescription" could not be bound.
     }
 
-    [TestProperty("Bug", "Fixed"), TestMethod, Description("NullReferenceException in LLBLGenProProvider.ExecuteEntityProjection - Remove the 'where' or the '.Name' or enable the 'orderby' and there will be no exception")]
+    [TestProperty("Bug", "Fixed"), TestMethod,
+     Description("NullReferenceException in LLBLGenProProvider.ExecuteEntityProjection - Remove the 'where' or the '.Name' or enable the 'orderby' and there will be no exception")]
     public void NullExceptionTest()
     {
       var q = (from soh in MetaSingletons.MetaData.SalesOrderHeader
@@ -195,13 +197,13 @@ namespace AW.Tests
         {
           soh.SalesOrderID,
           sod.SalesOrderDetailID,
-          MetaSingletons.MetaData.Product.First(p => p.ProductID == sod.ProductID).Name,
+          MetaSingletons.MetaData.Product.First(p => p.ProductID == sod.ProductID).Name
         });
       q.ToList(); //System.NullReferenceException: Object reference not set to an instance of an object.
     }
 
-    [TestProperty("Bug", "UnFixed"), TestCategory("Failing"), TestMethod, 
-    Description("The multi-part identifier LPLA_4.ContactID could not be bound when doing a nested query with a predicate involving an entity hop")]
+    [TestProperty("Bug", "UnFixed"), TestCategory("Failing"), TestMethod,
+     Description("The multi-part identifier LPLA_4.ContactID could not be bound when doing a nested query with a predicate involving an entity hop")]
     public void NestedQueryUsingFirst()
     {
       var k = from employeeAddress in MetaSingletons.MetaData.EmployeeAddress
@@ -272,7 +274,7 @@ namespace AW.Tests
           ProductComponentSubcategoryIDViaNav = b.ProductComponent.ProductSubcategory.ProductSubcategoryID,
           b.ProductAssemblyID,
           ProductAssemblySubcategoryID = b.ProductAssembly.ProductSubcategoryID,
-          ProductAssemblySubcategoryIDViaNav = b.ProductAssembly.ProductSubcategory.ProductSubcategoryID,
+          ProductAssemblySubcategoryIDViaNav = b.ProductAssembly.ProductSubcategory.ProductSubcategoryID
         };
       var firstBillOfMaterialProjectionProjection = billOfMaterialProjection.First();
       Assert.AreEqual(firstBillOfMaterialProjectionProjection.ProductComponentSubcategoryID,
@@ -298,7 +300,7 @@ namespace AW.Tests
     [TestMethod, TestProperty("Bug", "Fixed"), Description("LINQ - Invalid SQL when AnyOnSubtypeWithContainsAndWhere")]
     public void AnyOnSubtypeWithContainsAndWhere()
     {
-      var ids = new[] { 43659, 43660, 43661};
+      var ids = new[] {43659, 43660, 43661};
       Assert.IsTrue(MetaSingletons.MetaData.Customer.FilterBySalesOrderIDs(ids).Where(x => x.SalesTerritory.CountryRegionCode == "US").Any());
       // Fails ORMRelationException: Relation at index 1 doesn't contain an entity already added to the FROM clause. Bad alias?
       //Assert.IsFalse(MetaSingletons.MetaData.Customer.FilterBySalesOrderIDs(ids).Any(x => x.SalesTerritory.CountryRegionCode == "US"));
@@ -366,11 +368,11 @@ namespace AW.Tests
       var expectedCountProductNumber = queryableProductNumber.ToEntityCollection().Count;
       Assert.AreEqual(expectedCountProductNumber, queryableProductNumberLet.Count());
       Assert.AreEqual(expectedCountProductNumber, MetaSingletons.MetaData.WorkOrderHistory.FilterByProductNumber(productNumber).Count()
-                                                     + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductNumber(productNumber).Count()
-                                                     + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductNumber(productNumber).Count());
+                                                  + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductNumber(productNumber).Count()
+                                                  + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductNumber(productNumber).Count());
     }
 
-    [TestMethod, TestProperty("Bug", "UnFixed"), TestCategory("Failing"), Description("LINQ Discriminator filter missing with Count when filtering on 1:M related table.")]
+    [TestMethod, TestProperty("Bug", "Fixed"), Description("LINQ Discriminator filter missing with Count when filtering on 1:M related table.")]
     //http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=23424
     public void TestInheritanceWithJoinCounts()
     {
@@ -379,23 +381,33 @@ namespace AW.Tests
       var queryableProductNumber = MetaSingletons.MetaData.TransactionHistory.FilterByProductNumber(productNumber);
       var expectedCountProductNumber = queryableProductNumber.ToEntityCollection().Count;
       Assert.AreEqual(expectedCountProductNumber, MetaSingletons.MetaData.WorkOrderHistory.FilterByProductNumberWithJoin(productNumber).Count()
-                                               + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductNumberWithJoin(productNumber).Count()
-                                               + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductNumberWithJoin(productNumber).Count());
+                                                  + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductNumberWithJoin(productNumber).Count()
+                                                  + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductNumberWithJoin(productNumber).Count());
     }
 
     public static IQueryable<T> ExplicitJoinWithProduct<T>(IQueryable<T> transactionHistoryEntities) where T : TransactionHistoryEntity
     {
       return from th in transactionHistoryEntities
-             join p in MetaSingletons.MetaData.Product on th.ProductID equals p.ProductID
-             select th;
+        join p in MetaSingletons.MetaData.Product on th.ProductID equals p.ProductID
+        select th;
     }
 
-    [TestMethod, TestProperty("Bug", "UnFixed"), TestCategory("Failing"), Description("LINQ Discriminator filter missing with Count when filtering on 1:M related table.")]
+    [TestMethod, TestProperty("Bug", "Fixed"), Description("LINQ Discriminator filter missing with Count when filtering on 1:M related table.")]
     //http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=23424
     public void TestInheritanceWithJoinAny()
     {
       Assert.AreEqual(MetaSingletons.MetaData.SalesOrderHistory.Any(), ExplicitJoinWithProduct(MetaSingletons.MetaData.SalesOrderHistory).Any(), "ExplicitJoinWithProduct");
     }
 
+    [TestMethod, TestProperty("Bug", "UnFixed"), Description("Blowup filtering on 2 1:M related tables and a n:m table.")]
+    //http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=23591
+    public void TestProductCrossJoinVendor()
+    {
+      Assert.AreEqual(0,
+        MetaSingletons.MetaData.Product.FilterByUnitMeasureCode("AE")
+//        .FilterByStockedQuantity(3)
+        .Where(p=>p.WorkOrders.Any())
+        .FilterByVendorQuery(MetaSingletons.MetaData.Vendor.Where(v => v.Name != "")).Count());
+    }
   }
 }
