@@ -127,6 +127,15 @@ namespace Northwind.DAL.Linq.Filters
       return employees;
     }
 
+    public static IQueryable<EmployeeEntity> FilterByTerritories(this IQueryable<EmployeeEntity> employees, IQueryable<TerritoryEntity> territories)
+    {
+        return from e in employees
+               from et in e.EmployeeTerritories
+               from t in territories
+               where et.TerritoryId==t.TerritoryId
+               select e;
+    }
+
     public static IQueryable<OrderEntity> FilterByProducts(this IQueryable<OrderEntity> orders, params int[] productIds)
     {
       if (productIds != null && productIds.Length > 0)
