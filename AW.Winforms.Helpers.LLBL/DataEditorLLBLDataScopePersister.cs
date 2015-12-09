@@ -35,6 +35,12 @@ namespace AW.Winforms.Helpers.LLBL
     {
     }
 
+    public event EventHandler EditingFinished
+    {
+      add { GeneralEntityCollectionDataScope.EditingFinished += value; }
+      remove { GeneralEntityCollectionDataScope.EditingFinished -= value; }
+    }
+
     /// <summary>
     ///   Raised when the data of an entity in the scope changed. Ignored during fetches. Sender is the entity which data was changed
     /// </summary>

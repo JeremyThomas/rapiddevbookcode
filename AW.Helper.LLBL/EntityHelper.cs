@@ -569,6 +569,34 @@ namespace AW.Helper.LLBL
       }
     }
 
+    public static bool IsDirty(IUnitOfWorkCore unitOfWorkCore)
+    {
+      var unitOfWork = unitOfWorkCore as UnitOfWork;
+      if (unitOfWork == null)
+      {
+        var unitOfWork2 = unitOfWorkCore as UnitOfWork2;
+        if (unitOfWork2 != null)
+        {
+          if (unitOfWork2.GetCollectionElementsToSave().Any())
+            return true;
+          if (unitOfWork2.GetEntityElementsToUpdate().Any(uowe=>uowe.Entity.IsDirty))
+            return true;
+          if (unitOfWork2.GetEntityElementsToDelete().Any())
+            return true;
+        }
+      }
+      else
+      {
+        if (unitOfWork.GetCollectionElementsToSave().Any())
+          return true;
+        if (unitOfWork.GetEntityElementsToUpdate().Any(uowe => uowe.Entity.IsDirty))
+          return true;
+        if (unitOfWork.GetEntityElementsToDelete().Any())
+          return true;
+      }
+      return false;
+    }
+
     /// <summary>
     ///   Determines whether the specified data is dirty (Has a CUD) or has field errors from an attempted edit.
     /// </summary>
