@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AW.Helper;
 using AW.Helper.LLBL;
+//using Fasterflect;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -19,6 +20,11 @@ namespace AW.Winforms.Helpers.LLBL
     ///   Raised when an entity has been Removed from the scope. Ignored during fetches. Sender is the entity which was Removed.
     /// </summary>
     public event EventHandler EntityRemoved;
+
+    /// <summary>
+    /// Occurs when editing is finished, either through a commit or undo.
+    /// </summary>
+    public event EventHandler EditingFinished;
 
     #endregion
 
@@ -110,9 +116,11 @@ namespace AW.Winforms.Helpers.LLBL
 
     private void SetRemovedEntitiesTracker(IEntityCollectionCore entityCollectionCore)
     {
+      _context = _entityCollection.ActiveContext;
       if (entityCollectionCore.RemovedEntitiesTracker == null && entityCollectionCore.EntityFactoryToUse != null)
       {
-        entityCollectionCore.RemovedEntitiesTracker = entityCollectionCore.EntityFactoryToUse.CreateEntityCollection();
+        _currentRemovedEntitiesTracker = entityCollectionCore.EntityFactoryToUse.CreateEntityCollection();
+        entityCollectionCore.RemovedEntitiesTracker = _currentRemovedEntitiesTracker;
         entityCollectionCore.RemovedEntitiesTracker.EntityAdded += RemovedEntitiesTracker_EntityAdded;
         for (var i = entityCollectionCore.Count - 1; i > -1; i--)
         {
@@ -122,7 +130,16 @@ namespace AW.Winforms.Helpers.LLBL
             entityCollectionCore.Remove(entity);
         }
       }
+      else
+      {
+        _currentRemovedEntitiesTracker = null;
+      }
     }
+
+    //private Context Context
+    //{
+    //  get { return (Context) GetType().GetFieldValue("_context"); }
+    //}
 
     /// <summary>
     /// The _entities removal tracker, this is used instead doing MarkForDeletion directly to enable undo, since there is no way to clear DataScopeContext._manualAddedEntitiesRemovalTracker
@@ -135,6 +152,8 @@ namespace AW.Winforms.Helpers.LLBL
     /// </summary>
     private readonly List<IEntityCore> _entitiesRemovalTracker = new List<IEntityCore>();
     private bool _cascadeDeletes;
+    private Context _context;
+    private IEntityCollectionCore _currentRemovedEntitiesTracker;
 
     /// <summary>
     ///   Handles the EntityAdded event of a removedEntitiesTracker.
@@ -180,6 +199,12 @@ namespace AW.Winforms.Helpers.LLBL
     protected override void OnAfterCommitChanges()
     {
       _entitiesRemovalTracker.Clear();
+      if (_currentRemovedEntitiesTracker != null) _currentRemovedEntitiesTracker.Clear();
+
+      if (EditingFinished != null)
+      {
+        EditingFinished(this,EventArgs.Empty);
+      }
     }
 
     /// <summary>
@@ -225,10 +250,16 @@ namespace AW.Winforms.Helpers.LLBL
       {
         var unitOfWorkCore = BuildWorkForCommit();
         EntityHelper.Undo(unitOfWorkCore);
+        OnAfterCommitChanges();
       }
       else
+      {
         EntityHelper.Undo(modifiedData);
-      _entitiesRemovalTracker.Clear();
+        if (EditingFinished == null) return;
+        var unitOfWorkCore = BuildWorkForCommit();
+        if (!EntityHelper.IsDirty(unitOfWorkCore))
+          EditingFinished(this, EventArgs.Empty);
+      }
     }
 
 

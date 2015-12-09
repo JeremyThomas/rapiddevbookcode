@@ -104,6 +104,7 @@ namespace AW.Winforms.Helpers.LLBL
             gridDataEditor.DataEditorPersister = dataEditorLLBLDataScopePersister;
             dataEditorLLBLDataScopePersister.ContainedDataChanged += DataEditorEventHandlers_ContainedDataChanged;
             dataEditorLLBLDataScopePersister.EntityAdded += DataEditorEventHandlers_ContainedDataChanged;
+            dataEditorLLBLDataScopePersister.EditingFinished += dataEditorLLBLDataScopePersister_EditingFinished;
             saveToolStripButton.Visible = true;
             toolStripButtonCancelEdit.Visible = true;
           }
@@ -391,7 +392,7 @@ namespace AW.Winforms.Helpers.LLBL
           gridDataEditor.SaveEdits();
         else
           gridDataEditor.CancelEdits();
-        SetSaveButtons();
+        dataEditorLLBLDataScopePersister_EditingFinished(sender,e);
       }
     }
 
@@ -401,8 +402,13 @@ namespace AW.Winforms.Helpers.LLBL
       {
         gridDataEditor.CancelEdits();
         if (gridDataEditor.DataEditorPersister.Undo())
-          SetSaveButtons();
+          dataEditorLLBLDataScopePersister_EditingFinished(sender, e);
       }
+    }
+
+    void dataEditorLLBLDataScopePersister_EditingFinished(object sender, EventArgs e)
+    {
+      SetSaveButtons();
     }
 
     private void SetSaveButtons(bool enabled = false)
