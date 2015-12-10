@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -56,23 +55,24 @@ namespace LLBLGen.EntityBrowser
     {
       InitializeComponent();
       settingsBindingSource.DataSource = Settings.Default;
-      if (!String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
-        try
-        {
-          var adapterAssemblyPath = Path.GetDirectoryName(Settings.Default.AdapterAssemblyPath);
-          if (adapterAssemblyPath != null)
-            linqMetaDataAssemblyPathLabel.Links.Add(0, linqMetaDataAssemblyPathLabel.Text.Length, adapterAssemblyPath);
-        }
-        catch (Exception)
-        {
-          // ignored
-        }
 
       if (!String.IsNullOrWhiteSpace(Settings.Default.LinqMetaDataAssemblyPath))
         try
         {
           var linqMetaDataAssemblyPath = Path.GetDirectoryName(Settings.Default.LinqMetaDataAssemblyPath);
           if (linqMetaDataAssemblyPath != null) adapterAssemblyPathLabel.Links.Add(0, adapterAssemblyPathLabel.Text.Length, linqMetaDataAssemblyPath);
+        }
+        catch (Exception)
+        {
+          // ignored
+        }
+
+      if (!String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
+        try
+        {
+          var adapterAssemblyPath = Path.GetDirectoryName(Settings.Default.AdapterAssemblyPath);
+          if (adapterAssemblyPath != null)
+            linqMetaDataAssemblyPathLabel.Links.Add(0, linqMetaDataAssemblyPathLabel.Text.Length, adapterAssemblyPath);
         }
         catch (Exception)
         {
@@ -103,26 +103,6 @@ namespace LLBLGen.EntityBrowser
     private void toolStripButtonLoad_Click(object sender, EventArgs e)
     {
       LoadAssembliesAndTabs();
-    }
-
-    private void LoadAssembliesAndTabs()
-    {
-      if (!File.Exists(Settings.Default.LinqMetaDataAssemblyPath))
-        throw new ApplicationException("LinqMetaData assembly: " + Settings.Default.LinqMetaDataAssemblyPath + " not found!" + Environment.NewLine);
-      var linqMetaDataAssembly = LoadAssembly(Settings.Default.LinqMetaDataAssemblyPath);
-      _linqMetaDataType = linqMetaDataAssembly.GetConcretePublicImplementations(typeof (ILinqMetaData)).FirstOrDefault();
-      if (_linqMetaDataType == null)
-        throw new ApplicationException("There are no public types in that assembly that implement ILinqMetaData. Wrong Assembly chosen.");
-
-      _daoBaseImplementationType = EntityHelper.GetDaoBaseImplementation(linqMetaDataAssembly);
-
-      if (_daoBaseImplementationType == null && !String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
-      {
-        if (!File.Exists(Settings.Default.AdapterAssemblyPath))
-          throw new ApplicationException("Adapter assembly: " + Settings.Default.AdapterAssemblyPath + " not found!" + Environment.NewLine);
-        _adapterType = GetAdapterType(Settings.Default.AdapterAssemblyPath);
-      }
-      LoadTabs();
     }
 
     private void LoadTabs()
@@ -184,7 +164,7 @@ namespace LLBLGen.EntityBrowser
       InitializeEntityBrowser(usrCntrlEntityBrowser, connectionStringSetting);
       tabPage.Controls.Add(usrCntrlEntityBrowser);
     }
-   
+
     private static IEnumerable<ConnectionStringSettings> UserConnections
     {
       get { return Settings.Default.UserConnections == null ? null : Settings.Default.UserConnections.Cast<ConnectionStringSettings>(); }
@@ -231,28 +211,20 @@ namespace LLBLGen.EntityBrowser
       }
     }
 
-    public enum LLBLConnectionType
-    {
-      Unknown,
-      SelfServicing,
-      Adapter,
-      [Description("Adapter Factory")] AdapterFactory
-    }
-
     private static void InitializeEntityBrowser(UsrCntrlEntityBrowser usrCntrlEntityBrowser, ConnectionStringSettings connectionStringSetting)
     {
       ILinqMetaData linqMetaData;
       if (_daoBaseImplementationType == null)
       {
-        var adapter = GetAdapter(connectionStringSetting, null, Settings.Default.AdapterAssemblyPath, null, _adapterType);
-        adapter.CommandTimeOut = (int)Settings.Default.CommandTimeOut;
-        linqMetaData = (ILinqMetaData)Activator.CreateInstance(_linqMetaDataType, adapter);
+        var adapter = GetAdapter(connectionStringSetting);
+        adapter.CommandTimeOut = (int) Settings.Default.CommandTimeOut;
+        linqMetaData = (ILinqMetaData) Activator.CreateInstance(_linqMetaDataType, adapter);
       }
       else
       {
-        linqMetaData = (ILinqMetaData)Activator.CreateInstance(_linqMetaDataType);
+        linqMetaData = (ILinqMetaData) Activator.CreateInstance(_linqMetaDataType);
         EntityHelper.SetSelfservicingConnectionString(_daoBaseImplementationType, connectionStringSetting.ConnectionString);
-        DaoBase.CommandTimeOut = (int)Settings.Default.CommandTimeOut;
+        DaoBase.CommandTimeOut = (int) Settings.Default.CommandTimeOut;
         var sqlServerDqeAssemblyName = _daoBaseImplementationType.Assembly.GetReferencedAssemblies().FirstOrDefault(a => a.Name.Contains("SD.LLBLGen.Pro.DQE.SqlServer"));
         if (sqlServerDqeAssemblyName != null)
         {
@@ -260,16 +232,15 @@ namespace LLBLGen.EntityBrowser
           var sqlServerDqeAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.FullName == sqlServerDqeAssemblyName.FullName);
           if (sqlServerDqeAssembly != null)
           {
-
             var newCatalog = DataHelper.GetSqlDatabaseName(connectionStringSetting.ConnectionString);
             if (!string.IsNullOrWhiteSpace(newCatalog))
             {
-              var dynamicQueryEnginetype = sqlServerDqeAssembly.GetConcretePublicImplementations(typeof(DynamicQueryEngineBase)).FirstOrDefault();
+              var dynamicQueryEnginetype = sqlServerDqeAssembly.GetConcretePublicImplementations(typeof (DynamicQueryEngineBase)).FirstOrDefault();
               if (dynamicQueryEnginetype != null)
               {
                 var obj = dynamicQueryEnginetype.InvokeMember("_catalogOverwrites", BindingFlags.GetField | BindingFlags.NonPublic | BindingFlags.Static, null, null, null);
                 var overrides = obj as Dictionary<string, string>;
-                var entityType = _linqMetaDataType.Assembly.GetConcretePublicImplementations(typeof(EntityBase)).FirstOrDefault();
+                var entityType = _linqMetaDataType.Assembly.GetConcretePublicImplementations(typeof (EntityBase)).FirstOrDefault();
                 var elementCreator = EntityHelper.CreateElementCreator(entityType);
                 var entity = LinqUtils.CreateEntityInstanceFromEntityType(entityType, elementCreator);
                 if (entity != null && overrides != null)
@@ -291,45 +262,86 @@ namespace LLBLGen.EntityBrowser
       return Assembly.LoadFrom(assemblyPath);
     }
 
-    public static Type GetAdapterType(string adapterAssemblyPath, string adapterTypeName = null)
+    private void LoadAssembliesAndTabs()
     {
+      if (!File.Exists(Settings.Default.LinqMetaDataAssemblyPath))
+        throw new ApplicationException("LinqMetaData assembly: " + Settings.Default.LinqMetaDataAssemblyPath + " not found!" + Environment.NewLine);
+      var linqMetaDataAssembly = LoadAssembly(Settings.Default.LinqMetaDataAssemblyPath);
+      _linqMetaDataType = linqMetaDataAssembly.GetConcretePublicImplementations(typeof (ILinqMetaData)).FirstOrDefault();
+      if (_linqMetaDataType == null)
+        throw new ApplicationException("There are no public types in that assembly that implement ILinqMetaData. Wrong Assembly chosen.");
+
+      _daoBaseImplementationType = EntityHelper.GetDaoBaseImplementation(linqMetaDataAssembly);
+
+      if (_daoBaseImplementationType == null && !String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
+      {
+        _adapterTypes = GetAdapterTypes().ToList();
+      }
+      LoadTabs();
+    }
+
+    private static IEnumerable<Type> GetAdapterTypes()
+    {
+      var adapterAssemblyPaths = Settings.Default.AdapterAssemblyPath.Split(';');
+      return adapterAssemblyPaths.Where(p => !string.IsNullOrWhiteSpace(p)).Select(GetAdapterType);
+    }
+
+    public static Type GetAdapterType(string adapterAssemblyPath)
+    {
+      if (String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
+        throw new ApplicationException("Adapter assembly not specified!");
       if (!File.Exists(adapterAssemblyPath))
-        throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " not found!" + Environment.NewLine);
+        throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " not found!");
       var dataAccessAdapterAssembly = LoadAssembly(adapterAssemblyPath);
+      if (dataAccessAdapterAssembly == null)
+        throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " could not be loaded!");
+      return GetAdapterType(dataAccessAdapterAssembly);
+    }
 
-      var dataAccessAdapterType = String.IsNullOrEmpty(adapterTypeName) ? dataAccessAdapterAssembly.GetConcretePublicImplementations(typeof (DataAccessAdapterBase)).FirstOrDefault() : dataAccessAdapterAssembly.GetType(adapterTypeName);
+    private static Type GetAdapterType(Assembly dataAccessAdapterAssembly)
+    {
+      if (dataAccessAdapterAssembly == null)
+        throw new ArgumentNullException("dataAccessAdapterAssembly");
+      var dataAccessAdapterType = dataAccessAdapterAssembly.GetConcretePublicImplementations(typeof (DataAccessAdapterBase)).FirstOrDefault();
       if (dataAccessAdapterType == null)
-        throw new ApplicationException("CommonDaoBase or adapter not found!");
-
+        throw new ApplicationException(String.Format("Adapter not found in {0}!", dataAccessAdapterAssembly));
       return dataAccessAdapterType;
     }
 
-    private static DataAccessAdapterBase GetAdapter(ConnectionStringSettings connectionStringSettings, string adapterTypeName, string adapterAssemblyPath, Assembly dataAccessAdapterAssembly, Type dataAccessAdapterType)
+    private static DataAccessAdapterBase GetAdapter(ConnectionStringSettings connectionStringSettings)
     {
-      if (dataAccessAdapterAssembly == null)
+      if (_adapterTypes.Count == 1)
+        return CreateDataAccessAdapterInstance(_adapterTypes[0], connectionStringSettings);
+      if (_adapterTypes.Count == 0)
+        throw new ApplicationException("Adapter type not found!");
+      foreach (var adapterType in _adapterTypes)
       {
-        if (String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
-          return null;
-        dataAccessAdapterAssembly = LoadAssembly(adapterAssemblyPath);
+        var dqeAssemblyName = adapterType.Assembly.GetReferencedAssemblies().FirstOrDefault(a => a.Name.StartsWith("SD.LLBLGen.Pro.DQE"));
+        if (dqeAssemblyName != null)
+        {
+          if (IsSqlServer(connectionStringSettings) && dqeAssemblyName.Name.Contains("SqlServer"))
+            return CreateDataAccessAdapterInstance(adapterType, connectionStringSettings);
+          var dqeName = dqeAssemblyName.Name.Substring(19,3);
+          if (connectionStringSettings.ProviderName.Contains(dqeName))
+            return CreateDataAccessAdapterInstance(adapterType, connectionStringSettings);
+        }
       }
-      if (dataAccessAdapterAssembly == null)
-        throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " could not be loaded!");
-      if (dataAccessAdapterType == null)
-        dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
-      if (dataAccessAdapterType == null)
-        throw new ApplicationException(String.Format("Adapter type: {0} could not be loaded from: {1}!", adapterTypeName, adapterAssemblyPath));
-      var adapter = CreateDataAccessAdapterInstance(dataAccessAdapterType, connectionStringSettings);
-      return adapter;
+      return null;
     }
 
     private static DataAccessAdapterBase CreateDataAccessAdapterInstance(Type dataAccessAdapterType, ConnectionStringSettings connectionStringSettings)
     {
       var adapter = EntityHelper.CreateDataAccessAdapterInstance(dataAccessAdapterType, connectionStringSettings.ConnectionString
-        , () => connectionStringSettings.ProviderName.Contains("SqlClient")
+        , () => IsSqlServer(connectionStringSettings)
         , () => connectionStringSettings.ProviderName.Contains("Oracle"));
       return adapter;
     }
-    
+
+    private static bool IsSqlServer(ConnectionStringSettings connectionStringSettings)
+    {
+      return connectionStringSettings.ProviderName.Contains("SqlClient");
+    }
+
     //Variable to store the tabpage which belongs to the headeritem
     //over which the cursor is currently hovering.
     private TabPage _currentTabItem;
@@ -337,6 +349,7 @@ namespace LLBLGen.EntityBrowser
     private static readonly ConnectionStringSettingsCollection ConnectionStringSettingsCollection;
     private static readonly ClientSettingsSection UserSettings;
     private static Type _daoBaseImplementationType;
+    private static List<Type> _adapterTypes;
 
     private void tabControl_MouseMove(object sender, MouseEventArgs e)
     {

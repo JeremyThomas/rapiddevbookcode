@@ -228,7 +228,9 @@ namespace AW.Winforms.Helpers.LLBL
     {
       if (dataToSave == null) return CommitAllChanges(cascadeDeletes);
       var dataAccessAdapter = TransactionController as IDataAccessAdapter;
-      return dataAccessAdapter == null ? EntityHelper.Save(dataToSave) : EntityHelper.Save(dataToSave, dataAccessAdapter, cascadeDeletes);
+      var numberSaved = dataAccessAdapter == null ? EntityHelper.Save(dataToSave) : EntityHelper.Save(dataToSave, dataAccessAdapter, cascadeDeletes);
+      CallEditingFinishedIfNotDirty();
+      return numberSaved;
     }
     
     public int Delete(object dataToDelete = null, bool cascade = false)
@@ -248,6 +250,13 @@ namespace AW.Winforms.Helpers.LLBL
     {
       if (modifiedData == null)
       {
+        //From _context.Clear();
+        //foreach (IEntityCore toRemove in Enumerable.ToList<IEntityCore>((IEnumerable<IEntityCore>)_context.NewEntities.Values))
+        //{
+        //  _context.OnRemove(toRemove);
+        //  toRemove.ActiveContext = (Context)null;
+        //  _context.OnRemoveComplete(toRemove);
+        //}
         var unitOfWorkCore = BuildWorkForCommit();
         EntityHelper.Undo(unitOfWorkCore);
         OnAfterCommitChanges();
@@ -255,13 +264,16 @@ namespace AW.Winforms.Helpers.LLBL
       else
       {
         EntityHelper.Undo(modifiedData);
-        if (EditingFinished == null) return;
-        var unitOfWorkCore = BuildWorkForCommit();
-        if (!EntityHelper.IsDirty(unitOfWorkCore))
-          EditingFinished(this, EventArgs.Empty);
+        CallEditingFinishedIfNotDirty();
       }
     }
 
-
+    private void CallEditingFinishedIfNotDirty()
+    {
+      if (EditingFinished == null) return;
+      var unitOfWorkCore = BuildWorkForCommit();
+      if (!EntityHelper.IsDirty(unitOfWorkCore))
+        EditingFinished(this, EventArgs.Empty);
+    }
   }
 }
