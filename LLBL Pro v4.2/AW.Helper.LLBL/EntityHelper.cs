@@ -425,8 +425,18 @@ namespace AW.Helper.LLBL
     /// <param name="entities">The entities.</param>
     public static void RevertChangesToDBValue<T>(IEnumerable<T> entities) where T : class, IEntityCore
     {
-      foreach (var dirtyEntity in entities.Where(e => e.IsDirty))
+      foreach (var dirtyEntity in WhereIsDirty(entities))
         dirtyEntity.RevertChangesToDBValue();
+    }
+
+    public static IEnumerable<T> WhereIsDirty<T>(this IEnumerable<T> entities) where T : class, IEntityCore
+    {
+      return entities.Where(e => e.IsDirty);
+    }
+
+    public static bool IsAnyDirty(this IEnumerable<IEntityCore> entities)
+    {
+      return entities.Any(e => e.IsDirty);
     }
 
     /// <summary>
