@@ -134,6 +134,12 @@ namespace AW.Winforms.Helpers.LLBL
       {
         _currentRemovedEntitiesTracker = null;
       }
+      var enumerableItemType = MetaDataHelper.GetEnumerableItemType(entityCollectionCore);
+      foreach (var entityCore in NewEntities.Where(e=>e.GetType().IsAssignableTo(enumerableItemType)))
+      {
+        entityCollectionCore.Add(entityCore);
+      }
+      
     }
 
     //private Context Context
@@ -176,7 +182,7 @@ namespace AW.Winforms.Helpers.LLBL
     /// <param name="e">The <see cref="SD.LLBLGen.Pro.ORMSupportClasses.CollectionChangedEventArgs" /> instance containing the event data.</param>
     private void RemovedEntitiesTracker_EntityAdded(object sender, CollectionChangedEventArgs e)
     {
-      if (EntityRemoved != null)
+      if (EntityRemoved != null && e.InvolvedEntity != null && !e.InvolvedEntity.IsNew)
       {
         EntityRemoved(sender, e);
         _entitiesRemovalTracker.AddDistinct(e.InvolvedEntity);
@@ -198,10 +204,15 @@ namespace AW.Winforms.Helpers.LLBL
 
     protected override void OnBeforeCommitChanges()
     {
-      foreach (var entity in _entitiesRemovalTracker.Where(e => e.MarkedForDeletion))
+      foreach (var entity in EntitiesMarkedForDeletion)
       {
         MarkForDeletion(entity);
       }
+    }
+
+    private IEnumerable<IEntityCore> EntitiesMarkedForDeletion
+    {
+      get { return _entitiesRemovalTracker.Where(e => e.MarkedForDeletion); }
     }
 
     protected override IUnitOfWorkCore BuildWorkForCommit()
@@ -270,6 +281,13 @@ namespace AW.Winforms.Helpers.LLBL
       else
       {
         EntityHelper.Undo(modifiedData);
+        for (var i = _entitiesRemovalTracker.Count - 1; i > -1; i--)
+        {
+          var entity = _entitiesRemovalTracker[i];
+          if (!entity.MarkedForDeletion )
+            _entitiesRemovalTracker.Remove(entity);
+        }
+        
         CallEditingFinishedIfNotDirty();
       }
     }
@@ -289,7 +307,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     private bool ContextIsDirty()
     {
-      return NewEntities.Count > 0 || ExistingEntities.IsAnyDirty() || _entitiesRemovalTracker.Count > 0;
+      return NewEntities.Any(e => !e.MarkedForDeletion) || ExistingEntities.IsAnyDirty() || EntitiesMarkedForDeletion.Any();
     }
 
     private void CallEditingFinishedIfNotDirty()
