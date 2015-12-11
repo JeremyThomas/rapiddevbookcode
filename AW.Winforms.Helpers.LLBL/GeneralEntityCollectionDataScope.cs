@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AW.Helper;
 using AW.Helper.LLBL;
-//using Fasterflect;
+using Fasterflect;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -22,7 +22,7 @@ namespace AW.Winforms.Helpers.LLBL
     public event EventHandler EntityRemoved;
 
     /// <summary>
-    /// Occurs when editing is finished, either through a commit or undo.
+    ///   Occurs when editing is finished, either through a commit or undo.
     /// </summary>
     public event EventHandler EditingFinished;
 
@@ -125,8 +125,8 @@ namespace AW.Winforms.Helpers.LLBL
         for (var i = entityCollectionCore.Count - 1; i > -1; i--)
         {
           var entity = entityCollectionCore[i];
-          if (entity.MarkedForDeletion  //This wont be true as its reset in CollectionCore.PerformAdd
-            || _entitiesRemovalTracker.Contains(entity))
+          if (entity.MarkedForDeletion //This wont be true as its reset in CollectionCore.PerformAdd
+              || _entitiesRemovalTracker.Contains(entity))
             entityCollectionCore.Remove(entity);
         }
       }
@@ -142,18 +142,32 @@ namespace AW.Winforms.Helpers.LLBL
     //}
 
     /// <summary>
-    /// The _entities removal tracker, this is used instead doing MarkForDeletion directly to enable undo, since there is no way to clear DataScopeContext._manualAddedEntitiesRemovalTracker
-    /// except, perhaps calling DataScopeContext.PerformPostCommitActions
-    /// also need to remove entities when opening and old page of data
-    /// e.g
-    /// DataScope.BuildWorkForCommit
-    /// DataScope.PerformPostCommitActions
-    /// except that will also remove them from the context
+    ///   The _entities removal tracker, this is used instead doing MarkForDeletion directly to enable undo, since there is no way to clear DataScopeContext._manualAddedEntitiesRemovalTracker
+    ///   except, perhaps calling DataScopeContext.PerformPostCommitActions
+    ///   also need to remove entities when opening and old page of data
+    ///   e.g
+    ///   DataScope.BuildWorkForCommit
+    ///   DataScope.PerformPostCommitActions
+    ///   except that will also remove them from the context
     /// </summary>
     private readonly List<IEntityCore> _entitiesRemovalTracker = new List<IEntityCore>();
+
     private bool _cascadeDeletes;
     private Context _context;
     private IEntityCollectionCore _currentRemovedEntitiesTracker;
+    private static readonly MemberGetter DelegateForGetNewEntities = typeof(Context).DelegateForGetPropertyValue("NewEntities");
+
+    private Dictionary<Guid, IEntityCore>.ValueCollection NewEntities
+    {
+      get { return ((Dictionary<Guid, IEntityCore>)DelegateForGetNewEntities(_context)).Values; }
+    }
+
+    private static readonly MemberGetter DelegateForGetObjectIDToEntityInstance = typeof(Context).DelegateForGetPropertyValue("ObjectIDToEntityInstance");
+
+    private Dictionary<Guid, IEntityCore>.ValueCollection ExistingEntities
+    {
+      get { return ((Dictionary<Guid, IEntityCore>)DelegateForGetObjectIDToEntityInstance(_context)).Values; }
+    }
 
     /// <summary>
     ///   Handles the EntityAdded event of a removedEntitiesTracker.
@@ -165,7 +179,7 @@ namespace AW.Winforms.Helpers.LLBL
       if (EntityRemoved != null)
       {
         EntityRemoved(sender, e);
-        _entitiesRemovalTracker.AddDistinct(e.InvolvedEntity); 
+        _entitiesRemovalTracker.AddDistinct(e.InvolvedEntity);
       }
     }
 
@@ -203,7 +217,7 @@ namespace AW.Winforms.Helpers.LLBL
 
       if (EditingFinished != null)
       {
-        EditingFinished(this,EventArgs.Empty);
+        EditingFinished(this, EventArgs.Empty);
       }
     }
 
@@ -223,7 +237,7 @@ namespace AW.Winforms.Helpers.LLBL
           workData.Add(entityRelation);
         }
     }
-    
+
     public int Save(object dataToSave = null, bool cascadeDeletes = false)
     {
       if (dataToSave == null) return CommitAllChanges(cascadeDeletes);
@@ -232,7 +246,7 @@ namespace AW.Winforms.Helpers.LLBL
       CallEditingFinishedIfNotDirty();
       return numberSaved;
     }
-    
+
     public int Delete(object dataToDelete = null, bool cascade = false)
     {
       if (dataToDelete == null) return CommitAllChanges(cascade);
@@ -250,15 +264,7 @@ namespace AW.Winforms.Helpers.LLBL
     {
       if (modifiedData == null)
       {
-        //From _context.Clear();
-        //foreach (IEntityCore toRemove in Enumerable.ToList<IEntityCore>((IEnumerable<IEntityCore>)_context.NewEntities.Values))
-        //{
-        //  _context.OnRemove(toRemove);
-        //  toRemove.ActiveContext = (Context)null;
-        //  _context.OnRemoveComplete(toRemove);
-        //}
-        var unitOfWorkCore = BuildWorkForCommit();
-        EntityHelper.Undo(unitOfWorkCore);
+        UndoContext();
         OnAfterCommitChanges();
       }
       else
@@ -268,11 +274,28 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
+    private void UndoContext()
+    {
+//From _context.Clear();
+      foreach (var toRemove in NewEntities.ToList())
+      {
+        // _context.OnRemove(toRemove);
+        toRemove.ActiveContext = null;
+        // _context.OnRemoveComplete(toRemove);
+      }
+      EntityHelper.RevertChangesToDBValue(ExistingEntities);
+    }
+
+
+    private bool ContextIsDirty()
+    {
+      return NewEntities.Count > 0 || ExistingEntities.IsAnyDirty() || _entitiesRemovalTracker.Count > 0;
+    }
+
     private void CallEditingFinishedIfNotDirty()
     {
       if (EditingFinished == null) return;
-      var unitOfWorkCore = BuildWorkForCommit();
-      if (!EntityHelper.IsDirty(unitOfWorkCore))
+      if (!ContextIsDirty())
         EditingFinished(this, EventArgs.Empty);
     }
   }
