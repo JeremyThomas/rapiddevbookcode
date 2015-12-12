@@ -118,6 +118,17 @@ namespace AW.Winforms.Helpers.LLBL
         return EntityHelper.IsDirty(data);
       }
 
+      public bool TracksRemoves(IEnumerable enumerable)
+      {
+        var entityCollection = enumerable as IEntityCollection;
+        if (entityCollection == null)
+        {
+          var entityCollection2 = enumerable as IEntityCollection2;
+          return entityCollection2 != null && entityCollection2.RemovedEntitiesTracker != null;
+        }
+        return entityCollection.RemovedEntitiesTracker != null;
+      }
+
       public abstract IDictionary<string, int> GetChildCounts(object entityThatMayHaveChildren);
     }
 

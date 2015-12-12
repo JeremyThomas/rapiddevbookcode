@@ -103,7 +103,8 @@ namespace AW.Winforms.Helpers.LLBL
             var dataEditorLLBLDataScopePersister = new DataEditorLLBLDataScopePersister(this, EntityHelper.GetTransactionController(_linqMetaData));
             gridDataEditor.DataEditorPersister = dataEditorLLBLDataScopePersister;
             dataEditorLLBLDataScopePersister.ContainedDataChanged += DataEditorEventHandlers_ContainedDataChanged;
-            dataEditorLLBLDataScopePersister.EntityAdded += DataEditorEventHandlers_ContainedDataChanged;
+            dataEditorLLBLDataScopePersister.EntityAdded += DataEditorEventHandlers_EntityAdded;
+            dataEditorLLBLDataScopePersister.EntityRemoved += dataEditorLLBLDataScopePersister_EntityRemoved;
             dataEditorLLBLDataScopePersister.EditingFinished += dataEditorLLBLDataScopePersister_EditingFinished;
             saveToolStripButton.Visible = true;
             toolStripButtonCancelEdit.Visible = true;
@@ -123,6 +124,8 @@ namespace AW.Winforms.Helpers.LLBL
       // ReSharper disable once UseNameofExpression
       OnPropertyChanged("UseContext");
     }
+
+
 
     private GeneralEntityCollectionDataScope EntityCollectionDataScope
     {
@@ -422,6 +425,16 @@ namespace AW.Winforms.Helpers.LLBL
       var propertyChangedEventArgs = e as PropertyChangedEventArgs;
       if (propertyChangedEventArgs == null || propertyChangedEventArgs.PropertyName != "IsDirty")
         SetSaveButtons(true);
+    }
+
+    private void dataEditorLLBLDataScopePersister_EntityRemoved(object sender, EventArgs e)
+    {
+      SetSaveButtons(true);
+    }
+
+    private void DataEditorEventHandlers_EntityAdded(object sender, EventArgs e)
+    {
+      toolStripButtonCancelEdit.Enabled = true;
     }
 
     private void ensureFilteringEnabledCheckBox_Click(object sender, EventArgs e)

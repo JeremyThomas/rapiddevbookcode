@@ -628,8 +628,9 @@ namespace AW.Helper.LLBL
           var entityCollection2 = data as IEntityCollection2;
           return entityCollection2 != null && (entityCollection2.ContainsDirtyContents
                                                || ContainsEntityFieldsErrors(entityCollection2)
-                                               || (entityCollection2.RemovedEntitiesTracker != null
-                                                   && entityCollection2.RemovedEntitiesTracker.Count > 0));
+                                               || (entityCollection2.RemovedEntitiesTracker != null && entityCollection2.RemovedEntitiesTracker.Count > 0))
+                                            //   || entityCollection2.AsEnumerable().Any(e=>e.IsNew)
+                                               ;
         }
         return entityCollection.ContainsDirtyContents || ContainsEntityFieldsErrors(entityCollection);
       }
