@@ -453,8 +453,9 @@ namespace AW.Winforms.Helpers.Controls
     {
       if (SupportsNotifyPropertyChanged)
         saveToolStripButton.Enabled = false;
-      MaybeSetRemovingItem(bindingSourceEnumerable.DataSource);
-      if (_canSave && !saveToolStripButton.Enabled && DataEditorPersister.IsDirty(PageSourceEnumerable))
+      if (DataEditorPersister!=null && !DataEditorPersister.TracksRemoves(PageSourceEnumerable))
+        MaybeSetRemovingItem(bindingSourceEnumerable.DataSource);
+      if (DataEditorPersister != null && _canSave && !saveToolStripButton.Enabled && DataEditorPersister.IsDirty(PageSourceEnumerable))
       {
         toolStripButtonCancelEdit.Enabled = true;
         saveToolStripButton.Enabled = true;
@@ -475,7 +476,7 @@ namespace AW.Winforms.Helpers.Controls
       objectListView.RemovingItem += GridDataEditor_RemovingItem;
     }
 
-    private void SetRemovingItem(object ignore)
+    private static void SetRemovingItem(object ignore)
     {
     }
 
@@ -494,7 +495,7 @@ namespace AW.Winforms.Helpers.Controls
       objectListView.RemovingItem -= GridDataEditor_RemovingItem;
     }
 
-    private void SetUnRemovingItem(object ignore)
+    private static void SetUnRemovingItem(object ignore)
     {
     }
 
@@ -593,21 +594,18 @@ namespace AW.Winforms.Helpers.Controls
     {
       toolStripLabelSaveResult.Text = "";
       if (!IsBinding && _loaded)
+      {            toolStripButtonCancelEdit.Enabled = true;
+            bindingNavigatorPaging.Enabled = AllowPagingWhenEditing;
+        // ReSharper disable once SwitchStatementMissingSomeCases
         switch (e.ListChangedType)
         {
           case ListChangedType.ItemDeleted:
-            saveToolStripButton.Enabled = _canSave && (!DataSourceIsObjectListView || HasDeletes);
-            toolStripButtonCancelEdit.Enabled = true;
-            bindingNavigatorPaging.Enabled = AllowPagingWhenEditing;
+            saveToolStripButton.Enabled = _canSave && (DataEditorPersister.TracksRemoves(PageSourceEnumerable) || !DataSourceIsObjectListView || HasDeletes);
             break;
-
           case ListChangedType.ItemChanged:
-          case ListChangedType.ItemAdded:
-            saveToolStripButton.Enabled = _canSave;
-            toolStripButtonCancelEdit.Enabled = true;
-            bindingNavigatorPaging.Enabled = AllowPagingWhenEditing;
+            saveToolStripButton.Enabled = _canSave;           
             break;
-        }
+        }}
     }
 
     private void toolStripButtonCancelEdit_Click(object sender, EventArgs e)

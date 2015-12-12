@@ -58,11 +58,21 @@ namespace AW.Winforms.Helpers.LLBL
       add
       {
         GeneralEntityCollectionDataScope.EntityAdded += value;
-        GeneralEntityCollectionDataScope.EntityRemoved += value;
       }
       remove
       {
         GeneralEntityCollectionDataScope.EntityAdded -= value;
+      }
+    }
+
+    public event EventHandler EntityRemoved
+    {
+      add
+      {
+        GeneralEntityCollectionDataScope.EntityRemoved += value;
+      }
+      remove
+      {
         GeneralEntityCollectionDataScope.EntityRemoved -= value;
       }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
@@ -48,6 +49,13 @@ namespace AW.Winforms.Helpers.Controls
     /// <param name="modifiedData">The modified data.</param>
     /// <returns></returns>
     bool IsDirty(object modifiedData = null);
+
+    /// <summary>
+    /// Indicates wether the container trackes removals itself or the edit needs to do it instead
+    /// </summary>
+    /// <param name="enumerable">The enumerable.</param>
+    /// <returns></returns>
+    bool TracksRemoves(IEnumerable enumerable);
   }
 
   public interface IDataEditorPersisterWithCounts : IDataEditorPersister
@@ -147,6 +155,11 @@ namespace AW.Winforms.Helpers.Controls
     {
       return false;
     }
+
+    public bool TracksRemoves(IEnumerable enumerable)
+    {
+      return false;
+    }
   }
 
   public class DataEditorLinqtoSQLPersister : IDataEditorPersister
@@ -195,6 +208,11 @@ namespace AW.Winforms.Helpers.Controls
     {
       var changeSet = _dataContext.GetChangeSet();
       return changeSet.Updates.Count > 0;
+    }
+
+    public bool TracksRemoves(IEnumerable enumerable)
+    {
+      return false;
     }
   }
 

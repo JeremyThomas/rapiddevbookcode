@@ -135,7 +135,7 @@ namespace AW.Winforms.Helpers.LLBL
         _currentRemovedEntitiesTracker = null;
       }
       var enumerableItemType = MetaDataHelper.GetEnumerableItemType(entityCollectionCore);
-      foreach (var entityCore in NewEntities.Where(e=>e.GetType().IsAssignableTo(enumerableItemType)))
+      foreach (var entityCore in NewEntities.Where(e=>e.GetType().IsAssignableTo(enumerableItemType)).WhereIsDirty())
       {
         entityCollectionCore.Add(entityCore);
       }
@@ -307,7 +307,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     private bool ContextIsDirty()
     {
-      return NewEntities.Any(e => !e.MarkedForDeletion) || ExistingEntities.IsAnyDirty() || EntitiesMarkedForDeletion.Any();
+      return NewEntities.Any(e => !e.MarkedForDeletion && e.IsDirty) || ExistingEntities.IsAnyDirty() || EntitiesMarkedForDeletion.Any();
     }
 
     private void CallEditingFinishedIfNotDirty()
