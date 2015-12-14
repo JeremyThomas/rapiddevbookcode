@@ -43,6 +43,7 @@
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.toggleSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.panelSettings = new System.Windows.Forms.Panel();
+      this.checkBoxCascadeDeletes = new System.Windows.Forms.CheckBox();
       this.label2 = new System.Windows.Forms.Label();
       this.numericUpDownCommandTimeOut = new System.Windows.Forms.NumericUpDown();
       this.label1 = new System.Windows.Forms.Label();
@@ -63,7 +64,7 @@
       this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.toggleSettingsVisibilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.checkBoxCascadeDeletes = new System.Windows.Forms.CheckBox();
+      this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
       cacheDurationInSecondsLabel = new System.Windows.Forms.Label();
       prefixDelimiterLabel = new System.Windows.Forms.Label();
       this.toolStrip1.SuspendLayout();
@@ -167,24 +168,24 @@
             this.toolStripSeparator1,
             this.toggleSettingsToolStripMenuItem});
       this.contextMenuStripTabControl.Name = "contextMenuStripTabControl";
-      this.contextMenuStripTabControl.Size = new System.Drawing.Size(204, 54);
+      this.contextMenuStripTabControl.Size = new System.Drawing.Size(203, 54);
       // 
       // addConnectionToolStripMenuItem
       // 
       this.addConnectionToolStripMenuItem.Name = "addConnectionToolStripMenuItem";
-      this.addConnectionToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+      this.addConnectionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
       this.addConnectionToolStripMenuItem.Text = "Add Connection";
       this.addConnectionToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
       // toolStripSeparator1
       // 
       this.toolStripSeparator1.Name = "toolStripSeparator1";
-      this.toolStripSeparator1.Size = new System.Drawing.Size(200, 6);
+      this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
       // 
       // toggleSettingsToolStripMenuItem
       // 
       this.toggleSettingsToolStripMenuItem.Name = "toggleSettingsToolStripMenuItem";
-      this.toggleSettingsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+      this.toggleSettingsToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
       this.toggleSettingsToolStripMenuItem.Text = "Toggle Settings Visibility";
       this.toggleSettingsToolStripMenuItem.Click += new System.EventHandler(this.toggleSettingsToolStripMenuItem_Click);
       // 
@@ -212,6 +213,18 @@
       this.panelSettings.Size = new System.Drawing.Size(1181, 105);
       this.panelSettings.TabIndex = 2;
       this.panelSettings.Visible = false;
+      // 
+      // checkBoxCascadeDeletes
+      // 
+      this.checkBoxCascadeDeletes.AutoSize = true;
+      this.checkBoxCascadeDeletes.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CascadeDeletes;
+      this.checkBoxCascadeDeletes.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "CascadeDeletes", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.checkBoxCascadeDeletes.Location = new System.Drawing.Point(1018, 72);
+      this.checkBoxCascadeDeletes.Name = "checkBoxCascadeDeletes";
+      this.checkBoxCascadeDeletes.Size = new System.Drawing.Size(107, 17);
+      this.checkBoxCascadeDeletes.TabIndex = 19;
+      this.checkBoxCascadeDeletes.Text = "Cascade Deletes";
+      this.checkBoxCascadeDeletes.UseVisualStyleBackColor = true;
       // 
       // label2
       // 
@@ -337,64 +350,56 @@
             this.toolStripSeparator2,
             this.toggleSettingsVisibilityToolStripMenuItem});
       this.contextMenuStripTabPage.Name = "contextMenuStripTabPage";
-      this.contextMenuStripTabPage.Size = new System.Drawing.Size(204, 126);
+      this.contextMenuStripTabPage.Size = new System.Drawing.Size(203, 126);
       // 
       // addConnectionToolStripMenuItem1
       // 
       this.addConnectionToolStripMenuItem1.Name = "addConnectionToolStripMenuItem1";
-      this.addConnectionToolStripMenuItem1.Size = new System.Drawing.Size(203, 22);
+      this.addConnectionToolStripMenuItem1.Size = new System.Drawing.Size(202, 22);
       this.addConnectionToolStripMenuItem1.Text = "Add Connection";
       this.addConnectionToolStripMenuItem1.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
       // editConnectionToolStripMenuItem
       // 
       this.editConnectionToolStripMenuItem.Name = "editConnectionToolStripMenuItem";
-      this.editConnectionToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+      this.editConnectionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
       this.editConnectionToolStripMenuItem.Text = "Edit Connection";
       this.editConnectionToolStripMenuItem.Click += new System.EventHandler(this.editConnectionToolStripMenuItem_Click);
       // 
       // renameToolStripMenuItem
       // 
       this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-      this.renameToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+      this.renameToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
       this.renameToolStripMenuItem.Text = "Rename";
       this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
       // 
       // toolStripSeparator3
       // 
       this.toolStripSeparator3.Name = "toolStripSeparator3";
-      this.toolStripSeparator3.Size = new System.Drawing.Size(200, 6);
+      this.toolStripSeparator3.Size = new System.Drawing.Size(199, 6);
       // 
       // removeToolStripMenuItem
       // 
       this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-      this.removeToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+      this.removeToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
       this.removeToolStripMenuItem.Text = "Remove";
       this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
       // 
       // toolStripSeparator2
       // 
       this.toolStripSeparator2.Name = "toolStripSeparator2";
-      this.toolStripSeparator2.Size = new System.Drawing.Size(200, 6);
+      this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
       // 
       // toggleSettingsVisibilityToolStripMenuItem
       // 
       this.toggleSettingsVisibilityToolStripMenuItem.Name = "toggleSettingsVisibilityToolStripMenuItem";
-      this.toggleSettingsVisibilityToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+      this.toggleSettingsVisibilityToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
       this.toggleSettingsVisibilityToolStripMenuItem.Text = "Toggle Settings Visibility";
       this.toggleSettingsVisibilityToolStripMenuItem.Click += new System.EventHandler(this.toggleSettingsToolStripMenuItem_Click);
       // 
-      // checkBoxCascadeDeletes
+      // openFileDialog1
       // 
-      this.checkBoxCascadeDeletes.AutoSize = true;
-      this.checkBoxCascadeDeletes.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CascadeDeletes;
-      this.checkBoxCascadeDeletes.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "CascadeDeletes", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.checkBoxCascadeDeletes.Location = new System.Drawing.Point(1018, 72);
-      this.checkBoxCascadeDeletes.Name = "checkBoxCascadeDeletes";
-      this.checkBoxCascadeDeletes.Size = new System.Drawing.Size(107, 17);
-      this.checkBoxCascadeDeletes.TabIndex = 19;
-      this.checkBoxCascadeDeletes.Text = "Cascade Deletes";
-      this.checkBoxCascadeDeletes.UseVisualStyleBackColor = true;
+      this.openFileDialog1.FileName = "openFileDialog1";
       // 
       // MainForm
       // 
@@ -459,6 +464,7 @@
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.NumericUpDown numericUpDownCommandTimeOut;
     private System.Windows.Forms.CheckBox checkBoxCascadeDeletes;
+    private System.Windows.Forms.OpenFileDialog openFileDialog1;
   }
 }
 

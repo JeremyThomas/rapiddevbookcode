@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Data.SqlLocalDb;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using Microsoft.Win32;
 
 namespace AW.Helper
@@ -16,7 +17,7 @@ namespace AW.Helper
     DBUnknown,
     DBSqlserver,
     DBOracle,
-    DBUnsupported,
+    DBUnsupported
   }
 
   public static class DataHelper
@@ -79,9 +80,9 @@ namespace AW.Helper
     public const string DBPropInitialCatalog = "Initial Catalog";
 
     /// <summary>
-    ///   Initial File Name
+    ///   Initial File name
     /// </summary>
-    public const string DBPropinitialFileName = "Initial File Name";
+    public const string DBPropinitialFileName = "Initial File name";
 
     /// <summary>
     ///   Integrated Security"
@@ -256,13 +257,34 @@ namespace AW.Helper
     /// <summary>
     ///   Returns an instance of a DbProviderFactory if exists.
     /// </summary>
-    /// <param name="providerInvariantName"> Name of the provider invariant. </param>
+    /// <param name="providerInvariantName"> name of the provider invariant. </param>
     /// <returns> An instance of a DbProviderFactory for a specified provider name. </returns>
     public static DbProviderFactory GetFactoryIfExists(string providerInvariantName)
     {
       var dataTable = DbProviderFactories.GetFactoryClasses();
       var providerRow = dataTable.Rows.Find(providerInvariantName);
       return providerRow == null ? null : GetFactoryIfExists(providerRow);
+    }
+
+    public static DbProviderFactory RegisterDbProviderFactory(string name, string invariantName, string description, string assemblyQualifiedName)
+    {
+      var dbProviderFactory = GetFactoryIfExists(invariantName);
+      if (dbProviderFactory != null)
+        return dbProviderFactory;
+      var dbProvidersFactoriesDataTable = typeof (DbProviderFactories).GetMethod("GetProviderTable",
+        BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, null)
+        as DataTable;
+      if (dbProvidersFactoriesDataTable != null)
+      {
+        var row = dbProvidersFactoriesDataTable.NewRow();
+        row["name"] = name;
+        row["invariantName"] = invariantName;
+        row["description"] = description;
+        row["assemblyQualifiedName"] = assemblyQualifiedName;
+        dbProvidersFactoriesDataTable.Rows.Add(row);
+        return DbProviderFactories.GetFactory(row);
+      }
+      return null;
     }
 
     /// <summary>
@@ -418,7 +440,7 @@ namespace AW.Helper
     #endregion
 
     /// <summary>
-    /// Loads the data row.
+    ///   Loads the data row.
     /// </summary>
     /// <param name="table">The table.</param>
     /// <param name="values">The values.</param>
@@ -429,7 +451,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Loads the data row.
+    ///   Loads the data row.
     /// </summary>
     /// <param name="table">The table.</param>
     /// <param name="values">The values.</param>

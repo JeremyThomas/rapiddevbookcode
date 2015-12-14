@@ -70,7 +70,7 @@ namespace LLBLGen.EntityBrowser
       if (!String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
         try
         {
-          var adapterAssemblyPath = Path.GetDirectoryName(Settings.Default.AdapterAssemblyPath);
+          var adapterAssemblyPath = Path.GetDirectoryName(Settings.Default.AdapterAssemblyPath.Before(";", Settings.Default.AdapterAssemblyPath));
           if (adapterAssemblyPath != null)
             linqMetaDataAssemblyPathLabel.Links.Add(0, linqMetaDataAssemblyPathLabel.Text.Length, adapterAssemblyPath);
         }
@@ -180,15 +180,23 @@ namespace LLBLGen.EntityBrowser
         if (DataConnectionDialog.SelectedDataProvider != null)
         {
           connectionStringSettings.ProviderName = DataConnectionDialog.SelectedDataProvider.Name;
-          var adoDotNetConnectionProperties = new AdoDotNetConnectionProperties(connectionStringSettings.ProviderName);
-          var sqlConnectionStringBuilder = adoDotNetConnectionProperties.ConnectionStringBuilder as SqlConnectionStringBuilder;
-          if (sqlConnectionStringBuilder != null)
+          try
           {
-            sqlConnectionStringBuilder.ConnectionString = connectionStringSettings.ConnectionString;
-            var name = sqlConnectionStringBuilder.DataSource + "-" + (sqlConnectionStringBuilder.InitialCatalog ?? sqlConnectionStringBuilder.AttachDBFilename);
-            var existingConnectionStringSetting = ConnectionStringSettingsCollection[name];
-            if (existingConnectionStringSetting == null)
-              connectionStringSettings.Name = name;
+            var adoDotNetConnectionProperties = new AdoDotNetConnectionProperties(connectionStringSettings.ProviderName);
+            var sqlConnectionStringBuilder = adoDotNetConnectionProperties.ConnectionStringBuilder as SqlConnectionStringBuilder;
+            if (sqlConnectionStringBuilder != null)
+            {
+              sqlConnectionStringBuilder.ConnectionString = connectionStringSettings.ConnectionString;
+              var name = sqlConnectionStringBuilder.DataSource + "-" + (sqlConnectionStringBuilder.InitialCatalog ?? sqlConnectionStringBuilder.AttachDBFilename);
+              var existingConnectionStringSetting = ConnectionStringSettingsCollection[name];
+              if (existingConnectionStringSetting == null)
+                connectionStringSettings.Name = name;
+            }
+          }
+          catch (ArgumentException ex)
+          {
+            MessageBox.Show(connectionStringSettings.ProviderName);
+            throw;
           }
         }
         var stringSettings = ConnectionStringSettingsCollection[connectionStringSettings.Name];
@@ -206,7 +214,7 @@ namespace LLBLGen.EntityBrowser
         }
         else
         {
-          MessageBox.Show("See: " + stringSettings.Name + Environment.NewLine + stringSettings.ConnectionString, "Connection already present");
+          MessageBox.Show(string.Format("See: {0}{1}{2}", stringSettings.Name, Environment.NewLine, stringSettings.ConnectionString), "Connection already present");
         }
       }
     }
@@ -264,6 +272,8 @@ namespace LLBLGen.EntityBrowser
 
     private void LoadAssembliesAndTabs()
     {
+      if (String.IsNullOrWhiteSpace(Settings.Default.LinqMetaDataAssemblyPath))
+        return;
       if (!File.Exists(Settings.Default.LinqMetaDataAssemblyPath))
         throw new ApplicationException("LinqMetaData assembly: " + Settings.Default.LinqMetaDataAssemblyPath + " not found!" + Environment.NewLine);
       var linqMetaDataAssembly = LoadAssembly(Settings.Default.LinqMetaDataAssemblyPath);
@@ -310,10 +320,10 @@ namespace LLBLGen.EntityBrowser
 
     private static DataAccessAdapterBase GetAdapter(ConnectionStringSettings connectionStringSettings)
     {
+      if (_adapterTypes == null || _adapterTypes.Count == 0)
+        throw new ApplicationException("Adapter type not found!");
       if (_adapterTypes.Count == 1)
         return CreateDataAccessAdapterInstance(_adapterTypes[0], connectionStringSettings);
-      if (_adapterTypes.Count == 0)
-        throw new ApplicationException("Adapter type not found!");
       foreach (var adapterType in _adapterTypes)
       {
         var dqeAssemblyName = adapterType.Assembly.GetReferencedAssemblies().FirstOrDefault(a => a.Name.StartsWith("SD.LLBLGen.Pro.DQE"));
@@ -321,7 +331,7 @@ namespace LLBLGen.EntityBrowser
         {
           if (IsSqlServer(connectionStringSettings) && dqeAssemblyName.Name.Contains("SqlServer"))
             return CreateDataAccessAdapterInstance(adapterType, connectionStringSettings);
-          var dqeName = dqeAssemblyName.Name.Substring(19,3);
+          var dqeName = dqeAssemblyName.Name.Substring(19, 3);
           if (connectionStringSettings.ProviderName.Contains(dqeName))
             return CreateDataAccessAdapterInstance(adapterType, connectionStringSettings);
         }
@@ -447,7 +457,14 @@ namespace LLBLGen.EntityBrowser
 
     private void linqMetaDataAssemblyPathLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
-      if (e.Link.LinkData != null) Process.Start(e.Link.LinkData.ToString());
+      if (e.Link.LinkData == null)
+      {
+        var dialogResult = openFileDialog1.ShowDialog();
+        if (dialogResult == DialogResult.OK)
+          Settings.Default.LinqMetaDataAssemblyPath = openFileDialog1.FileName;
+      }
+      else
+        Process.Start(e.Link.LinkData.ToString());
     }
 
     private void toggleSettingsToolStripMenuItem_Click(object sender, EventArgs e)
