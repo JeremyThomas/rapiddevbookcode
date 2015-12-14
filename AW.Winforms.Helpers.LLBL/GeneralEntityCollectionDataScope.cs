@@ -135,11 +135,11 @@ namespace AW.Winforms.Helpers.LLBL
         _currentRemovedEntitiesTracker = null;
       }
       var enumerableItemType = MetaDataHelper.GetEnumerableItemType(entityCollectionCore);
-      foreach (var entityCore in NewEntities.Where(e=>e.GetType().IsAssignableTo(enumerableItemType)).WhereIsDirty())
+      foreach (var entityCore in NewEntities.Where(e => e.GetType().IsAssignableTo(enumerableItemType)).WhereIsDirty())
       {
         entityCollectionCore.Add(entityCore);
       }
-      
+      RemoveEmptyNew();
     }
 
     //private Context Context
@@ -161,18 +161,18 @@ namespace AW.Winforms.Helpers.LLBL
     private bool _cascadeDeletes;
     private Context _context;
     private IEntityCollectionCore _currentRemovedEntitiesTracker;
-    private static readonly MemberGetter DelegateForGetNewEntities = typeof(Context).DelegateForGetPropertyValue("NewEntities");
+    private static readonly MemberGetter DelegateForGetNewEntities = typeof (Context).DelegateForGetPropertyValue("NewEntities");
 
     private Dictionary<Guid, IEntityCore>.ValueCollection NewEntities
     {
-      get { return ((Dictionary<Guid, IEntityCore>)DelegateForGetNewEntities(_context)).Values; }
+      get { return ((Dictionary<Guid, IEntityCore>) DelegateForGetNewEntities(_context)).Values; }
     }
 
-    private static readonly MemberGetter DelegateForGetObjectIDToEntityInstance = typeof(Context).DelegateForGetPropertyValue("ObjectIDToEntityInstance");
+    private static readonly MemberGetter DelegateForGetObjectIDToEntityInstance = typeof (Context).DelegateForGetPropertyValue("ObjectIDToEntityInstance");
 
     private Dictionary<Guid, IEntityCore>.ValueCollection ExistingEntities
     {
-      get { return ((Dictionary<Guid, IEntityCore>)DelegateForGetObjectIDToEntityInstance(_context)).Values; }
+      get { return ((Dictionary<Guid, IEntityCore>) DelegateForGetObjectIDToEntityInstance(_context)).Values; }
     }
 
     /// <summary>
@@ -284,10 +284,10 @@ namespace AW.Winforms.Helpers.LLBL
         for (var i = _entitiesRemovalTracker.Count - 1; i > -1; i--)
         {
           var entity = _entitiesRemovalTracker[i];
-          if (!entity.MarkedForDeletion )
+          if (!entity.MarkedForDeletion)
             _entitiesRemovalTracker.Remove(entity);
         }
-        
+
         CallEditingFinishedIfNotDirty();
       }
     }
@@ -302,6 +302,18 @@ namespace AW.Winforms.Helpers.LLBL
         // _context.OnRemoveComplete(toRemove);
       }
       EntityHelper.RevertChangesToDBValue(ExistingEntities);
+    }
+
+    private void RemoveEmptyNew()
+    {
+      var someRemoved = false;
+      foreach (var toRemove in NewEntities.Where(e => !e.IsDirty).ToList())
+      {
+        toRemove.ActiveContext = null;
+        someRemoved = true;
+      }
+      if (someRemoved)
+        CallEditingFinishedIfNotDirty();
     }
 
 
