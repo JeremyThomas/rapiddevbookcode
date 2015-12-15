@@ -6,6 +6,7 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Data.SqlLocalDb;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Win32;
@@ -264,6 +265,15 @@ namespace AW.Helper
       var dataTable = DbProviderFactories.GetFactoryClasses();
       var providerRow = dataTable.Rows.Find(providerInvariantName);
       return providerRow == null ? null : GetFactoryIfExists(providerRow);
+    }
+
+    public static DbProviderFactory GetOracleManagedDataAccessFactoryRegisterIfNotAlready(string directoryName)
+    {
+      var oracleManagedDataAccessAssembly = Assembly.LoadFrom(Path.Combine(directoryName, "Oracle.ManagedDataAccess.dll"));
+      if (oracleManagedDataAccessAssembly == null)
+        return null;
+      return RegisterDbProviderFactory("ODP.NET, Managed Driver","Oracle.ManagedDataAccess.Client","Oracle Data Provider for .NET, Managed Driver", 
+        "Oracle.ManagedDataAccess.Client.OracleClientFactory, Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342");
     }
 
     public static DbProviderFactory RegisterDbProviderFactory(string name, string invariantName, string description, string assemblyQualifiedName)
