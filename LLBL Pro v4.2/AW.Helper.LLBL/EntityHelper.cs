@@ -1,15 +1,16 @@
-﻿using Microsoft.CSharp.RuntimeBinder;
-using SD.LLBLGen.Pro.LinqSupportClasses;
-using SD.LLBLGen.Pro.ORMSupportClasses;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.CSharp.RuntimeBinder;
+using SD.LLBLGen.Pro.LinqSupportClasses;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 using Expression = System.Linq.Expressions.Expression;
 
 namespace AW.Helper.LLBL
@@ -43,7 +44,7 @@ namespace AW.Helper.LLBL
       {
         try
         {
-          return GetQueryableForEntitySafely(linqMetaData, typeof(T)) as DataSourceBase<T>;
+          return GetQueryableForEntitySafely(linqMetaData, typeof (T)) as DataSourceBase<T>;
         }
         catch (Exception)
         {
@@ -87,7 +88,7 @@ namespace AW.Helper.LLBL
 
     private static IDataSource GetQueryableForEntitySafely(ILinqMetaData linqMetaData, Type typeOfEntity)
     {
-      for (var entityTypeValueForType = 0; entityTypeValueForType < Int32.MaxValue; entityTypeValueForType++)
+      for (var entityTypeValueForType = 0; entityTypeValueForType < int.MaxValue; entityTypeValueForType++)
       {
         var queryableForEntity = linqMetaData.GetQueryableForEntity(entityTypeValueForType);
         if (queryableForEntity.ElementType == typeOfEntity)
@@ -108,17 +109,17 @@ namespace AW.Helper.LLBL
       {
         elementType = expression.Type.GetGenericArguments()[0];
       }
-      var queryableType = typeof(IQueryable<>).MakeGenericType(elementType);
+      var queryableType = typeof (IQueryable<>).MakeGenericType(elementType);
       if (queryableType.IsAssignableFrom(expression.Type))
       {
         provider.CreateQuery(expression);
       }
-      var enumerableType = typeof(IEnumerable<>).MakeGenericType(elementType);
+      var enumerableType = typeof (IEnumerable<>).MakeGenericType(elementType);
       if (!enumerableType.IsAssignableFrom(expression.Type))
       {
         throw new ArgumentException("expression isn't enumerable");
       }
-      return (IQueryable)Activator.CreateInstance(typeof(LLBLGenProQuery<>).MakeGenericType(elementType), provider, expression);
+      return (IQueryable) Activator.CreateInstance(typeof (LLBLGenProQuery<>).MakeGenericType(elementType), provider, expression);
     }
 
     public static Tuple<Expression, Expression, Expression> GetMethodCallExpressionParts(MethodCallExpression methodCallExpression)
@@ -172,14 +173,14 @@ namespace AW.Helper.LLBL
 
     public static IElementCreatorCore CreateElementCreator(Type typeInTheSameAssemblyAsElementCreator)
     {
-      return typeof(IElementCreatorCore).IsAssignableFrom(typeInTheSameAssemblyAsElementCreator)
+      return typeof (IElementCreatorCore).IsAssignableFrom(typeInTheSameAssemblyAsElementCreator)
         ? CreateElementCreatorFromType(typeInTheSameAssemblyAsElementCreator)
         : CreateElementCreator(typeInTheSameAssemblyAsElementCreator.Assembly.GetExportedTypes());
     }
 
     public static IElementCreatorCore CreateElementCreator(IEnumerable<Type> types)
     {
-      var elementCreatorCoreType = typeof(IElementCreatorCore).GetAssignable(types).FirstOrDefault();
+      var elementCreatorCoreType = typeof (IElementCreatorCore).GetAssignable(types).FirstOrDefault();
       return elementCreatorCoreType == null ? null : CreateElementCreatorFromType(elementCreatorCoreType);
     }
 
@@ -195,7 +196,7 @@ namespace AW.Helper.LLBL
     /// <returns>An instance of the type.</returns>
     public static T CreateEntity<T>() where T : class, IEntityCore
     {
-      return CreateEntity(typeof(T)) as T;
+      return CreateEntity(typeof (T)) as T;
     }
 
     #endregion CreateEntity
@@ -209,14 +210,14 @@ namespace AW.Helper.LLBL
 
     public static IEntityFactoryCore GetFactoryCore<T>(IElementCreatorCore elementCreatorCore) where T : class, IEntityCore
     {
-      return (elementCreatorCore.GetFactory(typeof(T)));
+      return (elementCreatorCore.GetFactory(typeof (T)));
     }
 
     public static IEntityFactoryCore GetFactoryCore(IEntityCore entity)
     {
       var entity2 = entity as IEntity2;
       if (entity2 == null)
-        return ((IEntity)entity).GetEntityFactory();
+        return ((IEntity) entity).GetEntityFactory();
       return entity2.GetEntityFactory();
     }
 
@@ -238,7 +239,7 @@ namespace AW.Helper.LLBL
 
     private static IEntityFactoryCore GetFactoryCore<T>(IEnumerable<T> enumerable) where T : class, IEntityCore
     {
-      return GetFactoryCore(enumerable, typeof(T));
+      return GetFactoryCore(enumerable, typeof (T));
     }
 
     private static IEntityFactoryCore GetFactoryCore(IEnumerable enumerable, Type type)
@@ -268,17 +269,17 @@ namespace AW.Helper.LLBL
 
     public static int GetEntityTypeValueForType<T>() where T : class, IEntityCore
     {
-      return GetEntityTypeValueForType(typeof(T));
+      return GetEntityTypeValueForType(typeof (T));
     }
 
     public static IEnumerable<Type> GetEntitiesTypes()
     {
-      return MetaDataHelper.GetAllLoadedDescendants(typeof(IEntityCore));
+      return MetaDataHelper.GetAllLoadedDescendants(typeof (IEntityCore));
     }
 
     public static IEnumerable<Type> GetEntitiesTypes(Assembly entityAssembly)
     {
-      return typeof(IEntityCore).GetAssignable(entityAssembly.GetExportedTypes());
+      return typeof (IEntityCore).GetAssignable(entityAssembly.GetExportedTypes());
     }
 
     public static IEnumerable<Type> GetEntitiesTypes(ILinqMetaData linqMetaData)
@@ -288,7 +289,7 @@ namespace AW.Helper.LLBL
         return entitiesTypes;
       var topLevelProps =
         from prop in linqMetaData.GetType().GetProperties()
-        where prop.PropertyType.IsAssignableTo(typeof(IDataSource)) && prop.PropertyType.IsGenericType
+        where prop.PropertyType.IsAssignableTo(typeof (IDataSource)) && prop.PropertyType.IsGenericType
         let typeArgument = prop.PropertyType.GetGenericArguments()[0]
         where typeArgument != null
         select typeArgument;
@@ -315,7 +316,7 @@ namespace AW.Helper.LLBL
       {
         var entityFactoryCore = GetFactoryCore(enumerable, itemType);
         var entityFactory = (entityFactoryCore as IEntityFactory);
-        entities = entityFactory == null ? (IEntityCollectionCore)((IEntityFactory2)entityFactoryCore).CreateEntityCollection() : entityFactory.CreateEntityCollection();
+        entities = entityFactory == null ? (IEntityCollectionCore) ((IEntityFactory2) entityFactoryCore).CreateEntityCollection() : entityFactory.CreateEntityCollection();
         foreach (IEntityCore item in enumerable)
           entities.Add(item);
       }
@@ -338,7 +339,7 @@ namespace AW.Helper.LLBL
       var entityCollection = entityCollectionCore as IEntityCollection;
       if (entityCollection == null)
       {
-        var defaultView2 = ((IEntityCollection2)entityCollectionCore).DefaultView;
+        var defaultView2 = ((IEntityCollection2) entityCollectionCore).DefaultView;
         defaultView2.DataChangeAction = PostCollectionChangeAction.NoAction;
         return defaultView2 as IBindingListView;
       }
@@ -470,12 +471,12 @@ namespace AW.Helper.LLBL
       }
       if (view != null)
       {
-        modifiedEntities = ((IEntityView)modifiedEntities).RelatedCollection;
+        modifiedEntities = ((IEntityView) modifiedEntities).RelatedCollection;
         postCollectionChangeActionNoAction = view.DataChangeAction == PostCollectionChangeAction.NoAction;
       }
       if (view2 != null)
       {
-        modifiedEntities = ((IEntityView2)modifiedEntities).RelatedCollection;
+        modifiedEntities = ((IEntityView2) modifiedEntities).RelatedCollection;
         postCollectionChangeActionNoAction = view2.DataChangeAction == PostCollectionChangeAction.NoAction;
       }
       var entities = modifiedEntities as IEntityCollectionCore;
@@ -496,7 +497,8 @@ namespace AW.Helper.LLBL
             {
               var entityCollection2 = modifiedEntities as IEntityCollection2;
               if (entityCollection2 != null)
-              {foreach (var entity in entityCollection.RemovedEntitiesTracker.AsEnumerable().Where(entity => entity. Fields.State != EntityState.Deleted)) //Hasn't been deleted
+              {
+                foreach (var entity in entityCollection.RemovedEntitiesTracker.AsEnumerable().Where(entity => entity.Fields.State != EntityState.Deleted)) //Hasn't been deleted
                 {
                   entityCollection2.Add(entity);
                 }
@@ -505,7 +507,7 @@ namespace AW.Helper.LLBL
               //entityCollection2.AddRange((IEntityCollection2) entityCollection.RemovedEntitiesTracker);
             }
             else
-              collection.AddRange((IEntityCollection)entityCollection.RemovedEntitiesTracker);
+              collection.AddRange((IEntityCollection) entityCollection.RemovedEntitiesTracker);
           }
           finally
           {
@@ -548,7 +550,7 @@ namespace AW.Helper.LLBL
           if (entity != null)
             RevertChangesToDBValue(entity);
           else
-            RevertChangesToDBValue((IEntity2)modifiedData);
+            RevertChangesToDBValue((IEntity2) modifiedData);
         }
         else
           RevertChangesToDBValue(enumerable);
@@ -629,18 +631,18 @@ namespace AW.Helper.LLBL
           return entityCollection2 != null && (entityCollection2.ContainsDirtyContents
                                                || ContainsEntityFieldsErrors(entityCollection2)
                                                || (entityCollection2.RemovedEntitiesTracker != null && entityCollection2.RemovedEntitiesTracker.Count > 0))
-                                            //   || entityCollection2.AsEnumerable().Any(e=>e.IsNew)
-                                               ;
+            //   || entityCollection2.AsEnumerable().Any(e=>e.IsNew)
+            ;
         }
         return entityCollection.ContainsDirtyContents || ContainsEntityFieldsErrors(entityCollection);
       }
-      return entity.IsDirty || !String.IsNullOrWhiteSpace(GetEntityFieldsErrors(entity));
+      return entity.IsDirty || !string.IsNullOrWhiteSpace(GetEntityFieldsErrors(entity));
     }
 
     public static bool ContainsEntityFieldsErrors(IEntityCollectionCore entityCollection)
     {
       for (var i = 0; i < entityCollection.Count; i++)
-        if (!String.IsNullOrWhiteSpace(GetEntityFieldsErrors(entityCollection[i])))
+        if (!string.IsNullOrWhiteSpace(GetEntityFieldsErrors(entityCollection[i])))
           return true;
       return false;
     }
@@ -667,7 +669,7 @@ namespace AW.Helper.LLBL
       var llblQuery = enumerable as ILLBLGenProQuery;
       if (llblQuery != null)
         return llblQuery.Execute<EntityCollectionBase<T>>();
-      var entities = ((IEntityFactory)GetFactoryCore(enumerable)).CreateEntityCollection() as EntityCollectionBase<T>;
+      var entities = ((IEntityFactory) GetFactoryCore(enumerable)).CreateEntityCollection() as EntityCollectionBase<T>;
       if (entities != null)
         entities.AddRange(enumerable);
       return entities;
@@ -731,10 +733,10 @@ namespace AW.Helper.LLBL
     public static int Delete(object dataToDelete, bool cascade = false)
     {
       var listItemType = GetListItemType(dataToDelete);
-      if (typeof(IEntity).IsAssignableFrom(listItemType))
+      if (typeof (IEntity).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToDelete as IEnumerable;
-        return enumerable == null ? Convert.ToInt32(((IEntity)dataToDelete).Delete()) : DeleteEntities(enumerable);
+        return enumerable == null ? Convert.ToInt32(((IEntity) dataToDelete).Delete()) : DeleteEntities(enumerable);
       }
       return 0;
     }
@@ -747,7 +749,7 @@ namespace AW.Helper.LLBL
     public static int SaveEntities(IEnumerable entitiesToSave)
     {
       if (entitiesToSave is IEntityView)
-        entitiesToSave = ((IEntityView)entitiesToSave).RelatedCollection;
+        entitiesToSave = ((IEntityView) entitiesToSave).RelatedCollection;
       var collection = entitiesToSave as IEntityCollection;
       if (collection != null)
       {
@@ -771,17 +773,17 @@ namespace AW.Helper.LLBL
     public static int Save(object dataToSave)
     {
       var listItemType = GetListItemType(dataToSave);
-      if (typeof(IEntity).IsAssignableFrom(listItemType))
+      if (typeof (IEntity).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToSave as IEnumerable;
-        return enumerable == null ? Convert.ToInt32(((IEntity)dataToSave).Save()) : SaveEntities(enumerable);
+        return enumerable == null ? Convert.ToInt32(((IEntity) dataToSave).Save()) : SaveEntities(enumerable);
       }
       return 0;
     }
 
     public static Type GetDaoBaseImplementation(Assembly assembly)
     {
-      return assembly.GetConcretePublicImplementations(typeof(DaoBase)).FirstOrDefault();
+      return assembly.GetConcretePublicImplementations(typeof (DaoBase)).FirstOrDefault();
       //  return assembly.GetTypes().SingleOrDefault(t => t.Name.Contains("CommonDaoBase") && t.IsClass);
     }
 
@@ -799,7 +801,7 @@ namespace AW.Helper.LLBL
     {
       if (daoBaseImplementationType != null)
       {
-        if (!String.IsNullOrEmpty(connectionString))
+        if (!string.IsNullOrEmpty(connectionString))
         {
           daoBaseImplementationType.StaticMembers().ActualConnectionString = connectionString;
         }
@@ -843,7 +845,7 @@ namespace AW.Helper.LLBL
     public static int SaveEntities(IEnumerable entitiesToSave, IDataAccessAdapter dataAccessAdapter, bool cascade = false)
     {
       if (entitiesToSave is IEntityView2)
-        entitiesToSave = ((IEntityView2)entitiesToSave).RelatedCollection;
+        entitiesToSave = ((IEntityView2) entitiesToSave).RelatedCollection;
       var collectionToSave = entitiesToSave as IEntityCollection2;
       if (collectionToSave != null)
       {
@@ -888,10 +890,10 @@ namespace AW.Helper.LLBL
     public static int Save(object dataToSave, IDataAccessAdapter dataAccessAdapter, bool cascadeDeletes = false)
     {
       var listItemType = GetListItemType(dataToSave);
-      if (typeof(IEntity2).IsAssignableFrom(listItemType))
+      if (typeof (IEntity2).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToSave as IEnumerable;
-        return enumerable == null ? Convert.ToInt32(dataAccessAdapter.SaveEntity((IEntity2)dataToSave)) : SaveEntities(enumerable, dataAccessAdapter, cascadeDeletes);
+        return enumerable == null ? Convert.ToInt32(dataAccessAdapter.SaveEntity((IEntity2) dataToSave)) : SaveEntities(enumerable, dataAccessAdapter, cascadeDeletes);
       }
       return 0;
     }
@@ -962,10 +964,10 @@ namespace AW.Helper.LLBL
     public static int Delete(object dataToDelete, IDataAccessAdapter dataAccessAdapter, bool cascade = false)
     {
       var listItemType = GetListItemType(dataToDelete);
-      if (typeof(IEntity2).IsAssignableFrom(listItemType))
+      if (typeof (IEntity2).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToDelete as IEnumerable;
-        return enumerable == null ? Convert.ToInt32(DeleteEntity((IEntity2)dataToDelete, dataAccessAdapter, cascade)) : DeleteEntities(enumerable, dataAccessAdapter, cascade);
+        return enumerable == null ? Convert.ToInt32(DeleteEntity((IEntity2) dataToDelete, dataAccessAdapter, cascade)) : DeleteEntities(enumerable, dataAccessAdapter, cascade);
       }
       return 0;
     }
@@ -1040,7 +1042,7 @@ namespace AW.Helper.LLBL
 
     public static Dictionary<string, int> GetExistingChildCounts(IDataAccessAdapter dataAccessAdapter, EntityBase2 entity, params string[] entityTypesToExclude)
     {
-      return GetExistingChildCounts(dataAccessAdapter, entity, (IEnumerable<string>)entityTypesToExclude);
+      return GetExistingChildCounts(dataAccessAdapter, entity, (IEnumerable<string>) entityTypesToExclude);
     }
 
     public static Dictionary<string, int> GetExistingChildCounts(IDataAccessAdapter dataAccessAdapter, EntityBase2 entity, IEnumerable<string> entityTypesToExclude)
@@ -1051,7 +1053,7 @@ namespace AW.Helper.LLBL
 
     public static IEnumerable<Tuple<string, int>> GetChildCounts(IDataAccessAdapter dataAccessAdapter, EntityBase2 entity, params string[] entityTypesToExclude)
     {
-      return GetChildCounts(dataAccessAdapter, entity, (IEnumerable<string>)entityTypesToExclude);
+      return GetChildCounts(dataAccessAdapter, entity, (IEnumerable<string>) entityTypesToExclude);
     }
 
     public static IEnumerable<Tuple<string, int>> GetChildCounts(IDataAccessAdapter dataAccessAdapter, EntityBase2 entity, IEnumerable<string> entityTypesToExclude)
@@ -1063,11 +1065,11 @@ namespace AW.Helper.LLBL
     private static IEnumerable<List<IEntityFieldCore>> GetAllFkEntityFieldCoreObjectsWhereStartEntityIsPkSide(IEntityCore entity, bool onlyComponentsRelationShips = false)
     {
       return from entityRelation in GetAllRelationsWhereStartEntityIsPkSide(entity)
-             select entityRelation.GetAllFKEntityFieldCoreObjects()
-               into allFkEntityFieldCoreObjects
-               let anyIsPrimaryKeys = allFkEntityFieldCoreObjects.Any(f => f.IsPrimaryKey)
-               where !onlyComponentsRelationShips || anyIsPrimaryKeys
-               select allFkEntityFieldCoreObjects;
+        select entityRelation.GetAllFKEntityFieldCoreObjects()
+        into allFkEntityFieldCoreObjects
+        let anyIsPrimaryKeys = allFkEntityFieldCoreObjects.Any(f => f.IsPrimaryKey)
+        where !onlyComponentsRelationShips || anyIsPrimaryKeys
+        select allFkEntityFieldCoreObjects;
     }
 
     public static IEnumerable<IEntityRelation> GetAllRelationsWhereStartEntityIsPkSide(IEntityCore entity, bool onlyComponentsRelationShips)
@@ -1087,7 +1089,8 @@ namespace AW.Helper.LLBL
       return GetChildCount(dataAccessAdapter, entity, allFkEntityFieldCoreObjects, entityTypesToExclude);
     }
 
-    private static Tuple<string, int> GetChildCount(IDataAccessAdapter dataAccessAdapter, IEntityCore entity, List<IEntityFieldCore> allFkEntityFieldCoreObjects, IEnumerable<string> entityTypesToExclude)
+    private static Tuple<string, int> GetChildCount(IDataAccessAdapter dataAccessAdapter, IEntityCore entity, List<IEntityFieldCore> allFkEntityFieldCoreObjects,
+      IEnumerable<string> entityTypesToExclude)
     {
       var entityTypeRelationPredicateBucketTuple = CreateRelationPredicateBucket(allFkEntityFieldCoreObjects, entity.PrimaryKeyFields);
       if (entityTypeRelationPredicateBucketTuple != null && !entityTypesToExclude.Contains(entityTypeRelationPredicateBucketTuple.Item1))
@@ -1118,7 +1121,8 @@ namespace AW.Helper.LLBL
       return CreateRelationPredicateBucket(allFkEntityFieldCoreObjects, foreignKeyFieldValues, useActualName);
     }
 
-    private static Tuple<string, IRelationPredicateBucket> CreateRelationPredicateBucket(IEnumerable<IEntityFieldCore> allFkEntityFieldCoreObjects, IList foreignKeyFieldValues, bool useActualName = true)
+    private static Tuple<string, IRelationPredicateBucket> CreateRelationPredicateBucket(IEnumerable<IEntityFieldCore> allFkEntityFieldCoreObjects, IList foreignKeyFieldValues,
+      bool useActualName = true)
     {
       string typeOfEntity = null;
       var bucket = new RelationPredicateBucket();
@@ -1126,13 +1130,13 @@ namespace AW.Helper.LLBL
 
       foreach (var foreignKeyField in allFkEntityFieldCoreObjects)
       {
-        if (String.IsNullOrEmpty(typeOfEntity))
+        if (string.IsNullOrEmpty(typeOfEntity))
           typeOfEntity = useActualName ? foreignKeyField.ActualContainingObjectName : foreignKeyField.ContainingObjectName;
         var fkValue = foreignKeyFieldValues[index];
         index++;
         if (fkValue == null) return null;
         if (fkValue is IEntityField2)
-          fkValue = ((IEntityField2)fkValue).CurrentValue;
+          fkValue = ((IEntityField2) fkValue).CurrentValue;
         bucket.PredicateExpression.Add(new FieldCompareValuePredicate(foreignKeyField, null, ComparisonOperator.Equal, fkValue));
       }
       return new Tuple<string, IRelationPredicateBucket>(typeOfEntity, bucket);
@@ -1140,7 +1144,7 @@ namespace AW.Helper.LLBL
 
     public static IEnumerable<Tuple<string, int>> GetRelatedCounts(IDataAccessAdapter dataAccessAdapter, EntityBase2 entity, params string[] entityTypesToExclude)
     {
-      return GetRelatedCounts(dataAccessAdapter, entity, (IEnumerable<string>)entityTypesToExclude);
+      return GetRelatedCounts(dataAccessAdapter, entity, (IEnumerable<string>) entityTypesToExclude);
     }
 
     public static IEnumerable<Tuple<string, int>> GetRelatedCounts(IDataAccessAdapter dataAccessAdapter, IEntityCore entity, IEnumerable<string> entityTypesToExclude)
@@ -1227,7 +1231,7 @@ namespace AW.Helper.LLBL
       , Func<bool> isSqlServer = null, Func<bool> isOracle = null)
     {
       object adapter;
-      if (String.IsNullOrWhiteSpace(connectionString))
+      if (string.IsNullOrWhiteSpace(connectionString))
       {
         adapter = Activator.CreateInstance(dataAccessAdapterType);
       }
@@ -1247,7 +1251,32 @@ namespace AW.Helper.LLBL
         else
         {
           if (isOracle != null && isOracle())
-            adapter = Activator.CreateInstance(dataAccessAdapterType, connectionString, true, SchemaNameUsage.Default, null);
+            try
+            {
+              adapter = Activator.CreateInstance(dataAccessAdapterType, connectionString, true, SchemaNameUsage.Default, null);
+            }
+              //catch (TypeInitializationException e)
+              //{ return null; }
+              //catch (TargetInvocationException e)
+              //{ return null; }
+            catch (Exception e)
+            {
+              var baseException = e.GetBaseException();
+              if (baseException is ORMGeneralOperationException)
+              {
+                var oracleManagedDataAccessFactory = DataHelper.GetOracleManagedDataAccessFactoryRegisterIfNotAlready(
+                  Path.GetDirectoryName(dataAccessAdapterType.Assembly.Location));
+
+                if (oracleManagedDataAccessFactory == null)
+                  return null;
+                adapter = Activator.CreateInstance(dataAccessAdapterType, connectionString, true, SchemaNameUsage.Default, null);
+              }
+              else
+              {
+                throw;
+              }
+            }
+
           // <param name="connectionString">The connection string to use when connecting to the database.</param>
           // <param name="keepConnectionOpen">when true, the DataAccessAdapter will not close an opened connection. Use this for multi action usage.</param>
           // <param name="schemaNameUsageSetting">Configures this data access adapter object how to threat schema names in persistence information.</param>
@@ -1279,7 +1308,7 @@ namespace AW.Helper.LLBL
       if (entityCollection != null)
         return entityCollection;
       var llblQuery = enumerable as ILLBLGenProQuery;
-      return llblQuery == null ? ToEntityCollection(enumerable, ((IEntityFactory2)GetFactoryCore(enumerable))) : llblQuery.Execute<EntityCollectionBase2<T>>();
+      return llblQuery == null ? ToEntityCollection(enumerable, ((IEntityFactory2) GetFactoryCore(enumerable))) : llblQuery.Execute<EntityCollectionBase2<T>>();
     }
 
     private static EntityCollectionBase2<T> ToEntityCollection<T>(IEnumerable<T> enumerable, IEntityFactory2 entityFactory) where T : EntityBase2
@@ -1375,17 +1404,17 @@ namespace AW.Helper.LLBL
     {
       // variables to construct the message
       var sbErrors = new StringBuilder();
-      var toReturn = String.Empty;
+      var toReturn = string.Empty;
 
       // iterate over fields and get their errorInfo
       foreach (var field in entity.Fields.AsEnumerable())
         // IEntity implements IDataErrorInfo, and it contains a collections of field errors already set.
         // For more info read the docs (LLBLGen Pro Help -> Using generated code -> Validation per field or per entity -> IDataErrorInfo implementation).
-        if (!String.IsNullOrEmpty(((IDataErrorInfo)entity)[field.Name]))
-          sbErrors.Append(((IDataErrorInfo)entity)[field.Name] + ";");
+        if (!string.IsNullOrEmpty(((IDataErrorInfo) entity)[field.Name]))
+          sbErrors.Append(((IDataErrorInfo) entity)[field.Name] + ";");
 
       // determine if there was errors and cut off the extra ';'
-      if (sbErrors.ToString() != String.Empty)
+      if (sbErrors.ToString() != string.Empty)
       {
         toReturn = sbErrors.ToString();
         toReturn = toReturn.Substring(0, toReturn.Length - 2);
@@ -1398,10 +1427,10 @@ namespace AW.Helper.LLBL
     {
       // reset the field errors
       foreach (var field in entity.Fields.AsEnumerable())
-        entity.SetEntityFieldError(field.Name, String.Empty, false);
+        entity.SetEntityFieldError(field.Name, string.Empty, false);
 
       // reset entity error
-      entity.SetEntityError(String.Empty);
+      entity.SetEntityError(string.Empty);
     }
 
     /// <summary>
@@ -1420,8 +1449,8 @@ namespace AW.Helper.LLBL
       var entityField = entity.Fields[fieldIndex];
       if (entityField.CurrentValue != null)
         if (entityField.CurrentValue.Equals(valueToSet)
-            && !String.IsNullOrEmpty(((IDataErrorInfo)entity)[entityField.Name]))
-          entity.SetEntityFieldError(entityField.Name, String.Empty, false);
+            && !string.IsNullOrEmpty(((IDataErrorInfo) entity)[entityField.Name]))
+          entity.SetEntityFieldError(entityField.Name, string.Empty, false);
     }
 
     /// <summary>
@@ -1453,7 +1482,7 @@ namespace AW.Helper.LLBL
 
     public static bool IsEntityCore(Type type, bool includeGenericParameters = false)
     {
-      var isEntityCore = typeof(IEntityCore).IsAssignableFrom(type);
+      var isEntityCore = typeof (IEntityCore).IsAssignableFrom(type);
       if (isEntityCore || !includeGenericParameters) return isEntityCore;
       var typeParametersOfGenericType = MetaDataHelper.GetTypeParametersOfGenericType(type);
       return typeParametersOfGenericType != null && typeParametersOfGenericType.Any(t => IsEntityCore(t));
@@ -1514,8 +1543,8 @@ namespace AW.Helper.LLBL
 
     public static IFieldPersistenceInfo GetFieldPersistenceInfo(IDataAccessAdapter dataAccessAdapter, IEntityField2 field)
     {
-      var fullListQueryMethod = dataAccessAdapter.GetType().GetMethod("GetFieldPersistenceInfo", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] { typeof(IEntityField2) }, null);
-      return fullListQueryMethod.Invoke(dataAccessAdapter, new[] { field }) as IFieldPersistenceInfo;
+      var fullListQueryMethod = dataAccessAdapter.GetType().GetMethod("GetFieldPersistenceInfo", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {typeof (IEntityField2)}, null);
+      return fullListQueryMethod.Invoke(dataAccessAdapter, new[] {field}) as IFieldPersistenceInfo;
     }
 
     public static IFieldPersistenceInfo GetFieldPersistenceInfoSafely(IDataAccessAdapter dataAccessAdapter, IEntityField2 field)
@@ -1537,7 +1566,7 @@ namespace AW.Helper.LLBL
       var entityField = field as IEntityField;
       if (entityField != null)
         return entityField;
-      return adapter == null ? null : GetFieldPersistenceInfo(adapter, (IEntityField2)field);
+      return adapter == null ? null : GetFieldPersistenceInfo(adapter, (IEntityField2) field);
     }
 
     public static IFieldPersistenceInfo GetFieldPersistenceInfoSafely(IEntityFieldCore field, IDataAccessAdapter adapter = null)
@@ -1545,7 +1574,7 @@ namespace AW.Helper.LLBL
       var entityField = field as IEntityField;
       if (entityField != null)
         return entityField;
-      return adapter == null ? null : GetFieldPersistenceInfoSafely(adapter, (IEntityField2)field);
+      return adapter == null ? null : GetFieldPersistenceInfoSafely(adapter, (IEntityField2) field);
     }
 
     public static IFieldPersistenceInfo GetFieldPersistenceInfoSafely(IEntityCore entity, IDataAccessAdapter adapter = null)
@@ -1571,9 +1600,9 @@ namespace AW.Helper.LLBL
     public static IEnumerable<string> GetNavigatorNames(IEntityCore entity, string fieldName)
     {
       return from entityRelation in entity.GetAllRelations().Where(r => !r.StartEntityIsPkSide)
-             from fkEntityFieldCoreObject in entityRelation.GetAllFKEntityFieldCoreObjects()
-             where fkEntityFieldCoreObject.Name.Equals(fieldName)
-             select entityRelation.MappedFieldName;
+        from fkEntityFieldCoreObject in entityRelation.GetAllFKEntityFieldCoreObjects()
+        where fkEntityFieldCoreObject.Name.Equals(fieldName)
+        select entityRelation.MappedFieldName;
     }
 
     public static string GetPkIdStringFromFields(List<IEntityField2> primaryKeyFields)
@@ -1581,12 +1610,12 @@ namespace AW.Helper.LLBL
       if (primaryKeyFields.Count == 1 && primaryKeyFields[0].CurrentValue == null)
         return null;
 
-      return String.Join("/", primaryKeyFields.Select(pk => (pk.CurrentValue ?? "").ToString()).ToArray());
+      return string.Join("/", primaryKeyFields.Select(pk => (pk.CurrentValue ?? "").ToString()).ToArray());
     }
 
     public static string GetPkIdStringFromEntity(EntityBase2 entity)
     {
-      return GetPkIdStringFromFields(((IEntity2)entity).PrimaryKeyFields);
+      return GetPkIdStringFromFields(((IEntity2) entity).PrimaryKeyFields);
     }
 
     public static Context GetContextToUse(object potentialContextAwareElement)
@@ -1602,7 +1631,7 @@ namespace AW.Helper.LLBL
         }
         if (contextAwareElement == null)
         {
-          var contextToUse = ((dynamic)potentialContextAwareElement).ContextToUse as Context;
+          var contextToUse = ((dynamic) potentialContextAwareElement).ContextToUse as Context;
           return contextToUse;
         }
         return contextAwareElement.ContextToUse;
