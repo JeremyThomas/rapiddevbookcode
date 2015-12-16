@@ -443,6 +443,21 @@ namespace AW.Helper.LLBL
       return entities.Any(e => e.IsDirty);
     }
 
+    public static IEnumerable<IEntityCore> WhereNotDeleted(this IEnumerable<IEntityCore> entities)
+    {
+      return entities.Where(entity => entity.Fields.State != EntityState.Deleted);
+    }
+
+    public static IEnumerable<IEntityCore> WhereDeleted(this IEnumerable<IEntityCore> entities)
+    {
+      return entities.Where(entity => IsDeleted(entity));
+    }
+
+    public static bool IsDeleted(this IEntityCore entity)
+    {
+      return entity.Fields.State == EntityState.Deleted;
+    }
+
     /// <summary>
     ///   Reverts the changes to database value, removes any new entities and restores any deleted ones from RemovedEntitiesTracker.
     /// </summary>
@@ -498,7 +513,7 @@ namespace AW.Helper.LLBL
               var entityCollection2 = modifiedEntities as IEntityCollection2;
               if (entityCollection2 != null)
               {
-                foreach (var entity in entityCollection.RemovedEntitiesTracker.AsEnumerable().Where(entity => entity.Fields.State != EntityState.Deleted)) //Hasn't been deleted
+                foreach (var entity in WhereNotDeleted(entityCollection.RemovedEntitiesTracker.AsEnumerable())) //Hasn't been deleted
                 {
                   entityCollection2.Add(entity);
                 }
@@ -527,6 +542,8 @@ namespace AW.Helper.LLBL
         RevertChangesToDBValue(modifiedEntities.Cast<IEntityCore>());
       }
     }
+
+
 
     /// <summary>
     ///   Reverts the changes to database values, removes any new entities and restores any deleted ones from any RemovedEntitiesTracker.

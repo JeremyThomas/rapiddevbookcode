@@ -211,10 +211,10 @@ namespace AW.Winforms.Helpers.Controls
 
     private void saveToolStripButton_Click(object sender, EventArgs e)
     {
-      SaveEdits();
+      SaveEdits(false);
     }
 
-    public void SaveEdits()
+    public void SaveEdits(bool external = true)
     {
       dataGridViewEnumerable.EndEdit();
       var numSaved = DataEditorPersister.Save(BindingSourceEnumerableList, CascadeDeletes);
@@ -235,7 +235,7 @@ namespace AW.Winforms.Helpers.Controls
         }
       }
       else
-        saveToolStripButton.Enabled = numSaved == 0 || !SupportsNotifyPropertyChanged;
+        saveToolStripButton.Enabled = (!external && numSaved == 0) || !SupportsNotifyPropertyChanged;
       SetButtonsOnEditEnded();
     }
 
