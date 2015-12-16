@@ -172,8 +172,8 @@ namespace LLBLGen.EntityBrowser
 
     private void toolStripButtonAddConnection_Click(object sender, EventArgs e)
     {
-      DataConnectionConfiguration.SelectDataProvider(DataConnectionDialog, SystemDataSqlClient);
-
+      var currentConnectionStringSetting = CurrentConnectionStringSetting;
+      DataConnectionConfiguration.SelectDataProvider(DataConnectionDialog, currentConnectionStringSetting == null ? SystemDataSqlClient : currentConnectionStringSetting.ProviderName);
       if (DataConnectionDialog.Show(DataConnectionDialog) == DialogResult.OK)
       {
         var connectionStringSettings = new ConnectionStringSettings(DataConnectionDialog.ConnectionString, DataConnectionDialog.ConnectionString, SystemDataSqlClient);
@@ -215,6 +215,32 @@ namespace LLBLGen.EntityBrowser
         else
         {
           MessageBox.Show(string.Format("See: {0}{1}{2}", stringSettings.Name, Environment.NewLine, stringSettings.ConnectionString), "Connection already present");
+        }
+      }
+    }
+
+    private void editConnectionToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      var connectionStringSettings = CurrentConnectionStringSetting;
+      if (connectionStringSettings != null)
+      {
+        DataConnectionConfiguration.SelectDataProvider(DataConnectionDialog, connectionStringSettings.ProviderName);
+
+        if (DataConnectionDialog.SelectedDataProvider != null)
+          try
+          {
+            DataConnectionDialog.ConnectionString = connectionStringSettings.ConnectionString;
+          }
+          catch (Exception)
+          {
+            DataConnectionDialog.SelectedDataProvider = null;
+          }
+
+        if (DataConnectionDialog.Show(DataConnectionDialog) == DialogResult.OK)
+        {
+          connectionStringSettings.ConnectionString = DataConnectionDialog.ConnectionString;
+          var usrCntrlEntityBrowser = _currentTabItem.Controls[0] as UsrCntrlEntityBrowser;
+          InitializeEntityBrowser(usrCntrlEntityBrowser, connectionStringSettings);
         }
       }
     }
@@ -312,7 +338,14 @@ namespace LLBLGen.EntityBrowser
     {
       if (dataAccessAdapterAssembly == null)
         throw new ArgumentNullException("dataAccessAdapterAssembly");
-      var dataAccessAdapterType = dataAccessAdapterAssembly.GetConcretePublicImplementations(typeof (DataAccessAdapterBase)).FirstOrDefault();
+      var concretePublicImplementations = dataAccessAdapterAssembly.GetConcretePublicImplementations(typeof (DataAccessAdapterBase));
+      Type dataAccessAdapterType = null;
+      foreach (var implementation in concretePublicImplementations)
+      {
+        dataAccessAdapterType = implementation;
+        if (dataAccessAdapterType.Name.Contains("DataAccessAdapter"))
+          break;
+      }
       if (dataAccessAdapterType == null)
         throw new ApplicationException(String.Format("Adapter not found in {0}!", dataAccessAdapterAssembly));
       return dataAccessAdapterType;
@@ -405,32 +438,6 @@ namespace LLBLGen.EntityBrowser
         tabControl.ContextMenuStrip = contextMenuStripTabControl;
       else
         tabControl.ContextMenuStrip = null;
-    }
-
-    private void editConnectionToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      var connectionStringSettings = CurrentConnectionStringSetting;
-      if (connectionStringSettings != null)
-      {
-        DataConnectionConfiguration.SelectDataProvider(DataConnectionDialog, SystemDataSqlClient);
-
-        if (DataConnectionDialog.SelectedDataProvider != null)
-          try
-          {
-            DataConnectionDialog.ConnectionString = connectionStringSettings.ConnectionString;
-          }
-          catch (Exception)
-          {
-            DataConnectionDialog.SelectedDataProvider = null;
-          }
-
-        if (DataConnectionDialog.Show(DataConnectionDialog) == DialogResult.OK)
-        {
-          connectionStringSettings.ConnectionString = DataConnectionDialog.ConnectionString;
-          var usrCntrlEntityBrowser = _currentTabItem.Controls[0] as UsrCntrlEntityBrowser;
-          InitializeEntityBrowser(usrCntrlEntityBrowser, connectionStringSettings);
-        }
-      }
     }
 
     private ConnectionStringSettings CurrentConnectionStringSetting

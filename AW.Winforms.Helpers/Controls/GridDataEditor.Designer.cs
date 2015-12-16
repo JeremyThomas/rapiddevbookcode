@@ -40,8 +40,8 @@ namespace AW.Winforms.Helpers.Controls
     {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GridDataEditor));
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
       this.bindingSourceEnumerable = new System.Windows.Forms.BindingSource(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorAddNewItem1 = new System.Windows.Forms.ToolStripButton();
@@ -465,7 +465,7 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonObjectListViewVisualizer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonObjectListViewVisualizer.Image")));
       this.toolStripButtonObjectListViewVisualizer.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonObjectListViewVisualizer.Name = "toolStripButtonObjectListViewVisualizer";
-      this.toolStripButtonObjectListViewVisualizer.Size = new System.Drawing.Size(141, 19);
+      this.toolStripButtonObjectListViewVisualizer.Size = new System.Drawing.Size(141, 22);
       this.toolStripButtonObjectListViewVisualizer.Text = "ObjectListView Visualizer";
       this.toolStripButtonObjectListViewVisualizer.Click += new System.EventHandler(this.toolStripButtonObjectListViewVisualizer_Click);
       // 
@@ -480,7 +480,7 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonRelatedCounts.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRelatedCounts.Image")));
       this.toolStripButtonRelatedCounts.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonRelatedCounts.Name = "toolStripButtonRelatedCounts";
-      this.toolStripButtonRelatedCounts.Size = new System.Drawing.Size(129, 19);
+      this.toolStripButtonRelatedCounts.Size = new System.Drawing.Size(129, 22);
       this.toolStripButtonRelatedCounts.Text = "Related Object Counts";
       this.toolStripButtonRelatedCounts.Click += new System.EventHandler(this.toolStripButtonRelatedCounts_Click);
       // 
@@ -496,25 +496,25 @@ namespace AW.Winforms.Helpers.Controls
       // 
       this.dataGridViewEnumerable.AllowUserToOrderColumns = true;
       this.dataGridViewEnumerable.AutoGenerateColumns = false;
-      dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-      dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-      dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-      dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-      dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-      this.dataGridViewEnumerable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+      dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+      dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+      dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+      dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+      dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+      this.dataGridViewEnumerable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
       this.dataGridViewEnumerable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dataGridViewEnumerable.DataSource = this.bindingSourceEnumerable;
       this.dataGridViewEnumerable.DefaultCellBehavior = ADGV.ADGVColumnHeaderCellBehavior.SortingFiltering;
-      dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-      dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-      dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-      dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-      dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-      this.dataGridViewEnumerable.DefaultCellStyle = dataGridViewCellStyle2;
+      dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+      dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+      dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+      dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+      dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+      this.dataGridViewEnumerable.DefaultCellStyle = dataGridViewCellStyle6;
       this.dataGridViewEnumerable.DefaultDateTimeGrouping = ADGV.ADGVFilterMenuDateTimeGrouping.Second;
       this.dataGridViewEnumerable.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridViewEnumerable.Location = new System.Drawing.Point(3, 3);
