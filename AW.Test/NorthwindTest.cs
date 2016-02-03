@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Dynamic;
 using AW.Helper.LLBL;
 using AW.Test.Helpers;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL;
 using Northwind.DAL.DTO;
@@ -284,8 +285,8 @@ namespace AW.Tests
         select e;
 
       const int expected = 7;
-      Assert.AreEqual(expected, employees.ToEntityCollection2().Count()); //This is ok
-      Assert.AreEqual(expected, employees.Count());
+      employees.ToEntityCollection2().Count.Should().BeInRange(6, expected);
+      employees.Count().Should().BeInRange(6, expected);
 
       employees = from e in metaData.Employee
         from order in e.Orders
@@ -293,8 +294,8 @@ namespace AW.Tests
         where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
         select e;
 
-      Assert.AreEqual(expected, employees.ToEntityCollection2().Count()); //So is this
-      Assert.AreEqual(expected, employees.CountColumn(e => e.EmployeeId, true));
+      employees.ToEntityCollection2().Count.Should().BeInRange(6, expected);
+      employees.CountColumn(e => e.EmployeeId, true).Should().BeInRange(6, expected);
 
       // This one throws 'The multi-part identifier "LPLA_4.EmployeeID" could not be bound.'
       employees = from e in metaData.Employee
@@ -302,8 +303,8 @@ namespace AW.Tests
         where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
         select e;
 
-      Assert.AreEqual(expected, employees.ToEntityCollection2().Count());
-      Assert.AreEqual(expected, employees.CountColumn(e => e.EmployeeId, true));
+      employees.ToEntityCollection2().Count.Should().BeInRange(6, expected);
+      employees.CountColumn(e => e.EmployeeId, true).Should().BeInRange(6, expected);
     }
 
     [TestMethod, TestProperty("Bug", "Fixed")]

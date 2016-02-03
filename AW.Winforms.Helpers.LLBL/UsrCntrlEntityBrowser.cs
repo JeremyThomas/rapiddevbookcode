@@ -363,7 +363,7 @@ namespace AW.Winforms.Helpers.LLBL
     }
 
     /// <summary>
-    ///   Set a Cache on the base query of the gridDataEditor, which means all pageing based off that query will be cached too.
+    ///   Set a Cache on the base query of the gridDataEditor, which means all paging based off that query will be cached too.
     /// </summary>
     /// <param name="entityQueryable">The entity queryable.</param>
     /// <returns></returns>
