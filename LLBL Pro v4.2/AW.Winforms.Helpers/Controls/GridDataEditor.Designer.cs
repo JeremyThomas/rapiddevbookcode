@@ -685,7 +685,7 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonUnPage.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonUnPage.Name = "toolStripButtonUnPage";
       this.toolStripButtonUnPage.Size = new System.Drawing.Size(100, 22);
-      this.toolStripButtonUnPage.Text = "Remove Pageing";
+      this.toolStripButtonUnPage.Text = "Remove Paging";
       this.toolStripButtonUnPage.Click += new System.EventHandler(this.toolStripButtonUnPage_Click);
       // 
       // toolStripLabel4

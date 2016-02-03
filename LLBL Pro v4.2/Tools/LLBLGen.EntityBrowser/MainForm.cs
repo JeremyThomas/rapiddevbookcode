@@ -442,17 +442,24 @@ namespace LLBLGen.EntityBrowser
 
     private ConnectionStringSettings CurrentConnectionStringSetting
     {
-      get { return _currentTabItem.Tag as ConnectionStringSettings; }
+      get
+      {
+        if (_currentTabItem == null) return null;
+          return _currentTabItem.Tag as ConnectionStringSettings;
+      }
     }
 
     private void removeToolStripMenuItem_Click(object sender, EventArgs e)
     {
+      var currentConnectionStringSetting = CurrentConnectionStringSetting;
       tabControl.TabPages.Remove(_currentTabItem);
       if (tabControl.TabPages.Count == 0)
       {
         tabControl.ContextMenuStrip = contextMenuStripTabControl;
         ContextMenuStrip = contextMenuStripTabControl;
       }
+      if (currentConnectionStringSetting != null)
+        ConnectionStringSettingsCollection.Remove(currentConnectionStringSetting);
     }
 
     private void renameToolStripMenuItem_Click(object sender, EventArgs e)
