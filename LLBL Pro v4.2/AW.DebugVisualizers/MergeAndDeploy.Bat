@@ -25,6 +25,6 @@ IF EXIST "%USERPROFILE%\My Documents\Visual Studio 2015\Visualizers" (
  )
 @echo on
 MSBuild "..\AW.DebugVisualizers.sln" /p:Configuration="Release"
-"..\packages\ilmerge.2.14.1208\tools\ILMerge.exe" /out:bin\release\AW.EnumerableVisualizer.2015.exe bin\release\AW.DebugVisualizers.exe bin\release\AW.Helper.dll bin\release\AW.Winforms.Helpers.dll bin\release\Dynamic.dll bin\release\ObjectListView.dll bin\release\sliver.Windows.Forms.StateBrowser.dll bin\release\Humanizer.dll bin\release\AdvancedDataGridView.dll
+"..\packages\ilmerge.2.14.1208\tools\ILMerge.exe" /out:bin\release\AW.EnumerableVisualizer.2015.exe bin\release\AW.DebugVisualizers.exe bin\release\AW.Helper.dll bin\release\AW.Winforms.Helpers.dll bin\release\Dynamic.dll bin\release\ObjectListView.dll bin\release\sliver.Windows.Forms.StateBrowser.dll bin\release\Humanizer.dll bin\release\AdvancedDataGridView.dll bin\release\Microsoft.ReportViewer.WinForms.dll
  xcopy /y bin\release\AW.EnumerableVisualizer.2015.exe %VisualizersDir% 
 pause
