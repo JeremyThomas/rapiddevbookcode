@@ -12,84 +12,80 @@ namespace AW.Winforms.Helpers.Reporting
   /// </summary>
   internal class RdlGenerator
   {
-    private List<string> m_allFields;
-    private List<string> m_selectedFields;
+    public List<string> AllFields { get; set; }
 
-    public List<string> AllFields
-    {
-      get { return m_allFields; }
-      set { m_allFields = value; }
-    }
-
-    public List<string> SelectedFields
-    {
-      get { return m_selectedFields; }
-      set { m_selectedFields = value; }
-    }
+    public List<string> SelectedFields { get; set; }
 
     private Report CreateReport()
     {
-      var report = new Report();
-      report.Items = new object[]
+      var report = new Report
       {
-        CreateDataSources(),
-        CreateBody(),
-        CreateDataSets(),
-        "6.5in"
-      };
-      report.ItemsElementName = new[]
-      {
-        ItemsChoiceType37.DataSources,
-        ItemsChoiceType37.Body,
-        ItemsChoiceType37.DataSets,
-        ItemsChoiceType37.Width
+        Items = new object[]
+        {
+          CreateDataSources(),
+          CreateBody(),
+          CreateDataSets(),
+          "6.5in"
+        },
+        ItemsElementName = new[]
+        {
+          ItemsChoiceType37.DataSources,
+          ItemsChoiceType37.Body,
+          ItemsChoiceType37.DataSets,
+          ItemsChoiceType37.Width
+        }
       };
       return report;
     }
 
     private DataSourcesType CreateDataSources()
     {
-      var dataSources = new DataSourcesType();
-      dataSources.DataSource = new[] {CreateDataSource()};
+      var dataSources = new DataSourcesType {DataSource = new[] {CreateDataSource()}};
       return dataSources;
     }
 
     private DataSourceType CreateDataSource()
     {
-      var dataSource = new DataSourceType();
-      dataSource.Name = "DummyDataSource";
-      dataSource.Items = new object[] {CreateConnectionProperties()};
+      var dataSource = new DataSourceType
+      {
+        Name = "DummyDataSource",
+        Items = new object[] {CreateConnectionProperties()}
+      };
       return dataSource;
     }
 
-    private ConnectionPropertiesType CreateConnectionProperties()
+    private static ConnectionPropertiesType CreateConnectionProperties()
     {
-      var connectionProperties = new ConnectionPropertiesType();
-      connectionProperties.Items = new object[]
+      var connectionProperties = new ConnectionPropertiesType
       {
-        "",
-        "SQL"
-      };
-      connectionProperties.ItemsElementName = new[]
-      {
-        ItemsChoiceType.ConnectString,
-        ItemsChoiceType.DataProvider
+        Items = new object[]
+        {
+          "",
+          "SQL"
+        },
+        ItemsElementName = new[]
+        {
+          ItemsChoiceType.ConnectString,
+          ItemsChoiceType.DataProvider
+        }
       };
       return connectionProperties;
     }
 
     private BodyType CreateBody()
     {
-      var body = new BodyType();
-      body.Items = new object[]
+      var body = new BodyType
       {
-        CreateReportItems(),
-        "1in"
-      };
-      body.ItemsElementName = new[]
-      {
-        ItemsChoiceType30.ReportItems,
-        ItemsChoiceType30.Height
+        Items = new object[]
+        {
+          CreateReportItems(),
+          "1in"
+        },
+        ItemsElementName = new[]
+        {
+          ItemsChoiceType30.ReportItems,
+          ItemsChoiceType30.Height
+        }
       };
       return body;
     }
@@ -97,62 +93,63 @@ namespace AW.Winforms.Helpers.Reporting
     private ReportItemsType CreateReportItems()
     {
       var reportItems = new ReportItemsType();
-      var tableGen = new TableRdlGenerator();
-      tableGen.Fields = m_selectedFields;
+      var tableGen = new TableRdlGenerator {Fields = SelectedFields};
       reportItems.Items = new object[] {tableGen.CreateTable()};
       return reportItems;
     }
 
     private DataSetsType CreateDataSets()
     {
-      var dataSets = new DataSetsType();
-      dataSets.DataSet = new[] {CreateDataSet()};
+      var dataSets = new DataSetsType {DataSet = new[] {CreateDataSet()}};
       return dataSets;
     }
 
     private DataSetType CreateDataSet()
     {
-      var dataSet = new DataSetType();
-      dataSet.Name = "MyData";
-      dataSet.Items = new object[] {CreateQuery(), CreateFields()};
+      var dataSet = new DataSetType
+      {
+        Name = "MyData",
+        Items = new object[] {CreateQuery(), CreateFields()}
+      };
       return dataSet;
     }
 
-    private QueryType CreateQuery()
+    private static QueryType CreateQuery()
     {
-      var query = new QueryType();
-      query.Items = new object[]
+      var query = new QueryType
       {
-        "DummyDataSource",
-        ""
-      };
-      query.ItemsElementName = new[]
-      {
-        ItemsChoiceType2.DataSourceName,
-        ItemsChoiceType2.CommandText
+        Items = new object[]
+        {
+          "DummyDataSource",
+          ""
+        },
+        ItemsElementName = new[]
+        {
+          ItemsChoiceType2.DataSourceName,
+          ItemsChoiceType2.CommandText
+        }
       };
       return query;
     }
 
     private FieldsType CreateFields()
     {
-      var fields = new FieldsType();
-
-      fields.Field = new FieldType[m_allFields.Count];
-      for (var i = 0; i < m_allFields.Count; i++)
+      var fields = new FieldsType {Field = new FieldType[AllFields.Count]};
+      for (var i = 0; i < AllFields.Count; i++)
       {
-        fields.Field[i] = CreateField(m_allFields[i]);
+        fields.Field[i] = CreateField(AllFields[i]);
       }
-
       return fields;
     }
 
-    private FieldType CreateField(String fieldName)
+    private static FieldType CreateField(String fieldName)
     {
-      var field = new FieldType();
-      field.Name = fieldName;
-      field.Items = new object[] {fieldName};
-      field.ItemsElementName = new[] {ItemsChoiceType1.DataField};
+      var field = new FieldType
+      {
+        Name = fieldName,
+        Items = new object[] {fieldName},
+        ItemsElementName = new[] {ItemsChoiceType1.DataField}
+      };
       return field;
     }
 
