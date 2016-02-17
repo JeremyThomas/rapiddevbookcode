@@ -25,6 +25,6 @@ IF EXIST "%USERPROFILE%\My Documents\Visual Studio 2013\Visualizers" (
  )
 @echo on
 MSBuild "..\AW.DebugVisualizers.sln" /p:Configuration="Release 2013"
-"..\packages\ilmerge.2.14.1208\tools\ILMerge.exe" /out:bin\Release2013\AW.EnumerableVisualizer.2013.exe bin\Release2013\AW.DebugVisualizers.exe bin\Release2013\AW.Helper.dll bin\Release2013\AW.Winforms.Helpers.dll bin\Release2013\Dynamic.dll bin\Release2013\ObjectListView.dll bin\Release2013\sliver.Windows.Forms.StateBrowser.dll bin\Release2013\Humanizer.dll bin\Release2013\AdvancedDataGridView.dll
+"..\packages\ilmerge.2.14.1208\tools\ILMerge.exe" /out:bin\Release2013\AW.EnumerableVisualizer.2013.exe bin\Release2013\AW.DebugVisualizers.exe bin\Release2013\AW.Helper.dll bin\Release2013\AW.Winforms.Helpers.dll bin\Release2013\Dynamic.dll bin\Release2013\ObjectListView.dll bin\Release2013\sliver.Windows.Forms.StateBrowser.dll bin\Release2013\Humanizer.dll bin\Release2013\AdvancedDataGridView.dll  bin\release\Microsoft.ReportViewer.WinForms.dll
  xcopy /y bin\Release2013\AW.EnumerableVisualizer.2013.exe %VisualizersDir% 
 pause
