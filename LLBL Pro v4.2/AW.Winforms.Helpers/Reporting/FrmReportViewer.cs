@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using AW.Helper;
 using Microsoft.Reporting.WinForms;
 
 namespace AW.Winforms.Helpers.Reporting
@@ -38,7 +39,7 @@ namespace AW.Winforms.Helpers.Reporting
       return ms;
     }
 
-    private void DumpRdl(MemoryStream rdl)
+    private static void DumpRdl(MemoryStream rdl)
     {
 #if DEBUG_RDLC
             using (FileStream fs = new FileStream(@"c:\test.rdlc", FileMode.Create))
@@ -50,15 +51,7 @@ namespace AW.Winforms.Helpers.Reporting
 
     private List<string> GetAvailableFields()
     {
-      var properties = TypeDescriptor.GetProperties((new BindingSource(_dataSet, "")).Current);
-      var availableFields = new List<string>();
-      for (var i = 0; i < properties.Count; i++)
-      {
-        var t = properties[i];
-        if ((t.PropertyType.IsValueType || t.PropertyType == typeof (string)) && t.Name[0] != '<')
-          availableFields.Add(t.Name);
-      }
-      return availableFields;
+      return MetaDataHelper.GetPropertiesToDisplay(_dataSet).Select(p => p.Name).ToList();
     }
 
     public void OpenDataSet(IEnumerable dataSet, bool showOptionsDialog)
@@ -85,6 +78,7 @@ namespace AW.Winforms.Helpers.Reporting
       }
       catch (Exception ex)
       {
+        // ReSharper disable once LocalizableElement
         MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
     }

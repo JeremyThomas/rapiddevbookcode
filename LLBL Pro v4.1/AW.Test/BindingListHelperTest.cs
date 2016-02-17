@@ -64,6 +64,8 @@ namespace AW.Tests
     [AssemblyInitialize]
     public static void TestsInitialize(TestContext testContext)
     {
+      CommonEntityBase.Initialize();
+      Northwind.DAL.EntityClasses.CommonEntityBase.Initialize();
       LLBLWinformHelper.ForceInitialization();
     }
 

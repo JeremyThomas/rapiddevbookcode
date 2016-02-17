@@ -319,7 +319,10 @@ namespace AW.DebugVisualizers.Tests
     [TestMethod, Microsoft.VisualStudio.TestTools.UnitTesting.Description("Can throw null exception but doesn't when debugged")]
     public void SerializableCollectionViewTest()
     {
-      var collectionView = (new CollectionViewSource {Source = MetaSingletons.MetaData.AddressType.ToEntityCollection()}).View;
+      var addressTypeEntities = MetaSingletons.MetaData.AddressType.ToEntityCollection();
+      var collectionViewSource = new CollectionViewSource {Source = addressTypeEntities};
+      var collectionView = collectionViewSource.View;
+      Assert.IsTrue(collectionView.CanSort);
       TestShowTransported(collectionView, TestData.BrowseableAddressTypeProperties);
     }
 
@@ -494,7 +497,7 @@ namespace AW.DebugVisualizers.Tests
         TestShowTransported(directoryEntry.Children, 3);
     }
 
-    [TestCategory("Winforms"), TestMethod]
+    [TestCategory("Winforms"), TestCategory("Slow"), TestCategory("LDAP"), TestMethod]
     public void SearchResultCollectionTest()
     {
       using (var entry = new DirectoryEntry("LDAP://ldap.forumsys.com/dc=example,dc=com", "", "", AuthenticationTypes.None))
@@ -505,7 +508,7 @@ namespace AW.DebugVisualizers.Tests
       }
     }
 
-    [TestCategory("Winforms"), TestMethod]
+    [TestCategory("Winforms"), TestCategory("Slow"), TestCategory("LDAP"), TestMethod]
     public void ResultPropertyCollectionTest()
     {
       using (var entry = new DirectoryEntry("LDAP://ldap.forumsys.com/dc=example,dc=com", "", "", AuthenticationTypes.None))

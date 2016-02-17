@@ -8,13 +8,7 @@ namespace AW.Winforms.Helpers.Reporting
   /// </summary>
   internal class TableRdlGenerator
   {
-    private List<string> m_fields;
-
-    public List<string> Fields
-    {
-      get { return m_fields; }
-      set { m_fields = value; }
-    }
+    public List<string> Fields { get; set; }
 
     public TableType CreateTable()
     {
@@ -54,174 +48,169 @@ namespace AW.Winforms.Helpers.Reporting
 
     private TableRowsType CreateHeaderTableRows()
     {
-      var headerTableRows = new TableRowsType();
-      headerTableRows.TableRow = new[] {CreateHeaderTableRow()};
+      var headerTableRows = new TableRowsType {TableRow = new[] {CreateHeaderTableRow()}};
       return headerTableRows;
     }
 
     private TableRowType CreateHeaderTableRow()
     {
-      var headerTableRow = new TableRowType();
-      headerTableRow.Items = new object[] {CreateHeaderTableCells(), "0.25in"};
+      var headerTableRow = new TableRowType {Items = new object[] {CreateHeaderTableCells(), "0.25in"}};
       return headerTableRow;
     }
 
     private TableCellsType CreateHeaderTableCells()
     {
-      var headerTableCells = new TableCellsType();
-      headerTableCells.TableCell = new TableCellType[m_fields.Count];
-      for (var i = 0; i < m_fields.Count; i++)
+      var headerTableCells = new TableCellsType {TableCell = new TableCellType[Fields.Count]};
+      for (var i = 0; i < Fields.Count; i++)
       {
-        headerTableCells.TableCell[i] = CreateHeaderTableCell(m_fields[i]);
+        headerTableCells.TableCell[i] = CreateHeaderTableCell(Fields[i]);
       }
       return headerTableCells;
     }
 
     private TableCellType CreateHeaderTableCell(string fieldName)
     {
-      var headerTableCell = new TableCellType();
-      headerTableCell.Items = new object[] {CreateHeaderTableCellReportItems(fieldName)};
+      var headerTableCell = new TableCellType {Items = new object[] {CreateHeaderTableCellReportItems(fieldName)}};
       return headerTableCell;
     }
 
     private ReportItemsType CreateHeaderTableCellReportItems(string fieldName)
     {
-      var headerTableCellReportItems = new ReportItemsType();
-      headerTableCellReportItems.Items = new object[] {CreateHeaderTableCellTextbox(fieldName)};
+      var headerTableCellReportItems = new ReportItemsType {Items = new object[] {CreateHeaderTableCellTextbox(fieldName)}};
       return headerTableCellReportItems;
     }
 
-    private TextboxType CreateHeaderTableCellTextbox(string fieldName)
+    private static TextboxType CreateHeaderTableCellTextbox(string fieldName)
     {
-      var headerTableCellTextbox = new TextboxType();
-      headerTableCellTextbox.Name = fieldName + "_Header";
-      headerTableCellTextbox.Items = new object[]
+      var headerTableCellTextbox = new TextboxType
       {
-        fieldName,
-        CreateHeaderTableCellTextboxStyle(),
-        true
-      };
-      headerTableCellTextbox.ItemsElementName = new[]
-      {
-        ItemsChoiceType14.Value,
-        ItemsChoiceType14.Style,
-        ItemsChoiceType14.CanGrow
+        Name = fieldName + "_Header",
+        Items = new object[]
+        {
+          fieldName,
+          CreateHeaderTableCellTextboxStyle(),
+          true
+        },
+        ItemsElementName = new[]
+        {
+          ItemsChoiceType14.Value,
+          ItemsChoiceType14.Style,
+          ItemsChoiceType14.CanGrow
+        }
       };
       return headerTableCellTextbox;
     }
 
-    private StyleType CreateHeaderTableCellTextboxStyle()
+    private static StyleType CreateHeaderTableCellTextboxStyle()
     {
-      var headerTableCellTextboxStyle = new StyleType();
-      headerTableCellTextboxStyle.Items = new object[]
+      var headerTableCellTextboxStyle = new StyleType
       {
-        "700",
-        "14pt"
-      };
-      headerTableCellTextboxStyle.ItemsElementName = new[]
-      {
-        ItemsChoiceType5.FontWeight,
-        ItemsChoiceType5.FontSize
+        Items = new object[]
+        {
+          "700",
+          "14pt"
+        },
+        ItemsElementName = new[]
+        {
+          ItemsChoiceType5.FontWeight,
+          ItemsChoiceType5.FontSize
+        }
       };
       return headerTableCellTextboxStyle;
     }
 
     private DetailsType CreateDetails()
     {
-      var details = new DetailsType();
-      details.Items = new object[] {CreateTableRows()};
+      var details = new DetailsType {Items = new object[] {CreateTableRows()}};
       return details;
     }
 
     private TableRowsType CreateTableRows()
     {
-      var tableRows = new TableRowsType();
-      tableRows.TableRow = new[] {CreateTableRow()};
+      var tableRows = new TableRowsType {TableRow = new[] {CreateTableRow()}};
       return tableRows;
     }
 
     private TableRowType CreateTableRow()
     {
-      var tableRow = new TableRowType();
-      tableRow.Items = new object[] {CreateTableCells(), "0.25in"};
+      var tableRow = new TableRowType {Items = new object[] {CreateTableCells(), "0.25in"}};
       return tableRow;
     }
 
     private TableCellsType CreateTableCells()
     {
-      var tableCells = new TableCellsType();
-      tableCells.TableCell = new TableCellType[m_fields.Count];
-      for (var i = 0; i < m_fields.Count; i++)
+      var tableCells = new TableCellsType {TableCell = new TableCellType[Fields.Count]};
+      for (var i = 0; i < Fields.Count; i++)
       {
-        tableCells.TableCell[i] = CreateTableCell(m_fields[i]);
+        tableCells.TableCell[i] = CreateTableCell(Fields[i]);
       }
       return tableCells;
     }
 
-    private TableCellType CreateTableCell(string fieldName)
+    private static TableCellType CreateTableCell(string fieldName)
     {
-      var tableCell = new TableCellType();
-      tableCell.Items = new object[] {CreateTableCellReportItems(fieldName)};
+      var tableCell = new TableCellType {Items = new object[] {CreateTableCellReportItems(fieldName)}};
       return tableCell;
     }
 
-    private ReportItemsType CreateTableCellReportItems(string fieldName)
+    private static ReportItemsType CreateTableCellReportItems(string fieldName)
     {
-      var reportItems = new ReportItemsType();
-      reportItems.Items = new object[] {CreateTableCellTextbox(fieldName)};
+      var reportItems = new ReportItemsType {Items = new object[] {CreateTableCellTextbox(fieldName)}};
       return reportItems;
     }
 
-    private TextboxType CreateTableCellTextbox(string fieldName)
+    private static TextboxType CreateTableCellTextbox(string fieldName)
     {
-      var textbox = new TextboxType();
-      textbox.Name = fieldName;
-      textbox.Items = new object[]
+      var textbox = new TextboxType
       {
-        "=Fields!" + fieldName + ".Value",
-        CreateTableCellTextboxStyle(),
-        true
-      };
-      textbox.ItemsElementName = new[]
-      {
-        ItemsChoiceType14.Value,
-        ItemsChoiceType14.Style,
-        ItemsChoiceType14.CanGrow
+        Name = fieldName,
+        Items = new object[]
+        {
+          "=Fields!" + fieldName + ".Value",
+          CreateTableCellTextboxStyle(),
+          true
+        },
+        ItemsElementName = new[]
+        {
+          ItemsChoiceType14.Value,
+          ItemsChoiceType14.Style,
+          ItemsChoiceType14.CanGrow
+        }
       };
       return textbox;
     }
 
-    private StyleType CreateTableCellTextboxStyle()
+    private static StyleType CreateTableCellTextboxStyle()
     {
-      var style = new StyleType();
-      style.Items = new object[]
+      var style = new StyleType
       {
-        "=iif(RowNumber(Nothing) mod 2, \"AliceBlue\", \"White\")",
-        "Left"
-      };
-      style.ItemsElementName = new[]
-      {
-        ItemsChoiceType5.BackgroundColor,
-        ItemsChoiceType5.TextAlign
+        Items = new object[]
+        {
+          "=iif(RowNumber(Nothing) mod 2, \"AliceBlue\", \"White\")",
+          "Left"
+        },
+        ItemsElementName = new[]
+        {
+          ItemsChoiceType5.BackgroundColor,
+          ItemsChoiceType5.TextAlign
+        }
       };
       return style;
     }
 
     private TableColumnsType CreateTableColumns()
     {
-      var tableColumns = new TableColumnsType();
-      tableColumns.TableColumn = new TableColumnType[m_fields.Count];
-      for (var i = 0; i < m_fields.Count; i++)
+      var tableColumns = new TableColumnsType {TableColumn = new TableColumnType[Fields.Count]};
+      for (var i = 0; i < Fields.Count; i++)
       {
         tableColumns.TableColumn[i] = CreateTableColumn();
       }
       return tableColumns;
     }
 
-    private TableColumnType CreateTableColumn()
+    private static TableColumnType CreateTableColumn()
     {
-      var tableColumn = new TableColumnType();
-      tableColumn.Items = new object[] {"2in"};
+      var tableColumn = new TableColumnType {Items = new object[] {"2in"}};
       return tableColumn;
     }
   }
