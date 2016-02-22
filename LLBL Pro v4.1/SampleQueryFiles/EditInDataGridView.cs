@@ -10,15 +10,15 @@ using AW.Helper.LLBL;
 using AW.Winforms.Helpers.QueryRunner;
 using AW.Winforms.Helpers.LLBL;
 
-public class Script : MarshalByRefObject, IQueryScript
+public class Script 
 {
-    public IEnumerable Query()
+    public static IEnumerable Query()
     {
         var contacts = from contact in MetaSingletons.MetaData.Contact
                                      where contact.FirstName.Contains("Albert")
                                      select contact;
 
-        return contacts.AsEnumerable().ShowInGrid(20);
+        return contacts.AsEnumerable();
         //var t= x.ToList();
         //return  AW.Winforms.Helpers.AWHelper.ViewInDataGridView(x);
         //return AW.Winforms.Helpers.AWHelper.EditInDataGridView(t, MetaSingletons.Save, typeof(IEntity));

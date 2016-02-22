@@ -324,8 +324,8 @@ namespace AW.Winforms.Helpers
         var raiseListChangedEvents = bindingSource.RaiseListChangedEvents;
         bindingSource.RaiseListChangedEvents = false;
         try
-        {
-          if (bindingSource.SupportsSorting && bindingSource.IsSorted)
+        { 
+          if (bindingSource.SupportsSorting && (bindingSource.IsSorted || !string.IsNullOrWhiteSpace(bindingSource.Sort)))
             bindingSource.RemoveSort();
           if (bindingSource.SupportsFiltering && !string.IsNullOrWhiteSpace(bindingSource.Filter))
             bindingSource.RemoveFilter();

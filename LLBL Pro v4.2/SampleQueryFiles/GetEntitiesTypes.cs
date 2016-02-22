@@ -13,7 +13,7 @@ using AW.Data.Linq;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.QueryRunner;
 
-public class Script : MarshalByRefObject, IQueryScript
+public class Script
 {
   public static IEnumerable Query()
   {

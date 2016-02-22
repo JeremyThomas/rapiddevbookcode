@@ -671,16 +671,27 @@ namespace AW.Winforms.Helpers.Controls
       if (MembersToExclude != null && MembersToExclude.Contains(e.Column.DataPropertyName))
         dataGridView.Columns.Remove(e.Column);
 
+      var coreType = MetaDataHelper.GetCoreType(e.Column.ValueType);
+
       dataGridViewEnumerable.DefaultCellBehavior = bindingSourceEnumerable.SupportsFiltering ? ADGVColumnHeaderCellBehavior.SortingFiltering:ADGVColumnHeaderCellBehavior.SortingStandartGlyph;
       if (dataGridViewEnumerable.DefaultCellBehavior==ADGVColumnHeaderCellBehavior.SortingFiltering)
       {
         var adgvColumnHeaderCell = e.Column.HeaderCell as ADGVColumnHeaderCell;
-        if (adgvColumnHeaderCell != null) adgvColumnHeaderCell.CellBehavior = ADGVColumnHeaderCellBehavior.SortingFiltering;
+        if (adgvColumnHeaderCell != null)
+          if (coreType == null || ImplementsIComparable(coreType))
+            adgvColumnHeaderCell.CellBehavior = ADGVColumnHeaderCellBehavior.SortingFiltering;
+          else
+          {
+            adgvColumnHeaderCell.CellBehavior = ADGVColumnHeaderCellBehavior.DisabledHidden;
+            e.Column.SortMode = DataGridViewColumnSortMode.NotSortable;
+          }
       }
-      else
+      else if (coreType == null || ImplementsIComparable(coreType))
         e.Column.SortMode = DataGridViewColumnSortMode.Automatic;
+      else
+        e.Column.SortMode = DataGridViewColumnSortMode.NotSortable;
       if (Readonly || _shouldBeReadonly) return;
-      var coreType = MetaDataHelper.GetCoreType(e.Column.ValueType);
+
       if (e.Column.ValueType == null || e.Column is DataGridViewComboBoxColumn || e.Column is DataGridViewDateTimeColumn) return;
 
       if (coreType.IsEnum)
@@ -715,6 +726,11 @@ namespace AW.Winforms.Helpers.Controls
         dataGridView.Columns.Add(dataGridViewDateTimeColumn);
         dataGridViewDateTimeColumn.SortMode = e.Column.SortMode;
       }
+    }
+
+    private static bool ImplementsIComparable(Type coreType)
+    {
+      return coreType.Implements(typeof (IComparable)) || coreType.HasGenericTypeDefinition(typeof (IComparable<>));
     }
 
     private void dataGridViewEnumerable_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

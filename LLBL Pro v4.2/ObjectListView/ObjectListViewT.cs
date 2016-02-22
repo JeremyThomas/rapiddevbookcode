@@ -1625,7 +1625,7 @@ namespace JesseJohnston
       {
         var icomparableOfT = typeof (IComparable<>).MakeGenericType(new[] {propertyType});
         if (!icomparableOfT.IsAssignableFrom(propertyType))
-          throw new ArgumentException("The property does not implement IComparable or IComparable<T>.");
+          throw new ArgumentException(string.Format("The property {0} of type {1} does not implement IComparable or IComparable<T>.", property.DisplayName, propertyType));
       }
     }
 
