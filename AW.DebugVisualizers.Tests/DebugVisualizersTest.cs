@@ -360,6 +360,15 @@ namespace AW.DebugVisualizers.Tests
       TestShow(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)), 14);
     }
 
+    [TestCategory("Winforms"), TestMethod]
+    public void NonSerializableClassWithSerializableClassPropertyTest()
+    {
+      var myViewModelBases = new List<NonSerializableClassWithSerializableClassProperty>()
+      { new NonSerializableClassWithSerializableClassProperty(),new NonSerializableClassWithSerializableClassProperty()};
+      TestSerialize(myViewModelBases);
+      TestShowTransported(myViewModelBases, 1);
+    }
+
     [TestMethod]
     public void DifferentItemTypesTest()
     {

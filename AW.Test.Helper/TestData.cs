@@ -287,6 +287,16 @@ namespace AW.Test.Helpers
     }
   }
 
+  public class NonSerializableClassWithSerializableClassProperty
+  {
+    public string StringProperty { get; set; }
+
+    public SerializableClass Value
+    {
+      get { return new SerializableClass(); }
+    }
+  }
+
   [Serializable]
   public abstract class SerializableAbstractNoDefaultConstructorClass
   {
