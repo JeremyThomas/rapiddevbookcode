@@ -122,12 +122,12 @@ namespace AW.DebugVisualizers
             }
             catch (Exception)
             {
-              SerializeWithSurrogate(outgoingData, enumerable.CopyToDataTable());
+              Serialize(outgoingData, enumerable.CopyToDataTable(true));
             }
           }
         }
         else
-          Serialize(outgoingData, enumerable.CopyToDataTable());
+          SerializeViaDataTable(outgoingData, enumerable);
       }
       else
       {
@@ -167,13 +167,18 @@ namespace AW.DebugVisualizers
         target.RemotingFormat = SerializationFormat.Binary;
       else
         target.DataSet.RemotingFormat = SerializationFormat.Binary;
+      VisualizerObjectSource.Serialize(outgoingData, target);
+    }
+
+    private static void SerializeViaDataTable(Stream outgoingData, IEnumerable enumerable)
+    {
       try
       {
-        VisualizerObjectSource.Serialize(outgoingData, target);
+        Serialize(outgoingData, enumerable.CopyToDataTable());
       }
       catch (SerializationException)
       {
-        SerializeWithSurrogate(outgoingData, target);
+        Serialize(outgoingData, enumerable.CopyToDataTable(true));
       }
     }
 
@@ -191,7 +196,7 @@ namespace AW.DebugVisualizers
       }
       catch (SerializationException)
       {
-        Serialize(outgoingData, enumerable.CopyToDataTable());
+        SerializeViaDataTable(outgoingData, enumerable);
       }
     }
   }

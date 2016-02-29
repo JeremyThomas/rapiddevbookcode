@@ -19,11 +19,17 @@ namespace AW.Helper
     protected readonly Dictionary<string, int> OrdinalMap;
     protected Type Type;
     protected PropertyDescriptorGenerator PropertyDescriptorGenerator;
+    private readonly bool _safeMode;
 
-    // ObjectShredder constructor.
-    public ObjectShredder(PropertyDescriptorGenerator propertyDescriptorGenerator)
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="ObjectShredder" /> class.
+    /// </summary>
+    /// <param name="propertyDescriptorGenerator">The property descriptor generator.</param>
+    /// <param name="safeMode">if set to <c>true</c> [safe mode].</param>
+    public ObjectShredder(PropertyDescriptorGenerator propertyDescriptorGenerator = null, bool safeMode = false)
     {
       PropertyDescriptorGenerator = propertyDescriptorGenerator;
+      _safeMode = safeMode;
       OrdinalMap = new Dictionary<string, int>();
     }
 
@@ -136,11 +142,25 @@ namespace AW.Helper
 
       // Add the property and field values of the instance to an array.
       var values = new object[table.Columns.Count];
-
+      var stringType = typeof (string);
       foreach (var p in GetProperties(type))
         try
         {
-          values[OrdinalMap[p.Name]] = p.GetValue(instance);
+          var value = p.GetValue(instance);
+          var ordinal = OrdinalMap[p.Name];
+          if (!_safeMode)
+          {
+            values[ordinal] = value;
+          }
+          else
+          {
+            if (table.Columns[ordinal].DataType == stringType)
+              values[ordinal] = Convert.ToString(value);
+            else
+            {
+              values[ordinal] = value;
+            }
+          }
         }
         catch (Exception e)
         {
@@ -163,7 +183,7 @@ namespace AW.Helper
           // already.
           var dc = table.Columns.Contains(p.Name)
             ? table.Columns[p.Name]
-            : table.Columns.Add(p.Name, MetaDataHelper.GetCoreType(p.PropertyType));
+            : table.Columns.Add(p.Name, GetColumnType(p));
 
           // Add the property to the ordinal map.
           OrdinalMap.Add(p.Name, dc.Ordinal);
@@ -172,6 +192,18 @@ namespace AW.Helper
 
       // Return the table.
       return table;
+    }
+
+    private Type GetColumnType(PropertyDescriptor p)
+    {
+      var columnType = MetaDataHelper.GetCoreType(p.PropertyType);
+      if (!_safeMode)
+        return columnType;
+      if (columnType.IsValueType)
+        return columnType;
+      if (Type.GetTypeCode(columnType) == TypeCode.Object)
+        return typeof (string);
+      return columnType;
     }
   }
 

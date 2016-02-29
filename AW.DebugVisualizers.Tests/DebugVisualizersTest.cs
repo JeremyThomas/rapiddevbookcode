@@ -37,7 +37,6 @@ using Microsoft.Web.Administration;
 using Northwind.DAL.HelperClasses;
 using Northwind.DAL.Linq;
 using Northwind.DAL.Services;
-using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using AddressType = AW.Data.AddressType;
 using Application = System.Windows.Forms.Application;
@@ -363,10 +362,9 @@ namespace AW.DebugVisualizers.Tests
     [TestCategory("Winforms"), TestMethod]
     public void NonSerializableClassWithSerializableClassPropertyTest()
     {
-      var myViewModelBases = new List<NonSerializableClassWithSerializableClassProperty>()
-      { new NonSerializableClassWithSerializableClassProperty(),new NonSerializableClassWithSerializableClassProperty()};
-      TestSerialize(myViewModelBases);
-      TestShowTransported(myViewModelBases, 1);
+      var nonSerializableClassWithSerializableClassProperties = new List<NonSerializableClassWithSerializableClassProperty> { new NonSerializableClassWithSerializableClassProperty(),new NonSerializableClassWithSerializableClassProperty()};
+      TestSerialize(nonSerializableClassWithSerializableClassProperties);
+      TestShowTransported(nonSerializableClassWithSerializableClassProperties, 2);
     }
 
     [TestMethod]

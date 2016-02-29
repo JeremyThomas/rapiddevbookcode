@@ -342,17 +342,17 @@ namespace AW.Helper
       }
     }
 
-    public static DataTable CopyToDataTable(this IEnumerable source)
+    public static DataTable CopyToDataTable(this IEnumerable source, bool safeMode = false)
     {
-      return CopyToDataTable(source, MetaDataHelper.GetPropertiesToSerialize);
+      return CopyToDataTable(source, MetaDataHelper.GetPropertiesToSerialize, safeMode);
     }
 
-    public static DataTable CopyToDataTable(IEnumerable source, PropertyDescriptorGenerator propertyDescriptorGenerator)
+    public static DataTable CopyToDataTable(IEnumerable source, PropertyDescriptorGenerator propertyDescriptorGenerator, bool safeMode = false)
     {
       var dataView = source as DataView;
       if (dataView != null && dataView.Table != null)
         return dataView.Table;
-      return new ObjectShredder(propertyDescriptorGenerator).Shred(source, null, null);
+      return new ObjectShredder(propertyDescriptorGenerator, safeMode).Shred(source, null, null);
     }
 
     public static DataTable StripTypeColumns(this DataTable source)
