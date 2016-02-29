@@ -82,8 +82,7 @@ namespace AW.Tests
       Assert.IsTrue(new System.Collections.Specialized.NameValueCollection().IsNullOrEmpty());
       Assert.IsTrue(new NonGenericEnumerable().IsNullOrEmpty());
     }
-
-
+    
     private static void CopyToDataTableAndAssert<T>(IEnumerable<T> source)
     {
       var actual = GeneralHelper.CopyToDataTable(source);
@@ -91,9 +90,9 @@ namespace AW.Tests
       AssertCopyToDataTable(typeof (T), actual);
     }
 
-    private static void CopyToDataTableAndAssert(ICollection source, Type type)
+    private static void CopyToDataTableAndAssert(ICollection source, Type type, bool safeMode = false)
     {
-      var actual = source.CopyToDataTable();
+      var actual = source.CopyToDataTable(safeMode);
       Assert.AreEqual(source.Count, actual.Rows.Count);
       AssertCopyToDataTable(type, actual);
     }
@@ -126,6 +125,14 @@ namespace AW.Tests
     {
       var xmlSchema = TestData.GetTestXmlSchema();
       CopyToDataTableAndAssert(xmlSchema.Items, xmlSchema.Items[0].GetType());
+    }
+
+    [TestCategory("Winforms"), TestMethod]
+    public void NonSerializableClassWithSerializableClassPropertyTest()
+    {
+      var nonSerializableClassWithSerializableClassProperties = new List<NonSerializableClassWithSerializableClassProperty> { new NonSerializableClassWithSerializableClassProperty(), new NonSerializableClassWithSerializableClassProperty() };
+      CopyToDataTableAndAssert(nonSerializableClassWithSerializableClassProperties, typeof(NonSerializableClassWithSerializableClassProperty));
+      CopyToDataTableAndAssert(nonSerializableClassWithSerializableClassProperties, typeof(NonSerializableClassWithSerializableClassProperty), true);
     }
 
     [TestMethod]
