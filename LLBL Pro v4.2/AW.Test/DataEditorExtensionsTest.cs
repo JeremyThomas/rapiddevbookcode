@@ -307,6 +307,14 @@ namespace AW.Tests
         // searchResult.Properties.ShowInGrid();
       }
     }
+
+    [TestProperty("Winforms", "Interactive"), TestMethod]
+    public void NonComparableTest()
+    {
+      ModalFormHandler = NullHandler;
+      var nonSerializableClassWithSerializableClassProperties = NonSerializableClassWithSerializableClassProperty.GenerateList();
+      FrmDataEditor.ShowInGrid(nonSerializableClassWithSerializableClassProperties);
+    }
   }
 
   [TestClass]

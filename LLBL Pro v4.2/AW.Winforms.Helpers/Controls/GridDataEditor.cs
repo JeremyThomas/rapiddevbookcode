@@ -13,7 +13,6 @@ using System.Windows.Forms;
 using ADGV;
 using AW.Helper;
 using AW.Helper.TypeConverters;
-using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.EntityViewer;
 using AW.Winforms.Helpers.Forms;
 using AW.Winforms.Helpers.Misc;
@@ -45,7 +44,8 @@ namespace AW.Winforms.Helpers.Controls
     private IEnumerable _superset;
     private IDataEditorPersister _dataEditorPersister;
     private IDataEditorPersisterWithCounts _dataEditorPersisterWithCounts;
-    private static readonly Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider> FieldsToPropertiesTypeDescriptionProviders 
+
+    private static readonly Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider> FieldsToPropertiesTypeDescriptionProviders
       = new Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider>();
 
     static GridDataEditor()
@@ -56,7 +56,7 @@ namespace AW.Winforms.Helpers.Controls
     public GridDataEditor()
     {
       InitializeComponent();
-      
+
       dataGridViewEnumerable.AutoGenerateColumns = true;
       toolStripButtonShowDatagrid_Click(null, null);
       var toolStripItemFromBeginButton = searchToolBar.Items["fromBeginButton"] as ToolStripButton;
@@ -439,7 +439,7 @@ namespace AW.Winforms.Helpers.Controls
     private IEnumerable SkipTake()
     {
       var queryable = _superset as IQueryable;
-      return  queryable == null ? LinqHelper.SkipTake(_superset, GetPageIndex(), PageSize) : AWHelper.SkipTakeDynamic(queryable, GetPageIndex(), PageSize);
+      return queryable == null ? LinqHelper.SkipTake(_superset, GetPageIndex(), PageSize) : AWHelper.SkipTakeDynamic(queryable, GetPageIndex(), PageSize);
     }
 
     protected int GetPageIndex()
@@ -453,7 +453,7 @@ namespace AW.Winforms.Helpers.Controls
     {
       if (SupportsNotifyPropertyChanged)
         saveToolStripButton.Enabled = false;
-      if (DataEditorPersister!=null && !DataEditorPersister.TracksRemoves(PageSourceEnumerable))
+      if (DataEditorPersister != null && !DataEditorPersister.TracksRemoves(PageSourceEnumerable))
         MaybeSetRemovingItem(bindingSourceEnumerable.DataSource);
       if (DataEditorPersister != null && _canSave && !saveToolStripButton.Enabled && DataEditorPersister.IsDirty(PageSourceEnumerable))
       {
@@ -461,6 +461,7 @@ namespace AW.Winforms.Helpers.Controls
         saveToolStripButton.Enabled = true;
       }
     }
+
     private void MaybeSetRemovingItem(dynamic dataSource)
     {
       if (dataSource != null) SetRemovingItem(dataSource);
@@ -468,7 +469,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void SetRemovingItem<T>(ObjectListView<T> objectListView)
     {
-        objectListView.RemovingItem += GridDataEditor_RemovingItem;
+      objectListView.RemovingItem += GridDataEditor_RemovingItem;
     }
 
     private void SetRemovingItem(ObjectListView objectListView)
@@ -594,8 +595,9 @@ namespace AW.Winforms.Helpers.Controls
     {
       toolStripLabelSaveResult.Text = "";
       if (!IsBinding && _loaded)
-      {            toolStripButtonCancelEdit.Enabled = true;
-            bindingNavigatorPaging.Enabled = AllowPagingWhenEditing;
+      {
+        toolStripButtonCancelEdit.Enabled = true;
+        bindingNavigatorPaging.Enabled = AllowPagingWhenEditing;
         // ReSharper disable once SwitchStatementMissingSomeCases
         switch (e.ListChangedType)
         {
@@ -603,9 +605,10 @@ namespace AW.Winforms.Helpers.Controls
             saveToolStripButton.Enabled = _canSave && (DataEditorPersister.TracksRemoves(PageSourceEnumerable) || !DataSourceIsObjectListView || HasDeletes);
             break;
           case ListChangedType.ItemChanged:
-            saveToolStripButton.Enabled = _canSave;           
+            saveToolStripButton.Enabled = _canSave;
             break;
-        }}
+        }
+      }
     }
 
     private void toolStripButtonCancelEdit_Click(object sender, EventArgs e)
@@ -671,37 +674,35 @@ namespace AW.Winforms.Helpers.Controls
       if (MembersToExclude != null && MembersToExclude.Contains(e.Column.DataPropertyName))
         dataGridView.Columns.Remove(e.Column);
 
-      var coreType = MetaDataHelper.GetCoreType(e.Column.ValueType);
+      var valueType = e.Column.ValueType;
+      if (valueType == null)
+      {
+        var propertyInfo = ItemType.GetProperty(e.Column.DataPropertyName);
+        if (propertyInfo != null)
+          valueType = propertyInfo.PropertyType;
+      }
+      var coreType = MetaDataHelper.GetCoreType(valueType);
 
-      dataGridViewEnumerable.DefaultCellBehavior = bindingSourceEnumerable.SupportsFiltering ? ADGVColumnHeaderCellBehavior.SortingFiltering:ADGVColumnHeaderCellBehavior.SortingStandartGlyph;
-      if (dataGridViewEnumerable.DefaultCellBehavior==ADGVColumnHeaderCellBehavior.SortingFiltering)
+      dataGridViewEnumerable.DefaultCellBehavior = bindingSourceEnumerable.SupportsFiltering ? ADGVColumnHeaderCellBehavior.SortingFiltering : ADGVColumnHeaderCellBehavior.SortingStandartGlyph;
+      if (dataGridViewEnumerable.DefaultCellBehavior == ADGVColumnHeaderCellBehavior.SortingFiltering && coreType != null)
       {
         var adgvColumnHeaderCell = e.Column.HeaderCell as ADGVColumnHeaderCell;
         if (adgvColumnHeaderCell != null)
-          if (coreType == null || ImplementsIComparable(coreType))
-            adgvColumnHeaderCell.CellBehavior = ADGVColumnHeaderCellBehavior.SortingFiltering;
-          else
-          {
+          if (!ImplementsIComparable(coreType)) //For testing || e.Column.DataPropertyName == "ModifiedDate"
             adgvColumnHeaderCell.CellBehavior = ADGVColumnHeaderCellBehavior.DisabledHidden;
-            e.Column.SortMode = DataGridViewColumnSortMode.NotSortable;
-          }
       }
-      else if (coreType == null || ImplementsIComparable(coreType))
-        e.Column.SortMode = DataGridViewColumnSortMode.Automatic;
-      else
-        e.Column.SortMode = DataGridViewColumnSortMode.NotSortable;
       if (Readonly || _shouldBeReadonly) return;
 
-      if (e.Column.ValueType == null || e.Column is DataGridViewComboBoxColumn || e.Column is DataGridViewDateTimeColumn) return;
+      if (coreType == null || e.Column is DataGridViewComboBoxColumn || e.Column is DataGridViewDateTimeColumn) return;
 
       if (coreType.IsEnum)
       {
-        HumanizedEnumConverter.AddEnumerationConverter(e.Column.ValueType);
+        HumanizedEnumConverter.AddEnumerationConverter(valueType);
         var enumDataGridViewComboBoxColumn = new DataGridViewComboBoxColumn
         {
           HeaderText = e.Column.HeaderText,
-          ValueType = e.Column.ValueType,
-          DataSource = coreType == e.Column.ValueType ? Enum.GetValues(coreType) : GeneralHelper.EnumsGetValuesPlusUndefined(coreType),
+          ValueType = valueType,
+          DataSource = coreType == valueType ? Enum.GetValues(coreType) : GeneralHelper.EnumsGetValuesPlusUndefined(coreType),
           DataPropertyName = e.Column.DataPropertyName,
           SortMode = e.Column.SortMode,
           DefaultCellStyle = e.Column.DefaultCellStyle,
@@ -716,7 +717,7 @@ namespace AW.Winforms.Helpers.Controls
         var dataGridViewDateTimeColumn = new DataGridViewDateTimeColumn
         {
           HeaderText = e.Column.HeaderText,
-          ValueType = e.Column.ValueType,
+          ValueType = valueType,
           DataPropertyName = e.Column.DataPropertyName,
           SortMode = e.Column.SortMode,
           DefaultCellStyle = e.Column.DefaultCellStyle,
@@ -726,11 +727,22 @@ namespace AW.Winforms.Helpers.Controls
         dataGridView.Columns.Add(dataGridViewDateTimeColumn);
         dataGridViewDateTimeColumn.SortMode = e.Column.SortMode;
       }
+      //else if(e.Column.Tag==null)
+      //{
+      //  dataGridView.Columns.Remove(e.Column);
+      //  e.Column.Tag = true;
+      //  dataGridView.Columns.Add(e.Column);
+      //}
     }
 
     private static bool ImplementsIComparable(Type coreType)
     {
       return coreType.Implements(typeof (IComparable)) || coreType.HasGenericTypeDefinition(typeof (IComparable<>));
+    }
+
+    private void dataGridViewEnumerable_ColumnRemoved(object sender, DataGridViewColumnEventArgs e)
+    {
+      //TODO fix http://stackoverflow.com/questions/768170/datagridview-repeatedly-recreating-columns 
     }
 
     private void dataGridViewEnumerable_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -755,12 +767,11 @@ namespace AW.Winforms.Helpers.Controls
       {
         if (e.Value == null || e.Value is ICollection && ((ICollection) e.Value).IsNullOrEmpty())
         {
-        //  e.Value = dataGridViewColumn.CellTemplate.DefaultNewRowValue;
+          //  e.Value = dataGridViewColumn.CellTemplate.DefaultNewRowValue;
           e.Value = e.CellStyle.NullValue;
           e.FormattingApplied = true;
         }
       }
-     
     }
 
     private void dataGridViewEnumerable_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -952,26 +963,26 @@ namespace AW.Winforms.Helpers.Controls
     {
       var selectedColumns = dataGridViewEnumerable.SelectedColumns.OfType<DataGridViewTextBoxColumn>().ToList();
       if (selectedColumns.Any())
-      foreach (var selectedColumn in selectedColumns)
-      {
-        selectedColumn.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-      }
+        foreach (var selectedColumn in selectedColumns)
+        {
+          selectedColumn.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+        }
       else
       {
         foreach (var dataGridTextBoxColumn in dataGridViewEnumerable.SelectedCells.OfType<DataGridViewTextBoxCell>())
         {
           dataGridTextBoxColumn.Style.WrapMode = DataGridViewTriState.True;
         }
-     //         var currentDataGridTextBoxColumn = dataGridViewEnumerable.CurrentCell as ;
-     // if (currentDataGridTextBoxColumn != null)
-     // {
-     ////   currentDataGridTextBoxColumn.WrapMode = DataGridViewTriState.True;
-     //   dataGridViewEnumerable.CurrentCell.Style.WrapMode = DataGridViewTriState.True;
-     //  // dataGridViewEnumerable.CurrentCell.
-     // }
+        //         var currentDataGridTextBoxColumn = dataGridViewEnumerable.CurrentCell as ;
+        // if (currentDataGridTextBoxColumn != null)
+        // {
+        ////   currentDataGridTextBoxColumn.WrapMode = DataGridViewTriState.True;
+        //   dataGridViewEnumerable.CurrentCell.Style.WrapMode = DataGridViewTriState.True;
+        //  // dataGridViewEnumerable.CurrentCell.
+        // }
       }
 
-      dataGridViewEnumerable.AutoSizeRowsMode=DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+      dataGridViewEnumerable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
     }
 
     private void dataGridViewEnumerable_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -999,7 +1010,7 @@ namespace AW.Winforms.Helpers.Controls
     private void toolStripButtonCSharp_Click(object sender, EventArgs e)
     {
       var cSharp = SourceEnumerable.SerializeToCSharp(SerializeToCSharpOutputFormat, PromptForPropertiesToExclude());
-      var frmQueryRunner = DataEditorPersister==null? new FrmQueryRunner(): new FrmQueryRunner(dataToSave => DataEditorPersister.Save(dataToSave), DataEditorPersister.Delete);
+      var frmQueryRunner = DataEditorPersister == null ? new FrmQueryRunner() : new FrmQueryRunner(dataToSave => DataEditorPersister.Save(dataToSave), DataEditorPersister.Delete);
       frmQueryRunner.ViewText(cSharp);
       frmQueryRunner.ShowDialog();
       Settings.Default.Save();
@@ -1016,22 +1027,22 @@ namespace AW.Winforms.Helpers.Controls
 
     public void BeginInit()
     {
-      ((ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
-      ((ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
-      ((ISupportInitialize)(this.dataGridViewEnumerable)).BeginInit();
-      ((ISupportInitialize)(this.bindingNavigatorPaging)).BeginInit();
-      ((ISupportInitialize)(this.bindingSourcePaging)).BeginInit();
-      ((ISupportInitialize)(this.dataGridEnumerable)).BeginInit();
+      ((ISupportInitialize) (bindingSourceEnumerable)).BeginInit();
+      ((ISupportInitialize) (bindingNavigatorData)).BeginInit();
+      ((ISupportInitialize) (dataGridViewEnumerable)).BeginInit();
+      ((ISupportInitialize) (bindingNavigatorPaging)).BeginInit();
+      ((ISupportInitialize) (bindingSourcePaging)).BeginInit();
+      ((ISupportInitialize) (dataGridEnumerable)).BeginInit();
     }
 
     public void EndInit()
     {
-      ((ISupportInitialize)(this.bindingSourceEnumerable)).EndInit();
-      ((ISupportInitialize)(this.bindingNavigatorData)).EndInit();
-      ((ISupportInitialize)(this.dataGridViewEnumerable)).EndInit();
-      ((ISupportInitialize)(this.bindingNavigatorPaging)).EndInit();
-      ((ISupportInitialize)(this.bindingSourcePaging)).EndInit();
-      ((ISupportInitialize)(this.dataGridEnumerable)).EndInit();
+      ((ISupportInitialize) (bindingSourceEnumerable)).EndInit();
+      ((ISupportInitialize) (bindingNavigatorData)).EndInit();
+      ((ISupportInitialize) (dataGridViewEnumerable)).EndInit();
+      ((ISupportInitialize) (bindingNavigatorPaging)).EndInit();
+      ((ISupportInitialize) (bindingSourcePaging)).EndInit();
+      ((ISupportInitialize) (dataGridEnumerable)).EndInit();
     }
 
     private void toolStripButtonRelatedCounts_Click(object sender, EventArgs e)
@@ -1043,10 +1054,6 @@ namespace AW.Winforms.Helpers.Controls
         {
           //toolStripLabelNumChildren.Text = existingRelatedCounts.JoinAsString(Environment.NewLine);
           MessageBox.Show(existingRelatedCounts.JoinAsString(Environment.NewLine), string.Format("Number of references to {0}", bindingSourceEnumerable.Current));
-        }
-        else
-        {
-          //  toolStripLabelNumChildren.Text = "Not used";
         }
       }
     }
@@ -1064,6 +1071,5 @@ namespace AW.Winforms.Helpers.Controls
         SendKeys.Send("{DEL}");
       }
     }
-    
   }
 }

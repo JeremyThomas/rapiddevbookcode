@@ -86,6 +86,17 @@ namespace AW.Test.Helpers
       }
     }
 
+    /// <summary>
+    /// Use this to leave the form showing
+    /// </summary>
+    /// <param name="name">The name.</param>
+    /// <param name="hWnd">The h WND.</param>
+    /// <param name="form">The form.</param>
+    protected void NullHandler(string name, IntPtr hWnd, Form form)
+    {
+
+    }
+
     public static DataGridView GetDataGridViewFromGridDataEditor(Form form)
     {
       return ((DataGridView) form.Controls.All().FirstOrDefault(c => c is DataGridView));

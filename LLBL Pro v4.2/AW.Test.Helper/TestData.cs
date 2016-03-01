@@ -168,7 +168,6 @@ namespace AW.Test.Helpers
     {
       get { return ThreeStrings.Distinct(); }
     }
-
   }
 
   [Serializable]
@@ -183,7 +182,7 @@ namespace AW.Test.Helpers
   }
 
   [Serializable]
-  public class SerializableBaseClass: SerializableAbstractBaseClass
+  public class SerializableBaseClass : SerializableAbstractBaseClass
   {
     public int IntField;
 
@@ -293,7 +292,16 @@ namespace AW.Test.Helpers
 
     public SerializableClass Value
     {
-      get { return new SerializableClass(); }
+      get { return new SerializableClass { DateTimeField = DateTime.Now, IntField = 10, StringField = "aaa" }; }
+    }
+
+    public static List<NonSerializableClassWithSerializableClassProperty> GenerateList()
+    {
+      return new List<NonSerializableClassWithSerializableClassProperty>
+      {
+        new NonSerializableClassWithSerializableClassProperty {StringProperty = "1"},
+        new NonSerializableClassWithSerializableClassProperty {StringProperty = "2"}
+      };
     }
   }
 
@@ -309,9 +317,9 @@ namespace AW.Test.Helpers
   }
 
   [Serializable]
-  public class SerializableNoDefaultConstructorClass: SerializableAbstractNoDefaultConstructorClass
+  public class SerializableNoDefaultConstructorClass : SerializableAbstractNoDefaultConstructorClass
   {
-    public SerializableNoDefaultConstructorClass(string someString):base(someString)
+    public SerializableNoDefaultConstructorClass(string someString) : base(someString)
     {
     }
   }
@@ -328,13 +336,13 @@ namespace AW.Test.Helpers
   {
     public bool MoveNext()
     {
-    return false;
+      return false;
     }
 
     public void Reset()
     {
     }
 
-    public object Current { get;  set; }
+    public object Current { get; set; }
   }
 }

@@ -40,8 +40,8 @@ namespace AW.Winforms.Helpers.Controls
     {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GridDataEditor));
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
       this.bindingSourceEnumerable = new System.Windows.Forms.BindingSource(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorAddNewItem1 = new System.Windows.Forms.ToolStripButton();
@@ -496,25 +496,25 @@ namespace AW.Winforms.Helpers.Controls
       // 
       this.dataGridViewEnumerable.AllowUserToOrderColumns = true;
       this.dataGridViewEnumerable.AutoGenerateColumns = false;
-      dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-      dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-      dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-      dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-      dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-      this.dataGridViewEnumerable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+      dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+      dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+      dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+      dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+      dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+      this.dataGridViewEnumerable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
       this.dataGridViewEnumerable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dataGridViewEnumerable.DataSource = this.bindingSourceEnumerable;
       this.dataGridViewEnumerable.DefaultCellBehavior = ADGV.ADGVColumnHeaderCellBehavior.SortingFiltering;
-      dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-      dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-      dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-      dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-      dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-      this.dataGridViewEnumerable.DefaultCellStyle = dataGridViewCellStyle6;
+      dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+      dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+      dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+      dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+      dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+      this.dataGridViewEnumerable.DefaultCellStyle = dataGridViewCellStyle2;
       this.dataGridViewEnumerable.DefaultDateTimeGrouping = ADGV.ADGVFilterMenuDateTimeGrouping.Second;
       this.dataGridViewEnumerable.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridViewEnumerable.Location = new System.Drawing.Point(3, 3);
@@ -525,6 +525,7 @@ namespace AW.Winforms.Helpers.Controls
       this.dataGridViewEnumerable.FilterStringChanged += new System.EventHandler(this.dataGridViewEnumerable_FilterStringChanged);
       this.dataGridViewEnumerable.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridViewEnumerable_CellFormatting);
       this.dataGridViewEnumerable.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridViewEnumerable_ColumnAdded);
+      this.dataGridViewEnumerable.ColumnRemoved += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridViewEnumerable_ColumnRemoved);
       this.dataGridViewEnumerable.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridViewEnumerable_DataBindingComplete);
       this.dataGridViewEnumerable.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewEnumerable_DataError);
       this.dataGridViewEnumerable.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewEnumerable_EditingControlShowing);
@@ -684,7 +685,7 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonUnPage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonUnPage.Image")));
       this.toolStripButtonUnPage.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonUnPage.Name = "toolStripButtonUnPage";
-      this.toolStripButtonUnPage.Size = new System.Drawing.Size(100, 22);
+      this.toolStripButtonUnPage.Size = new System.Drawing.Size(94, 22);
       this.toolStripButtonUnPage.Text = "Remove Paging";
       this.toolStripButtonUnPage.Click += new System.EventHandler(this.toolStripButtonUnPage_Click);
       // 
@@ -692,7 +693,7 @@ namespace AW.Winforms.Helpers.Controls
       // 
       this.toolStripLabel4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
       this.toolStripLabel4.Name = "toolStripLabel4";
-      this.toolStripLabel4.Size = new System.Drawing.Size(71, 22);
+      this.toolStripLabel4.Size = new System.Drawing.Size(70, 22);
       this.toolStripLabel4.Text = "Total Count";
       // 
       // toolStripLabelSuperSetCount
