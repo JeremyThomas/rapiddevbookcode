@@ -48,16 +48,9 @@ namespace AW.DebugVisualizers
       if (enumerable == null)
       {
         var dataTable = o as DataTable;
-        if (dataTable == null)
-        {
-          var dataTableSurrogate = o as DataTableSurrogate;
-          if (dataTableSurrogate != null)
-            dataTable = dataTableSurrogate.ConvertToDataTable();
-        }
         if (dataTable != null)
           enumerable = dataTable.DefaultView;
       }
-
       if (enumerable != null)
         _modalService.ShowDialog(FrmDataEditor.CreateDataViewForm(enumerable));
     }
@@ -138,21 +131,6 @@ namespace AW.DebugVisualizers
     }
 
     #endregion
-
-    /// <summary>
-    ///   Gets data from the specified DataTable and into DataTableSurrogate and Serializes that.
-    /// </summary>
-    /// <param name="outgoingData">The outgoing data.</param>
-    /// <param name="target">The target.</param>
-    /// <remarks>
-    ///   This is a fallback if serializing a DataTable throws a SerializationException
-    /// </remarks>
-    private static void SerializeWithSurrogate(Stream outgoingData, DataTable target)
-    {
-      outgoingData.Position = 0;
-      var dataTableSurrogate = new DataTableSurrogate(target);
-      Serialize(outgoingData, dataTableSurrogate);
-    }
 
     /// <summary>
     ///   Binary Serialize DataTable.

@@ -362,7 +362,7 @@ namespace AW.DebugVisualizers.Tests
     [TestCategory("Winforms"), TestMethod]
     public void NonSerializableClassWithSerializableClassPropertyTest()
     {
-      var nonSerializableClassWithSerializableClassProperties = new List<NonSerializableClassWithSerializableClassProperty> { new NonSerializableClassWithSerializableClassProperty(),new NonSerializableClassWithSerializableClassProperty()};
+      var nonSerializableClassWithSerializableClassProperties = NonSerializableClassWithSerializableClassProperty.GenerateList();
       TestSerialize(nonSerializableClassWithSerializableClassProperties);
       TestShowTransported(nonSerializableClassWithSerializableClassProperties, 2);
     }

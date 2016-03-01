@@ -155,7 +155,7 @@ namespace AW.Helper
           else
           {
             if (table.Columns[ordinal].DataType == stringType)
-              values[ordinal] = Convert.ToString(value);
+              values[ordinal] = MetaDataHelper.ConvertToIdentifiableString(value);
             else
             {
               values[ordinal] = value;

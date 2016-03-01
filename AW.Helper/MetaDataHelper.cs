@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
@@ -10,7 +11,11 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace AW.Helper
 {
@@ -1008,5 +1013,289 @@ namespace AW.Helper
       var displayName = displayNameAttribute.DisplayName;
       return String.IsNullOrEmpty(displayName) ? fieldName : displayName;
     }
+
+    public static string ListToString(ICollection list, bool enumWithUnderlyingType = true)
+    {
+      if (list.Count == 0)
+        return String.Empty;
+      var stringBuilder = new StringBuilder();
+      foreach (var obj in list)
+        stringBuilder.Append(DisplayAsString(obj, enumWithUnderlyingType) + GeneralHelper.StringJoinSeparator);
+      return stringBuilder.ToString().TrimEnd(GeneralHelper.StringJoinSeparator.ToCharArray());
+    }
+
+    public static string StringDictionaryToString(StringDictionary stringDictionary)
+    {
+      if (stringDictionary.Count == 0)
+        return String.Empty;
+      var stringBuilder = new StringBuilder();
+      foreach (DictionaryEntry de in stringDictionary)
+        stringBuilder.AppendFormat("{0}=<{1}>, ", de.Key, de.Value);
+      return stringBuilder.ToString().TrimEnd(GeneralHelper.StringJoinSeparator.ToCharArray());
+    }
+
+    public static string DictionaryToString(IDictionary dictionary)
+    {
+      if (dictionary.Count == 0)
+        return String.Empty;
+      var stringBuilder = new StringBuilder();
+      foreach (DictionaryEntry de in dictionary)
+        stringBuilder.AppendFormat("{0}=<{1}>, ", de.Key, de.Value);
+      return stringBuilder.ToString().TrimEnd(GeneralHelper.StringJoinSeparator.ToCharArray());
+    }
+
+    public static string ConvertToString(object value)
+    {
+      if (value == null)
+        return String.Empty;
+      var converter = TypeDescriptor.GetConverter(value.GetType());
+      return converter.CanConvertTo(typeof(string)) ? converter.ConvertToString(value) : String.Empty;
+    }
+
+    /// <summary>
+    ///   Converts a value to a string for display.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="enumWithUnderlyingType">if set to <c>true</c> [enum with underlying type].</param>
+    /// <returns></returns>
+    public static string DisplayAsString(object value, bool enumWithUnderlyingType = true)
+    {
+      if (value == null)
+        return String.Empty;
+      if (value is Enum)
+      {
+        if (enumWithUnderlyingType)
+        {
+          var underlyingType = Enum.GetUnderlyingType(value.GetType());
+          var asUnderlyingType = Convert.ChangeType(value, underlyingType);
+          return value + "(" + asUnderlyingType + ")";
+        }
+        return ((Enum)value).EnumToString();
+      }
+      var dictionary = value as StringDictionary;
+      if (dictionary != null)
+        return StringDictionaryToString(dictionary);
+      var value1 = value as IDictionary;
+      if (value1 != null)
+        return DictionaryToString(value1);
+      var list = value as ICollection;
+      if (list != null)
+        return ListToString(list, enumWithUnderlyingType);
+      var node = value as XmlNode;
+      if (node != null)
+        return node.Name + "{" + node.InnerXml + "}";
+      return ConvertToString(value);
+    }
+
+    /// <summary>
+    ///   Gets the properties and values as string list.
+    /// </summary>
+    /// <param name="myObject">My object.</param>
+    /// <returns></returns>
+    public static IEnumerable<string> GetPropertiesAndValuesAsStringList(object myObject)
+    {
+      return from kv in GetPropertiesAndValues(myObject, false)
+             select String.Format("{0}={1}", kv.Key, DisplayAsString(kv.Value));
+    }
+
+    public static IEnumerable<string> GetSpecifiedPropertiesAndValuesAsStringList(object myObject, params string[] propertiesToInclude)
+    {
+      return from kv in GetSpecifiedPropertiesAndValues(myObject, false, propertiesToInclude)
+             select String.Format("{0}={1}", kv.Key, DisplayAsString(kv.Value));
+    }
+
+    public static string ConvertToIdentifiableString(object myObject)
+    {
+      if (myObject == null) return "";
+      var result = Convert.ToString(myObject);
+      if (result == myObject.GetType().ToString())
+      {
+        var identifiableString = GetPropertiesAndValuesAsStringList(myObject).JoinAsString();
+        if (!string.IsNullOrWhiteSpace(identifiableString))
+          return identifiableString;
+      }
+      return result;
+    }
+
+    /// <summary>
+    ///   Gets the properties and values as a CSV string.
+    /// </summary>
+    /// <param name="myObject">My object.</param>
+    /// <returns></returns>
+    public static string GetPropertiesAndValuesAsString(object myObject)
+    {
+      return GetPropertiesAndValuesAsStringList(myObject).JoinAsString();
+    }
+
+    public static string GetSpecifiedPropertiesAndValuesAsString(object myObject, params string[] propertiesToInclude)
+    {
+      return GetSpecifiedPropertiesAndValuesAsStringList(myObject, propertiesToInclude).JoinAsString();
+    }
+
+    #region Default
+    
+    /// <summary>
+    ///   Gets the default value of a value type.
+    /// </summary>
+    /// <param name="type">The type.</param>
+    /// <returns></returns>
+    public static object GetDefault(Type type)
+    {
+      if (type.IsValueType)
+        return Activator.CreateInstance(type);
+      return null;
+    }
+
+    public static bool IsDefault(object value)
+    {
+      if (value == null) return true;
+      var type = value.GetType();
+      return IsDefault(value, type);
+    }
+
+    /// <summary>
+    ///   Determines whether the specified value is default if IsValueType or object.ToString() = type.ToString() if not.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="type">The type.</param>
+    /// <returns></returns>
+    private static bool IsDefault(object value, Type type)
+    {
+      if (value == null) return true;
+      var defaultValue = GetDefault(type);
+      if (defaultValue == null)
+      {
+        var collection = value as ICollection;
+        if (collection == null)
+          return Convert.ToString(value) == type.ToString();
+        return collection.Count == 0;
+      }
+      return value.Equals(defaultValue);
+    }
+
+    /// <summary>
+    ///   Determines whether the specified object is null or DBNull.
+    /// </summary>
+    /// <param name="anObject">The object.</param>
+    /// <returns>
+    ///   <c>true</c> if the specified object is null; otherwise, <c>false</c>.
+    /// </returns>
+    public static bool IsNull(object anObject)
+    {
+      return (anObject == null || Convert.IsDBNull(anObject));
+    }
+
+    /// <summary>
+    ///   Determines whether [is null or empty or first is null] [the specified strings].
+    /// </summary>
+    /// <param name="strings">The strings.</param>
+    /// <returns>
+    ///   <c>true</c> if [is null or empty or first is null] [the specified strings]; otherwise, <c>false</c>.
+    /// </returns>
+    public static bool IsNullOrEmptyOrFirstIsNull(this IEnumerable<string> strings)
+    {
+      return strings.IsNullOrEmpty() || String.IsNullOrWhiteSpace(strings.First());
+    }
+
+    /// <summary>
+    ///   Determines whether [is null or empty] [the specified o].
+    /// </summary>
+    /// <param name="o">The o.</param>
+    /// <returns>
+    ///   <c>true</c> if [is null or empty] [the specified o]; otherwise, <c>false</c>.
+    /// </returns>
+    public static bool IsNullOrEmpty(object o)
+    {
+      var enumerable = o as IEnumerable;
+      if (enumerable == null)
+        return IsNull(o);
+      var strings = enumerable as IEnumerable<string>;
+      if (strings == null)
+        return !LinqHelper.Any(enumerable);
+      return IsNullOrEmptyOrFirstIsNull(strings);
+    }
+
+    public static bool IsNullOrEmptyOrDefault(object value, Type type)
+    {
+      return IsNullOrEmpty(value) || IsDefault(value, type);
+    }
+
+    #endregion
+
+    #region Serialize
+
+    /// <summary>
+    ///   Gets the properties and values as a dictionary.
+    /// </summary>
+    /// <param name="myObject">My object.</param>
+    /// <param name="includeNullsAndDefault">if set to <c>true</c> [include nulls and default].</param>
+    /// <param name="propertiesToExclude">The properties to exclude.</param>
+    /// <returns></returns>
+    public static Dictionary<string, object> GetPropertiesAndValues(object myObject, bool includeNullsAndDefault = false, params string[] propertiesToExclude)
+    {
+      return GetPropertiesAndValues(myObject, includeNullsAndDefault, GetPropertyDescriptors(myObject.GetType()).Where(p => !propertiesToExclude.Contains(p.Name)));
+    }
+
+    public static Dictionary<string, object> GetSpecifiedPropertiesAndValues(object myObject, bool includeNullsAndDefault = false, params string[] propertiesToInclude)
+    {
+      return GetPropertiesAndValues(myObject, includeNullsAndDefault, GetPropertyDescriptors(myObject.GetType()).Where(p => propertiesToInclude.Contains(p.Name)));
+    }
+
+    public static Dictionary<string, object> GetPropertiesAndValues(object myObject, bool includeNullsAndDefault, IEnumerable<PropertyDescriptor> propertyDescriptors)
+    {
+      var dictionary = new Dictionary<string, object>();
+      foreach (var descriptor in propertyDescriptors)
+      {
+        var value = descriptor.GetValue(myObject);
+        if (!includeNullsAndDefault && IsNullOrEmptyOrDefault(value, descriptor.PropertyType)) continue;
+        try
+        {
+          if (dictionary.ContainsKey(descriptor.DisplayName))
+            dictionary[descriptor.DisplayName + "," + descriptor.Name] = value;
+          else
+            dictionary[descriptor.DisplayName] = value;
+        }
+        catch (ArgumentException)
+        {
+          dictionary[descriptor.Name + "," + descriptor.DisplayName] = value;
+        }
+      }
+      return dictionary;
+    }
+
+    private static void GetPropertyAndValueAsStrings(IDictionary<string, string> dictionary, object value, string propertyName, Type propertyType)
+    {
+      if (IsNullOrEmptyOrDefault(value, propertyType))
+        dictionary.Add(propertyName, null);
+      else
+        dictionary.Add(propertyName, ConvertOrSerializeToString(value, propertyType));
+    }
+
+    public static string ConvertOrSerializeToString(object value, Type propertyType = null)
+    {
+      return typeof(IConvertible).IsAssignableFrom(GetCoreType(propertyType ?? value.GetType())) ? Convert.ToString(value) : SerializeToXml(value);
+    }
+    
+    /// <param name="value">The value.</param>
+    /// <param name="type">The type.</param>
+    /// <param name="defaultValue">The default value.</param>
+    /// <returns></returns>
+    public static string SerializeToXml(object value, Type type = null, string defaultValue = null)
+    {
+      if (value == null) return defaultValue;
+      var x = new XmlSerializer(type ?? value.GetType());
+
+      //we are saving the grid preferences
+      var doc = new XDocument();
+      using (var xw = doc.CreateWriter())
+      {
+        x.Serialize(xw, value);
+        xw.Close();
+      }
+      var el = doc.Root;
+      return el == null ? defaultValue : el.ToString();
+    }
+
+    #endregion
   }
 }

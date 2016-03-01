@@ -127,10 +127,10 @@ namespace AW.Tests
       CopyToDataTableAndAssert(xmlSchema.Items, xmlSchema.Items[0].GetType());
     }
 
-    [TestCategory("Winforms"), TestMethod]
+    [TestMethod]
     public void NonSerializableClassWithSerializableClassPropertyTest()
     {
-      var nonSerializableClassWithSerializableClassProperties = new List<NonSerializableClassWithSerializableClassProperty> { new NonSerializableClassWithSerializableClassProperty(), new NonSerializableClassWithSerializableClassProperty() };
+      var nonSerializableClassWithSerializableClassProperties = NonSerializableClassWithSerializableClassProperty.GenerateList();
       CopyToDataTableAndAssert(nonSerializableClassWithSerializableClassProperties, typeof(NonSerializableClassWithSerializableClassProperty));
       CopyToDataTableAndAssert(nonSerializableClassWithSerializableClassProperties, typeof(NonSerializableClassWithSerializableClassProperty), true);
     }
