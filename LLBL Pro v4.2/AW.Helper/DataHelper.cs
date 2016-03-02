@@ -317,7 +317,7 @@ namespace AW.Helper
 
     public static bool ServerNotFoundError(SqlException e)
     {
-      return (e.Number == -1 || e.Number == 2) && e.State == 0 && string.IsNullOrWhiteSpace(e.Server);
+      return (e.Number == -1 || e.Number == 2) && e.State == 0 && String.IsNullOrWhiteSpace(e.Server);
     }
 
     public static bool DbNotFoundError(SqlException e)
@@ -389,7 +389,7 @@ namespace AW.Helper
       // ReSharper disable once CollectionNeverQueried.Local
       var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
       var newCatalog = sqlConnectionStringBuilder.InitialCatalog;
-      if (string.IsNullOrWhiteSpace(newCatalog))
+      if (String.IsNullOrWhiteSpace(newCatalog))
         newCatalog = sqlConnectionStringBuilder.AttachDBFilename;
       return newCatalog;
     }
@@ -531,6 +531,19 @@ namespace AW.Helper
                       insertCount += dbDataAdapter.Update(table);
                   }
       return insertCount;
+    }
+
+    /// <summary>
+    /// Sets the remoting format.
+    /// </summary>
+    /// <param name="target">The target.</param>
+    /// <param name="serializationFormat">The serialization format. Defaults SerializationFormat.Binary</param>
+    public static void SetRemotingFormat(DataTable target, SerializationFormat serializationFormat = SerializationFormat.Binary)
+    {
+      if (target.DataSet == null)
+        target.RemotingFormat = serializationFormat;
+      else
+        target.DataSet.RemotingFormat = serializationFormat;
     }
   }
 }

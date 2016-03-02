@@ -141,10 +141,7 @@ namespace AW.DebugVisualizers
     private static void Serialize(Stream outgoingData, DataTable target)
     {
       outgoingData.Position = 0;
-      if (target.DataSet == null)
-        target.RemotingFormat = SerializationFormat.Binary;
-      else
-        target.DataSet.RemotingFormat = SerializationFormat.Binary;
+      DataHelper.SetRemotingFormat(target);
       VisualizerObjectSource.Serialize(outgoingData, target);
     }
 

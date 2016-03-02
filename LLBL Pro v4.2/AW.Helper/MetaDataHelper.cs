@@ -286,7 +286,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Gets the loadable types.
+    ///   Gets the loadable types.
     /// </summary>
     /// <remarks>http://haacked.com/archive/2012/07/23/get-all-types-in-an-assembly.aspx/</remarks>
     /// <param name="assembly">The assembly.</param>
@@ -306,7 +306,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Gets the concrete public implementations of the ancestor or interface type.
+    ///   Gets the concrete public implementations of the ancestor or interface type.
     /// </summary>
     /// <param name="assembly">The assembly.</param>
     /// <param name="ancestorTypeOrInterface">The ancestor type or interface.</param>
@@ -358,8 +358,8 @@ namespace AW.Helper
     public static IEnumerable<Type> GetAssignable(this Type ancestorType, IEnumerable<Type> descendantTypes)
     {
       return from type in descendantTypes
-        where type.IsPublic && !type.IsAbstract && ancestorType.IsAssignableFrom(type)  && ancestorType!= type
-             select type;
+        where type.IsPublic && !type.IsAbstract && ancestorType.IsAssignableFrom(type) && ancestorType != type
+        select type;
     }
 
     public static bool IsAssignableTo(this Type type, params Type[] ancestorTypes)
@@ -949,15 +949,15 @@ namespace AW.Helper
     /// <returns></returns>
     public static string GetDisplayName<T>(Expression<Func<T, object>> propertySpecifier)
     {
-      return GetDisplayName(typeof(T), MemberName.For(propertySpecifier));
+      return GetDisplayName(typeof (T), MemberName.For(propertySpecifier));
     }
 
     public static string GetDisplayName(Type type)
     {
-      var displayAttributes = Attribute.GetCustomAttribute(type, typeof(DisplayAttribute)) as DisplayAttribute;
+      var displayAttributes = Attribute.GetCustomAttribute(type, typeof (DisplayAttribute)) as DisplayAttribute;
       if (displayAttributes == null)
       {
-        var displayNameAttributes = Attribute.GetCustomAttribute(type, typeof(DisplayNameAttribute)) as DisplayNameAttribute;
+        var displayNameAttributes = Attribute.GetCustomAttribute(type, typeof (DisplayNameAttribute)) as DisplayNameAttribute;
         if (displayNameAttributes != null) return displayNameAttributes.DisplayName;
       }
       else
@@ -1049,7 +1049,7 @@ namespace AW.Helper
       if (value == null)
         return String.Empty;
       var converter = TypeDescriptor.GetConverter(value.GetType());
-      return converter.CanConvertTo(typeof(string)) ? converter.ConvertToString(value) : String.Empty;
+      return converter.CanConvertTo(typeof (string)) ? converter.ConvertToString(value) : String.Empty;
     }
 
     /// <summary>
@@ -1070,7 +1070,7 @@ namespace AW.Helper
           var asUnderlyingType = Convert.ChangeType(value, underlyingType);
           return value + "(" + asUnderlyingType + ")";
         }
-        return ((Enum)value).EnumToString();
+        return ((Enum) value).EnumToString();
       }
       var dictionary = value as StringDictionary;
       if (dictionary != null)
@@ -1095,13 +1095,13 @@ namespace AW.Helper
     public static IEnumerable<string> GetPropertiesAndValuesAsStringList(object myObject)
     {
       return from kv in GetPropertiesAndValues(myObject, false)
-             select String.Format("{0}={1}", kv.Key, DisplayAsString(kv.Value));
+        select String.Format("{0}={1}", kv.Key, DisplayAsString(kv.Value));
     }
 
     public static IEnumerable<string> GetSpecifiedPropertiesAndValuesAsStringList(object myObject, params string[] propertiesToInclude)
     {
       return from kv in GetSpecifiedPropertiesAndValues(myObject, false, propertiesToInclude)
-             select String.Format("{0}={1}", kv.Key, DisplayAsString(kv.Value));
+        select String.Format("{0}={1}", kv.Key, DisplayAsString(kv.Value));
     }
 
     public static string ConvertToIdentifiableString(object myObject)
@@ -1109,11 +1109,16 @@ namespace AW.Helper
       if (myObject == null) return "";
       var result = Convert.ToString(myObject);
       if (result == myObject.GetType().ToString())
-      {
-        var identifiableString = GetPropertiesAndValuesAsStringList(myObject).JoinAsString();
-        if (!string.IsNullOrWhiteSpace(identifiableString))
-          return identifiableString;
-      }
+        try
+        {
+          var identifiableString = GetPropertiesAndValuesAsStringList(myObject).JoinAsString();
+          if (!string.IsNullOrWhiteSpace(identifiableString))
+            return identifiableString;
+        }
+        catch (Exception e)
+        {
+          e.TraceOut();
+        }
       return result;
     }
 
@@ -1133,7 +1138,7 @@ namespace AW.Helper
     }
 
     #region Default
-    
+
     /// <summary>
     ///   Gets the default value of a value type.
     /// </summary>
@@ -1245,21 +1250,26 @@ namespace AW.Helper
     {
       var dictionary = new Dictionary<string, object>();
       foreach (var descriptor in propertyDescriptors)
-      {
-        var value = descriptor.GetValue(myObject);
-        if (!includeNullsAndDefault && IsNullOrEmptyOrDefault(value, descriptor.PropertyType)) continue;
         try
         {
-          if (dictionary.ContainsKey(descriptor.DisplayName))
-            dictionary[descriptor.DisplayName + "," + descriptor.Name] = value;
-          else
-            dictionary[descriptor.DisplayName] = value;
+          var value = descriptor.GetValue(myObject);
+          if (!includeNullsAndDefault && IsNullOrEmptyOrDefault(value, descriptor.PropertyType)) continue;
+          try
+          {
+            if (dictionary.ContainsKey(descriptor.DisplayName))
+              dictionary[descriptor.DisplayName + "," + descriptor.Name] = value;
+            else
+              dictionary[descriptor.DisplayName] = value;
+          }
+          catch (ArgumentException)
+          {
+            dictionary[descriptor.Name + "," + descriptor.DisplayName] = value;
+          }
         }
-        catch (ArgumentException)
+        catch (Exception e)
         {
-          dictionary[descriptor.Name + "," + descriptor.DisplayName] = value;
+          e.TraceOut();
         }
-      }
       return dictionary;
     }
 
@@ -1273,9 +1283,9 @@ namespace AW.Helper
 
     public static string ConvertOrSerializeToString(object value, Type propertyType = null)
     {
-      return typeof(IConvertible).IsAssignableFrom(GetCoreType(propertyType ?? value.GetType())) ? Convert.ToString(value) : SerializeToXml(value);
+      return typeof (IConvertible).IsAssignableFrom(GetCoreType(propertyType ?? value.GetType())) ? Convert.ToString(value) : SerializeToXml(value);
     }
-    
+
     /// <param name="value">The value.</param>
     /// <param name="type">The type.</param>
     /// <param name="defaultValue">The default value.</param>

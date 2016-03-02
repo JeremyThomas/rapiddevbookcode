@@ -133,7 +133,7 @@
     <Compile Include="DataEditorExtensionsTest.cs" />
     <Compile Include="DataEditorLinqtoSQLPersisterTest.cs" />
     <Compile Include="DataGridViewTest.cs" />
-    <Compile Include="DataTableSurrogateTest.cs" />
+    <Compile Include="DataTableBinarySerializationTest.cs" />
     <Compile Include="EntityHelperTest.cs" />
     <Compile Include="FrmEntitiesAndFieldsTest.cs" />
     <Compile Include="GeneralHelperTest.cs" />

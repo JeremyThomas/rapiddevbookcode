@@ -678,7 +678,16 @@ namespace AW.Winforms.Helpers.Controls
       if (valueType == null)
       {
         var propertyInfo = ItemType.GetProperty(e.Column.DataPropertyName);
-        if (propertyInfo != null)
+        if (propertyInfo == null)
+        {
+          var dataView = DataSource as DataView;
+          if (dataView != null)
+          {
+            var dataColumn = dataView.Table.Columns[e.Column.DataPropertyName];
+            valueType = dataColumn.DataType;
+          }
+        }
+        else
           valueType = propertyInfo.PropertyType;
       }
       var coreType = MetaDataHelper.GetCoreType(valueType);
