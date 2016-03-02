@@ -16,7 +16,7 @@ namespace AW.Tests
   ///   to contain all DataTableSurrogateTest Unit Tests
   /// </summary>
   [TestClass]
-  public class DataTableSurrogateTest
+  public class DataTableBinarySerializationTest
   {
     /// <summary>
     ///   Gets or sets the test context which provides
@@ -62,13 +62,13 @@ namespace AW.Tests
     [TestMethod]
     public void DataTableSurrogateSerializeDeserializeTest()
     {
-      TestDataTableSurrogateSerializeDeserialize(GeneralHelper.CopyToDataTable(NonSerializableClass.GenerateList()));
-      TestDataTableSurrogateSerializeDeserialize(GeneralHelper.CopyToDataTable(SerializableClass.GenerateList()));
+      TestDataTableBinarySerializeDeserialize(GeneralHelper.CopyToDataTable(NonSerializableClass.GenerateList()));
+      TestDataTableBinarySerializeDeserialize(GeneralHelper.CopyToDataTable(SerializableClass.GenerateList()));
       var dt = new DataSet();
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
       addressTypeEntityCollection.CreateHierarchicalProjection(dt);
-      TestDataTableSurrogateSerializeDeserialize(dt.Tables[0]);
-      TestDataTableSurrogateSerializeDeserialize(GeneralHelper.CopyToDataTable(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity))));
+      TestDataTableBinarySerializeDeserialize(dt.Tables[0]);
+      TestDataTableBinarySerializeDeserialize(GeneralHelper.CopyToDataTable(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity))));
       //TestDataTableSurrogateSerializeDeserialize(GeneralHelper.CopyToDataTable(MetaSingletons.MetaData.AddressType));
     }
 
@@ -79,7 +79,8 @@ namespace AW.Tests
     public void DataTableSurrogateSerializeDeserializexmlSchemaTest()
     {
       var xmlSchema = TestData.GetTestXmlSchema();
-      TestDataTableSurrogateSerializeDeserialize(xmlSchema.Items.CopyToDataTable());
+      TestDataTableBinarySerializeDeserialize(xmlSchema.Items.CopyToDataTable(true));
+    //  TestDataTableSurrogateSerializeDeserialize(xmlSchema.Items.CopyToDataTable());
     }
 
     [TestMethod]
@@ -89,19 +90,18 @@ namespace AW.Tests
       var stringEnumerable = enumerable.Where(s => s.Length > 1);
       var datatable = GeneralHelper.CopyToDataTable(stringEnumerable);
       Assert.AreEqual(enumerable[0], datatable.Rows[0][0].ToString());
-      TestDataTableSurrogateSerializeDeserialize(datatable);
+      TestDataTableBinarySerializeDeserialize(datatable);
     }
 
-    private static void TestDataTableSurrogateSerializeDeserialize(DataTable datatable)
+    private static void TestDataTableBinarySerializeDeserialize(DataTable datatable)
     {
-      var target = new DataTableSurrogate(datatable);
+      DataHelper.SetRemotingFormat(datatable);
       var memoryStream = new MemoryStream();
       var binaryFormatter = new BinaryFormatter();
-      binaryFormatter.Serialize(memoryStream, target);
+      binaryFormatter.Serialize(memoryStream, datatable);
       memoryStream.Position = 0;
-      var result = binaryFormatter.Deserialize(memoryStream) as DataTableSurrogate;
-      Assert.IsNotNull(result);
-      var resultDataTable = result.ConvertToDataTable();
+      var resultDataTable = binaryFormatter.Deserialize(memoryStream) as DataTable;
+      Assert.IsNotNull(resultDataTable);
       Assert.AreEqual(datatable.Columns.Count, resultDataTable.Columns.Count);
       Assert.AreEqual(datatable.Rows.Count, resultDataTable.Rows.Count);
       //CollectionAssert.AreEqual(datatable.DefaultView, resultDataTable.DefaultView);

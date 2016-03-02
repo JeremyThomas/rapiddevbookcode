@@ -313,7 +313,12 @@ namespace AW.Tests
     {
       ModalFormHandler = NullHandler;
       var nonSerializableClassWithSerializableClassProperties = NonSerializableClassWithSerializableClassProperty.GenerateList();
-      FrmDataEditor.ShowInGrid(nonSerializableClassWithSerializableClassProperties);
+    //  FrmDataEditor.ShowInGrid(nonSerializableClassWithSerializableClassProperties);
+      var propertyDescriptors = MetaDataHelper.GetPropertiesToDisplay(typeof(AddressTypeEntity));
+      var copyToDataTable = propertyDescriptors.CopyToDataTable();
+      //var propertyDescriptorCollection = TypeDescriptor.GetProperties(copyToDataTable.DefaultView);
+      //CollectionAssert.AreEquivalent(propertyDescriptors.ToList(), propertyDescriptorCollection);
+      FrmDataEditor.ShowInGrid(copyToDataTable.DefaultView);
     }
   }
 
