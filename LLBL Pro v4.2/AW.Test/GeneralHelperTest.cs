@@ -90,9 +90,9 @@ namespace AW.Tests
       AssertCopyToDataTable(typeof (T), actual);
     }
 
-    private static void CopyToDataTableAndAssert(ICollection source, Type type, bool safeMode = false)
+    private static void CopyToDataTableAndAssert(ICollection source, Type type, ObjectShredder.ShreddingMode shreddingMode = ObjectShredder.ShreddingMode.AllFields)
     {
-      var actual = source.CopyToDataTable(safeMode);
+      var actual = source.CopyToDataTable(shreddingMode);
       Assert.AreEqual(source.Count, actual.Rows.Count);
       AssertCopyToDataTable(type, actual);
     }
@@ -132,7 +132,7 @@ namespace AW.Tests
     {
       var nonSerializableClassWithSerializableClassProperties = NonSerializableClassWithSerializableClassProperty.GenerateList();
       CopyToDataTableAndAssert(nonSerializableClassWithSerializableClassProperties, typeof(NonSerializableClassWithSerializableClassProperty));
-      CopyToDataTableAndAssert(nonSerializableClassWithSerializableClassProperties, typeof(NonSerializableClassWithSerializableClassProperty), true);
+      CopyToDataTableAndAssert(nonSerializableClassWithSerializableClassProperties, typeof(NonSerializableClassWithSerializableClassProperty), ObjectShredder.ShreddingMode.Safe);
     }
 
     [TestMethod]

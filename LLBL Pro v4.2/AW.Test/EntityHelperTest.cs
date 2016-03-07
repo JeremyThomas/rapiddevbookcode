@@ -115,7 +115,7 @@ namespace AW.Tests
       ToEntityCollectionTestHelper<AddressTypeEntity>();
     }
 
-    [TestMethod, Description("A test for ToEntityCollection for abstract entities")]
+    [TestMethod, TestCategory("Slow"), Description("A test for ToEntityCollection for abstract entities")]
     public void ToEntityCollectionAbstractTest()
     {
       ToEntityCollectionTestHelper<TransactionHistoryEntity>();

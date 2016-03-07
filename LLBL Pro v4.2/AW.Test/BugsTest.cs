@@ -320,7 +320,7 @@ namespace AW.Tests
       queryable.OrderBy(th => th.ModifiedDate).ToList(); //Doesn't
     }
 
-    [TestMethod, TestProperty("Bug", "Fixed"), Description("Discriminator filter missing when Entity Instance in projection")]
+    [TestMethod, TestProperty("Bug", "Fixed"), TestCategory("Slow"), Description("Discriminator filter missing when Entity Instance in projection")]
     //http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=21502
     public void TestInheritanceProjectionEntityInstance()
     {

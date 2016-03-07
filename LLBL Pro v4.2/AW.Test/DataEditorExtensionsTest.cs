@@ -85,7 +85,7 @@ namespace AW.Tests
     /// <summary>
     ///   A test for ShowInGrid
     /// </summary>
-    [TestCategory("Winforms"), TestMethod]
+    [TestCategory("Winforms"), TestCategory("Slow"), TestMethod]
     public void EditInDataGridViewTest()
     {
       TestShowInGrid(NonSerializableClass.GenerateList(), NonSerializableClass.NumberOfNonSerializableClassProperties, NonSerializableClass.NumberOfNonSerializableClassProperties);
@@ -275,7 +275,7 @@ namespace AW.Tests
       Assert.AreEqual(awDataClassesDataContext.AddressTypes, actual);
     }
 
-    [TestCategory("Winforms"), TestMethod]
+    [TestCategory("Winforms"), TestCategory("Slow"), TestMethod]
     public void Xml_test()
     {
       var xml = TestData.GetTestxmlString();
