@@ -79,7 +79,7 @@ namespace AW.Tests
     public void DataTableSurrogateSerializeDeserializexmlSchemaTest()
     {
       var xmlSchema = TestData.GetTestXmlSchema();
-      TestDataTableBinarySerializeDeserialize(xmlSchema.Items.CopyToDataTable(true));
+      TestDataTableBinarySerializeDeserialize(xmlSchema.Items.CopyToDataTable(ObjectShredder.ShreddingMode.Safe));
     //  TestDataTableSurrogateSerializeDeserialize(xmlSchema.Items.CopyToDataTable());
     }
 

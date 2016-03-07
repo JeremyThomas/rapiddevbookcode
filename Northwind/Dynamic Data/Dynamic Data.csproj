@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,7 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Dynamic_Data</RootNamespace>
     <AssemblyName>Northwind Dynamic Data</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
@@ -47,19 +47,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20160126\lib\net45\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
+      <HintPath>..\..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20160224\lib\net45\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.Web, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SD.LLBLGen.Pro.ORMSupportClasses.Web.4.2.20160126\lib\net35\SD.LLBLGen.Pro.ORMSupportClasses.Web.dll</HintPath>
+      <HintPath>..\..\packages\SD.LLBLGen.Pro.ORMSupportClasses.Web.4.2.20160224\lib\net35\SD.LLBLGen.Pro.ORMSupportClasses.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
@@ -306,10 +310,6 @@
     <ProjectReference Include="..\..\AW.Helper.LLBL\AW.Helper.LLBL.csproj">
       <Project>{7919C746-73F3-4279-A53B-CC6C08F42318}</Project>
       <Name>AW.Helper.LLBL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\DynamicDataSupportClasses\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj">
-      <Project>{64696470-5D05-4E00-95C4-C320F268E526}</Project>
-      <Name>SD.LLBLGen.Pro.DynamicDataSupportClasses</Name>
     </ProjectReference>
     <ProjectReference Include="..\DAL\Northwind.DAL.csproj">
       <Project>{24FA312C-06E0-462D-97FA-709AC20D09EF}</Project>

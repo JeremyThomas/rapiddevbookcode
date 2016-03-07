@@ -288,7 +288,7 @@ namespace AW.DebugVisualizers.Tests
       TestShowTransported(MetaSingletons.MetaData.Address.Take(5), TestData.BrowseableAddressProperties);
     }
 
-    [TestMethod]
+    [TestMethod, TestCategory("Slow")]
     public void AdapterTest()
     {
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
@@ -337,7 +337,7 @@ namespace AW.DebugVisualizers.Tests
       TestShowTransported(SerializableClass.GenerateList(), 8);
     }
 
-    [TestCategory("Winforms"), TestMethod]
+    [TestCategory("Winforms"), TestCategory("Slow"), TestMethod]
     public void NonSerializableEnumerationTest()
     {
       TestShowTransported(MetaSingletons.MetaData.AddressType, TestData.BrowseableAddressTypeProperties);
@@ -348,7 +348,7 @@ namespace AW.DebugVisualizers.Tests
       TestShowTransported(AddressTypeEntityCollection.AsQueryable().OrderByDescending(at => at.AddressTypeID), TestData.BrowseableAddressTypeProperties);
     }
 
-    [TestCategory("Winforms"), TestMethod]
+    [TestCategory("Winforms"), TestCategory("Slow"), TestMethod]
     public void NonSerializableItemTest()
     {
       var listofNonSerializableClasses = NonSerializableClass.GenerateList();
@@ -377,7 +377,7 @@ namespace AW.DebugVisualizers.Tests
       TestSerialize(listofNonSerializableClasses.ToBindingListView());
     }
 
-    [TestCategory("Winforms"), TestMethod]
+    [TestCategory("Winforms"), TestCategory("Slow"), TestMethod]
     public void StringArrayTest()
     {
       var enumerable = new[] {"s1", "s2", "s3"};
@@ -425,7 +425,7 @@ namespace AW.DebugVisualizers.Tests
       TestShowTransported(readOnlyDictionary, 2, 1);
     }
 
-    [TestCategory("Winforms"), TestMethod]
+    [TestCategory("Winforms"), TestCategory("Slow"), TestMethod]
     public void Xml_test()
     {
       var xml = TestData.GetTestxmlString();
@@ -440,7 +440,7 @@ namespace AW.DebugVisualizers.Tests
       TestShowTransported(xmlDoc.FirstChild.ChildNodes, 25, 14);
     }
 
-    [TestMethod]
+    [TestMethod, TestCategory("Slow")]
     public void XmlSchemaTest()
     {
       var xmlSchema = TestData.GetTestXmlSchema();
@@ -556,7 +556,7 @@ namespace AW.DebugVisualizers.Tests
       }
     }
 
-    [TestCategory("Winforms"), TestMethod]
+    [TestCategory("Winforms"), TestCategory("Slow"), TestMethod]
     public void ClaimsTest()
     {
       var windowsIdentity = WindowsIdentity.GetCurrent();
@@ -594,7 +594,7 @@ namespace AW.DebugVisualizers.Tests
     /// <param name="transportedEnumerableOrDataTable"> The transported enumerable or data table. </param>
     private static void AssertNewContainerIsBindingListView(object enumerableOrDataTableToVisualize, object transportedEnumerableOrDataTable)
     {
-      if (!(transportedEnumerableOrDataTable is DataTableSurrogate) && !(transportedEnumerableOrDataTable is IListSource)
+      if (!(transportedEnumerableOrDataTable is IListSource)
           && transportedEnumerableOrDataTable.GetType() != enumerableOrDataTableToVisualize.GetType())
         Assert.IsInstanceOfType(transportedEnumerableOrDataTable, typeof (IBindingListView));
     }
@@ -649,7 +649,7 @@ namespace AW.DebugVisualizers.Tests
     private static void TestShow(object enumerableOrDataTableToVisualize, int expectedColumnCount)
     {
       Assert.IsTrue(enumerableOrDataTableToVisualize is IEnumerable
-                    || enumerableOrDataTableToVisualize is DataTableSurrogate || enumerableOrDataTableToVisualize is DataTable
+                    || enumerableOrDataTableToVisualize is DataTable
                     || enumerableOrDataTableToVisualize is WeakReference);
       AssertTypeIsRegistered(enumerableOrDataTableToVisualize);
       ShowWithFake(enumerableOrDataTableToVisualize);

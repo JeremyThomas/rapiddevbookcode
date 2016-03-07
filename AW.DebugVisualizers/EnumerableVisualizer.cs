@@ -115,7 +115,7 @@ namespace AW.DebugVisualizers
             }
             catch (Exception)
             {
-              Serialize(outgoingData, enumerable.CopyToDataTable(true));
+              Serialize(outgoingData, enumerable.CopyToDataTable(ObjectShredder.ShreddingMode.Safe));
             }
           }
         }
@@ -153,7 +153,7 @@ namespace AW.DebugVisualizers
       }
       catch (SerializationException)
       {
-        Serialize(outgoingData, enumerable.CopyToDataTable(true));
+        Serialize(outgoingData, enumerable.CopyToDataTable(ObjectShredder.ShreddingMode.Safe));
       }
     }
 

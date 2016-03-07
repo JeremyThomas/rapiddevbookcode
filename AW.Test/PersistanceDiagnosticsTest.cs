@@ -74,7 +74,7 @@ namespace AW.Tests
       Assert.AreEqual(0, errors.Length, errors.ToString());
     }
 
-    [TestCategory("Slow"), TestMethod]
+    [TestMethod]
     public void CheckAllAWEntitiesCanBeFetchedUsingLINQTest()
     {
       var errors = PersistanceDiagnostics.CheckAllEntitiesCanBeFetchedUsingLINQ<Data.EntityType>(MetaSingletons.MetaData, 30);

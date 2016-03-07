@@ -677,7 +677,16 @@ namespace AW.Winforms.Helpers.Controls
       var valueType = e.Column.ValueType;
       if (valueType == null)
       {
-        var propertyInfo = ItemType.GetProperty(e.Column.DataPropertyName);
+        PropertyInfo propertyInfo;
+        try
+        {
+          propertyInfo = ItemType.GetProperty(e.Column.DataPropertyName);
+        }
+        catch (AmbiguousMatchException)
+        {
+          propertyInfo = ItemType.GetProperties().FirstOrDefault(p => p.Name == e.Column.DataPropertyName);
+        }
+
         if (propertyInfo == null)
         {
           var dataView = DataSource as DataView;

@@ -15,21 +15,27 @@ namespace AW.Helper
   /// <see cref="http://msdn.microsoft.com/en-us/library/bb669096.aspx" />
   public class ObjectShredder
   {
+    public enum ShreddingMode
+    {
+      AllFields,
+      NonSerializableAsString,
+      Safe
+    }
     protected IEnumerable<PropertyDescriptor> Pd;
     protected readonly Dictionary<string, int> OrdinalMap;
     protected Type Type;
     protected PropertyDescriptorGenerator PropertyDescriptorGenerator;
-    private readonly bool _safeMode;
+    private readonly ShreddingMode _shreddingMode;
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="ObjectShredder" /> class.
     /// </summary>
     /// <param name="propertyDescriptorGenerator">The property descriptor generator.</param>
-    /// <param name="safeMode">if set to <c>true</c> [safe mode].</param>
-    public ObjectShredder(PropertyDescriptorGenerator propertyDescriptorGenerator = null, bool safeMode = false)
+    /// <param name="shreddingMode">if set to <c>true</c> [safe mode].</param>
+    public ObjectShredder(PropertyDescriptorGenerator propertyDescriptorGenerator = null, ShreddingMode shreddingMode = ShreddingMode.AllFields)
     {
       PropertyDescriptorGenerator = propertyDescriptorGenerator;
-      _safeMode = safeMode;
+      _shreddingMode = shreddingMode;
       OrdinalMap = new Dictionary<string, int>();
     }
 
@@ -148,7 +154,7 @@ namespace AW.Helper
         {
           var value = p.GetValue(instance);
           var ordinal = OrdinalMap[p.Name];
-          if (!_safeMode)
+          if (_shreddingMode== ShreddingMode.AllFields)
           {
             values[ordinal] = value;
           }
@@ -197,7 +203,7 @@ namespace AW.Helper
     private Type GetColumnType(PropertyDescriptor p)
     {
       var columnType = MetaDataHelper.GetCoreType(p.PropertyType);
-      if (!_safeMode)
+      if (_shreddingMode == ShreddingMode.AllFields)
         return columnType;
       if (columnType.IsValueType)
         return columnType;
