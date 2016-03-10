@@ -635,7 +635,7 @@ namespace AW.Helper
     /// <returns> </returns>
     public static IEnumerable<PropertyDescriptor> GetPropertiesToSerialize(Type type)
     {
-      return GetPropertiesToDisplay(type).FilterByIsNotAssignableFrom(typeof (IDictionary));
+      return GetPropertiesToDisplay(type);
     }
 
     /// <summary>
