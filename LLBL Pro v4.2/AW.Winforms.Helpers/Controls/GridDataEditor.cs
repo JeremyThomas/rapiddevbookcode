@@ -706,7 +706,7 @@ namespace AW.Winforms.Helpers.Controls
       {
         var adgvColumnHeaderCell = e.Column.HeaderCell as ADGVColumnHeaderCell;
         if (adgvColumnHeaderCell != null)
-          if (!ImplementsIComparable(coreType)) //For testing || e.Column.DataPropertyName == "ModifiedDate"
+          if (!MetaDataHelper.ImplementsIComparable(coreType)) //For testing || e.Column.DataPropertyName == "ModifiedDate"
             adgvColumnHeaderCell.CellBehavior = ADGVColumnHeaderCellBehavior.DisabledHidden;
       }
       if (Readonly || _shouldBeReadonly) return;
@@ -751,11 +751,6 @@ namespace AW.Winforms.Helpers.Controls
       //  e.Column.Tag = true;
       //  dataGridView.Columns.Add(e.Column);
       //}
-    }
-
-    private static bool ImplementsIComparable(Type coreType)
-    {
-      return coreType.Implements(typeof (IComparable)) || coreType.HasGenericTypeDefinition(typeof (IComparable<>));
     }
 
     private void dataGridViewEnumerable_ColumnRemoved(object sender, DataGridViewColumnEventArgs e)

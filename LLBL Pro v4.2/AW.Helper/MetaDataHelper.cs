@@ -374,6 +374,11 @@ namespace AW.Helper
       return type.GetInterface(interfaceType.FullName);
     }
 
+    public static bool ImplementsIComparable(Type coreType)
+    {
+      return coreType.Implements(typeof(IComparable)) || coreType.HasGenericTypeDefinition(typeof(IComparable<>));
+    }
+
     public static bool Implements(this Type type, Type interfaceType)
     {
       return type.Implements(interfaceType.FullName);
@@ -630,12 +635,7 @@ namespace AW.Helper
     /// <returns> </returns>
     public static IEnumerable<PropertyDescriptor> GetPropertiesToSerialize(Type type)
     {
-      return GetPropertiesToDisplay(type).FilterBySerializable().FilterByIsNotAssignableFrom(typeof (IDictionary));
-    }
-
-    public static IEnumerable<PropertyDescriptor> GetPropertiesToSerialize(IEnumerable enumerable)
-    {
-      return GetPropertiesToSerialize(GetEnumerableItemType(enumerable));
+      return GetPropertiesToDisplay(type).FilterByIsNotAssignableFrom(typeof (IDictionary));
     }
 
     /// <summary>
@@ -1112,7 +1112,7 @@ namespace AW.Helper
         try
         {
           var identifiableString = GetPropertiesAndValuesAsStringList(myObject).JoinAsString();
-          if (!string.IsNullOrWhiteSpace(identifiableString))
+          if (!String.IsNullOrWhiteSpace(identifiableString))
             return identifiableString;
         }
         catch (Exception e)

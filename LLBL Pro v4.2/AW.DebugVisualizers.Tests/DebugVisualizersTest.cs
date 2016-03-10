@@ -417,12 +417,12 @@ namespace AW.DebugVisualizers.Tests
     public void DictionaryTest()
     {
       var dictionary = NonSerializableClass.GenerateList().ToDictionary(ns => ns.IntProperty, ns => ns);
-      TestShowTransported(dictionary, 2, 1);
+      TestShowTransported(dictionary, 2);
       const int expectedColumnCount = NonSerializableClass.NumberOfNonSerializableClassProperties*2;
       TestShowTransported(dictionary.Values, expectedColumnCount);
       TestShowTransported(dictionary.Keys, 1);
       var readOnlyDictionary = new ReadOnlyDictionary<int, NonSerializableClass>(dictionary);
-      TestShowTransported(readOnlyDictionary, 2, 1);
+      TestShowTransported(readOnlyDictionary, 2);
     }
 
     [TestCategory("Winforms"), TestCategory("Slow"), TestMethod]
@@ -431,26 +431,26 @@ namespace AW.DebugVisualizers.Tests
       var xml = TestData.GetTestxmlString();
 
       var xElement = XElement.Parse(xml);
-      TestShowTransported(xElement.Elements(), 21, 7);
+      TestShowTransported(xElement.Elements(), 21, 15);
       //TestSerialize(xElement);
 
       var xmlDoc = new XmlDocument();
       xmlDoc.LoadXml(xml);
       //Show(xmlDoc.FirstChild.ChildNodes);
-      TestShowTransported(xmlDoc.FirstChild.ChildNodes, 25, 14);
+      TestShowTransported(xmlDoc.FirstChild.ChildNodes, 25);
     }
 
     [TestMethod, TestCategory("Slow")]
     public void XmlSchemaTest()
     {
       var xmlSchema = TestData.GetTestXmlSchema();
-      TestShowTransported(xmlSchema.Items, 28, 23);
+      TestShowTransported(xmlSchema.Items, 28);
       TestShowTransported(xmlSchema.Attributes.Names, 0);
       TestShowTransported(xmlSchema.Elements.Names, 3);
-      TestShowTransported(xmlSchema.Elements.Values, 28, 23);
+      TestShowTransported(xmlSchema.Elements.Values, 28);
       TestShowTransported(xmlSchema.Groups.Values, 0);
       TestShowTransported(xmlSchema.SchemaTypes.Values, 0);
-      TestShowTransported(XmlSchemaHelper.GetAllElements(xmlSchema), 28, 23);
+      TestShowTransported(XmlSchemaHelper.GetAllElements(xmlSchema), 28);
     }
 
     //[TestMethod]
@@ -466,13 +466,13 @@ namespace AW.DebugVisualizers.Tests
     [TestMethod]
     public void SettingsPropertyTest()
     {
-      TestShowTransported(Settings.Default.Properties, 9, 7);
+      TestShowTransported(Settings.Default.Properties, 9, 8);
       if (Settings.Default.PropertyValues.Count == 0)
       {
         var x = Settings.Default.StringSetting;
       }
       Assert.AreNotEqual(0, Settings.Default.PropertyValues.Count);
-      TestShowTransported(Settings.Default.PropertyValues, 7, 6);
+      TestShowTransported(Settings.Default.PropertyValues, 7);
     }
 
     [TestMethod]

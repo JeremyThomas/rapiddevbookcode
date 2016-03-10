@@ -203,12 +203,13 @@ namespace AW.Helper
     private Type GetColumnType(PropertyDescriptor p)
     {
       var columnType = MetaDataHelper.GetCoreType(p.PropertyType);
-      if (_shreddingMode == ShreddingMode.AllFields)
-        return columnType;
-      if (columnType.IsValueType)
+      if (_shreddingMode == ShreddingMode.AllFields || columnType.IsValueType)
         return columnType;
       if (Type.GetTypeCode(columnType) == TypeCode.Object)
-        return typeof (string);
+        if (_shreddingMode == ShreddingMode.NonSerializableAsString && MetaDataHelper.IsSerializable(columnType))
+          return columnType;
+        else
+          return typeof(string);
       return columnType;
     }
   }
