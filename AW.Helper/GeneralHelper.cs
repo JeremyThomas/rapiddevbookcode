@@ -361,12 +361,12 @@ namespace AW.Helper
       return source;
     }
 
-    public static DataTable CopyToDataTable(this IEnumerable source, ObjectShredder.ShreddingMode shreddingMode = ObjectShredder.ShreddingMode.NonSerializableAsString)
+    public static DataTable CopyToDataTable(this IEnumerable source, ObjectShredder.ShreddingMode shreddingMode = ObjectShredder.ShreddingMode.NonSerializableAndNonComparableAsString)
     {
       return CopyToDataTable(source, MetaDataHelper.GetPropertiesToSerialize, shreddingMode);
     }
 
-    private static DataTable CopyToDataTable(IEnumerable source, PropertyDescriptorGenerator propertyDescriptorGenerator, ObjectShredder.ShreddingMode shreddingMode = ObjectShredder.ShreddingMode.AllFields)
+    private static DataTable CopyToDataTable(IEnumerable source, PropertyDescriptorGenerator propertyDescriptorGenerator, ObjectShredder.ShreddingMode shreddingMode)
     {
       var dataView = source as DataView;
       if (dataView != null && dataView.Table != null)

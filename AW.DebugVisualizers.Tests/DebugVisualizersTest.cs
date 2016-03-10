@@ -466,7 +466,7 @@ namespace AW.DebugVisualizers.Tests
     [TestMethod]
     public void SettingsPropertyTest()
     {
-      TestShowTransported(Settings.Default.Properties, 9, 8);
+      TestShowTransported(Settings.Default.Properties, 9);
       if (Settings.Default.PropertyValues.Count == 0)
       {
         var x = Settings.Default.StringSetting;
@@ -511,7 +511,7 @@ namespace AW.DebugVisualizers.Tests
       using (var searcher = new DirectorySearcher(entry))
       {
         searcher.PageSize = 5;
-        TestShowTransported(searcher.FindAll(), 2, 1);
+        TestShowTransported(searcher.FindAll(), 2);
       }
     }
 

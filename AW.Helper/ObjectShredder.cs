@@ -19,6 +19,7 @@ namespace AW.Helper
     {
       AllFields,
       NonSerializableAsString,
+      NonSerializableAndNonComparableAsString,
       Safe
     }
     protected IEnumerable<PropertyDescriptor> Pd;
@@ -206,8 +207,13 @@ namespace AW.Helper
       if (_shreddingMode == ShreddingMode.AllFields || columnType.IsValueType)
         return columnType;
       if (Type.GetTypeCode(columnType) == TypeCode.Object)
-        if (_shreddingMode == ShreddingMode.NonSerializableAsString && MetaDataHelper.IsSerializable(columnType))
+        if ((_shreddingMode == ShreddingMode.NonSerializableAsString || _shreddingMode == ShreddingMode.NonSerializableAndNonComparableAsString)
+            && MetaDataHelper.IsSerializable(columnType))
+        {
+          if ( _shreddingMode == ShreddingMode.NonSerializableAndNonComparableAsString && !MetaDataHelper.ImplementsIComparable(columnType))
+            return typeof(string);
           return columnType;
+        }
         else
           return typeof(string);
       return columnType;
