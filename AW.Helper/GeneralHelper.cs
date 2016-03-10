@@ -342,19 +342,6 @@ namespace AW.Helper
       }
     }
 
-    public static DataTable CopyToDataTable(this IEnumerable source, ObjectShredder.ShreddingMode shreddingMode = ObjectShredder.ShreddingMode.AllFields)
-    {
-      return CopyToDataTable(source, MetaDataHelper.GetPropertiesToSerialize, shreddingMode);
-    }
-
-    public static DataTable CopyToDataTable(IEnumerable source, PropertyDescriptorGenerator propertyDescriptorGenerator, ObjectShredder.ShreddingMode shreddingMode = ObjectShredder.ShreddingMode.AllFields)
-    {
-      var dataView = source as DataView;
-      if (dataView != null && dataView.Table != null)
-        return dataView.Table;
-      return new ObjectShredder(propertyDescriptorGenerator, shreddingMode).Shred(source, null, null);
-    }
-
     public static DataTable StripTypeColumns(this DataTable source)
     {
       var dataColumnsToRemove = source.Columns.OfType<DataColumn>().Where(dc => !dc.DataType.IsSerializable || dc.DataType == typeof (Type)).ToList();
@@ -374,21 +361,17 @@ namespace AW.Helper
       return source;
     }
 
-    /// <summary>
-    ///   Copies enumerable to a data table.
-    /// </summary>
-    /// <see cref="http://msdn.microsoft.com/en-us/library/bb669096.aspx" />
-    /// <typeparam name="T"> </typeparam>
-    /// <param name="source"> The source. </param>
-    /// <returns> </returns>
-    public static DataTable CopyToDataTable<T>(this IEnumerable<T> source)
+    public static DataTable CopyToDataTable(this IEnumerable source, ObjectShredder.ShreddingMode shreddingMode = ObjectShredder.ShreddingMode.NonSerializableAsString)
     {
-      return CopyToDataTable(source, null, null);
+      return CopyToDataTable(source, MetaDataHelper.GetPropertiesToSerialize, shreddingMode);
     }
 
-    public static DataTable CopyToDataTable<T>(this IEnumerable<T> source, DataTable table, LoadOption? options)
+    private static DataTable CopyToDataTable(IEnumerable source, PropertyDescriptorGenerator propertyDescriptorGenerator, ObjectShredder.ShreddingMode shreddingMode = ObjectShredder.ShreddingMode.AllFields)
     {
-      return new ObjectShredder(MetaDataHelper.GetPropertiesToSerialize).Shred(source, table, options);
+      var dataView = source as DataView;
+      if (dataView != null && dataView.Table != null)
+        return dataView.Table;
+      return new ObjectShredder(propertyDescriptorGenerator, shreddingMode).Shred(source, null, null);
     }
 
     /// <summary>

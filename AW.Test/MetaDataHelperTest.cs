@@ -141,7 +141,7 @@ namespace AW.Tests
       var customerEntityType = typeof (CustomerEntity);
       var expected = MetaDataHelper.GetPropertiesToSerialize(customerEntityType);
       Assert.IsTrue(MetaDataHelper.IsSerializable(customerEntityType));
-      Assert.AreEqual(11, expected.Count());
+      Assert.AreEqual(12, expected.Count());
       var metaData = NorthwindTest.GetNorthwindLinqMetaData();
       var customer = metaData.Customer
         .WithPath(new PathEdge<OrderEntity>(CustomerEntity.PrefetchPathOrders, new PathEdge<EmployeeEntity>(OrderEntity.PrefetchPathEmployee)))

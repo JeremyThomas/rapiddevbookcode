@@ -288,7 +288,7 @@ namespace AW.Winforms.Helpers.EntityViewer
         get
         {
           if (string.IsNullOrEmpty(base.Description))
-            return String.Format("{0} {1} {2}\n\rDefined in class {3}", Category, _property.PropertyType, _property.Name, _property.DeclaringType == null ? null: _property.DeclaringType.FullName);
+            return String.Format("{0} {1} {2}\n\rDefined in class {3}", Category, _property.PropertyType, _property.Name, _property.DeclaringType == null ? null : _property.DeclaringType.FullName);
 
           return base.Description;
         }
@@ -306,14 +306,18 @@ namespace AW.Winforms.Helpers.EntityViewer
 
       public override object GetValue(object component)
       {
-        try
-        {
-          return _property.GetValue(component, null);
-        }
-        catch (Exception)
-        {
-          return null;
-        }
+        if (_property.CanRead)
+          try
+          {
+            var indexParameters = _property.GetIndexParameters();
+            if (indexParameters.Length == 0)
+              return _property.GetValue(component, null);
+          }
+          catch (Exception)
+          {
+            return null;
+          }
+        return null;
       }
 
       public override void SetValue(object component, object value)
