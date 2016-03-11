@@ -377,7 +377,7 @@ namespace AW.Helper
 
     public static bool ImplementsIComparable(Type coreType)
     {
-      return coreType.Implements(typeof(IComparable)) || coreType.HasGenericTypeDefinition(typeof(IComparable<>));
+      return coreType.Implements(typeof (IComparable)) || coreType.HasGenericTypeDefinition(typeof (IComparable<>));
     }
 
     public static bool Implements(this Type type, Type interfaceType)
@@ -610,6 +610,11 @@ namespace AW.Helper
     /// <remarks>
     ///   See CurrencyManager.GetItemProperties()
     ///   Where clause copied from DataGridViewDataConnection.GetCollectionOfBoundDataGridViewColumns()
+    ///   ListBindingHelper.GetListItemProperties(type) calls TypeDescriptor.GetProperties(typeof(XElement), BrowsableAttributeList)
+    ///   which excludes properties with no attributes even if IsBrowsable is true.
+    ///   But when the list is ObjectListView it gets its own list of properties via a straight TypeDescriptor.GetProperties(listItemType) then
+    ///   supplies them via the ITypedList it implements but now if ListBindingHelper.GetListItemProperties() is called on the ObjectListView
+    ///   it now returns those properties it wouldn't otherwise have.
     /// </remarks>
     /// <returns> The properties to display in LINQPad's Dump </returns>
     public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay(Type type)
@@ -647,7 +652,6 @@ namespace AW.Helper
       {
         TypeDescriptor.RemoveProvider(fieldsToPropertiesTypeDescriptionProvider, type);
       }
-
     }
 
     /// <summary>
