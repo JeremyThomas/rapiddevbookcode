@@ -25,6 +25,7 @@ using AW.Data.EntityClasses;
 using AW.DebugVisualizers.Tests.Properties;
 using AW.Helper;
 using AW.Helper.LLBL;
+using AW.Helper.PropertyDescriptors;
 using AW.Helper.TypeConverters;
 using AW.LinqToSQL;
 using AW.Test.Helpers;
@@ -202,7 +203,7 @@ namespace AW.DebugVisualizers.Tests
       var enumerableRowCollection = addressTypeDataTable.AsEnumerable();
       TestSerialize(enumerableRowCollection);
 
-      TestSerialize(DataTableExtensions.CopyToDataTable(enumerableRowCollection));
+      TestSerialize(enumerableRowCollection.CopyToDataTable());
     }
 
     [TestCategory("Winforms"), TestMethod]
@@ -425,13 +426,16 @@ namespace AW.DebugVisualizers.Tests
       TestShowTransported(readOnlyDictionary, 2);
     }
 
+    public const int NumXElementProperties = 15;
+    public const int NumXElementFieldsToShow = 6;
+
     [TestCategory("Winforms"), TestCategory("Slow"), TestMethod]
     public void Xml_test()
     {
-      var xml = TestData.GetTestxmlString();
+      var xml = TestData.TestXmlString; 
 
       var xElement = XElement.Parse(xml);
-      TestShowTransported(xElement.Elements(), 21, 15);
+      TestShowTransported(xElement.Elements(), NumXElementProperties + NumXElementFieldsToShow, NumXElementProperties);
       //TestSerialize(xElement);
 
       var xmlDoc = new XmlDocument();
@@ -491,7 +495,7 @@ namespace AW.DebugVisualizers.Tests
       using (var usr = UserPrincipal.FindByIdentity(ctx, IdentityType.SamAccountName, Environment.UserName))
       {
         var directoryEntry = usr != null ? usr.GetUnderlyingObject() as DirectoryEntry : null;
-        if (directoryEntry != null) TestShowTransported(directoryEntry.Properties, 5); 
+        if (directoryEntry != null) TestShowTransported(directoryEntry.Properties, 5);
         //Slow when calling System.DirectoryServices.Interop.UnsafeNativeMethods.ADsOpenObject() from System.DirectoryServices.PropertyCollection.GetEnumerator()   (from System.Collections.IEnumerable)
       }
     }

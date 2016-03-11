@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Globalization;
@@ -8,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Resources;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
@@ -79,7 +81,7 @@ namespace AW.Tests
       Assert.IsTrue((new List<SerializableClass>()).IsNullOrEmpty());
       Assert.IsTrue(LinqHelper.IsNullOrEmpty(null));
 
-      Assert.IsTrue(new System.Collections.Specialized.NameValueCollection().IsNullOrEmpty());
+      Assert.IsTrue(new NameValueCollection().IsNullOrEmpty());
       Assert.IsTrue(new NonGenericEnumerable().IsNullOrEmpty());
     }
     
@@ -90,20 +92,21 @@ namespace AW.Tests
       AssertCopyToDataTable(typeof (T), actual);
     }
 
-    private static void CopyToDataTableAndAssert(ICollection source, Type type, ObjectShredder.ShreddingMode shreddingMode = ObjectShredder.ShreddingMode.AllFields)
+    private static int CopyToDataTableAndAssert(ICollection source, Type type, ObjectShredder.ShreddingMode shreddingMode = ObjectShredder.ShreddingMode.AllFields)
     {
       var actual = source.CopyToDataTable(shreddingMode);
       Assert.AreEqual(source.Count, actual.Rows.Count);
-      AssertCopyToDataTable(type, actual);
+      return AssertCopyToDataTable(type, actual);
     }
 
-    private static void AssertCopyToDataTable(Type type, DataTable actual)
+    private static int AssertCopyToDataTable(Type type, DataTable actual)
     {
       var propertyDescriptors = MetaDataHelper.GetPropertiesToSerialize(type);
       Assert.AreEqual(propertyDescriptors.Count(), actual.Columns.Count);
       var expectedPropertyDescriptorNames = propertyDescriptors.Select(pd => pd.Name).ToList();
       var actualNames = actual.Columns.Cast<DataColumn>().Select(dc => dc.ColumnName).ToList();
       CollectionAssert.AreEquivalent(expectedPropertyDescriptorNames, actualNames);
+      return actual.Columns.Count;
     }
 
     [TestMethod, Microsoft.VisualStudio.TestTools.UnitTesting.Description("A test for CopyToDataTable")]
@@ -125,6 +128,16 @@ namespace AW.Tests
     {
       var xmlSchema = TestData.GetTestXmlSchema();
       CopyToDataTableAndAssert(xmlSchema.Items, xmlSchema.Items[0].GetType());
+    }
+
+    public const int NumXElementProperties = 15;
+    public const int NumXElementOtherToShow = 6; //Don't know what these are but they are not fields
+
+    [TestMethod, Microsoft.VisualStudio.TestTools.UnitTesting.Description("A test for CopyToDataTable")]
+    public void XElementCopyToDataTableTest()
+    {
+      var xElements = TestData.TestXElements();
+     Assert.AreEqual(NumXElementProperties, CopyToDataTableAndAssert(xElements, xElements.First().GetType()));
     }
 
     [TestMethod]
@@ -193,8 +206,6 @@ namespace AW.Tests
       Assert.AreEqual(1, root.Count());
       Assert.AreEqual(5, employeeEntitiesQueryRoot.Single().Staff.Count);
     }
-
-
   }
 
   public class StringPropertyDescriptor : PropertyDescriptor

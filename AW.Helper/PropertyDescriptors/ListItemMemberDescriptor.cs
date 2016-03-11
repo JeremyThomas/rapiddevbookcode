@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace AW.Winforms.Helpers.PropGridEx
+namespace AW.Helper.PropertyDescriptors
 {
   public abstract class ListItemAbstractDescriptor : PropertyDescriptor
   {

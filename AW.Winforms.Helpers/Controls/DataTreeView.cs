@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using AW.Helper;
+using AW.Helper.PropertyDescriptors;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.EntityViewer;
 

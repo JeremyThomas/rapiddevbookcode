@@ -6,16 +6,16 @@ using System.Reflection;
 
 //http://www.codeproject.com/KB/grid/PropertyGridExWinForms.aspx
 
-namespace AW.Winforms.Helpers.PropGridEx
+namespace AW.Helper.PropertyDescriptors
 {
   /// <summary>
   ///   Custom PropertyDescriptor for Fields
   /// </summary>
-  internal class FieldMemberDescriptor : PropertyDescriptor
+  public class FieldMemberDescriptor : PropertyDescriptor
   {
     private readonly FieldInfo m_FieldInfo;
 
-    internal FieldMemberDescriptor(FieldInfo field)
+    public FieldMemberDescriptor(FieldInfo field)
       : base(String.Concat(field.DeclaringType.Name, ".", field.Name), (Attribute[]) field.GetCustomAttributes(typeof (Attribute), true))
     {
       m_FieldInfo = field;

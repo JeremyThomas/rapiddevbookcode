@@ -254,9 +254,7 @@
     <Compile Include="FrmThreePanelBase.Designer.cs">
       <DependentUpon>FrmThreePanelBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Misc\ChainingPropertyDescriptor.cs" />
     <Compile Include="Misc\ConvertersAndDescriptors.cs" />
-    <Compile Include="Misc\SubstitutingTypeDescriptor.cs" />
     <Compile Include="QueryRunner\FrmQueryRunner.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -269,7 +267,6 @@
     <Compile Include="QueryRunner\QueryRunner.Designer.cs">
       <DependentUpon>QueryRunner.cs</DependentUpon>
     </Compile>
-    <Compile Include="EntityViewer\FieldsToPropertiesTypeDescriptionProvider.cs" />
     <Compile Include="EntityViewer\FrmEntityViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -297,9 +294,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="PropGridEx\DictionaryItemMemberDescriptor.cs" />
-    <Compile Include="PropGridEx\FieldMemberDescriptor.cs" />
-    <Compile Include="PropGridEx\ListItemMemberDescriptor.cs" />
     <Compile Include="PropGridEx\PropertyGridEx.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using AW.Winforms.Helpers.PropGridEx;
 
 //http://msdn.microsoft.com/en-us/magazine/cc163804.aspx
 
-namespace AW.Winforms.Helpers.EntityViewer
+namespace AW.Helper.PropertyDescriptors
 {
   public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
   {

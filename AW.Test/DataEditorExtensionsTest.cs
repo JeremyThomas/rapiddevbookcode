@@ -14,6 +14,7 @@ using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
+using AW.Helper.PropertyDescriptors;
 using AW.Helper.TypeConverters;
 using AW.LinqToSQL;
 using AW.Test.Helpers;
@@ -111,12 +112,12 @@ namespace AW.Tests
     {
       if (_fieldsToPropertiesTypeDescriptionProvider == null && typeToEdit != null)
       {
-        _fieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeToEdit, BindingFlags.Instance | BindingFlags.Public);
+        _fieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeToEdit, FieldBindingFlags);
         TypeDescriptor.AddProvider(_fieldsToPropertiesTypeDescriptionProvider, typeToEdit);
       }
     }
 
-    private void TidyUp(Type itemType)
+    private static void TidyUp(Type itemType)
     {
       if (_fieldsToPropertiesTypeDescriptionProvider != null && itemType != null)
       {
@@ -278,11 +279,16 @@ namespace AW.Tests
     [TestCategory("Winforms"), TestCategory("Slow"), TestMethod]
     public void Xml_test()
     {
-      var xml = TestData.GetTestxmlString();
+      var xml = TestData.TestXmlString;
 
       var xElement = XElement.Parse(xml);
-      var xElements = xElement.Elements();
-      TestShowInGrid(xElements, 15, 6);
+      var xElements = xElement.Elements().ToList();
+      TestShowInGrid(xElements, GeneralHelperTest.NumXElementProperties, GeneralHelperTest.NumXElementOtherToShow);
+      //var propertyDescriptorCollection = ListBindingHelper.GetListItemProperties(xElements);
+      //var dataGridView = new DataGridView();
+      //dataGridView.DataSource = xElements;
+      //var controlBindingsCollection = dataGridView.DataBindings;
+      //FrmDataEditor.ShowInGrid(xElements.CopyToDataTable().DefaultView);
 
       var xmlDoc = new XmlDocument();
       xmlDoc.LoadXml(xml);
@@ -313,8 +319,8 @@ namespace AW.Tests
     {
       ModalFormHandler = NullHandler;
       var nonSerializableClassWithSerializableClassProperties = NonSerializableClassWithSerializableClassProperty.GenerateList();
-    //  FrmDataEditor.ShowInGrid(nonSerializableClassWithSerializableClassProperties);
-      var propertyDescriptors = MetaDataHelper.GetPropertiesToDisplay(typeof(AddressTypeEntity));
+      //  FrmDataEditor.ShowInGrid(nonSerializableClassWithSerializableClassProperties);
+      var propertyDescriptors = MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity));
       var copyToDataTable = propertyDescriptors.CopyToDataTable();
       //var propertyDescriptorCollection = TypeDescriptor.GetProperties(copyToDataTable.DefaultView);
       //CollectionAssert.AreEquivalent(propertyDescriptors.ToList(), propertyDescriptorCollection);
@@ -328,11 +334,12 @@ namespace AW.Tests
     [TestCategory("Winforms"), TestMethod]
     public void Xml_test()
     {
-      //var xml = TestData.GetTestxmlString();
+      var xml = TestData.TestXmlString;
 
-      //var xElement = XElement.Parse(xml);
-      //var xElements = xElement.Elements();
-      //xElements.ShowInGrid();
+      var xElement = XElement.Parse(xml);
+      var xElements = xElement.Elements();
+      FrmDataEditor.ShowInGrid(xElements);
+      FrmDataEditor.ShowInGrid(xElements.CopyToDataTable().DefaultView);
 
       //var xmlDoc = new XmlDocument();
       //xmlDoc.LoadXml(xml);

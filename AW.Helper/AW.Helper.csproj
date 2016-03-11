@@ -102,6 +102,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="PropertyDescriptors\ChainingPropertyDescriptor.cs" />
+    <Compile Include="PropertyDescriptors\DictionaryItemMemberDescriptor.cs" />
+    <Compile Include="PropertyDescriptors\FieldMemberDescriptor.cs" />
+    <Compile Include="PropertyDescriptors\FieldsToPropertiesTypeDescriptionProvider.cs" />
+    <Compile Include="PropertyDescriptors\ListItemMemberDescriptor.cs" />
+    <Compile Include="PropertyDescriptors\SubstitutingTypeDescriptor.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="StaticMembersDynamicWrapper.cs" />
     <Compile Include="TypeConverters\BaseEnumConverter.cs" />

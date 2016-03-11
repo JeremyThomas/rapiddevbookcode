@@ -1,4 +1,5 @@
 using System;
+using AW.Helper.PropertyDescriptors;
 using AW.Winforms.Helpers.PropGridEx;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 

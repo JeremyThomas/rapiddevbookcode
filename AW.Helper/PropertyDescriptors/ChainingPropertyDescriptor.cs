@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AW.Winforms.Helpers.Misc
+namespace AW.Helper.PropertyDescriptors
 {
   /// <summary>
   ///   http://www.codeproject.com/Articles/18450/HyperDescriptor-Accelerated-dynamic-property-acces

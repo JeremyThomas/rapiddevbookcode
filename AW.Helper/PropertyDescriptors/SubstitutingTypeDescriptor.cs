@@ -3,10 +3,9 @@ using System.Collections;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
-using AW.Helper;
 using AW.Helper.TypeConverters;
 
-namespace AW.Winforms.Helpers.Misc
+namespace AW.Helper.PropertyDescriptors
 {
   /// <summary>
   ///   For replacing the PropertyDescriptors of a type with another

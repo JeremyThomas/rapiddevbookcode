@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using AW.Helper.LLBL;
+using AW.Helper.PropertyDescriptors;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.EntityViewer;
 using AW.Winforms.Helpers.PropGridEx;

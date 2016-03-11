@@ -17,7 +17,7 @@ namespace AW.Test.Helpers
   {
     protected int ExpectedColumnCount;
     protected int ActualColumnCount;
-    private const BindingFlags FieldBindingFlags = BindingFlags.Instance | BindingFlags.Public;
+    public const BindingFlags FieldBindingFlags = BindingFlags.Instance | BindingFlags.Public;
 
     protected void TestShowInGrid<T>(IEnumerable<T> enumerable, int numProperties = -1, int numFieldsToShow = 0, IDataEditorPersister dataEditorPersister = null)
     {
@@ -35,7 +35,7 @@ namespace AW.Test.Helpers
       if (ExpectedColumnCount < 0)
       {
         numProperties = MetaDataHelper.GetPropertiesToDisplay(typeof (T)).Count();
-        numFieldsToShow = typeof (T).GetFields(FieldBindingFlags).Count();
+        numFieldsToShow = typeof (T).GetFields(FieldBindingFlags).Length;
         ExpectedColumnCount = numProperties + numFieldsToShow;
       }
       return numProperties;

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Data;
+using System.Xml;
 using System.Xml.Schema;
 using AW.Data;
 using AW.Data.CollectionClasses;
@@ -12,6 +13,7 @@ using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
+using AW.Helper.PropertyDescriptors;
 using AW.Test.Helpers;
 using AW.Winforms.Helpers.EntityViewer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -117,21 +119,21 @@ namespace AW.Tests
     public void GetPropertiesToSerializeTest()
     {
       var xmlSchemaElementType = typeof (XmlSchemaElement);
-      var xmlSchemaObjectType = typeof (XmlSchemaObject);
+//      var xmlSchemaObjectType = typeof (XmlSchemaObject);
 
       var expected = MetaDataHelper.GetPropertiesToSerialize(xmlSchemaElementType);
 
-      var fieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(xmlSchemaObjectType, BindingFlags.Instance | BindingFlags.Public);
-      TypeDescriptor.AddProvider(fieldsToPropertiesTypeDescriptionProvider, xmlSchemaObjectType);
-      MetaDataHelper.GetPropertiesToSerialize(xmlSchemaObjectType);
-      var actual = MetaDataHelper.GetPropertiesToSerialize(xmlSchemaElementType);
+      var fieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(xmlSchemaElementType, BindingFlags.Instance | BindingFlags.Public);
+      TypeDescriptor.AddProvider(fieldsToPropertiesTypeDescriptionProvider, xmlSchemaElementType);
       try
       {
+      //  MetaDataHelper.GetPropertiesToSerialize(xmlSchemaObjectType);
+      var actual = MetaDataHelper.GetPropertiesToSerialize(xmlSchemaElementType);
         CollectionAssert.AreEqual(expected.ToList(), actual.ToList());
       }
       finally
       {
-        TypeDescriptor.RemoveProvider(fieldsToPropertiesTypeDescriptionProvider, xmlSchemaObjectType);
+        TypeDescriptor.RemoveProvider(fieldsToPropertiesTypeDescriptionProvider, xmlSchemaElementType);
       }
     }
 
@@ -244,6 +246,35 @@ namespace AW.Tests
       {
         TypeDescriptor.RemoveProvider(fieldsToPropertiesTypeDescriptionProvider, serializableClassType);
       }
+    }
+
+    /// <summary>
+    ///   A test for GetPropertiesToSerialize
+    /// </summary>
+    [TestMethod]
+    public void GetPropertiesToSerializeIncludesPublicFieldsTest()
+    {
+      var serializableClassType = typeof(SerializableClass);
+
+      var browsableAttributeList = new Attribute[] { new BrowsableAttribute(true) };
+      var expected = TypeDescriptor.GetProperties(serializableClassType, browsableAttributeList);
+
+      var actual = MetaDataHelper.GetPropertiesToSerialize(serializableClassType);
+
+      Assert.AreEqual(expected.Count * 2, actual.Count(), "Expect GetPropertiesToSerialize to bring back the fields as well");
+    }
+
+    [TestMethod]
+    public void GetPropertiesToSerializeXmlElementTest()
+    {
+      var serializableClassType = typeof(XmlElement);
+
+      var browsableAttributeList = new Attribute[] { new BrowsableAttribute(true) };
+      var expected = TypeDescriptor.GetProperties(serializableClassType, browsableAttributeList);
+
+      var actual = MetaDataHelper.GetPropertiesToSerialize(serializableClassType);
+
+      Assert.AreEqual(expected.Count * 2, actual.Count(), "Expect GetPropertiesToSerialize to bring back the fields as well");
     }
 
     [TestMethod]

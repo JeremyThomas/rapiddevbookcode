@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using AW.Data;
@@ -45,11 +46,17 @@ namespace AW.Test.Helpers
       return from e in query select e;
     }
 
-    public static string GetTestxmlString()
+    private static readonly Lazy<string> LazyTestXmlString = new Lazy<string>(GetTestXmlString);
+    public static string TestXmlString
     {
-      var x = new XmlSerializer(typeof (List<SerializableClass>));
-      var s = new MemoryStream();
-      x.Serialize(s, SerializableClass.GenerateList());
+      get { return LazyTestXmlString.Value; }
+    }
+
+    private static string GetTestXmlString()
+    {
+      //var x = new XmlSerializer(typeof (List<SerializableClass>));
+      //var s = new MemoryStream();
+      //x.Serialize(s, SerializableClass.GenerateList());
 
       //	var serializableClassDataTable = GeneralHelper.CopyToDataTable(SerializableClass.GenerateList());
       //var sw = new StringWriter();
@@ -60,6 +67,13 @@ namespace AW.Test.Helpers
       var ds = GetAddressTypeDataSet();
 
       return ds.GetXml();
+    }
+
+    public static List<XElement> TestXElements()
+    {
+      var xElement = XElement.Parse(TestData.TestXmlString);
+      var xElements = xElement.Elements().ToList();
+      return xElements;
     }
 
     public static XmlSchema GetTestXmlSchema()
