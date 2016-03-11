@@ -62,7 +62,11 @@ namespace AW.Tests
     [TestMethod]
     public void DataTableSurrogateSerializeDeserializeTest()
     {
-      TestDataTableBinarySerializeDeserialize(GeneralHelper.CopyToDataTable(NonSerializableClass.GenerateList()));
+      var nonSerializableClasses = NonSerializableClass.GenerateList();
+      var nonSerializableClassesAsDataTable = GeneralHelper.CopyToDataTable(nonSerializableClasses);
+      Assert.AreEqual(MetaDataHelper.GetPropertiesToSerialize(typeof(NonSerializableClass)).Count(), nonSerializableClassesAsDataTable.Columns.Count);
+      Assert.AreEqual(6, nonSerializableClassesAsDataTable.Columns.Count);
+      TestDataTableBinarySerializeDeserialize(nonSerializableClassesAsDataTable);
       TestDataTableBinarySerializeDeserialize(GeneralHelper.CopyToDataTable(SerializableClass.GenerateList()));
       var dt = new DataSet();
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();

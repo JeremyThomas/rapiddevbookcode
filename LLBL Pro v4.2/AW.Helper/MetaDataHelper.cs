@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using AW.Helper.PropertyDescriptors;
 
 namespace AW.Helper
 {
@@ -607,6 +608,7 @@ namespace AW.Helper
     ///   with AutoGenerateColumns.
     /// </summary>
     /// <remarks>
+    ///   See CurrencyManager.GetItemProperties()
     ///   Where clause copied from DataGridViewDataConnection.GetCollectionOfBoundDataGridViewColumns()
     /// </remarks>
     /// <returns> The properties to display in LINQPad's Dump </returns>
@@ -635,7 +637,17 @@ namespace AW.Helper
     /// <returns> </returns>
     public static IEnumerable<PropertyDescriptor> GetPropertiesToSerialize(Type type)
     {
-      return GetPropertiesToDisplay(type);
+      var fieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(type, BindingFlags.Instance | BindingFlags.Public);
+      TypeDescriptor.AddProvider(fieldsToPropertiesTypeDescriptionProvider, type);
+      try
+      {
+        return GetPropertiesToDisplay(type);
+      }
+      finally
+      {
+        TypeDescriptor.RemoveProvider(fieldsToPropertiesTypeDescriptionProvider, type);
+      }
+
     }
 
     /// <summary>

@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using ADGV;
 using AW.Helper;
+using AW.Helper.PropertyDescriptors;
 using AW.Helper.TypeConverters;
 using AW.Winforms.Helpers.EntityViewer;
 using AW.Winforms.Helpers.Forms;

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms.Design;
+using AW.Helper.PropertyDescriptors;
 using AW.Winforms.Helpers.Properties;
 
 namespace AW.Winforms.Helpers.PropGridEx
