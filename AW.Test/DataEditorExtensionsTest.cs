@@ -19,6 +19,7 @@ using AW.Helper.TypeConverters;
 using AW.LinqToSQL;
 using AW.Test.Helpers;
 using AW.Tests.Properties;
+using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.EntityViewer;
@@ -285,8 +286,8 @@ namespace AW.Tests
       var xElements = xElement.Elements().ToList();
       TestShowInGrid(xElements, GeneralHelperTest.NumXElementProperties, GeneralHelperTest.NumXElementOtherToShow);
       //var propertyDescriptorCollection = ListBindingHelper.GetListItemProperties(xElements);
-      //var dataGridView = new DataGridView();
-      //dataGridView.DataSource = xElements;
+      //var bindingListView = xElements.ToBindingListView();
+     // var dataGridView = new DataGridView {DataSource = bindingListView};
       //var controlBindingsCollection = dataGridView.DataBindings;
       //FrmDataEditor.ShowInGrid(xElements.CopyToDataTable().DefaultView);
 
@@ -332,14 +333,30 @@ namespace AW.Tests
   public class DataEditorExtensionsRunner
   {
     [TestCategory("Winforms"), TestMethod]
-    public void Xml_test()
+    public void XmlRun()
     {
       var xml = TestData.TestXmlString;
 
       var xElement = XElement.Parse(xml);
-      var xElements = xElement.Elements();
-      FrmDataEditor.ShowInGrid(xElements);
-      FrmDataEditor.ShowInGrid(xElements.CopyToDataTable().DefaultView);
+      var xElements = xElement.Elements().ToList();
+      var olv = new JesseJohnston.ObjectListView(xElements);
+      var olvt = new JesseJohnston.ObjectListView<XElement>(xElements);
+      //var bindingListView = xElements.ToBindingListView();
+      var propertyDescriptorCollection = ListBindingHelper.GetListItemProperties(olv);
+      var propertyDescriptorCollectionT = ListBindingHelper.GetListItemProperties(olvt);
+
+      var BrowsableAttributeList = new Attribute[] { new System.ComponentModel.BrowsableAttribute(true) };
+      var descriptorCollection = TypeDescriptor.GetProperties(typeof (XElement));
+      var descriptorCollectionB = TypeDescriptor.GetProperties(typeof(XElement), BrowsableAttributeList);
+      var descriptorCollectionO = TypeDescriptor.GetProperties(ListBindingHelper.GetListItemType(olv), BrowsableAttributeList);
+      //var dataGridView = new DataGridView { DataSource = bindingListView };
+      //var f = new Form();
+      //dataGridView.Parent = f;
+      //f.ShowDialog();
+
+      //AWHelper.ShowForm(f);
+      //   FrmDataEditor.ShowInGrid(xElements);
+      //FrmDataEditor.ShowInGrid(xElements.CopyToDataTable().DefaultView);
 
       //var xmlDoc = new XmlDocument();
       //xmlDoc.LoadXml(xml);
