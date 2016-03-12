@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Windows.Forms;
 
 namespace JesseJohnston
 {
@@ -177,6 +178,10 @@ namespace JesseJohnston
     [NonSerialized] private EventHandler<RemovingItemEventArgs> removingItemEvent;
     [NonSerialized] private ListChangedEventHandler beforeListChangedEvent;
     [NonSerialized] private ListChangedEventHandler afterListChangedEvent;
+    /// <summary>
+    /// The return non browseable properties in ITypedList method GetItemProperties
+    /// </summary>
+    public static bool IncludeNonBrowseable = true;
 
     #endregion
 
@@ -1416,7 +1421,7 @@ namespace JesseJohnston
       else
         filterPredicate = null;
 
-      itemProperties = TypeDescriptor.GetProperties(typeof (T));
+      SetItemProperties(typeof(T));
     }
 
     private bool FilterPredicatePlaceholder(T listItem)
@@ -1539,7 +1544,7 @@ namespace JesseJohnston
       isEditableObject = typeof (IEditableObject).IsAssignableFrom(listItemType);
       supportsNotifyPropertyChanged = typeof (INotifyPropertyChanged).IsAssignableFrom(listItemType);
 
-      itemProperties = TypeDescriptor.GetProperties(listItemType);
+      SetItemProperties(listItemType);
       itemPropertyChangedEvents = GetPropertyChangedEvents(listItemType);
       supportsPropertyChangedEvents = itemPropertyChangedEvents.Count > 0;
 
@@ -1547,6 +1552,11 @@ namespace JesseJohnston
 
       propertyComparers = new PropertyComparerCollection(listItemType);
       propertyComparers.CollectionChanged += propertyComparers_CollectionChanged;
+    }
+
+    private void SetItemProperties(Type value)
+    {
+      itemProperties = IncludeNonBrowseable ? TypeDescriptor.GetProperties(value) : ListBindingHelper.GetListItemProperties(value);
     }
 
     private Dictionary<string, EventHandlerInfo> GetPropertyChangedEvents(Type itemType)

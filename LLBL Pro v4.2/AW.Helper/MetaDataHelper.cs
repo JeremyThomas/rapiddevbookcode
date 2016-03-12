@@ -611,21 +611,30 @@ namespace AW.Helper
     ///   See CurrencyManager.GetItemProperties()
     ///   Where clause copied from DataGridViewDataConnection.GetCollectionOfBoundDataGridViewColumns()
     ///   ListBindingHelper.GetListItemProperties(type) calls TypeDescriptor.GetProperties(typeof(XElement), BrowsableAttributeList)
-    ///   which excludes properties with no attributes even if IsBrowsable is true.
+    ///   which eventually calls GetProperties(Attribute[] attributes) of any CustomTypeDescriptor.
     ///   But when the list is ObjectListView it gets its own list of properties via a straight TypeDescriptor.GetProperties(listItemType) then
     ///   supplies them via the ITypedList it implements but now if ListBindingHelper.GetListItemProperties() is called on the ObjectListView
     ///   it now returns those properties it wouldn't otherwise have.
+    /// In the case of XElement's XTypeDescriptor. GetProperties(Attribute[] attributes) it only returns the 6 XPropertyDescriptors if attributes == null
+    /// In response I have replaced TypeDescriptor.GetProperties(listItemType) in SetListItemType,ItemType Set,OnDeserialization with ListBindingHelper.GetListItemProperties(type)
     /// </remarks>
     /// <returns> The properties to display in LINQPad's Dump </returns>
     public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay(Type type)
     {
-      return from propertyDescriptor in ListBindingHelper.GetListItemProperties(type).AsEnumerable()
-        where (!typeof (IList).IsAssignableFrom(propertyDescriptor.PropertyType) || TypeDescriptor.GetConverter(typeof (Image)).CanConvertFrom(propertyDescriptor.PropertyType))
-        select propertyDescriptor;
+      return FilterToPropertiesToDisplay(ListBindingHelper.GetListItemProperties(type).AsEnumerable());
+    }
+
+    private static IEnumerable<PropertyDescriptor> FilterToPropertiesToDisplay(IEnumerable<PropertyDescriptor> properties)
+    {
+      return properties.Where(propertyDescriptor => !typeof (IList).IsAssignableFrom(propertyDescriptor.PropertyType) 
+      || TypeDescriptor.GetConverter(typeof (Image)).CanConvertFrom(propertyDescriptor.PropertyType));
     }
 
     public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay(IEnumerable enumerable)
     {
+      var typedList = enumerable as ITypedList;
+      if (typedList != null)
+        return FilterToPropertiesToDisplay(typedList.GetItemProperties(null).AsEnumerable());
       var enumerableItemType = GetEnumerableItemType(enumerable);
       return GetPropertiesToDisplay(enumerableItemType == typeof (object) ? enumerable.GetType() : enumerableItemType);
     }
