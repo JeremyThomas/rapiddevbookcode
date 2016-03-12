@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace JesseJohnston
 {
@@ -140,6 +141,10 @@ namespace JesseJohnston
     [NonSerialized] private EventHandler<RemovingItemEventArgs> removingItemEvent;
     [NonSerialized] private ListChangedEventHandler beforeListChangedEvent;
     [NonSerialized] private ListChangedEventHandler afterListChangedEvent;
+    /// <summary>
+    /// The return non browseable properties in ITypedList method GetItemProperties
+    /// </summary>
+    public static bool IncludeNonBrowseable = true;
 
     #endregion
 
@@ -215,7 +220,7 @@ namespace JesseJohnston
 
           itemType = value;
           sortProps = new SortDescriptionCollection(itemType);
-          itemProperties = TypeDescriptor.GetProperties(value);
+          SetItemProperties(value);
           itemPropertyChangedEvents = GetPropertyChangedEvents(value);
           supportsPropertyChangedEvents = itemPropertyChangedEvents.Count > 0;
 
@@ -227,6 +232,11 @@ namespace JesseJohnston
           Unlock();
         }
       }
+    }
+
+    private void SetItemProperties(Type value)
+    {
+      itemProperties = IncludeNonBrowseable ? TypeDescriptor.GetProperties(value) : ListBindingHelper.GetListItemProperties(value);
     }
 
     /// <summary>
@@ -1697,7 +1707,7 @@ namespace JesseJohnston
       else
         filterPredicate = null;
 
-      itemProperties = TypeDescriptor.GetProperties(itemType);
+      SetItemProperties(itemType);
     }
 
     private bool FilterPredicatePlaceholder(object listItem)

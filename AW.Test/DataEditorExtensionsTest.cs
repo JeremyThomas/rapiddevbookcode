@@ -19,11 +19,11 @@ using AW.Helper.TypeConverters;
 using AW.LinqToSQL;
 using AW.Test.Helpers;
 using AW.Tests.Properties;
-using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
-using AW.Winforms.Helpers.EntityViewer;
+using JesseJohnston;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Northwind.DAL.EntityClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Tests
@@ -108,6 +108,7 @@ namespace AW.Tests
     }
 
     private static FieldsToPropertiesTypeDescriptionProvider _fieldsToPropertiesTypeDescriptionProvider;
+    private static readonly Attribute[] BrowsableAttributeList = new Attribute[] { new BrowsableAttribute(true) };
 
     private static void AddFieldsToPropertiesTypeDescriptionProvider(Type typeToEdit)
     {
@@ -287,7 +288,7 @@ namespace AW.Tests
       TestShowInGrid(xElements, GeneralHelperTest.NumXElementProperties, GeneralHelperTest.NumXElementOtherToShow);
       //var propertyDescriptorCollection = ListBindingHelper.GetListItemProperties(xElements);
       //var bindingListView = xElements.ToBindingListView();
-     // var dataGridView = new DataGridView {DataSource = bindingListView};
+      // var dataGridView = new DataGridView {DataSource = bindingListView};
       //var controlBindingsCollection = dataGridView.DataBindings;
       //FrmDataEditor.ShowInGrid(xElements.CopyToDataTable().DefaultView);
 
@@ -327,6 +328,41 @@ namespace AW.Tests
       //CollectionAssert.AreEquivalent(propertyDescriptors.ToList(), propertyDescriptorCollection);
       FrmDataEditor.ShowInGrid(copyToDataTable.DefaultView);
     }
+
+
+    [TestProperty("Winforms", "Interactive"), TestMethod]
+    public void PropertiesToDisplayTest()
+    {
+      ObjectListView.IncludeNonBrowseable = true;
+      ObjectListView<CategoryEntity>.IncludeNonBrowseable = true;
+      TestPropertiesToDisplay<CategoryEntity>(17, 12);
+      TestPropertiesToDisplay<XElement>(GeneralHelperTest.NumXElementOtherToShow + GeneralHelperTest.NumXElementProperties, 0, GeneralHelperTest.NumXElementOtherToShow);
+      var propertyDescriptorCollectionXElement = TypeDescriptor.GetProperties(typeof(XElement), BrowsableAttributeList);
+      AddFieldsToPropertiesTypeDescriptionProvider(typeof (NonSerializableClass));
+      try
+      {
+        TestPropertiesToDisplay<NonSerializableClass>(NonSerializableClass.NumberOfNonSerializableClassProperties*2);
+        var propertyDescriptorCollectionNonSerializableClass = TypeDescriptor.GetProperties(typeof (NonSerializableClass), BrowsableAttributeList);
+      }
+      finally
+      {
+        TidyUp(typeof (NonSerializableClass));
+      }
+    }
+
+    private static void TestPropertiesToDisplay<T>(int expectedTotlal, int expectedNumNonBrowsable = 0, int numTypeDescriptionProviderDescriptors = 0)
+    {
+      var propertyDescriptors = TypeDescriptor.GetProperties(typeof (T)).AsEnumerable();
+      Assert.AreEqual(expectedTotlal, propertyDescriptors.Count());
+      Assert.AreEqual(expectedNumNonBrowsable, propertyDescriptors.Count(p => !p.IsBrowsable));
+      var categoryEntities = new List<T>();
+      var propertyDescriptorCollection = ListBindingHelper.GetListItemProperties(categoryEntities);
+      var olvCategory = new ObjectListView(categoryEntities);
+      var propertyDescriptorCollectionOlv = ListBindingHelper.GetListItemProperties(olvCategory);
+      Assert.AreEqual(propertyDescriptorCollection.Count, propertyDescriptorCollectionOlv.Count - expectedNumNonBrowsable - numTypeDescriptionProviderDescriptors);
+      Assert.AreEqual(propertyDescriptorCollection.Count, propertyDescriptors.Count(p => p.IsBrowsable) - numTypeDescriptionProviderDescriptors);
+      Assert.AreEqual(expectedNumNonBrowsable, propertyDescriptorCollectionOlv.AsEnumerable().Count(p => !p.IsBrowsable));
+    }
   }
 
   [TestClass]
@@ -339,17 +375,18 @@ namespace AW.Tests
 
       var xElement = XElement.Parse(xml);
       var xElements = xElement.Elements().ToList();
-      var olv = new JesseJohnston.ObjectListView(xElements);
-      var olvt = new JesseJohnston.ObjectListView<XElement>(xElements);
-      //var bindingListView = xElements.ToBindingListView();
+      var olv = new ObjectListView(xElements);
+      var olvt = new ObjectListView<XElement>(xElements);
+      var propertyDescriptorCollectionXElements = ListBindingHelper.GetListItemProperties(xElements);
       var propertyDescriptorCollection = ListBindingHelper.GetListItemProperties(olv);
       var propertyDescriptorCollectionT = ListBindingHelper.GetListItemProperties(olvt);
 
-      var BrowsableAttributeList = new Attribute[] { new System.ComponentModel.BrowsableAttribute(true) };
+      var BrowsableAttributeList = new Attribute[] {new BrowsableAttribute(true)};
       var descriptorCollection = TypeDescriptor.GetProperties(typeof (XElement));
-      var descriptorCollectionB = TypeDescriptor.GetProperties(typeof(XElement), BrowsableAttributeList);
+      var descriptorCollectionB = TypeDescriptor.GetProperties(typeof (XElement), BrowsableAttributeList);
       var descriptorCollectionO = TypeDescriptor.GetProperties(ListBindingHelper.GetListItemType(olv), BrowsableAttributeList);
-      //var dataGridView = new DataGridView { DataSource = bindingListView };
+      var dataGridView = new DataGridView {DataSource = new ObjectListView(new List<CategoryEntity>())};
+      //dataGridView.DataConnection.GetCollectionOfBoundDataGridViewColumns()
       //var f = new Form();
       //dataGridView.Parent = f;
       //f.ShowDialog();
