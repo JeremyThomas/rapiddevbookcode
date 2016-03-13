@@ -181,7 +181,7 @@ namespace JesseJohnston
     /// <summary>
     /// The return non browseable properties in ITypedList method GetItemProperties
     /// </summary>
-    public static bool IncludeNonBrowseable = true;
+    public static bool IncludeNonBrowseable;
 
     #endregion
 
