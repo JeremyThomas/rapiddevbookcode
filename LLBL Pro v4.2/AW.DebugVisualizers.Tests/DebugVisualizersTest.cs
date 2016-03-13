@@ -31,6 +31,7 @@ using AW.LinqToSQL;
 using AW.Test.Helpers;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.Misc;
+using JesseJohnston;
 using Microsoft.VisualBasic;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -435,7 +436,8 @@ namespace AW.DebugVisualizers.Tests
       var xml = TestData.TestXmlString; 
 
       var xElement = XElement.Parse(xml);
-      TestShowTransported(xElement.Elements(), NumXElementProperties + NumXElementFieldsToShow, NumXElementProperties);
+      var expectedColumnCount = ObjectListView.IncludeNonBrowseable ? NumXElementProperties + NumXElementFieldsToShow : NumXElementProperties;
+      TestShowTransported(xElement.Elements(), expectedColumnCount, NumXElementProperties);
       //TestSerialize(xElement);
 
       var xmlDoc = new XmlDocument();

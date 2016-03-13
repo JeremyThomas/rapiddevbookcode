@@ -285,7 +285,7 @@ namespace AW.Tests
 
       var xElement = XElement.Parse(xml);
       var xElements = xElement.Elements().ToList();
-      TestShowInGrid(xElements, GeneralHelperTest.NumXElementProperties, GeneralHelperTest.NumXElementOtherToShow);
+      TestShowInGrid(xElements, GeneralHelperTest.NumXElementProperties, ObjectListView.IncludeNonBrowseable ? GeneralHelperTest.NumXElementOtherToShow : 0);
       //var propertyDescriptorCollection = ListBindingHelper.GetListItemProperties(xElements);
       //var bindingListView = xElements.ToBindingListView();
       // var dataGridView = new DataGridView {DataSource = bindingListView};
@@ -333,8 +333,8 @@ namespace AW.Tests
     [TestProperty("Winforms", "Interactive"), TestMethod]
     public void PropertiesToDisplayTest()
     {
-      ObjectListView.IncludeNonBrowseable = true;
-      ObjectListView<CategoryEntity>.IncludeNonBrowseable = true;
+     // ObjectListView.IncludeNonBrowseable = true;
+     // ObjectListView<CategoryEntity>.IncludeNonBrowseable = true;
       TestPropertiesToDisplay<CategoryEntity>(17, 12);
       TestPropertiesToDisplay<XElement>(GeneralHelperTest.NumXElementOtherToShow + GeneralHelperTest.NumXElementProperties, 0, GeneralHelperTest.NumXElementOtherToShow);
       var propertyDescriptorCollectionXElement = TypeDescriptor.GetProperties(typeof(XElement), BrowsableAttributeList);

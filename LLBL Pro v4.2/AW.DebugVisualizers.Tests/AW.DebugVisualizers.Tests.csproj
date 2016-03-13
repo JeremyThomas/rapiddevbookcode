@@ -198,6 +198,10 @@
       <Project>{0AAD790B-15C7-4119-9987-3137A0BB20B9}</Project>
       <Name>Northwind.DAL.SqlServer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ObjectListView\ObjectListView.csproj">
+      <Project>{3a62f36d-4e53-4532-b9ef-3b303a578b5e}</Project>
+      <Name>ObjectListView</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Ancillary\AdventureWorks.snk">

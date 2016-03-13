@@ -632,11 +632,12 @@ namespace AW.Helper
 
     public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay(IEnumerable enumerable)
     {
-      var typedList = enumerable as ITypedList;
+      var target = ListBindingHelper.GetList(enumerable);
+      var typedList = target as ITypedList;
       if (typedList != null)
         return FilterToPropertiesToDisplay(typedList.GetItemProperties(null).AsEnumerable());
       var enumerableItemType = GetEnumerableItemType(enumerable);
-      return GetPropertiesToDisplay(enumerableItemType == typeof (object) ? enumerable.GetType() : enumerableItemType);
+      return GetPropertiesToDisplay(enumerableItemType == typeof(object) ? enumerable.GetType() : enumerableItemType);
     }
 
     public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay<T>(IEnumerable<T> enumerable)
