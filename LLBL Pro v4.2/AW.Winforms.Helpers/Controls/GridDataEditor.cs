@@ -204,9 +204,16 @@ namespace AW.Winforms.Helpers.Controls
 
     private void GridDataEditor_Load(object sender, EventArgs e)
     {
-      var dataGridViewScriptClipboardCopyMode = dataGridViewEnumerable.ClipboardCopyMode;
-      if (toolStripComboBoxClipboardCopyMode.ComboBox != null) toolStripComboBoxClipboardCopyMode.ComboBox.DataSource = Enum.GetValues(typeof (DataGridViewClipboardCopyMode));
-      toolStripComboBoxClipboardCopyMode.SelectedItem = dataGridViewScriptClipboardCopyMode;
+      HumanizedEnumConverter.AddEnumerationConverter(typeof(DataGridViewClipboardCopyMode));
+      if (toolStripComboBoxClipboardCopyMode.ComboBox != null)
+        toolStripComboBoxClipboardCopyMode.ComboBox.DataSource =
+          //  new[]
+          //{
+          //  DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText,
+          //  DataGridViewClipboardCopyMode.EnableWithAutoHeaderText, DataGridViewClipboardCopyMode.EnableWithoutHeaderText
+          //};
+          GeneralHelper.EnumAsEnumerable<DataGridViewClipboardCopyMode>().Where(cm => cm != DataGridViewClipboardCopyMode.Disable).ToList();
+      toolStripComboBoxClipboardCopyMode.SelectedItem = DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
       _loaded = true;
     }
 
@@ -273,6 +280,7 @@ namespace AW.Winforms.Helpers.Controls
         _canSave = CanSaveEnumerable();
         saveToolStripButton.Enabled = _canSave && !SupportsNotifyPropertyChanged;
         saveToolStripButton.Visible = _canSave;
+        toolStripCheckBoxDeletesAreCascading.Visible = _canSave;
         copyToolStripButton.Enabled = true;
         printToolStripButton.Enabled = true;
         toolStripButtonObjectBrowser.Enabled = true;
@@ -287,6 +295,7 @@ namespace AW.Winforms.Helpers.Controls
         toolStripButtonObjectBrowser.Enabled = false;
         saveToolStripButton.Enabled = false;
         bindingNavigatorPaging.Enabled = true;
+        toolStripCheckBoxDeletesAreCascading.Enabled = false;
       }
       toolStripLabelSaveResult.Text = "";
       toolStripLabelDeleteCount.Text = "";
