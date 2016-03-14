@@ -58,6 +58,8 @@ namespace AW.Winforms.Helpers.Controls
     {
       InitializeComponent();
 
+      toolStripComboBoxClipboardCopyMode.ComboBox.MakeFormatUsingTypeConverter();
+
       dataGridViewEnumerable.AutoGenerateColumns = true;
       toolStripButtonShowDatagrid_Click(null, null);
       var toolStripItemFromBeginButton = searchToolBar.Items["fromBeginButton"] as ToolStripButton;
@@ -68,6 +70,7 @@ namespace AW.Winforms.Helpers.Controls
       }
       MoveLastItem(3);
       MoveLastItem(2);
+      _searchToolStripButton = searchToolBar.Items[4] as ToolStripButton;
     }
 
     private void MoveLastItem(int offset)
@@ -179,6 +182,19 @@ namespace AW.Winforms.Helpers.Controls
 
     #endregion
 
+    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    {
+      switch (keyData)
+      {
+        case Keys.Control | Keys.F:
+        case Keys.F3:
+          searchToolBar.Show();
+          _searchToolStripButton.PerformClick();
+          break;
+      }
+      return base.ProcessCmdKey(ref msg, keyData);
+    }
+
     private void printToolStripButton_Click(object sender, EventArgs e)
     {
       var frm = new FrmReportViewer {WindowState = FormWindowState.Normal};
@@ -204,7 +220,11 @@ namespace AW.Winforms.Helpers.Controls
 
     private void GridDataEditor_Load(object sender, EventArgs e)
     {
-      HumanizedEnumConverter.AddEnumerationConverter(typeof(DataGridViewClipboardCopyMode));
+   //   toolStripComboBoxClipboardCopyMode.
+      //toolStripComboBoxClipboardCopyMode.ComboBox.Format += (s, ec) =>
+      //  {
+      //    ec.Value = Convert.ToString(ec.Value);
+      //  };
       if (toolStripComboBoxClipboardCopyMode.ComboBox != null)
         toolStripComboBoxClipboardCopyMode.ComboBox.DataSource =
           //  new[]
@@ -214,9 +234,10 @@ namespace AW.Winforms.Helpers.Controls
           //};
           GeneralHelper.EnumAsEnumerable<DataGridViewClipboardCopyMode>().Where(cm => cm != DataGridViewClipboardCopyMode.Disable).ToList();
       toolStripComboBoxClipboardCopyMode.SelectedItem = DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
+
       _loaded = true;
     }
-
+    
     private void saveToolStripButton_Click(object sender, EventArgs e)
     {
       SaveEdits(false);
@@ -904,6 +925,7 @@ namespace AW.Winforms.Helpers.Controls
     }
 
     public Func<IEnumerable, Type, IBindingListView> BindingListViewCreater;
+    private readonly ToolStripButton _searchToolStripButton;
 
     private void toolStripButtonClearFilters_Click(object sender, EventArgs e)
     {

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Linq.Dynamic;
@@ -323,6 +324,21 @@ namespace AW.Winforms.Helpers
     public static IEnumerable<TreeNode> AsEnumerable(this TreeNodeCollection treeNodeCollection)
     {
       return treeNodeCollection.Cast<TreeNode>();
+    }
+
+    public static void MakeFormatUsingTypeConverter(this ListControl listControl)
+    {
+      if (listControl != null)
+      {
+        listControl.FormattingEnabled = true;
+        listControl.Format += FormatUsingTypeConverter;
+      }
+    }
+
+    public static void FormatUsingTypeConverter(object sender, ListControlConvertEventArgs e)
+    {
+      var typeConverter = TypeDescriptor.GetConverter(e.Value);
+      e.Value = typeConverter.ConvertToString(e.Value);
     }
   }
 
