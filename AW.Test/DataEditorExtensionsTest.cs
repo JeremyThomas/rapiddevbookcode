@@ -359,9 +359,13 @@ namespace AW.Tests
       var propertyDescriptorCollection = ListBindingHelper.GetListItemProperties(categoryEntities);
       var olvCategory = new ObjectListView(categoryEntities);
       var propertyDescriptorCollectionOlv = ListBindingHelper.GetListItemProperties(olvCategory);
-      Assert.AreEqual(propertyDescriptorCollection.Count, propertyDescriptorCollectionOlv.Count - expectedNumNonBrowsable - numTypeDescriptionProviderDescriptors);
+      var actual = propertyDescriptorCollectionOlv.Count;
+      if (ObjectListView.IncludeNonBrowseable)
+        actual = actual - expectedNumNonBrowsable - numTypeDescriptionProviderDescriptors;
+      Assert.AreEqual(propertyDescriptorCollection.Count, actual);
       Assert.AreEqual(propertyDescriptorCollection.Count, propertyDescriptors.Count(p => p.IsBrowsable) - numTypeDescriptionProviderDescriptors);
-      Assert.AreEqual(expectedNumNonBrowsable, propertyDescriptorCollectionOlv.AsEnumerable().Count(p => !p.IsBrowsable));
+      if (ObjectListView.IncludeNonBrowseable)
+        Assert.AreEqual(expectedNumNonBrowsable, propertyDescriptorCollectionOlv.AsEnumerable().Count(p => !p.IsBrowsable));
     }
   }
 
