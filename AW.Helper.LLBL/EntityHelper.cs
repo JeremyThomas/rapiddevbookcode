@@ -1081,11 +1081,11 @@ namespace AW.Helper.LLBL
 
     private static IEnumerable<List<IEntityFieldCore>> GetAllFkEntityFieldCoreObjectsWhereStartEntityIsPkSide(IEntityCore entity, bool onlyComponentsRelationShips = false)
     {
-      return from entityRelation in GetAllRelationsWhereStartEntityIsPkSide(entity)
-        select entityRelation.GetAllFKEntityFieldCoreObjects()
-        into allFkEntityFieldCoreObjects
-        let anyIsPrimaryKeys = allFkEntityFieldCoreObjects.Any(f => f.IsPrimaryKey)
-        where !onlyComponentsRelationShips || anyIsPrimaryKeys
+      var enumerable = from entityRelation in GetAllRelationsWhereStartEntityIsPkSide(entity)
+        select entityRelation.GetAllFKEntityFieldCoreObjects();
+      return from allFkEntityFieldCoreObjects in enumerable
+        let allRequired = allFkEntityFieldCoreObjects.All(f => !f.IsNullable)
+        where !onlyComponentsRelationShips || allRequired
         select allFkEntityFieldCoreObjects;
     }
 
