@@ -976,7 +976,16 @@ namespace AW.Winforms.Helpers.Controls
         startColumn,
         e.WholeWord,
         e.CaseSensitive);
-
+      if (c == null && startRow!=0)
+      {
+        c = dataGridViewEnumerable.FindCell(
+          e.ValueToSearch,
+          e.ColumnToSearch != null ? e.ColumnToSearch.Name : null,
+          0,
+          0,
+          e.WholeWord,
+          e.CaseSensitive);
+      }
       if (c != null)
         dataGridViewEnumerable.CurrentCell = c;
     }

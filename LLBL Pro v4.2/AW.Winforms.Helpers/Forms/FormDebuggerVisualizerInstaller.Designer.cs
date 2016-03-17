@@ -264,6 +264,7 @@
       this.Name = "FormDebuggerVisualizerInstaller";
       this.ShowIcon = false;
       this.Text = "Enumerable Debugger Visualizer Installer";
+      this.Shown += new System.EventHandler(this.FormDebuggerVisualizerInstaller_Shown);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.tableLayoutPanel1.PerformLayout();
       this.panel1.ResumeLayout(false);
