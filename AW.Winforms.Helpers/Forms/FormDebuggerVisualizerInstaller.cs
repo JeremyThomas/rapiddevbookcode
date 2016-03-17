@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AW.Helper;
 
@@ -87,10 +88,33 @@ namespace AW.Winforms.Helpers.Forms
     private static FileInfo CopyVisualizer(FileSystemInfo sourceVisualizerFileInfo, FileSystemInfo destinationVisualizerFileInfo, Control statusLabel)
     {
       if (destinationVisualizerFileInfo.Exists && sourceVisualizerFileInfo.LastWriteTime > destinationVisualizerFileInfo.LastWriteTime)
-        File.Copy(Application.ExecutablePath, destinationVisualizerFileInfo.FullName, true);
+        CopyNewAssemblies(destinationVisualizerFileInfo, true);
       else
-        File.Copy(Application.ExecutablePath, destinationVisualizerFileInfo.FullName);
+        CopyNewAssemblies(destinationVisualizerFileInfo, false);
       return GetStatus(destinationVisualizerFileInfo.FullName, statusLabel);
+    }
+
+    private static void CopyNewAssemblies(FileSystemInfo destinationVisualizerFileInfo, bool overwrite)
+    {
+// File.Copy(Application.ExecutablePath, destinationVisualizerFileInfo.FullName);
+      var directoryName = Path.GetDirectoryName(destinationVisualizerFileInfo.FullName);
+      if (directoryName != null)
+      {
+        var baseDirectory = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
+        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+        {
+          try
+          {
+            var sourceFileName = assembly.Location;
+            var sourceFileNameDirectory = Path.GetDirectoryName(sourceFileName);
+            if (sourceFileNameDirectory == baseDirectory)
+              File.Copy(sourceFileName, Path.Combine(directoryName, Path.GetFileName(sourceFileName)),overwrite);
+          }
+          catch (Exception)
+          {
+          }
+        }
+      }
     }
 
     private void buttonInstallAllUsers_Click(object sender, EventArgs e)
@@ -151,6 +175,11 @@ namespace AW.Winforms.Helpers.Forms
       };
       form.Controls.Add(textBox);
       form.ShowDialog();
+    }
+
+    private void FormDebuggerVisualizerInstaller_Shown(object sender, EventArgs e)
+    {
+       Task.Run(()=> MetaDataHelper.LoadReferencedAssemblies("CSScriptLibrary", "Microsoft.Data.ConnectionUI", "System.Data.SqlLocalDb"));
     }
   }
 }

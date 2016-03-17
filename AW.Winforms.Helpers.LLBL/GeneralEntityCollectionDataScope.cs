@@ -116,7 +116,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     private void SetRemovedEntitiesTracker(IEntityCollectionCore entityCollectionCore)
     {
-      _context = _entityCollection.ActiveContext;
+      _context = entityCollectionCore.ActiveContext;
       if (entityCollectionCore.RemovedEntitiesTracker == null && entityCollectionCore.EntityFactoryToUse != null)
       {
         _currentRemovedEntitiesTracker = entityCollectionCore.EntityFactoryToUse.CreateEntityCollection();

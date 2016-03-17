@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.Properties;
-using FarsiLibrary.Win;
 using FastColoredTextBoxNS;
 
 namespace AW.Winforms.Helpers.Controls
@@ -464,18 +463,6 @@ namespace AW.Winforms.Helpers.Controls
       catch
       {
         ;
-      }
-    }
-
-    private void tsFiles_TabStripItemSelectionChanged(TabStripItemChangedEventArgs e)
-    {
-      if (CurrentTB != null)
-      {
-        CurrentTB.Focus();
-        var text = CurrentTB.Text;
-        ThreadPool.QueueUserWorkItem(
-          o => ReBuildObjectExplorer(text)
-          );
       }
     }
 

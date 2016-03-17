@@ -251,6 +251,18 @@ namespace AW.Helper
       return !AppDomain.CurrentDomain.BaseDirectory.Equals(directoryPath, StringComparison.OrdinalIgnoreCase);
     }
 
+    public static void LoadReferencedAssemblies(params string[] assembliesToIgnore)
+    {
+      var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
+
+      loadedAssemblies
+          .SelectMany(x => x.GetReferencedAssemblies())
+          .Distinct()
+          .Where(y => loadedAssemblies.All(a => a.FullName != y.FullName) && assembliesToIgnore.All(a => !y.FullName.Contains(a)))
+          .ToList()
+          .ForEach(x => loadedAssemblies.Add(AppDomain.CurrentDomain.Load(x)));
+    }
+
     /// <summary>
     ///   Gets the type, case insensitive, if it can't find it it then looks in the loaded assemblies.
     /// </summary>

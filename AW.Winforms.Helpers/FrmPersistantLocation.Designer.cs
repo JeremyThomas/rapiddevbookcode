@@ -32,16 +32,18 @@ namespace AW.Winforms.Helpers
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.SuspendLayout();
-			// 
-			// FrmPersistantLocation
-			// 
-			this.AutoScaleDimensions = new SizeF(6F, 13F);
-			this.AutoScaleMode = AutoScaleMode.Font;
-			this.ClientSize = new Size(284, 262);
-			this.Name = "FrmPersistantLocation";
-			this.Text = "Form Persistant Location";
-			this.ResumeLayout(false);
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPersistantLocation));
+      this.SuspendLayout();
+      // 
+      // FrmPersistantLocation
+      // 
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.ClientSize = new System.Drawing.Size(284, 262);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+      this.Name = "FrmPersistantLocation";
+      this.Text = "Form Persistant Location";
+      this.ResumeLayout(false);
 
 		}
 
