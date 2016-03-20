@@ -71,6 +71,7 @@ namespace AW.Winforms.Helpers.Controls
       MoveLastItem(3);
       MoveLastItem(2);
       _searchToolStripButton = searchToolBar.Items[4] as ToolStripButton;
+      _searchToolStripTextBox = searchToolBar.Items[3] as ToolStripTextBox;
     }
 
     private void MoveLastItem(int offset)
@@ -83,7 +84,7 @@ namespace AW.Winforms.Helpers.Controls
     /// <summary>
     ///   Initializes a new instance of the <see cref="T:System.Windows.Forms.UserControl" /> class.
     /// </summary>
-    public GridDataEditor(IEnumerable enumerable, IDataEditorPersister dataEditorPersister = null, ushort pageSize = DefaultPageSize, bool readOnly = true, params string[] membersToExclude)
+    public GridDataEditor(IEnumerable enumerable, Boolean delayBind = false, IDataEditorPersister dataEditorPersister = null, ushort pageSize = DefaultPageSize, bool readOnly = true, params string[] membersToExclude)
       : this()
     {
       MembersToExclude = membersToExclude;
@@ -94,22 +95,25 @@ namespace AW.Winforms.Helpers.Controls
         SetItemType(enumerable);
         readOnly = readOnly || !_itemType.IsGenericType;
       }
-      InitialiseAndBindGridDataEditor(enumerable, dataEditorPersister, pageSize, readOnly);
-    }
-
-    public void InitialiseAndBindGridDataEditor(IEnumerable enumerable, IDataEditorPersister dataEditorPersister,
-      ushort pageSize, bool readOnly)
-    {
+      DelayBind = delayBind;
       DataEditorPersister = dataEditorPersister;
       Readonly = readOnly;
       tabControlGrids.SelectedTab = tabPageDataGridView;
-      BindEnumerable(enumerable, pageSize);
+      if (DelayBind)
+      {
+        PageSize = pageSize;
+        DelayedEnumerable = enumerable;
+      }
+      else
+        BindEnumerable(enumerable, pageSize);
     }
+
+    public bool DelayBind { get; set; }
+    public IEnumerable DelayedEnumerable { get; private set; }
 
     #region Properties
 
-    [Category("Data"),
-     Description("Size of the page")]
+    [Category("Data"), Description("Size of the page")]
     public ushort PageSize
     {
       get { return _pageSize; }
@@ -120,7 +124,7 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
-    [AttributeProvider(typeof (IListSource)),
+    [AttributeProvider(typeof(IListSource)),
      Category("Data"),
      Description("Data source of the tree.")]
     public object DataSource
@@ -133,7 +137,7 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
-    [Editor("System.Windows.Forms.Design.DataMemberListEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof (UITypeEditor)),
+    [Editor("System.Windows.Forms.Design.DataMemberListEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor)),
      RefreshProperties(RefreshProperties.Repaint),
      Category("Data"),
      Description("Data member of the tree.")]
@@ -188,7 +192,12 @@ namespace AW.Winforms.Helpers.Controls
       {
         case Keys.Control | Keys.F:
         case Keys.F3:
-          searchToolBar.Show();
+          if (!searchToolBar.Visible)
+          {
+            searchToolBar.Show();
+            searchToolBar.Focus();
+            _searchToolStripTextBox.Focus();
+          }
           _searchToolStripButton.PerformClick();
           break;
       }
@@ -220,7 +229,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void GridDataEditor_Load(object sender, EventArgs e)
     {
-   //   toolStripComboBoxClipboardCopyMode.
+      //   toolStripComboBoxClipboardCopyMode.
       //toolStripComboBoxClipboardCopyMode.ComboBox.Format += (s, ec) =>
       //  {
       //    ec.Value = Convert.ToString(ec.Value);
@@ -237,7 +246,28 @@ namespace AW.Winforms.Helpers.Controls
 
       _loaded = true;
     }
-    
+
+
+    bool _fullyPainted;
+
+    /// <summary>
+    ///   http://stackoverflow.com/questions/7309736/which-event-is-launched-right-after-control-is-fully-loaded
+    /// </summary>
+    /// <param name="m">The m.</param>
+    protected override void WndProc(ref Message m)
+    {
+      base.WndProc(ref m);
+      if (m.Msg == 15 && !_fullyPainted)
+      {
+        _fullyPainted = true;
+        if (DelayBind && DelayedEnumerable != null)
+        {
+          BindEnumerable(DelayedEnumerable, PageSize);
+          DelayedEnumerable = null;
+        }
+      }
+    }
+
     private void saveToolStripButton_Click(object sender, EventArgs e)
     {
       SaveEdits(false);
@@ -602,7 +632,7 @@ namespace AW.Winforms.Helpers.Controls
 
     protected void OnSetItemType()
     {
-      SupportsNotifyPropertyChanged = typeof (INotifyPropertyChanged).IsAssignableFrom(ItemType);
+      SupportsNotifyPropertyChanged = typeof(INotifyPropertyChanged).IsAssignableFrom(ItemType);
       AddFieldsToPropertiesTypeDescriptionProvider(ItemType);
     }
 
@@ -761,7 +791,7 @@ namespace AW.Winforms.Helpers.Controls
         dataGridView.Columns.Add(enumDataGridViewComboBoxColumn);
         enumDataGridViewComboBoxColumn.SortMode = e.Column.SortMode;
       }
-      else if (coreType == typeof (DateTime))
+      else if (coreType == typeof(DateTime))
       {
         var dataGridViewDateTimeColumn = new DataGridViewDateTimeColumn
         {
@@ -926,6 +956,7 @@ namespace AW.Winforms.Helpers.Controls
 
     public Func<IEnumerable, Type, IBindingListView> BindingListViewCreater;
     private readonly ToolStripButton _searchToolStripButton;
+    private readonly ToolStripTextBox _searchToolStripTextBox;
 
     private void toolStripButtonClearFilters_Click(object sender, EventArgs e)
     {
@@ -976,7 +1007,7 @@ namespace AW.Winforms.Helpers.Controls
         startColumn,
         e.WholeWord,
         e.CaseSensitive);
-      if (c == null && startRow!=0)
+      if (c == null && startRow != 0)
       {
         c = dataGridViewEnumerable.FindCell(
           e.ValueToSearch,

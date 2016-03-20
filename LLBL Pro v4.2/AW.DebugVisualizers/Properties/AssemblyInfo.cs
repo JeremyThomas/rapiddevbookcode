@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Enumerable Debugger Visualizer for VS2015")]
 [assembly: AssemblyProduct("Enumerable Debugger Visualizer for VS2015")]
 #endif
-[assembly: AssemblyCopyright("Copyright © Jeremy Thomas 2015")]
+[assembly: AssemblyCopyright("Copyright © Jeremy Thomas 2016")]
 [assembly: AssemblyCompany("Jeremy Thomas")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -37,5 +37,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("3.1.*")]
-[assembly: AssemblyFileVersion("3.1.0.0")]
+[assembly: AssemblyVersion("3.2.*")]
+[assembly: AssemblyFileVersion("3.2.0.0")]

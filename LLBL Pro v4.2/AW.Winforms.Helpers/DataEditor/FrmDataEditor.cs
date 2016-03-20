@@ -50,7 +50,7 @@ namespace AW.Winforms.Helpers.DataEditor
     private static Form InitialiseDataEditorForm(Form frmDataEditor, IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly)
     {
       frmDataEditor.Text = GetEnumerableDescription(enumerable);
-      var gridDataEditor = new GridDataEditor(enumerable, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), pageSize, readOnly) { Dock = DockStyle.Fill };
+      var gridDataEditor = new GridDataEditor(enumerable, true, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), pageSize, readOnly) { Dock = DockStyle.Fill };
       frmDataEditor.Controls.Add(gridDataEditor);
       return frmDataEditor;
     }
