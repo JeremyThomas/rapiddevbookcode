@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.Forms;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 
@@ -19,7 +21,12 @@ namespace AW.DebugVisualizers
                         "To install click on either of the buttons below which will copy this assembly to the directory chosen. " + Environment.NewLine +
                         "To uninstall go to the folder and remove the AW.EnumerableVisualizer assembly." + Environment.NewLine +
                         "For more info see: https://rapiddevbookcode.codeplex.com/wikipage?title=EnumerableDebugVisualizer";
-      Application.Run(new FormDebuggerVisualizerInstaller(typeof (IDialogVisualizerService), "Enumerable Debugger Visualizer", description));
+      Application.Run(new FormDebuggerVisualizerInstaller(typeof(IDialogVisualizerService), "Enumerable Debugger Visualizer", description, DemoAction));
+    }
+
+    private static void DemoAction()
+    {
+      FrmDataEditor.CreateDataViewForm(AppDomain.CurrentDomain.GetAssemblies()).Show();
     }
   }
 }

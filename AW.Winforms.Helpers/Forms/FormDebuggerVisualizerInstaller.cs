@@ -25,13 +25,19 @@ namespace AW.Winforms.Helpers.Forms
       InitializeComponent();
     }
 
-    /// <exception cref="ArgumentOutOfRangeException"><paramref /> is less than zero or greater than the length of this instance. </exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///   <paramref /> is less than zero or greater than the length of this
+    ///   instance.
+    /// </exception>
     /// <exception cref="ArgumentNullException"><paramref /> is null. </exception>
-    /// <exception cref="NotSupportedException">The current assembly is a dynamic assembly, represented by an <see cref="T:System.Reflection.Emit.AssemblyBuilder" /> object. </exception>
+    /// <exception cref="NotSupportedException">
+    ///   The current assembly is a dynamic assembly, represented by an
+    ///   <see cref="T:System.Reflection.Emit.AssemblyBuilder" /> object.
+    /// </exception>
     /// <exception cref="FileNotFoundException">The file specified cannot be found. </exception>
     /// <exception cref="IOException"><see cref="M:System.IO.FileSystemInfo.Refresh" /> cannot initialize the data. </exception>
     /// <exception cref="PlatformNotSupportedException">The current operating system is not Windows NT or later.</exception>
-    public FormDebuggerVisualizerInstaller(Type dialogVisualizerServiceType, string title, string description) : this()
+    public FormDebuggerVisualizerInstaller(Type dialogVisualizerServiceType, string title, string description, Action demoAction = null) : this()
     {
       var microsoftVisualStudioDebuggerVisualizersAssembly = Assembly.GetAssembly(dialogVisualizerServiceType);
       var fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly = FileVersionInfo.GetVersionInfo(microsoftVisualStudioDebuggerVisualizersAssembly.Location);
@@ -60,6 +66,20 @@ namespace AW.Winforms.Helpers.Forms
       var indexOfHyperLink = linkLabelWebSite.Text.IndexOf("https", StringComparison.Ordinal);
       linkLabelWebSite.Links.Add(indexOfHyperLink, linkLabelWebSite.Text.Length,
         linkLabelWebSite.Text.Substring(indexOfHyperLink));
+      buttonDemo.Enabled = demoAction != null;
+      if (buttonDemo.Enabled)
+        buttonDemo.Click += (o, i) =>
+        {
+          try
+          {
+            buttonDemo.Enabled = false;
+            demoAction();
+          }
+          finally
+          {
+            buttonDemo.Enabled = true;
+          }
+        };
     }
 
     private void GetAllStatus()
@@ -108,7 +128,7 @@ namespace AW.Winforms.Helpers.Forms
             var sourceFileName = assembly.Location;
             var sourceFileNameDirectory = Path.GetDirectoryName(sourceFileName);
             if (sourceFileNameDirectory == baseDirectory)
-              File.Copy(sourceFileName, Path.Combine(directoryName, Path.GetFileName(sourceFileName)),overwrite);
+              File.Copy(sourceFileName, Path.Combine(directoryName, Path.GetFileName(sourceFileName)), overwrite);
           }
           catch (Exception)
           {
@@ -157,7 +177,7 @@ namespace AW.Winforms.Helpers.Forms
 
     private void buttonRegistered_Click(object sender, EventArgs e)
     {
-      var debuggerVisualizerAttributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof (DebuggerVisualizerAttribute), false);
+      var debuggerVisualizerAttributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof(DebuggerVisualizerAttribute), false);
       var form = new FrmPersistantLocation
       {
         Icon = Icon,
@@ -179,7 +199,7 @@ namespace AW.Winforms.Helpers.Forms
 
     private void FormDebuggerVisualizerInstaller_Shown(object sender, EventArgs e)
     {
-       Task.Run(()=> MetaDataHelper.LoadReferencedAssemblies("CSScriptLibrary", "Microsoft.Data.ConnectionUI", "System.Data.SqlLocalDb"));
+      Task.Run(() => MetaDataHelper.LoadReferencedAssemblies("CSScriptLibrary", "Microsoft.Data.ConnectionUI", "System.Data.SqlLocalDb"));
     }
   }
 }
