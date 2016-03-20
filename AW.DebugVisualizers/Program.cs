@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.DataEditor;
@@ -26,7 +27,8 @@ namespace AW.DebugVisualizers
 
     private static void DemoAction()
     {
-      FrmDataEditor.CreateDataViewForm(AppDomain.CurrentDomain.GetAssemblies()).Show();
+      var dataViewForm = FrmDataEditor.CreateDataViewForm(AppDomain.CurrentDomain.GetAssemblies());
+      dataViewForm.Show();
     }
   }
 }

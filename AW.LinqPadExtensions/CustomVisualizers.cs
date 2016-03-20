@@ -59,7 +59,7 @@ namespace LINQPad
       if (enumerable != null)
       {
         var panelTitle = GetPanelTitle(enumerable, options);
-        var outputPanel = PanelManager.DisplayControl(new GridDataEditor(enumerable, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), pageSize,
+        var outputPanel = PanelManager.DisplayControl(new GridDataEditor(enumerable, false, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), pageSize,
           false, options == null ? null : options.MembersToExclude), TrimTitle(panelTitle));
         outputPanel.ToolTip = panelTitle;
       }
