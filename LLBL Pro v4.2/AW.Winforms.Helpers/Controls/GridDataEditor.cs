@@ -406,7 +406,7 @@ namespace AW.Winforms.Helpers.Controls
       }
       try
       {
-        if (enumerable is ArrayList || enumerable is Array || enumerable is DataView || !(IsGenericType(enumerable)))
+        if (enumerable is ArrayList || enumerable is Array || enumerable is DataView || !IsGenericType(enumerable))
         {
           PageSize = 0;
           _superset = null;
@@ -777,19 +777,17 @@ namespace AW.Winforms.Helpers.Controls
       if (coreType == null || e.Column is DataGridViewComboBoxColumn || e.Column is DataGridViewDateTimeColumn) return;
 
       if (coreType.IsEnum)
-      {        var enumDataSource =coreType == valueType ? Enum.GetValues(coreType) : GeneralHelper.EnumsGetValuesPlusUndefined(coreType);
-
-        if (SourceDataView == null)
+      {
+        var enumDataSource = coreType == valueType ? Enum.GetValues(coreType) : GeneralHelper.EnumsGetValuesPlusUndefined(coreType);
+        var isDataTable = SourceDataView != null;
+        if (isDataTable)
         {
-          HumanizedEnumConverter.AddEnumerationConverter(valueType);
+          valueType = Enum.GetUnderlyingType(coreType);
+          enumDataSource = GeneralHelper.Enum2DataTable(Enum.GetValues(coreType), valueType).DefaultView;
+          //enumDataSource = enumDataSource.OfType<Enum>().Select(value => new {Display = value.EnumToString(), Value = Convert.ChangeType(value, valueType)}).ToList();
         }
         else
-        {
-          //GeneralHelper.Enum2DataTable(enumDataSource)
-          valueType = Enum.GetUnderlyingType(coreType);
-          enumDataSource = enumDataSource.OfType<Enum>().Select(value => new { Display = value.ToString(), Value = Convert.ChangeType(value, valueType) })
-         .ToList();
-        }
+          HumanizedEnumConverter.AddEnumerationConverter(valueType);
         var enumDataGridViewComboBoxColumn = new DataGridViewComboBoxColumn
         {
           HeaderText = e.Column.HeaderText,
@@ -800,12 +798,13 @@ namespace AW.Winforms.Helpers.Controls
           DefaultCellStyle = e.Column.DefaultCellStyle,
           Name = e.Column.Name
         };
-        if (SourceDataView != null)
+
+        if (isDataTable)
         {
           enumDataGridViewComboBoxColumn.ValueMember = "Value";
           enumDataGridViewComboBoxColumn.DisplayMember = "Display";
         }
-          dataGridView.Columns.Remove(e.Column);
+        dataGridView.Columns.Remove(e.Column);
         dataGridView.Columns.Add(enumDataGridViewComboBoxColumn);
         enumDataGridViewComboBoxColumn.SortMode = e.Column.SortMode;
       }
@@ -881,18 +880,7 @@ namespace AW.Winforms.Helpers.Controls
           column.Width = MaxAutoGenerateColumnWidth;
         searchToolBar.SetColumns(dataGridViewEnumerable.Columns);
         toolStripButtonUnPage.Visible = Paging();
-
-        
       }
-      //foreach (DataGridViewColumn c in dataGridViewEnumerable.Columns)
-      //  {
-      //    if (c != null && c.ValueType.IsEnum && c is DataGridViewComboBoxColumn)
-      //    {
-      //      var cell  =dataGridViewEnumerable.Rows[0].Cells[c.Index];
-      //      if (cell.Value != null && !cell.Value.GetType().IsEnum)
-      //        cell.Value = Enum.ToObject(c.ValueType, cell.Value);
-      //    }
-      //  }
     }
 
     private void dataGridViewEnumerable_FilterStringChanged(object sender, EventArgs e)
@@ -1146,22 +1134,22 @@ namespace AW.Winforms.Helpers.Controls
 
     public void BeginInit()
     {
-      ((ISupportInitialize) (bindingSourceEnumerable)).BeginInit();
-      ((ISupportInitialize) (bindingNavigatorData)).BeginInit();
-      ((ISupportInitialize) (dataGridViewEnumerable)).BeginInit();
-      ((ISupportInitialize) (bindingNavigatorPaging)).BeginInit();
-      ((ISupportInitialize) (bindingSourcePaging)).BeginInit();
-      ((ISupportInitialize) (dataGridEnumerable)).BeginInit();
+      ((ISupportInitialize) bindingSourceEnumerable).BeginInit();
+      ((ISupportInitialize) bindingNavigatorData).BeginInit();
+      ((ISupportInitialize) dataGridViewEnumerable).BeginInit();
+      ((ISupportInitialize) bindingNavigatorPaging).BeginInit();
+      ((ISupportInitialize) bindingSourcePaging).BeginInit();
+      ((ISupportInitialize) dataGridEnumerable).BeginInit();
     }
 
     public void EndInit()
     {
-      ((ISupportInitialize) (bindingSourceEnumerable)).EndInit();
-      ((ISupportInitialize) (bindingNavigatorData)).EndInit();
-      ((ISupportInitialize) (dataGridViewEnumerable)).EndInit();
-      ((ISupportInitialize) (bindingNavigatorPaging)).EndInit();
-      ((ISupportInitialize) (bindingSourcePaging)).EndInit();
-      ((ISupportInitialize) (dataGridEnumerable)).EndInit();
+      ((ISupportInitialize) bindingSourceEnumerable).EndInit();
+      ((ISupportInitialize) bindingNavigatorData).EndInit();
+      ((ISupportInitialize) dataGridViewEnumerable).EndInit();
+      ((ISupportInitialize) bindingNavigatorPaging).EndInit();
+      ((ISupportInitialize) bindingSourcePaging).EndInit();
+      ((ISupportInitialize) dataGridEnumerable).EndInit();
     }
 
     private void toolStripButtonRelatedCounts_Click(object sender, EventArgs e)
@@ -1191,28 +1179,5 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
-    public static IEnumerable<object> GetValuesForFilter(DataGridView grid, string columnName, bool useFormatedValue = false)
-    {
-      return (useFormatedValue ? grid.Rows.Cast<DataGridViewRow>().Where<DataGridViewRow>((Func<DataGridViewRow, bool>)(r => !r.IsNewRow))
-        .Select<DataGridViewRow, object>((Func<DataGridViewRow, object>)(r => r.Cells[columnName].FormattedValue)) : grid.Rows.Cast<DataGridViewRow>()
-        .Where<DataGridViewRow>((Func<DataGridViewRow, bool>)(r => !r.IsNewRow))
-        .Select<DataGridViewRow, object>((Func<DataGridViewRow, object>)(r => r.Cells[columnName].Value))).Distinct<object>();
-    }
-
-    private void dataGridViewEnumerable_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
-    {
-    //  var dataGridViewColumn = this.dataGridViewEnumerable.Columns[e.ColumnIndex];
-    //  if (e.RowIndex>=0)
-    //  {
-    //    var dataGridViewCell = dataGridViewEnumerable.Rows[e.RowIndex].Cells[e.ColumnIndex];
-    //  }
-    //  //  dataGridViewCell.Value
-    //  var dataGridViewCells = ADGVFilterMenu.GetValuesForFilter(this.dataGridViewEnumerable, (dataGridViewColumn.Name));
-    }
-
-    private void dataGridViewEnumerable_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-    {
-
-    }
   }
 }
