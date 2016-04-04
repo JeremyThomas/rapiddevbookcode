@@ -1480,7 +1480,13 @@ namespace JesseJohnston
     protected virtual void OnListChanged(ListChangedEventArgs args)
     {
       if (listChangedEvent != null)
-        listChangedEvent(this, args);
+        try
+        {
+          listChangedEvent(this, args);
+        }
+        catch (Exception)
+        {
+        }
     }
 
     /// <summary>

@@ -143,7 +143,29 @@ namespace AW.Helper
         throw new ArgumentException(String.Format("typeof({0}).IsEnum == false", enumType), "enumType");
     }
 
-#pragma warning disable 1584,1711,1572,1581,1580
+    /// <summary>
+    /// http://stackoverflow.com/questions/17972291/datagridview-linked-to-datatable-with-combobox-column-based-on-enum
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static DataTable Enum2DataTable<T>()
+    {
+      DataTable EnumTable = new DataTable();
+      EnumTable.Columns.Add(new DataColumn("Value", Enum.GetUnderlyingType(typeof(T))));
+      EnumTable.Columns.Add(new DataColumn("Display", typeof(System.String)));
+      DataRow EnumRow;
+      foreach (T e in Enum.GetValues(typeof(T)))
+      {
+        EnumRow = EnumTable.NewRow();
+        EnumRow["Value"] = e;
+        EnumRow["Display"] = e.ToString();
+        EnumTable.Rows.Add(EnumRow);
+      }
+
+      return EnumTable;
+    }
+
+#pragma warning disable 1584, 1711, 1572, 1581, 1580
     /// <summary>
     ///   Turns an enum member into a human readable string using humanizer; e.g. AnonymousUser -&gt; Anonymous user.
     ///   It also honors DescriptionAttribute data annotation
@@ -165,7 +187,7 @@ namespace AW.Helper
     /// <see
     ///   cref="http://stackoverflow.com/questions/18277499/could-not-load-file-or-assembly-system-core-version-2-0-5-0-exception-wh?lq=1" />
     /// <see cref="https://github.com/Fody/Costura/issues/30" />
-#pragma warning restore 1584,1711,1572,1581,1580
+#pragma warning restore 1584, 1711, 1572, 1581, 1580
     public static string EnumToString(this Enum value)
     {
       if (value == null) return null;

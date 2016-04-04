@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Globalization;
@@ -317,6 +318,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
     {
+      Trace.Write(Name + " " + PageSourceEnumerable + " ");
       e.Exception.TraceOut();
       if (_canSave && !toolStripButtonCancelEdit.Enabled && DataEditorPersister.IsDirty(PageSourceEnumerable))
       {
@@ -589,10 +591,10 @@ namespace AW.Winforms.Helpers.Controls
 
     private void TidyUp()
     {
-      if (ItemType != null && FieldsToPropertiesTypeDescriptionProviders.ContainsKey(ItemType))
+      if (_itemType != null && FieldsToPropertiesTypeDescriptionProviders.ContainsKey(_itemType))
       {
-        TypeDescriptor.RemoveProvider(FieldsToPropertiesTypeDescriptionProviders[ItemType], ItemType);
-        FieldsToPropertiesTypeDescriptionProviders.Remove(ItemType);
+        TypeDescriptor.RemoveProvider(FieldsToPropertiesTypeDescriptionProviders[_itemType], _itemType);
+        FieldsToPropertiesTypeDescriptionProviders.Remove(_itemType);
       }
     }
 
@@ -750,7 +752,7 @@ namespace AW.Winforms.Helpers.Controls
 
         if (propertyInfo == null)
         {
-          var dataView = DataSource as DataView;
+          var dataView = SourceDataView;
           if (dataView != null)
           {
             var dataColumn = dataView.Table.Columns[e.Column.DataPropertyName];
@@ -775,19 +777,35 @@ namespace AW.Winforms.Helpers.Controls
       if (coreType == null || e.Column is DataGridViewComboBoxColumn || e.Column is DataGridViewDateTimeColumn) return;
 
       if (coreType.IsEnum)
-      {
-        HumanizedEnumConverter.AddEnumerationConverter(valueType);
+      {        var enumDataSource =coreType == valueType ? Enum.GetValues(coreType) : GeneralHelper.EnumsGetValuesPlusUndefined(coreType);
+
+        if (SourceDataView == null)
+        {
+          HumanizedEnumConverter.AddEnumerationConverter(valueType);
+        }
+        else
+        {
+          //GeneralHelper.Enum2DataTable(enumDataSource)
+          valueType = Enum.GetUnderlyingType(coreType);
+          enumDataSource = enumDataSource.OfType<Enum>().Select(value => new { Display = value.ToString(), Value = Convert.ChangeType(value, valueType) })
+         .ToList();
+        }
         var enumDataGridViewComboBoxColumn = new DataGridViewComboBoxColumn
         {
           HeaderText = e.Column.HeaderText,
           ValueType = valueType,
-          DataSource = coreType == valueType ? Enum.GetValues(coreType) : GeneralHelper.EnumsGetValuesPlusUndefined(coreType),
+          DataSource = enumDataSource,
           DataPropertyName = e.Column.DataPropertyName,
           SortMode = e.Column.SortMode,
           DefaultCellStyle = e.Column.DefaultCellStyle,
           Name = e.Column.Name
         };
-        dataGridView.Columns.Remove(e.Column);
+        if (SourceDataView != null)
+        {
+          enumDataGridViewComboBoxColumn.ValueMember = "Value";
+          enumDataGridViewComboBoxColumn.DisplayMember = "Display";
+        }
+          dataGridView.Columns.Remove(e.Column);
         dataGridView.Columns.Add(enumDataGridViewComboBoxColumn);
         enumDataGridViewComboBoxColumn.SortMode = e.Column.SortMode;
       }
@@ -863,7 +881,18 @@ namespace AW.Winforms.Helpers.Controls
           column.Width = MaxAutoGenerateColumnWidth;
         searchToolBar.SetColumns(dataGridViewEnumerable.Columns);
         toolStripButtonUnPage.Visible = Paging();
+
+        
       }
+      //foreach (DataGridViewColumn c in dataGridViewEnumerable.Columns)
+      //  {
+      //    if (c != null && c.ValueType.IsEnum && c is DataGridViewComboBoxColumn)
+      //    {
+      //      var cell  =dataGridViewEnumerable.Rows[0].Cells[c.Index];
+      //      if (cell.Value != null && !cell.Value.GetType().IsEnum)
+      //        cell.Value = Enum.ToObject(c.ValueType, cell.Value);
+      //    }
+      //  }
     }
 
     private void dataGridViewEnumerable_FilterStringChanged(object sender, EventArgs e)
@@ -938,6 +967,11 @@ namespace AW.Winforms.Helpers.Controls
     private IEnumerable PageSourceEnumerable
     {
       get { return bindingSourceEnumerable.GetDataSource(); }
+    }
+
+    private DataView SourceDataView
+    {
+      get { return SourceEnumerable as DataView; }
     }
 
     [Category("GridDataEditor"), Description("Gets or sets wether filtering is enabled in the grid, even if the underlying collection doesn't support it.")]
@@ -1155,6 +1189,30 @@ namespace AW.Winforms.Helpers.Controls
         dataGridViewEnumerable.Focus();
         SendKeys.Send("{DEL}");
       }
+    }
+
+    public static IEnumerable<object> GetValuesForFilter(DataGridView grid, string columnName, bool useFormatedValue = false)
+    {
+      return (useFormatedValue ? grid.Rows.Cast<DataGridViewRow>().Where<DataGridViewRow>((Func<DataGridViewRow, bool>)(r => !r.IsNewRow))
+        .Select<DataGridViewRow, object>((Func<DataGridViewRow, object>)(r => r.Cells[columnName].FormattedValue)) : grid.Rows.Cast<DataGridViewRow>()
+        .Where<DataGridViewRow>((Func<DataGridViewRow, bool>)(r => !r.IsNewRow))
+        .Select<DataGridViewRow, object>((Func<DataGridViewRow, object>)(r => r.Cells[columnName].Value))).Distinct<object>();
+    }
+
+    private void dataGridViewEnumerable_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+    {
+    //  var dataGridViewColumn = this.dataGridViewEnumerable.Columns[e.ColumnIndex];
+    //  if (e.RowIndex>=0)
+    //  {
+    //    var dataGridViewCell = dataGridViewEnumerable.Rows[e.RowIndex].Cells[e.ColumnIndex];
+    //  }
+    //  //  dataGridViewCell.Value
+    //  var dataGridViewCells = ADGVFilterMenu.GetValuesForFilter(this.dataGridViewEnumerable, (dataGridViewColumn.Name));
+    }
+
+    private void dataGridViewEnumerable_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+    {
+
     }
   }
 }
