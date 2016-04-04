@@ -8,7 +8,6 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -75,7 +74,7 @@ namespace AW.Helper
     /// <returns> </returns>
     public static T ToEnum<T>(this string strOfEnum)
     {
-      return String.IsNullOrEmpty(strOfEnum) ? default(T) : (T) StringToEnum(strOfEnum, (typeof (T)));
+      return String.IsNullOrEmpty(strOfEnum) ? default(T) : (T) StringToEnum(strOfEnum, (typeof(T)));
     }
 
     /// <summary>
@@ -126,7 +125,7 @@ namespace AW.Helper
       TEnum[] enumAsEnumerable;
       var values = Enum.GetValues(enumType);
       if (enumType == type)
-        enumAsEnumerable = (TEnum[])values;
+        enumAsEnumerable = (TEnum[]) values;
       else
       {
         enumAsEnumerable = (values.Cast<TEnum>()).ToArray();
@@ -137,32 +136,34 @@ namespace AW.Helper
 
     public static void CheckIsEnum(Type enumType)
     {
-      if (enumType == typeof (Enum))
+      if (enumType == typeof(Enum))
         throw new ArgumentException("typeof(TEnum) == System.Enum", "enumType");
       if (!(enumType.IsEnum))
         throw new ArgumentException(String.Format("typeof({0}).IsEnum == false", enumType), "enumType");
     }
 
     /// <summary>
+    /// For providing the datasource to a enum lookup against a datatable
     /// http://stackoverflow.com/questions/17972291/datagridview-linked-to-datatable-with-combobox-column-based-on-enum
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <param name="enums">The values.</param>
+    /// <param name="underlyingType">Underlying Type of the enum.</param>
+    /// <param name="valueColumnName">Name of the value column.</param>
+    /// <param name="displayColumnName">Display name of the column.</param>
     /// <returns></returns>
-    public static DataTable Enum2DataTable<T>()
+    public static DataTable Enum2DataTable(IEnumerable enums, Type underlyingType, string valueColumnName = "Value", string displayColumnName = "Display")
     {
-      DataTable EnumTable = new DataTable();
-      EnumTable.Columns.Add(new DataColumn("Value", Enum.GetUnderlyingType(typeof(T))));
-      EnumTable.Columns.Add(new DataColumn("Display", typeof(System.String)));
-      DataRow EnumRow;
-      foreach (T e in Enum.GetValues(typeof(T)))
+      var enumTable = new DataTable();
+      enumTable.Columns.Add(new DataColumn(valueColumnName, underlyingType));
+      enumTable.Columns.Add(new DataColumn(displayColumnName, typeof(String)));
+      foreach (var e in enums.OfType<Enum>())
       {
-        EnumRow = EnumTable.NewRow();
-        EnumRow["Value"] = e;
-        EnumRow["Display"] = e.ToString();
-        EnumTable.Rows.Add(EnumRow);
+        var enumRow = enumTable.NewRow();
+        enumRow[valueColumnName] = e;
+        enumRow[displayColumnName] = e.EnumToString();
+        enumTable.Rows.Add(enumRow);
       }
-
-      return EnumTable;
+      return enumTable;
     }
 
 #pragma warning disable 1584, 1711, 1572, 1581, 1580
@@ -321,7 +322,7 @@ namespace AW.Helper
       if (value == null) return null;
       var fi = value.GetType().GetField(value.ToString());
       if (fi == null) return null;
-      var attributes = (DescriptionAttribute[]) fi.GetCustomAttributes(typeof (DescriptionAttribute), false);
+      var attributes = (DescriptionAttribute[]) fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
       return (attributes.Length > 0) ? attributes[0].Description : null;
     }
 
@@ -366,7 +367,7 @@ namespace AW.Helper
 
     public static DataTable StripTypeColumns(this DataTable source)
     {
-      var dataColumnsToRemove = source.Columns.OfType<DataColumn>().Where(dc => !dc.DataType.IsSerializable || dc.DataType == typeof (Type)).ToList();
+      var dataColumnsToRemove = source.Columns.OfType<DataColumn>().Where(dc => !dc.DataType.IsSerializable || dc.DataType == typeof(Type)).ToList();
       foreach (var dataColumn in dataColumnsToRemove)
         source.Columns.Remove(dataColumn);
       return source;
@@ -374,7 +375,7 @@ namespace AW.Helper
 
     public static DataTable StripNonSerializables(this DataTable source)
     {
-      foreach (var dataColumn in source.Columns.OfType<DataColumn>().Where(dc => dc.DataType == typeof (object)))
+      foreach (var dataColumn in source.Columns.OfType<DataColumn>().Where(dc => dc.DataType == typeof(object)))
       {
         var column = dataColumn;
         foreach (var row in source.Rows.OfType<DataRow>().Where(row => row[column] != null && !row[column].GetType().IsSerializable))
@@ -401,8 +402,8 @@ namespace AW.Helper
     /// </summary>
     public static DataTable ToDataTable<T>(List<T> items)
     {
-      var tb = new DataTable(typeof (T).Name);
-      var props = typeof (T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+      var tb = new DataTable(typeof(T).Name);
+      var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
       foreach (var prop in props)
       {
@@ -466,10 +467,11 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Adds the range specified to an ICollection(Of T) typed container.
-    /// 
+    ///   Adds the range specified to an ICollection(Of T) typed container.
     /// </summary>
-    /// <typeparam name="T">type of the element in the Collection</typeparam><param name="container">The container.</param><param name="rangeToAdd">The range to add.</param>
+    /// <typeparam name="T">type of the element in the Collection</typeparam>
+    /// <param name="container">The container.</param>
+    /// <param name="rangeToAdd">The range to add.</param>
     public static void AddRange<T>(this ICollection<T> container, IEnumerable<T> rangeToAdd)
     {
       if (container == null || rangeToAdd == null)
@@ -477,7 +479,7 @@ namespace AW.Helper
       foreach (var obj in rangeToAdd)
         container.Add(obj);
     }
-    
+
     /// <summary>
     ///   Adds the range of items.
     /// </summary>
@@ -488,7 +490,7 @@ namespace AW.Helper
     public static ICollection<T> AddRange<T>(this ICollection<T> list, params T[] range)
     {
       if (range != null)
-        list.AddRange((IEnumerable<T>)range);
+        list.AddRange((IEnumerable<T>) range);
       return list;
     }
 
@@ -517,7 +519,7 @@ namespace AW.Helper
     public static ICollection<T> AddRangeDistinct<T>(this ICollection<T> list, params T[] range)
     {
       if (range != null)
-        list.AddRangeDistinct((IEnumerable<T>)range);
+        list.AddRangeDistinct((IEnumerable<T>) range);
       return list;
     }
 
@@ -578,7 +580,7 @@ namespace AW.Helper
       if (element != null)
       {
         var xml = element.ValueXml.InnerXml;
-        var xs = new XmlSerializer(typeof (StringCollection));
+        var xs = new XmlSerializer(typeof(StringCollection));
         return ((StringCollection) xs.Deserialize(new XmlTextReader(xml, XmlNodeType.Element, null))).AsEnumerable();
       }
       return null;
@@ -747,7 +749,7 @@ namespace AW.Helper
         Provider = applicationSettingsBase.Providers.Cast<SettingsProvider>().FirstOrDefault(),
         SerializeAs = SettingsSerializeAs.Xml
       };
-      settingsProperty.Attributes.Add(typeof (UserScopedSettingAttribute), new UserScopedSettingAttribute());
+      settingsProperty.Attributes.Add(typeof(UserScopedSettingAttribute), new UserScopedSettingAttribute());
       applicationSettingsBase.Properties.Add(settingsProperty);
     }
 
@@ -768,7 +770,7 @@ namespace AW.Helper
     public static void ThrowInnerException(Exception exception)
     {
       if (exception.InnerException != null)
-        GeneralHelper.ThrowInnerException(exception.InnerException);
+        ThrowInnerException(exception.InnerException);
       throw exception;
     }
 
@@ -870,7 +872,7 @@ namespace AW.Helper
     /// <summary>
     ///   Get string value before [first] delimiter.
     /// </summary>
-    public static string Before(this string value, string delimiter,string valueIfnotFound="")
+    public static string Before(this string value, string delimiter, string valueIfnotFound = "")
     {
       var posA = value.IndexOf(delimiter, StringComparison.Ordinal);
       return posA == -1 ? valueIfnotFound : value.Substring(0, posA);
@@ -901,7 +903,7 @@ namespace AW.Helper
       return value;
     }
 
-    public static ICollection<T> WireUpSelfJoin<T,TI>(IEnumerable<T> entities,
+    public static ICollection<T> WireUpSelfJoin<T, TI>(IEnumerable<T> entities,
       Func<T, TI> iDFunc, Func<T, bool> isChildFunc, Func<T, TI> parentIDFunc, Action<T, T> assignToParentFunc)
     {
       var edDictionary = entities.ToDictionary(iDFunc);
@@ -916,7 +918,7 @@ namespace AW.Helper
     public static IEnumerable<T> WireUpSelfJoinAndRemoveChildren<T, TI>(IEnumerable<T> entities,
       Func<T, TI> iDFunc, Func<T, bool> isChildFunc, Func<T, TI> parentIDFunc, Action<T, T> assignToParentFunc)
     {
-     var entityCollection = WireUpSelfJoin(entities, iDFunc,  isChildFunc,  parentIDFunc,  assignToParentFunc);
+      var entityCollection = WireUpSelfJoin(entities, iDFunc, isChildFunc, parentIDFunc, assignToParentFunc);
       return entityCollection.Where(employeeEntity => !isChildFunc(employeeEntity));
     }
 
