@@ -85,7 +85,7 @@ namespace LLBLGen.EntityBrowser
       Text += string.Format(" - {0}", ProfilerHelper.OrmProfilerStatus);
       try
       {
-        LoadAssembliesAndTabs();
+        LoadAssembliesAndTabs(Settings.Default.LinqMetaDataAssemblyPath, Settings.Default.AdapterAssemblyPath);
         if (tabControl.TabPages.Count == 0)
         {
           panelSettings.Visible = true;
@@ -102,7 +102,13 @@ namespace LLBLGen.EntityBrowser
 
     private void toolStripButtonLoad_Click(object sender, EventArgs e)
     {
-      LoadAssembliesAndTabs();
+      LoadAssembliesAndTabs(Settings.Default.LinqMetaDataAssemblyPath, Settings.Default.AdapterAssemblyPath);
+    }
+
+    private void linqMetaDataAssemblyPathTextBox_Leave(object sender, EventArgs e)
+    {
+      if (_linqMetaDataType == null)
+        LoadAssembliesAndTabs(linqMetaDataAssemblyPathTextBox.Text, Settings.Default.AdapterAssemblyPath);
     }
 
     private void LoadTabs()
@@ -239,8 +245,11 @@ namespace LLBLGen.EntityBrowser
         if (DataConnectionDialog.Show(DataConnectionDialog) == DialogResult.OK)
         {
           connectionStringSettings.ConnectionString = DataConnectionDialog.ConnectionString;
-          var usrCntrlEntityBrowser = _currentTabItem.Controls[0] as UsrCntrlEntityBrowser;
-          InitializeEntityBrowser(usrCntrlEntityBrowser, connectionStringSettings);
+          if (_currentTabItem.Controls.Count > 0)
+          {
+            var usrCntrlEntityBrowser = _currentTabItem.Controls[0] as UsrCntrlEntityBrowser;
+            InitializeEntityBrowser(usrCntrlEntityBrowser, connectionStringSettings);
+          }
         }
       }
     }
@@ -269,12 +278,12 @@ namespace LLBLGen.EntityBrowser
             var newCatalog = DataHelper.GetSqlDatabaseName(connectionStringSetting.ConnectionString);
             if (!string.IsNullOrWhiteSpace(newCatalog))
             {
-              var dynamicQueryEnginetype = sqlServerDqeAssembly.GetConcretePublicImplementations(typeof (DynamicQueryEngineBase)).FirstOrDefault();
+              var dynamicQueryEnginetype = sqlServerDqeAssembly.GetConcretePublicImplementations(typeof(DynamicQueryEngineBase)).FirstOrDefault();
               if (dynamicQueryEnginetype != null)
               {
                 var obj = dynamicQueryEnginetype.InvokeMember("_catalogOverwrites", BindingFlags.GetField | BindingFlags.NonPublic | BindingFlags.Static, null, null, null);
                 var overrides = obj as Dictionary<string, string>;
-                var entityType = _linqMetaDataType.Assembly.GetConcretePublicImplementations(typeof (EntityBase)).FirstOrDefault();
+                var entityType = _linqMetaDataType.Assembly.GetConcretePublicImplementations(typeof(EntityBase)).FirstOrDefault();
                 var elementCreator = EntityHelper.CreateElementCreator(entityType);
                 var entity = LinqUtils.CreateEntityInstanceFromEntityType(entityType, elementCreator);
                 if (entity != null && overrides != null)
@@ -296,20 +305,20 @@ namespace LLBLGen.EntityBrowser
       return Assembly.LoadFrom(assemblyPath);
     }
 
-    private void LoadAssembliesAndTabs()
+    private void LoadAssembliesAndTabs(string linqMetaDataAssemblyPath, string adapterAssemblyPath)
     {
-      if (String.IsNullOrWhiteSpace(Settings.Default.LinqMetaDataAssemblyPath))
+      if (String.IsNullOrWhiteSpace(linqMetaDataAssemblyPath))
         return;
-      if (!File.Exists(Settings.Default.LinqMetaDataAssemblyPath))
-        throw new ApplicationException("LinqMetaData assembly: " + Settings.Default.LinqMetaDataAssemblyPath + " not found!" + Environment.NewLine);
-      var linqMetaDataAssembly = LoadAssembly(Settings.Default.LinqMetaDataAssemblyPath);
-      _linqMetaDataType = linqMetaDataAssembly.GetConcretePublicImplementations(typeof (ILinqMetaData)).FirstOrDefault();
+      if (!File.Exists(linqMetaDataAssemblyPath))
+        throw new ApplicationException("LinqMetaData assembly: " + linqMetaDataAssemblyPath + " not found!" + Environment.NewLine);
+      var linqMetaDataAssembly = LoadAssembly(linqMetaDataAssemblyPath);
+      _linqMetaDataType = linqMetaDataAssembly.GetConcretePublicImplementations(typeof(ILinqMetaData)).FirstOrDefault();
       if (_linqMetaDataType == null)
         throw new ApplicationException("There are no public types in that assembly that implement ILinqMetaData. Wrong Assembly chosen.");
 
       _daoBaseImplementationType = EntityHelper.GetDaoBaseImplementation(linqMetaDataAssembly);
 
-      if (_daoBaseImplementationType == null && !String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
+      if (_daoBaseImplementationType == null && !String.IsNullOrWhiteSpace(adapterAssemblyPath))
       {
         _adapterTypes = GetAdapterTypes().ToList();
       }
@@ -338,7 +347,7 @@ namespace LLBLGen.EntityBrowser
     {
       if (dataAccessAdapterAssembly == null)
         throw new ArgumentNullException("dataAccessAdapterAssembly");
-      var concretePublicImplementations = dataAccessAdapterAssembly.GetConcretePublicImplementations(typeof (DataAccessAdapterBase));
+      var concretePublicImplementations = dataAccessAdapterAssembly.GetConcretePublicImplementations(typeof(DataAccessAdapterBase));
       Type dataAccessAdapterType = null;
       foreach (var implementation in concretePublicImplementations)
       {
@@ -445,7 +454,7 @@ namespace LLBLGen.EntityBrowser
       get
       {
         if (_currentTabItem == null) return null;
-          return _currentTabItem.Tag as ConnectionStringSettings;
+        return _currentTabItem.Tag as ConnectionStringSettings;
       }
     }
 
