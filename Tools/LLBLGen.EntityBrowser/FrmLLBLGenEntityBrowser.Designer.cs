@@ -338,6 +338,7 @@
       this.linqMetaDataAssemblyPathTextBox.Name = "linqMetaDataAssemblyPathTextBox";
       this.linqMetaDataAssemblyPathTextBox.Size = new System.Drawing.Size(1017, 20);
       this.linqMetaDataAssemblyPathTextBox.TabIndex = 1;
+      this.linqMetaDataAssemblyPathTextBox.Leave += new System.EventHandler(this.linqMetaDataAssemblyPathTextBox_Leave);
       // 
       // contextMenuStripTabPage
       // 
