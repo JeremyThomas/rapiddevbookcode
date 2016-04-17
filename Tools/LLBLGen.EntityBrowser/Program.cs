@@ -25,7 +25,7 @@ namespace LLBLGen.EntityBrowser
       // Add the event handler for handling non-UI thread exceptions to the event. 
       AppDomain.CurrentDomain.UnhandledException +=CurrentDomain_UnhandledException;
 
-      Application.Run(new MainForm());
+      Application.Run(new FrmLLBLGenEntityBrowser());
     }
 
     /// <summary>

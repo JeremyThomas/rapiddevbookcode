@@ -1,6 +1,6 @@
 ﻿namespace LLBLGen.EntityBrowser
 {
-  partial class MainForm
+  partial class FrmLLBLGenEntityBrowser
   {
     /// <summary>
     /// Required designer variable.
@@ -31,7 +31,7 @@
       this.components = new System.ComponentModel.Container();
       System.Windows.Forms.Label cacheDurationInSecondsLabel;
       System.Windows.Forms.Label prefixDelimiterLabel;
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLLBLGenEntityBrowser));
       this.linqMetaDataAssemblyPathLabel = new System.Windows.Forms.LinkLabel();
       this.adapterAssemblyPathLabel = new System.Windows.Forms.LinkLabel();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -401,7 +401,7 @@
       // 
       this.openFileDialog1.FileName = "openFileDialog1";
       // 
-      // MainForm
+      // FrmLLBLGenEntityBrowser
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -411,7 +411,7 @@
       this.Controls.Add(this.panelSettings);
       this.Controls.Add(this.toolStrip1);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-      this.Name = "MainForm";
+      this.Name = "FrmLLBLGenEntityBrowser";
       this.Text = "Data Browser";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
       this.Load += new System.EventHandler(this.MainForm_Load);

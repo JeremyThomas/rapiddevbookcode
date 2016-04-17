@@ -188,6 +188,7 @@ namespace AW.Helper
     /// <see
     ///   cref="http://stackoverflow.com/questions/18277499/could-not-load-file-or-assembly-system-core-version-2-0-5-0-exception-wh?lq=1" />
     /// <see cref="https://github.com/Fody/Costura/issues/30" />
+    ///<see cref= "https://github.com/dennisdoomen/fluentassertions/issues/311" />
 #pragma warning restore 1584, 1711, 1572, 1581, 1580
     public static string EnumToString(this Enum value)
     {

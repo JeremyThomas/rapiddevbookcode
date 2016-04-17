@@ -13,6 +13,6 @@ using System.Reflection;
 internal static class NorthwindAssemblyInfoConstants
 {
 	public const string AssemblyCompany = "Northwind Traders";
-	public const string AssemblyCopyright = "Copyright © 2012 " + AssemblyCompany;
+	public const string AssemblyCopyright = "Copyright © 2016 " + AssemblyCompany;
 	public const string AssemblyProduct = AssemblyCompany + " LLBL Sample";
 }

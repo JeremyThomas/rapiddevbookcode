@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 
 namespace AW.Helper.TypeConverters
 {
@@ -54,7 +55,17 @@ namespace AW.Helper.TypeConverters
     public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
     {
       if (destinationType == typeof (string) && value != null)
-        return Enum.IsDefined(_coreEnumType, value) ? ((Enum) Enum.ToObject(_coreEnumType, value)).EnumToString() : string.Empty;
+        try
+        {
+          return Enum.IsDefined(_coreEnumType, value) ? ((Enum)Enum.ToObject(_coreEnumType, value)).EnumToString() : string.Empty;
+        }
+        catch (FileNotFoundException e)
+        {
+          e.TraceOut();
+          var description = GeneralHelper.GetDescription(value);
+          if  (!String.IsNullOrEmpty(description))
+            return description;
+        }
       return base.ConvertTo(context, culture, value, destinationType);
     }
 

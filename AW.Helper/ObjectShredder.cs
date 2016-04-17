@@ -93,10 +93,21 @@ namespace AW.Helper
       {
         while (e.MoveNext())
         {
+          var values = ShredObject(table, e.Current);
           if (options != null)
-            table.LoadDataRow(ShredObject(table, e.Current), (LoadOption) options);
+            table.LoadDataRow(values, (LoadOption) options);
           else
-            table.LoadDataRow(ShredObject(table, e.Current), true);
+          {
+            var dataRow = table.LoadDataRow(values, true);
+            for (var index = 0; index < values.Length; index++)
+            {
+              var value = values[index];
+              if (value.GetType().IsEnum)
+              {
+                dataRow[index] = value;
+              }
+            }
+          }
         }
       }
       table.EndLoadData();

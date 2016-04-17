@@ -24,7 +24,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace LLBLGen.EntityBrowser
 {
-  public partial class MainForm : FrmPersistantLocation
+  public partial class FrmLLBLGenEntityBrowser : FrmPersistantLocation
   {
     private static Type _linqMetaDataType;
     private static Type _adapterType;
@@ -40,7 +40,7 @@ namespace LLBLGen.EntityBrowser
 
     private static readonly DataConnectionDialog DataConnectionDialog;
 
-    static MainForm()
+    static FrmLLBLGenEntityBrowser()
     {
       ProfilerHelper.InitializeOrmProfiler();
       DataConnectionDialog = new DataConnectionDialog();
@@ -51,7 +51,7 @@ namespace LLBLGen.EntityBrowser
       ConnectionStringSettingsCollection = Configuration.ConnectionStrings.ConnectionStrings;
     }
 
-    public MainForm()
+    public FrmLLBLGenEntityBrowser()
     {
       InitializeComponent();
       settingsBindingSource.DataSource = Settings.Default;
