@@ -11,6 +11,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -963,6 +964,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private DomainIsolator CreateDomainIsolator()
     {
+      MemoryStream stream = null;
+      var assembly = MetaDataHelper.GetAssembly("LINQPad.Common");
+      if (assembly != null)
+      {
+        var formatter = new BinaryFormatter();
+        stream = new MemoryStream();
+        formatter.Serialize(stream, assembly); //Doesn't work - just does name
+      }
       var domainIsolator = new DomainIsolator("Inspect Custom Assembly");
       domainIsolator.AddProbePaths(CxInfo.CustomTypeInfo.CustomAssemblyPath, GetDriverDataValue(CxInfo, ElementNameFactoryAssembly), GetDriverDataValue(CxInfo, ElementNameAdapterAssembly));
       return domainIsolator;
