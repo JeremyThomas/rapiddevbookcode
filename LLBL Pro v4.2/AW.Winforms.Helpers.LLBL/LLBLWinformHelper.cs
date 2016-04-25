@@ -99,7 +99,19 @@ namespace AW.Winforms.Helpers.LLBL
 
     public abstract class DataEditorLLBLPersister : IDataEditorPersisterWithCounts
     {
+      /// <summary>
+      /// Saves (persist CUD changes) the specified data.
+      /// </summary>
+      /// <param name="dataToSave">The data to save.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
+      /// <param name="cascadeDeletes">Deletes cascade non-recursively to children of the selected entity</param>
+      /// <returns></returns>
       public abstract int Save(object dataToSave = null, bool cascadeDeletes = false);
+      /// <summary>
+      /// Deletes the specified data, may not be needed if 'Save' can handle deletes.
+      /// </summary>
+      /// <param name="dataToDelete">The data to delete.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
+      /// <param name="cascade">if set to <c>true</c>Deletes cascade non-recursively to children of the selected entity.</param>
+      /// <returns></returns>
       public abstract int Delete(object dataToDelete, bool cascade = false);
 
       public virtual bool CanSave(Type typeToSave)
@@ -134,14 +146,26 @@ namespace AW.Winforms.Helpers.LLBL
 
     public class DataEditorLLBLSelfServicingPersister : DataEditorLLBLPersister
     {
+      /// <summary>
+      /// Saves (persist CUD changes) the specified data.
+      /// </summary>
+      /// <param name="dataToSave">The data to save.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
+      /// <param name="cascadeDeletes">Deletes cascade non-recursively to children of the selected entity</param>
+      /// <returns></returns>
       public override int Save(object dataToSave = null, bool cascadeDeletes = false)
       {
         return EntityHelper.Save(dataToSave);
       }
 
+      /// <summary>
+      /// Deletes the specified data, may not be needed if 'Save' can handle deletes.
+      /// </summary>
+      /// <param name="dataToDelete">The data to delete.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
+      /// <param name="cascade">if set to <c>true</c>Deletes cascade non-recursively to children of the selected entity.</param>
+      /// <returns></returns>
       public override int Delete(object dataToDelete, bool cascade = false)
       {
-        return EntityHelper.Delete(dataToDelete);
+        return EntityHelper.Delete(dataToDelete, cascade);
       }
 
       public override bool CanSave(Type typeToSave)
@@ -176,14 +200,26 @@ namespace AW.Winforms.Helpers.LLBL
         _dataAccessAdapter = dataAccessAdapter;
       }
 
+      /// <summary>
+      /// Saves (persist CUD changes) the specified data.
+      /// </summary>
+      /// <param name="dataToSave">The data to save.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
+      /// <param name="cascadeDeletes">Deletes cascade non-recursively to children of the selected entity</param>
+      /// <returns></returns>
       public override int Save(object dataToSave = null, bool cascadeDeletes = false)
       {
-        return EntityHelper.Save(dataToSave, _dataAccessAdapter);
+        return EntityHelper.Save(dataToSave, _dataAccessAdapter, cascadeDeletes);
       }
 
+      /// <summary>
+      /// Deletes the specified data, may not be needed if 'Save' can handle deletes.
+      /// </summary>
+      /// <param name="dataToDelete">The data to delete.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
+      /// <param name="cascade">if set to <c>true</c>Deletes cascade non-recursively to children of the selected entity.</param>
+      /// <returns></returns>
       public override int Delete(object dataToDelete, bool cascade = false)
       {
-        return EntityHelper.Delete(dataToDelete, _dataAccessAdapter);
+        return EntityHelper.Delete(dataToDelete, _dataAccessAdapter, cascade);
       }
 
       public override bool CanSave(Type typeToSave)

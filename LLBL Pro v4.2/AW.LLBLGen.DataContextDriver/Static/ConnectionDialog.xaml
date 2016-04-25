@@ -54,7 +54,7 @@
               </Hyperlink>
             </Label>
             <Label x:Name="lblAssemblyPath"
-                   Content="Path to LLBL assembly containing a ILinqMetaData or IElementCreatorCore:"
+                   Content="Path to a LLBLGen Pro generated assembly containing a ILinqMetaData implementation:"
                    Padding="0,0,0,1"
                    ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" />
           </DockPanel>

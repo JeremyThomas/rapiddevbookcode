@@ -55,6 +55,8 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
@@ -125,7 +127,9 @@ namespace AW.Winforms.Helpers.LLBL
             this.useContextCheckBox,
             this.prefixDelimiterLabel,
             this.prefixDelimiterTextBox,
+            this.toolStripLabel1,
             this.cacheDurationInSecondsNumericUpDown,
+            this.toolStripLabel2,
             this.pageSizeNumericUpDown,
             this.toolStripCheckBoxDeletesAreCascading});
       this.toolStrip.Location = new System.Drawing.Point(0, 557);
@@ -163,6 +167,8 @@ namespace AW.Winforms.Helpers.LLBL
       this.ensureFilteringEnabledCheckBox.Name = "ensureFilteringEnabledCheckBox";
       this.ensureFilteringEnabledCheckBox.Size = new System.Drawing.Size(155, 25);
       this.ensureFilteringEnabledCheckBox.Text = "Ensure Filtering Enabled:";
+      this.ensureFilteringEnabledCheckBox.ToolTipText = "Specifies whether filtering is enabled in the grid, even if the underlying collec" +
+    "tion doesn\'t support it.";
       this.ensureFilteringEnabledCheckBox.Click += new System.EventHandler(this.ensureFilteringEnabledCheckBox_Click);
       // 
       // useSchemaCheckBox
@@ -172,6 +178,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.useSchemaCheckBox.Name = "useSchemaCheckBox";
       this.useSchemaCheckBox.Size = new System.Drawing.Size(93, 19);
       this.useSchemaCheckBox.Text = "Use Schema:";
+      this.useSchemaCheckBox.ToolTipText = "Use Table Schema to group the Entities";
       this.useSchemaCheckBox.Click += new System.EventHandler(this.toolStripCheckBox1_Click);
       // 
       // useContextCheckBox
@@ -181,6 +188,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.useContextCheckBox.Name = "useContextCheckBox";
       this.useContextCheckBox.Size = new System.Drawing.Size(92, 19);
       this.useContextCheckBox.Text = "Use Context:";
+      this.useContextCheckBox.ToolTipText = resources.GetString("useContextCheckBox.ToolTipText");
       this.useContextCheckBox.Click += new System.EventHandler(this.useContextCheckBox_Click);
       // 
       // prefixDelimiterLabel
@@ -188,13 +196,16 @@ namespace AW.Winforms.Helpers.LLBL
       this.prefixDelimiterLabel.Name = "prefixDelimiterLabel";
       this.prefixDelimiterLabel.Size = new System.Drawing.Size(90, 15);
       this.prefixDelimiterLabel.Text = "Prefix Delimiter:";
+      this.prefixDelimiterLabel.ToolTipText = "Table Prefix Delimiter to group Entities by (e.g. with a delimiter of _ table Sal" +
+    "es_Order would grouped into a node called Sales)";
       // 
       // prefixDelimiterTextBox
       // 
       this.prefixDelimiterTextBox.MaxLength = 25;
       this.prefixDelimiterTextBox.Name = "prefixDelimiterTextBox";
       this.prefixDelimiterTextBox.Size = new System.Drawing.Size(20, 23);
-      this.prefixDelimiterTextBox.ToolTipText = "Prefix Delimiter e.g. _";
+      this.prefixDelimiterTextBox.ToolTipText = "Table Prefix Delimiter to group Entities by (e.g. with a delimiter of _ table Sal" +
+    "es_Order would grouped into a node called Sales)";
       this.prefixDelimiterTextBox.Click += new System.EventHandler(this.prefixDelimiterTextBox_Click);
       // 
       // cacheDurationInSecondsNumericUpDown
@@ -206,6 +217,8 @@ namespace AW.Winforms.Helpers.LLBL
       this.cacheDurationInSecondsNumericUpDown.Size = new System.Drawing.Size(53, 25);
       this.cacheDurationInSecondsNumericUpDown.Text = "Cache Duration In Seconds:";
       this.cacheDurationInSecondsNumericUpDown.TextVisible = false;
+      this.cacheDurationInSecondsNumericUpDown.ToolTipText = "Specifies the duration that the query\'s result set should be cached for. Zero to " +
+    "turn caching off.";
       this.cacheDurationInSecondsNumericUpDown.ValueChanged += new System.EventHandler(this.cacheDurationInSecondsNumericUpDown_ValueChanged);
       // 
       // pageSizeNumericUpDown
@@ -215,8 +228,9 @@ namespace AW.Winforms.Helpers.LLBL
       this.pageSizeNumericUpDown.Name = "pageSizeNumericUpDown";
       this.pageSizeNumericUpDown.NumBackColor = System.Drawing.SystemColors.Window;
       this.pageSizeNumericUpDown.Size = new System.Drawing.Size(53, 25);
-      this.pageSizeNumericUpDown.Text = "PageSize";
+      this.pageSizeNumericUpDown.Text = "Page Size";
       this.pageSizeNumericUpDown.TextVisible = false;
+      this.pageSizeNumericUpDown.ToolTipText = "The number of rows per page in the grid. Zero to turn paging off.";
       this.pageSizeNumericUpDown.Click += new System.EventHandler(this.pageSizeNumericUpDown_Click);
       // 
       // toolStripCheckBoxDeletesAreCascading
@@ -234,6 +248,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.gridDataEditor.DataEditorPersister = null;
       this.gridDataEditor.DataMember = "";
       this.gridDataEditor.DataSource = null;
+      this.gridDataEditor.DelayBind = false;
       this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
       this.gridDataEditor.EnsureFilteringEnabled = false;
       this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
@@ -280,6 +295,19 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorData.TabIndex = 2;
       this.bindingNavigatorData.Text = "bindingNavigator1";
       // 
+      // toolStripLabel1
+      // 
+      this.toolStripLabel1.Name = "toolStripLabel1";
+      this.toolStripLabel1.Size = new System.Drawing.Size(152, 15);
+      this.toolStripLabel1.Text = "Cache Duration In Seconds:";
+      // 
+      // toolStripLabel2
+      // 
+      this.toolStripLabel2.Name = "toolStripLabel2";
+      this.toolStripLabel2.Size = new System.Drawing.Size(56, 15);
+      this.toolStripLabel2.Text = "Page Size";
+      this.toolStripLabel2.ToolTipText = "The number of rows per page in the grid. Zero to turn paging off.";
+      // 
       // UsrCntrlEntityBrowser
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -323,5 +351,7 @@ namespace AW.Winforms.Helpers.LLBL
     private ToolStripNumericUpDown cacheDurationInSecondsNumericUpDown;
     private ToolStripNumericUpDown pageSizeNumericUpDown;
     private ToolStripCheckBox toolStripCheckBoxDeletesAreCascading;
+    private ToolStripLabel toolStripLabel1;
+    private ToolStripLabel toolStripLabel2;
   }
 }

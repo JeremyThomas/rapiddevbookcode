@@ -17,7 +17,7 @@ namespace AW.Winforms.Helpers.Controls
     ///   Saves (persist CUD changes) the specified data.
     /// </summary>
     /// <param name="dataToSave">The data to save.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
-    /// <param name="cascadeDeletes"></param>
+    /// <param name="cascadeDeletes">Deletes cascade non-recursively to children of the selected entity</param>
     /// <returns></returns>
     int Save(object dataToSave = null, bool cascadeDeletes = false);
 
@@ -25,7 +25,7 @@ namespace AW.Winforms.Helpers.Controls
     ///   Deletes the specified data, may not be needed if 'Save' can handle deletes.
     /// </summary>
     /// <param name="dataToDelete">The data to delete.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
-    /// <param name="cascade">if set to <c>true</c> [cascade].</param>
+    /// <param name="cascade">if set to <c>true</c>Deletes cascade non-recursively to children of the selected entity.</param>
     /// <returns></returns>
     int Delete(object dataToDelete = null, bool cascade = false);
 
