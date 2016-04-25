@@ -886,7 +886,7 @@ namespace AW.Helper.LLBL
     /// </summary>
     /// <param name="entitiesToSave">The entities to save.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
-    /// <param name="cascade">if set to <c>true</c> [cascadeDeletes].</param>
+    /// <param name="cascade">if set to <c>true</c>Deletes cascade non-recursively to children of the selected entity.</param>
     /// <returns>
     ///   the amount of persisted entities
     /// </returns>
@@ -896,13 +896,13 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    ///   Saves any changes to the specified data to the DB.
+    /// Saves any changes to the specified data to the DB.
     /// </summary>
     /// <param name="dataToSave">The data to save, must be a CommonEntityBase or a list of CommonEntityBase's.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
-    /// <param name="cascadeDeletes">if set to <c>true</c> [cascadeDeletes].</param>
+    /// <param name="cascadeDeletes">if set to <c>true</c> [cascade deletes].</param>
     /// <returns>
-    ///   The number of persisted entities.
+    /// The number of persisted entities.
     /// </returns>
     public static int Save(object dataToSave, IDataAccessAdapter dataAccessAdapter, bool cascadeDeletes = false)
     {
@@ -920,7 +920,7 @@ namespace AW.Helper.LLBL
     /// </summary>
     /// <param name="entitiesToDelete">The entities to delete.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
-    /// <param name="cascade">if set to <c>true</c> [cascadeDeletes].</param>
+    /// <param name="cascade">if set to <c>true</c>Deletes cascade non-recursively to children of the selected entity.</param>
     /// <returns>
     ///   the amount of persisted entities
     /// </returns>
@@ -1001,10 +1001,18 @@ namespace AW.Helper.LLBL
       return dataAccessAdapter.DeleteEntity(entityToDelete);
     }
 
+    /// <summary>
+    /// Makes the cascade deletes for all children of the rooty entity.
+    /// Other entities that reference the root entity will remain unless onlyDeleteComponents is false
+    /// </summary>
+    /// <param name="uow">The uow.</param>
+    /// <param name="entity">The root entity.</param>
+    /// <param name="deleteDirectly">if set to <c>true</c> [delete directly].</param>
+    /// <param name="onlyDeleteComponents">if set to <c>true</c> only delete components i.e children.</param>
+    /// <param name="entityTypesToExclude">The entity types to exclude.</param>
     public static void MakeCascadeDeletesForAllChildren(UnitOfWork2 uow, IEntity2 entity, bool deleteDirectly = false, bool onlyDeleteComponents = true, params string[] entityTypesToExclude)
     {
       // Delete children of Entity
-
       var allFkEntityFieldCoreObjectList = GetAllFkEntityFieldCoreObjectsWhereStartEntityIsPkSide(entity, onlyDeleteComponents);
       foreach (var allFkEntityFieldCoreObjects in allFkEntityFieldCoreObjectList)
       {
@@ -1079,6 +1087,12 @@ namespace AW.Helper.LLBL
       return allRelationsWhereStartEntityIsPkSide.Select(entityRelation => GetChildCount(dataAccessAdapter, entity, entityRelation, entityTypesToExclude)).Where(childCount => childCount != null);
     }
 
+    /// <summary>
+    /// Gets all foreign key entity field core objects where start entity is the primary key side.
+    /// </summary>
+    /// <param name="entity">The entity.</param>
+    /// <param name="onlyComponentsRelationShips">if set to <c>true</c> Only include components relation ships i.e. where the referencing entity can't exist without the start Entity.</param>
+    /// <returns></returns>
     private static IEnumerable<List<IEntityFieldCore>> GetAllFkEntityFieldCoreObjectsWhereStartEntityIsPkSide(IEntityCore entity, bool onlyComponentsRelationShips = false)
     {
       var enumerable = from entityRelation in GetAllRelationsWhereStartEntityIsPkSide(entity)

@@ -299,6 +299,7 @@ namespace AW.Winforms.Helpers.Controls
       SetButtonsOnEditEnded();
     }
 
+    [Description("Deletes cascade non-recursively to children of the selected entity")]
     public bool CascadeDeletes
     {
       get { return toolStripCheckBoxDeletesAreCascading.Checked; }

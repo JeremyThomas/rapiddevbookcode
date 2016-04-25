@@ -65,6 +65,7 @@
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.toggleSettingsVisibilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+      this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
       cacheDurationInSecondsLabel = new System.Windows.Forms.Label();
       prefixDelimiterLabel = new System.Windows.Forms.Label();
       this.toolStrip1.SuspendLayout();
@@ -80,20 +81,24 @@
       // cacheDurationInSecondsLabel
       // 
       cacheDurationInSecondsLabel.AutoSize = true;
-      cacheDurationInSecondsLabel.Location = new System.Drawing.Point(97, 78);
+      cacheDurationInSecondsLabel.Location = new System.Drawing.Point(98, 78);
       cacheDurationInSecondsLabel.Name = "cacheDurationInSecondsLabel";
       cacheDurationInSecondsLabel.Size = new System.Drawing.Size(141, 13);
       cacheDurationInSecondsLabel.TabIndex = 6;
       cacheDurationInSecondsLabel.Text = "Cache Duration In Seconds:";
+      this.toolTip1.SetToolTip(cacheDurationInSecondsLabel, "Specifies the duration that the query\'s result set should be cached for. Zero to " +
+        "turn caching off.");
       // 
       // prefixDelimiterLabel
       // 
       prefixDelimiterLabel.AutoSize = true;
-      prefixDelimiterLabel.Location = new System.Drawing.Point(388, 78);
+      prefixDelimiterLabel.Location = new System.Drawing.Point(397, 78);
       prefixDelimiterLabel.Name = "prefixDelimiterLabel";
       prefixDelimiterLabel.Size = new System.Drawing.Size(79, 13);
       prefixDelimiterLabel.TabIndex = 10;
       prefixDelimiterLabel.Text = "Prefix Delimiter:";
+      this.toolTip1.SetToolTip(prefixDelimiterLabel, "Table Prefix Delimiter to group Entities by (e.g. with a delimiter of _ table Sal" +
+        "es_Order would grouped into a node called Sales)");
       // 
       // linqMetaDataAssemblyPathLabel
       // 
@@ -104,6 +109,8 @@
       this.linqMetaDataAssemblyPathLabel.TabIndex = 0;
       this.linqMetaDataAssemblyPathLabel.TabStop = true;
       this.linqMetaDataAssemblyPathLabel.Text = "Linq Meta Data Assembly Path:";
+      this.toolTip1.SetToolTip(this.linqMetaDataAssemblyPathLabel, "Path to a LLBLGen Pro generated assembly containing an ILinqMetaData implementati" +
+        "on");
       this.linqMetaDataAssemblyPathLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linqMetaDataAssemblyPathLabel_LinkClicked);
       // 
       // adapterAssemblyPathLabel
@@ -115,6 +122,7 @@
       this.adapterAssemblyPathLabel.TabIndex = 2;
       this.adapterAssemblyPathLabel.TabStop = true;
       this.adapterAssemblyPathLabel.Text = "Adapter Assembly Path:";
+      this.toolTip1.SetToolTip(this.adapterAssemblyPathLabel, "Path to Adapter assembly");
       this.adapterAssemblyPathLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linqMetaDataAssemblyPathLabel_LinkClicked);
       // 
       // toolStrip1
@@ -219,88 +227,100 @@
       this.checkBoxCascadeDeletes.AutoSize = true;
       this.checkBoxCascadeDeletes.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CascadeDeletes;
       this.checkBoxCascadeDeletes.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "CascadeDeletes", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.checkBoxCascadeDeletes.Location = new System.Drawing.Point(1018, 72);
+      this.checkBoxCascadeDeletes.Location = new System.Drawing.Point(813, 74);
       this.checkBoxCascadeDeletes.Name = "checkBoxCascadeDeletes";
       this.checkBoxCascadeDeletes.Size = new System.Drawing.Size(107, 17);
       this.checkBoxCascadeDeletes.TabIndex = 19;
       this.checkBoxCascadeDeletes.Text = "Cascade Deletes";
+      this.toolTip1.SetToolTip(this.checkBoxCascadeDeletes, "Deletes cascade non-recursively to children of the selected entity.");
       this.checkBoxCascadeDeletes.UseVisualStyleBackColor = true;
       // 
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(852, 77);
+      this.label2.Location = new System.Drawing.Point(922, 74);
       this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(94, 13);
+      this.label2.Size = new System.Drawing.Size(97, 13);
       this.label2.TabIndex = 18;
-      this.label2.Text = "CommandTimeOut";
+      this.label2.Text = "Command TimeOut";
+      this.toolTip1.SetToolTip(this.label2, "The timeout value to use with the ADO.NET data fetching");
       // 
       // numericUpDownCommandTimeOut
       // 
       this.numericUpDownCommandTimeOut.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "CommandTimeOut", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.numericUpDownCommandTimeOut.Location = new System.Drawing.Point(952, 73);
+      this.numericUpDownCommandTimeOut.Location = new System.Drawing.Point(1026, 70);
       this.numericUpDownCommandTimeOut.Name = "numericUpDownCommandTimeOut";
       this.numericUpDownCommandTimeOut.Size = new System.Drawing.Size(42, 20);
       this.numericUpDownCommandTimeOut.TabIndex = 17;
+      this.toolTip1.SetToolTip(this.numericUpDownCommandTimeOut, "The timeout value to use with the ADO.NET data fetching");
       this.numericUpDownCommandTimeOut.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CommandTimeOut;
       // 
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(722, 77);
+      this.label1.Location = new System.Drawing.Point(694, 77);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(52, 13);
       this.label1.TabIndex = 16;
       this.label1.Text = "PageSize";
+      this.toolTip1.SetToolTip(this.label1, "The number of rows per page in the grid. Zero to turn paging off.");
       // 
       // numericUpDownPageSize
       // 
       this.numericUpDownPageSize.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "PageSize", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.numericUpDownPageSize.Location = new System.Drawing.Point(789, 73);
+      this.numericUpDownPageSize.Location = new System.Drawing.Point(753, 73);
       this.numericUpDownPageSize.Name = "numericUpDownPageSize";
       this.numericUpDownPageSize.Size = new System.Drawing.Size(54, 20);
       this.numericUpDownPageSize.TabIndex = 15;
+      this.toolTip1.SetToolTip(this.numericUpDownPageSize, "The number of rows per page in the grid. Zero to turn paging off.");
       this.numericUpDownPageSize.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.PageSize;
       // 
       // cacheDurationInSecondsNumericUpDown
       // 
       this.cacheDurationInSecondsNumericUpDown.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "CacheDurationInSeconds", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.cacheDurationInSecondsNumericUpDown.Location = new System.Drawing.Point(244, 74);
+      this.cacheDurationInSecondsNumericUpDown.Location = new System.Drawing.Point(246, 74);
       this.cacheDurationInSecondsNumericUpDown.Name = "cacheDurationInSecondsNumericUpDown";
       this.cacheDurationInSecondsNumericUpDown.Size = new System.Drawing.Size(49, 20);
       this.cacheDurationInSecondsNumericUpDown.TabIndex = 14;
+      this.toolTip1.SetToolTip(this.cacheDurationInSecondsNumericUpDown, "Specifies the duration that the query\'s result set should be cached for. Zero to " +
+        "turn caching off.");
       this.cacheDurationInSecondsNumericUpDown.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CacheDurationInSeconds;
       // 
       // ensureFilteringEnabledCheckBox
       // 
       this.ensureFilteringEnabledCheckBox.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.EnsureFilteringEnabled;
       this.ensureFilteringEnabledCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "EnsureFilteringEnabled", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.ensureFilteringEnabledCheckBox.Location = new System.Drawing.Point(579, 70);
+      this.ensureFilteringEnabledCheckBox.Location = new System.Drawing.Point(545, 71);
       this.ensureFilteringEnabledCheckBox.Name = "ensureFilteringEnabledCheckBox";
       this.ensureFilteringEnabledCheckBox.Size = new System.Drawing.Size(142, 24);
       this.ensureFilteringEnabledCheckBox.TabIndex = 13;
       this.ensureFilteringEnabledCheckBox.Text = "Ensure Filtering Enabled";
+      this.toolTip1.SetToolTip(this.ensureFilteringEnabledCheckBox, "Specifies whether filtering is enabled in the grid, even if the underlying collec" +
+        "tion doesn\'t support it.");
       this.ensureFilteringEnabledCheckBox.UseVisualStyleBackColor = true;
       // 
       // prefixDelimiterTextBox
       // 
       this.prefixDelimiterTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "PrefixDelimiter", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.prefixDelimiterTextBox.Location = new System.Drawing.Point(473, 74);
+      this.prefixDelimiterTextBox.Location = new System.Drawing.Point(483, 74);
       this.prefixDelimiterTextBox.Name = "prefixDelimiterTextBox";
-      this.prefixDelimiterTextBox.Size = new System.Drawing.Size(100, 20);
+      this.prefixDelimiterTextBox.Size = new System.Drawing.Size(56, 20);
       this.prefixDelimiterTextBox.TabIndex = 11;
       this.prefixDelimiterTextBox.Text = global::LLBLGen.EntityBrowser.Properties.Settings.Default.PrefixDelimiter;
+      this.toolTip1.SetToolTip(this.prefixDelimiterTextBox, "Table Prefix Delimiter to group Entities by (e.g. with a delimiter of _ table Sal" +
+        "es_Order would grouped into a node called Sales)");
       // 
       // useSchemaCheckBox
       // 
       this.useSchemaCheckBox.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.UseSchema;
       this.useSchemaCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
       this.useSchemaCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "UseSchema", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.useSchemaCheckBox.Location = new System.Drawing.Point(299, 71);
+      this.useSchemaCheckBox.Location = new System.Drawing.Point(302, 72);
       this.useSchemaCheckBox.Name = "useSchemaCheckBox";
       this.useSchemaCheckBox.Size = new System.Drawing.Size(88, 24);
       this.useSchemaCheckBox.TabIndex = 9;
       this.useSchemaCheckBox.Text = "Use Schema";
+      this.toolTip1.SetToolTip(this.useSchemaCheckBox, "Use Table Schema to group the Entities");
       this.useSchemaCheckBox.UseVisualStyleBackColor = true;
       // 
       // useContextCheckBox
@@ -313,6 +333,7 @@
       this.useContextCheckBox.Size = new System.Drawing.Size(85, 24);
       this.useContextCheckBox.TabIndex = 5;
       this.useContextCheckBox.Text = "Use Context";
+      this.toolTip1.SetToolTip(this.useContextCheckBox, resources.GetString("useContextCheckBox.ToolTip"));
       this.useContextCheckBox.UseVisualStyleBackColor = true;
       // 
       // adapterAssemblyPathTextBox
@@ -338,6 +359,8 @@
       this.linqMetaDataAssemblyPathTextBox.Name = "linqMetaDataAssemblyPathTextBox";
       this.linqMetaDataAssemblyPathTextBox.Size = new System.Drawing.Size(1017, 20);
       this.linqMetaDataAssemblyPathTextBox.TabIndex = 1;
+      this.toolTip1.SetToolTip(this.linqMetaDataAssemblyPathTextBox, "Path to a LLBLGen Pro generated assembly containing an ILinqMetaData implementati" +
+        "on");
       this.linqMetaDataAssemblyPathTextBox.Leave += new System.EventHandler(this.linqMetaDataAssemblyPathTextBox_Leave);
       // 
       // contextMenuStripTabPage
@@ -466,6 +489,7 @@
     private System.Windows.Forms.NumericUpDown numericUpDownCommandTimeOut;
     private System.Windows.Forms.CheckBox checkBoxCascadeDeletes;
     private System.Windows.Forms.OpenFileDialog openFileDialog1;
+    private System.Windows.Forms.ToolTip toolTip1;
   }
 }
 

@@ -80,7 +80,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     [DefaultValue(true),
      Category("EntityBrowser"),
-     Description("Gets or sets wether a Context is used for entity fetches, if true then entites will remain dirty until saved or reverted.")]
+     Description("Specifies whether a Context is used for entity fetches, if true then entities will remain dirty until saved or reverted, i.e. the entity stays in memory and will be reused even if re-fetched.")]
     public bool UseContext
     {
       get { return HasLinqMetaData ? ContextToUse != null : _useContext; }
@@ -125,8 +125,6 @@ namespace AW.Winforms.Helpers.LLBL
       OnPropertyChanged("UseContext");
     }
 
-
-
     private GeneralEntityCollectionDataScope EntityCollectionDataScope
     {
       get
@@ -137,8 +135,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-
-    [Category("EntityBrowser"), Description("Gets or sets wether filtering is enabled in the grid, even if the underlying collection doesn't support it.")]
+    [Category("EntityBrowser"), Description("Specifies whether filtering is enabled in the grid, even if the underlying collection doesn't support it.")]
     public bool EnsureFilteringEnabled
     {
       get { return gridDataEditor.EnsureFilteringEnabled; }
@@ -150,7 +147,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-    [Category("EntityBrowser"), Description("Gets or sets the PageSize in the grid.")]
+    [Category("EntityBrowser"), Description("Page size in the grid. Zero for no paging.")]
     public ushort PageSize
     {
       get { return gridDataEditor.PageSize; }
@@ -163,7 +160,7 @@ namespace AW.Winforms.Helpers.LLBL
     }
 
     [DefaultValue(DefaultCacheDurationInSeconds), Category("EntityBrowser"),
-     Description("Specifies that the query's resultset should be cached for the duration specified, 0 means don't cache at all.")]
+     Description("Specifies the duration that the query's result set should be cached for. Zero to turn caching off.")]
     public int CacheDurationInSeconds
     {
       get { return _cacheDurationInSeconds; }
@@ -196,6 +193,7 @@ namespace AW.Winforms.Helpers.LLBL
       PrefixDelimiter = DefaultPrefixDelimiter;
       UseSchema = true;
       UseContext = true;
+      CascadeDeletes = true;
       CacheDurationInSeconds = DefaultCacheDurationInSeconds;
     }
 
@@ -348,7 +346,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     private void ViewEntities(IQueryable entityQueryable)
     {
-      if (typeof (IEntity).IsAssignableFrom(entityQueryable.ElementType))
+      if (typeof(IEntity).IsAssignableFrom(entityQueryable.ElementType))
       {
         if (gridDataEditor.DataEditorPersister == null)
           gridDataEditor.DataEditorPersister = new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister();
@@ -395,7 +393,7 @@ namespace AW.Winforms.Helpers.LLBL
           gridDataEditor.SaveEdits();
         else
           gridDataEditor.CancelEdits();
-        dataEditorLLBLDataScopePersister_EditingFinished(sender,e);
+        dataEditorLLBLDataScopePersister_EditingFinished(sender, e);
       }
     }
 
@@ -467,6 +465,9 @@ namespace AW.Winforms.Helpers.LLBL
       PrefixDelimiter = prefixDelimiterTextBox.Text;
     }
 
+    [DefaultValue(true),
+     Category("EntityBrowser"),
+     Description("Deletes cascade non-recursively to children of the selected entity.")]
     public bool CascadeDeletes
     {
       get { return toolStripCheckBoxDeletesAreCascading.Checked; }
