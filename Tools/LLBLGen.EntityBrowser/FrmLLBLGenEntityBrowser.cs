@@ -315,7 +315,7 @@ namespace LLBLGen.EntityBrowser
       _linqMetaDataType = linqMetaDataAssembly.GetConcretePublicImplementations(typeof(ILinqMetaData)).FirstOrDefault();
       if (_linqMetaDataType == null)
         throw new ApplicationException("There are no public types in that assembly that implement ILinqMetaData. Wrong Assembly chosen.");
-
+      labellinqMetaDataAssemblyVersion.Text = "Version " + linqMetaDataAssembly.GetVersion();
       _daoBaseImplementationType = EntityHelper.GetDaoBaseImplementation(linqMetaDataAssembly);
 
       if (_daoBaseImplementationType == null && !String.IsNullOrWhiteSpace(adapterAssemblyPath))

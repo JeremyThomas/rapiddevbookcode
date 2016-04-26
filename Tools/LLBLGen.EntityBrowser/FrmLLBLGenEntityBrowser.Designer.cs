@@ -43,6 +43,10 @@
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.toggleSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.panelSettings = new System.Windows.Forms.Panel();
+      this.panel1 = new System.Windows.Forms.Panel();
+      this.labellinqMetaDataAssemblyVersion = new System.Windows.Forms.Label();
+      this.linqMetaDataAssemblyPathTextBox = new System.Windows.Forms.TextBox();
+      this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.checkBoxCascadeDeletes = new System.Windows.Forms.CheckBox();
       this.label2 = new System.Windows.Forms.Label();
       this.numericUpDownCommandTimeOut = new System.Windows.Forms.NumericUpDown();
@@ -54,8 +58,6 @@
       this.useSchemaCheckBox = new System.Windows.Forms.CheckBox();
       this.useContextCheckBox = new System.Windows.Forms.CheckBox();
       this.adapterAssemblyPathTextBox = new System.Windows.Forms.TextBox();
-      this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-      this.linqMetaDataAssemblyPathTextBox = new System.Windows.Forms.TextBox();
       this.contextMenuStripTabPage = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.addConnectionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
       this.editConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,16 +68,19 @@
       this.toggleSettingsVisibilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.panel2 = new System.Windows.Forms.Panel();
       cacheDurationInSecondsLabel = new System.Windows.Forms.Label();
       prefixDelimiterLabel = new System.Windows.Forms.Label();
       this.toolStrip1.SuspendLayout();
       this.contextMenuStripTabControl.SuspendLayout();
       this.panelSettings.SuspendLayout();
+      this.panel1.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCommandTimeOut)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPageSize)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.cacheDurationInSecondsNumericUpDown)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
       this.contextMenuStripTabPage.SuspendLayout();
+      this.panel2.SuspendLayout();
       this.SuspendLayout();
       // 
       // cacheDurationInSecondsLabel
@@ -103,12 +108,14 @@
       // linqMetaDataAssemblyPathLabel
       // 
       this.linqMetaDataAssemblyPathLabel.AutoSize = true;
-      this.linqMetaDataAssemblyPathLabel.Location = new System.Drawing.Point(3, 17);
+      this.linqMetaDataAssemblyPathLabel.Dock = System.Windows.Forms.DockStyle.Left;
+      this.linqMetaDataAssemblyPathLabel.Location = new System.Drawing.Point(0, 0);
       this.linqMetaDataAssemblyPathLabel.Name = "linqMetaDataAssemblyPathLabel";
       this.linqMetaDataAssemblyPathLabel.Size = new System.Drawing.Size(155, 13);
       this.linqMetaDataAssemblyPathLabel.TabIndex = 0;
       this.linqMetaDataAssemblyPathLabel.TabStop = true;
       this.linqMetaDataAssemblyPathLabel.Text = "Linq Meta Data Assembly Path:";
+      this.linqMetaDataAssemblyPathLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       this.toolTip1.SetToolTip(this.linqMetaDataAssemblyPathLabel, "Path to a LLBLGen Pro generated assembly containing an ILinqMetaData implementati" +
         "on");
       this.linqMetaDataAssemblyPathLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linqMetaDataAssemblyPathLabel_LinkClicked);
@@ -132,7 +139,7 @@
             this.toolStripButtonLoad});
       this.toolStrip1.Location = new System.Drawing.Point(0, 0);
       this.toolStrip1.Name = "toolStrip1";
-      this.toolStrip1.Size = new System.Drawing.Size(714, 25);
+      this.toolStrip1.Size = new System.Drawing.Size(1181, 25);
       this.toolStrip1.TabIndex = 0;
       this.toolStrip1.Text = "toolStrip1";
       this.toolStrip1.Visible = false;
@@ -199,6 +206,7 @@
       // 
       // panelSettings
       // 
+      this.panelSettings.Controls.Add(this.panel1);
       this.panelSettings.Controls.Add(this.checkBoxCascadeDeletes);
       this.panelSettings.Controls.Add(this.label2);
       this.panelSettings.Controls.Add(this.numericUpDownCommandTimeOut);
@@ -213,14 +221,50 @@
       this.panelSettings.Controls.Add(this.useContextCheckBox);
       this.panelSettings.Controls.Add(this.adapterAssemblyPathLabel);
       this.panelSettings.Controls.Add(this.adapterAssemblyPathTextBox);
-      this.panelSettings.Controls.Add(this.linqMetaDataAssemblyPathLabel);
-      this.panelSettings.Controls.Add(this.linqMetaDataAssemblyPathTextBox);
       this.panelSettings.Dock = System.Windows.Forms.DockStyle.Top;
       this.panelSettings.Location = new System.Drawing.Point(0, 0);
       this.panelSettings.Name = "panelSettings";
       this.panelSettings.Size = new System.Drawing.Size(1181, 105);
       this.panelSettings.TabIndex = 2;
       this.panelSettings.Visible = false;
+      // 
+      // panel1
+      // 
+      this.panel1.Controls.Add(this.linqMetaDataAssemblyPathTextBox);
+      this.panel1.Controls.Add(this.linqMetaDataAssemblyPathLabel);
+      this.panel1.Controls.Add(this.panel2);
+      this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+      this.panel1.Location = new System.Drawing.Point(0, 0);
+      this.panel1.Name = "panel1";
+      this.panel1.Size = new System.Drawing.Size(1181, 22);
+      this.panel1.TabIndex = 20;
+      // 
+      // labellinqMetaDataAssemblyVersion
+      // 
+      this.labellinqMetaDataAssemblyVersion.AutoSize = true;
+      this.labellinqMetaDataAssemblyVersion.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.labellinqMetaDataAssemblyVersion.Location = new System.Drawing.Point(0, 0);
+      this.labellinqMetaDataAssemblyVersion.Name = "labellinqMetaDataAssemblyVersion";
+      this.labellinqMetaDataAssemblyVersion.Size = new System.Drawing.Size(42, 13);
+      this.labellinqMetaDataAssemblyVersion.TabIndex = 2;
+      this.labellinqMetaDataAssemblyVersion.Text = "Version";
+      this.labellinqMetaDataAssemblyVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      // 
+      // linqMetaDataAssemblyPathTextBox
+      // 
+      this.linqMetaDataAssemblyPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "LinqMetaDataAssemblyPath", true));
+      this.linqMetaDataAssemblyPathTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.linqMetaDataAssemblyPathTextBox.Location = new System.Drawing.Point(155, 0);
+      this.linqMetaDataAssemblyPathTextBox.Name = "linqMetaDataAssemblyPathTextBox";
+      this.linqMetaDataAssemblyPathTextBox.Size = new System.Drawing.Size(984, 20);
+      this.linqMetaDataAssemblyPathTextBox.TabIndex = 1;
+      this.toolTip1.SetToolTip(this.linqMetaDataAssemblyPathTextBox, "Path to a LLBLGen Pro generated assembly containing an ILinqMetaData implementati" +
+        "on");
+      this.linqMetaDataAssemblyPathTextBox.Leave += new System.EventHandler(this.linqMetaDataAssemblyPathTextBox_Leave);
+      // 
+      // settingsBindingSource
+      // 
+      this.settingsBindingSource.DataSource = typeof(System.Configuration.ApplicationSettingsBase);
       // 
       // checkBoxCascadeDeletes
       // 
@@ -346,23 +390,6 @@
       this.adapterAssemblyPathTextBox.Size = new System.Drawing.Size(1053, 20);
       this.adapterAssemblyPathTextBox.TabIndex = 3;
       // 
-      // settingsBindingSource
-      // 
-      this.settingsBindingSource.DataSource = typeof(System.Configuration.ApplicationSettingsBase);
-      // 
-      // linqMetaDataAssemblyPathTextBox
-      // 
-      this.linqMetaDataAssemblyPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.linqMetaDataAssemblyPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "LinqMetaDataAssemblyPath", true));
-      this.linqMetaDataAssemblyPathTextBox.Location = new System.Drawing.Point(164, 10);
-      this.linqMetaDataAssemblyPathTextBox.Name = "linqMetaDataAssemblyPathTextBox";
-      this.linqMetaDataAssemblyPathTextBox.Size = new System.Drawing.Size(1017, 20);
-      this.linqMetaDataAssemblyPathTextBox.TabIndex = 1;
-      this.toolTip1.SetToolTip(this.linqMetaDataAssemblyPathTextBox, "Path to a LLBLGen Pro generated assembly containing an ILinqMetaData implementati" +
-        "on");
-      this.linqMetaDataAssemblyPathTextBox.Leave += new System.EventHandler(this.linqMetaDataAssemblyPathTextBox_Leave);
-      // 
       // contextMenuStripTabPage
       // 
       this.contextMenuStripTabPage.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -425,6 +452,16 @@
       // 
       this.openFileDialog1.FileName = "openFileDialog1";
       // 
+      // panel2
+      // 
+      this.panel2.AutoSize = true;
+      this.panel2.Controls.Add(this.labellinqMetaDataAssemblyVersion);
+      this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
+      this.panel2.Location = new System.Drawing.Point(1139, 0);
+      this.panel2.Name = "panel2";
+      this.panel2.Size = new System.Drawing.Size(42, 22);
+      this.panel2.TabIndex = 3;
+      // 
       // FrmLLBLGenEntityBrowser
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -444,11 +481,15 @@
       this.contextMenuStripTabControl.ResumeLayout(false);
       this.panelSettings.ResumeLayout(false);
       this.panelSettings.PerformLayout();
+      this.panel1.ResumeLayout(false);
+      this.panel1.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCommandTimeOut)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPageSize)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.cacheDurationInSecondsNumericUpDown)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
       this.contextMenuStripTabPage.ResumeLayout(false);
+      this.panel2.ResumeLayout(false);
+      this.panel2.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -490,6 +531,9 @@
     private System.Windows.Forms.CheckBox checkBoxCascadeDeletes;
     private System.Windows.Forms.OpenFileDialog openFileDialog1;
     private System.Windows.Forms.ToolTip toolTip1;
+    private System.Windows.Forms.Panel panel1;
+    private System.Windows.Forms.Label labellinqMetaDataAssemblyVersion;
+    private System.Windows.Forms.Panel panel2;
   }
 }
 
