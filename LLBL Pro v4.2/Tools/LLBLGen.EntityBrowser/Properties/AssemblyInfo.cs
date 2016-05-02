@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("LLBLGen.EntityBrowser")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("LLBLGen Entity Browser")]
+[assembly: AssemblyDescription("An application that lets you browse, view and edit the data in a database via the mapped LLBLGen Pro entities")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
