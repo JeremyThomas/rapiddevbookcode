@@ -43,10 +43,12 @@
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.toggleSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.panelSettings = new System.Windows.Forms.Panel();
+      this.labelOrmProfilerStatus = new System.Windows.Forms.Label();
       this.panel1 = new System.Windows.Forms.Panel();
-      this.labellinqMetaDataAssemblyVersion = new System.Windows.Forms.Label();
       this.linqMetaDataAssemblyPathTextBox = new System.Windows.Forms.TextBox();
       this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.panel2 = new System.Windows.Forms.Panel();
+      this.labellinqMetaDataAssemblyVersion = new System.Windows.Forms.Label();
       this.checkBoxCascadeDeletes = new System.Windows.Forms.CheckBox();
       this.label2 = new System.Windows.Forms.Label();
       this.numericUpDownCommandTimeOut = new System.Windows.Forms.NumericUpDown();
@@ -68,7 +70,6 @@
       this.toggleSettingsVisibilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.panel2 = new System.Windows.Forms.Panel();
       cacheDurationInSecondsLabel = new System.Windows.Forms.Label();
       prefixDelimiterLabel = new System.Windows.Forms.Label();
       this.toolStrip1.SuspendLayout();
@@ -76,11 +77,11 @@
       this.panelSettings.SuspendLayout();
       this.panel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
+      this.panel2.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCommandTimeOut)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPageSize)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.cacheDurationInSecondsNumericUpDown)).BeginInit();
       this.contextMenuStripTabPage.SuspendLayout();
-      this.panel2.SuspendLayout();
       this.SuspendLayout();
       // 
       // cacheDurationInSecondsLabel
@@ -206,6 +207,7 @@
       // 
       // panelSettings
       // 
+      this.panelSettings.Controls.Add(this.labelOrmProfilerStatus);
       this.panelSettings.Controls.Add(this.panel1);
       this.panelSettings.Controls.Add(this.checkBoxCascadeDeletes);
       this.panelSettings.Controls.Add(this.label2);
@@ -221,12 +223,22 @@
       this.panelSettings.Controls.Add(this.useContextCheckBox);
       this.panelSettings.Controls.Add(this.adapterAssemblyPathLabel);
       this.panelSettings.Controls.Add(this.adapterAssemblyPathTextBox);
+      this.panelSettings.DataBindings.Add(new System.Windows.Forms.Binding("Visible", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "ShowSettings", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.panelSettings.Dock = System.Windows.Forms.DockStyle.Top;
       this.panelSettings.Location = new System.Drawing.Point(0, 0);
       this.panelSettings.Name = "panelSettings";
       this.panelSettings.Size = new System.Drawing.Size(1181, 105);
       this.panelSettings.TabIndex = 2;
-      this.panelSettings.Visible = false;
+      this.panelSettings.Visible = global::LLBLGen.EntityBrowser.Properties.Settings.Default.ShowSettings;
+      // 
+      // labelOrmProfilerStatus
+      // 
+      this.labelOrmProfilerStatus.AutoSize = true;
+      this.labelOrmProfilerStatus.Location = new System.Drawing.Point(1075, 72);
+      this.labelOrmProfilerStatus.Name = "labelOrmProfilerStatus";
+      this.labelOrmProfilerStatus.Size = new System.Drawing.Size(88, 13);
+      this.labelOrmProfilerStatus.TabIndex = 21;
+      this.labelOrmProfilerStatus.Text = "OrmProfilerStatus";
       // 
       // panel1
       // 
@@ -238,17 +250,6 @@
       this.panel1.Name = "panel1";
       this.panel1.Size = new System.Drawing.Size(1181, 22);
       this.panel1.TabIndex = 20;
-      // 
-      // labellinqMetaDataAssemblyVersion
-      // 
-      this.labellinqMetaDataAssemblyVersion.AutoSize = true;
-      this.labellinqMetaDataAssemblyVersion.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.labellinqMetaDataAssemblyVersion.Location = new System.Drawing.Point(0, 0);
-      this.labellinqMetaDataAssemblyVersion.Name = "labellinqMetaDataAssemblyVersion";
-      this.labellinqMetaDataAssemblyVersion.Size = new System.Drawing.Size(42, 13);
-      this.labellinqMetaDataAssemblyVersion.TabIndex = 2;
-      this.labellinqMetaDataAssemblyVersion.Text = "Version";
-      this.labellinqMetaDataAssemblyVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
       // linqMetaDataAssemblyPathTextBox
       // 
@@ -265,6 +266,27 @@
       // settingsBindingSource
       // 
       this.settingsBindingSource.DataSource = typeof(System.Configuration.ApplicationSettingsBase);
+      // 
+      // panel2
+      // 
+      this.panel2.AutoSize = true;
+      this.panel2.Controls.Add(this.labellinqMetaDataAssemblyVersion);
+      this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
+      this.panel2.Location = new System.Drawing.Point(1139, 0);
+      this.panel2.Name = "panel2";
+      this.panel2.Size = new System.Drawing.Size(42, 22);
+      this.panel2.TabIndex = 3;
+      // 
+      // labellinqMetaDataAssemblyVersion
+      // 
+      this.labellinqMetaDataAssemblyVersion.AutoSize = true;
+      this.labellinqMetaDataAssemblyVersion.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.labellinqMetaDataAssemblyVersion.Location = new System.Drawing.Point(0, 0);
+      this.labellinqMetaDataAssemblyVersion.Name = "labellinqMetaDataAssemblyVersion";
+      this.labellinqMetaDataAssemblyVersion.Size = new System.Drawing.Size(42, 13);
+      this.labellinqMetaDataAssemblyVersion.TabIndex = 2;
+      this.labellinqMetaDataAssemblyVersion.Text = "Version";
+      this.labellinqMetaDataAssemblyVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
       // checkBoxCascadeDeletes
       // 
@@ -452,16 +474,6 @@
       // 
       this.openFileDialog1.FileName = "openFileDialog1";
       // 
-      // panel2
-      // 
-      this.panel2.AutoSize = true;
-      this.panel2.Controls.Add(this.labellinqMetaDataAssemblyVersion);
-      this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-      this.panel2.Location = new System.Drawing.Point(1139, 0);
-      this.panel2.Name = "panel2";
-      this.panel2.Size = new System.Drawing.Size(42, 22);
-      this.panel2.TabIndex = 3;
-      // 
       // FrmLLBLGenEntityBrowser
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -484,12 +496,12 @@
       this.panel1.ResumeLayout(false);
       this.panel1.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
+      this.panel2.ResumeLayout(false);
+      this.panel2.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCommandTimeOut)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPageSize)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.cacheDurationInSecondsNumericUpDown)).EndInit();
       this.contextMenuStripTabPage.ResumeLayout(false);
-      this.panel2.ResumeLayout(false);
-      this.panel2.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -534,6 +546,7 @@
     private System.Windows.Forms.Panel panel1;
     private System.Windows.Forms.Label labellinqMetaDataAssemblyVersion;
     private System.Windows.Forms.Panel panel2;
+    private System.Windows.Forms.Label labelOrmProfilerStatus;
   }
 }
 

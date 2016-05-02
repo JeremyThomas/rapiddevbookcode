@@ -80,13 +80,15 @@ namespace LLBLGen.EntityBrowser
         }
     }
 
-    private void MainForm_Load(object sender, EventArgs e)
+    private void MainForm_Load(object sender, EventArgs e) 
     {
-      Text += string.Format(" - {0}", ProfilerHelper.OrmProfilerStatus);
+      labelOrmProfilerStatus.Text = ProfilerHelper.OrmProfilerStatus;
       try
       {
         LoadAssembliesAndTabs(Settings.Default.LinqMetaDataAssemblyPath, Settings.Default.AdapterAssemblyPath);
-        if (tabControl.TabPages.Count == 0)
+        if (_linqMetaDataType!=null)
+          Text += string.Format(" - {0}", _linqMetaDataType.Assembly.FullName.Before(", Culture"));
+        if (tabControl.TabPages.Count == 0 || Settings.Default.ShowSettings)
         {
           panelSettings.Visible = true;
           toolStrip1.Visible = true;
@@ -115,12 +117,15 @@ namespace LLBLGen.EntityBrowser
     {
       if (_linqMetaDataType != null)
       {
+        var countBefore = tabControl.TabPages.Count;
         if (UserConnections != null)
           foreach (var connectionStringSetting in UserConnections)
             AddEntityBrowser(connectionStringSetting);
-        if (tabControl.TabPages.Count == 0)
+        if (tabControl.TabPages.Count == countBefore)
+        {
+          tabControl.TabPages.Clear();
           foreach (ConnectionStringSettings connectionStringSetting in ConnectionStringSettingsCollection)
-            AddEntityBrowser(connectionStringSetting);
+            AddEntityBrowser(connectionStringSetting);}
       }
     }
 
