@@ -35,10 +35,9 @@ namespace AW.Winforms.Helpers.LLBL
     /// </summary>
     private void InitializeComponent()
     {
-      this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UsrCntrlEntityBrowser));
       this.treeViewEntities = new System.Windows.Forms.TreeView();
-      this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+      this.imageList1 = new System.Windows.Forms.ImageList();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.toolStrip = new System.Windows.Forms.ToolStrip();
       this.toolStripButtonCancelEdit = new System.Windows.Forms.ToolStripButton();
@@ -52,11 +51,11 @@ namespace AW.Winforms.Helpers.LLBL
       this.pageSizeNumericUpDown = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.toolStripCheckBoxDeletesAreCascading = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
-      this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
-      this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
-      this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+      this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator();
+      this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator();
+      this.toolTip1 = new System.Windows.Forms.ToolTip();
       this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
@@ -112,7 +111,7 @@ namespace AW.Winforms.Helpers.LLBL
       // splitContainer1.Panel2
       // 
       this.splitContainer1.Panel2.Controls.Add(this.gridDataEditor);
-      this.splitContainer1.Size = new System.Drawing.Size(764, 585);
+      this.splitContainer1.Size = new System.Drawing.Size(1204, 585);
       this.splitContainer1.SplitterDistance = 254;
       this.splitContainer1.TabIndex = 3;
       // 
@@ -238,8 +237,9 @@ namespace AW.Winforms.Helpers.LLBL
       this.toolStripCheckBoxDeletesAreCascading.Checked = false;
       this.toolStripCheckBoxDeletesAreCascading.CheckState = System.Windows.Forms.CheckState.Unchecked;
       this.toolStripCheckBoxDeletesAreCascading.Name = "toolStripCheckBoxDeletesAreCascading";
-      this.toolStripCheckBoxDeletesAreCascading.Size = new System.Drawing.Size(143, 19);
-      this.toolStripCheckBoxDeletesAreCascading.Text = "Deletes Are Cascading";
+      this.toolStripCheckBoxDeletesAreCascading.Size = new System.Drawing.Size(114, 19);
+      this.toolStripCheckBoxDeletesAreCascading.Text = " Cascade Deletes";
+      this.toolStripCheckBoxDeletesAreCascading.ToolTipText = "Deletes cascade non-recursively to children of the selected entity.";
       this.toolStripCheckBoxDeletesAreCascading.Click += new System.EventHandler(this.toolStripCheckBoxDeletesAreCascading_Click);
       // 
       // gridDataEditor
@@ -256,7 +256,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.gridDataEditor.Name = "gridDataEditor";
       this.gridDataEditor.PageSize = ((ushort)(15));
       this.gridDataEditor.Readonly = false;
-      this.gridDataEditor.Size = new System.Drawing.Size(506, 585);
+      this.gridDataEditor.Size = new System.Drawing.Size(946, 585);
       this.gridDataEditor.TabIndex = 0;
       this.toolTip1.SetToolTip(this.gridDataEditor, "Data in the Tables");
       // 
@@ -295,12 +295,6 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorData.TabIndex = 2;
       this.bindingNavigatorData.Text = "bindingNavigator1";
       // 
-      // toolStripLabel1
-      // 
-      this.toolStripLabel1.Name = "toolStripLabel1";
-      this.toolStripLabel1.Size = new System.Drawing.Size(152, 15);
-      this.toolStripLabel1.Text = "Cache Duration In Seconds:";
-      // 
       // toolStripLabel2
       // 
       this.toolStripLabel2.Name = "toolStripLabel2";
@@ -308,13 +302,19 @@ namespace AW.Winforms.Helpers.LLBL
       this.toolStripLabel2.Text = "Page Size";
       this.toolStripLabel2.ToolTipText = "The number of rows per page in the grid. Zero to turn paging off.";
       // 
+      // toolStripLabel1
+      // 
+      this.toolStripLabel1.Name = "toolStripLabel1";
+      this.toolStripLabel1.Size = new System.Drawing.Size(152, 15);
+      this.toolStripLabel1.Text = "Cache Duration In Seconds:";
+      // 
       // UsrCntrlEntityBrowser
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.splitContainer1);
       this.Name = "UsrCntrlEntityBrowser";
-      this.Size = new System.Drawing.Size(764, 585);
+      this.Size = new System.Drawing.Size(1204, 585);
       this.Load += new System.EventHandler(this.UsrCntrlEntityBrowser_Load);
       this.VisibleChanged += new System.EventHandler(this.UsrCntrlEntityBrowser_VisibleChanged);
       this.splitContainer1.Panel1.ResumeLayout(false);

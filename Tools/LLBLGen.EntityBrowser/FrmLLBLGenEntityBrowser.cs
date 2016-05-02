@@ -82,7 +82,7 @@ namespace LLBLGen.EntityBrowser
 
     private void MainForm_Load(object sender, EventArgs e) 
     {
-      labelOrmProfilerStatus.Text = ProfilerHelper.OrmProfilerStatus;
+      toolStripLabelOrmProfilerStatus.Text = ProfilerHelper.OrmProfilerStatus;
       try
       {
         LoadAssembliesAndTabs(Settings.Default.LinqMetaDataAssemblyPath, Settings.Default.AdapterAssemblyPath);
@@ -91,13 +91,13 @@ namespace LLBLGen.EntityBrowser
         if (tabControl.TabPages.Count == 0 || Settings.Default.ShowSettings)
         {
           panelSettings.Visible = true;
-          toolStrip1.Visible = true;
+          toolStrip.Visible = true;
         }
       }
       catch (Exception ex)
       {
         panelSettings.Visible = true;
-        toolStrip1.Visible = true;
+        toolStrip.Visible = true;
         Application.OnThreadException(ex.GetBaseException());
       }
     }
@@ -498,7 +498,7 @@ namespace LLBLGen.EntityBrowser
     private void toggleSettingsToolStripMenuItem_Click(object sender, EventArgs e)
     {
       panelSettings.Visible = !panelSettings.Visible;
-      toolStrip1.Visible = !toolStrip1.Visible;
+      toolStrip.Visible = !toolStrip.Visible;
     }
   }
 

@@ -156,7 +156,7 @@ namespace LLBLGen.EntityBrowser.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool ShowSettings {
             get {
                 return ((bool)(this["ShowSettings"]));
