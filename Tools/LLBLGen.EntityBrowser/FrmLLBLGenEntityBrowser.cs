@@ -170,7 +170,7 @@ namespace LLBLGen.EntityBrowser
       {
         Dock = DockStyle.Fill,
         PageSize = (ushort) Settings.Default.PageSize,
-        CascadeDeletes = checkBoxCascadeDeletes.Checked
+        CascadeDeletes = Settings.Default.CascadeDeletes
       };
       InitializeEntityBrowser(usrCntrlEntityBrowser, connectionStringSetting);
       tabPage.Controls.Add(usrCntrlEntityBrowser);
