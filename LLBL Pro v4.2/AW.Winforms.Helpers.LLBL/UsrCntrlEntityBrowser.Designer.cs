@@ -35,9 +35,10 @@ namespace AW.Winforms.Helpers.LLBL
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UsrCntrlEntityBrowser));
       this.treeViewEntities = new System.Windows.Forms.TreeView();
-      this.imageList1 = new System.Windows.Forms.ImageList();
+      this.imageList1 = new System.Windows.Forms.ImageList(this.components);
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.toolStrip = new System.Windows.Forms.ToolStrip();
       this.toolStripButtonCancelEdit = new System.Windows.Forms.ToolStripButton();
@@ -47,15 +48,15 @@ namespace AW.Winforms.Helpers.LLBL
       this.useContextCheckBox = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       this.prefixDelimiterLabel = new System.Windows.Forms.ToolStripLabel();
       this.prefixDelimiterTextBox = new System.Windows.Forms.ToolStripTextBox();
+      this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
       this.cacheDurationInSecondsNumericUpDown = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
+      this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
       this.pageSizeNumericUpDown = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.toolStripCheckBoxDeletesAreCascading = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
-      this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator();
-      this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator();
-      this.toolTip1 = new System.Windows.Forms.ToolTip();
-      this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
-      this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+      this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
+      this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
+      this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
@@ -200,6 +201,7 @@ namespace AW.Winforms.Helpers.LLBL
       // 
       // prefixDelimiterTextBox
       // 
+      this.prefixDelimiterTextBox.BackColor = System.Drawing.SystemColors.Control;
       this.prefixDelimiterTextBox.MaxLength = 25;
       this.prefixDelimiterTextBox.Name = "prefixDelimiterTextBox";
       this.prefixDelimiterTextBox.Size = new System.Drawing.Size(20, 23);
@@ -207,9 +209,15 @@ namespace AW.Winforms.Helpers.LLBL
     "es_Order would grouped into a node called Sales)";
       this.prefixDelimiterTextBox.Click += new System.EventHandler(this.prefixDelimiterTextBox_Click);
       // 
+      // toolStripLabel1
+      // 
+      this.toolStripLabel1.Name = "toolStripLabel1";
+      this.toolStripLabel1.Size = new System.Drawing.Size(152, 15);
+      this.toolStripLabel1.Text = "Cache Duration In Seconds:";
+      // 
       // cacheDurationInSecondsNumericUpDown
       // 
-      this.cacheDurationInSecondsNumericUpDown.BackColor = System.Drawing.Color.Transparent;
+      this.cacheDurationInSecondsNumericUpDown.BackColor = System.Drawing.SystemColors.Control;
       this.cacheDurationInSecondsNumericUpDown.DecimalPlaces = 0;
       this.cacheDurationInSecondsNumericUpDown.Name = "cacheDurationInSecondsNumericUpDown";
       this.cacheDurationInSecondsNumericUpDown.NumBackColor = System.Drawing.SystemColors.Window;
@@ -220,9 +228,16 @@ namespace AW.Winforms.Helpers.LLBL
     "turn caching off.";
       this.cacheDurationInSecondsNumericUpDown.ValueChanged += new System.EventHandler(this.cacheDurationInSecondsNumericUpDown_ValueChanged);
       // 
+      // toolStripLabel2
+      // 
+      this.toolStripLabel2.Name = "toolStripLabel2";
+      this.toolStripLabel2.Size = new System.Drawing.Size(56, 15);
+      this.toolStripLabel2.Text = "Page Size";
+      this.toolStripLabel2.ToolTipText = "The number of rows per page in the grid. Zero to turn paging off.";
+      // 
       // pageSizeNumericUpDown
       // 
-      this.pageSizeNumericUpDown.BackColor = System.Drawing.Color.Transparent;
+      this.pageSizeNumericUpDown.BackColor = System.Drawing.SystemColors.Control;
       this.pageSizeNumericUpDown.DecimalPlaces = 0;
       this.pageSizeNumericUpDown.Name = "pageSizeNumericUpDown";
       this.pageSizeNumericUpDown.NumBackColor = System.Drawing.SystemColors.Window;
@@ -294,19 +309,6 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorData.Size = new System.Drawing.Size(331, 25);
       this.bindingNavigatorData.TabIndex = 2;
       this.bindingNavigatorData.Text = "bindingNavigator1";
-      // 
-      // toolStripLabel2
-      // 
-      this.toolStripLabel2.Name = "toolStripLabel2";
-      this.toolStripLabel2.Size = new System.Drawing.Size(56, 15);
-      this.toolStripLabel2.Text = "Page Size";
-      this.toolStripLabel2.ToolTipText = "The number of rows per page in the grid. Zero to turn paging off.";
-      // 
-      // toolStripLabel1
-      // 
-      this.toolStripLabel1.Name = "toolStripLabel1";
-      this.toolStripLabel1.Size = new System.Drawing.Size(152, 15);
-      this.toolStripLabel1.Text = "Cache Duration In Seconds:";
       // 
       // UsrCntrlEntityBrowser
       // 

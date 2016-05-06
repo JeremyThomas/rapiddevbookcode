@@ -142,7 +142,13 @@ namespace AW.Winforms.Helpers.Controls
       _num.Increment = 1;
       _num.Hexadecimal = false;
       _num.TextAlign = HorizontalAlignment.Center;
-
+      _num.MouseHover += HandleMouseHover;
+      _num.MouseLeave += HandleMouseLeave;
+      foreach (Control child in _num.Controls)
+      {
+        child.MouseHover += HandleMouseHover;
+        child.MouseLeave += HandleMouseLeave;
+      }
       _txt = new Label
       {
         Text = "NumericUpDown",
@@ -150,9 +156,26 @@ namespace AW.Winforms.Helpers.Controls
         AutoSize = true,
         Dock = DockStyle.Left
       };
-
+      _txt.MouseHover += HandleMouseHover;
+      _txt.MouseLeave += HandleMouseLeave;
+     // _controlPanel
       _controlPanel.Controls.Add(_txt);
       _controlPanel.Controls.Add(_num);
+    }
+
+    /// <summary>
+    /// Handles the mouse hover. Need this for tooltips
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    private void HandleMouseHover(object sender, EventArgs e)
+    {
+      OnMouseHover(e);
+    }
+
+    private void HandleMouseLeave(object sender, EventArgs e)
+    {
+      OnMouseLeave(e);
     }
 
     protected void UpdateAutoSize()
@@ -169,5 +192,6 @@ namespace AW.Winforms.Helpers.Controls
         _num.Width = _controlPanel.ClientSize.Width - _txt.Width - _controlPanel.Margin.Horizontal - _controlPanel.Margin.Horizontal;
       }
     }
+
   }
 }
