@@ -140,6 +140,7 @@ namespace AW.Winforms.Helpers.LLBL
       // 
       // toolStripButtonCancelEdit
       // 
+      this.toolStripButtonCancelEdit.BackColor = System.Drawing.Color.Transparent;
       this.toolStripButtonCancelEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
       this.toolStripButtonCancelEdit.Enabled = false;
       this.toolStripButtonCancelEdit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCancelEdit.Image")));
@@ -151,6 +152,7 @@ namespace AW.Winforms.Helpers.LLBL
       // 
       // saveToolStripButton
       // 
+      this.saveToolStripButton.BackColor = System.Drawing.Color.Transparent;
       this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
       this.saveToolStripButton.Enabled = false;
       this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
@@ -162,6 +164,7 @@ namespace AW.Winforms.Helpers.LLBL
       // 
       // ensureFilteringEnabledCheckBox
       // 
+      this.ensureFilteringEnabledCheckBox.BackColor = System.Drawing.Color.Transparent;
       this.ensureFilteringEnabledCheckBox.Checked = false;
       this.ensureFilteringEnabledCheckBox.CheckState = System.Windows.Forms.CheckState.Unchecked;
       this.ensureFilteringEnabledCheckBox.Name = "ensureFilteringEnabledCheckBox";
@@ -173,26 +176,29 @@ namespace AW.Winforms.Helpers.LLBL
       // 
       // useSchemaCheckBox
       // 
+      this.useSchemaCheckBox.BackColor = System.Drawing.Color.Transparent;
       this.useSchemaCheckBox.Checked = false;
       this.useSchemaCheckBox.CheckState = System.Windows.Forms.CheckState.Unchecked;
       this.useSchemaCheckBox.Name = "useSchemaCheckBox";
-      this.useSchemaCheckBox.Size = new System.Drawing.Size(93, 19);
-      this.useSchemaCheckBox.Text = "Use Schema:";
+      this.useSchemaCheckBox.Size = new System.Drawing.Size(90, 19);
+      this.useSchemaCheckBox.Text = "Use Schema";
       this.useSchemaCheckBox.ToolTipText = "Use Table Schema to group the Entities";
       this.useSchemaCheckBox.Click += new System.EventHandler(this.toolStripCheckBox1_Click);
       // 
       // useContextCheckBox
       // 
+      this.useContextCheckBox.BackColor = System.Drawing.Color.Transparent;
       this.useContextCheckBox.Checked = false;
       this.useContextCheckBox.CheckState = System.Windows.Forms.CheckState.Unchecked;
       this.useContextCheckBox.Name = "useContextCheckBox";
-      this.useContextCheckBox.Size = new System.Drawing.Size(92, 19);
-      this.useContextCheckBox.Text = "Use Context:";
+      this.useContextCheckBox.Size = new System.Drawing.Size(89, 19);
+      this.useContextCheckBox.Text = "Use Context";
       this.useContextCheckBox.ToolTipText = resources.GetString("useContextCheckBox.ToolTipText");
       this.useContextCheckBox.Click += new System.EventHandler(this.useContextCheckBox_Click);
       // 
       // prefixDelimiterLabel
       // 
+      this.prefixDelimiterLabel.BackColor = System.Drawing.Color.Transparent;
       this.prefixDelimiterLabel.Name = "prefixDelimiterLabel";
       this.prefixDelimiterLabel.Size = new System.Drawing.Size(90, 15);
       this.prefixDelimiterLabel.Text = "Prefix Delimiter:";
@@ -201,7 +207,7 @@ namespace AW.Winforms.Helpers.LLBL
       // 
       // prefixDelimiterTextBox
       // 
-      this.prefixDelimiterTextBox.BackColor = System.Drawing.SystemColors.Control;
+      this.prefixDelimiterTextBox.BackColor = System.Drawing.SystemColors.Window;
       this.prefixDelimiterTextBox.MaxLength = 25;
       this.prefixDelimiterTextBox.Name = "prefixDelimiterTextBox";
       this.prefixDelimiterTextBox.Size = new System.Drawing.Size(20, 23);
@@ -211,13 +217,14 @@ namespace AW.Winforms.Helpers.LLBL
       // 
       // toolStripLabel1
       // 
+      this.toolStripLabel1.BackColor = System.Drawing.Color.Transparent;
       this.toolStripLabel1.Name = "toolStripLabel1";
       this.toolStripLabel1.Size = new System.Drawing.Size(152, 15);
       this.toolStripLabel1.Text = "Cache Duration In Seconds:";
       // 
       // cacheDurationInSecondsNumericUpDown
       // 
-      this.cacheDurationInSecondsNumericUpDown.BackColor = System.Drawing.SystemColors.Control;
+      this.cacheDurationInSecondsNumericUpDown.BackColor = System.Drawing.Color.Transparent;
       this.cacheDurationInSecondsNumericUpDown.DecimalPlaces = 0;
       this.cacheDurationInSecondsNumericUpDown.Name = "cacheDurationInSecondsNumericUpDown";
       this.cacheDurationInSecondsNumericUpDown.NumBackColor = System.Drawing.SystemColors.Window;
@@ -230,14 +237,15 @@ namespace AW.Winforms.Helpers.LLBL
       // 
       // toolStripLabel2
       // 
+      this.toolStripLabel2.BackColor = System.Drawing.Color.Transparent;
       this.toolStripLabel2.Name = "toolStripLabel2";
-      this.toolStripLabel2.Size = new System.Drawing.Size(56, 15);
-      this.toolStripLabel2.Text = "Page Size";
+      this.toolStripLabel2.Size = new System.Drawing.Size(59, 15);
+      this.toolStripLabel2.Text = "Page Size:";
       this.toolStripLabel2.ToolTipText = "The number of rows per page in the grid. Zero to turn paging off.";
       // 
       // pageSizeNumericUpDown
       // 
-      this.pageSizeNumericUpDown.BackColor = System.Drawing.SystemColors.Control;
+      this.pageSizeNumericUpDown.BackColor = System.Drawing.Color.Transparent;
       this.pageSizeNumericUpDown.DecimalPlaces = 0;
       this.pageSizeNumericUpDown.Name = "pageSizeNumericUpDown";
       this.pageSizeNumericUpDown.NumBackColor = System.Drawing.SystemColors.Window;
@@ -249,6 +257,7 @@ namespace AW.Winforms.Helpers.LLBL
       // 
       // toolStripCheckBoxDeletesAreCascading
       // 
+      this.toolStripCheckBoxDeletesAreCascading.BackColor = System.Drawing.Color.Transparent;
       this.toolStripCheckBoxDeletesAreCascading.Checked = false;
       this.toolStripCheckBoxDeletesAreCascading.CheckState = System.Windows.Forms.CheckState.Unchecked;
       this.toolStripCheckBoxDeletesAreCascading.Name = "toolStripCheckBoxDeletesAreCascading";

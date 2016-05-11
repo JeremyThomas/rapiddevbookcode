@@ -159,14 +159,21 @@ namespace AW.Tests
       return (IEnumerable<T>) list;
     }
 
-    private static void MaybeAssertObjectListView(dynamic list)
+    private static void MaybeAssertObjectListView(dynamic list, bool assertRaiseItemChangedEvents = false)
     {
-      AssertObjectListView(list);
+      AssertObjectListView(list, assertRaiseItemChangedEvents);
     }
 
-    private static void AssertObjectListView<T>(IList<T> list)
+    private static void AssertObjectListView<T>(IList<T> list, bool assertRaiseItemChangedEvents = false)
     {
       Assert.IsInstanceOfType(list, typeof (ObjectListView<T>));
+      if (assertRaiseItemChangedEvents)
+      {
+        var objectListView = (ObjectListView<T>) list;
+        var raiseItemChangedEvents = objectListView.List as IRaiseItemChangedEvents;
+        Assert.IsNotNull(raiseItemChangedEvents, "objectListView.List as IRaiseItemChangedEvents");
+        Assert.IsTrue(raiseItemChangedEvents.RaisesItemChangedEvents, "raiseItemChangedEvents.RaisesItemChangedEvents");
+      }
     }
 
     private static BindingSource TestBindEnumerableReadonly<T>(IEnumerable<T> enumerable, bool setReadonly)
@@ -259,7 +266,13 @@ namespace AW.Tests
       var list = TestToBindingListView(enumerable, ensureFilteringEnabled);
       Assert.IsInstanceOfType(list, typeof (ICollection));
       if (ensureFilteringEnabled)
+      {
         MaybeAssertObjectListView(list);
+        Assert.IsTrue(list.SupportsFiltering);
+        var raiseItemChangedEvents = list as IRaiseItemChangedEvents;
+        Assert.IsNotNull(raiseItemChangedEvents);
+        Assert.IsTrue(raiseItemChangedEvents.RaisesItemChangedEvents, "raiseItemChangedEvents.RaisesItemChangedEvents");
+      }
       else
         Assert.IsInstanceOfType(list, typeof (IEntityView));
       var dataSource = (ICollection) BindingListHelper.GetDataSource(list);

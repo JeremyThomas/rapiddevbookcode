@@ -10,47 +10,47 @@ namespace AW.Winforms.Helpers.Controls
   [ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.ToolStrip | ToolStripItemDesignerAvailability.StatusStrip)]
   public class ToolStripCheckBox : ToolStripControlHost
   {
-    private readonly CheckBox _checkBox;
+    public CheckBox CheckBox { get; private set; }
 
     public event EventHandler CheckedChanged
     {
-      add { _checkBox.CheckedChanged += value; }
-      remove { _checkBox.CheckedChanged -= value; }
+      add { CheckBox.CheckedChanged += value; }
+      remove { CheckBox.CheckedChanged -= value; }
     }
 
     public event EventHandler CheckStateChanged
     {
-      add { _checkBox.CheckStateChanged += value; }
-      remove { _checkBox.CheckStateChanged -= value; }
+      add { CheckBox.CheckStateChanged += value; }
+      remove { CheckBox.CheckStateChanged -= value; }
     }
 
     public override string Text
     {
-      get { return _checkBox.Text; }
+      get { return CheckBox.Text; }
       set
       {
-        _checkBox.Text = value;
+        CheckBox.Text = value;
         UpdateAutoSize();
       }
     }
 
     public bool Checked
     {
-      get { return _checkBox.Checked; }
-      set { _checkBox.Checked = value; }
+      get { return CheckBox.Checked; }
+      set { CheckBox.Checked = value; }
     }
 
     public CheckState CheckState
     {
-      get { return _checkBox.CheckState; }
-      set { _checkBox.CheckState = value; }
+      get { return CheckBox.CheckState; }
+      set { CheckBox.CheckState = value; }
     }
 
     public ToolStripCheckBox() : base(new CheckBox())
     {
       // Set up the FlowLayouPanel.
-      _checkBox = (CheckBox) Control;
-      _checkBox.AutoSize = true;
+      CheckBox = (CheckBox) Control;
+      CheckBox.AutoSize = true;
     }
 
     protected void UpdateAutoSize()

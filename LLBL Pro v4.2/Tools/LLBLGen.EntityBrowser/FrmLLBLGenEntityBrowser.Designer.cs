@@ -38,12 +38,12 @@
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.toggleSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.panelSettings = new System.Windows.Forms.Panel();
+      this.adapterAssemblyPathTextBox = new System.Windows.Forms.TextBox();
+      this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.panelMetaData = new System.Windows.Forms.Panel();
       this.linqMetaDataAssemblyPathTextBox = new System.Windows.Forms.TextBox();
-      this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.panel2 = new System.Windows.Forms.Panel();
       this.labellinqMetaDataAssemblyVersion = new System.Windows.Forms.Label();
-      this.adapterAssemblyPathTextBox = new System.Windows.Forms.TextBox();
       this.contextMenuStripTabPage = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.addConnectionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
       this.editConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,7 +67,7 @@
       this.toolStripCheckBox3 = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       this.toolStripNumericUpDowncacheDurationInSeconds = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-      this.toolStripCheckBox1 = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
+      this.toolStripCheckBoxEnsureFilteringEnabled = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       this.pageSizeNumericUpDown = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.toolStripCheckBoxDeletesAreCascading = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -75,8 +75,8 @@
       this.toolStripLabelOrmProfilerStatus = new System.Windows.Forms.ToolStripLabel();
       this.contextMenuStripTabControl.SuspendLayout();
       this.panelSettings.SuspendLayout();
-      this.panelMetaData.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
+      this.panelMetaData.SuspendLayout();
       this.panel2.SuspendLayout();
       this.contextMenuStripTabPage.SuspendLayout();
       this.toolStrip.SuspendLayout();
@@ -163,6 +163,20 @@
       this.panelSettings.TabIndex = 2;
       this.panelSettings.Visible = global::LLBLGen.EntityBrowser.Properties.Settings.Default.ShowSettings;
       // 
+      // adapterAssemblyPathTextBox
+      // 
+      this.adapterAssemblyPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "AdapterAssemblyPath", true));
+      this.adapterAssemblyPathTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.adapterAssemblyPathTextBox.Location = new System.Drawing.Point(119, 0);
+      this.adapterAssemblyPathTextBox.Name = "adapterAssemblyPathTextBox";
+      this.adapterAssemblyPathTextBox.Size = new System.Drawing.Size(1382, 20);
+      this.adapterAssemblyPathTextBox.TabIndex = 3;
+      this.toolTip1.SetToolTip(this.adapterAssemblyPathTextBox, "Path to Adapter assembly");
+      // 
+      // settingsBindingSource
+      // 
+      this.settingsBindingSource.DataSource = typeof(System.Configuration.ApplicationSettingsBase);
+      // 
       // panelMetaData
       // 
       this.panelMetaData.Controls.Add(this.linqMetaDataAssemblyPathTextBox);
@@ -186,10 +200,6 @@
         "on");
       this.linqMetaDataAssemblyPathTextBox.Leave += new System.EventHandler(this.linqMetaDataAssemblyPathTextBox_Leave);
       // 
-      // settingsBindingSource
-      // 
-      this.settingsBindingSource.DataSource = typeof(System.Configuration.ApplicationSettingsBase);
-      // 
       // panel2
       // 
       this.panel2.AutoSize = true;
@@ -210,16 +220,6 @@
       this.labellinqMetaDataAssemblyVersion.TabIndex = 2;
       this.labellinqMetaDataAssemblyVersion.Text = "Version";
       this.labellinqMetaDataAssemblyVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-      // 
-      // adapterAssemblyPathTextBox
-      // 
-      this.adapterAssemblyPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "AdapterAssemblyPath", true));
-      this.adapterAssemblyPathTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.adapterAssemblyPathTextBox.Location = new System.Drawing.Point(119, 0);
-      this.adapterAssemblyPathTextBox.Name = "adapterAssemblyPathTextBox";
-      this.adapterAssemblyPathTextBox.Size = new System.Drawing.Size(1382, 20);
-      this.adapterAssemblyPathTextBox.TabIndex = 3;
-      this.toolTip1.SetToolTip(this.adapterAssemblyPathTextBox, "Path to Adapter assembly");
       // 
       // contextMenuStripTabPage
       // 
@@ -298,7 +298,7 @@
             this.toolStripCheckBox3,
             this.toolStripNumericUpDowncacheDurationInSeconds,
             this.toolStripSeparator5,
-            this.toolStripCheckBox1,
+            this.toolStripCheckBoxEnsureFilteringEnabled,
             this.pageSizeNumericUpDown,
             this.toolStripCheckBoxDeletesAreCascading,
             this.toolStripSeparator7,
@@ -312,6 +312,7 @@
       // 
       // toolStripButtonAddConnection
       // 
+      this.toolStripButtonAddConnection.BackColor = System.Drawing.Color.Transparent;
       this.toolStripButtonAddConnection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
       this.toolStripButtonAddConnection.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAddConnection.Image")));
       this.toolStripButtonAddConnection.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -322,6 +323,7 @@
       // 
       // toolStripButtonLoad
       // 
+      this.toolStripButtonLoad.BackColor = System.Drawing.Color.Transparent;
       this.toolStripButtonLoad.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
       this.toolStripButtonLoad.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLoad.Image")));
       this.toolStripButtonLoad.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -332,6 +334,7 @@
       // 
       // toolStripButtonCancelEdit
       // 
+      this.toolStripButtonCancelEdit.BackColor = System.Drawing.Color.Transparent;
       this.toolStripButtonCancelEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
       this.toolStripButtonCancelEdit.Enabled = false;
       this.toolStripButtonCancelEdit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCancelEdit.Image")));
@@ -343,6 +346,7 @@
       // 
       // saveToolStripButton
       // 
+      this.saveToolStripButton.BackColor = System.Drawing.Color.Transparent;
       this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
       this.saveToolStripButton.Enabled = false;
       this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
@@ -354,11 +358,13 @@
       // 
       // toolStripSeparator6
       // 
+      this.toolStripSeparator6.BackColor = System.Drawing.Color.Transparent;
       this.toolStripSeparator6.Name = "toolStripSeparator6";
       this.toolStripSeparator6.Size = new System.Drawing.Size(6, 28);
       // 
       // toolStripLabel1
       // 
+      this.toolStripLabel1.BackColor = System.Drawing.Color.Transparent;
       this.toolStripLabel1.Name = "toolStripLabel1";
       this.toolStripLabel1.Size = new System.Drawing.Size(90, 25);
       this.toolStripLabel1.Text = "Prefix Delimiter:";
@@ -376,30 +382,35 @@
       // 
       // toolStripCheckBox2
       // 
+      this.toolStripCheckBox2.BackColor = System.Drawing.Color.Transparent;
       this.toolStripCheckBox2.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.UseSchema;
       this.toolStripCheckBox2.CheckState = System.Windows.Forms.CheckState.Checked;
       this.toolStripCheckBox2.Name = "toolStripCheckBox2";
-      this.toolStripCheckBox2.Size = new System.Drawing.Size(93, 25);
-      this.toolStripCheckBox2.Text = "Use Schema:";
+      this.toolStripCheckBox2.Size = new System.Drawing.Size(90, 25);
+      this.toolStripCheckBox2.Text = "Use Schema";
       this.toolStripCheckBox2.ToolTipText = "Use Table Schema to group the Entities";
       // 
       // toolStripSeparator4
       // 
+      this.toolStripSeparator4.BackColor = System.Drawing.Color.Transparent;
+      this.toolStripSeparator4.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
       this.toolStripSeparator4.Name = "toolStripSeparator4";
+      this.toolStripSeparator4.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
       this.toolStripSeparator4.Size = new System.Drawing.Size(6, 28);
       // 
       // toolStripCheckBox3
       // 
+      this.toolStripCheckBox3.BackColor = System.Drawing.Color.Transparent;
       this.toolStripCheckBox3.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.UseContext;
       this.toolStripCheckBox3.CheckState = System.Windows.Forms.CheckState.Checked;
       this.toolStripCheckBox3.Name = "toolStripCheckBox3";
-      this.toolStripCheckBox3.Size = new System.Drawing.Size(92, 25);
-      this.toolStripCheckBox3.Text = "Use Context:";
+      this.toolStripCheckBox3.Size = new System.Drawing.Size(89, 25);
+      this.toolStripCheckBox3.Text = "Use Context";
       this.toolStripCheckBox3.ToolTipText = resources.GetString("toolStripCheckBox3.ToolTipText");
       // 
       // toolStripNumericUpDowncacheDurationInSeconds
       // 
-      this.toolStripNumericUpDowncacheDurationInSeconds.BackColor = System.Drawing.SystemColors.Control;
+      this.toolStripNumericUpDowncacheDurationInSeconds.BackColor = System.Drawing.Color.Transparent;
       this.toolStripNumericUpDowncacheDurationInSeconds.DecimalPlaces = 0;
       this.toolStripNumericUpDowncacheDurationInSeconds.Name = "toolStripNumericUpDowncacheDurationInSeconds";
       this.toolStripNumericUpDowncacheDurationInSeconds.NumBackColor = System.Drawing.SystemColors.Window;
@@ -411,22 +422,25 @@
       // 
       // toolStripSeparator5
       // 
+      this.toolStripSeparator5.BackColor = System.Drawing.Color.Transparent;
+      this.toolStripSeparator5.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
       this.toolStripSeparator5.Name = "toolStripSeparator5";
       this.toolStripSeparator5.Size = new System.Drawing.Size(6, 28);
       // 
-      // toolStripCheckBox1
+      // toolStripCheckBoxEnsureFilteringEnabled
       // 
-      this.toolStripCheckBox1.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.EnsureFilteringEnabled;
-      this.toolStripCheckBox1.CheckState = System.Windows.Forms.CheckState.Unchecked;
-      this.toolStripCheckBox1.Name = "toolStripCheckBox1";
-      this.toolStripCheckBox1.Size = new System.Drawing.Size(152, 25);
-      this.toolStripCheckBox1.Text = "Ensure Filtering Enabled";
-      this.toolStripCheckBox1.ToolTipText = "Specifies whether filtering is enabled in the grid, even if the underlying collec" +
+      this.toolStripCheckBoxEnsureFilteringEnabled.BackColor = System.Drawing.Color.Transparent;
+      this.toolStripCheckBoxEnsureFilteringEnabled.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.EnsureFilteringEnabled;
+      this.toolStripCheckBoxEnsureFilteringEnabled.CheckState = System.Windows.Forms.CheckState.Unchecked;
+      this.toolStripCheckBoxEnsureFilteringEnabled.Name = "toolStripCheckBoxEnsureFilteringEnabled";
+      this.toolStripCheckBoxEnsureFilteringEnabled.Size = new System.Drawing.Size(152, 25);
+      this.toolStripCheckBoxEnsureFilteringEnabled.Text = "Ensure Filtering Enabled";
+      this.toolStripCheckBoxEnsureFilteringEnabled.ToolTipText = "Specifies whether filtering is enabled in the grid, even if the underlying collec" +
     "tion doesn\'t support it.";
       // 
       // pageSizeNumericUpDown
       // 
-      this.pageSizeNumericUpDown.BackColor = System.Drawing.SystemColors.Control;
+      this.pageSizeNumericUpDown.BackColor = System.Drawing.Color.Transparent;
       this.pageSizeNumericUpDown.DecimalPlaces = 0;
       this.pageSizeNumericUpDown.Name = "pageSizeNumericUpDown";
       this.pageSizeNumericUpDown.NumBackColor = System.Drawing.SystemColors.Window;
@@ -437,6 +451,7 @@
       // 
       // toolStripCheckBoxDeletesAreCascading
       // 
+      this.toolStripCheckBoxDeletesAreCascading.BackColor = System.Drawing.Color.Transparent;
       this.toolStripCheckBoxDeletesAreCascading.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CascadeDeletes;
       this.toolStripCheckBoxDeletesAreCascading.CheckState = System.Windows.Forms.CheckState.Unchecked;
       this.toolStripCheckBoxDeletesAreCascading.Name = "toolStripCheckBoxDeletesAreCascading";
@@ -446,12 +461,13 @@
       // 
       // toolStripSeparator7
       // 
+      this.toolStripSeparator7.BackColor = System.Drawing.Color.Transparent;
       this.toolStripSeparator7.Name = "toolStripSeparator7";
       this.toolStripSeparator7.Size = new System.Drawing.Size(6, 28);
       // 
       // toolStripNumericUpDownCommandTimeOut
       // 
-      this.toolStripNumericUpDownCommandTimeOut.BackColor = System.Drawing.SystemColors.Control;
+      this.toolStripNumericUpDownCommandTimeOut.BackColor = System.Drawing.Color.Transparent;
       this.toolStripNumericUpDownCommandTimeOut.DecimalPlaces = 0;
       this.toolStripNumericUpDownCommandTimeOut.Name = "toolStripNumericUpDownCommandTimeOut";
       this.toolStripNumericUpDownCommandTimeOut.NumBackColor = System.Drawing.SystemColors.Window;
@@ -462,6 +478,7 @@
       // 
       // toolStripLabelOrmProfilerStatus
       // 
+      this.toolStripLabelOrmProfilerStatus.BackColor = System.Drawing.Color.Transparent;
       this.toolStripLabelOrmProfilerStatus.Name = "toolStripLabelOrmProfilerStatus";
       this.toolStripLabelOrmProfilerStatus.Size = new System.Drawing.Size(101, 25);
       this.toolStripLabelOrmProfilerStatus.Text = "OrmProfilerStatus";
@@ -484,9 +501,9 @@
       this.contextMenuStripTabControl.ResumeLayout(false);
       this.panelSettings.ResumeLayout(false);
       this.panelSettings.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
       this.panelMetaData.ResumeLayout(false);
       this.panelMetaData.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
       this.panel2.ResumeLayout(false);
       this.panel2.PerformLayout();
       this.contextMenuStripTabPage.ResumeLayout(false);
@@ -535,7 +552,7 @@
     private AW.Winforms.Helpers.Controls.ToolStripCheckBox toolStripCheckBox3;
     private AW.Winforms.Helpers.Controls.ToolStripNumericUpDown toolStripNumericUpDowncacheDurationInSeconds;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-    private AW.Winforms.Helpers.Controls.ToolStripCheckBox toolStripCheckBox1;
+    private AW.Winforms.Helpers.Controls.ToolStripCheckBox toolStripCheckBoxEnsureFilteringEnabled;
     private AW.Winforms.Helpers.Controls.ToolStripNumericUpDown pageSizeNumericUpDown;
     private AW.Winforms.Helpers.Controls.ToolStripCheckBox toolStripCheckBoxDeletesAreCascading;
     private AW.Winforms.Helpers.Controls.ToolStripNumericUpDown toolStripNumericUpDownCommandTimeOut;

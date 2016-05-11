@@ -96,7 +96,7 @@ namespace AW.Winforms.Helpers
       if (bindingListView != null && (!ensureFilteringEnabled || bindingListView.SupportsFiltering))
         return bindingListView;
 
-      return ToObjectListView((IEnumerable<T>) GetDataSource(bindingListView) ?? enumerable);
+      return ToObjectListView((IEnumerable<T>) GetDataSource(bindingListView, ensureFilteringEnabled) ?? enumerable);
     }
 
     private static IBindingListView MaybeCreateBindingListView(dynamic enumerable, bool ensureFilteringEnabled = false,
@@ -422,51 +422,60 @@ namespace AW.Winforms.Helpers
       return anObject != null && (anObject is ObjectListView || anObject.GetType().HasGenericTypeDefinition(typeof (ObjectListView<>)));
     }
 
-    public static IEnumerable GetDataSource(this BindingSource bindingSource)
+    public static IEnumerable GetDataSource(this BindingSource bindingSource, bool wantRaiseItemChangedEvents = false)
     {
       var dataSource = bindingSource.List as BindingSource;
       if (dataSource != null)
         return GetDataSource(dataSource);
       var bindingList = bindingSource.List as IBindingList;
-      return bindingList == null ? bindingSource.List : GetDataSource(bindingList);
+      return bindingList == null ? bindingSource.List : GetDataSource(bindingList, wantRaiseItemChangedEvents);
     }
 
-    public static IEnumerable GetDataSource(IBindingList bindingList)
+    public static IEnumerable GetDataSource(IBindingList bindingList, bool wantRaiseItemChangedEvents = false)
     {
       if (bindingList == null)
         return null;
       var bindingSource = bindingList as BindingSource;
       if (bindingSource != null)
-        return GetDataSource(bindingSource);
-      return MaybeGetObjectListViewDataSourcedynamic(bindingList);
+        return GetDataSource(bindingSource, wantRaiseItemChangedEvents);
+      return MaybeGetObjectListViewDataSourcedynamic(bindingList, wantRaiseItemChangedEvents);
     }
 
-    private static IEnumerable GetObjectListViewDataSource(IBindingList bindingList)
+    private static IEnumerable GetObjectListViewDataSource(IBindingList bindingList, bool wantRaiseItemChangedEvents = false)
     {
       var bindingListSourceProvider = BindingListViewSources.FirstOrDefault(b => b.Key.IsInstanceOfType(bindingList)).Value;
       if (bindingListSourceProvider != null)
-        return bindingListSourceProvider(bindingList);
+      {
+        var objectListViewDataSource = bindingListSourceProvider(bindingList);
+        if (wantRaiseItemChangedEvents)
+        {
+          var raiseItemChangedEvents = objectListViewDataSource as IRaiseItemChangedEvents;
+          if (raiseItemChangedEvents == null && bindingList is IRaiseItemChangedEvents && bindingList.GetType().HasGenericTypeDefinition(typeof(IList<>)))
+            return bindingList;
+        }
+        return objectListViewDataSource;
+      }
       return bindingList;
     }
 
-    private static IEnumerable MaybeGetObjectListViewDataSourcedynamic(dynamic dataSource)
+    private static IEnumerable MaybeGetObjectListViewDataSourcedynamic(dynamic dataSource, bool wantRaiseItemChangedEvents = false)
     {
-      return GetObjectListViewDataSource(dataSource);
+      return GetObjectListViewDataSource(dataSource, wantRaiseItemChangedEvents);
     }
 
-    private static IEnumerable GetObjectListViewDataSource<T>(ObjectListView<T> objectListView)
+    private static IEnumerable GetObjectListViewDataSource<T>(ObjectListView<T> objectListView, bool wantRaiseItemChangedEvents = false)
     {
       var objectListViewSource = objectListView.List as ObjectListView<T>;
-      return objectListViewSource == null ? objectListView.List : GetObjectListViewDataSource(objectListViewSource);
+      return objectListViewSource == null ? objectListView.List : GetObjectListViewDataSource(objectListViewSource, wantRaiseItemChangedEvents);
     }
 
-    private static IEnumerable GetObjectListViewDataSource(ObjectListView objectListView)
+    private static IEnumerable GetObjectListViewDataSource(ObjectListView objectListView, bool wantRaiseItemChangedEvents = false)
     {
       var bindingSource = objectListView.List as BindingSource;
       if (bindingSource != null)
-        return GetDataSource(bindingSource);
+        return GetDataSource(bindingSource, wantRaiseItemChangedEvents);
       var objectListViewSource = objectListView.List as ObjectListView;
-      return objectListViewSource == null ? objectListView.List : GetObjectListViewDataSource(objectListViewSource);
+      return objectListViewSource == null ? objectListView.List : GetObjectListViewDataSource(objectListViewSource, wantRaiseItemChangedEvents);
     }
   }
 }

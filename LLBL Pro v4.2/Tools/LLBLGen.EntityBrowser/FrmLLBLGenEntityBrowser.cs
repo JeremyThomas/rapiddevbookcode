@@ -78,6 +78,8 @@ namespace LLBLGen.EntityBrowser
         {
           // ignored
         }
+
+      this.toolStripCheckBoxEnsureFilteringEnabled.CheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LLBLGen.EntityBrowser.Properties.Settings.Default.EnsureFilteringEnabled, "EnsureFilteringEnabled", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
     }
 
     private void MainForm_Load(object sender, EventArgs e) 

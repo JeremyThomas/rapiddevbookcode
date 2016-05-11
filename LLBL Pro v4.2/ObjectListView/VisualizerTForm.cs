@@ -143,7 +143,7 @@ namespace JesseJohnston
 				dataGridListTableStyle.MappingName = view.List.GetType().Name;
 
 			foreach (var column in props.Distinct().Select(prop => new DataGridTextBoxColumn {HeaderText = prop.Name, MappingName = prop.Name, NullText = "", ReadOnly = true})
-				.Where(column => !dataGridViewTableStyle.GridColumnStyles.Contains(column.HeaderText)))
+				.Where(column => !dataGridListTableStyle.GridColumnStyles.Contains(column.HeaderText)))
 				dataGridListTableStyle.GridColumnStyles.Add(column);
 
 			dataGridList.DataSource = view.List;
