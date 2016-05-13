@@ -33,7 +33,7 @@ namespace AW.Winforms.Helpers.DataEditor
 
     public static Form CreateDataViewForm(IEnumerable enumerable)
     {
-      return CreateDataEditorForm(enumerable, null, GridDataEditor.DefaultPageSize, true);
+      return InitialiseDataVieverForm(new FrmDataEditor(),enumerable);
     }
 
     public static Form CreateDataEditorForm(IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
@@ -51,6 +51,18 @@ namespace AW.Winforms.Helpers.DataEditor
     {
       frmDataEditor.Text = GetEnumerableDescription(enumerable);
       var gridDataEditor = new GridDataEditor(enumerable, true, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), pageSize, readOnly) { Dock = DockStyle.Fill };
+      frmDataEditor.Controls.Add(gridDataEditor);
+      return frmDataEditor;
+    }
+
+    private static Form InitialiseDataVieverForm(Form frmDataEditor, IEnumerable enumerable, bool allowPaging = false)
+    {
+      frmDataEditor.Text = GetEnumerableDescription(enumerable);
+      var gridDataEditor = new GridDataEditor(enumerable, true, null, 0)
+      {
+        Dock = DockStyle.Fill,
+        bindingNavigatorPaging = {Visible = allowPaging}
+      };
       frmDataEditor.Controls.Add(gridDataEditor);
       return frmDataEditor;
     }
