@@ -85,7 +85,7 @@ namespace AW.Winforms.Helpers.Controls
     /// <summary>
     ///   Initializes a new instance of the <see cref="T:System.Windows.Forms.UserControl" /> class.
     /// </summary>
-    public GridDataEditor(IEnumerable enumerable, Boolean delayBind = false, IDataEditorPersister dataEditorPersister = null, ushort pageSize = DefaultPageSize, bool readOnly = true, params string[] membersToExclude)
+    public GridDataEditor(IEnumerable enumerable, bool delayBind = false, IDataEditorPersister dataEditorPersister = null, ushort pageSize = DefaultPageSize, bool readOnly = true, params string[] membersToExclude)
       : this()
     {
       MembersToExclude = membersToExclude;

@@ -52,7 +52,7 @@ namespace AW.DebugVisualizers
           enumerable = dataTable.DefaultView;
       }
       if (enumerable != null)
-        _modalService.ShowDialog(FrmDataEditor.CreateDataEditorForm(enumerable, null, 0));
+        _modalService.ShowDialog(FrmDataEditor.CreateDataViewForm(enumerable));
     }
   }
 
