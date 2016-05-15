@@ -78,17 +78,24 @@ namespace LLBLGen.EntityBrowser
         {
           // ignored
         }
-
-      this.toolStripCheckBoxEnsureFilteringEnabled.CheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LLBLGen.EntityBrowser.Properties.Settings.Default.EnsureFilteringEnabled, "EnsureFilteringEnabled", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      toolStripCheckBoxEnsureFilteringEnabled.DataBind(Settings.Default);
+      toolStripCheckBoxUseContext.DataBind(Settings.Default);
+      toolStripCheckBoxCascadeDeletes.DataBind(Settings.Default);
+      toolStripCheckBoxUseSchema.DataBind(Settings.Default);
+      toolStripNumericUpDownCacheDurationInSeconds.DataBind(Settings.Default);
+      toolStripNumericUpDownPageSize.DataBind(Settings.Default);
+      toolStripNumericUpDownCommandTimeOut.DataBind(Settings.Default);
+      if (toolStripTextBoxTablePrefixDelimiter.TextBox != null)
+        toolStripTextBoxTablePrefixDelimiter.TextBox.DataBindings.Add(new Binding("Text", Settings.Default, "PrefixDelimiter", true, DataSourceUpdateMode.OnPropertyChanged));
     }
 
-    private void MainForm_Load(object sender, EventArgs e) 
+    private void MainForm_Load(object sender, EventArgs e)
     {
       toolStripLabelOrmProfilerStatus.Text = ProfilerHelper.OrmProfilerStatus;
       try
       {
         LoadAssembliesAndTabs(Settings.Default.LinqMetaDataAssemblyPath, Settings.Default.AdapterAssemblyPath);
-        if (_linqMetaDataType!=null)
+        if (_linqMetaDataType != null)
           Text += string.Format(" - {0}", _linqMetaDataType.Assembly.FullName.Before(", Culture"));
         if (tabControl.TabPages.Count == 0 || Settings.Default.ShowSettings)
         {
@@ -127,7 +134,8 @@ namespace LLBLGen.EntityBrowser
         {
           tabControl.TabPages.Clear();
           foreach (ConnectionStringSettings connectionStringSetting in ConnectionStringSettingsCollection)
-            AddEntityBrowser(connectionStringSetting);}
+            AddEntityBrowser(connectionStringSetting);
+        }
       }
     }
 

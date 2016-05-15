@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Configuration;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
+using AW.Helper;
 
 namespace AW.Winforms.Helpers.Controls
 {
@@ -58,6 +60,11 @@ namespace AW.Winforms.Helpers.Controls
       if (!AutoSize) return;
       AutoSize = false;
       AutoSize = true;
+    }
+
+    public void DataBind(ApplicationSettingsBase settings)
+    {
+      CheckBox.DataBindings.Add(new Binding("Checked", settings, Name.After("CheckBox"), true, DataSourceUpdateMode.OnPropertyChanged));
     }
   }
 }
