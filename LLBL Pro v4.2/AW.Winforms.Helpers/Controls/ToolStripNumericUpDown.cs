@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
+using AW.Helper;
 
 namespace AW.Winforms.Helpers.Controls
 {
@@ -191,6 +193,11 @@ namespace AW.Winforms.Helpers.Controls
       {
         _num.Width = _controlPanel.ClientSize.Width - _txt.Width - _controlPanel.Margin.Horizontal - _controlPanel.Margin.Horizontal;
       }
+    }
+
+    public void DataBind(ApplicationSettingsBase settings)
+    {
+      _num.DataBindings.Add(new Binding("Value", settings, Name.After("UpDown"), true, DataSourceUpdateMode.OnPropertyChanged));
     }
 
   }

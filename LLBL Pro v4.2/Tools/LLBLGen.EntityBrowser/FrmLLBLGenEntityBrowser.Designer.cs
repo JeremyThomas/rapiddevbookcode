@@ -39,7 +39,6 @@
       this.toggleSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.panelSettings = new System.Windows.Forms.Panel();
       this.adapterAssemblyPathTextBox = new System.Windows.Forms.TextBox();
-      this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.panelMetaData = new System.Windows.Forms.Panel();
       this.linqMetaDataAssemblyPathTextBox = new System.Windows.Forms.TextBox();
       this.panel2 = new System.Windows.Forms.Panel();
@@ -61,25 +60,26 @@
       this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-      this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
-      this.toolStripCheckBox2 = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
+      this.toolStripTextBoxTablePrefixDelimiter = new System.Windows.Forms.ToolStripTextBox();
+      this.toolStripCheckBoxUseSchema = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-      this.toolStripCheckBox3 = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
-      this.toolStripNumericUpDowncacheDurationInSeconds = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
+      this.toolStripCheckBoxUseContext = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
+      this.toolStripNumericUpDownCacheDurationInSeconds = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripCheckBoxEnsureFilteringEnabled = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
-      this.pageSizeNumericUpDown = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
-      this.toolStripCheckBoxDeletesAreCascading = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
+      this.toolStripNumericUpDownPageSize = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
+      this.toolStripCheckBoxCascadeDeletes = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripNumericUpDownCommandTimeOut = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.toolStripLabelOrmProfilerStatus = new System.Windows.Forms.ToolStripLabel();
+      this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.contextMenuStripTabControl.SuspendLayout();
       this.panelSettings.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
       this.panelMetaData.SuspendLayout();
       this.panel2.SuspendLayout();
       this.contextMenuStripTabPage.SuspendLayout();
       this.toolStrip.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
       // linqMetaDataAssemblyPathLabel
@@ -115,10 +115,10 @@
       // 
       this.tabControl.ContextMenuStrip = this.contextMenuStripTabControl;
       this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tabControl.Location = new System.Drawing.Point(0, 71);
+      this.tabControl.Location = new System.Drawing.Point(0, 73);
       this.tabControl.Name = "tabControl";
       this.tabControl.SelectedIndex = 0;
-      this.tabControl.Size = new System.Drawing.Size(1501, 517);
+      this.tabControl.Size = new System.Drawing.Size(1501, 515);
       this.tabControl.TabIndex = 1;
       this.tabControl.MouseLeave += new System.EventHandler(this.tabControl_MouseLeave);
       this.tabControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tabControl_MouseMove);
@@ -159,7 +159,7 @@
       this.panelSettings.Dock = System.Windows.Forms.DockStyle.Top;
       this.panelSettings.Location = new System.Drawing.Point(0, 50);
       this.panelSettings.Name = "panelSettings";
-      this.panelSettings.Size = new System.Drawing.Size(1501, 21);
+      this.panelSettings.Size = new System.Drawing.Size(1501, 23);
       this.panelSettings.TabIndex = 2;
       this.panelSettings.Visible = global::LLBLGen.EntityBrowser.Properties.Settings.Default.ShowSettings;
       // 
@@ -172,10 +172,6 @@
       this.adapterAssemblyPathTextBox.Size = new System.Drawing.Size(1382, 20);
       this.adapterAssemblyPathTextBox.TabIndex = 3;
       this.toolTip1.SetToolTip(this.adapterAssemblyPathTextBox, "Path to Adapter assembly");
-      // 
-      // settingsBindingSource
-      // 
-      this.settingsBindingSource.DataSource = typeof(System.Configuration.ApplicationSettingsBase);
       // 
       // panelMetaData
       // 
@@ -292,15 +288,15 @@
             this.saveToolStripButton,
             this.toolStripSeparator6,
             this.toolStripLabel1,
-            this.toolStripTextBox1,
-            this.toolStripCheckBox2,
+            this.toolStripTextBoxTablePrefixDelimiter,
+            this.toolStripCheckBoxUseSchema,
             this.toolStripSeparator4,
-            this.toolStripCheckBox3,
-            this.toolStripNumericUpDowncacheDurationInSeconds,
+            this.toolStripCheckBoxUseContext,
+            this.toolStripNumericUpDownCacheDurationInSeconds,
             this.toolStripSeparator5,
             this.toolStripCheckBoxEnsureFilteringEnabled,
-            this.pageSizeNumericUpDown,
-            this.toolStripCheckBoxDeletesAreCascading,
+            this.toolStripNumericUpDownPageSize,
+            this.toolStripCheckBoxCascadeDeletes,
             this.toolStripSeparator7,
             this.toolStripNumericUpDownCommandTimeOut,
             this.toolStripLabelOrmProfilerStatus});
@@ -371,24 +367,24 @@
       this.toolStripLabel1.ToolTipText = "Table Prefix Delimiter to group Entities by (e.g. with a delimiter of _ table Sal" +
     "es_Order would grouped into a node called Sales)";
       // 
-      // toolStripTextBox1
+      // toolStripTextBoxTablePrefixDelimiter
       // 
-      this.toolStripTextBox1.MaxLength = 25;
-      this.toolStripTextBox1.Name = "toolStripTextBox1";
-      this.toolStripTextBox1.Size = new System.Drawing.Size(20, 28);
-      this.toolStripTextBox1.Text = global::LLBLGen.EntityBrowser.Properties.Settings.Default.PrefixDelimiter;
-      this.toolStripTextBox1.ToolTipText = "Table Prefix Delimiter to group Entities by (e.g. with a delimiter of _ table Sal" +
+      this.toolStripTextBoxTablePrefixDelimiter.MaxLength = 25;
+      this.toolStripTextBoxTablePrefixDelimiter.Name = "toolStripTextBoxTablePrefixDelimiter";
+      this.toolStripTextBoxTablePrefixDelimiter.Size = new System.Drawing.Size(20, 28);
+      this.toolStripTextBoxTablePrefixDelimiter.Text = global::LLBLGen.EntityBrowser.Properties.Settings.Default.PrefixDelimiter;
+      this.toolStripTextBoxTablePrefixDelimiter.ToolTipText = "Table Prefix Delimiter to group Entities by (e.g. with a delimiter of _ table Sal" +
     "es_Order would grouped into a node called Sales)";
       // 
-      // toolStripCheckBox2
+      // toolStripCheckBoxUseSchema
       // 
-      this.toolStripCheckBox2.BackColor = System.Drawing.Color.Transparent;
-      this.toolStripCheckBox2.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.UseSchema;
-      this.toolStripCheckBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.toolStripCheckBox2.Name = "toolStripCheckBox2";
-      this.toolStripCheckBox2.Size = new System.Drawing.Size(90, 25);
-      this.toolStripCheckBox2.Text = "Use Schema";
-      this.toolStripCheckBox2.ToolTipText = "Use Table Schema to group the Entities";
+      this.toolStripCheckBoxUseSchema.BackColor = System.Drawing.Color.Transparent;
+      this.toolStripCheckBoxUseSchema.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.UseSchema;
+      this.toolStripCheckBoxUseSchema.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.toolStripCheckBoxUseSchema.Name = "toolStripCheckBoxUseSchema";
+      this.toolStripCheckBoxUseSchema.Size = new System.Drawing.Size(90, 25);
+      this.toolStripCheckBoxUseSchema.Text = "Use Schema";
+      this.toolStripCheckBoxUseSchema.ToolTipText = "Use Table Schema to group the Entities";
       // 
       // toolStripSeparator4
       // 
@@ -398,27 +394,27 @@
       this.toolStripSeparator4.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
       this.toolStripSeparator4.Size = new System.Drawing.Size(6, 28);
       // 
-      // toolStripCheckBox3
+      // toolStripCheckBoxUseContext
       // 
-      this.toolStripCheckBox3.BackColor = System.Drawing.Color.Transparent;
-      this.toolStripCheckBox3.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.UseContext;
-      this.toolStripCheckBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.toolStripCheckBox3.Name = "toolStripCheckBox3";
-      this.toolStripCheckBox3.Size = new System.Drawing.Size(89, 25);
-      this.toolStripCheckBox3.Text = "Use Context";
-      this.toolStripCheckBox3.ToolTipText = resources.GetString("toolStripCheckBox3.ToolTipText");
+      this.toolStripCheckBoxUseContext.BackColor = System.Drawing.Color.Transparent;
+      this.toolStripCheckBoxUseContext.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.UseContext;
+      this.toolStripCheckBoxUseContext.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.toolStripCheckBoxUseContext.Name = "toolStripCheckBoxUseContext";
+      this.toolStripCheckBoxUseContext.Size = new System.Drawing.Size(89, 25);
+      this.toolStripCheckBoxUseContext.Text = "Use Context";
+      this.toolStripCheckBoxUseContext.ToolTipText = resources.GetString("toolStripCheckBoxUseContext.ToolTipText");
       // 
-      // toolStripNumericUpDowncacheDurationInSeconds
+      // toolStripNumericUpDownCacheDurationInSeconds
       // 
-      this.toolStripNumericUpDowncacheDurationInSeconds.BackColor = System.Drawing.Color.Transparent;
-      this.toolStripNumericUpDowncacheDurationInSeconds.DecimalPlaces = 0;
-      this.toolStripNumericUpDowncacheDurationInSeconds.Name = "toolStripNumericUpDowncacheDurationInSeconds";
-      this.toolStripNumericUpDowncacheDurationInSeconds.NumBackColor = System.Drawing.SystemColors.Window;
-      this.toolStripNumericUpDowncacheDurationInSeconds.Size = new System.Drawing.Size(211, 25);
-      this.toolStripNumericUpDowncacheDurationInSeconds.Text = "Cache Duration In Seconds:";
-      this.toolStripNumericUpDowncacheDurationInSeconds.ToolTipText = "Specifies the duration that the query\'s result set should be cached for. Zero to " +
+      this.toolStripNumericUpDownCacheDurationInSeconds.BackColor = System.Drawing.Color.Transparent;
+      this.toolStripNumericUpDownCacheDurationInSeconds.DecimalPlaces = 0;
+      this.toolStripNumericUpDownCacheDurationInSeconds.Name = "toolStripNumericUpDownCacheDurationInSeconds";
+      this.toolStripNumericUpDownCacheDurationInSeconds.NumBackColor = System.Drawing.SystemColors.Window;
+      this.toolStripNumericUpDownCacheDurationInSeconds.Size = new System.Drawing.Size(211, 25);
+      this.toolStripNumericUpDownCacheDurationInSeconds.Text = "Cache Duration In Seconds:";
+      this.toolStripNumericUpDownCacheDurationInSeconds.ToolTipText = "Specifies the duration that the query\'s result set should be cached for. Zero to " +
     "turn caching off.";
-      this.toolStripNumericUpDowncacheDurationInSeconds.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CacheDurationInSeconds;
+      this.toolStripNumericUpDownCacheDurationInSeconds.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CacheDurationInSeconds;
       // 
       // toolStripSeparator5
       // 
@@ -438,26 +434,26 @@
       this.toolStripCheckBoxEnsureFilteringEnabled.ToolTipText = "Specifies whether filtering is enabled in the grid, even if the underlying collec" +
     "tion doesn\'t support it.";
       // 
-      // pageSizeNumericUpDown
+      // toolStripNumericUpDownPageSize
       // 
-      this.pageSizeNumericUpDown.BackColor = System.Drawing.Color.Transparent;
-      this.pageSizeNumericUpDown.DecimalPlaces = 0;
-      this.pageSizeNumericUpDown.Name = "pageSizeNumericUpDown";
-      this.pageSizeNumericUpDown.NumBackColor = System.Drawing.SystemColors.Window;
-      this.pageSizeNumericUpDown.Size = new System.Drawing.Size(115, 25);
-      this.pageSizeNumericUpDown.Text = "Page Size";
-      this.pageSizeNumericUpDown.ToolTipText = "The number of rows per page in the grid. Zero to turn paging off.";
-      this.pageSizeNumericUpDown.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.PageSize;
+      this.toolStripNumericUpDownPageSize.BackColor = System.Drawing.Color.Transparent;
+      this.toolStripNumericUpDownPageSize.DecimalPlaces = 0;
+      this.toolStripNumericUpDownPageSize.Name = "toolStripNumericUpDownPageSize";
+      this.toolStripNumericUpDownPageSize.NumBackColor = System.Drawing.SystemColors.Window;
+      this.toolStripNumericUpDownPageSize.Size = new System.Drawing.Size(115, 25);
+      this.toolStripNumericUpDownPageSize.Text = "Page Size";
+      this.toolStripNumericUpDownPageSize.ToolTipText = "The number of rows per page in the grid. Zero to turn paging off.";
+      this.toolStripNumericUpDownPageSize.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.PageSize;
       // 
-      // toolStripCheckBoxDeletesAreCascading
+      // toolStripCheckBoxCascadeDeletes
       // 
-      this.toolStripCheckBoxDeletesAreCascading.BackColor = System.Drawing.Color.Transparent;
-      this.toolStripCheckBoxDeletesAreCascading.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CascadeDeletes;
-      this.toolStripCheckBoxDeletesAreCascading.CheckState = System.Windows.Forms.CheckState.Unchecked;
-      this.toolStripCheckBoxDeletesAreCascading.Name = "toolStripCheckBoxDeletesAreCascading";
-      this.toolStripCheckBoxDeletesAreCascading.Size = new System.Drawing.Size(111, 25);
-      this.toolStripCheckBoxDeletesAreCascading.Text = "Cascade Deletes";
-      this.toolStripCheckBoxDeletesAreCascading.ToolTipText = "Deletes cascade non-recursively to children of the selected entity.";
+      this.toolStripCheckBoxCascadeDeletes.BackColor = System.Drawing.Color.Transparent;
+      this.toolStripCheckBoxCascadeDeletes.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CascadeDeletes;
+      this.toolStripCheckBoxCascadeDeletes.CheckState = System.Windows.Forms.CheckState.Unchecked;
+      this.toolStripCheckBoxCascadeDeletes.Name = "toolStripCheckBoxCascadeDeletes";
+      this.toolStripCheckBoxCascadeDeletes.Size = new System.Drawing.Size(111, 25);
+      this.toolStripCheckBoxCascadeDeletes.Text = "Cascade Deletes";
+      this.toolStripCheckBoxCascadeDeletes.ToolTipText = "Deletes cascade non-recursively to children of the selected entity.";
       // 
       // toolStripSeparator7
       // 
@@ -483,6 +479,10 @@
       this.toolStripLabelOrmProfilerStatus.Size = new System.Drawing.Size(101, 25);
       this.toolStripLabelOrmProfilerStatus.Text = "OrmProfilerStatus";
       // 
+      // settingsBindingSource
+      // 
+      this.settingsBindingSource.DataSource = typeof(System.Configuration.ApplicationSettingsBase);
+      // 
       // FrmLLBLGenEntityBrowser
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -501,7 +501,6 @@
       this.contextMenuStripTabControl.ResumeLayout(false);
       this.panelSettings.ResumeLayout(false);
       this.panelSettings.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
       this.panelMetaData.ResumeLayout(false);
       this.panelMetaData.PerformLayout();
       this.panel2.ResumeLayout(false);
@@ -509,6 +508,7 @@
       this.contextMenuStripTabPage.ResumeLayout(false);
       this.toolStrip.ResumeLayout(false);
       this.toolStrip.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -545,16 +545,16 @@
     public System.Windows.Forms.ToolStripButton toolStripButtonCancelEdit;
     private System.Windows.Forms.ToolStripButton saveToolStripButton;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-    private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+    private System.Windows.Forms.ToolStripTextBox toolStripTextBoxTablePrefixDelimiter;
     private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-    private AW.Winforms.Helpers.Controls.ToolStripCheckBox toolStripCheckBox2;
+    private AW.Winforms.Helpers.Controls.ToolStripCheckBox toolStripCheckBoxUseSchema;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-    private AW.Winforms.Helpers.Controls.ToolStripCheckBox toolStripCheckBox3;
-    private AW.Winforms.Helpers.Controls.ToolStripNumericUpDown toolStripNumericUpDowncacheDurationInSeconds;
+    private AW.Winforms.Helpers.Controls.ToolStripCheckBox toolStripCheckBoxUseContext;
+    private AW.Winforms.Helpers.Controls.ToolStripNumericUpDown toolStripNumericUpDownCacheDurationInSeconds;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     private AW.Winforms.Helpers.Controls.ToolStripCheckBox toolStripCheckBoxEnsureFilteringEnabled;
-    private AW.Winforms.Helpers.Controls.ToolStripNumericUpDown pageSizeNumericUpDown;
-    private AW.Winforms.Helpers.Controls.ToolStripCheckBox toolStripCheckBoxDeletesAreCascading;
+    private AW.Winforms.Helpers.Controls.ToolStripNumericUpDown toolStripNumericUpDownPageSize;
+    private AW.Winforms.Helpers.Controls.ToolStripCheckBox toolStripCheckBoxCascadeDeletes;
     private AW.Winforms.Helpers.Controls.ToolStripNumericUpDown toolStripNumericUpDownCommandTimeOut;
     private System.Windows.Forms.ToolStripLabel toolStripLabelOrmProfilerStatus;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
