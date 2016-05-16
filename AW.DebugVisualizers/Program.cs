@@ -27,7 +27,7 @@ namespace AW.DebugVisualizers
 
     private static void DemoAction()
     {
-      var dataViewForm = FrmDataEditor.CreateDataViewForm(AppDomain.CurrentDomain.GetAssemblies());
+      var dataViewForm = EnumerableVisualizer.CreateDataViewForm(AppDomain.CurrentDomain.GetAssemblies());
       dataViewForm.Show();
     }
   }

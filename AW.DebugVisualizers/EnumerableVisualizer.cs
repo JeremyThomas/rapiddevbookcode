@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Runtime.Serialization;
+using System.Windows.Forms;
 using AW.Helper;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.DataEditor;
+using AW.Winforms.Helpers.Forms;
 using AW.Winforms.Helpers.Misc;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 
@@ -52,7 +55,22 @@ namespace AW.DebugVisualizers
           enumerable = dataTable.DefaultView;
       }
       if (enumerable != null)
-        _modalService.ShowDialog(FrmDataEditor.CreateDataViewForm(enumerable));
+        _modalService.ShowDialog(CreateDataViewForm(enumerable));
+    }
+
+    public static Form CreateDataViewForm(IEnumerable enumerable)
+    {
+      var toolStripButtonAbout = new ToolStripButton
+      {
+        DisplayStyle = ToolStripItemDisplayStyle.Text,
+        ImageTransparentColor = Color.Magenta,
+        Name = "toolStripButtonAbout",
+        Size = new Size(44, 25),
+        Text = "About",
+        ToolTipText = "About"
+      };
+      toolStripButtonAbout.Click += (sender, e) => {AboutBox.ShowAboutBox(Application.OpenForms[0]);};
+      return FrmDataEditor.CreateDataViewForm(enumerable, toolStripButtonAbout);
     }
   }
 
@@ -67,7 +85,8 @@ namespace AW.DebugVisualizers
 
     /// <summary>
     ///   Gets data from the specified object and serializes it into the outgoing data stream
-    ///   This class implements the debugee side of the visualizer. It is responsible for running the commands against the   server.
+    ///   This class implements the debugee side of the visualizer. It is responsible for running the commands against the
+    ///   server.
     /// </summary>
     /// <remarks>
     ///   Uses the Bi­na­ry­For­mat­ter se­ri­al­iz­er.

@@ -13,6 +13,7 @@ using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.ConnectionUI;
+using AW.Winforms.Helpers.Forms;
 using AW.Winforms.Helpers.LLBL;
 using LLBLGen.EntityBrowser.Properties;
 using Microsoft.Data.ConnectionUI;
@@ -509,6 +510,11 @@ namespace LLBLGen.EntityBrowser
     {
       panelSettings.Visible = !panelSettings.Visible;
       toolStrip.Visible = !toolStrip.Visible;
+    }
+
+    private void toolStripButtonAbout_Click(object sender, EventArgs e)
+    {
+      AboutBox.ShowAboutBox(this);
     }
   }
 

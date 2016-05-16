@@ -17,3 +17,7 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
 [assembly: Guid("aa92d1dd-b208-43ce-8e8f-7c5a04d6eb89")]
+[assembly: AssemblyCompany("Jeremy Thomas")]
+[assembly: AssemblyProduct("LLBLGen Entity Browser")]
+[assembly: AssemblyCopyright("2016 Jeremy Thomas")]
+
