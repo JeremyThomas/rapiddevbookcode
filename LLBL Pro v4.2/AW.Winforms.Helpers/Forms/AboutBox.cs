@@ -86,9 +86,7 @@ namespace AW.Winforms.Helpers.Forms
       set
       {
         if (value == "")
-        {
           AppDescriptionLabel.Visible = false;
-        }
         else
         {
           AppDescriptionLabel.Visible = true;
@@ -110,9 +108,7 @@ namespace AW.Winforms.Helpers.Forms
       set
       {
         if (value == "")
-        {
           AppVersionLabel.Visible = false;
-        }
         else
         {
           AppVersionLabel.Visible = true;
@@ -135,9 +131,7 @@ namespace AW.Winforms.Helpers.Forms
       set
       {
         if (value == "")
-        {
           AppCopyrightLabel.Visible = false;
-        }
         else
         {
           AppCopyrightLabel.Visible = true;
@@ -173,9 +167,7 @@ namespace AW.Winforms.Helpers.Forms
       set
       {
         if (string.IsNullOrEmpty(value))
-        {
           MoreRichTextBox.Visible = false;
-        }
         else
         {
           MoreRichTextBox.Visible = true;
@@ -201,9 +193,7 @@ namespace AW.Winforms.Helpers.Forms
     {
       try
       {
-        if (string.IsNullOrWhiteSpace(a.Location))
-          return DateTime.MaxValue;
-        return File.GetLastWriteTime(a.Location);
+        return string.IsNullOrWhiteSpace(a.Location) ? DateTime.MaxValue : File.GetLastWriteTime(a.Location);
       }
       catch (Exception)
       {
@@ -224,20 +214,14 @@ namespace AW.Winforms.Helpers.Forms
       DateTime dt;
 
       if (forceFileDate)
-      {
         dt = AssemblyLastWriteTime(a);
-      }
       else
       {
         dt = DateTime.Parse("01/01/2000").AddDays(assemblyVersion.Build).AddSeconds(assemblyVersion.Revision*2);
         if (TimeZone.IsDaylightSavingTime(dt, TimeZone.CurrentTimeZone.GetDaylightChanges(dt.Year)))
-        {
           dt = dt.AddHours(1);
-        }
         if (dt > DateTime.Now || assemblyVersion.Build < 730 || assemblyVersion.Revision == 0)
-        {
           dt = AssemblyLastWriteTime(a);
-        }
       }
 
       return dt;
@@ -319,7 +303,7 @@ namespace AW.Winforms.Helpers.Forms
             break;
           case "System.Runtime.InteropServices.ComCompatibleVersionAttribute":
           {
-            var x = ((ComCompatibleVersionAttribute) attribute);
+            var x = (ComCompatibleVersionAttribute) attribute;
             value = x.MajorVersion + "." + x.MinorVersion + "." + x.RevisionNumber + "." + x.BuildNumber;
             break;
           }
@@ -331,7 +315,7 @@ namespace AW.Winforms.Helpers.Forms
             break;
           case "System.Runtime.InteropServices.TypeLibVersionAttribute":
           {
-            var x = ((TypeLibVersionAttribute) attribute);
+            var x = (TypeLibVersionAttribute) attribute;
             value = x.MajorVersion + "." + x.MinorVersion;
             break;
           }
@@ -402,7 +386,8 @@ namespace AW.Winforms.Helpers.Forms
       try
       {
         var rk = Registry.LocalMachine.OpenSubKey(keyName);
-        if (rk != null) return (string) rk.GetValue(subKeyRef, "");
+        if (rk != null)
+          return (string) rk.GetValue(subKeyRef, "");
       }
       catch (Exception)
       {
@@ -418,9 +403,7 @@ namespace AW.Winforms.Helpers.Forms
     {
       var strSysInfoPath = RegistryHklmValue(@"SOFTWARE\Microsoft\Shared Tools Location", "MSINFO");
       if (strSysInfoPath == "")
-      {
         strSysInfoPath = RegistryHklmValue(@"SOFTWARE\Microsoft\Shared Tools\MSINFO", "PATH");
-      }
 
       if (strSysInfoPath == "")
       {
@@ -479,9 +462,7 @@ namespace AW.Winforms.Helpers.Forms
     private void PopulateAssemblies()
     {
       foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
-      {
         PopulateAssemblySummary(a);
-      }
       AssemblyNamesComboBox.SelectedIndex = AssemblyNamesComboBox.FindStringExact(_entryAssemblyName);
     }
 
@@ -490,30 +471,30 @@ namespace AW.Winforms.Helpers.Forms
     // </summary>
     private void PopulateAssemblySummary(Assembly a)
     {
-      var nvc = AssemblyAttributes(a);
-
       var strAssemblyName = a.GetName().Name;
-
       var lvi = new ListViewItem
       {
         Text = strAssemblyName,
         Tag = strAssemblyName
       };
       if (strAssemblyName == _callingAssemblyName)
-      {
         lvi.Text += " (calling)";
-      }
       if (strAssemblyName == _executingAssemblyName)
-      {
         lvi.Text += " (executing)";
-      }
       if (strAssemblyName == _entryAssemblyName)
-      {
         lvi.Text += " (entry)";
+      try
+      {
+        var nvc = AssemblyAttributes(a);
+        lvi.SubItems.Add(nvc["version"]);
+        lvi.SubItems.Add(nvc["builddate"]);
+        lvi.SubItems.Add(nvc["codebase"]);
       }
-      lvi.SubItems.Add(nvc["version"]);
-      lvi.SubItems.Add(nvc["builddate"]);
-      lvi.SubItems.Add(nvc["codebase"]);
+      catch (Exception e)
+      {
+        lvi.Text += e.Message;
+      }
+
       //lvi.SubItems.Add(AssemblyVersion(a))
       //lvi.SubItems.Add(AssemblyBuildDatestring(a, true))
       //lvi.SubItems.Add(AssemblyCodeBase(a))
@@ -527,9 +508,7 @@ namespace AW.Winforms.Helpers.Forms
     private string EntryAssemblyAttribute(string strName)
     {
       if (_entryAssemblyAttributeCollection[strName] == null)
-      {
         return "<Assembly: Assembly" + strName + "(\"\")>";
-      }
       return _entryAssemblyAttributeCollection[strName];
     }
 
@@ -557,25 +536,15 @@ namespace AW.Winforms.Helpers.Forms
       Text = ReplaceTokens(Text);
       AppTitleLabel.Text = ReplaceTokens(AppTitleLabel.Text);
       if (AppDescriptionLabel.Visible)
-      {
         AppDescriptionLabel.Text = ReplaceTokens(AppDescriptionLabel.Text);
-      }
       if (AppCopyrightLabel.Visible)
-      {
         AppCopyrightLabel.Text = ReplaceTokens(AppCopyrightLabel.Text);
-      }
       if (AppVersionLabel.Visible)
-      {
         AppVersionLabel.Text = ReplaceTokens(AppVersionLabel.Text);
-      }
       if (AppDateLabel.Visible)
-      {
         AppDateLabel.Text = ReplaceTokens(AppDateLabel.Text);
-      }
       if (MoreRichTextBox.Visible)
-      {
         MoreRichTextBox.Text = ReplaceTokens(MoreRichTextBox.Text);
-      }
     }
 
     // <summary>
@@ -605,11 +574,15 @@ namespace AW.Winforms.Helpers.Forms
       // this assembly property is only available in framework versions 1.1+
       Populate(lvw, "Image Runtime Version", a.ImageRuntimeVersion);
       Populate(lvw, "Loaded from GAC", a.GlobalAssemblyCache.ToString());
-
-      var nvc = AssemblyAttributes(a);
-      foreach (string strKey in nvc)
+      try
       {
-        Populate(lvw, strKey, nvc[strKey]);
+        var nvc = AssemblyAttributes(a);
+        foreach (string strKey in nvc)
+          Populate(lvw, strKey, nvc[strKey]);
+      }
+      catch (Exception e)
+      {
+        Populate(lvw, e.GetType().ToString(), e.Message);
       }
     }
 
@@ -628,13 +601,9 @@ namespace AW.Winforms.Helpers.Forms
     {
       // if the user didn't provide an assembly, try to guess which one is the entry assembly
       if (AppEntryAssembly == null)
-      {
         AppEntryAssembly = Assembly.GetEntryAssembly();
-      }
       if (AppEntryAssembly == null)
-      {
         AppEntryAssembly = Assembly.GetExecutingAssembly();
-      }
 
       _executingAssemblyName = Assembly.GetExecutingAssembly().GetName().Name;
       _callingAssemblyName = Assembly.GetCallingAssembly().GetName().Name;
@@ -728,14 +697,8 @@ namespace AW.Winforms.Helpers.Forms
     private void AssemblyInfoListViewColumnClick(object sender, ColumnClickEventArgs e)
     {
       var intTargetCol = e.Column + 1;
-
-      if (AssemblyInfoListView.Tag != null)
-      {
-        if (Math.Abs(Convert.ToInt32(AssemblyInfoListView.Tag)) == intTargetCol)
-        {
-          intTargetCol = -Convert.ToInt32(AssemblyInfoListView.Tag);
-        }
-      }
+      if (AssemblyInfoListView.Tag != null && Math.Abs(Convert.ToInt32(AssemblyInfoListView.Tag)) == intTargetCol)
+        intTargetCol = -Convert.ToInt32(AssemblyInfoListView.Tag);
       AssemblyInfoListView.Tag = intTargetCol;
       AssemblyInfoListView.ListViewItemSorter = new ListViewItemComparer(intTargetCol, true);
     }
@@ -761,17 +724,11 @@ namespace AW.Winforms.Helpers.Forms
     private class ListViewItemComparer : IComparer
     {
       private readonly int _intCol;
-      private readonly bool _isAscending = true;
-
-      public ListViewItemComparer()
-      {
-        _intCol = 0;
-        _isAscending = true;
-      }
+      private readonly bool _isAscending;
 
       public ListViewItemComparer(int column, bool ascending)
       {
-        _isAscending = column >= 0 && @ascending;
+        _isAscending = column >= 0 && ascending;
         _intCol = Math.Abs(column) - 1;
       }
 
@@ -780,9 +737,7 @@ namespace AW.Winforms.Helpers.Forms
         var intResult = String.CompareOrdinal(((ListViewItem) x).SubItems[_intCol].Text, ((ListViewItem) y).SubItems[_intCol].Text);
 
         if (_isAscending)
-        {
           return intResult;
-        }
         return -intResult;
       }
     }

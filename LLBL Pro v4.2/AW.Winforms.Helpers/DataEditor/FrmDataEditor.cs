@@ -31,9 +31,9 @@ namespace AW.Winforms.Helpers.DataEditor
       return text;
     }
 
-    public static Form CreateDataViewForm(IEnumerable enumerable)
+    public static Form CreateDataViewForm(IEnumerable enumerable, params ToolStripItem[] toolStripItems)
     {
-      return InitialiseDataVieverForm(new FrmDataEditor(),enumerable);
+      return InitialiseDataViewerForm(new FrmDataEditor(), enumerable, false, toolStripItems);
     }
 
     public static Form CreateDataEditorForm(IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
@@ -50,12 +50,12 @@ namespace AW.Winforms.Helpers.DataEditor
     private static Form InitialiseDataEditorForm(Form frmDataEditor, IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly)
     {
       frmDataEditor.Text = GetEnumerableDescription(enumerable);
-      var gridDataEditor = new GridDataEditor(enumerable, true, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), pageSize, readOnly) { Dock = DockStyle.Fill };
+      var gridDataEditor = new GridDataEditor(enumerable, true, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), pageSize, readOnly) {Dock = DockStyle.Fill};
       frmDataEditor.Controls.Add(gridDataEditor);
       return frmDataEditor;
     }
 
-    private static Form InitialiseDataVieverForm(Form frmDataEditor, IEnumerable enumerable, bool allowPaging = false)
+    private static Form InitialiseDataViewerForm(Form frmDataEditor, IEnumerable enumerable, bool allowPaging = false, params ToolStripItem[] toolStripItems)
     {
       frmDataEditor.Text = GetEnumerableDescription(enumerable);
       var gridDataEditor = new GridDataEditor(enumerable, true, null, 0)
@@ -63,6 +63,7 @@ namespace AW.Winforms.Helpers.DataEditor
         Dock = DockStyle.Fill,
         bindingNavigatorPaging = {Visible = allowPaging}
       };
+      gridDataEditor.bindingNavigatorData.Items.AddRange(toolStripItems);
       frmDataEditor.Controls.Add(gridDataEditor);
       return frmDataEditor;
     }

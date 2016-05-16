@@ -39,6 +39,7 @@
       this.toggleSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.panelSettings = new System.Windows.Forms.Panel();
       this.adapterAssemblyPathTextBox = new System.Windows.Forms.TextBox();
+      this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.panelMetaData = new System.Windows.Forms.Panel();
       this.linqMetaDataAssemblyPathTextBox = new System.Windows.Forms.TextBox();
       this.panel2 = new System.Windows.Forms.Panel();
@@ -72,14 +73,14 @@
       this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripNumericUpDownCommandTimeOut = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.toolStripLabelOrmProfilerStatus = new System.Windows.Forms.ToolStripLabel();
-      this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.toolStripButtonAbout = new System.Windows.Forms.ToolStripButton();
       this.contextMenuStripTabControl.SuspendLayout();
       this.panelSettings.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
       this.panelMetaData.SuspendLayout();
       this.panel2.SuspendLayout();
       this.contextMenuStripTabPage.SuspendLayout();
       this.toolStrip.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
       // linqMetaDataAssemblyPathLabel
@@ -172,6 +173,10 @@
       this.adapterAssemblyPathTextBox.Size = new System.Drawing.Size(1382, 20);
       this.adapterAssemblyPathTextBox.TabIndex = 3;
       this.toolTip1.SetToolTip(this.adapterAssemblyPathTextBox, "Path to Adapter assembly");
+      // 
+      // settingsBindingSource
+      // 
+      this.settingsBindingSource.DataSource = typeof(System.Configuration.ApplicationSettingsBase);
       // 
       // panelMetaData
       // 
@@ -299,7 +304,8 @@
             this.toolStripCheckBoxCascadeDeletes,
             this.toolStripSeparator7,
             this.toolStripNumericUpDownCommandTimeOut,
-            this.toolStripLabelOrmProfilerStatus});
+            this.toolStripLabelOrmProfilerStatus,
+            this.toolStripButtonAbout});
       this.toolStrip.Location = new System.Drawing.Point(0, 0);
       this.toolStrip.Name = "toolStrip";
       this.toolStrip.Size = new System.Drawing.Size(1501, 28);
@@ -479,9 +485,16 @@
       this.toolStripLabelOrmProfilerStatus.Size = new System.Drawing.Size(101, 25);
       this.toolStripLabelOrmProfilerStatus.Text = "OrmProfilerStatus";
       // 
-      // settingsBindingSource
+      // toolStripButtonAbout
       // 
-      this.settingsBindingSource.DataSource = typeof(System.Configuration.ApplicationSettingsBase);
+      this.toolStripButtonAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonAbout.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAbout.Image")));
+      this.toolStripButtonAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonAbout.Name = "toolStripButtonAbout";
+      this.toolStripButtonAbout.Size = new System.Drawing.Size(44, 25);
+      this.toolStripButtonAbout.Text = "About";
+      this.toolStripButtonAbout.ToolTipText = "About";
+      this.toolStripButtonAbout.Click += new System.EventHandler(this.toolStripButtonAbout_Click);
       // 
       // FrmLLBLGenEntityBrowser
       // 
@@ -501,6 +514,7 @@
       this.contextMenuStripTabControl.ResumeLayout(false);
       this.panelSettings.ResumeLayout(false);
       this.panelSettings.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
       this.panelMetaData.ResumeLayout(false);
       this.panelMetaData.PerformLayout();
       this.panel2.ResumeLayout(false);
@@ -508,7 +522,6 @@
       this.contextMenuStripTabPage.ResumeLayout(false);
       this.toolStrip.ResumeLayout(false);
       this.toolStrip.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -558,6 +571,7 @@
     private AW.Winforms.Helpers.Controls.ToolStripNumericUpDown toolStripNumericUpDownCommandTimeOut;
     private System.Windows.Forms.ToolStripLabel toolStripLabelOrmProfilerStatus;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+    private System.Windows.Forms.ToolStripButton toolStripButtonAbout;
   }
 }
 
