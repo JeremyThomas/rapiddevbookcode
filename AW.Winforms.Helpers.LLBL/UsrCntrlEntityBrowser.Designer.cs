@@ -57,6 +57,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.toolStripNumericUpDownCommandTimeOut = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
@@ -131,7 +132,8 @@ namespace AW.Winforms.Helpers.LLBL
             this.cacheDurationInSecondsNumericUpDown,
             this.toolStripLabel2,
             this.pageSizeNumericUpDown,
-            this.toolStripCheckBoxDeletesAreCascading});
+            this.toolStripCheckBoxDeletesAreCascading,
+            this.toolStripNumericUpDownCommandTimeOut});
       this.toolStrip.Location = new System.Drawing.Point(0, 557);
       this.toolStrip.Name = "toolStrip";
       this.toolStrip.Size = new System.Drawing.Size(254, 28);
@@ -319,6 +321,17 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorData.TabIndex = 2;
       this.bindingNavigatorData.Text = "bindingNavigator1";
       // 
+      // toolStripNumericUpDownCommandTimeOut
+      // 
+      this.toolStripNumericUpDownCommandTimeOut.BackColor = System.Drawing.Color.Transparent;
+      this.toolStripNumericUpDownCommandTimeOut.DecimalPlaces = 0;
+      this.toolStripNumericUpDownCommandTimeOut.Name = "toolStripNumericUpDownCommandTimeOut";
+      this.toolStripNumericUpDownCommandTimeOut.NumBackColor = System.Drawing.SystemColors.Window;
+      this.toolStripNumericUpDownCommandTimeOut.Size = new System.Drawing.Size(173, 25);
+      this.toolStripNumericUpDownCommandTimeOut.Text = "Command TimeOut";
+      this.toolStripNumericUpDownCommandTimeOut.ToolTipText = "The timeout value to use with the ADO.NET data fetching";
+      this.toolStripNumericUpDownCommandTimeOut.ValueChanged += new System.EventHandler(this.toolStripNumericUpDownCommandTimeOut_ValueChanged);
+      // 
       // UsrCntrlEntityBrowser
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -364,5 +377,6 @@ namespace AW.Winforms.Helpers.LLBL
     private ToolStripCheckBox toolStripCheckBoxDeletesAreCascading;
     private ToolStripLabel toolStripLabel1;
     private ToolStripLabel toolStripLabel2;
+    private ToolStripNumericUpDown toolStripNumericUpDownCommandTimeOut;
   }
 }

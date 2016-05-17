@@ -497,5 +497,10 @@ namespace AW.Winforms.Helpers.LLBL
     {
       AWHelper.ResizeToFitNodes(treeViewEntities);
     }
+
+    private void toolStripNumericUpDownCommandTimeOut_ValueChanged(object sender, EventArgs e)
+    {
+      DaoBase.CommandTimeOut = (int)toolStripNumericUpDownCommandTimeOut.Value;
+    }
   }
 }

@@ -55,8 +55,7 @@ namespace LLBLGen.EntityBrowser
     public FrmLLBLGenEntityBrowser()
     {
       InitializeComponent();
-      settingsBindingSource.DataSource = Settings.Default;
-
+      Settings.Default.PropertyChanged += SettingPropertyChanged;
       if (!String.IsNullOrWhiteSpace(Settings.Default.LinqMetaDataAssemblyPath))
         try
         {
@@ -90,12 +89,17 @@ namespace LLBLGen.EntityBrowser
         toolStripTextBoxTablePrefixDelimiter.TextBox.DataBindings.Add(new Binding("Text", Settings.Default, "PrefixDelimiter", true, DataSourceUpdateMode.OnPropertyChanged));
     }
 
+    private void SettingPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+     toolStripButtonLoad.Enabled = toolStripButtonLoad.Enabled || e.PropertyName!= "ShowSettings";
+    }
+
     private void MainForm_Load(object sender, EventArgs e)
     {
       toolStripLabelOrmProfilerStatus.Text = ProfilerHelper.OrmProfilerStatus;
       try
       {
-        LoadAssembliesAndTabs(Settings.Default.LinqMetaDataAssemblyPath, Settings.Default.AdapterAssemblyPath);
+        LoadAssembliesAndTabs();
         if (_linqMetaDataType != null)
           Text += string.Format(" - {0}", _linqMetaDataType.Assembly.FullName.Before(", Culture"));
         if (tabControl.TabPages.Count == 0 || Settings.Default.ShowSettings)
@@ -114,7 +118,8 @@ namespace LLBLGen.EntityBrowser
 
     private void toolStripButtonLoad_Click(object sender, EventArgs e)
     {
-      LoadAssembliesAndTabs(Settings.Default.LinqMetaDataAssemblyPath, Settings.Default.AdapterAssemblyPath);
+      LoadAssembliesAndTabs();
+      toolStripButtonLoad.Enabled = false;
     }
 
     private void linqMetaDataAssemblyPathTextBox_Leave(object sender, EventArgs e)
@@ -319,6 +324,11 @@ namespace LLBLGen.EntityBrowser
     private static Assembly LoadAssembly(string assemblyPath)
     {
       return Assembly.LoadFrom(assemblyPath);
+    }
+
+    private void LoadAssembliesAndTabs()
+    {
+      LoadAssembliesAndTabs(Settings.Default.LinqMetaDataAssemblyPath, Settings.Default.AdapterAssemblyPath);
     }
 
     private void LoadAssembliesAndTabs(string linqMetaDataAssemblyPath, string adapterAssemblyPath)

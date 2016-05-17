@@ -39,7 +39,6 @@
       this.toggleSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.panelSettings = new System.Windows.Forms.Panel();
       this.adapterAssemblyPathTextBox = new System.Windows.Forms.TextBox();
-      this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.panelMetaData = new System.Windows.Forms.Panel();
       this.linqMetaDataAssemblyPathTextBox = new System.Windows.Forms.TextBox();
       this.panel2 = new System.Windows.Forms.Panel();
@@ -76,7 +75,6 @@
       this.toolStripButtonAbout = new System.Windows.Forms.ToolStripButton();
       this.contextMenuStripTabControl.SuspendLayout();
       this.panelSettings.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
       this.panelMetaData.SuspendLayout();
       this.panel2.SuspendLayout();
       this.contextMenuStripTabPage.SuspendLayout();
@@ -166,17 +164,14 @@
       // 
       // adapterAssemblyPathTextBox
       // 
-      this.adapterAssemblyPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "AdapterAssemblyPath", true));
+      this.adapterAssemblyPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "AdapterAssemblyPath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.adapterAssemblyPathTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
       this.adapterAssemblyPathTextBox.Location = new System.Drawing.Point(119, 0);
       this.adapterAssemblyPathTextBox.Name = "adapterAssemblyPathTextBox";
       this.adapterAssemblyPathTextBox.Size = new System.Drawing.Size(1382, 20);
       this.adapterAssemblyPathTextBox.TabIndex = 3;
+      this.adapterAssemblyPathTextBox.Text = global::LLBLGen.EntityBrowser.Properties.Settings.Default.AdapterAssemblyPath;
       this.toolTip1.SetToolTip(this.adapterAssemblyPathTextBox, "Path to Adapter assembly");
-      // 
-      // settingsBindingSource
-      // 
-      this.settingsBindingSource.DataSource = typeof(System.Configuration.ApplicationSettingsBase);
       // 
       // panelMetaData
       // 
@@ -191,12 +186,13 @@
       // 
       // linqMetaDataAssemblyPathTextBox
       // 
-      this.linqMetaDataAssemblyPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "LinqMetaDataAssemblyPath", true));
+      this.linqMetaDataAssemblyPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "LinqMetaDataAssemblyPath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.linqMetaDataAssemblyPathTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
       this.linqMetaDataAssemblyPathTextBox.Location = new System.Drawing.Point(158, 0);
       this.linqMetaDataAssemblyPathTextBox.Name = "linqMetaDataAssemblyPathTextBox";
       this.linqMetaDataAssemblyPathTextBox.Size = new System.Drawing.Size(1301, 20);
       this.linqMetaDataAssemblyPathTextBox.TabIndex = 1;
+      this.linqMetaDataAssemblyPathTextBox.Text = global::LLBLGen.EntityBrowser.Properties.Settings.Default.LinqMetaDataAssemblyPath;
       this.toolTip1.SetToolTip(this.linqMetaDataAssemblyPathTextBox, "Path to a LLBLGen Pro generated assembly containing an ILinqMetaData implementati" +
         "on");
       this.linqMetaDataAssemblyPathTextBox.Leave += new System.EventHandler(this.linqMetaDataAssemblyPathTextBox_Leave);
@@ -321,17 +317,20 @@
       this.toolStripButtonAddConnection.Name = "toolStripButtonAddConnection";
       this.toolStripButtonAddConnection.Size = new System.Drawing.Size(33, 25);
       this.toolStripButtonAddConnection.Text = "Add";
+      this.toolStripButtonAddConnection.ToolTipText = "Add Connection";
       this.toolStripButtonAddConnection.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
       // toolStripButtonLoad
       // 
       this.toolStripButtonLoad.BackColor = System.Drawing.Color.Transparent;
       this.toolStripButtonLoad.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonLoad.Enabled = false;
       this.toolStripButtonLoad.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLoad.Image")));
       this.toolStripButtonLoad.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonLoad.Name = "toolStripButtonLoad";
-      this.toolStripButtonLoad.Size = new System.Drawing.Size(37, 25);
-      this.toolStripButtonLoad.Text = "Load";
+      this.toolStripButtonLoad.Size = new System.Drawing.Size(47, 25);
+      this.toolStripButtonLoad.Text = "Reload";
+      this.toolStripButtonLoad.ToolTipText = "Reload all the tabs with the default settings";
       this.toolStripButtonLoad.Click += new System.EventHandler(this.toolStripButtonLoad_Click);
       // 
       // toolStripButtonCancelEdit
@@ -514,7 +513,6 @@
       this.contextMenuStripTabControl.ResumeLayout(false);
       this.panelSettings.ResumeLayout(false);
       this.panelSettings.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
       this.panelMetaData.ResumeLayout(false);
       this.panelMetaData.PerformLayout();
       this.panel2.ResumeLayout(false);
@@ -531,7 +529,6 @@
     private System.Windows.Forms.TabControl tabControl;
     private System.Windows.Forms.Panel panelSettings;
     private System.Windows.Forms.TextBox adapterAssemblyPathTextBox;
-    private System.Windows.Forms.BindingSource settingsBindingSource;
     private System.Windows.Forms.TextBox linqMetaDataAssemblyPathTextBox;
     private System.Windows.Forms.ContextMenuStrip contextMenuStripTabControl;
     private System.Windows.Forms.ToolStripMenuItem addConnectionToolStripMenuItem;
