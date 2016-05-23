@@ -415,10 +415,10 @@
       this.toolStripNumericUpDownCacheDurationInSeconds.DecimalPlaces = 0;
       this.toolStripNumericUpDownCacheDurationInSeconds.Name = "toolStripNumericUpDownCacheDurationInSeconds";
       this.toolStripNumericUpDownCacheDurationInSeconds.NumBackColor = System.Drawing.SystemColors.Window;
-      this.toolStripNumericUpDownCacheDurationInSeconds.Size = new System.Drawing.Size(211, 25);
-      this.toolStripNumericUpDownCacheDurationInSeconds.Text = "Cache Duration In Seconds:";
-      this.toolStripNumericUpDownCacheDurationInSeconds.ToolTipText = "Specifies the duration that the query\'s result set should be cached for. Zero to " +
-    "turn caching off.";
+      this.toolStripNumericUpDownCacheDurationInSeconds.Size = new System.Drawing.Size(151, 25);
+      this.toolStripNumericUpDownCacheDurationInSeconds.Text = "Cache Duration:";
+      this.toolStripNumericUpDownCacheDurationInSeconds.ToolTipText = "Specifies the duration (in seconds) that the query\'s result set should be cached " +
+    "for. Zero to turn caching off.";
       this.toolStripNumericUpDownCacheDurationInSeconds.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CacheDurationInSeconds;
       // 
       // toolStripSeparator5
@@ -445,8 +445,8 @@
       this.toolStripNumericUpDownPageSize.DecimalPlaces = 0;
       this.toolStripNumericUpDownPageSize.Name = "toolStripNumericUpDownPageSize";
       this.toolStripNumericUpDownPageSize.NumBackColor = System.Drawing.SystemColors.Window;
-      this.toolStripNumericUpDownPageSize.Size = new System.Drawing.Size(115, 25);
-      this.toolStripNumericUpDownPageSize.Text = "Page Size";
+      this.toolStripNumericUpDownPageSize.Size = new System.Drawing.Size(118, 25);
+      this.toolStripNumericUpDownPageSize.Text = "Page Size:";
       this.toolStripNumericUpDownPageSize.ToolTipText = "The number of rows per page in the grid. Zero to turn paging off.";
       this.toolStripNumericUpDownPageSize.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.PageSize;
       // 
@@ -472,9 +472,9 @@
       this.toolStripNumericUpDownCommandTimeOut.DecimalPlaces = 0;
       this.toolStripNumericUpDownCommandTimeOut.Name = "toolStripNumericUpDownCommandTimeOut";
       this.toolStripNumericUpDownCommandTimeOut.NumBackColor = System.Drawing.SystemColors.Window;
-      this.toolStripNumericUpDownCommandTimeOut.Size = new System.Drawing.Size(173, 25);
-      this.toolStripNumericUpDownCommandTimeOut.Text = "Command TimeOut";
-      this.toolStripNumericUpDownCommandTimeOut.ToolTipText = "The timeout value to use with the ADO.NET data fetching";
+      this.toolStripNumericUpDownCommandTimeOut.Size = new System.Drawing.Size(176, 25);
+      this.toolStripNumericUpDownCommandTimeOut.Text = "Command TimeOut:";
+      this.toolStripNumericUpDownCommandTimeOut.ToolTipText = "The timeout value (in seconds) to use with the ADO.NET data fetching";
       this.toolStripNumericUpDownCommandTimeOut.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CommandTimeOut;
       // 
       // toolStripLabelOrmProfilerStatus

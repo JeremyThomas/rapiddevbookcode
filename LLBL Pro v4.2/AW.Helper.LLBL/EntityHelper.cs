@@ -99,7 +99,7 @@ namespace AW.Helper.LLBL
 
     public static IQueryProvider GetProvider(ILinqMetaData linqMetaData)
     {
-      return linqMetaData.GetQueryableForEntity(0).Provider;
+      return linqMetaData == null ? null : linqMetaData.GetQueryableForEntity(0).Provider;
     }
 
     public static IQueryable CreateLLBLGenProQueryFromEnumerableExpression(IQueryProvider provider, Expression expression)
