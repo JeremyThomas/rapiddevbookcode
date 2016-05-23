@@ -228,6 +228,8 @@ namespace AW.Winforms.Helpers.LLBL
     public void Initialize(ILinqMetaData linqMetaData, EntityHelper.GetQueryableForEntityDelegate getQueryableForEntityDelegate = null, params string[] membersToExclude)
     {
       _linqMetaData = linqMetaData;
+      var dataAccessAdapter = EntityHelper.GetTransactionController(_linqMetaData) as IDataAccessAdapter;
+      toolStripNumericUpDownCommandTimeOut.Value = dataAccessAdapter == null ? DaoBase.CommandTimeOut : dataAccessAdapter.CommandTimeOut;
       SetContextToUse();
       _getQueryableForEntityDelegate = getQueryableForEntityDelegate;
       gridDataEditor.MembersToExclude = membersToExclude;
@@ -500,7 +502,14 @@ namespace AW.Winforms.Helpers.LLBL
 
     private void toolStripNumericUpDownCommandTimeOut_ValueChanged(object sender, EventArgs e)
     {
-      DaoBase.CommandTimeOut = (int)toolStripNumericUpDownCommandTimeOut.Value;
+      if (HasLinqMetaData)
+      {
+        var dataAccessAdapter = EntityHelper.GetTransactionController(_linqMetaData) as IDataAccessAdapter;
+        if (dataAccessAdapter == null)
+          DaoBase.CommandTimeOut = (int) toolStripNumericUpDownCommandTimeOut.Value;
+        else
+          dataAccessAdapter.CommandTimeOut = (int) toolStripNumericUpDownCommandTimeOut.Value;
+      }
     }
   }
 }

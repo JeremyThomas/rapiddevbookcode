@@ -53,11 +53,12 @@ namespace AW.Winforms.Helpers.LLBL
       this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
       this.pageSizeNumericUpDown = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.toolStripCheckBoxDeletesAreCascading = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
+      this.toolStripNumericUpDownCommandTimeOut = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.toolStripNumericUpDownCommandTimeOut = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
+      this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
@@ -133,6 +134,7 @@ namespace AW.Winforms.Helpers.LLBL
             this.toolStripLabel2,
             this.pageSizeNumericUpDown,
             this.toolStripCheckBoxDeletesAreCascading,
+            this.toolStripLabel3,
             this.toolStripNumericUpDownCommandTimeOut});
       this.toolStrip.Location = new System.Drawing.Point(0, 557);
       this.toolStrip.Name = "toolStrip";
@@ -213,6 +215,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.prefixDelimiterTextBox.MaxLength = 25;
       this.prefixDelimiterTextBox.Name = "prefixDelimiterTextBox";
       this.prefixDelimiterTextBox.Size = new System.Drawing.Size(20, 23);
+      this.prefixDelimiterTextBox.Text = "Prefix Delimiter:";
       this.prefixDelimiterTextBox.ToolTipText = "Table Prefix Delimiter to group Entities by (e.g. with a delimiter of _ table Sal" +
     "es_Order would grouped into a node called Sales)";
       this.prefixDelimiterTextBox.Click += new System.EventHandler(this.prefixDelimiterTextBox_Click);
@@ -221,8 +224,10 @@ namespace AW.Winforms.Helpers.LLBL
       // 
       this.toolStripLabel1.BackColor = System.Drawing.Color.Transparent;
       this.toolStripLabel1.Name = "toolStripLabel1";
-      this.toolStripLabel1.Size = new System.Drawing.Size(152, 15);
-      this.toolStripLabel1.Text = "Cache Duration In Seconds:";
+      this.toolStripLabel1.Size = new System.Drawing.Size(92, 15);
+      this.toolStripLabel1.Text = "Cache Duration:";
+      this.toolStripLabel1.ToolTipText = "Specifies the duration (in seconds) that the query\'s result set should be cached " +
+    "for. Zero to turn caching off.";
       // 
       // cacheDurationInSecondsNumericUpDown
       // 
@@ -231,10 +236,10 @@ namespace AW.Winforms.Helpers.LLBL
       this.cacheDurationInSecondsNumericUpDown.Name = "cacheDurationInSecondsNumericUpDown";
       this.cacheDurationInSecondsNumericUpDown.NumBackColor = System.Drawing.SystemColors.Window;
       this.cacheDurationInSecondsNumericUpDown.Size = new System.Drawing.Size(53, 25);
-      this.cacheDurationInSecondsNumericUpDown.Text = "Cache Duration In Seconds:";
+      this.cacheDurationInSecondsNumericUpDown.Text = "Cache Duration:";
       this.cacheDurationInSecondsNumericUpDown.TextVisible = false;
-      this.cacheDurationInSecondsNumericUpDown.ToolTipText = "Specifies the duration that the query\'s result set should be cached for. Zero to " +
-    "turn caching off.";
+      this.cacheDurationInSecondsNumericUpDown.ToolTipText = "Specifies the duration (in seconds) that the query\'s result set should be cached " +
+    "for. Zero to turn caching off.";
       this.cacheDurationInSecondsNumericUpDown.ValueChanged += new System.EventHandler(this.cacheDurationInSecondsNumericUpDown_ValueChanged);
       // 
       // toolStripLabel2
@@ -252,7 +257,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.pageSizeNumericUpDown.Name = "pageSizeNumericUpDown";
       this.pageSizeNumericUpDown.NumBackColor = System.Drawing.SystemColors.Window;
       this.pageSizeNumericUpDown.Size = new System.Drawing.Size(53, 25);
-      this.pageSizeNumericUpDown.Text = "Page Size";
+      this.pageSizeNumericUpDown.Text = "Page Size:";
       this.pageSizeNumericUpDown.TextVisible = false;
       this.pageSizeNumericUpDown.ToolTipText = "The number of rows per page in the grid. Zero to turn paging off.";
       this.pageSizeNumericUpDown.Click += new System.EventHandler(this.pageSizeNumericUpDown_Click);
@@ -267,6 +272,18 @@ namespace AW.Winforms.Helpers.LLBL
       this.toolStripCheckBoxDeletesAreCascading.Text = " Cascade Deletes";
       this.toolStripCheckBoxDeletesAreCascading.ToolTipText = "Deletes cascade non-recursively to children of the selected entity.";
       this.toolStripCheckBoxDeletesAreCascading.Click += new System.EventHandler(this.toolStripCheckBoxDeletesAreCascading_Click);
+      // 
+      // toolStripNumericUpDownCommandTimeOut
+      // 
+      this.toolStripNumericUpDownCommandTimeOut.BackColor = System.Drawing.Color.Transparent;
+      this.toolStripNumericUpDownCommandTimeOut.DecimalPlaces = 0;
+      this.toolStripNumericUpDownCommandTimeOut.Name = "toolStripNumericUpDownCommandTimeOut";
+      this.toolStripNumericUpDownCommandTimeOut.NumBackColor = System.Drawing.SystemColors.Window;
+      this.toolStripNumericUpDownCommandTimeOut.Size = new System.Drawing.Size(173, 25);
+      this.toolStripNumericUpDownCommandTimeOut.Text = "Command TimeOut";
+      this.toolStripNumericUpDownCommandTimeOut.TextVisible = false;
+      this.toolStripNumericUpDownCommandTimeOut.ToolTipText = "The timeout value (in seconds) to use with the ADO.NET data fetching";
+      this.toolStripNumericUpDownCommandTimeOut.ValueChanged += new System.EventHandler(this.toolStripNumericUpDownCommandTimeOut_ValueChanged);
       // 
       // gridDataEditor
       // 
@@ -321,16 +338,12 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorData.TabIndex = 2;
       this.bindingNavigatorData.Text = "bindingNavigator1";
       // 
-      // toolStripNumericUpDownCommandTimeOut
+      // toolStripLabel3
       // 
-      this.toolStripNumericUpDownCommandTimeOut.BackColor = System.Drawing.Color.Transparent;
-      this.toolStripNumericUpDownCommandTimeOut.DecimalPlaces = 0;
-      this.toolStripNumericUpDownCommandTimeOut.Name = "toolStripNumericUpDownCommandTimeOut";
-      this.toolStripNumericUpDownCommandTimeOut.NumBackColor = System.Drawing.SystemColors.Window;
-      this.toolStripNumericUpDownCommandTimeOut.Size = new System.Drawing.Size(173, 25);
-      this.toolStripNumericUpDownCommandTimeOut.Text = "Command TimeOut";
-      this.toolStripNumericUpDownCommandTimeOut.ToolTipText = "The timeout value to use with the ADO.NET data fetching";
-      this.toolStripNumericUpDownCommandTimeOut.ValueChanged += new System.EventHandler(this.toolStripNumericUpDownCommandTimeOut_ValueChanged);
+      this.toolStripLabel3.Name = "toolStripLabel3";
+      this.toolStripLabel3.Size = new System.Drawing.Size(117, 15);
+      this.toolStripLabel3.Text = "Command TimeOut:";
+      this.toolStripLabel3.ToolTipText = "The timeout value (in seconds) to use with the ADO.NET data fetching";
       // 
       // UsrCntrlEntityBrowser
       // 
@@ -378,5 +391,6 @@ namespace AW.Winforms.Helpers.LLBL
     private ToolStripLabel toolStripLabel1;
     private ToolStripLabel toolStripLabel2;
     private ToolStripNumericUpDown toolStripNumericUpDownCommandTimeOut;
+    private ToolStripLabel toolStripLabel3;
   }
 }
