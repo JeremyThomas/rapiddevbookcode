@@ -24,6 +24,7 @@ namespace AW.Test.Helpers
       ModalFormHandler = Handler;
       numProperties = GetNumberOfColumns<T>(numProperties, ref numFieldsToShow);
       var actual = FrmDataEditor.ShowInGrid(enumerable, dataEditorPersister);
+      Application.DoEvents();
       Assert.AreEqual(enumerable, actual);
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
       TestEditInDataGridView(enumerable, numProperties, numFieldsToShow, dataEditorPersister);
@@ -47,6 +48,7 @@ namespace AW.Test.Helpers
         ModalFormHandler = Handler;
       ExpectedColumnCount = numProperties + numFieldsToShow;
       var actual = FrmDataEditor.ShowInGrid(enumerable, dataEditorPersister);
+      Application.DoEvents();
       Assert.AreEqual(enumerable, actual);
       if (enumerable != null)
       {
@@ -81,7 +83,12 @@ namespace AW.Test.Helpers
           form.Close();
         else
         {
-          Debugger.Break();
+          Application.DoEvents();
+          ActualColumnCount = dataGridView.ColumnCount;
+          if (ExpectedColumnCount == ActualColumnCount)
+            form.Close();
+          else
+            Debugger.Break();
         }
       }
     }
