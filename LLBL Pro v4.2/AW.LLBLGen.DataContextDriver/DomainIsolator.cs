@@ -48,7 +48,7 @@ namespace AW.LLBLGen.DataContextDriver
     /// </summary>
     private static readonly string LinqpadCommonAssemblyNameStart = LinqpadCommonAssemblyName.ToLowerInvariant() + ",";
 
-    public AppDomain Domain { get; }
+    public AppDomain Domain { get; set; }
 
     public DomainIsolator(string friendlyName, Stream assemblyStream = null)
       : this(friendlyName, new AppDomainSetup

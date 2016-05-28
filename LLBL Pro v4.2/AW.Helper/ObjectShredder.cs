@@ -102,10 +102,8 @@ namespace AW.Helper
             for (var index = 0; index < values.Length; index++)
             {
               var value = values[index];
-              if (value.GetType().IsEnum)
-              {
+              if (value != null && value.GetType().IsEnum)
                 dataRow[index] = value;
-              }
             }
           }
         }

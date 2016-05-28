@@ -177,7 +177,7 @@ namespace AW.DebugVisualizers.Tests
     [TestMethod]
     public void DebuggerVisualizerAttributeTest()
     {
-      Assert.AreEqual(0, VisualizerAttributesNotFoundInAssembly.Count, VisualizerAttributesNotFoundInAssembly.Select(va => va.TargetTypeName).JoinAsString());
+      Assert.AreEqual(0, VisualizerAttributesNotFoundInAssembly.Count, VisualizerAttributesNotFoundInAssembly.Select(va => va.TargetTypeName).JoinAsString(Environment.NewLine));
     }
 
     [TestMethod]
@@ -618,18 +618,20 @@ namespace AW.DebugVisualizers.Tests
     //  visualizerHost.ShowVisualizer();
     //}
 
-    private static void ShowWithFake(object enumerableOrDataTableToVisualize)
+    private static DataGridView ShowWithFake(object enumerableOrDataTableToVisualize)
     {
       var visualizerObjectProviderFake = new VisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
       //AssertNewContainerIsBindingListView(enumerableOrDataTableToVisualize, visualizerObjectProviderFake.GetObject());
       EnumerableVisualizer.Show(DialogVisualizerServiceFake, visualizerObjectProviderFake);
+      Application.DoEvents();
+     return GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
     }
 
     /// <summary>
-    ///   Shows data directly
+    ///   Shows data directly, for eyeballing grid
     /// </summary>
     /// <param name="enumerableOrDataTableToVisualize"></param>
-    private static void ShowWithFakeAndWait(object enumerableOrDataTableToVisualize)
+    private static DataGridView ShowWithFakeAndWait(object enumerableOrDataTableToVisualize)
     {
       //  var visualizerObjectProviderFake = new VisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
       //DialogVisualizerServiceFakeForDebug
@@ -638,13 +640,14 @@ namespace AW.DebugVisualizers.Tests
       //var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
       //   ShowWithFake(enumerableOrDataTableToVisualize);
       //    Application.DoEvents();
-      ShowWithFake(enumerableOrDataTableToVisualize);
+      var dataGridView = ShowWithFake(enumerableOrDataTableToVisualize);
       Application.DoEvents();
       _dialogVisualizerServiceFake.VisualizerForm.BringToFront();
       while (_dialogVisualizerServiceFake.VisualizerForm.Visible)
       {
         Application.DoEvents();
       }
+      return dataGridView;
     }
 
     /// <summary>
@@ -658,8 +661,7 @@ namespace AW.DebugVisualizers.Tests
                     || enumerableOrDataTableToVisualize is DataTable
                     || enumerableOrDataTableToVisualize is WeakReference);
       AssertTypeIsRegistered(enumerableOrDataTableToVisualize);
-      ShowWithFake(enumerableOrDataTableToVisualize);
-      var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
+      var dataGridView = ShowWithFake(enumerableOrDataTableToVisualize);
       Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());
       Assert.IsTrue(dataGridView.ReadOnly, "dataGridView.ReadOnly");
       Assert.IsInstanceOfType(dataGridView.DataSource, typeof (BindingSource)); //make it BindingSource
@@ -721,6 +723,10 @@ namespace AW.DebugVisualizers.Tests
         form.ShowDialog(); //Doesn't do anything
       else
         form.Show();
+      //while (!form.Visible)
+      //{
+      //  appli
+      //}
       return DialogResult.None;
     }
 
