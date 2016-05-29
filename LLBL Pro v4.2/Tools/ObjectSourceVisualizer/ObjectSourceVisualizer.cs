@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using AW.Helper;
-using AW.Winforms.Helpers.Forms;
 using AW.Winforms.Helpers.QueryRunner;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 
@@ -43,11 +42,14 @@ namespace ObjectAsSourceCodeVisualizer
       var s = o as string;
 
       if (s != null)
-      {
-        var frmQueryRunner = new FrmQueryRunner();
-        frmQueryRunner.ViewText(s);
-        _modalService.ShowDialog(frmQueryRunner);
-      }
+        _modalService.ShowDialog(CreateQueryRunnerForm(s));
+    }
+
+    public static FrmQueryRunner CreateQueryRunnerForm(string cSharpSource)
+    {
+      var frmQueryRunner = new FrmQueryRunner();
+      frmQueryRunner.ViewText(cSharpSource);
+      return frmQueryRunner;
     }
   }
 
@@ -61,12 +63,7 @@ namespace ObjectAsSourceCodeVisualizer
     ///   server.
     /// </summary>
     /// <remarks>
-    ///   Strategy is: if the items are serializable then
-    ///   if the enumerable is also serializable
-    ///   serialize the enumerable
-    ///   else
-    ///   create a ObjectListView to contains the items and serialize that instead.
-    ///   Full back is to copy the enumerable to a data table and serialize that instead.
+    ///   SerializeToCSharp turns the object graph into text which is then Serialized by the base class
     /// </remarks>
     /// <param name="target">Object being visualized.</param>
     /// <param name="outgoingData">Outgoing data stream.</param>

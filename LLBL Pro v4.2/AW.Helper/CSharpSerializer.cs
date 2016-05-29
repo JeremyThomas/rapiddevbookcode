@@ -135,7 +135,7 @@ namespace AW.Helper
     /// </summary>
     /// <param name="obj">Object graph to serialize to C# Object Literal Constructor</param>
     /// <param name="outputFormat"></param>
-    /// <param name="globalExcludeProperties">Properties to globally exculde</param>
+    /// <param name="globalExcludeProperties">Properties to globally exclude</param>
     /// <param name="entityRestrictions">
     ///   Entities to serialize as a limited set of properties, useful to limit depth of
     ///   traversal
