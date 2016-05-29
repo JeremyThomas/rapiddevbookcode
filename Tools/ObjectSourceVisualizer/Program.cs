@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using AW.Helper;
 using AW.Winforms.Helpers.Forms;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 
@@ -19,8 +20,14 @@ namespace ObjectAsSourceCodeVisualizer
                         "In other words: It will serialize the object as C# source text." + Environment.NewLine +
                         "To install click on either of the buttons below which will copy this assembly to the directory chosen. " + Environment.NewLine +
                         "To uninstall go to the folder and remove the assembly." + Environment.NewLine +
-                        "For more info see: https://github.com/jefflomax/csharp-object-to-object-literal";
-      Application.Run(new FormDebuggerVisualizerInstaller(typeof (IDialogVisualizerService), "C# object literal Debugger Visualizer", description));
+                        "For more info see: https://rapiddevbookcode.codeplex.com/wikipage?title=ObjectAsSourceCodeDebuggerVisualizer";
+      Application.Run(new FormDebuggerVisualizerInstaller(typeof (IDialogVisualizerService), "C# object literal Debugger Visualizer", description, DemoAction));
+    }
+
+    private static void DemoAction()
+    {
+      var dataViewForm = ObjectSourceVisualizer.CreateQueryRunnerForm(AW.Helper.Properties.Settings.Default.SerializeToCSharp());
+      dataViewForm.Show();
     }
   }
 }
