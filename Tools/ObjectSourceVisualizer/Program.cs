@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Winforms.Helpers.Forms;
@@ -21,12 +22,14 @@ namespace ObjectAsSourceCodeVisualizer
                         "To install click on either of the buttons below which will copy this assembly to the directory chosen. " + Environment.NewLine +
                         "To uninstall go to the folder and remove the assembly." + Environment.NewLine +
                         "For more info see: https://rapiddevbookcode.codeplex.com/wikipage?title=ObjectAsSourceCodeDebuggerVisualizer";
-      Application.Run(new FormDebuggerVisualizerInstaller(typeof (IDialogVisualizerService), "C# object literal Debugger Visualizer", description, DemoAction));
+      Application.Run(new FormDebuggerVisualizerInstaller(typeof(IDialogVisualizerService), "C# object literal Debugger Visualizer", description, DemoAction));
     }
 
     private static void DemoAction()
     {
-      var dataViewForm = ObjectSourceVisualizer.CreateQueryRunnerForm(AW.Helper.Properties.Settings.Default.SerializeToCSharp());
+      var controls = new List<Control> { new Control("Control1"), new Control("Control2"), new Control("Control3") };
+      var dataViewForm = ObjectSourceVisualizer.CreateQueryRunnerForm(controls.SerializeToCSharp(OutputFormat.Compileable,
+        "Anchor,AutoScrollOffset,BackColor,Bounds,Cursor,DataBindings,Font,ForeColor,Margin,WindowTarget,Padding,ClientSize,Location,MaximumSize,MinimumSize,Size"));
       dataViewForm.Show();
     }
   }

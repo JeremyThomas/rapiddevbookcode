@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -79,9 +80,19 @@ namespace AW.Helper
       {
         Type = obj.GetType();
         var keyProperty = Type.GetProperty(KeyProperty);
-        Key = (keyProperty == null)
-          ? obj.GetHashCode()
-          : Convert.ToInt64(keyProperty.GetValue(obj));
+        Int64? key = null;
+        if (keyProperty != null)
+        {
+          var value = keyProperty.GetValue(obj);
+          var typeConverter = TypeDescriptor.GetConverter(value);
+          if (typeConverter.CanConvertTo(typeof(Int64)))
+          {
+            var convertTo = typeConverter.ConvertTo(value, typeof(Int64));
+            if (convertTo != null)
+              key = (Int64)convertTo;
+          }
+        }
+        Key = key.HasValue ? key.Value : obj.GetHashCode();
         Path = (path.Length == 0)
           ? UniqueName
           : path;
@@ -131,17 +142,15 @@ namespace AW.Helper
     }
 
     /// <summary>
-    ///   Convert .NET object graph to C# source code
+    /// Convert .NET object graph to C# source code
     /// </summary>
     /// <param name="obj">Object graph to serialize to C# Object Literal Constructor</param>
-    /// <param name="outputFormat"></param>
-    /// <param name="globalExcludeProperties">Properties to globally exclude</param>
-    /// <param name="entityRestrictions">
-    ///   Entities to serialize as a limited set of properties, useful to limit depth of
-    ///   traversal
-    /// </param>
+    /// <param name="outputFormat">The output format.</param>
+    /// <param name="globalExcludeProperties">Properties to globally exclude, comma seperated</param>
+    /// <param name="entityRestrictions">Entities to serialize as a limited set of properties, useful to limit depth of
+    /// traversal</param>
     /// <returns>
-    ///   string containing Object Literal Constructor
+    /// string containing Object Literal Constructor
     /// </returns>
     public static string SerializeToCSharp
       (
@@ -203,19 +212,21 @@ namespace AW.Helper
       {
         case OutputFormat.Compileable:
           var type = obj.GetType();
-          sb.AppendLine(FileHeader1 + "using " + type.Namespace + ";");
+          sb.AppendLine(FileHeader1);
+          if (type.Namespace != null && !FileHeader1.Contains(type.Namespace))
+            sb.AppendLine("using " + type.Namespace + ";");
           if (type.IsGenericType)
             foreach (var genericTypeArgument in type.GenericTypeArguments)
-            {
               sb.AppendLine("using " + genericTypeArgument.Namespace + ";");
-            }
           else
           {
             var enumerable = obj as IEnumerable;
             if (enumerable != null)
             {
               var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
-              sb.AppendLine("using " + itemType.Namespace + ";");
+              var usingLine = "using " + itemType.Namespace + ";";
+              if (!FileHeader1.Contains(usingLine))
+                sb.AppendLine(usingLine);
             }
           }
           break;
