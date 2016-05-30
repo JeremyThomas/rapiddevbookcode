@@ -112,6 +112,9 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Globalization" />
+    <Reference Include="System.Runtime" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq">
@@ -127,6 +130,7 @@
       <Link>GlobalAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="CSharpSerializerTests.cs" />
+    <Compile Include="CSharpSerializerTests.Data.cs" />
     <Compile Include="CustomerQueriesTest.cs" />
     <Compile Include="BindingListHelperTest.cs" />
     <Compile Include="DataConnectionConfigurationTest.cs" />
