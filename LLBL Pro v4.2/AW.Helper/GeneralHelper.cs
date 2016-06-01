@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
@@ -143,8 +142,8 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// For providing the datasource to a enum lookup against a datatable
-    /// http://stackoverflow.com/questions/17972291/datagridview-linked-to-datatable-with-combobox-column-based-on-enum
+    ///   For providing the datasource to a enum lookup against a datatable
+    ///   http://stackoverflow.com/questions/17972291/datagridview-linked-to-datatable-with-combobox-column-based-on-enum
     /// </summary>
     /// <param name="enums">The values.</param>
     /// <param name="underlyingType">Underlying Type of the enum.</param>
@@ -169,7 +168,7 @@ namespace AW.Helper
 #pragma warning disable 1584, 1711, 1572, 1581, 1580
     /// <summary>
     ///   Turns an enum member into a human readable string using humanizer; e.g. AnonymousUser -&gt; Anonymous user.
-    ///   It also honors DescriptionAttribute data annotation
+    ///   It also honors DescriptionAttribute and DisplayAttribute data annotations
     /// </summary>
     /// <param name="value">The enum member to be humanized</param>
     /// <returns>
@@ -188,7 +187,7 @@ namespace AW.Helper
     /// <see
     ///   cref="http://stackoverflow.com/questions/18277499/could-not-load-file-or-assembly-system-core-version-2-0-5-0-exception-wh?lq=1" />
     /// <see cref="https://github.com/Fody/Costura/issues/30" />
-    ///<see cref= "https://github.com/dennisdoomen/fluentassertions/issues/311" />
+    /// <see cref="https://github.com/dennisdoomen/fluentassertions/issues/311" />
 #pragma warning restore 1584, 1711, 1572, 1581, 1580
     public static string EnumToString(this Enum value)
     {
@@ -200,7 +199,7 @@ namespace AW.Helper
       catch (FileNotFoundException e)
       {
         TraceOut(e);
-        var description = GetDescription(value);
+        var description = MetaDataHelper.GetDisplayNameOrDescription(value);
         return String.IsNullOrEmpty(description) ? value.ToString() : description;
       }
     }
@@ -311,20 +310,6 @@ namespace AW.Helper
       }
 
       return maxValue;
-    }
-
-    /// <summary>
-    ///   Gets the description of an object if it has one else returns null.
-    /// </summary>
-    /// <param name="value">The value.</param>
-    /// <returns></returns>
-    public static string GetDescription(object value)
-    {
-      if (value == null) return null;
-      var fi = value.GetType().GetField(value.ToString());
-      if (fi == null) return null;
-      var attributes = (DescriptionAttribute[]) fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
-      return (attributes.Length > 0) ? attributes[0].Description : null;
     }
 
     public static string JoinAsString<T>(this IEnumerable<T> input)

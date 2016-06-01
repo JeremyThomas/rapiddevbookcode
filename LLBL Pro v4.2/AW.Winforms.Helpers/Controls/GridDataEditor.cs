@@ -1180,5 +1180,17 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
+    private void dataGridViewEnumerable_KeyDown(object sender, KeyEventArgs e)
+    {
+      if (e.KeyCode == Keys.Delete)
+        DeleteCellsIfNotInEditMode();
+    }
+
+    private void DeleteCellsIfNotInEditMode()
+    {
+      if (!dataGridViewEnumerable.CurrentCell.IsInEditMode)
+        foreach (DataGridViewCell selectedCell in dataGridViewEnumerable.SelectedCells)
+          selectedCell.Value = selectedCell.ValueType == typeof(string) ? string.Empty : MetaDataHelper.GetDefault(selectedCell.ValueType);
+    }
   }
 }
