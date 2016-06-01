@@ -227,10 +227,8 @@ using ObjectAsSourceCodeVisualizer;
 [assembly: DebuggerVisualizer(typeof(ObjectSourceVisualizer), typeof(ObjectSourceVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.LLBLGenProQuery`1, SD.LLBLGen.Pro.LinqSupportClasses.NET35", Description = ObjectSourceVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof(ObjectSourceVisualizer), typeof(ObjectSourceVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1, SD.LLBLGen.Pro.ORMSupportClasses.NET20", Description = ObjectSourceVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof(ObjectSourceVisualizer), typeof(ObjectSourceVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityFieldsCore`1, SD.LLBLGen.Pro.ORMSupportClasses.NET20", Description = ObjectSourceVisualizer.Description)]
+
 //-Other classes
-[assembly: DebuggerVisualizer(typeof(ObjectSourceVisualizer), typeof(ObjectSourceVisualizerObjectSource), TargetTypeName = "System.Data.Linq.Table`1, System.Data.Linq", Description = ObjectSourceVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof(ObjectSourceVisualizer), typeof(ObjectSourceVisualizerObjectSource), TargetTypeName = "System.Data.Linq.DataQuery`1, System.Data.Linq", Description = ObjectSourceVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof(ObjectSourceVisualizer), typeof(ObjectSourceVisualizerObjectSource), Target = typeof(DataTable), Description = ObjectSourceVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof(ObjectSourceVisualizer), typeof(ObjectSourceVisualizerObjectSource), Target = typeof(SqlErrorCollection), Description = ObjectSourceVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof(ObjectSourceVisualizer), typeof(ObjectSourceVisualizerObjectSource), Target = typeof(SqlParameterCollection), Description = ObjectSourceVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof(ObjectSourceVisualizer), typeof(ObjectSourceVisualizerObjectSource), TargetTypeName = "Oracle.DataAccess.Client.OracleParameterCollection, Oracle.DataAccess.Client", Description = ObjectSourceVisualizer.Description)]

@@ -13,6 +13,7 @@ namespace AW.Helper.TypeConverters
   {
     private readonly Type _coreEnumType;
     private readonly bool _isNullable;
+    private static bool _humanizerNotLoading;
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="HumanizedEnumConverter" /> class.
@@ -37,7 +38,7 @@ namespace AW.Helper.TypeConverters
       GeneralHelper.CheckIsEnum(coreType);
       TypeConverterHelper.AddConverter(typeof(HumanizedEnumConverter), enumType, coreType);
     }
-    
+
     /// <summary>
     ///   Converts the given value object to the specified destination type.
     ///   When the converting to string and the enum is not defined then return empty string rather than the number
@@ -54,18 +55,31 @@ namespace AW.Helper.TypeConverters
     /// </returns>
     public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
     {
-      if (destinationType == typeof (string) && value != null)
-        try
+      if (destinationType == typeof(string) && value != null)
+        if (Enum.IsDefined(_coreEnumType, value))
         {
-          return Enum.IsDefined(_coreEnumType, value) ? ((Enum)Enum.ToObject(_coreEnumType, value)).EnumToString() : string.Empty;
+          var theEnum = (Enum) Enum.ToObject(_coreEnumType, value);
+          if (_humanizerNotLoading)
+          {
+            var description = MetaDataHelper.GetDisplayNameOrDescription(theEnum);
+            if (!String.IsNullOrEmpty(description))
+              return description;
+          }
+          else
+            try
+            {
+              return theEnum.EnumToString();
+            }
+            catch (FileNotFoundException e)
+            {
+              _humanizerNotLoading = true;
+              e.TraceOut();
+              var description = MetaDataHelper.GetDisplayNameOrDescription(theEnum);
+              if (!String.IsNullOrEmpty(description))
+                return description;
+            }
         }
-        catch (FileNotFoundException e)
-        {
-          e.TraceOut();
-          var description = GeneralHelper.GetDescription(value);
-          if  (!String.IsNullOrEmpty(description))
-            return description;
-        }
+        else return string.Empty;
       return base.ConvertTo(context, culture, value, destinationType);
     }
 

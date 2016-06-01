@@ -53,7 +53,7 @@ namespace AW.Helper
     public static IEnumerable<Type> GetTypeAndParentTypes(this Type type)
     {
       // is there any base type?
-      if ((type == null))
+      if (type == null)
         yield break;
       // return all inherited types
       var currentBaseType = type;
@@ -65,11 +65,14 @@ namespace AW.Helper
           yield return currentBaseType;
         if (currentBaseType.IsNested)
         {
-          var nestedTypeInBase = currentBaseType.DeclaringType.BaseType.GetNestedType(type.Name, BindingFlags.NonPublic | BindingFlags.Public);
-          if (nestedTypeInBase != null)
-            currentBaseType = nestedTypeInBase;
-          else
-            currentBaseType = currentBaseType.BaseType;
+          if (currentBaseType.DeclaringType != null && currentBaseType.DeclaringType.BaseType != null)
+          {
+            var nestedTypeInBase = currentBaseType.DeclaringType.BaseType.GetNestedType(type.Name, BindingFlags.NonPublic | BindingFlags.Public);
+            if (nestedTypeInBase != null)
+              currentBaseType = nestedTypeInBase;
+            else
+              currentBaseType = currentBaseType.BaseType;
+          }
         }
         else
           currentBaseType = currentBaseType.BaseType;
@@ -902,6 +905,28 @@ namespace AW.Helper
     public static IEnumerable<DescriptionAttribute> GetDescriptionAttributes(Type type)
     {
       return GetCustomAttributes<DescriptionAttribute>(type);
+    }
+
+    public static string GetDisplayNameOrDescription(Enum value)
+    {
+      if (value == null)
+        return null;
+      var enumMember = value.GetType().GetField(value.ToString());
+      if (enumMember == null)
+        return null;
+      return GetDisplayNameOrDescription(enumMember);
+    }
+
+    public static string GetDisplayNameOrDescription(MemberInfo enumMember)
+    {
+      var displayAttribute = enumMember.GetCustomAttribute<DisplayAttribute>();
+      if (displayAttribute != null)
+        return displayAttribute.GetName();
+      var displayNameAttribute = enumMember.GetCustomAttribute<DisplayNameAttribute>();
+      if (displayNameAttribute != null)
+        return displayNameAttribute.DisplayName;
+      var descriptionAttribute = enumMember.GetCustomAttribute<DescriptionAttribute>();
+      return descriptionAttribute == null ? null : descriptionAttribute.Description;
     }
 
     public static T[] GetCustomAttributes<T>(Type type, bool inherit = true) where T : Attribute

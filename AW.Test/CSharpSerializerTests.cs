@@ -44,10 +44,18 @@ namespace AW.Tests
     [TestMethod]
     public void SerializeControlsToCSharpTest()
     {
-      var controls = new List<Control> { new Control("Control1"), new Control("Control2"), new Control("Control3") };
+      var controls = new List<Control> {new Control("Control1"), new Control("Control2"), new Control("Control3")};
       var rootVariable = TestSerializerToCSharp(controls,
         "Anchor,AutoScrollOffset,BackColor,Bounds,Cursor,DataBindings,Font,ForeColor,Margin,WindowTarget,Padding,ClientSize,Location,MaximumSize,MinimumSize,Size,Handle,HandleInternal");
-      rootVariable.ShouldAllBeEquivalentTo(controls, options => options.Excluding(m => m.Handle).ExcludingNestedObjects().ExcludingFields().ExcludingProperties());
+      for (var index = 0; index < rootVariable.Count; index++)
+      {
+        var control = rootVariable[index];
+        control.ShouldBeEquivalentTo(controls[index], options => options.ExcludingNestedObjects().ExcludingFields().Excluding(m => m.Handle).Excluding(m => m.SelectedMemberPath == "HandleInternal")
+          .Excluding(m => m.SelectedMemberPath == "InternalHandle").Excluding(m => m.SelectedMemberPath == "Properties").Excluding(m => m.SelectedMemberPath == "TopMostParent")
+          .Excluding(m => m.SelectedMemberPath == "WindowTarget").Excluding(m => m.SelectedMemberPath == "AccessibilityObject"));
+      }
+      //rootVariable.ShouldAllBeEquivalentTo(controls, options => options.Excluding(m => m.Handle).ExcludingNestedObjects()
+      //.Excluding(m => m.SelectedMemberPath == "[0].HandleInternal").Excluding(m => m.SelectedMemberPath == "[0].InternalHandle").IgnoringCyclicReferences());
     }
 
     private static T TestSerializerToCSharp<T>(T obj, string globalExcludeProperties = "", params Restriction[] entityRestrictions)

@@ -312,20 +312,15 @@ namespace AW.Winforms.Helpers.LLBL
       }
 
       foreach (var entityNode in entityNodes)
-      {
         PopulateEntityFields(entityNode.Value.Item1, entityNode.Value.Item2, entityNodes, adapter);
-      }
 
       if (schemas.Count == 1)
         schemaTreeNodeCollection.AddRange(schemas.First().Value.Nodes.OfType<TreeNode>().ToArray());
       else
-        foreach (var treeNode in schemas)
-        {
+        foreach (var treeNode in schemas.OrderBy(n => n.Key))
           schemaTreeNodeCollection.Add(treeNode.Value);
-        }
     }
-
-
+    
     private static void PopulateEntityFields(TreeNode entityNode, IEntityCore entity, Dictionary<Type, Tuple<TreeNode, IEntityCore>> entityNodes, IDataAccessAdapter adapter)
     {
       var entityType = entity.GetType();

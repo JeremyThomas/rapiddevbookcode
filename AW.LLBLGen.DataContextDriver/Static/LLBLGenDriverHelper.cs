@@ -193,7 +193,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         let name = EntityHelper.GetNameFromEntity(entity)
         orderby name
         select CreateTableExplorerItem(entity, name, adapter)
-        ).ToList<ExplorerItem>();
+        ).ToList();
 
       // Create a lookup keying each element type to the properties of that type. This will allow
       // us to build hyperlink targets allowing the user to click between associations:
@@ -295,10 +295,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
 
       if (useSchema && schemas.Count > 1)
-        return schemas.Values.ToList();
-      if (prefixesAsSchemas.Any())
-        return prefixesAsSchemas.Values.ToList();
-      return topLevelProps;
+        return schemas.Values.OrderBy(s=>s.Text).ToList();
+      return prefixesAsSchemas.Any() ? prefixesAsSchemas.Values.OrderBy(s => s.Text).ToList() : topLevelProps;
     }
 
     private static bool AddWithPrefixDelimiter(string prefixDelimiter, ExplorerItem table, Dictionary<string, ExplorerItem> prefixesAsSchemas)

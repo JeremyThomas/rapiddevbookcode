@@ -530,6 +530,7 @@ namespace AW.Winforms.Helpers.Controls
       this.dataGridViewEnumerable.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridViewEnumerable_DataBindingComplete);
       this.dataGridViewEnumerable.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewEnumerable_DataError);
       this.dataGridViewEnumerable.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewEnumerable_EditingControlShowing);
+      this.dataGridViewEnumerable.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridViewEnumerable_KeyDown);
       // 
       // bindingNavigatorPaging
       // 
