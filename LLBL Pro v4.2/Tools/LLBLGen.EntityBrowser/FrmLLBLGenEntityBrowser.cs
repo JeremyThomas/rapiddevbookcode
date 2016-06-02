@@ -181,7 +181,7 @@ namespace LLBLGen.EntityBrowser
       tabControl.TabPages.Add(connectionStringSetting.Name, connectionStringSetting.Name);
       var tabPage = tabControl.TabPages[connectionStringSetting.Name];
       tabPage.Tag = connectionStringSetting;
-      var usrCntrlEntityBrowser = new UsrCntrlEntityBrowser(null, Settings.Default.UseContext, Settings.Default.PrefixDelimiter,
+      var usrCntrlEntityBrowser = new UsrCntrlEntityBrowser(null, Settings.Default.UseSchema, Settings.Default.PrefixDelimiter,
         Settings.Default.EnsureFilteringEnabled, Settings.Default.UseContext, (int) Settings.Default.CacheDurationInSeconds)
       {
         Dock = DockStyle.Fill,
