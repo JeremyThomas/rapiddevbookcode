@@ -280,6 +280,7 @@ namespace AW.Winforms.Helpers.LLBL
       {
         treeViewEntities.Nodes.Clear();
         LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, _linqMetaData, null, UseSchema, PrefixDelimiter);
+        treeViewEntities.Sort();
       }
     }
 
