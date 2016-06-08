@@ -129,24 +129,24 @@
             this.toolStripSeparator1,
             this.toggleSettingsToolStripMenuItem});
       this.contextMenuStripTabControl.Name = "contextMenuStripTabControl";
-      this.contextMenuStripTabControl.Size = new System.Drawing.Size(203, 54);
+      this.contextMenuStripTabControl.Size = new System.Drawing.Size(204, 54);
       // 
       // addConnectionToolStripMenuItem
       // 
       this.addConnectionToolStripMenuItem.Name = "addConnectionToolStripMenuItem";
-      this.addConnectionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.addConnectionToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
       this.addConnectionToolStripMenuItem.Text = "Add Connection";
       this.addConnectionToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
       // toolStripSeparator1
       // 
       this.toolStripSeparator1.Name = "toolStripSeparator1";
-      this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
+      this.toolStripSeparator1.Size = new System.Drawing.Size(200, 6);
       // 
       // toggleSettingsToolStripMenuItem
       // 
       this.toggleSettingsToolStripMenuItem.Name = "toggleSettingsToolStripMenuItem";
-      this.toggleSettingsToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.toggleSettingsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
       this.toggleSettingsToolStripMenuItem.Text = "Toggle Settings Visibility";
       this.toggleSettingsToolStripMenuItem.Click += new System.EventHandler(this.toggleSettingsToolStripMenuItem_Click);
       // 
@@ -229,50 +229,50 @@
             this.toolStripSeparator2,
             this.toggleSettingsVisibilityToolStripMenuItem});
       this.contextMenuStripTabPage.Name = "contextMenuStripTabPage";
-      this.contextMenuStripTabPage.Size = new System.Drawing.Size(203, 126);
+      this.contextMenuStripTabPage.Size = new System.Drawing.Size(204, 126);
       // 
       // addConnectionToolStripMenuItem1
       // 
       this.addConnectionToolStripMenuItem1.Name = "addConnectionToolStripMenuItem1";
-      this.addConnectionToolStripMenuItem1.Size = new System.Drawing.Size(202, 22);
+      this.addConnectionToolStripMenuItem1.Size = new System.Drawing.Size(203, 22);
       this.addConnectionToolStripMenuItem1.Text = "Add Connection";
       this.addConnectionToolStripMenuItem1.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
       // editConnectionToolStripMenuItem
       // 
       this.editConnectionToolStripMenuItem.Name = "editConnectionToolStripMenuItem";
-      this.editConnectionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.editConnectionToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
       this.editConnectionToolStripMenuItem.Text = "Edit Connection";
       this.editConnectionToolStripMenuItem.Click += new System.EventHandler(this.editConnectionToolStripMenuItem_Click);
       // 
       // renameToolStripMenuItem
       // 
       this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-      this.renameToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.renameToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
       this.renameToolStripMenuItem.Text = "Rename";
       this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
       // 
       // toolStripSeparator3
       // 
       this.toolStripSeparator3.Name = "toolStripSeparator3";
-      this.toolStripSeparator3.Size = new System.Drawing.Size(199, 6);
+      this.toolStripSeparator3.Size = new System.Drawing.Size(200, 6);
       // 
       // removeToolStripMenuItem
       // 
       this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-      this.removeToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.removeToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
       this.removeToolStripMenuItem.Text = "Remove";
       this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
       // 
       // toolStripSeparator2
       // 
       this.toolStripSeparator2.Name = "toolStripSeparator2";
-      this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
+      this.toolStripSeparator2.Size = new System.Drawing.Size(200, 6);
       // 
       // toggleSettingsVisibilityToolStripMenuItem
       // 
       this.toggleSettingsVisibilityToolStripMenuItem.Name = "toggleSettingsVisibilityToolStripMenuItem";
-      this.toggleSettingsVisibilityToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.toggleSettingsVisibilityToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
       this.toggleSettingsVisibilityToolStripMenuItem.Text = "Toggle Settings Visibility";
       this.toggleSettingsVisibilityToolStripMenuItem.Click += new System.EventHandler(this.toggleSettingsToolStripMenuItem_Click);
       // 

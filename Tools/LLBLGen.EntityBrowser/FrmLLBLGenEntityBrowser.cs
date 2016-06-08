@@ -56,11 +56,15 @@ namespace LLBLGen.EntityBrowser
     {
       InitializeComponent();
       Settings.Default.PropertyChanged += SettingPropertyChanged;
+      adapterAssemblyPathLabel.Tag = Settings.Default.AdapterAssemblyPath;
+      linqMetaDataAssemblyPathLabel.Tag = Settings.Default.LinqMetaDataAssemblyPath;
+
       if (!String.IsNullOrWhiteSpace(Settings.Default.LinqMetaDataAssemblyPath))
         try
         {
           var linqMetaDataAssemblyPath = Path.GetDirectoryName(Settings.Default.LinqMetaDataAssemblyPath);
-          if (linqMetaDataAssemblyPath != null) adapterAssemblyPathLabel.Links.Add(0, adapterAssemblyPathLabel.Text.Length, linqMetaDataAssemblyPath);
+          if (linqMetaDataAssemblyPath != null && Directory.Exists(linqMetaDataAssemblyPath))
+            adapterAssemblyPathLabel.Links.Add(0, adapterAssemblyPathLabel.Text.Length, linqMetaDataAssemblyPath);
         }
         catch (Exception)
         {
@@ -71,7 +75,7 @@ namespace LLBLGen.EntityBrowser
         try
         {
           var adapterAssemblyPath = Path.GetDirectoryName(Settings.Default.AdapterAssemblyPath.Before(";", Settings.Default.AdapterAssemblyPath));
-          if (adapterAssemblyPath != null)
+          if (adapterAssemblyPath != null && Directory.Exists(adapterAssemblyPath))
             linqMetaDataAssemblyPathLabel.Links.Add(0, linqMetaDataAssemblyPathLabel.Text.Length, adapterAssemblyPath);
         }
         catch (Exception)
@@ -102,18 +106,25 @@ namespace LLBLGen.EntityBrowser
         LoadAssembliesAndTabs();
         if (_linqMetaDataType != null)
           Text += string.Format(" - {0}", _linqMetaDataType.Assembly.FullName.Before(", Culture"));
-        if (tabControl.TabPages.Count == 0 || Settings.Default.ShowSettings)
-        {
-          panelSettings.Visible = true;
-          toolStrip.Visible = true;
-        }
+        SetSettingsVisible(tabControl.TabPages.Count == 0 || Settings.Default.ShowSettings);
       }
       catch (Exception ex)
       {
-        panelSettings.Visible = true;
-        toolStrip.Visible = true;
+        SetSettingsVisible(true);
         Application.OnThreadException(ex.GetBaseException());
       }
+    }
+
+    private void toggleSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      SetSettingsVisible(!panelSettings.Visible);
+    }
+
+    private void SetSettingsVisible(bool visible)
+    {
+      panelSettings.Visible = visible;
+      toolStrip.Visible = panelSettings.Visible;
+      panelMetaData.Visible = panelSettings.Visible;
     }
 
     private void toolStripButtonLoad_Click(object sender, EventArgs e)
@@ -508,18 +519,18 @@ namespace LLBLGen.EntityBrowser
     {
       if (e.Link.LinkData == null)
       {
+        var linkLabel = sender as LinkLabel;
+        if (linkLabel != null)
+        {
+          var s = linkLabel.Tag as string;
+          openFileDialog1.FileName = s;
+        }
         var dialogResult = openFileDialog1.ShowDialog();
         if (dialogResult == DialogResult.OK)
           Settings.Default.LinqMetaDataAssemblyPath = openFileDialog1.FileName;
       }
       else
         Process.Start(e.Link.LinkData.ToString());
-    }
-
-    private void toggleSettingsToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      panelSettings.Visible = !panelSettings.Visible;
-      toolStrip.Visible = !toolStrip.Visible;
     }
 
     private void toolStripButtonAbout_Click(object sender, EventArgs e)
