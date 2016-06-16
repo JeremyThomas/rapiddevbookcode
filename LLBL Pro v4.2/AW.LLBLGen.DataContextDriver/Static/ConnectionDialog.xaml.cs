@@ -423,7 +423,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
     }
 
-    private void SetUriToPath(Hyperlink hyperlink, string location)
+    private static void SetUriToPath(Hyperlink hyperlink, string location)
     {
       if (location != null)
       {

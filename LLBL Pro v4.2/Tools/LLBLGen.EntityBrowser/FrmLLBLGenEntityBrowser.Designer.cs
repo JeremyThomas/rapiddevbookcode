@@ -73,6 +73,7 @@
       this.toolStripNumericUpDownCommandTimeOut = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.toolStripLabelOrmProfilerStatus = new System.Windows.Forms.ToolStripLabel();
       this.toolStripButtonAbout = new System.Windows.Forms.ToolStripButton();
+      this.editConnectionStringToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.contextMenuStripTabControl.SuspendLayout();
       this.panelSettings.SuspendLayout();
       this.panelMetaData.SuspendLayout();
@@ -95,7 +96,7 @@
       this.linqMetaDataAssemblyPathLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       this.toolTip1.SetToolTip(this.linqMetaDataAssemblyPathLabel, "Path to a LLBLGen Pro generated assembly containing an ILinqMetaData implementati" +
         "on");
-      this.linqMetaDataAssemblyPathLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linqMetaDataAssemblyPathLabel_LinkClicked);
+      this.linqMetaDataAssemblyPathLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.AssemblyPathLabel_LinkClicked);
       // 
       // adapterAssemblyPathLabel
       // 
@@ -108,7 +109,7 @@
       this.adapterAssemblyPathLabel.TabStop = true;
       this.adapterAssemblyPathLabel.Text = "Adapter Assembly Path:";
       this.toolTip1.SetToolTip(this.adapterAssemblyPathLabel, "Path to Adapter assembly");
-      this.adapterAssemblyPathLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linqMetaDataAssemblyPathLabel_LinkClicked);
+      this.adapterAssemblyPathLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.AssemblyPathLabel_LinkClicked);
       // 
       // tabControl
       // 
@@ -129,24 +130,24 @@
             this.toolStripSeparator1,
             this.toggleSettingsToolStripMenuItem});
       this.contextMenuStripTabControl.Name = "contextMenuStripTabControl";
-      this.contextMenuStripTabControl.Size = new System.Drawing.Size(204, 54);
+      this.contextMenuStripTabControl.Size = new System.Drawing.Size(203, 54);
       // 
       // addConnectionToolStripMenuItem
       // 
       this.addConnectionToolStripMenuItem.Name = "addConnectionToolStripMenuItem";
-      this.addConnectionToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+      this.addConnectionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
       this.addConnectionToolStripMenuItem.Text = "Add Connection";
       this.addConnectionToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
       // toolStripSeparator1
       // 
       this.toolStripSeparator1.Name = "toolStripSeparator1";
-      this.toolStripSeparator1.Size = new System.Drawing.Size(200, 6);
+      this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
       // 
       // toggleSettingsToolStripMenuItem
       // 
       this.toggleSettingsToolStripMenuItem.Name = "toggleSettingsToolStripMenuItem";
-      this.toggleSettingsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+      this.toggleSettingsToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
       this.toggleSettingsToolStripMenuItem.Text = "Toggle Settings Visibility";
       this.toggleSettingsToolStripMenuItem.Click += new System.EventHandler(this.toggleSettingsToolStripMenuItem_Click);
       // 
@@ -223,62 +224,66 @@
       this.contextMenuStripTabPage.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addConnectionToolStripMenuItem1,
             this.editConnectionToolStripMenuItem,
+            this.editConnectionStringToolStripMenuItem,
             this.renameToolStripMenuItem,
             this.toolStripSeparator3,
             this.removeToolStripMenuItem,
             this.toolStripSeparator2,
             this.toggleSettingsVisibilityToolStripMenuItem});
       this.contextMenuStripTabPage.Name = "contextMenuStripTabPage";
-      this.contextMenuStripTabPage.Size = new System.Drawing.Size(204, 126);
+      this.contextMenuStripTabPage.Size = new System.Drawing.Size(203, 170);
       // 
       // addConnectionToolStripMenuItem1
       // 
       this.addConnectionToolStripMenuItem1.Name = "addConnectionToolStripMenuItem1";
-      this.addConnectionToolStripMenuItem1.Size = new System.Drawing.Size(203, 22);
-      this.addConnectionToolStripMenuItem1.Text = "Add Connection";
+      this.addConnectionToolStripMenuItem1.Size = new System.Drawing.Size(202, 22);
+      this.addConnectionToolStripMenuItem1.Text = "Add Connection...";
       this.addConnectionToolStripMenuItem1.Click += new System.EventHandler(this.toolStripButtonAddConnection_Click);
       // 
       // editConnectionToolStripMenuItem
       // 
       this.editConnectionToolStripMenuItem.Name = "editConnectionToolStripMenuItem";
-      this.editConnectionToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-      this.editConnectionToolStripMenuItem.Text = "Edit Connection";
+      this.editConnectionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.editConnectionToolStripMenuItem.Text = "Edit Connection...";
+      this.editConnectionToolStripMenuItem.ToolTipText = "Edit Connection with a GUI";
       this.editConnectionToolStripMenuItem.Click += new System.EventHandler(this.editConnectionToolStripMenuItem_Click);
       // 
       // renameToolStripMenuItem
       // 
       this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-      this.renameToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-      this.renameToolStripMenuItem.Text = "Rename";
+      this.renameToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.renameToolStripMenuItem.Text = "Rename Connection...";
       this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
       // 
       // toolStripSeparator3
       // 
       this.toolStripSeparator3.Name = "toolStripSeparator3";
-      this.toolStripSeparator3.Size = new System.Drawing.Size(200, 6);
+      this.toolStripSeparator3.Size = new System.Drawing.Size(199, 6);
       // 
       // removeToolStripMenuItem
       // 
       this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-      this.removeToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-      this.removeToolStripMenuItem.Text = "Remove";
+      this.removeToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.removeToolStripMenuItem.Text = "Remove Connection";
       this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
       // 
       // toolStripSeparator2
       // 
       this.toolStripSeparator2.Name = "toolStripSeparator2";
-      this.toolStripSeparator2.Size = new System.Drawing.Size(200, 6);
+      this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
       // 
       // toggleSettingsVisibilityToolStripMenuItem
       // 
       this.toggleSettingsVisibilityToolStripMenuItem.Name = "toggleSettingsVisibilityToolStripMenuItem";
-      this.toggleSettingsVisibilityToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+      this.toggleSettingsVisibilityToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
       this.toggleSettingsVisibilityToolStripMenuItem.Text = "Toggle Settings Visibility";
       this.toggleSettingsVisibilityToolStripMenuItem.Click += new System.EventHandler(this.toggleSettingsToolStripMenuItem_Click);
       // 
       // openFileDialog1
       // 
-      this.openFileDialog1.FileName = "openFileDialog1";
+      this.openFileDialog1.DefaultExt = "dll";
+      this.openFileDialog1.Filter = "\"Assemblies (*.dll)|*.dll|All files (*.*)|*.*\"";
+      this.openFileDialog1.Multiselect = true;
       // 
       // toolStrip
       // 
@@ -495,6 +500,14 @@
       this.toolStripButtonAbout.ToolTipText = "About";
       this.toolStripButtonAbout.Click += new System.EventHandler(this.toolStripButtonAbout_Click);
       // 
+      // editConnectionStringToolStripMenuItem
+      // 
+      this.editConnectionStringToolStripMenuItem.Name = "editConnectionStringToolStripMenuItem";
+      this.editConnectionStringToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.editConnectionStringToolStripMenuItem.Text = "Edit Connection String...";
+      this.editConnectionStringToolStripMenuItem.ToolTipText = "Edit the underlying connection string text";
+      this.editConnectionStringToolStripMenuItem.Click += new System.EventHandler(this.editConnectionStringToolStripMenuItem_Click);
+      // 
       // FrmLLBLGenEntityBrowser
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -569,6 +582,7 @@
     private System.Windows.Forms.ToolStripLabel toolStripLabelOrmProfilerStatus;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
     private System.Windows.Forms.ToolStripButton toolStripButtonAbout;
+    private System.Windows.Forms.ToolStripMenuItem editConnectionStringToolStripMenuItem;
   }
 }
 

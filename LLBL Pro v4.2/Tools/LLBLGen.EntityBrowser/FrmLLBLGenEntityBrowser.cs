@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -56,32 +57,8 @@ namespace LLBLGen.EntityBrowser
     {
       InitializeComponent();
       Settings.Default.PropertyChanged += SettingPropertyChanged;
-      adapterAssemblyPathLabel.Tag = Settings.Default.AdapterAssemblyPath;
-      linqMetaDataAssemblyPathLabel.Tag = Settings.Default.LinqMetaDataAssemblyPath;
-
-      if (!String.IsNullOrWhiteSpace(Settings.Default.LinqMetaDataAssemblyPath))
-        try
-        {
-          var linqMetaDataAssemblyPath = Path.GetDirectoryName(Settings.Default.LinqMetaDataAssemblyPath);
-          if (linqMetaDataAssemblyPath != null && Directory.Exists(linqMetaDataAssemblyPath))
-            adapterAssemblyPathLabel.Links.Add(0, adapterAssemblyPathLabel.Text.Length, linqMetaDataAssemblyPath);
-        }
-        catch (Exception)
-        {
-          // ignored
-        }
-
-      if (!String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
-        try
-        {
-          var adapterAssemblyPath = Path.GetDirectoryName(Settings.Default.AdapterAssemblyPath.Before(";", Settings.Default.AdapterAssemblyPath));
-          if (adapterAssemblyPath != null && Directory.Exists(adapterAssemblyPath))
-            linqMetaDataAssemblyPathLabel.Links.Add(0, linqMetaDataAssemblyPathLabel.Text.Length, adapterAssemblyPath);
-        }
-        catch (Exception)
-        {
-          // ignored
-        }
+      adapterAssemblyPathLabel.Tag = adapterAssemblyPathTextBox;
+      linqMetaDataAssemblyPathLabel.Tag = linqMetaDataAssemblyPathTextBox;
       toolStripCheckBoxEnsureFilteringEnabled.DataBind(Settings.Default);
       toolStripCheckBoxUseContext.DataBind(Settings.Default);
       toolStripCheckBoxCascadeDeletes.DataBind(Settings.Default);
@@ -93,9 +70,9 @@ namespace LLBLGen.EntityBrowser
         toolStripTextBoxTablePrefixDelimiter.TextBox.DataBindings.Add(new Binding("Text", Settings.Default, "PrefixDelimiter", true, DataSourceUpdateMode.OnPropertyChanged));
     }
 
-    private void SettingPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void SettingPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-     toolStripButtonLoad.Enabled = toolStripButtonLoad.Enabled || e.PropertyName!= "ShowSettings";
+      toolStripButtonLoad.Enabled = toolStripButtonLoad.Enabled || e.PropertyName != "ShowSettings";
     }
 
     private void MainForm_Load(object sender, EventArgs e)
@@ -135,8 +112,44 @@ namespace LLBLGen.EntityBrowser
 
     private void linqMetaDataAssemblyPathTextBox_Leave(object sender, EventArgs e)
     {
-      if (_linqMetaDataType == null)
-        LoadAssembliesAndTabs(linqMetaDataAssemblyPathTextBox.Text, Settings.Default.AdapterAssemblyPath);
+      if (!String.IsNullOrWhiteSpace(linqMetaDataAssemblyPathTextBox.Text))
+      {
+        if (_linqMetaDataType == null || _linqMetaDataType.Assembly.Location != linqMetaDataAssemblyPathTextBox.Text)
+          LoadLinqMetaData(linqMetaDataAssemblyPathTextBox.Text);
+        if (_daoBaseImplementationType == null && String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
+        {
+          var linqMetaDataAssemblyPath = Path.GetDirectoryName(linqMetaDataAssemblyPathTextBox.Text);
+          var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(linqMetaDataAssemblyPathTextBox.Text) + "*.dll";
+          if (linqMetaDataAssemblyPath != null)
+            Settings.Default.AdapterAssemblyPath = Directory.GetFiles(linqMetaDataAssemblyPath, fileNameWithoutExtension).Where(f => f != linqMetaDataAssemblyPathTextBox.Text).JoinAsString(";");
+        }
+      }
+    }
+
+    private void AssemblyPathLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+      if (e.Link.LinkData == null)
+      {
+        var linkLabel = sender as LinkLabel;
+        if (linkLabel != null)
+        {
+          var textBox = linkLabel.Tag as TextBox;
+          if (textBox != null)
+          {
+            if (string.IsNullOrWhiteSpace(textBox.Text) && _linqMetaDataType != null)
+              openFileDialog1.FileName = _linqMetaDataType.Assembly.Location;
+            else
+              openFileDialog1.FileName = textBox.Text.Before(";", textBox.Text);
+            if (File.Exists(openFileDialog1.FileName) && string.IsNullOrWhiteSpace(openFileDialog1.InitialDirectory))
+              openFileDialog1.InitialDirectory = Path.GetDirectoryName(openFileDialog1.FileName);
+            var dialogResult = openFileDialog1.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+              textBox.Text = openFileDialog1.FileName;
+          }
+        }
+      }
+      else
+        Process.Start(e.Link.LinkData.ToString());
     }
 
     private void LoadTabs()
@@ -256,6 +269,13 @@ namespace LLBLGen.EntityBrowser
         }
       }
     }
+    
+    private void editConnectionStringToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      var connectionString = Interaction.InputBox("Edit this connection directly", "ConnectionString", CurrentConnectionStringSetting.ConnectionString);
+      if (!CurrentConnectionStringSetting.IsReadOnly() && !string.IsNullOrWhiteSpace(connectionString))
+        CurrentConnectionStringSetting.ConnectionString = connectionString;
+    }
 
     private void editConnectionToolStripMenuItem_Click(object sender, EventArgs e)
     {
@@ -344,8 +364,20 @@ namespace LLBLGen.EntityBrowser
 
     private void LoadAssembliesAndTabs(string linqMetaDataAssemblyPath, string adapterAssemblyPath)
     {
-      if (String.IsNullOrWhiteSpace(linqMetaDataAssemblyPath))
-        return;
+      if (!String.IsNullOrWhiteSpace(linqMetaDataAssemblyPath))
+      {
+        LoadLinqMetaData(linqMetaDataAssemblyPath);
+
+        if (_daoBaseImplementationType == null && !String.IsNullOrWhiteSpace(adapterAssemblyPath))
+        {
+          _adapterTypes = GetAdapterTypes().ToList();
+        }
+        LoadTabs();
+      }
+    }
+
+    private void LoadLinqMetaData(string linqMetaDataAssemblyPath)
+    {
       if (!File.Exists(linqMetaDataAssemblyPath))
         throw new ApplicationException("LinqMetaData assembly: " + linqMetaDataAssemblyPath + " not found!" + Environment.NewLine);
       var linqMetaDataAssembly = LoadAssembly(linqMetaDataAssemblyPath);
@@ -354,12 +386,6 @@ namespace LLBLGen.EntityBrowser
         throw new ApplicationException("There are no public types in that assembly that implement ILinqMetaData. Wrong Assembly chosen.");
       labellinqMetaDataAssemblyVersion.Text = "Version " + linqMetaDataAssembly.GetVersion();
       _daoBaseImplementationType = EntityHelper.GetDaoBaseImplementation(linqMetaDataAssembly);
-
-      if (_daoBaseImplementationType == null && !String.IsNullOrWhiteSpace(adapterAssemblyPath))
-      {
-        _adapterTypes = GetAdapterTypes().ToList();
-      }
-      LoadTabs();
     }
 
     private static IEnumerable<Type> GetAdapterTypes()
@@ -510,33 +536,19 @@ namespace LLBLGen.EntityBrowser
 
     private void renameToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      _currentTabItem.Text = Interaction.InputBox("Set the name of this connection", "Title", _currentTabItem.Text);
-      if (!CurrentConnectionStringSetting.IsReadOnly())
-        CurrentConnectionStringSetting.Name = _currentTabItem.Text;
-    }
-
-    private void linqMetaDataAssemblyPathLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-    {
-      if (e.Link.LinkData == null)
+      var connectionName = Interaction.InputBox("Set the name of this connection", "Rename connection", _currentTabItem.Text);
+      if (!CurrentConnectionStringSetting.IsReadOnly() && !string.IsNullOrWhiteSpace(connectionName))
       {
-        var linkLabel = sender as LinkLabel;
-        if (linkLabel != null)
-        {
-          var s = linkLabel.Tag as string;
-          openFileDialog1.FileName = s;
-        }
-        var dialogResult = openFileDialog1.ShowDialog();
-        if (dialogResult == DialogResult.OK)
-          Settings.Default.LinqMetaDataAssemblyPath = openFileDialog1.FileName;
+        _currentTabItem.Text = connectionName;
+        CurrentConnectionStringSetting.Name = _currentTabItem.Text;
       }
-      else
-        Process.Start(e.Link.LinkData.ToString());
     }
 
     private void toolStripButtonAbout_Click(object sender, EventArgs e)
     {
       AboutBox.ShowAboutBox(this);
     }
+
   }
 
   internal class BrowserConnection
