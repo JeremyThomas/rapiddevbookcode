@@ -144,7 +144,10 @@ namespace LLBLGen.EntityBrowser
               openFileDialog1.InitialDirectory = Path.GetDirectoryName(openFileDialog1.FileName);
             var dialogResult = openFileDialog1.ShowDialog();
             if (dialogResult == DialogResult.OK)
+            {
               textBox.Text = openFileDialog1.FileName;
+              textBox.Focus();
+            }
           }
         }
       }
@@ -269,7 +272,7 @@ namespace LLBLGen.EntityBrowser
         }
       }
     }
-    
+
     private void editConnectionStringToolStripMenuItem_Click(object sender, EventArgs e)
     {
       var connectionString = Interaction.InputBox("Edit this connection directly", "ConnectionString", CurrentConnectionStringSetting.ConnectionString);
@@ -391,19 +394,27 @@ namespace LLBLGen.EntityBrowser
     private static IEnumerable<Type> GetAdapterTypes()
     {
       var adapterAssemblyPaths = Settings.Default.AdapterAssemblyPath.Split(';');
-      return adapterAssemblyPaths.Where(p => !string.IsNullOrWhiteSpace(p)).Select(GetAdapterType);
+      return adapterAssemblyPaths.Where(p => !string.IsNullOrWhiteSpace(p)).Select(GetAdapterType).Where(at => at != null);
     }
 
     public static Type GetAdapterType(string adapterAssemblyPath)
     {
-      if (String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
-        throw new ApplicationException("Adapter assembly not specified!");
-      if (!File.Exists(adapterAssemblyPath))
-        throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " not found!");
-      var dataAccessAdapterAssembly = LoadAssembly(adapterAssemblyPath);
-      if (dataAccessAdapterAssembly == null)
-        throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " could not be loaded!");
-      return GetAdapterType(dataAccessAdapterAssembly);
+      try
+      {
+        if (String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
+          throw new ApplicationException("Adapter assembly not specified!");
+        if (!File.Exists(adapterAssemblyPath))
+          throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " not found!");
+        var dataAccessAdapterAssembly = LoadAssembly(adapterAssemblyPath);
+        if (dataAccessAdapterAssembly == null)
+          throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " could not be loaded!");
+        return GetAdapterType(dataAccessAdapterAssembly);
+      }
+      catch (Exception e)
+      {
+        Application.OnThreadException(e);
+        return null;
+      }
     }
 
     private static Type GetAdapterType(Assembly dataAccessAdapterAssembly)
@@ -548,7 +559,6 @@ namespace LLBLGen.EntityBrowser
     {
       AboutBox.ShowAboutBox(this);
     }
-
   }
 
   internal class BrowserConnection
