@@ -820,9 +820,29 @@ namespace AW.Winforms.Helpers.Controls
           DefaultCellStyle = e.Column.DefaultCellStyle,
           Name = e.Column.Name
         };
+        dataGridViewDateTimeColumn.SortMode = e.Column.SortMode;
         dataGridView.Columns.Remove(e.Column);
         dataGridView.Columns.Add(dataGridViewDateTimeColumn);
-        dataGridViewDateTimeColumn.SortMode = e.Column.SortMode;
+      }
+      else if (coreType == typeof(bool) && !(e.Column is DataGridViewCheckBoxColumn))
+      {
+        var dataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn
+        {
+          HeaderText = e.Column.HeaderText,
+          ValueType = valueType,
+          DataPropertyName = e.Column.DataPropertyName,
+          SortMode = e.Column.SortMode,
+          Name = e.Column.Name,
+          DefaultCellStyle = e.Column.DefaultCellStyle
+        };
+        dataGridViewCheckBoxColumn.SortMode = e.Column.SortMode;
+        if (valueType == typeof(bool?))
+        {
+          dataGridViewCheckBoxColumn.ThreeState = true;
+          dataGridViewCheckBoxColumn.DefaultCellStyle.NullValue = CheckState.Indeterminate;
+        }
+        dataGridView.Columns.Remove(e.Column);
+        dataGridView.Columns.Add(dataGridViewCheckBoxColumn);
       }
       //else if(e.Column.Tag==null)
       //{
