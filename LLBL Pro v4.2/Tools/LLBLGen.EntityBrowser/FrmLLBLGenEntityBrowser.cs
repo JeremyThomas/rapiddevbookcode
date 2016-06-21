@@ -384,6 +384,8 @@ namespace LLBLGen.EntityBrowser
       if (!File.Exists(linqMetaDataAssemblyPath))
         throw new ApplicationException("LinqMetaData assembly: " + linqMetaDataAssemblyPath + " not found!" + Environment.NewLine);
       var linqMetaDataAssembly = LoadAssembly(linqMetaDataAssemblyPath);
+      if (linqMetaDataAssembly.Location!= linqMetaDataAssemblyPath)
+        throw new ApplicationException("New assembly could not be loaded, restart to try again.");
       _linqMetaDataType = linqMetaDataAssembly.GetConcretePublicImplementations(typeof(ILinqMetaData)).FirstOrDefault();
       if (_linqMetaDataType == null)
         throw new ApplicationException("There are no public types in that assembly that implement ILinqMetaData. Wrong Assembly chosen.");
