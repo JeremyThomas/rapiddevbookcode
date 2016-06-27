@@ -1485,7 +1485,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    ///   Gets the properties of type entity since sometimes these properties are not browseable so they need to be handled as
+    ///   Gets the properties of type IEntityCore since sometimes these properties are not browseable so they need to be handled as
     ///   a special case.
     /// </summary>
     /// <param name="type">The type.</param>
@@ -1496,11 +1496,24 @@ namespace AW.Helper.LLBL
       return MetaDataHelper.GetPropertyDescriptors(type).FilterByIsEntityCore(true, includeGenericParameters);
     }
 
+    /// <summary>
+    /// Filters the property descriptor to IEntityCore.
+    /// </summary>
+    /// <param name="propertyDescriptors">The property descriptors.</param>
+    /// <param name="isEntityCore">The is entity core.</param>
+    /// <param name="includeGenericParameters">if set to <c>true</c> [include generic parameters].</param>
+    /// <returns></returns>
     public static IEnumerable<PropertyDescriptor> FilterByIsEntityCore(this IEnumerable<PropertyDescriptor> propertyDescriptors, bool? isEntityCore = true, bool includeGenericParameters = false)
     {
       return isEntityCore.HasValue ? propertyDescriptors.Where(propertyDescriptor => IsEntityCore(propertyDescriptor, includeGenericParameters) == isEntityCore.Value) : propertyDescriptors;
     }
 
+    /// <summary>
+    /// Determines whether the specified property descriptor is IEntityCore.
+    /// </summary>
+    /// <param name="propertyDescriptor">The property descriptor.</param>
+    /// <param name="includeGenericParameters">if set to <c>true</c> [include generic parameters].</param>
+    /// <returns></returns>
     public static bool IsEntityCore(PropertyDescriptor propertyDescriptor, bool includeGenericParameters = false)
     {
       return IsEntityCore(propertyDescriptor.PropertyType, includeGenericParameters);
@@ -1511,6 +1524,12 @@ namespace AW.Helper.LLBL
       return IsEntityCore(propertyDescriptor.ComponentType);
     }
 
+    /// <summary>
+    /// Determines whether the specified type is IEntityCore.
+    /// </summary>
+    /// <param name="type">The type.</param>
+    /// <param name="includeGenericParameters">if set to <c>true</c> [include generic parameters].</param>
+    /// <returns></returns>
     public static bool IsEntityCore(Type type, bool includeGenericParameters = false)
     {
       var isEntityCore = typeof (IEntityCore).IsAssignableFrom(type);

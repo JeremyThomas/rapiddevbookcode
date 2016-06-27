@@ -85,7 +85,8 @@ namespace AW.Winforms.Helpers.Controls
     /// <summary>
     ///   Initializes a new instance of the <see cref="T:System.Windows.Forms.UserControl" /> class.
     /// </summary>
-    public GridDataEditor(IEnumerable enumerable, bool delayBind = false, IDataEditorPersister dataEditorPersister = null, ushort pageSize = DefaultPageSize, bool readOnly = true, params string[] membersToExclude)
+    public GridDataEditor(IEnumerable enumerable, bool delayBind = false, IDataEditorPersister dataEditorPersister = null, ushort pageSize = DefaultPageSize, bool readOnly = true,
+      params string[] membersToExclude)
       : this()
     {
       MembersToExclude = membersToExclude;
@@ -773,58 +774,10 @@ namespace AW.Winforms.Helpers.Controls
           if (!MetaDataHelper.ImplementsIComparable(coreType)) //For testing || e.Column.DataPropertyName == "ModifiedDate"
             adgvColumnHeaderCell.CellBehavior = ADGVColumnHeaderCellBehavior.DisabledHidden;
       }
-      if (Readonly || _shouldBeReadonly) return;
 
-      if (coreType == null || e.Column is DataGridViewComboBoxColumn || e.Column is DataGridViewDateTimeColumn) return;
+      if (coreType == null || e.Column is DataGridViewComboBoxColumn || e.Column is DataGridViewDateTimeColumn || e.Column is DataGridViewCheckBoxColumn) return;
 
-      if (coreType.IsEnum)
-      {
-        var enumDataSource = coreType == valueType ? Enum.GetValues(coreType) : GeneralHelper.EnumsGetValuesPlusUndefined(coreType);
-        var isDataTable = SourceDataView != null;
-        if (isDataTable)
-        {
-          valueType = Enum.GetUnderlyingType(coreType);
-          enumDataSource = GeneralHelper.Enum2DataTable(Enum.GetValues(coreType), valueType).DefaultView;
-          //enumDataSource = enumDataSource.OfType<Enum>().Select(value => new {Display = value.EnumToString(), Value = Convert.ChangeType(value, valueType)}).ToList();
-        }
-        else
-          HumanizedEnumConverter.AddEnumerationConverter(valueType);
-        var enumDataGridViewComboBoxColumn = new DataGridViewComboBoxColumn
-        {
-          HeaderText = e.Column.HeaderText,
-          ValueType = valueType,
-          DataSource = enumDataSource,
-          DataPropertyName = e.Column.DataPropertyName,
-          SortMode = e.Column.SortMode,
-          DefaultCellStyle = e.Column.DefaultCellStyle,
-          Name = e.Column.Name
-        };
-
-        if (isDataTable)
-        {
-          enumDataGridViewComboBoxColumn.ValueMember = "Value";
-          enumDataGridViewComboBoxColumn.DisplayMember = "Display";
-        }
-        dataGridView.Columns.Remove(e.Column);
-        dataGridView.Columns.Add(enumDataGridViewComboBoxColumn);
-        enumDataGridViewComboBoxColumn.SortMode = e.Column.SortMode;
-      }
-      else if (coreType == typeof(DateTime))
-      {
-        var dataGridViewDateTimeColumn = new DataGridViewDateTimeColumn
-        {
-          HeaderText = e.Column.HeaderText,
-          ValueType = valueType,
-          DataPropertyName = e.Column.DataPropertyName,
-          SortMode = e.Column.SortMode,
-          DefaultCellStyle = e.Column.DefaultCellStyle,
-          Name = e.Column.Name
-        };
-        dataGridViewDateTimeColumn.SortMode = e.Column.SortMode;
-        dataGridView.Columns.Remove(e.Column);
-        dataGridView.Columns.Add(dataGridViewDateTimeColumn);
-      }
-      else if (coreType == typeof(bool) && !(e.Column is DataGridViewCheckBoxColumn))
+      if (coreType == typeof(bool) && !(e.Column is DataGridViewCheckBoxColumn))
       {
         var dataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn
         {
@@ -843,6 +796,57 @@ namespace AW.Winforms.Helpers.Controls
         }
         dataGridView.Columns.Remove(e.Column);
         dataGridView.Columns.Add(dataGridViewCheckBoxColumn);
+      }
+      else
+      {
+        if (Readonly || _shouldBeReadonly) return;
+        if (coreType.IsEnum)
+        {
+          var enumDataSource = coreType == valueType ? Enum.GetValues(coreType) : GeneralHelper.EnumsGetValuesPlusUndefined(coreType);
+          var isDataTable = SourceDataView != null;
+          if (isDataTable)
+          {
+            valueType = Enum.GetUnderlyingType(coreType);
+            enumDataSource = GeneralHelper.Enum2DataTable(Enum.GetValues(coreType), valueType).DefaultView;
+            //enumDataSource = enumDataSource.OfType<Enum>().Select(value => new {Display = value.EnumToString(), Value = Convert.ChangeType(value, valueType)}).ToList();
+          }
+          else
+            HumanizedEnumConverter.AddEnumerationConverter(valueType);
+          var enumDataGridViewComboBoxColumn = new DataGridViewComboBoxColumn
+          {
+            HeaderText = e.Column.HeaderText,
+            ValueType = valueType,
+            DataSource = enumDataSource,
+            DataPropertyName = e.Column.DataPropertyName,
+            SortMode = e.Column.SortMode,
+            DefaultCellStyle = e.Column.DefaultCellStyle,
+            Name = e.Column.Name
+          };
+
+          if (isDataTable)
+          {
+            enumDataGridViewComboBoxColumn.ValueMember = "Value";
+            enumDataGridViewComboBoxColumn.DisplayMember = "Display";
+          }
+          dataGridView.Columns.Remove(e.Column);
+          dataGridView.Columns.Add(enumDataGridViewComboBoxColumn);
+          enumDataGridViewComboBoxColumn.SortMode = e.Column.SortMode;
+        }
+        else if (coreType == typeof(DateTime))
+        {
+          var dataGridViewDateTimeColumn = new DataGridViewDateTimeColumn
+          {
+            HeaderText = e.Column.HeaderText,
+            ValueType = valueType,
+            DataPropertyName = e.Column.DataPropertyName,
+            SortMode = e.Column.SortMode,
+            DefaultCellStyle = e.Column.DefaultCellStyle,
+            Name = e.Column.Name
+          };
+          dataGridViewDateTimeColumn.SortMode = e.Column.SortMode;
+          dataGridView.Columns.Remove(e.Column);
+          dataGridView.Columns.Add(dataGridViewDateTimeColumn);
+        }
       }
       //else if(e.Column.Tag==null)
       //{
@@ -909,7 +913,7 @@ namespace AW.Winforms.Helpers.Controls
       if (bindingSourceEnumerable.SupportsFiltering)
       {
         bindingSourceEnumerable.Filter = dataGridViewEnumerable.FilterString;
-        toolStripButtonClearFilters.Visible = !String.IsNullOrWhiteSpace(dataGridViewEnumerable.FilterString);
+        toolStripButtonClearFilters.Visible = !string.IsNullOrWhiteSpace(dataGridViewEnumerable.FilterString);
         toolStripButtonClearFilters.ToolTipText = dataGridViewEnumerable.FilterString;
       }
     }
@@ -1147,7 +1151,7 @@ namespace AW.Winforms.Helpers.Controls
     private string PromptForPropertiesToExclude()
     {
       Helper.Properties.Settings.Default.PropertiesToExclude = Interaction.InputBox(
-        String.Format("Enter the properties to exclude from {0} and {1};{2}seperated by commas.",
+        string.Format("Enter the properties to exclude from {0} and {1};{2}seperated by commas.",
           SourceEnumerable.GetType().FriendlyName(), ItemType.FriendlyName(), Environment.NewLine),
         "Choose Properties To Exclude", Helper.Properties.Settings.Default.PropertiesToExclude);
       return Helper.Properties.Settings.Default.PropertiesToExclude;
