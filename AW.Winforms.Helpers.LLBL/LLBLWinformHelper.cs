@@ -20,9 +20,9 @@ namespace AW.Winforms.Helpers.LLBL
     /// </summary>
     static LLBLWinformHelper()
     {
-      BindingListHelper.RegisterbindingListViewCreater(typeof (IEntityCore), EntityHelper.CreateEntityView);
-      BindingListHelper.RegisterBindingListSourceProvider(typeof (IEntityView), EntityHelper.GetRelatedCollection);
-      BindingListHelper.RegisterBindingListSourceProvider(typeof (IEntityView2), EntityHelper.GetRelatedCollection);
+      BindingListHelper.RegisterbindingListViewCreater(typeof(IEntityCore), EntityHelper.CreateEntityView);
+      BindingListHelper.RegisterBindingListSourceProvider(typeof(IEntityView), EntityHelper.GetRelatedCollection);
+      BindingListHelper.RegisterBindingListSourceProvider(typeof(IEntityView2), EntityHelper.GetRelatedCollection);
       DataEditorPersisterFactory.Register(DataEditorLLBLDataScopePersisterFactory);
     }
 
@@ -100,14 +100,15 @@ namespace AW.Winforms.Helpers.LLBL
     public abstract class DataEditorLLBLPersister : IDataEditorPersisterWithCounts
     {
       /// <summary>
-      /// Saves (persist CUD changes) the specified data.
+      ///   Saves (persist CUD changes) the specified data.
       /// </summary>
       /// <param name="dataToSave">The data to save.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
       /// <param name="cascadeDeletes">Deletes cascade non-recursively to children of the selected entity</param>
       /// <returns></returns>
       public abstract int Save(object dataToSave = null, bool cascadeDeletes = false);
+
       /// <summary>
-      /// Deletes the specified data, may not be needed if 'Save' can handle deletes.
+      ///   Deletes the specified data, may not be needed if 'Save' can handle deletes.
       /// </summary>
       /// <param name="dataToDelete">The data to delete.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
       /// <param name="cascade">if set to <c>true</c>Deletes cascade non-recursively to children of the selected entity.</param>
@@ -116,7 +117,7 @@ namespace AW.Winforms.Helpers.LLBL
 
       public virtual bool CanSave(Type typeToSave)
       {
-        return typeof (IEntityCore).IsAssignableFrom(typeToSave);
+        return typeof(IEntityCore).IsAssignableFrom(typeToSave);
       }
 
       public virtual bool Undo(object modifiedData)
@@ -147,7 +148,7 @@ namespace AW.Winforms.Helpers.LLBL
     public class DataEditorLLBLSelfServicingPersister : DataEditorLLBLPersister
     {
       /// <summary>
-      /// Saves (persist CUD changes) the specified data.
+      ///   Saves (persist CUD changes) the specified data.
       /// </summary>
       /// <param name="dataToSave">The data to save.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
       /// <param name="cascadeDeletes">Deletes cascade non-recursively to children of the selected entity</param>
@@ -158,7 +159,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
 
       /// <summary>
-      /// Deletes the specified data, may not be needed if 'Save' can handle deletes.
+      ///   Deletes the specified data, may not be needed if 'Save' can handle deletes.
       /// </summary>
       /// <param name="dataToDelete">The data to delete.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
       /// <param name="cascade">if set to <c>true</c>Deletes cascade non-recursively to children of the selected entity.</param>
@@ -170,7 +171,7 @@ namespace AW.Winforms.Helpers.LLBL
 
       public override bool CanSave(Type typeToSave)
       {
-        return typeof (EntityBase).IsAssignableFrom(typeToSave);
+        return typeof(EntityBase).IsAssignableFrom(typeToSave);
       }
 
       public override IDictionary<string, int> GetChildCounts(object entityThatMayHaveChildren)
@@ -201,7 +202,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
 
       /// <summary>
-      /// Saves (persist CUD changes) the specified data.
+      ///   Saves (persist CUD changes) the specified data.
       /// </summary>
       /// <param name="dataToSave">The data to save.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
       /// <param name="cascadeDeletes">Deletes cascade non-recursively to children of the selected entity</param>
@@ -212,7 +213,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
 
       /// <summary>
-      /// Deletes the specified data, may not be needed if 'Save' can handle deletes.
+      ///   Deletes the specified data, may not be needed if 'Save' can handle deletes.
       /// </summary>
       /// <param name="dataToDelete">The data to delete.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
       /// <param name="cascade">if set to <c>true</c>Deletes cascade non-recursively to children of the selected entity.</param>
@@ -224,7 +225,7 @@ namespace AW.Winforms.Helpers.LLBL
 
       public override bool CanSave(Type typeToSave)
       {
-        return typeof (EntityBase2).IsAssignableFrom(typeToSave);
+        return typeof(EntityBase2).IsAssignableFrom(typeToSave);
       }
 
       public override IDictionary<string, int> GetChildCounts(object entityThatMayHaveChildren)
@@ -237,7 +238,8 @@ namespace AW.Winforms.Helpers.LLBL
 
     #region PopulateTreeViewWithSchema
 
-    public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, ILinqMetaData linqMetaData = null, Type baseType = null, bool useSchema = true, string prefixDelimiter = null)
+    public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, ILinqMetaData linqMetaData = null, Type baseType = null, bool useSchema = true,
+      string prefixDelimiter = null)
     {
       var entitiesTypes = EntityHelper.GetEntitiesTypes(baseType, linqMetaData).ToList();
       PopulateTreeViewWithSchema(schemaTreeNodeCollection, entitiesTypes, useSchema, prefixDelimiter, EntityHelper.GetDataAccessAdapter(linqMetaData));
@@ -251,12 +253,13 @@ namespace AW.Winforms.Helpers.LLBL
       PopulateTreeViewWithSchema(entityTreeView.Nodes, entitiesTypes, useSchema, prefixDelimiter, adapter);
     }
 
-    public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, IEnumerable<Type> entitiesTypes, bool useSchema = true, string prefixDelimiter = null, IDataAccessAdapter adapter = null)
+    public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, IEnumerable<Type> entitiesTypes, bool useSchema = true, string prefixDelimiter = null,
+      IDataAccessAdapter adapter = null)
     {
       IElementCreatorCore elementCreator = null;
       var schemas = new Dictionary<string, TreeNode>();
       var prefixesToGroupBy = new Dictionary<string, TreeNode>();
-      var usePrefixes = !String.IsNullOrWhiteSpace(prefixDelimiter);
+      var usePrefixes = !string.IsNullOrWhiteSpace(prefixDelimiter);
       var entityNodes = new Dictionary<Type, Tuple<TreeNode, IEntityCore>>();
       foreach (var entityType in entitiesTypes.OrderBy(t => t.Name).ToList())
       {
@@ -270,7 +273,7 @@ namespace AW.Winforms.Helpers.LLBL
           if (fieldPersistenceInfo != null)
           {
             var schema = fieldPersistenceInfo.SourceSchemaName;
-            if (useSchema && !String.IsNullOrWhiteSpace(schema))
+            if (useSchema && !string.IsNullOrWhiteSpace(schema))
             {
               TreeNode schemaTreeNode;
               if (!schemas.TryGetValue(schema, out schemaTreeNode))
@@ -284,7 +287,7 @@ namespace AW.Winforms.Helpers.LLBL
             if (usePrefixes)
             {
               var prefix = fieldPersistenceInfo.SourceObjectName.Before(prefixDelimiter);
-              if (!String.IsNullOrWhiteSpace(prefix))
+              if (!string.IsNullOrWhiteSpace(prefix))
               {
                 TreeNode prefixTreeNode;
                 var prefixKey = useSchema ? schema + prefix : prefix;
@@ -302,7 +305,7 @@ namespace AW.Winforms.Helpers.LLBL
           var entityNodeText = GetEntityTypeName(entityType);
           if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
             if (entityType.BaseType != null && !entityType.BaseType.IsAbstract)
-              entityNodeText += String.Format(" (Sub-type of '{0}')", GetEntityTypeName(entityType.BaseType));
+              entityNodeText += string.Format(" (Sub-type of '{0}')", GetEntityTypeName(entityType.BaseType));
           var entityNode = treeNodeCollectionToAddTo.Add(entityType.Name, entityNodeText);
           entityNode.Tag = entityType;
 
@@ -315,44 +318,48 @@ namespace AW.Winforms.Helpers.LLBL
         PopulateEntityFields(entityNode.Value.Item1, entityNode.Value.Item2, entityNodes, adapter);
 
       if (schemas.Count == 1)
-        schemaTreeNodeCollection.AddRange(schemas.First().Value.Nodes.OfType<TreeNode>().ToArray());
+        schemaTreeNodeCollection.AddRange(schemas.First().Value.Nodes.OfType<TreeNode>().OrderBy(n => n.Text).ToArray());
       else
         foreach (var treeNode in schemas.OrderBy(n => n.Key))
           schemaTreeNodeCollection.Add(treeNode.Value);
     }
-    
-    private static void PopulateEntityFields(TreeNode entityNode, IEntityCore entity, Dictionary<Type, Tuple<TreeNode, IEntityCore>> entityNodes, IDataAccessAdapter adapter)
+
+    private static void PopulateEntityFields(TreeNode entityNode, IEntityCore entity, IDictionary<Type, Tuple<TreeNode, IEntityCore>> entityNodes, IDataAccessAdapter adapter)
     {
       var entityType = entity.GetType();
-      var entityFields = entity.GetFields();
-
+      var entityFields = entity.GetFields().ToDictionary(f => f.Name, f => f); //new HashSet<IEntityFieldCore>(entity.GetFields());
+      var nonFieldNodes = new List<TreeNode>();
       foreach (var fieldNode in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().FilterByIsEntityCore(false, true).
         Select(browseableProperty => CreateSimpleTypeTreeNode(browseableProperty, 1)))
       {
-        entityNode.Nodes.Add(fieldNode);
-        var field = entityFields.FirstOrDefault(f => f.Name.Equals(fieldNode.Name));
+        if (entityFields.ContainsKey(fieldNode.Name))
         {
-          if (field != null)
-          {
-            fieldNode.Text = CreateFieldText(field);
-            var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafely(field, adapter);
-            var fkNavigator = field.IsForeignKey ? "Navigator: " + EntityHelper.GetNavigatorNames(entity, field.Name).JoinAsString() : "";
-            fieldNode.ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, fieldNode.Tag as PropertyDescriptor, fkNavigator);
-          }
+          entityNode.Nodes.Add(fieldNode);
+          var field = entityFields[fieldNode.Name];
+          fieldNode.Text = CreateFieldText(field);
+          var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafely(field, adapter);
+          var fkNavigator = field.IsForeignKey ? "Navigator: " + EntityHelper.GetNavigatorNames(entity, field.Name).JoinAsString() : "";
+          fieldNode.ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, fieldNode.Tag as PropertyDescriptor, fkNavigator);
         }
+        else
+          nonFieldNodes.Add(fieldNode);
       }
 
-      foreach (var entityTypeProperty in EntityHelper.GetPropertiesOfTypeEntity(entityType, true))
+      entityNode.Nodes.AddRange(nonFieldNodes.ToArray());
+      var oneToManyNodes = new List<TreeNode>();
+
+      foreach (var entityTypeProperty in EntityHelper.GetPropertiesOfTypeEntity(entityType, true).Where(p => p.PropertyType.IsClass && !p.PropertyType.IsAbstract).OrderBy(p => p.DisplayName))
       {
-        var fieldNode = entityNode.Nodes.Add(entityTypeProperty.Name);
-        fieldNode.ToolTipText = FormatTypeName(entityTypeProperty.PropertyType);
+        var fieldNode = new TreeNode(entityTypeProperty.Name) {ToolTipText = FormatTypeName(entityTypeProperty.PropertyType)};
         if (EntityHelper.IsEntityCore(entityTypeProperty))
         {
+          entityNode.Nodes.Add(fieldNode);
           fieldNode.ImageIndex = 3;
           fieldNode.ToolTipText = CreateNavigatorToolTipText(entity, entityTypeProperty, GetTargetToolTipText(entityNodes, entityTypeProperty.PropertyType));
         }
         else
         {
+          oneToManyNodes.Add(fieldNode);
           fieldNode.ImageIndex = 2;
           var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(entityTypeProperty.PropertyType);
           string targetToolTipText = null;
@@ -362,6 +369,7 @@ namespace AW.Winforms.Helpers.LLBL
         //  fieldNode.Text = CreateTreeNodeText(entityTypeProperty);
         fieldNode.Tag = entityTypeProperty;
       }
+      entityNode.Nodes.AddRange(oneToManyNodes.ToArray());
     }
 
     private static string GetTargetToolTipText(IDictionary<Type, Tuple<TreeNode, IEntityCore>> entityNodes, Type propertyType)
@@ -383,7 +391,7 @@ namespace AW.Winforms.Helpers.LLBL
         entity.CustomPropertiesOfType.Values.JoinAsString());
       if (fieldPersistenceInfo != null)
       {
-        var dbInfo = String.Format("Table: {0}.{1}.{2}", fieldPersistenceInfo.SourceCatalogName, fieldPersistenceInfo.SourceSchemaName, fieldPersistenceInfo.SourceObjectName);
+        var dbInfo = string.Format("Table: {0}.{1}.{2}", fieldPersistenceInfo.SourceCatalogName, fieldPersistenceInfo.SourceSchemaName, fieldPersistenceInfo.SourceObjectName);
         toolTipText += Environment.NewLine + dbInfo;
       }
       return toolTipText.Trim();
@@ -402,7 +410,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     public static string CreateDisplayNameDescriptionToolTipText(MemberDescriptor propertyDescriptor)
     {
-      var displayName = String.Empty;
+      var displayName = string.Empty;
       try
       {
         displayName = propertyDescriptor.DisplayName;
@@ -420,7 +428,7 @@ namespace AW.Winforms.Helpers.LLBL
     {
       var toolTipText = CreateDisplayNameDescriptionCustomPropertiesToolTipText(entity, navigatorProperty);
 
-      if (typeof (IEnumerable).IsAssignableFrom(navigatorProperty.PropertyType))
+      if (typeof(IEnumerable).IsAssignableFrom(navigatorProperty.PropertyType))
       {
         var targetTipText = targetToolTipText;
         if (navigatorProperty.PropertyType.IsGenericType)
@@ -436,7 +444,7 @@ namespace AW.Winforms.Helpers.LLBL
         var allFkEntityFieldCoreObjects = relation.GetAllFKEntityFieldCoreObjects();
         var plurilizer = allFkEntityFieldCoreObjects.Count == 1 ? "" : "s";
         toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText,
-          String.Format("Foreign Key field{0}: {1}", plurilizer, allFkEntityFieldCoreObjects.Select(f => f.Name).JoinAsString()));
+          string.Format("Foreign Key field{0}: {1}", plurilizer, allFkEntityFieldCoreObjects.Select(f => f.Name).JoinAsString()));
       }
       return targetToolTipText.Contains(toolTipText) ? targetToolTipText : GeneralHelper.Join(Environment.NewLine, toolTipText, targetToolTipText);
     }
@@ -464,13 +472,13 @@ namespace AW.Winforms.Helpers.LLBL
           typeName += "{" + field.MaxLength + "}";
         else
         {
-          var scalePrecision = String.Empty;
+          var scalePrecision = string.Empty;
           if (field.Scale > 0)
             scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeparator, scalePrecision, field.Scale.ToString());
           var precision = field.Precision;
           if (precision > 0 && IsNonNormalPrecision(typeCode, precision))
             scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeparator, scalePrecision, precision.ToString());
-          if (!String.IsNullOrEmpty(scalePrecision))
+          if (!string.IsNullOrEmpty(scalePrecision))
             typeName += "{" + scalePrecision + "}";
         }
       return GeneralHelper.Join(" - ", field.Name + " (" + typeName + ")", extra);
@@ -486,15 +494,15 @@ namespace AW.Winforms.Helpers.LLBL
         var coreType = MetaDataHelper.GetCoreType(propertyDescriptor.PropertyType);
         if (coreType.IsEnum)
           toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText,
-            String.Format("Enum values: {0}", Enum.GetNames(coreType).JoinAsString()));
+            string.Format("Enum values: {0}", Enum.GetNames(coreType).JoinAsString()));
       }
       if (fieldPersistenceInfo != null)
       {
         var sourceColumnIsNullable = fieldPersistenceInfo.SourceColumnIsNullable ? "" : " not ";
         var sizeAndPrecision = "";
-        if (fieldPersistenceInfo.SourceColumnMaxLength < UInt16.MaxValue && fieldPersistenceInfo.SourceColumnMaxLength > 0 || fieldPersistenceInfo.SourceColumnPrecision > 0)
-          sizeAndPrecision = String.Format("({0})", fieldPersistenceInfo.SourceColumnMaxLength + fieldPersistenceInfo.SourceColumnPrecision);
-        var dbInfo = String.Format("Column: {0} ({1}{2}, {3} null)", fieldPersistenceInfo.SourceColumnName, fieldPersistenceInfo.SourceColumnDbType,
+        if (fieldPersistenceInfo.SourceColumnMaxLength < ushort.MaxValue && fieldPersistenceInfo.SourceColumnMaxLength > 0 || fieldPersistenceInfo.SourceColumnPrecision > 0)
+          sizeAndPrecision = string.Format("({0})", fieldPersistenceInfo.SourceColumnMaxLength + fieldPersistenceInfo.SourceColumnPrecision);
+        var dbInfo = string.Format("Column: {0} ({1}{2}, {3} null)", fieldPersistenceInfo.SourceColumnName, fieldPersistenceInfo.SourceColumnDbType,
           sizeAndPrecision, sourceColumnIsNullable);
         toolTipText += Environment.NewLine + GeneralHelper.Join(GeneralHelper.StringJoinSeparator, dbInfo, fieldPersistenceInfo.IdentityValueSequenceName);
       }
@@ -514,7 +522,7 @@ namespace AW.Winforms.Helpers.LLBL
       var topLevelProps =
         (
           from prop in dataContextType.GetProperties()
-          where prop.PropertyType != typeof (string)
+          where prop.PropertyType != typeof(string)
           // Display all properties of type IEnumerable<T> (except for string!)
           let ienumerableOfT = prop.PropertyType.GetInterface("System.Collections.Generic.IEnumerable`1")
           where ienumerableOfT != null
@@ -569,7 +577,7 @@ namespace AW.Winforms.Helpers.LLBL
           ToolTipText = FormatTypeName(childProp.PropertyType, true),
           Name = childProp.Name
         };
-        if (typeof (IEntityCore).IsAssignableFrom(childProp.PropertyType))
+        if (typeof(IEntityCore).IsAssignableFrom(childProp.PropertyType))
         {
           n.ImageIndex = 3;
           n.Tag = childProp;

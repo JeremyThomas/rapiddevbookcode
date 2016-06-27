@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace AW.Helper
@@ -42,7 +43,7 @@ namespace AW.Helper
 
     public void SetType(IEnumerable source)
     {
-      if (Type == null)
+      if (Type == null && source != null)
       {
         Type = MetaDataHelper.GetEnumerableItemType(source);
         SetProperties(Type);
@@ -73,6 +74,7 @@ namespace AW.Helper
     ///   existing rows in the table.
     /// </param>
     /// <returns>A DataTable created from the source sequence.</returns>
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public DataTable Shred(IEnumerable source, DataTable table, LoadOption? options)
     {
       SetType(source);
@@ -89,8 +91,9 @@ namespace AW.Helper
 
       // Enumerate the source sequence and load the object values into rows.
       table.BeginLoadData();
-      var e = source.GetEnumerator();
+      if (source != null)
       {
+        var e = source.GetEnumerator();
         while (e.MoveNext())
         {
           var values = ShredObject(table, e.Current);
@@ -126,17 +129,20 @@ namespace AW.Helper
 
       // Enumerate the source sequence and load the scalar values into rows.
       table.BeginLoadData();
-      var e = source.GetEnumerator();
+      if (source != null)
       {
-        var values = new object[table.Columns.Count];
-        while (e.MoveNext())
+        var e = source.GetEnumerator();
         {
-          values[table.Columns["Value"].Ordinal] = e.Current;
+          var values = new object[table.Columns.Count];
+          while (e.MoveNext())
+          {
+            values[table.Columns["Value"].Ordinal] = e.Current;
 
-          if (options != null)
-            table.LoadDataRow(values, (LoadOption) options);
-          else
-            table.LoadDataRow(values, true);
+            if (options != null)
+              table.LoadDataRow(values, (LoadOption) options);
+            else
+              table.LoadDataRow(values, true);
+          }
         }
       }
       table.EndLoadData();
