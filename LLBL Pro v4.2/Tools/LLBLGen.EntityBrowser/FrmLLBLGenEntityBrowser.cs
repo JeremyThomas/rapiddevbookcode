@@ -209,11 +209,10 @@ namespace LLBLGen.EntityBrowser
       var tabPage = tabControl.TabPages[connectionStringSetting.Name];
       tabPage.Tag = connectionStringSetting;
       var usrCntrlEntityBrowser = new UsrCntrlEntityBrowser(null, Settings.Default.UseSchema, Settings.Default.PrefixDelimiter,
-        Settings.Default.EnsureFilteringEnabled, Settings.Default.UseContext, (int) Settings.Default.CacheDurationInSeconds)
+        Settings.Default.EnsureFilteringEnabled, Settings.Default.UseContext, (int) Settings.Default.CacheDurationInSeconds,
+        (ushort) Settings.Default.PageSize,Settings.Default.CascadeDeletes)
       {
-        Dock = DockStyle.Fill,
-        PageSize = (ushort) Settings.Default.PageSize,
-        CascadeDeletes = Settings.Default.CascadeDeletes
+        Dock = DockStyle.Fill
       };
       InitializeEntityBrowser(usrCntrlEntityBrowser, connectionStringSetting);
       tabPage.Controls.Add(usrCntrlEntityBrowser);

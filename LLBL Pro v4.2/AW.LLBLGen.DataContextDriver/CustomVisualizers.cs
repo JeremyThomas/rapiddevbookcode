@@ -51,7 +51,7 @@ namespace AW.LLBLGen.DataContextDriver
     }
 
     /// <summary>
-    ///   Browses the data as LLBL Entities from a LINQPad like Treeview.
+    /// Browses the data as LLBL Entities from a LINQPad like Treeview.
     /// </summary>
     /// <param name="linqMetaData">The linq meta data.</param>
     /// <param name="useSchema">if set to <c>true</c> group by schema.</param>
@@ -59,17 +59,20 @@ namespace AW.LLBLGen.DataContextDriver
     /// <param name="ensureFilteringEnabled">if set to <c>true</c> ensure filtering enabled, i.e. use ObjectListView rather than native LLBL EntityView.</param>
     /// <param name="useContext">if set to <c>true</c> [use context].</param>
     /// <param name="cacheDurationInSeconds">The cache duration in seconds.</param>
+    /// <param name="pageSize">Size of the page.</param>
+    /// <param name="cascadeDeletes">if set to <c>true</c> [cascade deletes].</param>
     /// <returns>
-    ///   True if succeeded rather than void so can be passed to LINQPads Dump method.
+    /// True if succeeded rather than void so can be passed to LINQPads Dump method.
     /// </returns>
     /// <example>LinqPad: this.BrowseData()</example>
 // ReSharper disable UnusedMember.Global
     public static bool BrowseData(this ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = UsrCntrlEntityBrowser.DefaultPrefixDelimiter,
-      bool ensureFilteringEnabled = true, bool useContext = true, int cacheDurationInSeconds = UsrCntrlEntityBrowser.DefaultCacheDurationInSeconds)
+      bool ensureFilteringEnabled = true, bool useContext = true, int cacheDurationInSeconds = UsrCntrlEntityBrowser.DefaultCacheDurationInSeconds,
+      ushort pageSize = GridDataEditor.DefaultPageSize, bool cascadeDeletes = true)
     {
       if (linqMetaData == null)
         return false;
-      PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, useContext, cacheDurationInSeconds
+      PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, useContext, cacheDurationInSeconds, pageSize, cascadeDeletes
         , MembersToExcludeCache.GetMembersToExclude(typeof (EntityBase))), "Data Browser");
       return true;
     }
