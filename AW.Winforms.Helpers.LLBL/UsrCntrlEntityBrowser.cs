@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using AW.Helper.LLBL;
+using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.LLBL.Annotations;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -227,11 +228,13 @@ namespace AW.Winforms.Helpers.LLBL
     }
 
     public static FrmPersistantLocation ShowDataBrowser(ILinqMetaData linqMetaData, Form parentForm = null,
-      bool useSchema = true, string prefixDelimiter = DefaultPrefixDelimiter, bool ensureFilteringEnabled = true, bool useContext = true, int cacheDurationInSeconds = DefaultCacheDurationInSeconds,
+      bool useSchema = true, string prefixDelimiter = DefaultPrefixDelimiter, bool ensureFilteringEnabled = true, 
+      bool useContext = true, int cacheDurationInSeconds = DefaultCacheDurationInSeconds,
+      ushort pageSize = GridDataEditor.DefaultPageSize, bool cascadeDeletes = true,
       params string[] membersToExclude)
     {
       var usrCntrlEntityBrowser = new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter,
-        ensureFilteringEnabled, useContext, cacheDurationInSeconds, membersToExclude);
+        ensureFilteringEnabled, useContext, cacheDurationInSeconds, pageSize, cascadeDeletes, membersToExclude);
       var dataBrowser = FrmPersistantLocation.ShowControlInForm(usrCntrlEntityBrowser, "Data Browser", parentForm, "DataBrowser");
       //usrCntrlEntityBrowser.ResizeToFitNodes();
       return dataBrowser;
@@ -250,7 +253,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     private void GridDataEditor_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-      if (e.PropertyName== "PageSize")
+      if (e.PropertyName == "PageSize")
         pageSizeNumericUpDown.Value = gridDataEditor.PageSize;
       else if (e.PropertyName == "EnsureFilteringEnabled")
         ensureFilteringEnabledCheckBox.Checked = gridDataEditor.EnsureFilteringEnabled;
@@ -268,9 +271,12 @@ namespace AW.Winforms.Helpers.LLBL
     /// <param name="ensureFilteringEnabled">if set to <c>true</c> [ensure filtering enabled].</param>
     /// <param name="useContext">if set to <c>true</c> [use context].</param>
     /// <param name="cacheDurationInSeconds">The cache duration in seconds, 0 means don't cache.</param>
+    /// <param name="pageSize">Size of the page.</param>
+    /// <param name="cascadeDeletes">if set to <c>true</c> [cascade deletes].</param>
     /// <param name="membersToExclude">The members to exclude.</param>
     public UsrCntrlEntityBrowser(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = DefaultPrefixDelimiter,
-      bool ensureFilteringEnabled = true, bool useContext = true, int cacheDurationInSeconds = DefaultCacheDurationInSeconds, params string[] membersToExclude)
+      bool ensureFilteringEnabled = true, bool useContext = true, int cacheDurationInSeconds = DefaultCacheDurationInSeconds,
+      ushort pageSize = GridDataEditor.DefaultPageSize, bool cascadeDeletes = true, params string[] membersToExclude)
       : this()
     {
       PrefixDelimiter = prefixDelimiter;
@@ -279,6 +285,8 @@ namespace AW.Winforms.Helpers.LLBL
       Initialize(linqMetaData, null, membersToExclude);
       EnsureFilteringEnabled = ensureFilteringEnabled;
       CacheDurationInSeconds = cacheDurationInSeconds;
+      PageSize = pageSize;
+      CascadeDeletes = cascadeDeletes;
     }
 
     /// <summary>

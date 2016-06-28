@@ -327,9 +327,9 @@ namespace AW.Winforms.Helpers.LLBL
     private static void PopulateEntityFields(TreeNode entityNode, IEntityCore entity, IDictionary<Type, Tuple<TreeNode, IEntityCore>> entityNodes, IDataAccessAdapter adapter)
     {
       var entityType = entity.GetType();
-      var entityFields = entity.GetFields().ToDictionary(f => f.Name, f => f); //new HashSet<IEntityFieldCore>(entity.GetFields());
+      var entityFields = entity.GetFields().Where(f => f.Name.Equals(f.Alias)).ToDictionary(f => f.Name, f => f);
       var nonFieldNodes = new List<TreeNode>();
-      foreach (var fieldNode in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().FilterByIsEntityCore(false, true).
+      foreach (var fieldNode in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().FilterByIsEntityCore(false, true).OrderBy(p => p.Name).
         Select(browseableProperty => CreateSimpleTypeTreeNode(browseableProperty, 1)))
       {
         if (entityFields.ContainsKey(fieldNode.Name))
