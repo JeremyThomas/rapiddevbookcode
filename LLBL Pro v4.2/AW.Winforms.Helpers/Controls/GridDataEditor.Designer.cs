@@ -466,7 +466,7 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonObjectListViewVisualizer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonObjectListViewVisualizer.Image")));
       this.toolStripButtonObjectListViewVisualizer.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonObjectListViewVisualizer.Name = "toolStripButtonObjectListViewVisualizer";
-      this.toolStripButtonObjectListViewVisualizer.Size = new System.Drawing.Size(141, 22);
+      this.toolStripButtonObjectListViewVisualizer.Size = new System.Drawing.Size(141, 19);
       this.toolStripButtonObjectListViewVisualizer.Text = "ObjectListView Visualizer";
       this.toolStripButtonObjectListViewVisualizer.Click += new System.EventHandler(this.toolStripButtonObjectListViewVisualizer_Click);
       // 
@@ -481,17 +481,18 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonRelatedCounts.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRelatedCounts.Image")));
       this.toolStripButtonRelatedCounts.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonRelatedCounts.Name = "toolStripButtonRelatedCounts";
-      this.toolStripButtonRelatedCounts.Size = new System.Drawing.Size(129, 22);
+      this.toolStripButtonRelatedCounts.Size = new System.Drawing.Size(129, 19);
       this.toolStripButtonRelatedCounts.Text = "Related Object Counts";
       this.toolStripButtonRelatedCounts.Click += new System.EventHandler(this.toolStripButtonRelatedCounts_Click);
       // 
       // toolStripCheckBoxDeletesAreCascading
       // 
-      this.toolStripCheckBoxDeletesAreCascading.Checked = true;
-      this.toolStripCheckBoxDeletesAreCascading.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.toolStripCheckBoxDeletesAreCascading.Checked = false;
+      this.toolStripCheckBoxDeletesAreCascading.CheckState = System.Windows.Forms.CheckState.Unchecked;
       this.toolStripCheckBoxDeletesAreCascading.Name = "toolStripCheckBoxDeletesAreCascading";
       this.toolStripCheckBoxDeletesAreCascading.Size = new System.Drawing.Size(143, 19);
       this.toolStripCheckBoxDeletesAreCascading.Text = "Deletes Are Cascading";
+      this.toolStripCheckBoxDeletesAreCascading.CheckedChanged += new System.EventHandler(this.toolStripCheckBoxDeletesAreCascading_CheckedChanged);
       // 
       // dataGridViewEnumerable
       // 
@@ -695,7 +696,7 @@ namespace AW.Winforms.Helpers.Controls
       // 
       this.toolStripLabel4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
       this.toolStripLabel4.Name = "toolStripLabel4";
-      this.toolStripLabel4.Size = new System.Drawing.Size(70, 22);
+      this.toolStripLabel4.Size = new System.Drawing.Size(71, 22);
       this.toolStripLabel4.Text = "Total Count";
       // 
       // toolStripLabelSuperSetCount

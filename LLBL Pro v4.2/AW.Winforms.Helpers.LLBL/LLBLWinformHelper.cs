@@ -348,7 +348,7 @@ namespace AW.Winforms.Helpers.LLBL
       entityNode.Nodes.AddRange(nonFieldNodes.ToArray());
       var oneToManyNodes = new List<TreeNode>();
 
-      foreach (var entityTypeProperty in EntityHelper.GetPropertiesOfTypeEntity(entityType, true).Where(p => p.PropertyType.IsClass && !p.PropertyType.IsAbstract).OrderBy(p => p.DisplayName))
+      foreach (var entityTypeProperty in EntityHelper.GetPropertiesOfTypeEntity(entityType, true).Where(p => p.PropertyType.IsClass && !p.PropertyType.IsAbstract).OrderBy(p => p.Name))
       {
         var fieldNode = new TreeNode(entityTypeProperty.Name) {ToolTipText = FormatTypeName(entityTypeProperty.PropertyType)};
         if (EntityHelper.IsEntityCore(entityTypeProperty))

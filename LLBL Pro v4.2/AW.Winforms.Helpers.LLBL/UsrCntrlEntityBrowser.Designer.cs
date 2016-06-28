@@ -43,22 +43,22 @@ namespace AW.Winforms.Helpers.LLBL
       this.toolStrip = new System.Windows.Forms.ToolStrip();
       this.toolStripButtonCancelEdit = new System.Windows.Forms.ToolStripButton();
       this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
-      this.ensureFilteringEnabledCheckBox = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       this.useSchemaCheckBox = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       this.useContextCheckBox = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       this.prefixDelimiterLabel = new System.Windows.Forms.ToolStripLabel();
       this.prefixDelimiterTextBox = new System.Windows.Forms.ToolStripTextBox();
-      this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripLabelCacheDuration = new System.Windows.Forms.ToolStripLabel();
       this.cacheDurationInSecondsNumericUpDown = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
-      this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripLabelCommandTimeOut = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripNumericUpDownCommandTimeOut = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
+      this.ensureFilteringEnabledCheckBox = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
+      this.toolStripLabelPageSize = new System.Windows.Forms.ToolStripLabel();
       this.pageSizeNumericUpDown = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.toolStripCheckBoxDeletesAreCascading = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
-      this.toolStripNumericUpDownCommandTimeOut = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
@@ -78,7 +78,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.treeViewEntities.Name = "treeViewEntities";
       this.treeViewEntities.SelectedImageIndex = 4;
       this.treeViewEntities.ShowNodeToolTips = true;
-      this.treeViewEntities.Size = new System.Drawing.Size(254, 557);
+      this.treeViewEntities.Size = new System.Drawing.Size(250, 557);
       this.treeViewEntities.TabIndex = 1;
       this.toolTip1.SetToolTip(this.treeViewEntities, "Entities amd their proerties");
       this.treeViewEntities.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEntities_AfterExpand);
@@ -115,7 +115,7 @@ namespace AW.Winforms.Helpers.LLBL
       // 
       this.splitContainer1.Panel2.Controls.Add(this.gridDataEditor);
       this.splitContainer1.Size = new System.Drawing.Size(1204, 585);
-      this.splitContainer1.SplitterDistance = 254;
+      this.splitContainer1.SplitterDistance = 250;
       this.splitContainer1.TabIndex = 3;
       // 
       // toolStrip
@@ -124,21 +124,21 @@ namespace AW.Winforms.Helpers.LLBL
       this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonCancelEdit,
             this.saveToolStripButton,
-            this.ensureFilteringEnabledCheckBox,
             this.useSchemaCheckBox,
             this.useContextCheckBox,
             this.prefixDelimiterLabel,
             this.prefixDelimiterTextBox,
-            this.toolStripLabel1,
+            this.toolStripLabelCacheDuration,
             this.cacheDurationInSecondsNumericUpDown,
-            this.toolStripLabel2,
+            this.toolStripLabelCommandTimeOut,
+            this.toolStripNumericUpDownCommandTimeOut,
+            this.ensureFilteringEnabledCheckBox,
+            this.toolStripLabelPageSize,
             this.pageSizeNumericUpDown,
-            this.toolStripCheckBoxDeletesAreCascading,
-            this.toolStripLabel3,
-            this.toolStripNumericUpDownCommandTimeOut});
+            this.toolStripCheckBoxDeletesAreCascading});
       this.toolStrip.Location = new System.Drawing.Point(0, 557);
       this.toolStrip.Name = "toolStrip";
-      this.toolStrip.Size = new System.Drawing.Size(254, 28);
+      this.toolStrip.Size = new System.Drawing.Size(250, 28);
       this.toolStrip.TabIndex = 2;
       this.toolStrip.Text = "toolStrip";
       // 
@@ -166,25 +166,13 @@ namespace AW.Winforms.Helpers.LLBL
       this.saveToolStripButton.Text = "&Save";
       this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
       // 
-      // ensureFilteringEnabledCheckBox
-      // 
-      this.ensureFilteringEnabledCheckBox.BackColor = System.Drawing.Color.Transparent;
-      this.ensureFilteringEnabledCheckBox.Checked = false;
-      this.ensureFilteringEnabledCheckBox.CheckState = System.Windows.Forms.CheckState.Unchecked;
-      this.ensureFilteringEnabledCheckBox.Name = "ensureFilteringEnabledCheckBox";
-      this.ensureFilteringEnabledCheckBox.Size = new System.Drawing.Size(155, 25);
-      this.ensureFilteringEnabledCheckBox.Text = "Ensure Filtering Enabled:";
-      this.ensureFilteringEnabledCheckBox.ToolTipText = "Specifies whether filtering is enabled in the grid, even if the underlying collec" +
-    "tion doesn\'t support it.";
-      this.ensureFilteringEnabledCheckBox.Click += new System.EventHandler(this.ensureFilteringEnabledCheckBox_Click);
-      // 
       // useSchemaCheckBox
       // 
       this.useSchemaCheckBox.BackColor = System.Drawing.Color.Transparent;
       this.useSchemaCheckBox.Checked = false;
       this.useSchemaCheckBox.CheckState = System.Windows.Forms.CheckState.Unchecked;
       this.useSchemaCheckBox.Name = "useSchemaCheckBox";
-      this.useSchemaCheckBox.Size = new System.Drawing.Size(90, 19);
+      this.useSchemaCheckBox.Size = new System.Drawing.Size(90, 25);
       this.useSchemaCheckBox.Text = "Use Schema";
       this.useSchemaCheckBox.ToolTipText = "Use Table Schema to group the Entities";
       this.useSchemaCheckBox.Click += new System.EventHandler(this.toolStripCheckBox1_Click);
@@ -220,13 +208,13 @@ namespace AW.Winforms.Helpers.LLBL
     "es_Order would grouped into a node called Sales)";
       this.prefixDelimiterTextBox.Click += new System.EventHandler(this.prefixDelimiterTextBox_Click);
       // 
-      // toolStripLabel1
+      // toolStripLabelCacheDuration
       // 
-      this.toolStripLabel1.BackColor = System.Drawing.Color.Transparent;
-      this.toolStripLabel1.Name = "toolStripLabel1";
-      this.toolStripLabel1.Size = new System.Drawing.Size(92, 15);
-      this.toolStripLabel1.Text = "Cache Duration:";
-      this.toolStripLabel1.ToolTipText = "Specifies the duration (in seconds) that the query\'s result set should be cached " +
+      this.toolStripLabelCacheDuration.BackColor = System.Drawing.Color.Transparent;
+      this.toolStripLabelCacheDuration.Name = "toolStripLabelCacheDuration";
+      this.toolStripLabelCacheDuration.Size = new System.Drawing.Size(92, 15);
+      this.toolStripLabelCacheDuration.Text = "Cache Duration:";
+      this.toolStripLabelCacheDuration.ToolTipText = "Specifies the duration (in seconds) that the query\'s result set should be cached " +
     "for. Zero to turn caching off.";
       // 
       // cacheDurationInSecondsNumericUpDown
@@ -242,13 +230,44 @@ namespace AW.Winforms.Helpers.LLBL
     "for. Zero to turn caching off.";
       this.cacheDurationInSecondsNumericUpDown.ValueChanged += new System.EventHandler(this.cacheDurationInSecondsNumericUpDown_ValueChanged);
       // 
-      // toolStripLabel2
+      // toolStripLabelCommandTimeOut
       // 
-      this.toolStripLabel2.BackColor = System.Drawing.Color.Transparent;
-      this.toolStripLabel2.Name = "toolStripLabel2";
-      this.toolStripLabel2.Size = new System.Drawing.Size(59, 15);
-      this.toolStripLabel2.Text = "Page Size:";
-      this.toolStripLabel2.ToolTipText = "The number of rows per page in the grid. Zero to turn paging off.";
+      this.toolStripLabelCommandTimeOut.Name = "toolStripLabelCommandTimeOut";
+      this.toolStripLabelCommandTimeOut.Size = new System.Drawing.Size(117, 15);
+      this.toolStripLabelCommandTimeOut.Text = "Command TimeOut:";
+      this.toolStripLabelCommandTimeOut.ToolTipText = "The timeout value (in seconds) to use with the ADO.NET data fetching";
+      // 
+      // toolStripNumericUpDownCommandTimeOut
+      // 
+      this.toolStripNumericUpDownCommandTimeOut.BackColor = System.Drawing.Color.Transparent;
+      this.toolStripNumericUpDownCommandTimeOut.DecimalPlaces = 0;
+      this.toolStripNumericUpDownCommandTimeOut.Name = "toolStripNumericUpDownCommandTimeOut";
+      this.toolStripNumericUpDownCommandTimeOut.NumBackColor = System.Drawing.SystemColors.Window;
+      this.toolStripNumericUpDownCommandTimeOut.Size = new System.Drawing.Size(53, 25);
+      this.toolStripNumericUpDownCommandTimeOut.Text = "Command TimeOut";
+      this.toolStripNumericUpDownCommandTimeOut.TextVisible = false;
+      this.toolStripNumericUpDownCommandTimeOut.ToolTipText = "The timeout value (in seconds) to use with the ADO.NET data fetching";
+      this.toolStripNumericUpDownCommandTimeOut.ValueChanged += new System.EventHandler(this.toolStripNumericUpDownCommandTimeOut_ValueChanged);
+      // 
+      // ensureFilteringEnabledCheckBox
+      // 
+      this.ensureFilteringEnabledCheckBox.BackColor = System.Drawing.Color.Transparent;
+      this.ensureFilteringEnabledCheckBox.Checked = false;
+      this.ensureFilteringEnabledCheckBox.CheckState = System.Windows.Forms.CheckState.Unchecked;
+      this.ensureFilteringEnabledCheckBox.Name = "ensureFilteringEnabledCheckBox";
+      this.ensureFilteringEnabledCheckBox.Size = new System.Drawing.Size(155, 19);
+      this.ensureFilteringEnabledCheckBox.Text = "Ensure Filtering Enabled:";
+      this.ensureFilteringEnabledCheckBox.ToolTipText = "Specifies whether filtering is enabled in the grid, even if the underlying collec" +
+    "tion doesn\'t support it.";
+      this.ensureFilteringEnabledCheckBox.Click += new System.EventHandler(this.ensureFilteringEnabledCheckBox_Click);
+      // 
+      // toolStripLabelPageSize
+      // 
+      this.toolStripLabelPageSize.BackColor = System.Drawing.Color.Transparent;
+      this.toolStripLabelPageSize.Name = "toolStripLabelPageSize";
+      this.toolStripLabelPageSize.Size = new System.Drawing.Size(59, 15);
+      this.toolStripLabelPageSize.Text = "Page Size:";
+      this.toolStripLabelPageSize.ToolTipText = "The number of rows per page in the grid. Zero to turn paging off.";
       // 
       // pageSizeNumericUpDown
       // 
@@ -260,7 +279,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.pageSizeNumericUpDown.Text = "Page Size:";
       this.pageSizeNumericUpDown.TextVisible = false;
       this.pageSizeNumericUpDown.ToolTipText = "The number of rows per page in the grid. Zero to turn paging off.";
-      this.pageSizeNumericUpDown.Click += new System.EventHandler(this.pageSizeNumericUpDown_Click);
+      this.pageSizeNumericUpDown.ValueChanged += new System.EventHandler(this.pageSizeNumericUpDown_ValueChanged);
       // 
       // toolStripCheckBoxDeletesAreCascading
       // 
@@ -272,18 +291,6 @@ namespace AW.Winforms.Helpers.LLBL
       this.toolStripCheckBoxDeletesAreCascading.Text = " Cascade Deletes";
       this.toolStripCheckBoxDeletesAreCascading.ToolTipText = "Deletes cascade non-recursively to children of the selected entity.";
       this.toolStripCheckBoxDeletesAreCascading.Click += new System.EventHandler(this.toolStripCheckBoxDeletesAreCascading_Click);
-      // 
-      // toolStripNumericUpDownCommandTimeOut
-      // 
-      this.toolStripNumericUpDownCommandTimeOut.BackColor = System.Drawing.Color.Transparent;
-      this.toolStripNumericUpDownCommandTimeOut.DecimalPlaces = 0;
-      this.toolStripNumericUpDownCommandTimeOut.Name = "toolStripNumericUpDownCommandTimeOut";
-      this.toolStripNumericUpDownCommandTimeOut.NumBackColor = System.Drawing.SystemColors.Window;
-      this.toolStripNumericUpDownCommandTimeOut.Size = new System.Drawing.Size(173, 25);
-      this.toolStripNumericUpDownCommandTimeOut.Text = "Command TimeOut";
-      this.toolStripNumericUpDownCommandTimeOut.TextVisible = false;
-      this.toolStripNumericUpDownCommandTimeOut.ToolTipText = "The timeout value (in seconds) to use with the ADO.NET data fetching";
-      this.toolStripNumericUpDownCommandTimeOut.ValueChanged += new System.EventHandler(this.toolStripNumericUpDownCommandTimeOut_ValueChanged);
       // 
       // gridDataEditor
       // 
@@ -299,7 +306,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.gridDataEditor.Name = "gridDataEditor";
       this.gridDataEditor.PageSize = ((ushort)(15));
       this.gridDataEditor.Readonly = false;
-      this.gridDataEditor.Size = new System.Drawing.Size(946, 585);
+      this.gridDataEditor.Size = new System.Drawing.Size(950, 585);
       this.gridDataEditor.TabIndex = 0;
       this.toolTip1.SetToolTip(this.gridDataEditor, "Data in the Tables");
       // 
@@ -337,13 +344,6 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorData.Size = new System.Drawing.Size(331, 25);
       this.bindingNavigatorData.TabIndex = 2;
       this.bindingNavigatorData.Text = "bindingNavigator1";
-      // 
-      // toolStripLabel3
-      // 
-      this.toolStripLabel3.Name = "toolStripLabel3";
-      this.toolStripLabel3.Size = new System.Drawing.Size(117, 15);
-      this.toolStripLabel3.Text = "Command TimeOut:";
-      this.toolStripLabel3.ToolTipText = "The timeout value (in seconds) to use with the ADO.NET data fetching";
       // 
       // UsrCntrlEntityBrowser
       // 
@@ -388,9 +388,9 @@ namespace AW.Winforms.Helpers.LLBL
     private ToolStripNumericUpDown cacheDurationInSecondsNumericUpDown;
     private ToolStripNumericUpDown pageSizeNumericUpDown;
     private ToolStripCheckBox toolStripCheckBoxDeletesAreCascading;
-    private ToolStripLabel toolStripLabel1;
-    private ToolStripLabel toolStripLabel2;
+    private ToolStripLabel toolStripLabelCacheDuration;
+    private ToolStripLabel toolStripLabelPageSize;
     private ToolStripNumericUpDown toolStripNumericUpDownCommandTimeOut;
-    private ToolStripLabel toolStripLabel3;
+    private ToolStripLabel toolStripLabelCommandTimeOut;
   }
 }
