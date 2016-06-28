@@ -10,9 +10,11 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using ADGV;
 using AW.Helper;
+using AW.Helper.Annotations;
 using AW.Helper.PropertyDescriptors;
 using AW.Helper.TypeConverters;
 using AW.Winforms.Helpers.EntityViewer;
@@ -26,7 +28,7 @@ using Microsoft.VisualBasic;
 
 namespace AW.Winforms.Helpers.Controls
 {
-  public partial class GridDataEditor : UserControl, ISupportInitialize
+  public partial class GridDataEditor : UserControl, ISupportInitialize, INotifyPropertyChanged
   {
     public string[] MembersToExclude { get; set; }
 
@@ -123,6 +125,7 @@ namespace AW.Winforms.Helpers.Controls
       {
         _pageSize = value;
         toolStripLabelCurrentPagesSize.Text = _pageSize.ToString(CultureInfo.InvariantCulture);
+        OnPropertyChanged();
       }
     }
 
@@ -186,6 +189,14 @@ namespace AW.Winforms.Helpers.Controls
     /// </summary>
     private bool _shouldBeReadonly;
 
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    [NotifyPropertyChangedInvocator]
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+      if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+    }
+
     #endregion
 
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -216,7 +227,9 @@ namespace AW.Winforms.Helpers.Controls
     public static void CopyEntireDataGridViewToClipboard(DataGridView dataGridView)
     {
       dataGridView.SelectAll();
-      Clipboard.SetDataObject(dataGridView.GetClipboardContent());
+      var clipboardContent = dataGridView.GetClipboardContent();
+      if (clipboardContent != null)
+        Clipboard.SetDataObject(clipboardContent);
     }
 
     private void copyToolStripButton_Click(object sender, EventArgs e)
@@ -306,6 +319,15 @@ namespace AW.Winforms.Helpers.Controls
       get { return toolStripCheckBoxDeletesAreCascading.Checked; }
       set { toolStripCheckBoxDeletesAreCascading.Checked = value; }
     }
+
+    private void toolStripCheckBoxDeletesAreCascading_CheckedChanged(object sender, EventArgs e)
+    {
+      // ReSharper disable once ExplicitCallerInfoArgument
+      OnPropertyChanged("CascadeDeletes");
+    }
+
+    [Category("GridDataEditor"), Description("Gets or sets wether filtering is enabled in the grid, even if the underlying collection doesn't support it.")]
+    public bool EnsureFilteringEnabled { get; set; }
 
     private bool HasDeletes
     {
@@ -960,6 +982,8 @@ namespace AW.Winforms.Helpers.Controls
       if (!bindingSourceEnumerable.SupportsFiltering)
       {
         EnsureFilteringEnabled = true;
+        // ReSharper disable once ExplicitCallerInfoArgument
+        OnPropertyChanged("EnsureFilteringEnabled");
         BindEnumerable(SourceEnumerable);
 
         //BindEnumerable(new Csla.ObjectListView(BindingSourceEnumerableList));
@@ -986,9 +1010,6 @@ namespace AW.Winforms.Helpers.Controls
     {
       get { return SourceEnumerable as DataView; }
     }
-
-    [Category("GridDataEditor"), Description("Gets or sets wether filtering is enabled in the grid, even if the underlying collection doesn't support it.")]
-    public bool EnsureFilteringEnabled { get; set; }
 
     public IDataEditorPersister DataEditorPersister
     {
@@ -1216,5 +1237,6 @@ namespace AW.Winforms.Helpers.Controls
         foreach (DataGridViewCell selectedCell in dataGridViewEnumerable.SelectedCells)
           selectedCell.Value = selectedCell.ValueType == typeof(string) ? string.Empty : MetaDataHelper.GetDefault(selectedCell.ValueType);
     }
+
   }
 }

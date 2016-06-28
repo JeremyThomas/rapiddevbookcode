@@ -20,9 +20,10 @@ namespace AW.Winforms.Helpers.LLBL
     private EntityHelper.GetQueryableForEntityDelegate _getQueryableForEntityDelegate;
     private bool _useSchema;
     private string _prefixDelimiter;
+    private int _cacheDurationInSeconds;
+    private bool _useContext;
 
-    [DefaultValue(DefaultPrefixDelimiter),
-     Category("EntityBrowser"),
+    [DefaultValue(DefaultPrefixDelimiter), Category("EntityBrowser"),
      Description("Table Prefix Delimiter to group Entities by (e.g. with a delimiter of _ table Sales_Order would grouped into a node called Sales)")]
     public string PrefixDelimiter
     {
@@ -39,8 +40,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-    [DefaultValue(true),
-     Category("EntityBrowser"),
+    [DefaultValue(true), Category("EntityBrowser"),
      Description("Use Table Schema to group the Entities")]
     public bool UseSchema
     {
@@ -54,84 +54,6 @@ namespace AW.Winforms.Helpers.LLBL
           OnPropertyChanged();
         }
         useSchemaCheckBox.Checked = value;
-      }
-    }
-
-    private bool HasLinqMetaData
-    {
-      get { return _linqMetaData != null; }
-    }
-
-    /// <summary>
-    /// </summary>
-    public Context ContextToUse
-    {
-      //IContextAwareElement contextAwareElement = (object) query as IContextAwareElement;
-      get { return HasLinqMetaData ? EntityHelper.GetContextToUse(_linqMetaData) : null; }
-      set
-      {
-        if (HasLinqMetaData)
-          ((dynamic) _linqMetaData).ContextToUse = value;
-      }
-    }
-
-    private bool _useContext;
-    private int _cacheDurationInSeconds;
-
-    [DefaultValue(true),
-     Category("EntityBrowser"),
-     Description("Specifies whether a Context is used for entity fetches, if true then entities will remain dirty until saved or reverted, i.e. the entity stays in memory and will be reused even if re-fetched.")]
-    public bool UseContext
-    {
-      get { return HasLinqMetaData ? ContextToUse != null : _useContext; }
-      set { SetContextToUse(value); }
-    }
-
-    private void SetContextToUse()
-    {
-      SetContextToUse(_useContext);
-    }
-
-    private void SetContextToUse(bool value)
-    {
-      if (HasLinqMetaData)
-      {
-        if (value)
-        {
-          if (!UseContext)
-          {
-            var dataEditorLLBLDataScopePersister = new DataEditorLLBLDataScopePersister(this, EntityHelper.GetTransactionController(_linqMetaData));
-            gridDataEditor.DataEditorPersister = dataEditorLLBLDataScopePersister;
-            dataEditorLLBLDataScopePersister.ContainedDataChanged += DataEditorEventHandlers_ContainedDataChanged;
-            dataEditorLLBLDataScopePersister.EntityAdded += DataEditorEventHandlers_EntityAdded;
-            dataEditorLLBLDataScopePersister.EntityRemoved += dataEditorLLBLDataScopePersister_EntityRemoved;
-            dataEditorLLBLDataScopePersister.EditingFinished += dataEditorLLBLDataScopePersister_EditingFinished;
-            saveToolStripButton.Visible = true;
-            toolStripButtonCancelEdit.Visible = true;
-          }
-        }
-        else
-        {
-          ContextToUse = null;
-          gridDataEditor.DataEditorPersister = null;
-          saveToolStripButton.Visible = false;
-          toolStripButtonCancelEdit.Visible = false;
-        }
-      }
-      else
-        _useContext = value;
-      useContextCheckBox.Checked = value;
-      // ReSharper disable once UseNameofExpression
-      OnPropertyChanged("UseContext");
-    }
-
-    private GeneralEntityCollectionDataScope EntityCollectionDataScope
-    {
-      get
-      {
-        var dataEditorLLBLDataScopePersister = gridDataEditor.DataEditorPersister as DataEditorLLBLDataScopePersister;
-        if (dataEditorLLBLDataScopePersister == null) return null;
-        return dataEditorLLBLDataScopePersister.GeneralEntityCollectionDataScope;
       }
     }
 
@@ -176,6 +98,134 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
+    [DefaultValue(true), Category("EntityBrowser"),
+     Description("Deletes cascade non-recursively to children of the selected entity.")]
+    public bool CascadeDeletes
+    {
+      get { return toolStripCheckBoxDeletesAreCascading.Checked; }
+      set { toolStripCheckBoxDeletesAreCascading.Checked = value; }
+    }
+
+    private void ensureFilteringEnabledCheckBox_Click(object sender, EventArgs e)
+    {
+      EnsureFilteringEnabled = ensureFilteringEnabledCheckBox.Checked;
+    }
+
+    private void toolStripCheckBox1_Click(object sender, EventArgs e)
+    {
+      UseSchema = useSchemaCheckBox.Checked;
+    }
+
+    private void useContextCheckBox_Click(object sender, EventArgs e)
+    {
+      UseContext = useContextCheckBox.Checked;
+    }
+
+    private void cacheDurationInSecondsNumericUpDown_ValueChanged(object sender, EventArgs e)
+    {
+      CacheDurationInSeconds = (int) cacheDurationInSecondsNumericUpDown.Value;
+    }
+
+    private void pageSizeNumericUpDown_ValueChanged(object sender, EventArgs e)
+    {
+      PageSize = (ushort) pageSizeNumericUpDown.Value;
+    }
+
+    private void prefixDelimiterTextBox_Click(object sender, EventArgs e)
+    {
+      PrefixDelimiter = prefixDelimiterTextBox.Text;
+    }
+
+    private void toolStripCheckBoxDeletesAreCascading_Click(object sender, EventArgs e)
+    {
+      gridDataEditor.CascadeDeletes = toolStripCheckBoxDeletesAreCascading.Checked;
+      OnPropertyChanged();
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    [NotifyPropertyChangedInvocator]
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+      if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    [DefaultValue(true), Category("EntityBrowser"),
+     Description(
+       "Specifies whether a Context is used for entity fetches, if true then entities will remain dirty until saved or reverted, i.e. the entity stays in memory and will be reused even if re-fetched."
+       )]
+    public bool UseContext
+    {
+      get { return HasLinqMetaData ? ContextToUse != null : _useContext; }
+      set { SetContextToUse(value); }
+    }
+
+    private void SetContextToUse()
+    {
+      SetContextToUse(_useContext);
+    }
+
+    private void SetContextToUse(bool value)
+    {
+      if (HasLinqMetaData)
+      {
+        if (value)
+        {
+          if (!UseContext)
+          {
+            var dataEditorLLBLDataScopePersister = new DataEditorLLBLDataScopePersister(this, EntityHelper.GetTransactionController(_linqMetaData));
+            gridDataEditor.DataEditorPersister = dataEditorLLBLDataScopePersister;
+            dataEditorLLBLDataScopePersister.ContainedDataChanged += DataEditorEventHandlers_ContainedDataChanged;
+            dataEditorLLBLDataScopePersister.EntityAdded += DataEditorEventHandlers_EntityAdded;
+            dataEditorLLBLDataScopePersister.EntityRemoved += dataEditorLLBLDataScopePersister_EntityRemoved;
+            dataEditorLLBLDataScopePersister.EditingFinished += dataEditorLLBLDataScopePersister_EditingFinished;
+            saveToolStripButton.Visible = true;
+            toolStripButtonCancelEdit.Visible = true;
+          }
+        }
+        else
+        {
+          ContextToUse = null;
+          gridDataEditor.DataEditorPersister = null;
+          saveToolStripButton.Visible = false;
+          toolStripButtonCancelEdit.Visible = false;
+        }
+      }
+      else
+        _useContext = value;
+      useContextCheckBox.Checked = value;
+      // ReSharper disable once UseNameofExpression
+      OnPropertyChanged("UseContext");
+    }
+
+    private bool HasLinqMetaData
+    {
+      get { return _linqMetaData != null; }
+    }
+
+    /// <summary>
+    /// </summary>
+    public Context ContextToUse
+    {
+      //IContextAwareElement contextAwareElement = (object) query as IContextAwareElement;
+      get { return HasLinqMetaData ? EntityHelper.GetContextToUse(_linqMetaData) : null; }
+      set
+      {
+        if (HasLinqMetaData)
+          ((dynamic) _linqMetaData).ContextToUse = value;
+      }
+    }
+
+    private GeneralEntityCollectionDataScope EntityCollectionDataScope
+    {
+      get
+      {
+        var dataEditorLLBLDataScopePersister = gridDataEditor.DataEditorPersister as DataEditorLLBLDataScopePersister;
+        if (dataEditorLLBLDataScopePersister == null) return null;
+        return dataEditorLLBLDataScopePersister.GeneralEntityCollectionDataScope;
+      }
+    }
+
     public static FrmPersistantLocation ShowDataBrowser(ILinqMetaData linqMetaData, Form parentForm = null,
       bool useSchema = true, string prefixDelimiter = DefaultPrefixDelimiter, bool ensureFilteringEnabled = true, bool useContext = true, int cacheDurationInSeconds = DefaultCacheDurationInSeconds,
       params string[] membersToExclude)
@@ -195,6 +245,18 @@ namespace AW.Winforms.Helpers.LLBL
       UseContext = true;
       CascadeDeletes = true;
       CacheDurationInSeconds = DefaultCacheDurationInSeconds;
+      gridDataEditor.PropertyChanged += GridDataEditor_PropertyChanged;
+    }
+
+    private void GridDataEditor_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      if (e.PropertyName== "PageSize")
+        pageSizeNumericUpDown.Value = gridDataEditor.PageSize;
+      else if (e.PropertyName == "EnsureFilteringEnabled")
+        ensureFilteringEnabledCheckBox.Checked = gridDataEditor.EnsureFilteringEnabled;
+      else if (e.PropertyName == "CascadeDeletes")
+        toolStripCheckBoxDeletesAreCascading.Checked = gridDataEditor.CascadeDeletes;
+      OnPropertyChanged(e.PropertyName);
     }
 
     /// <summary>
@@ -436,59 +498,6 @@ namespace AW.Winforms.Helpers.LLBL
     private void DataEditorEventHandlers_EntityAdded(object sender, EventArgs e)
     {
       toolStripButtonCancelEdit.Enabled = true;
-    }
-
-    private void ensureFilteringEnabledCheckBox_Click(object sender, EventArgs e)
-    {
-      EnsureFilteringEnabled = ensureFilteringEnabledCheckBox.Checked;
-    }
-
-    private void toolStripCheckBox1_Click(object sender, EventArgs e)
-    {
-      UseSchema = useSchemaCheckBox.Checked;
-    }
-
-    private void useContextCheckBox_Click(object sender, EventArgs e)
-    {
-      UseContext = useContextCheckBox.Checked;
-    }
-
-    private void cacheDurationInSecondsNumericUpDown_ValueChanged(object sender, EventArgs e)
-    {
-      CacheDurationInSeconds = (int) cacheDurationInSecondsNumericUpDown.Value;
-    }
-
-    private void pageSizeNumericUpDown_Click(object sender, EventArgs e)
-    {
-      PageSize = (ushort) pageSizeNumericUpDown.Value;
-    }
-
-    private void prefixDelimiterTextBox_Click(object sender, EventArgs e)
-    {
-      PrefixDelimiter = prefixDelimiterTextBox.Text;
-    }
-
-    [DefaultValue(true),
-     Category("EntityBrowser"),
-     Description("Deletes cascade non-recursively to children of the selected entity.")]
-    public bool CascadeDeletes
-    {
-      get { return toolStripCheckBoxDeletesAreCascading.Checked; }
-      set { toolStripCheckBoxDeletesAreCascading.Checked = value; }
-    }
-
-    private void toolStripCheckBoxDeletesAreCascading_Click(object sender, EventArgs e)
-    {
-      gridDataEditor.CascadeDeletes = toolStripCheckBoxDeletesAreCascading.Checked;
-      OnPropertyChanged();
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    [NotifyPropertyChangedInvocator]
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-      if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
     }
 
     private void treeViewEntities_AfterExpand(object sender, TreeViewEventArgs e)
