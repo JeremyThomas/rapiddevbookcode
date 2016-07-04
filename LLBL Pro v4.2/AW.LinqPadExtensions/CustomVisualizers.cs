@@ -60,7 +60,7 @@ namespace LINQPad
       {
         var panelTitle = GetPanelTitle(enumerable, options);
         var outputPanel = PanelManager.DisplayControl(new GridDataEditor(enumerable, false, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), pageSize,
-          false, options == null ? null : options.MembersToExclude), TrimTitle(panelTitle));
+          false, true, options == null ? null : options.MembersToExclude), TrimTitle(panelTitle));
         outputPanel.ToolTip = panelTitle;
       }
       return null; //So can be used in a linqpad expression

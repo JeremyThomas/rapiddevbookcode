@@ -181,11 +181,9 @@ namespace AW.Helper
     ///   directory
     /// </remarks>
     /// <see cref="https://github.com/AutoMapper/AutoMapper/issues/383" />
-    /// <see
-    ///   cref="https://connect.microsoft.com/VisualStudio/feedback/details/779370/vs2012-incorrectly-resolves-mscorlib-version-when-referencing-pcl-assembly" />
+    /// <see cref="https://connect.microsoft.com/VisualStudio/feedback/details/779370/vs2012-incorrectly-resolves-mscorlib-version-when-referencing-pcl-assembly" />
     /// <see cref="http://stackoverflow.com/questions/13871267/unable-to-resolve-assemblies-that-use-portable-class-libraries" />
-    /// <see
-    ///   cref="http://stackoverflow.com/questions/18277499/could-not-load-file-or-assembly-system-core-version-2-0-5-0-exception-wh?lq=1" />
+    /// <see cref="http://stackoverflow.com/questions/18277499/could-not-load-file-or-assembly-system-core-version-2-0-5-0-exception-wh?lq=1" />
     /// <see cref="https://github.com/Fody/Costura/issues/30" />
     /// <see cref="https://github.com/dennisdoomen/fluentassertions/issues/311" />
 #pragma warning restore 1584, 1711, 1572, 1581, 1580
@@ -201,6 +199,12 @@ namespace AW.Helper
         TraceOut(e);
         var description = MetaDataHelper.GetDisplayNameOrDescription(value);
         return String.IsNullOrEmpty(description) ? value.ToString() : description;
+      }
+      catch (NullReferenceException e)
+      {
+        TraceOut(e);
+        var description = MetaDataHelper.GetDisplayNameOrDescription(value);
+        return string.IsNullOrEmpty(description) ? value.ToString() : description;
       }
     }
 
