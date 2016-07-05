@@ -37,10 +37,7 @@ namespace AW.Winforms.Helpers.Forms
     public static void ShowAboutBox(IWin32Window owner = null, string moreInfo = null)
     {
       if (moreInfo == null)
-      {
-        moreInfo = Environment.NewLine + Environment.NewLine;
-        moreInfo += "https://rapiddevbookcode.codeplex.com/documentation" + Environment.NewLine;
-      }
+        moreInfo = Environment.NewLine + Environment.NewLine + "https://rapiddevbookcode.codeplex.com/documentation" + Environment.NewLine;
       var ab = new AboutBox(moreInfo);
       ab.ShowDialog(owner);
     }

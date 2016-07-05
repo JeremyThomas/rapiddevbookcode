@@ -263,7 +263,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
             var baseItem = explorerItems.SingleOrDefault();
             if (baseItem != null)
             {
-              table.Text += String.Format(" (Sub-type of '{0}')", baseItem.DragText);
+              table.Text += LLBLWinformHelper.CreateSubTypeSuffix(baseItem.DragText);
               foreach (var explorerItem in baseItem.Children)
               {
                 var item = table.Children.Single(c => c.Text == explorerItem.Text);
