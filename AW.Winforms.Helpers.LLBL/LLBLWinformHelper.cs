@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Windows.Forms;
@@ -15,6 +16,8 @@ namespace AW.Winforms.Helpers.LLBL
 {
   public static class LLBLWinformHelper
   {
+    private const int ImageIndexColumn = 1;
+
     /// <summary>
     ///   Initializes a new instance of the <see cref="T:System.Object" /> class.
     /// </summary>
@@ -305,7 +308,7 @@ namespace AW.Winforms.Helpers.LLBL
           var entityNodeText = GetEntityTypeName(entityType);
           if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
             if (entityType.BaseType != null && !entityType.BaseType.IsAbstract)
-              entityNodeText += string.Format(" (Sub-type of '{0}')", GetEntityTypeName(entityType.BaseType));
+              entityNodeText += CreateSubTypeSuffix(GetEntityTypeName(entityType.BaseType));
           var entityNode = treeNodeCollectionToAddTo.Add(entityType.Name, entityNodeText);
           entityNode.Tag = entityType;
 
@@ -316,6 +319,23 @@ namespace AW.Winforms.Helpers.LLBL
 
       foreach (var entityNode in entityNodes)
         PopulateEntityFields(entityNode.Value.Item1, entityNode.Value.Item2, entityNodes, adapter);
+      foreach (var entityNode in entityNodes)
+        if (entityNode.Value.Item2.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
+        {
+          var baseType = entityNode.Key.BaseType;
+          if (baseType != null && entityNodes.ContainsKey(baseType))
+          {
+            var baseItem = entityNodes[baseType].Item1;
+            foreach (var explorerItem in baseItem.Nodes.AsEnumerable())
+            {
+              var item = entityNode.Value.Item1.Nodes.AsEnumerable().Single(c => c.Text == explorerItem.Text);
+              if (explorerItem.ToolTipText.Contains(item.ToolTipText))
+                item.ToolTipText = explorerItem.ToolTipText;
+              if (item.ImageIndex == ImageIndexColumn)
+                item.ForeColor = Color.Gray;
+            }
+          }
+        }
 
       if (schemas.Count == 1)
         schemaTreeNodeCollection.AddRange(schemas.First().Value.Nodes.OfType<TreeNode>().OrderBy(n => n.Text).ToArray());
@@ -324,13 +344,18 @@ namespace AW.Winforms.Helpers.LLBL
           schemaTreeNodeCollection.Add(treeNode.Value);
     }
 
+    public static string CreateSubTypeSuffix(string entitytName)
+    {
+      return string.Format(" (Sub-type of '{0}')", entitytName);
+    }
+
     private static void PopulateEntityFields(TreeNode entityNode, IEntityCore entity, IDictionary<Type, Tuple<TreeNode, IEntityCore>> entityNodes, IDataAccessAdapter adapter)
     {
       var entityType = entity.GetType();
       var entityFields = entity.GetFields().Where(f => f.Name.Equals(f.Alias)).ToDictionary(f => f.Name, f => f);
       var nonFieldNodes = new List<TreeNode>();
-      foreach (var fieldNode in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().FilterByIsEntityCore(false, true).OrderBy(p => p.Name).
-        Select(browseableProperty => CreateSimpleTypeTreeNode(browseableProperty, 1)))
+      var propertyDescriptors = ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().FilterByIsEntityCore(false, true).OrderBy(p => p.Name);
+      foreach (var fieldNode in propertyDescriptors.Select(browseableProperty => CreateSimpleTypeTreeNode(browseableProperty, ImageIndexColumn)))
       {
         if (entityFields.ContainsKey(fieldNode.Name))
         {
@@ -348,7 +373,8 @@ namespace AW.Winforms.Helpers.LLBL
       entityNode.Nodes.AddRange(nonFieldNodes.ToArray());
       var oneToManyNodes = new List<TreeNode>();
 
-      foreach (var entityTypeProperty in EntityHelper.GetPropertiesOfTypeEntity(entityType, true).Where(p => p.PropertyType.IsClass && !p.PropertyType.IsAbstract).OrderBy(p => p.Name))
+      var entityTypeProperties = EntityHelper.GetPropertiesOfTypeEntity(entityType, true).Where(p => p.PropertyType.IsClass && !p.PropertyType.IsAbstract).OrderBy(p => p.Name);
+      foreach (var entityTypeProperty in entityTypeProperties)
       {
         var fieldNode = new TreeNode(entityTypeProperty.Name) {ToolTipText = FormatTypeName(entityTypeProperty.PropertyType)};
         if (EntityHelper.IsEntityCore(entityTypeProperty))

@@ -558,7 +558,7 @@ namespace LLBLGen.EntityBrowser
 
     private void toolStripButtonAbout_Click(object sender, EventArgs e)
     {
-      AboutBox.ShowAboutBox(this);
+      AboutBox.ShowAboutBox(this, Environment.NewLine + Environment.NewLine + "https://rapiddevbookcode.codeplex.com/wikipage?title=LLBLGen%20Entity%20Browser" + Environment.NewLine);
     }
   }
 
