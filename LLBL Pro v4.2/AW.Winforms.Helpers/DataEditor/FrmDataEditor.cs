@@ -42,15 +42,15 @@ namespace AW.Winforms.Helpers.DataEditor
     }
 
 // ReSharper disable once MemberCanBePrivate.Global
-    public static Form CreateDataEditorForm(IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly)
+    public static Form CreateDataEditorForm(IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly, bool showPublicFields = true)
     {
-      return InitialiseDataEditorForm(new FrmDataEditor(), enumerable, dataEditorPersister, pageSize, readOnly);
+      return InitialiseDataEditorForm(new FrmDataEditor(), enumerable, dataEditorPersister, pageSize, readOnly, showPublicFields);
     }
 
-    private static Form InitialiseDataEditorForm(Form frmDataEditor, IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly)
+    private static Form InitialiseDataEditorForm(Form frmDataEditor, IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly, bool showPublicFields = false)
     {
       frmDataEditor.Text = GetEnumerableDescription(enumerable);
-      var gridDataEditor = new GridDataEditor(enumerable, true, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), pageSize, readOnly) {Dock = DockStyle.Fill};
+      var gridDataEditor = new GridDataEditor(enumerable, true, DataEditorPersisterFactory.Create(enumerable, dataEditorPersister), pageSize, readOnly, showPublicFields) {Dock = DockStyle.Fill};
       frmDataEditor.Controls.Add(gridDataEditor);
       return frmDataEditor;
     }
@@ -58,7 +58,7 @@ namespace AW.Winforms.Helpers.DataEditor
     private static Form InitialiseDataViewerForm(Form frmDataEditor, IEnumerable enumerable, bool allowPaging = false, params ToolStripItem[] toolStripItems)
     {
       frmDataEditor.Text = GetEnumerableDescription(enumerable);
-      var gridDataEditor = new GridDataEditor(enumerable, true, null, 0)
+      var gridDataEditor = new GridDataEditor(enumerable, true, null, 0, true, true)
       {
         Dock = DockStyle.Fill,
         bindingNavigatorPaging = {Visible = allowPaging}

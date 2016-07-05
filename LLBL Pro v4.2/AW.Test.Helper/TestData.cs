@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.DirectoryServices;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -181,6 +182,21 @@ namespace AW.Test.Helpers
     public static IEnumerable<string> ThreeStringsEnumerable
     {
       get { return ThreeStrings.Distinct(); }
+    }
+
+    public const string LdapUserName = "guest1";
+
+    /// <summary>
+    /// Creates the LDAP directory entry.
+    /// </summary>
+    /// <remarks>
+    /// http://www.zflexldapadministrator.com/index.php/blog/82-free-online-ldap
+    /// http://www.forumsys.com/en/tutorials/integration-how-to/ldap/online-ldap-test-server/
+    /// </remarks>
+    /// <returns></returns>
+    public static DirectoryEntry CreateLdapDirectoryEntry()
+    {
+      return new DirectoryEntry("LDAP://www.zflexldap.com", "cn=ro_admin,ou=sysadmins,dc=zflexsoftware,dc=com", "zflexpass", AuthenticationTypes.None);
     }
   }
 

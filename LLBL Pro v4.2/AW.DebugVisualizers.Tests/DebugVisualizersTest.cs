@@ -510,10 +510,13 @@ namespace AW.DebugVisualizers.Tests
         TestShowTransported(directoryEntry.Children, 3);
     }
 
+    /// <summary>
+    /// Searches the result collection test.
+    /// </summary>
     [TestCategory("Winforms"), TestCategory("Slow"), TestCategory("LDAP"), TestMethod]
     public void SearchResultCollectionTest()
     {
-      using (var entry = new DirectoryEntry("LDAP://ldap.forumsys.com/dc=example,dc=com", "", "", AuthenticationTypes.None))
+      using (var entry = TestData.CreateLdapDirectoryEntry())
       using (var searcher = new DirectorySearcher(entry))
       {
         searcher.PageSize = 5;
@@ -524,10 +527,10 @@ namespace AW.DebugVisualizers.Tests
     [TestCategory("Winforms"), TestCategory("Slow"), TestCategory("LDAP"), TestMethod]
     public void ResultPropertyCollectionTest()
     {
-      using (var entry = new DirectoryEntry("LDAP://ldap.forumsys.com/dc=example,dc=com", "", "", AuthenticationTypes.None))
+      using (var entry = TestData.CreateLdapDirectoryEntry())
       using (var searcher = new DirectorySearcher(entry))
       {
-        searcher.Filter = "(uid=" + "tesla" + ")";
+        searcher.Filter = "(uid=" + TestData.LdapUserName + ")";
         var searchResult = searcher.FindOne();
         SingleValueCollectionConverter.AddConverter(typeof (ResultPropertyValueCollection));
         SubstitutingTypeDescriptionProvider.AddSpecificTypeConverterFor((DictionaryEntry d) => d.Value);
