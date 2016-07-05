@@ -297,13 +297,13 @@ namespace AW.Tests
       TestEditInDataGridView(xmlDoc.FirstChild.ChildNodes, 24, 1);
     }
 
-    [TestCategory("Winforms"), TestMethod]
+    [TestCategory("Winforms"), TestCategory("LDAP"), TestCategory("Slow"), TestMethod]
     public void ResultPropertyCollectionTest()
     {
-      using (var entry = new DirectoryEntry("LDAP://ldap.forumsys.com/dc=example,dc=com", "", "", AuthenticationTypes.None))
+      using (var entry = TestData.CreateLdapDirectoryEntry())
       using (var searcher = new DirectorySearcher(entry))
       {
-        searcher.Filter = "(uid=" + "tesla" + ")";
+        searcher.Filter = "(uid=" + TestData.LdapUserName + ")";
         var searchResult = searcher.FindOne();
         SingleValueCollectionConverter.AddConverter(typeof (ICollection));
         var dictionaryEntries = searchResult.Properties.OfType<DictionaryEntry>();
