@@ -120,12 +120,6 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="linkLabelWebSite.Text" xml:space="preserve">
-    <value>This is an Enumerable Debugger Visualizer that displays any registered IEnumerable object in a DataGridView control.
-To install click on either of the buttons below which will copy this assembly to the directory chosen. 
-To uninstall go to the folder and remove the AW.EnumerableVisualizer assembly.
-For more info see: https://rapiddevbookcode.codeplex.com/wikipage?title=EnumerableDebugVisualizer</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

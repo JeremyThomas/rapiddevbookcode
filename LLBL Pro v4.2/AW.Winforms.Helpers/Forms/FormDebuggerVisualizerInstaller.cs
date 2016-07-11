@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -80,6 +81,18 @@ namespace AW.Winforms.Helpers.Forms
             buttonDemo.Enabled = true;
           }
         };
+    }
+
+    private void FormDebuggerVisualizerInstaller_Shown(object sender, EventArgs e)
+    {
+      Task.Run(() => MetaDataHelper.LoadReferencedAssemblies("CSScriptLibrary", "Microsoft.Data.ConnectionUI", "System.Data.SqlLocalDb"));
+      var titlebarHeight = Height - ClientSize.Height;
+      Width = buttonRegistered.Width + linkLabelWebSite.Width + 20;
+      Height = tableLayoutPanel.Height + linkLabelWebSite.Height + titlebarHeight;
+      var minimumFormHeight = tableLayoutPanel.Height + titlebarHeight;
+      tableLayoutPanel.MinimumSize = new Size(labelLocation.Bounds.Right, tableLayoutPanel.Height);
+      MinimumSize = new Size(tableLayoutPanel.MinimumSize.Width, minimumFormHeight);
+      MaximumSize = new Size(int.MaxValue, Height);
     }
 
     private void GetAllStatus()
@@ -172,7 +185,10 @@ namespace AW.Winforms.Helpers.Forms
 
     private void buttonAbout_Click(object sender, EventArgs e)
     {
-      AboutBox.ShowAboutBox(this);
+      var moreInfo = "";
+      foreach (LinkLabel.Link link in linkLabelWebSite.Links)
+        moreInfo = Environment.NewLine + Environment.NewLine + link.LinkData + Environment.NewLine;
+      AboutBox.ShowAboutBox(this, moreInfo);
     }
 
     private void buttonRegistered_Click(object sender, EventArgs e)
@@ -197,9 +213,5 @@ namespace AW.Winforms.Helpers.Forms
       form.ShowDialog();
     }
 
-    private void FormDebuggerVisualizerInstaller_Shown(object sender, EventArgs e)
-    {
-      Task.Run(() => MetaDataHelper.LoadReferencedAssemblies("CSScriptLibrary", "Microsoft.Data.ConnectionUI", "System.Data.SqlLocalDb"));
-    }
   }
 }
