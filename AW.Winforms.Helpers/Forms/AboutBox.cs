@@ -505,7 +505,7 @@ namespace AW.Winforms.Helpers.Forms
     private string EntryAssemblyAttribute(string strName)
     {
       if (_entryAssemblyAttributeCollection[strName] == null)
-        return "<Assembly: Assembly" + strName + "(\"\")>";
+        return ""; //<Assembly: Assembly" + strName + "(\"\")>
       return _entryAssemblyAttributeCollection[strName];
     }
 

@@ -34,8 +34,8 @@
       this.buttonInstallCurrentUser = new System.Windows.Forms.Button();
       this.linkLabelAll = new System.Windows.Forms.LinkLabel();
       this.label1 = new System.Windows.Forms.Label();
-      this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-      this.label3 = new System.Windows.Forms.Label();
+      this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+      this.labelLocation = new System.Windows.Forms.Label();
       this.label4 = new System.Windows.Forms.Label();
       this.labelStatusAll = new System.Windows.Forms.Label();
       this.linkLabelUser = new System.Windows.Forms.LinkLabel();
@@ -45,12 +45,8 @@
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
       this.buttonAbout = new System.Windows.Forms.Button();
       this.buttonRegistered = new System.Windows.Forms.Button();
-      this.panel1 = new System.Windows.Forms.Panel();
-      this.panel2 = new System.Windows.Forms.Panel();
       this.buttonDemo = new System.Windows.Forms.Button();
-      this.tableLayoutPanel1.SuspendLayout();
-      this.panel1.SuspendLayout();
-      this.panel2.SuspendLayout();
+      this.tableLayoutPanel.SuspendLayout();
       this.SuspendLayout();
       // 
       // buttonInstallAllUsers
@@ -104,44 +100,44 @@
       this.label1.TabIndex = 3;
       this.label1.Text = "Install Action";
       // 
-      // tableLayoutPanel1
+      // tableLayoutPanel
       // 
-      this.tableLayoutPanel1.AutoSize = true;
-      this.tableLayoutPanel1.ColumnCount = 3;
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-      this.tableLayoutPanel1.Controls.Add(this.buttonInstallCurrentUser, 0, 2);
-      this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-      this.tableLayoutPanel1.Controls.Add(this.label3, 2, 0);
-      this.tableLayoutPanel1.Controls.Add(this.label4, 1, 0);
-      this.tableLayoutPanel1.Controls.Add(this.linkLabelAll, 2, 1);
-      this.tableLayoutPanel1.Controls.Add(this.labelStatusAll, 1, 1);
-      this.tableLayoutPanel1.Controls.Add(this.linkLabelUser, 2, 2);
-      this.tableLayoutPanel1.Controls.Add(this.labelStatusUser, 1, 2);
-      this.tableLayoutPanel1.Controls.Add(this.buttonInstallAllUsers, 0, 1);
-      this.tableLayoutPanel1.Controls.Add(this.labelVersion, 0, 3);
-      this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 67);
-      this.tableLayoutPanel1.MinimumSize = new System.Drawing.Size(641, 103);
-      this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-      this.tableLayoutPanel1.RowCount = 4;
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(670, 103);
-      this.tableLayoutPanel1.TabIndex = 5;
+      this.tableLayoutPanel.AutoSize = true;
+      this.tableLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+      this.tableLayoutPanel.ColumnCount = 3;
+      this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+      this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+      this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+      this.tableLayoutPanel.Controls.Add(this.buttonInstallCurrentUser, 0, 2);
+      this.tableLayoutPanel.Controls.Add(this.label1, 0, 0);
+      this.tableLayoutPanel.Controls.Add(this.labelLocation, 2, 0);
+      this.tableLayoutPanel.Controls.Add(this.label4, 1, 0);
+      this.tableLayoutPanel.Controls.Add(this.linkLabelAll, 2, 1);
+      this.tableLayoutPanel.Controls.Add(this.labelStatusAll, 1, 1);
+      this.tableLayoutPanel.Controls.Add(this.linkLabelUser, 2, 2);
+      this.tableLayoutPanel.Controls.Add(this.labelStatusUser, 1, 2);
+      this.tableLayoutPanel.Controls.Add(this.buttonInstallAllUsers, 0, 1);
+      this.tableLayoutPanel.Controls.Add(this.labelVersion, 0, 3);
+      this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.tableLayoutPanel.Location = new System.Drawing.Point(0, 57);
+      this.tableLayoutPanel.Name = "tableLayoutPanel";
+      this.tableLayoutPanel.RowCount = 4;
+      this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+      this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel.Size = new System.Drawing.Size(324, 103);
+      this.tableLayoutPanel.TabIndex = 5;
       // 
-      // label3
+      // labelLocation
       // 
-      this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-      this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(229, 6);
-      this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(101, 13);
-      this.label3.TabIndex = 2;
-      this.label3.Text = "Location to install to";
+      this.labelLocation.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      this.labelLocation.AutoSize = true;
+      this.labelLocation.Location = new System.Drawing.Point(229, 6);
+      this.labelLocation.Name = "labelLocation";
+      this.labelLocation.Size = new System.Drawing.Size(101, 13);
+      this.labelLocation.TabIndex = 2;
+      this.labelLocation.Text = "Location to install to";
       // 
       // label4
       // 
@@ -189,7 +185,7 @@
       // 
       this.labelVersion.Anchor = System.Windows.Forms.AnchorStyles.Left;
       this.labelVersion.AutoSize = true;
-      this.tableLayoutPanel1.SetColumnSpan(this.labelVersion, 3);
+      this.tableLayoutPanel.SetColumnSpan(this.labelVersion, 3);
       this.labelVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.labelVersion.Location = new System.Drawing.Point(3, 86);
       this.labelVersion.Name = "labelVersion";
@@ -199,22 +195,20 @@
       // 
       // linkLabelWebSite
       // 
-      this.linkLabelWebSite.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
       this.linkLabelWebSite.AutoSize = true;
       this.linkLabelWebSite.LinkArea = new System.Windows.Forms.LinkArea(0, 0);
-      this.linkLabelWebSite.Location = new System.Drawing.Point(0, 0);
-      this.linkLabelWebSite.MinimumSize = new System.Drawing.Size(100, 50);
+      this.linkLabelWebSite.Location = new System.Drawing.Point(3, 0);
       this.linkLabelWebSite.Name = "linkLabelWebSite";
       this.linkLabelWebSite.Padding = new System.Windows.Forms.Padding(0, 5, 5, 0);
-      this.linkLabelWebSite.Size = new System.Drawing.Size(563, 57);
+      this.linkLabelWebSite.Size = new System.Drawing.Size(162, 18);
       this.linkLabelWebSite.TabIndex = 0;
-      this.linkLabelWebSite.Text = resources.GetString("linkLabelWebSite.Text");
+      this.linkLabelWebSite.Text = "Debugger Visualizer Description";
       this.linkLabelWebSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAll_LinkClicked);
       // 
       // buttonAbout
       // 
-      this.buttonAbout.Location = new System.Drawing.Point(0, 0);
+      this.buttonAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonAbout.Location = new System.Drawing.Point(218, 0);
       this.buttonAbout.Name = "buttonAbout";
       this.buttonAbout.Size = new System.Drawing.Size(48, 23);
       this.buttonAbout.TabIndex = 7;
@@ -225,69 +219,44 @@
       // 
       // buttonRegistered
       // 
-      this.buttonRegistered.Location = new System.Drawing.Point(0, 26);
+      this.buttonRegistered.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonRegistered.Location = new System.Drawing.Point(218, 29);
       this.buttonRegistered.Name = "buttonRegistered";
-      this.buttonRegistered.Size = new System.Drawing.Size(106, 34);
+      this.buttonRegistered.Size = new System.Drawing.Size(106, 24);
       this.buttonRegistered.TabIndex = 8;
       this.buttonRegistered.Text = "Registered classes";
       this.toolTip1.SetToolTip(this.buttonRegistered, "Show the classes this is registered for");
       this.buttonRegistered.UseVisualStyleBackColor = true;
       this.buttonRegistered.Click += new System.EventHandler(this.buttonRegistered_Click);
       // 
-      // panel1
-      // 
-      this.panel1.Controls.Add(this.panel2);
-      this.panel1.Controls.Add(this.linkLabelWebSite);
-      this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.panel1.Location = new System.Drawing.Point(0, 0);
-      this.panel1.MinimumSize = new System.Drawing.Size(641, 60);
-      this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(670, 67);
-      this.panel1.TabIndex = 8;
-      // 
-      // panel2
-      // 
-      this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.panel2.Controls.Add(this.buttonDemo);
-      this.panel2.Controls.Add(this.buttonRegistered);
-      this.panel2.Controls.Add(this.buttonAbout);
-      this.panel2.Location = new System.Drawing.Point(561, 0);
-      this.panel2.MaximumSize = new System.Drawing.Size(109, 67);
-      this.panel2.MinimumSize = new System.Drawing.Size(109, 67);
-      this.panel2.Name = "panel2";
-      this.panel2.Size = new System.Drawing.Size(109, 67);
-      this.panel2.TabIndex = 8;
-      // 
       // buttonDemo
       // 
-      this.buttonDemo.Location = new System.Drawing.Point(55, -1);
+      this.buttonDemo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonDemo.Location = new System.Drawing.Point(272, 0);
       this.buttonDemo.Name = "buttonDemo";
       this.buttonDemo.Size = new System.Drawing.Size(51, 23);
       this.buttonDemo.TabIndex = 9;
       this.buttonDemo.Text = "Demo";
       this.buttonDemo.UseVisualStyleBackColor = true;
-
       // 
       // FormDebuggerVisualizerInstaller
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.AutoSize = true;
-      this.ClientSize = new System.Drawing.Size(670, 170);
-      this.Controls.Add(this.panel1);
-      this.Controls.Add(this.tableLayoutPanel1);
+      this.ClientSize = new System.Drawing.Size(324, 160);
+      this.Controls.Add(this.buttonAbout);
+      this.Controls.Add(this.buttonDemo);
+      this.Controls.Add(this.buttonRegistered);
+      this.Controls.Add(this.tableLayoutPanel);
+      this.Controls.Add(this.linkLabelWebSite);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "FormDebuggerVisualizerInstaller";
       this.ShowIcon = false;
-      this.Text = "Enumerable Debugger Visualizer Installer";
+      this.Text = "Debugger Visualizer Installer";
       this.Shown += new System.EventHandler(this.FormDebuggerVisualizerInstaller_Shown);
-      this.tableLayoutPanel1.ResumeLayout(false);
-      this.tableLayoutPanel1.PerformLayout();
-      this.panel1.ResumeLayout(false);
-      this.panel1.PerformLayout();
-      this.panel2.ResumeLayout(false);
+      this.tableLayoutPanel.ResumeLayout(false);
+      this.tableLayoutPanel.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -299,8 +268,8 @@
     private System.Windows.Forms.Button buttonInstallCurrentUser;
     private System.Windows.Forms.LinkLabel linkLabelAll;
     private System.Windows.Forms.Label label1;
-    private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-    private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+    private System.Windows.Forms.Label labelLocation;
     private System.Windows.Forms.LinkLabel linkLabelUser;
     private System.Windows.Forms.Label label4;
     private System.Windows.Forms.Label labelStatusAll;
@@ -309,8 +278,6 @@
     private System.Windows.Forms.ToolTip toolTip1;
     private System.Windows.Forms.Label labelVersion;
     private System.Windows.Forms.Button buttonAbout;
-    private System.Windows.Forms.Panel panel1;
-    private System.Windows.Forms.Panel panel2;
     private System.Windows.Forms.Button buttonRegistered;
     private System.Windows.Forms.Button buttonDemo;
   }
