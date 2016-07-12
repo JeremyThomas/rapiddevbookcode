@@ -380,10 +380,9 @@ namespace LLBLGen.EntityBrowser
 
     private void LoadLinqMetaData(string linqMetaDataAssemblyPath)
     {
-      if (!File.Exists(linqMetaDataAssemblyPath))
-        throw new ApplicationException("LinqMetaData assembly: " + linqMetaDataAssemblyPath + " not found!" + Environment.NewLine);
+      linqMetaDataAssemblyPath = GeneralHelper.FindIfFileExists(linqMetaDataAssemblyPath, "LinqMetaData assembly");
       var linqMetaDataAssembly = LoadAssembly(linqMetaDataAssemblyPath);
-      if (linqMetaDataAssembly.Location!= linqMetaDataAssemblyPath)
+      if (linqMetaDataAssembly.Location != linqMetaDataAssemblyPath && linqMetaDataAssembly.Location != Path.GetFullPath(linqMetaDataAssemblyPath))
         throw new ApplicationException("New assembly could not be loaded, restart to try again.");
       _linqMetaDataType = linqMetaDataAssembly.GetConcretePublicImplementations(typeof(ILinqMetaData)).FirstOrDefault();
       if (_linqMetaDataType == null)
@@ -391,7 +390,7 @@ namespace LLBLGen.EntityBrowser
       labellinqMetaDataAssemblyVersion.Text = "Version " + linqMetaDataAssembly.GetVersion();
       _daoBaseImplementationType = EntityHelper.GetDaoBaseImplementation(linqMetaDataAssembly);
     }
-
+    
     private static IEnumerable<Type> GetAdapterTypes()
     {
       var adapterAssemblyPaths = Settings.Default.AdapterAssemblyPath.Split(';');
@@ -402,10 +401,9 @@ namespace LLBLGen.EntityBrowser
     {
       try
       {
-        if (String.IsNullOrWhiteSpace(Settings.Default.AdapterAssemblyPath))
+        if (String.IsNullOrWhiteSpace(adapterAssemblyPath))
           throw new ApplicationException("Adapter assembly not specified!");
-        if (!File.Exists(adapterAssemblyPath))
-          throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " not found!");
+        adapterAssemblyPath = GeneralHelper.FindIfFileExists(adapterAssemblyPath, "Adapter assembly");
         var dataAccessAdapterAssembly = LoadAssembly(adapterAssemblyPath);
         if (dataAccessAdapterAssembly == null)
           throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " could not be loaded!");

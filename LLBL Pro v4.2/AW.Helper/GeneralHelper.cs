@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using Humanizer;
@@ -822,6 +823,32 @@ namespace AW.Helper
     public static IEnumerable<string> FilterByFileExists(params string[] filePaths)
     {
       return filePaths.Where(File.Exists);
+    }
+
+    /// <summary>
+    /// Finds if file exists, throws a FileNotFoundException if it doesn't, searches for file relative to the Application.ExecutablePath.
+    /// </summary>
+    /// <param name="fileName">Name of the file.</param>
+    /// <param name="fileType">Type of the file, used in the exception message.</param>
+    /// <returns>fileName or full path of if relative to the Application.ExecutablePath and Environment.CurrentDirectory is not the executableDirectory</returns>
+    /// <exception cref="FileNotFoundException">If the file is not found
+    /// </exception>
+    public static string FindIfFileExists(string fileName, string fileType)
+    {
+      if (!File.Exists(fileName))
+      {
+        var executableDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+        if (executableDirectory != Environment.CurrentDirectory && executableDirectory != null)
+        {
+          var fullPath = Path.Combine(executableDirectory, fileName);
+          if (!File.Exists(fullPath))
+            throw new FileNotFoundException(string.Format("{0}: {1} not found!{2}", fileType, fileName, Environment.NewLine), fileName);
+          fileName = fullPath;
+        }
+        else
+          throw new FileNotFoundException(string.Format("{0}: {1} not found!{2}", fileType, fileName, Environment.NewLine), fileName);
+      }
+      return fileName;
     }
 
     public static bool Contains(this string source, string value, StringComparison comp)
