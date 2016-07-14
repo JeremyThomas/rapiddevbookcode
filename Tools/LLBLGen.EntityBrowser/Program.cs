@@ -42,21 +42,22 @@ namespace LLBLGen.EntityBrowser
     private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
     {
       var exception = e.Exception;
-      using (var dialog = new ThreadExceptionDialog(exception))
-      {
-        GeneralHelper.TraceOut(exception.ToString());
-        try
+      if (exception != null)
+        using (var dialog = new ThreadExceptionDialog(exception))
         {
-          WriteExceptionToEventLog(exception, "ThreadException");
+          GeneralHelper.TraceOut(exception.ToString());
+          try
+          {
+            WriteExceptionToEventLog(exception, "ThreadException");
+          }
+          catch (Exception ex)
+          {
+            GeneralHelper.TraceOut(ex.ToString());
+          }
+          if (exception.StackTrace != null && !exception.StackTrace.Contains("System.Windows.Forms.DataGridTextBoxColumn.GetText(Object value)")) //As DataGrid doesn't have DataError event
+            if (dialog.ShowDialog() == DialogResult.Abort)
+              Exit();
         }
-        catch (Exception ex)
-        {
-          GeneralHelper.TraceOut(ex.ToString());
-        }
-        if (!exception.StackTrace.Contains("System.Windows.Forms.DataGridTextBoxColumn.GetText(Object value)")) //As DataGrid doesn't have DataError event
-          if (dialog.ShowDialog() == DialogResult.Abort)
-            Exit();
-      }
     }
 
     /// <summary>
@@ -113,7 +114,7 @@ namespace LLBLGen.EntityBrowser
         EventLog.CreateEventSource(source, "Application");
       // Create an EventLog instance and assign its source.
       var myLog = new EventLog {Source = source};
-      myLog.WriteEntry(ErrorMsg + exception.Message + "\n\nStack Trace:\n" + exception.StackTrace);
+      myLog.WriteEntry(ErrorMsg +Environment.NewLine + exception + "\n\nStack Trace:\n" + exception.StackTrace);
     }
   }
 }
