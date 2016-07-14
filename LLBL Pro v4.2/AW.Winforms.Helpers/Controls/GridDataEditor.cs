@@ -824,7 +824,7 @@ namespace AW.Winforms.Helpers.Controls
           DataPropertyName = e.Column.DataPropertyName,
           SortMode = e.Column.SortMode,
           Name = e.Column.Name,
-          DefaultCellStyle = e.Column.DefaultCellStyle
+          DefaultCellStyle = e.Column.DefaultCellStyle,
         };
         dataGridViewCheckBoxColumn.SortMode = e.Column.SortMode;
         if (valueType == typeof(bool?))
@@ -1254,5 +1254,26 @@ namespace AW.Winforms.Helpers.Controls
           selectedCell.Value = selectedCell.ValueType == typeof(string) ? string.Empty : MetaDataHelper.GetDefault(selectedCell.ValueType);
     }
 
+    /// <summary>
+    /// Handles the CurrentCellDirtyStateChanged event of the dataGridViewEnumerable control.
+    /// </summary>
+    /// <remarks>http://stackoverflow.com/questions/9608343/datagridview-combobox-column-change-cell-value-after-selection-from-dropdown-is</remarks>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    private void dataGridViewEnumerable_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+    {
+      var dataGridView = sender as DataGridView;
+      if (dataGridView != null)
+      {
+        if (dataGridView.CurrentCell == null)
+          return;
+        var dataGridViewColumn = dataGridView.CurrentCell.OwningColumn; //DataGridViewComboBoxCell
+        if (dataGridViewColumn is DataGridViewCheckBoxColumn || dataGridViewColumn is DataGridViewButtonColumn || dataGridViewColumn is DataGridViewComboBoxColumn)
+        {
+          if (dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit) && dataGridViewColumn is DataGridViewComboBoxColumn && dataGridViewEnumerable.EndEdit())
+            dataGridView.BindingContext[dataGridViewEnumerable.DataSource].EndCurrentEdit();
+        }
+      }
+    }
   }
 }
