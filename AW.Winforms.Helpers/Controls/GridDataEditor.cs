@@ -1263,17 +1263,13 @@ namespace AW.Winforms.Helpers.Controls
     private void dataGridViewEnumerable_CurrentCellDirtyStateChanged(object sender, EventArgs e)
     {
       var dataGridView = sender as DataGridView;
-      if (dataGridView != null)
-      {
-        if (dataGridView.CurrentCell == null)
-          return;
-        var dataGridViewColumn = dataGridView.CurrentCell.OwningColumn; //DataGridViewComboBoxCell
-        if (dataGridViewColumn is DataGridViewCheckBoxColumn || dataGridViewColumn is DataGridViewButtonColumn || dataGridViewColumn is DataGridViewComboBoxColumn)
-        {
-          if (dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit) && dataGridViewColumn is DataGridViewComboBoxColumn && dataGridViewEnumerable.EndEdit())
-            dataGridView.BindingContext[dataGridViewEnumerable.DataSource].EndCurrentEdit();
-        }
-      }
+      if (dataGridView == null || dataGridView.CurrentCell == null)
+        return;
+      var isComboBox = dataGridView.CurrentCell is DataGridViewComboBoxCell;
+      if ((isComboBox || dataGridView.CurrentCell is DataGridViewCheckBoxCell) 
+        && dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit) 
+        && isComboBox && dataGridView.EndEdit())
+        dataGridView.BindingContext[dataGridView.DataSource].EndCurrentEdit();
     }
   }
 }

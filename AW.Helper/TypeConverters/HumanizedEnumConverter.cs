@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 
 namespace AW.Helper.TypeConverters
 {
@@ -99,10 +100,29 @@ namespace AW.Helper.TypeConverters
     {
       var s = value as string;
       if (s == null) return base.ConvertFrom(context, culture, value);
-      var enumConversion = GeneralHelper.StringToEnum(s, EnumType, false);
+      object enumConversion;
+      if (_humanizerNotLoading)
+        enumConversion = Enum.IsDefined(EnumType, s) ? base.ConvertFrom(context, culture, s) : DisplayNameOrDescriptionToEnum(s);
+      else
+        try
+        {
+          enumConversion = GeneralHelper.StringToEnum(s, EnumType, false);
+        }
+        catch (FileNotFoundException e)
+        {
+          _humanizerNotLoading = true;
+          e.TraceOut();
+          enumConversion = Enum.IsDefined(EnumType, s) ? base.ConvertFrom(context, culture, s) : DisplayNameOrDescriptionToEnum(s);
+        }
       if (enumConversion == null && !_isNullable)
         return base.ConvertFrom(context, culture, s); // To throw an exception
       return enumConversion;
+    }
+
+    private Enum DisplayNameOrDescriptionToEnum(string s)
+    {
+      return Enum.GetValues(EnumType).Cast<Enum>().FirstOrDefault(enumValue =>
+        string.Equals(MetaDataHelper.GetDisplayNameOrDescription(enumValue), s, StringComparison.OrdinalIgnoreCase));
     }
   }
 }
