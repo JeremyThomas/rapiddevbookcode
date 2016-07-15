@@ -93,8 +93,9 @@
       <HintPath>..\packages\SD.Tools.Algorithmia.1.2.1\lib\net35\SD.Tools.Algorithmia.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SD.Tools.BCLExtensions">
-      <HintPath>..\packages\SD.Tools.BCLExtensions.1.0.0\lib\SD.Tools.BCLExtensions.dll</HintPath>
+    <Reference Include="SD.Tools.BCLExtensions, Version=1.1.0.0, Culture=neutral, PublicKeyToken=a3f87088dcb994e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SD.Tools.BCLExtensions.1.1.0\lib\net35\SD.Tools.BCLExtensions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SD.Tools.OrmProfiler.Interceptor.NET45, Version=1.5.0.0, Culture=neutral, PublicKeyToken=f175dc08f093a9ae, processorArchitecture=MSIL">
       <HintPath>..\packages\SD.Tools.OrmProfiler.Interceptor.NET45.1.5.20150715\lib\net45\SD.Tools.OrmProfiler.Interceptor.NET45.dll</HintPath>
@@ -109,6 +110,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
