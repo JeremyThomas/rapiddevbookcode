@@ -5,7 +5,7 @@ using System.Threading;
 using System.Windows.Forms;
 using AW.Helper;
 
-namespace LLBLGen.EntityBrowser
+namespace LLBLGen.EntityExplorer
 {
   static class Program
   {
@@ -27,7 +27,7 @@ namespace LLBLGen.EntityBrowser
       // Add the event handler for handling non-UI thread exceptions to the event. 
       AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-      Application.Run(new FrmLLBLGenEntityBrowser());
+      Application.Run(new FrmLLBLGenEntityExplorer());
     }
 
     /// <summary>

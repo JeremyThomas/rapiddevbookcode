@@ -746,8 +746,9 @@ namespace AW.Helper
 
     public static void CopySettings(SettingsBase settings, ClientSettingsSection clientSettingsSection)
     {
-      foreach (SettingsPropertyValue settingsPropertyValue in settings.PropertyValues)
-        SetProperty(clientSettingsSection, settingsPropertyValue.Name, settings, Convert.ToString(settingsPropertyValue.SerializedValue));
+      if (clientSettingsSection != null)
+        foreach (SettingsPropertyValue settingsPropertyValue in settings.PropertyValues)
+         SetProperty(clientSettingsSection, settingsPropertyValue.Name, settings, Convert.ToString(settingsPropertyValue.SerializedValue));
     }
 
     private static void SetProperty(ClientSettingsSection clientSettingsSection, string propertyName, SettingsBase settings, string value = null)

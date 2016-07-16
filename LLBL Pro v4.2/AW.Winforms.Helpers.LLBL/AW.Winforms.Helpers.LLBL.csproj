@@ -97,11 +97,11 @@
     <Compile Include="GeneralEntityCollectionDataScope.cs" />
     <Compile Include="DataEditorLLBLDataScopePersister.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="UsrCntrlEntityBrowser.cs">
+    <Compile Include="UsrCntrlEntityExplorer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UsrCntrlEntityBrowser.Designer.cs">
-      <DependentUpon>UsrCntrlEntityBrowser.cs</DependentUpon>
+    <Compile Include="UsrCntrlEntityExplorer.Designer.cs">
+      <DependentUpon>UsrCntrlEntityExplorer.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmEntitiesAndFields.cs">
       <SubType>Form</SubType>
@@ -137,8 +137,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UsrCntrlEntityBrowser.resx">
-      <DependentUpon>UsrCntrlEntityBrowser.cs</DependentUpon>
+    <EmbeddedResource Include="UsrCntrlEntityExplorer.resx">
+      <DependentUpon>UsrCntrlEntityExplorer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmEntitiesAndFields.resx">

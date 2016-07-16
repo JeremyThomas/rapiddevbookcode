@@ -45,7 +45,7 @@
       this.useSchemaCheckBox = new System.Windows.Forms.CheckBox();
       this.useContextCheckBox = new System.Windows.Forms.CheckBox();
       this.ensureFilteringEnabledCheckBox = new System.Windows.Forms.CheckBox();
-      this.usrCntrlEntityBrowser1 = new AW.Winforms.Helpers.LLBL.UsrCntrlEntityBrowser();
+      this.usrCntrlEntityBrowser1 = new AW.Winforms.Helpers.LLBL.UsrCntrlEntityExplorer();
       cacheDurationInSecondsLabel = new System.Windows.Forms.Label();
       prefixDelimiterLabel = new System.Windows.Forms.Label();
       this.toolStrip1.SuspendLayout();
@@ -254,7 +254,7 @@
 
     #endregion
 
-    private AW.Winforms.Helpers.LLBL.UsrCntrlEntityBrowser usrCntrlEntityBrowser1;
+    private AW.Winforms.Helpers.LLBL.UsrCntrlEntityExplorer usrCntrlEntityBrowser1;
     private System.Windows.Forms.ToolStrip toolStrip1;
     private System.Windows.Forms.ToolStripButton toolStripButtonRemote;
     private System.Windows.Forms.ToolStripButton toolStripButtonShowEmployeeHierarchyInTree;

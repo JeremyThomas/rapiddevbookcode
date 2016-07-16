@@ -1,6 +1,6 @@
-﻿namespace LLBLGen.EntityBrowser
+﻿namespace LLBLGen.EntityExplorer
 {
-  partial class FrmLLBLGenEntityBrowser
+  partial class FrmLLBLGenEntityExplorer
   {
     /// <summary>
     /// Required designer variable.
@@ -29,7 +29,7 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLLBLGenEntityBrowser));
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLLBLGenEntityExplorer));
       this.linqMetaDataAssemblyPathLabel = new System.Windows.Forms.LinkLabel();
       this.adapterAssemblyPathLabel = new System.Windows.Forms.LinkLabel();
       this.tabControl = new System.Windows.Forms.TabControl();
@@ -46,6 +46,7 @@
       this.contextMenuStripTabPage = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.addConnectionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
       this.editConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.editConnectionStringToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
       this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,7 +74,6 @@
       this.toolStripNumericUpDownCommandTimeOut = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.toolStripLabelOrmProfilerStatus = new System.Windows.Forms.ToolStripLabel();
       this.toolStripButtonAbout = new System.Windows.Forms.ToolStripButton();
-      this.editConnectionStringToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.contextMenuStripTabControl.SuspendLayout();
       this.panelSettings.SuspendLayout();
       this.panelMetaData.SuspendLayout();
@@ -155,23 +155,23 @@
       // 
       this.panelSettings.Controls.Add(this.adapterAssemblyPathTextBox);
       this.panelSettings.Controls.Add(this.adapterAssemblyPathLabel);
-      this.panelSettings.DataBindings.Add(new System.Windows.Forms.Binding("Visible", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "ShowSettings", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.panelSettings.DataBindings.Add(new System.Windows.Forms.Binding("Visible", global::LLBLGen.EntityExplorer.Properties.Settings.Default, "ShowSettings", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.panelSettings.Dock = System.Windows.Forms.DockStyle.Top;
       this.panelSettings.Location = new System.Drawing.Point(0, 50);
       this.panelSettings.Name = "panelSettings";
       this.panelSettings.Size = new System.Drawing.Size(1501, 23);
       this.panelSettings.TabIndex = 2;
-      this.panelSettings.Visible = global::LLBLGen.EntityBrowser.Properties.Settings.Default.ShowSettings;
+      this.panelSettings.Visible = global::LLBLGen.EntityExplorer.Properties.Settings.Default.ShowSettings;
       // 
       // adapterAssemblyPathTextBox
       // 
-      this.adapterAssemblyPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "AdapterAssemblyPath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.adapterAssemblyPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::LLBLGen.EntityExplorer.Properties.Settings.Default, "AdapterAssemblyPath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.adapterAssemblyPathTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
       this.adapterAssemblyPathTextBox.Location = new System.Drawing.Point(119, 0);
       this.adapterAssemblyPathTextBox.Name = "adapterAssemblyPathTextBox";
       this.adapterAssemblyPathTextBox.Size = new System.Drawing.Size(1382, 20);
       this.adapterAssemblyPathTextBox.TabIndex = 3;
-      this.adapterAssemblyPathTextBox.Text = global::LLBLGen.EntityBrowser.Properties.Settings.Default.AdapterAssemblyPath;
+      this.adapterAssemblyPathTextBox.Text = global::LLBLGen.EntityExplorer.Properties.Settings.Default.AdapterAssemblyPath;
       this.toolTip1.SetToolTip(this.adapterAssemblyPathTextBox, "Path to Adapter assembly");
       // 
       // panelMetaData
@@ -187,13 +187,13 @@
       // 
       // linqMetaDataAssemblyPathTextBox
       // 
-      this.linqMetaDataAssemblyPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::LLBLGen.EntityBrowser.Properties.Settings.Default, "LinqMetaDataAssemblyPath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.linqMetaDataAssemblyPathTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::LLBLGen.EntityExplorer.Properties.Settings.Default, "LinqMetaDataAssemblyPath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.linqMetaDataAssemblyPathTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
       this.linqMetaDataAssemblyPathTextBox.Location = new System.Drawing.Point(158, 0);
       this.linqMetaDataAssemblyPathTextBox.Name = "linqMetaDataAssemblyPathTextBox";
       this.linqMetaDataAssemblyPathTextBox.Size = new System.Drawing.Size(1301, 20);
       this.linqMetaDataAssemblyPathTextBox.TabIndex = 1;
-      this.linqMetaDataAssemblyPathTextBox.Text = global::LLBLGen.EntityBrowser.Properties.Settings.Default.LinqMetaDataAssemblyPath;
+      this.linqMetaDataAssemblyPathTextBox.Text = global::LLBLGen.EntityExplorer.Properties.Settings.Default.LinqMetaDataAssemblyPath;
       this.toolTip1.SetToolTip(this.linqMetaDataAssemblyPathTextBox, "Path to a LLBLGen Pro generated assembly containing an ILinqMetaData implementati" +
         "on");
       this.linqMetaDataAssemblyPathTextBox.Leave += new System.EventHandler(this.linqMetaDataAssemblyPathTextBox_Leave);
@@ -231,7 +231,7 @@
             this.toolStripSeparator2,
             this.toggleSettingsVisibilityToolStripMenuItem});
       this.contextMenuStripTabPage.Name = "contextMenuStripTabPage";
-      this.contextMenuStripTabPage.Size = new System.Drawing.Size(203, 170);
+      this.contextMenuStripTabPage.Size = new System.Drawing.Size(203, 148);
       // 
       // addConnectionToolStripMenuItem1
       // 
@@ -247,6 +247,14 @@
       this.editConnectionToolStripMenuItem.Text = "Edit Connection...";
       this.editConnectionToolStripMenuItem.ToolTipText = "Edit Connection with a GUI";
       this.editConnectionToolStripMenuItem.Click += new System.EventHandler(this.editConnectionToolStripMenuItem_Click);
+      // 
+      // editConnectionStringToolStripMenuItem
+      // 
+      this.editConnectionStringToolStripMenuItem.Name = "editConnectionStringToolStripMenuItem";
+      this.editConnectionStringToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+      this.editConnectionStringToolStripMenuItem.Text = "Edit Connection String...";
+      this.editConnectionStringToolStripMenuItem.ToolTipText = "Edit the underlying connection string text";
+      this.editConnectionStringToolStripMenuItem.Click += new System.EventHandler(this.editConnectionStringToolStripMenuItem_Click);
       // 
       // renameToolStripMenuItem
       // 
@@ -382,14 +390,14 @@
       this.toolStripTextBoxTablePrefixDelimiter.MaxLength = 25;
       this.toolStripTextBoxTablePrefixDelimiter.Name = "toolStripTextBoxTablePrefixDelimiter";
       this.toolStripTextBoxTablePrefixDelimiter.Size = new System.Drawing.Size(20, 28);
-      this.toolStripTextBoxTablePrefixDelimiter.Text = global::LLBLGen.EntityBrowser.Properties.Settings.Default.PrefixDelimiter;
+      this.toolStripTextBoxTablePrefixDelimiter.Text = global::LLBLGen.EntityExplorer.Properties.Settings.Default.PrefixDelimiter;
       this.toolStripTextBoxTablePrefixDelimiter.ToolTipText = "Table Prefix Delimiter to group Entities by (e.g. with a delimiter of _ table Sal" +
     "es_Order would grouped into a node called Sales)";
       // 
       // toolStripCheckBoxUseSchema
       // 
       this.toolStripCheckBoxUseSchema.BackColor = System.Drawing.Color.Transparent;
-      this.toolStripCheckBoxUseSchema.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.UseSchema;
+      this.toolStripCheckBoxUseSchema.Checked = global::LLBLGen.EntityExplorer.Properties.Settings.Default.UseSchema;
       this.toolStripCheckBoxUseSchema.CheckState = System.Windows.Forms.CheckState.Checked;
       this.toolStripCheckBoxUseSchema.Name = "toolStripCheckBoxUseSchema";
       this.toolStripCheckBoxUseSchema.Size = new System.Drawing.Size(90, 25);
@@ -407,7 +415,7 @@
       // toolStripCheckBoxUseContext
       // 
       this.toolStripCheckBoxUseContext.BackColor = System.Drawing.Color.Transparent;
-      this.toolStripCheckBoxUseContext.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.UseContext;
+      this.toolStripCheckBoxUseContext.Checked = global::LLBLGen.EntityExplorer.Properties.Settings.Default.UseContext;
       this.toolStripCheckBoxUseContext.CheckState = System.Windows.Forms.CheckState.Checked;
       this.toolStripCheckBoxUseContext.Name = "toolStripCheckBoxUseContext";
       this.toolStripCheckBoxUseContext.Size = new System.Drawing.Size(89, 25);
@@ -424,7 +432,7 @@
       this.toolStripNumericUpDownCacheDurationInSeconds.Text = "Cache Duration:";
       this.toolStripNumericUpDownCacheDurationInSeconds.ToolTipText = "Specifies the duration (in seconds) that the query\'s result set should be cached " +
     "for. Zero to turn caching off.";
-      this.toolStripNumericUpDownCacheDurationInSeconds.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CacheDurationInSeconds;
+      this.toolStripNumericUpDownCacheDurationInSeconds.Value = global::LLBLGen.EntityExplorer.Properties.Settings.Default.CacheDurationInSeconds;
       // 
       // toolStripSeparator5
       // 
@@ -436,7 +444,7 @@
       // toolStripCheckBoxEnsureFilteringEnabled
       // 
       this.toolStripCheckBoxEnsureFilteringEnabled.BackColor = System.Drawing.Color.Transparent;
-      this.toolStripCheckBoxEnsureFilteringEnabled.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.EnsureFilteringEnabled;
+      this.toolStripCheckBoxEnsureFilteringEnabled.Checked = global::LLBLGen.EntityExplorer.Properties.Settings.Default.EnsureFilteringEnabled;
       this.toolStripCheckBoxEnsureFilteringEnabled.CheckState = System.Windows.Forms.CheckState.Unchecked;
       this.toolStripCheckBoxEnsureFilteringEnabled.Name = "toolStripCheckBoxEnsureFilteringEnabled";
       this.toolStripCheckBoxEnsureFilteringEnabled.Size = new System.Drawing.Size(152, 25);
@@ -453,12 +461,12 @@
       this.toolStripNumericUpDownPageSize.Size = new System.Drawing.Size(118, 25);
       this.toolStripNumericUpDownPageSize.Text = "Page Size:";
       this.toolStripNumericUpDownPageSize.ToolTipText = "The number of rows per page in the grid. Zero to turn paging off.";
-      this.toolStripNumericUpDownPageSize.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.PageSize;
+      this.toolStripNumericUpDownPageSize.Value = global::LLBLGen.EntityExplorer.Properties.Settings.Default.PageSize;
       // 
       // toolStripCheckBoxCascadeDeletes
       // 
       this.toolStripCheckBoxCascadeDeletes.BackColor = System.Drawing.Color.Transparent;
-      this.toolStripCheckBoxCascadeDeletes.Checked = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CascadeDeletes;
+      this.toolStripCheckBoxCascadeDeletes.Checked = global::LLBLGen.EntityExplorer.Properties.Settings.Default.CascadeDeletes;
       this.toolStripCheckBoxCascadeDeletes.CheckState = System.Windows.Forms.CheckState.Unchecked;
       this.toolStripCheckBoxCascadeDeletes.Name = "toolStripCheckBoxCascadeDeletes";
       this.toolStripCheckBoxCascadeDeletes.Size = new System.Drawing.Size(111, 25);
@@ -480,7 +488,7 @@
       this.toolStripNumericUpDownCommandTimeOut.Size = new System.Drawing.Size(176, 25);
       this.toolStripNumericUpDownCommandTimeOut.Text = "Command TimeOut:";
       this.toolStripNumericUpDownCommandTimeOut.ToolTipText = "The timeout value (in seconds) to use with the ADO.NET data fetching";
-      this.toolStripNumericUpDownCommandTimeOut.Value = global::LLBLGen.EntityBrowser.Properties.Settings.Default.CommandTimeOut;
+      this.toolStripNumericUpDownCommandTimeOut.Value = global::LLBLGen.EntityExplorer.Properties.Settings.Default.CommandTimeOut;
       // 
       // toolStripLabelOrmProfilerStatus
       // 
@@ -500,15 +508,7 @@
       this.toolStripButtonAbout.ToolTipText = "About";
       this.toolStripButtonAbout.Click += new System.EventHandler(this.toolStripButtonAbout_Click);
       // 
-      // editConnectionStringToolStripMenuItem
-      // 
-      this.editConnectionStringToolStripMenuItem.Name = "editConnectionStringToolStripMenuItem";
-      this.editConnectionStringToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-      this.editConnectionStringToolStripMenuItem.Text = "Edit Connection String...";
-      this.editConnectionStringToolStripMenuItem.ToolTipText = "Edit the underlying connection string text";
-      this.editConnectionStringToolStripMenuItem.Click += new System.EventHandler(this.editConnectionStringToolStripMenuItem_Click);
-      // 
-      // FrmLLBLGenEntityBrowser
+      // FrmLLBLGenEntityExplorer
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -519,8 +519,8 @@
       this.Controls.Add(this.panelMetaData);
       this.Controls.Add(this.toolStrip);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-      this.Name = "FrmLLBLGenEntityBrowser";
-      this.Text = "Data Browser";
+      this.Name = "FrmLLBLGenEntityExplorer";
+      this.Text = "Entity Explorer";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
       this.Load += new System.EventHandler(this.MainForm_Load);
       this.contextMenuStripTabControl.ResumeLayout(false);

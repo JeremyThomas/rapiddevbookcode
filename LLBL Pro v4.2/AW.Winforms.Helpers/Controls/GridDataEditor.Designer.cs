@@ -80,6 +80,7 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonObjectListViewVisualizer = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonRelatedCounts = new System.Windows.Forms.ToolStripButton();
+      this.toolStripCheckBoxDeletesAreCascading = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       this.dataGridViewEnumerable = new ADGV.AdvancedDataGridView();
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingSourcePaging = new System.Windows.Forms.BindingSource(this.components);
@@ -103,10 +104,9 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripLabelSuperSetCount = new System.Windows.Forms.ToolStripLabel();
       this.dataGridEnumerable = new System.Windows.Forms.DataGrid();
       this.tabControlGrids = new System.Windows.Forms.TabControl();
-      this.tabPageDataGrid = new System.Windows.Forms.TabPage();
       this.tabPageDataGridView = new System.Windows.Forms.TabPage();
+      this.tabPageDataGrid = new System.Windows.Forms.TabPage();
       this.searchToolBar = new ADGV.SearchToolBar();
-      this.toolStripCheckBoxDeletesAreCascading = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
       this.bindingNavigatorData.SuspendLayout();
@@ -116,8 +116,8 @@ namespace AW.Winforms.Helpers.Controls
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourcePaging)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridEnumerable)).BeginInit();
       this.tabControlGrids.SuspendLayout();
-      this.tabPageDataGrid.SuspendLayout();
       this.tabPageDataGridView.SuspendLayout();
+      this.tabPageDataGrid.SuspendLayout();
       this.SuspendLayout();
       // 
       // bindingSourceEnumerable
@@ -485,6 +485,15 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonRelatedCounts.Text = "Related Object Counts";
       this.toolStripButtonRelatedCounts.Click += new System.EventHandler(this.toolStripButtonRelatedCounts_Click);
       // 
+      // toolStripCheckBoxDeletesAreCascading
+      // 
+      this.toolStripCheckBoxDeletesAreCascading.Checked = false;
+      this.toolStripCheckBoxDeletesAreCascading.CheckState = System.Windows.Forms.CheckState.Unchecked;
+      this.toolStripCheckBoxDeletesAreCascading.Name = "toolStripCheckBoxDeletesAreCascading";
+      this.toolStripCheckBoxDeletesAreCascading.Size = new System.Drawing.Size(143, 19);
+      this.toolStripCheckBoxDeletesAreCascading.Text = "Deletes Are Cascading";
+      this.toolStripCheckBoxDeletesAreCascading.CheckedChanged += new System.EventHandler(this.toolStripCheckBoxDeletesAreCascading_CheckedChanged);
+      // 
       // dataGridViewEnumerable
       // 
       this.dataGridViewEnumerable.AllowUserToOrderColumns = true;
@@ -688,7 +697,7 @@ namespace AW.Winforms.Helpers.Controls
       // 
       this.toolStripLabel4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
       this.toolStripLabel4.Name = "toolStripLabel4";
-      this.toolStripLabel4.Size = new System.Drawing.Size(71, 22);
+      this.toolStripLabel4.Size = new System.Drawing.Size(70, 22);
       this.toolStripLabel4.Text = "Total Count";
       // 
       // toolStripLabelSuperSetCount
@@ -718,17 +727,6 @@ namespace AW.Winforms.Helpers.Controls
       this.tabControlGrids.TabIndex = 7;
       this.tabControlGrids.SelectedIndexChanged += new System.EventHandler(this.tabControlGrids_SelectedIndexChanged);
       // 
-      // tabPageDataGrid
-      // 
-      this.tabPageDataGrid.Controls.Add(this.dataGridEnumerable);
-      this.tabPageDataGrid.Location = new System.Drawing.Point(4, 22);
-      this.tabPageDataGrid.Name = "tabPageDataGrid";
-      this.tabPageDataGrid.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageDataGrid.Size = new System.Drawing.Size(1504, 522);
-      this.tabPageDataGrid.TabIndex = 0;
-      this.tabPageDataGrid.Text = "DataGrid";
-      this.tabPageDataGrid.UseVisualStyleBackColor = true;
-      // 
       // tabPageDataGridView
       // 
       this.tabPageDataGridView.Controls.Add(this.dataGridViewEnumerable);
@@ -739,6 +737,17 @@ namespace AW.Winforms.Helpers.Controls
       this.tabPageDataGridView.TabIndex = 1;
       this.tabPageDataGridView.Text = "DataGridView";
       this.tabPageDataGridView.UseVisualStyleBackColor = true;
+      // 
+      // tabPageDataGrid
+      // 
+      this.tabPageDataGrid.Controls.Add(this.dataGridEnumerable);
+      this.tabPageDataGrid.Location = new System.Drawing.Point(4, 22);
+      this.tabPageDataGrid.Name = "tabPageDataGrid";
+      this.tabPageDataGrid.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPageDataGrid.Size = new System.Drawing.Size(1504, 522);
+      this.tabPageDataGrid.TabIndex = 0;
+      this.tabPageDataGrid.Text = "DataGrid";
+      this.tabPageDataGrid.UseVisualStyleBackColor = true;
       // 
       // searchToolBar
       // 
@@ -755,15 +764,6 @@ namespace AW.Winforms.Helpers.Controls
       this.searchToolBar.Visible = false;
       this.searchToolBar.Search += new ADGV.SearchToolBarSearchEventHandler(this.searchToolBar_Search);
       this.searchToolBar.VisibleChanged += new System.EventHandler(this.searchToolBar_VisibleChanged);
-      // 
-      // toolStripCheckBoxDeletesAreCascading
-      // 
-      this.toolStripCheckBoxDeletesAreCascading.Checked = false;
-      this.toolStripCheckBoxDeletesAreCascading.CheckState = System.Windows.Forms.CheckState.Unchecked;
-      this.toolStripCheckBoxDeletesAreCascading.Name = "toolStripCheckBoxDeletesAreCascading";
-      this.toolStripCheckBoxDeletesAreCascading.Size = new System.Drawing.Size(143, 19);
-      this.toolStripCheckBoxDeletesAreCascading.Text = "Deletes Are Cascading";
-      this.toolStripCheckBoxDeletesAreCascading.CheckedChanged += new System.EventHandler(this.toolStripCheckBoxDeletesAreCascading_CheckedChanged);
       // 
       // GridDataEditor
       // 
@@ -785,8 +785,8 @@ namespace AW.Winforms.Helpers.Controls
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourcePaging)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridEnumerable)).EndInit();
       this.tabControlGrids.ResumeLayout(false);
-      this.tabPageDataGrid.ResumeLayout(false);
       this.tabPageDataGridView.ResumeLayout(false);
+      this.tabPageDataGrid.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
