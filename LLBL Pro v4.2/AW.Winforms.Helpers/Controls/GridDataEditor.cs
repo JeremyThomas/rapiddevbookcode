@@ -1263,7 +1263,7 @@ namespace AW.Winforms.Helpers.Controls
     private void dataGridViewEnumerable_CurrentCellDirtyStateChanged(object sender, EventArgs e)
     {
       var dataGridView = sender as DataGridView;
-      if (dataGridView == null || dataGridView.CurrentCell == null)
+      if (dataGridView == null)
         return;
       var isComboBox = dataGridView.CurrentCell is DataGridViewComboBoxCell;
       if ((isComboBox || dataGridView.CurrentCell is DataGridViewCheckBoxCell) 
