@@ -7,7 +7,7 @@ using SD.LLBLGen.Pro.LinqSupportClasses;
 
 namespace AW.Winforms.Helpers.LLBL
 {
-  partial class UsrCntrlEntityBrowser
+  partial class UsrCntrlEntityExplorer
   {
     /// <summary>
     /// Required designer variable.
@@ -36,7 +36,7 @@ namespace AW.Winforms.Helpers.LLBL
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UsrCntrlEntityBrowser));
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UsrCntrlEntityExplorer));
       this.treeViewEntities = new System.Windows.Forms.TreeView();
       this.imageList1 = new System.Windows.Forms.ImageList(this.components);
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -345,12 +345,12 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorData.TabIndex = 2;
       this.bindingNavigatorData.Text = "bindingNavigator1";
       // 
-      // UsrCntrlEntityBrowser
+      // UsrCntrlEntityExplorer
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.splitContainer1);
-      this.Name = "UsrCntrlEntityBrowser";
+      this.Name = "UsrCntrlEntityExplorer";
       this.Size = new System.Drawing.Size(1204, 585);
       this.Load += new System.EventHandler(this.UsrCntrlEntityBrowser_Load);
       this.VisibleChanged += new System.EventHandler(this.UsrCntrlEntityBrowser_VisibleChanged);

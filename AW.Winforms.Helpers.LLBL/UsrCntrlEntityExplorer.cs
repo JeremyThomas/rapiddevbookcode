@@ -12,7 +12,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.LLBL
 {
-  public partial class UsrCntrlEntityBrowser : UserControl, IContextAwareElement, INotifyPropertyChanged
+  public partial class UsrCntrlEntityExplorer : UserControl, IContextAwareElement, INotifyPropertyChanged
   {
     public const int DefaultCacheDurationInSeconds = 20;
     public const string DefaultPrefixDelimiter = "_";
@@ -233,14 +233,14 @@ namespace AW.Winforms.Helpers.LLBL
       ushort pageSize = GridDataEditor.DefaultPageSize, bool cascadeDeletes = true,
       params string[] membersToExclude)
     {
-      var usrCntrlEntityBrowser = new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter,
+      var usrCntrlEntityBrowser = new UsrCntrlEntityExplorer(linqMetaData, useSchema, prefixDelimiter,
         ensureFilteringEnabled, useContext, cacheDurationInSeconds, pageSize, cascadeDeletes, membersToExclude);
       var dataBrowser = FrmPersistantLocation.ShowControlInForm(usrCntrlEntityBrowser, "Data Browser", parentForm, "DataBrowser");
       //usrCntrlEntityBrowser.ResizeToFitNodes();
       return dataBrowser;
     }
 
-    public UsrCntrlEntityBrowser()
+    public UsrCntrlEntityExplorer()
     {
       InitializeComponent();
       PrefixDelimiter = DefaultPrefixDelimiter;
@@ -263,7 +263,7 @@ namespace AW.Winforms.Helpers.LLBL
     }
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="UsrCntrlEntityBrowser" /> class.
+    ///   Initializes a new instance of the <see cref="UsrCntrlEntityExplorer" /> class.
     /// </summary>
     /// <param name="linqMetaData">The linq meta data.</param>
     /// <param name="useSchema">if set to <c>true</c> [use schema].</param>
@@ -274,7 +274,7 @@ namespace AW.Winforms.Helpers.LLBL
     /// <param name="pageSize">Size of the page.</param>
     /// <param name="cascadeDeletes">if set to <c>true</c> [cascade deletes].</param>
     /// <param name="membersToExclude">The members to exclude.</param>
-    public UsrCntrlEntityBrowser(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = DefaultPrefixDelimiter,
+    public UsrCntrlEntityExplorer(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = DefaultPrefixDelimiter,
       bool ensureFilteringEnabled = true, bool useContext = true, int cacheDurationInSeconds = DefaultCacheDurationInSeconds,
       ushort pageSize = GridDataEditor.DefaultPageSize, bool cascadeDeletes = true, params string[] membersToExclude)
       : this()

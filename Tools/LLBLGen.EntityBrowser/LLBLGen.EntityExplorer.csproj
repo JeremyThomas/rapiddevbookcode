@@ -7,8 +7,8 @@
     <ProjectGuid>{AA92D1DD-B208-43CE-8E8F-7C5A04D6EB89}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LLBLGen.EntityBrowser</RootNamespace>
-    <AssemblyName>LLBLGen.EntityBrowser</AssemblyName>
+    <RootNamespace>LLBLGen.EntityExplorer</RootNamespace>
+    <AssemblyName>LLBLGen.EntityExplorer</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -90,16 +90,16 @@
     <Compile Include="..\..\Ancillary\GlobalAssemblyVersion.cs">
       <Link>GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="FrmLLBLGenEntityBrowser.cs">
+    <Compile Include="FrmLLBLGenEntityExplorer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmLLBLGenEntityBrowser.Designer.cs">
-      <DependentUpon>FrmLLBLGenEntityBrowser.cs</DependentUpon>
+    <Compile Include="FrmLLBLGenEntityExplorer.Designer.cs">
+      <DependentUpon>FrmLLBLGenEntityExplorer.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FrmLLBLGenEntityBrowser.resx">
-      <DependentUpon>FrmLLBLGenEntityBrowser.cs</DependentUpon>
+    <EmbeddedResource Include="FrmLLBLGenEntityExplorer.resx">
+      <DependentUpon>FrmLLBLGenEntityExplorer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -165,7 +165,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>if exist "$(TargetPath).config" del  "$(TargetPath).config" 
-rename "$(TargetPath).config.Prebuild" "$(TargetFileName).config"</PostBuildEvent>
+if exist "$(TargetPath).config.Prebuild" rename "$(TargetPath).config.Prebuild" "$(TargetFileName).config"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

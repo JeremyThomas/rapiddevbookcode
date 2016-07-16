@@ -16,7 +16,7 @@ using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.ConnectionUI;
 using AW.Winforms.Helpers.Forms;
 using AW.Winforms.Helpers.LLBL;
-using LLBLGen.EntityBrowser.Properties;
+using LLBLGen.EntityExplorer.Properties;
 using Microsoft.Data.ConnectionUI;
 using Microsoft.VisualBasic;
 using SD.LLBLGen.Pro.LinqSupportClasses;
@@ -24,12 +24,11 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 // ReSharper disable BuiltInTypeReferenceStyle
 
-namespace LLBLGen.EntityBrowser
+namespace LLBLGen.EntityExplorer
 {
-  public partial class FrmLLBLGenEntityBrowser : FrmPersistantLocation
+  public partial class FrmLLBLGenEntityExplorer : FrmPersistantLocation
   {
     private static Type _linqMetaDataType;
-    private static Type _adapterType;
 
     /// <summary>
     ///   The <see cref="ConnectionString" /> property's name.
@@ -42,7 +41,7 @@ namespace LLBLGen.EntityBrowser
 
     private static readonly DataConnectionDialog DataConnectionDialog;
 
-    static FrmLLBLGenEntityBrowser()
+    static FrmLLBLGenEntityExplorer()
     {
       ProfilerHelper.InitializeOrmProfiler();
       DataConnectionDialog = new DataConnectionDialog();
@@ -53,7 +52,7 @@ namespace LLBLGen.EntityBrowser
       ConnectionStringSettingsCollection = Configuration.ConnectionStrings.ConnectionStrings;
     }
 
-    public FrmLLBLGenEntityBrowser()
+    public FrmLLBLGenEntityExplorer()
     {
       InitializeComponent();
       Settings.Default.PropertyChanged += SettingPropertyChanged;
@@ -81,8 +80,6 @@ namespace LLBLGen.EntityBrowser
       try
       {
         LoadAssembliesAndTabs();
-        if (_linqMetaDataType != null)
-          Text += string.Format(" - {0}", _linqMetaDataType.Assembly.FullName.Before(", Culture"));
         SetSettingsVisible(tabControl.TabPages.Count == 0 || Settings.Default.ShowSettings);
       }
       catch (Exception ex)
@@ -162,12 +159,12 @@ namespace LLBLGen.EntityBrowser
         var countBefore = tabControl.TabPages.Count;
         if (UserConnections != null)
           foreach (var connectionStringSetting in UserConnections)
-            AddEntityBrowser(connectionStringSetting);
+            AddEntityExplorer(connectionStringSetting);
         if (tabControl.TabPages.Count == countBefore)
         {
           tabControl.TabPages.Clear();
           foreach (ConnectionStringSettings connectionStringSetting in ConnectionStringSettingsCollection)
-            AddEntityBrowser(connectionStringSetting);
+            AddEntityExplorer(connectionStringSetting);
         }
       }
     }
@@ -203,19 +200,21 @@ namespace LLBLGen.EntityBrowser
       }
     }
 
-    private void AddEntityBrowser(ConnectionStringSettings connectionStringSetting)
+    private void AddEntityExplorer(ConnectionStringSettings connectionStringSetting)
     {
+      if (connectionStringSetting== null || string.IsNullOrWhiteSpace(connectionStringSetting.ConnectionString))
+        return;
       tabControl.TabPages.Add(connectionStringSetting.Name, connectionStringSetting.Name);
       var tabPage = tabControl.TabPages[connectionStringSetting.Name];
       tabPage.Tag = connectionStringSetting;
-      var usrCntrlEntityBrowser = new UsrCntrlEntityBrowser(null, Settings.Default.UseSchema, Settings.Default.PrefixDelimiter,
+      var usrCntrlEntityExplorer = new UsrCntrlEntityExplorer(null, Settings.Default.UseSchema, Settings.Default.PrefixDelimiter,
         Settings.Default.EnsureFilteringEnabled, Settings.Default.UseContext, (int) Settings.Default.CacheDurationInSeconds,
         (ushort) Settings.Default.PageSize,Settings.Default.CascadeDeletes)
       {
         Dock = DockStyle.Fill
       };
-      InitializeEntityBrowser(usrCntrlEntityBrowser, connectionStringSetting);
-      tabPage.Controls.Add(usrCntrlEntityBrowser);
+      InitializeEntityExplorer(usrCntrlEntityExplorer, connectionStringSetting);
+      tabPage.Controls.Add(usrCntrlEntityExplorer);
     }
 
     private static IEnumerable<ConnectionStringSettings> UserConnections
@@ -263,7 +262,7 @@ namespace LLBLGen.EntityBrowser
           {
             Application.OnThreadException(ex.GetBaseException());
           }
-          AddEntityBrowser(connectionStringSettings);
+          AddEntityExplorer(connectionStringSettings);
         }
         else
         {
@@ -301,16 +300,18 @@ namespace LLBLGen.EntityBrowser
           connectionStringSettings.ConnectionString = DataConnectionDialog.ConnectionString;
           if (_currentTabItem.Controls.Count > 0)
           {
-            var usrCntrlEntityBrowser = _currentTabItem.Controls[0] as UsrCntrlEntityBrowser;
-            InitializeEntityBrowser(usrCntrlEntityBrowser, connectionStringSettings);
+            var usrCntrlEntityExplorer = _currentTabItem.Controls[0] as UsrCntrlEntityExplorer;
+            InitializeEntityExplorer(usrCntrlEntityExplorer, connectionStringSettings);
           }
         }
       }
     }
 
-    private static void InitializeEntityBrowser(UsrCntrlEntityBrowser usrCntrlEntityBrowser, ConnectionStringSettings connectionStringSetting)
+    private static void InitializeEntityExplorer(UsrCntrlEntityExplorer usrCntrlEntityExplorer, ConnectionStringSettings connectionStringSetting)
     {
       ILinqMetaData linqMetaData;
+      if (_linqMetaDataType == null)
+        throw new ApplicationException("LinqMetaData type not found!");
       if (_daoBaseImplementationType == null)
       {
         var adapter = GetAdapter(connectionStringSetting);
@@ -351,7 +352,7 @@ namespace LLBLGen.EntityBrowser
           }
         }
       }
-      usrCntrlEntityBrowser.Initialize(linqMetaData);
+      usrCntrlEntityExplorer.Initialize(linqMetaData);
     }
 
     private static Assembly LoadAssembly(string assemblyPath)
@@ -369,25 +370,30 @@ namespace LLBLGen.EntityBrowser
       if (!String.IsNullOrWhiteSpace(linqMetaDataAssemblyPath))
       {
         LoadLinqMetaData(linqMetaDataAssemblyPath);
-
         if (_daoBaseImplementationType == null && !String.IsNullOrWhiteSpace(adapterAssemblyPath))
-        {
           _adapterTypes = GetAdapterTypes().ToList();
-        }
         LoadTabs();
       }
+      toolStripButtonAddConnection.Enabled = _linqMetaDataType != null;
     }
 
     private void LoadLinqMetaData(string linqMetaDataAssemblyPath)
     {
+      toolStripButtonAddConnection.Enabled = _linqMetaDataType != null;
       linqMetaDataAssemblyPath = GeneralHelper.FindIfFileExists(linqMetaDataAssemblyPath, "LinqMetaData assembly");
       var linqMetaDataAssembly = LoadAssembly(linqMetaDataAssemblyPath);
       if (linqMetaDataAssembly.Location != linqMetaDataAssemblyPath && linqMetaDataAssembly.Location != Path.GetFullPath(linqMetaDataAssemblyPath))
         throw new ApplicationException("New assembly could not be loaded, restart to try again.");
       _linqMetaDataType = linqMetaDataAssembly.GetConcretePublicImplementations(typeof(ILinqMetaData)).FirstOrDefault();
       if (_linqMetaDataType == null)
+      {
+        toolStripButtonAddConnection.Enabled = false;
         throw new ApplicationException("There are no public types in that assembly that implement ILinqMetaData. Wrong Assembly chosen.");
-      labellinqMetaDataAssemblyVersion.Text = "Version " + linqMetaDataAssembly.GetVersion();
+      }
+      toolStripButtonAddConnection.Enabled = true;
+      var nameAndVersion = _linqMetaDataType.Assembly.FullName.Before(", Culture", _linqMetaDataType.Assembly.FullName);
+      Text = string.Format("Entity Explorer - {0}", nameAndVersion);
+      labellinqMetaDataAssemblyVersion.Text = nameAndVersion.After(",", nameAndVersion);
       _daoBaseImplementationType = EntityHelper.GetDaoBaseImplementation(linqMetaDataAssembly);
     }
     

@@ -51,7 +51,7 @@ namespace AW.LLBLGen.DataContextDriver
     }
 
     /// <summary>
-    /// Browses the data as LLBL Entities from a LINQPad like Treeview.
+    /// Explore the data as LLBL Entities from a LINQPad like Treeview.
     /// </summary>
     /// <param name="linqMetaData">The linq meta data.</param>
     /// <param name="useSchema">if set to <c>true</c> group by schema.</param>
@@ -64,16 +64,16 @@ namespace AW.LLBLGen.DataContextDriver
     /// <returns>
     /// True if succeeded rather than void so can be passed to LINQPads Dump method.
     /// </returns>
-    /// <example>LinqPad: this.BrowseData()</example>
+    /// <example>LinqPad: this.Explore()</example>
 // ReSharper disable UnusedMember.Global
-    public static bool BrowseData(this ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = UsrCntrlEntityBrowser.DefaultPrefixDelimiter,
-      bool ensureFilteringEnabled = true, bool useContext = true, int cacheDurationInSeconds = UsrCntrlEntityBrowser.DefaultCacheDurationInSeconds,
+    public static bool Explore(this ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = UsrCntrlEntityExplorer.DefaultPrefixDelimiter,
+      bool ensureFilteringEnabled = true, bool useContext = true, int cacheDurationInSeconds = UsrCntrlEntityExplorer.DefaultCacheDurationInSeconds,
       ushort pageSize = GridDataEditor.DefaultPageSize, bool cascadeDeletes = true)
     {
       if (linqMetaData == null)
         return false;
-      PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, useContext, cacheDurationInSeconds, pageSize, cascadeDeletes
-        , MembersToExcludeCache.GetMembersToExclude(typeof (EntityBase))), "Data Browser");
+      PanelManager.DisplayControl(new UsrCntrlEntityExplorer(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, useContext, cacheDurationInSeconds, pageSize, cascadeDeletes
+        , MembersToExcludeCache.GetMembersToExclude(typeof (EntityBase))), "Entity Explorer");
       return true;
     }
 

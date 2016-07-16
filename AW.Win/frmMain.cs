@@ -240,7 +240,7 @@ namespace AW.Win
 
     private FrmPersistantLocation ShowDataBrowser()
     {
-      var childForm = UsrCntrlEntityBrowser.ShowDataBrowser(MetaSingletons.MetaData, this);
+      var childForm = UsrCntrlEntityExplorer.ShowDataBrowser(MetaSingletons.MetaData, this);
       childForm.Tag = true;
       return childForm;
     }
