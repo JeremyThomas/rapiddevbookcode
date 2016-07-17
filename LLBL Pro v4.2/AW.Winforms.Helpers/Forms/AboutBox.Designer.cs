@@ -125,6 +125,7 @@ namespace AW.Winforms.Helpers.Forms
       // 
       this.AppDescriptionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.AppDescriptionLabel.AutoEllipsis = true;
       this.AppDescriptionLabel.AutoSize = true;
       this.AppDescriptionLabel.Location = new System.Drawing.Point(58, 27);
       this.AppDescriptionLabel.Name = "AppDescriptionLabel";

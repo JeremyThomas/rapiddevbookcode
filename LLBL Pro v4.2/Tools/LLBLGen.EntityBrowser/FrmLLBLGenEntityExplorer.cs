@@ -562,7 +562,10 @@ namespace LLBLGen.EntityExplorer
 
     private void toolStripButtonAbout_Click(object sender, EventArgs e)
     {
-      AboutBox.ShowAboutBox(this, Environment.NewLine + Environment.NewLine + "https://rapiddevbookcode.codeplex.com/wikipage?title=LLBLGen%20Entity%20Browser" + Environment.NewLine);
+      var assembly = GetType().Assembly;
+      AboutBox.ShowAboutBox(this, Environment.NewLine  + Environment.NewLine
+        +  assembly.GetInformationalVersionAttribute()+ Environment.NewLine + " File Version: " + assembly.GetVersion()
+        + Environment.NewLine + Environment.NewLine + "For more information see https://rapiddevbookcode.codeplex.com/wikipage?title=LLBLGen%20Entity%20Exploror");
     }
   }
 

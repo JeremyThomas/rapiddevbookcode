@@ -8,7 +8,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
+using System.Security;
+using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using AW.Helper;
@@ -319,16 +323,51 @@ namespace AW.Winforms.Helpers.Forms
           case "System.Security.AllowPartiallyTrustedCallersAttribute":
             value = "(Present)";
             break;
+          case "System.Reflection.AssemblyFileVersionAttribute":
+            value = ((AssemblyFileVersionAttribute) attribute).Version;
+            break;
+          case "System.Runtime.Versioning.TargetFrameworkAttribute":
+            value = ((TargetFrameworkAttribute) attribute).FrameworkDisplayName;
+            break;
+          case "System.Runtime.CompilerServices.RuntimeCompatibilityAttribute":
+            value = ((RuntimeCompatibilityAttribute) attribute).WrapNonExceptionThrows.ToString();
+            break;
+          case "System.Runtime.CompilerServices.CompilationRelaxationsAttribute":
+            value = ((CompilationRelaxationsAttribute) attribute).CompilationRelaxations.ToString();
+            break;
+          case "System.Runtime.CompilerServices.ExtensionAttribute":
+            value = Convert.ToString(((ExtensionAttribute) attribute).TypeId);
+            break;
+          case "System.Runtime.CompilerServices.InternalsVisibleToAttribute":
+            value = ((InternalsVisibleToAttribute) attribute).AllInternalsVisible.ToString();
+            break;
+          case "System.Security.SecurityRulesAttribute":
+            value = ((SecurityRulesAttribute) attribute).SkipVerificationInFullTrust.ToString();
+            break;
+          case "System.Reflection.AssemblyMetadataAttribute":
+          case "System.Security.Permissions.SecurityPermissionAttribute":
+            value = MetaDataHelper.GetPropertiesAndValuesAsString(attribute);
+            break;
+          case "System.Security.SecurityTransparentAttribute":
+            value = ((SecurityTransparentAttribute) attribute).TypeId.ToString();
+            break;
+          case "System.Reflection.AssemblySignatureKeyAttribute":
+            value = ((AssemblySignatureKeyAttribute) attribute).PublicKey;
+            break;
+          case "System.Reflection.AssemblyKeyNameAttribute":
+            value = ((AssemblyKeyNameAttribute) attribute).KeyName;
+            break;
+          case "System.Security.Permissions.FileIOPermissionAttribute":
+            value = MetaDataHelper.GetPropertiesAndValuesAsString(attribute);
+            break;
           default:
-            // debug.writeline("** unknown assembly attribute '" + TypeName + "'")
+            GeneralHelper.TraceOut("** unknown assembly attribute '" + typeName + "'"); //+ MetaDataHelper.GetPropertiesAndValuesAsString(attribute)
             value = typeName;
             break;
         }
 
         if (nvc[theName] == null)
-        {
           nvc.Add(theName, value);
-        }
       }
 
       // add some extra values that are not in the AssemblyInfo, but nice to have
@@ -357,21 +396,15 @@ namespace AW.Winforms.Helpers.Forms
       try
       {
         if (a.GetName().Version.Major == 0 && a.GetName().Version.Minor == 0)
-        {
           nvc.Add("Version", "(unknown)");
-        }
         else
-        {
           nvc.Add("Version", a.GetName().Version.ToString());
-        }
       }
       catch (Exception)
       {
         nvc.Add("Version", "(unknown)");
       }
-
       nvc.Add("FullName", a.FullName);
-
       return nvc;
     }
 
@@ -401,14 +434,12 @@ namespace AW.Winforms.Helpers.Forms
       var strSysInfoPath = RegistryHklmValue(@"SOFTWARE\Microsoft\Shared Tools Location", "MSINFO");
       if (strSysInfoPath == "")
         strSysInfoPath = RegistryHklmValue(@"SOFTWARE\Microsoft\Shared Tools\MSINFO", "PATH");
-
       if (strSysInfoPath == "")
       {
         MessageBox.Show(string.Format("System Information is unavailable at this time.{0}{0}(couldn't find path for Microsoft System Information Tool in the registry.)", Environment.NewLine),
           Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         return;
       }
-
       try
       {
         Process.Start(strSysInfoPath);
@@ -616,9 +647,7 @@ namespace AW.Winforms.Helpers.Forms
 
       TabPanelDetails.Visible = false;
       if (!MoreRichTextBox.Visible)
-      {
         Height = Height - MoreRichTextBox.Height;
-      }
     }
 
     // <summary>
