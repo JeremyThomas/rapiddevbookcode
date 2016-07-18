@@ -1721,6 +1721,10 @@ namespace JesseJohnston
         {
           // inaccessible property path
         }
+        catch (TargetInvocationException)
+        {
+          // inaccessible property path
+        }
 
         object secondValue = null;
         try
@@ -1728,6 +1732,10 @@ namespace JesseJohnston
           secondValue = prop.GetValue(second);
         }
         catch (TargetException)
+        {
+          // inaccessible property path
+        }
+        catch (TargetInvocationException)
         {
           // inaccessible property path
         }

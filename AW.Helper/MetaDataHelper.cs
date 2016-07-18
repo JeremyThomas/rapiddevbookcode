@@ -1161,6 +1161,12 @@ namespace AW.Helper
         select String.Format("{0}={1}", kv.Key, DisplayAsString(kv.Value));
     }
 
+    public static IEnumerable<string> GetReadablePropertiesAndValuesAsStringList(object myObject, params string[] propertiesToExclude)
+    {
+      return from kv in GetReadablePropertiesAndValuesAsStrings(myObject, propertiesToExclude)
+             select String.Format("{0}={1}", kv.Key, DisplayAsString(kv.Value));
+    }
+
     public static IEnumerable<string> GetSpecifiedPropertiesAndValuesAsStringList(object myObject, params string[] propertiesToInclude)
     {
       return from kv in GetSpecifiedPropertiesAndValues(myObject, false, propertiesToInclude)
@@ -1198,6 +1204,11 @@ namespace AW.Helper
     public static string GetSpecifiedPropertiesAndValuesAsString(object myObject, params string[] propertiesToInclude)
     {
       return GetSpecifiedPropertiesAndValuesAsStringList(myObject, propertiesToInclude).JoinAsString();
+    }
+
+    public static string GetReadablePropertiesAndValuesAsString(object myObject, params string[] propertiesToExclude)
+    {
+      return GetReadablePropertiesAndValuesAsStringList(myObject, propertiesToExclude).JoinAsString();
     }
 
     #region Default
@@ -1336,12 +1347,58 @@ namespace AW.Helper
       return dictionary;
     }
 
-    private static void GetPropertyAndValueAsStrings(IDictionary<string, string> dictionary, object value, string propertyName, Type propertyType)
+    public static Dictionary<string, string> GetReadablePropertiesAndValuesAsStrings<T>(object myObject, params Expression<Func<T, object>>[] propertiesToExclude)
+    {
+      return GetReadablePropertiesAndValuesAsStrings(myObject, false, MemberName.For(propertiesToExclude));
+    }
+
+    public static Dictionary<string, string> GetReadablePropertiesAndValuesAsStrings(object myObject, params string[] propertiesToExclude)
+    {
+      return GetReadablePropertiesAndValuesAsStrings(myObject, false, (IEnumerable<string>)propertiesToExclude);
+    }
+
+    public static Dictionary<string, string> GetReadablePropertiesAndValuesAsStrings(object myObject, bool includeNullsAndDefault, IEnumerable<string> propertiesToExclude)
+    {
+      var modelClass = myObject.GetType();
+
+      var dictionary = new Dictionary<string, string>();
+
+      foreach (var propertyInfo in modelClass.GetProperties().Where(p => p.CanRead && !propertiesToExclude.Contains(p.Name)))
+        try
+        {
+          var value = propertyInfo.GetValue(myObject);
+          GetPropertyAndValueAsStrings(dictionary, value, propertyInfo.Name, propertyInfo.PropertyType, includeNullsAndDefault);
+        }
+        catch (ArgumentException)
+        {
+        }
+        catch (NotSupportedException)
+        {
+        }
+        catch (TargetInvocationException e)
+        {
+          GeneralHelper.TraceOut(propertyInfo.Name);
+          e.TraceOut();
+        }
+      return dictionary;
+
+      //return modelClass.GetProperties().Where(p => !propertiesToExclude.Contains(p.Name))
+      //  .ToDictionary(descriptor => descriptor.Name, descriptor => descriptor.GetValue(myObject));//
+    }
+
+    private static void GetPropertyAndValueAsStrings(IDictionary<string, string> dictionary, object value, string propertyName, Type propertyType, bool includeNullsAndDefault = false)
     {
       if (IsNullOrEmptyOrDefault(value, propertyType))
-        dictionary.Add(propertyName, null);
+      {
+        if (includeNullsAndDefault)
+          dictionary.Add(propertyName, null);
+      }
       else
-        dictionary.Add(propertyName, ConvertOrSerializeToString(value, propertyType));
+      {
+        var serializeToString = ConvertOrSerializeToString(value, propertyType);
+        if (includeNullsAndDefault || !string.IsNullOrWhiteSpace(serializeToString))
+          dictionary.Add(propertyName, serializeToString);
+      }
     }
 
     public static string ConvertOrSerializeToString(object value, Type propertyType = null)
@@ -1356,17 +1413,22 @@ namespace AW.Helper
     public static string SerializeToXml(object value, Type type = null, string defaultValue = null)
     {
       if (value == null) return defaultValue;
-      var x = new XmlSerializer(type ?? value.GetType());
-
-      //we are saving the grid preferences
-      var doc = new XDocument();
-      using (var xw = doc.CreateWriter())
+      type = type ?? value.GetType();
+      if (type.IsPublic)
       {
-        x.Serialize(xw, value);
-        xw.Close();
+        var x = new XmlSerializer(type);
+
+        //we are saving the grid preferences
+        var doc = new XDocument();
+        using (var xw = doc.CreateWriter())
+        {
+          x.Serialize(xw, value);
+          xw.Close();
+        }
+        var el = doc.Root;
+        return el == null ? defaultValue : el.ToString();
       }
-      var el = doc.Root;
-      return el == null ? defaultValue : el.ToString();
+      return null;
     }
 
     #endregion

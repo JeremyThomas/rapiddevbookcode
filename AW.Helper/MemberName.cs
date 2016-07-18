@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace AW.Helper
@@ -28,6 +30,11 @@ namespace AW.Helper
     public static string For<T, TResult>(T instance, Expression<Func<T, TResult>> expression)
     {
       return FindMemberName(expression.Body);
+    }
+
+    public static IEnumerable<string> For<T>(Expression<Func<T, object>>[] expressions)
+    {
+      return expressions.Select(For);
     }
 
     public static string For<T, TResult>(Expression<Func<T, TResult>> expression)
