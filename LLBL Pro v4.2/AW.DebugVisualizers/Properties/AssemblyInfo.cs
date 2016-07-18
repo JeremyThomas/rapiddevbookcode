@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Enumerable Debugger Visualizer for VS2013")]
 [assembly: AssemblyProduct("Enumerable Debugger Visualizer for VS2013")]
 #else
-[assembly: AssemblyDescription("Enumerable Debugger Visualizer for VS2015")]
+[assembly: AssemblyDescription("Enumerable Debugger Visualizer for VS2015 that displays any registered IEnumerable object in a Grid")]
 [assembly: AssemblyProduct("Enumerable Debugger Visualizer for VS2015")]
 #endif
 [assembly: AssemblyCopyright("Copyright © Jeremy Thomas 2016")]

@@ -564,7 +564,7 @@ namespace LLBLGen.EntityExplorer
     {
       var assembly = GetType().Assembly;
       AboutBox.ShowAboutBox(this, Environment.NewLine  + Environment.NewLine
-        +  assembly.GetInformationalVersionAttribute()+ Environment.NewLine + " File Version: " + assembly.GetVersion()
+        +  assembly.GetInformationalVersionAttribute()+ Environment.NewLine + "File Version: " + assembly.GetVersion()
         + Environment.NewLine + Environment.NewLine + "For more information see https://rapiddevbookcode.codeplex.com/wikipage?title=LLBLGen%20Entity%20Exploror");
     }
   }

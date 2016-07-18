@@ -11,8 +11,6 @@ using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
-using System.Security;
-using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using AW.Helper;
@@ -192,6 +190,7 @@ namespace AW.Winforms.Helpers.Forms
     // <returns>File.GetLastWriteTime, or DateTime.MaxValue if exception was encountered.</returns>
     private static DateTime AssemblyLastWriteTime(Assembly a)
     {
+      if (a.IsDynamic) return DateTime.MaxValue;
       try
       {
         return string.IsNullOrWhiteSpace(a.Location) ? DateTime.MaxValue : File.GetLastWriteTime(a.Location);
@@ -284,6 +283,12 @@ namespace AW.Winforms.Helpers.Forms
           case "System.Reflection.AssemblyInformationalVersionAttribute":
             value = ((AssemblyInformationalVersionAttribute) attribute).InformationalVersion;
             break;
+          case "System.Reflection.AssemblyVersionAttribute":
+            value = ((AssemblyVersionAttribute) attribute).Version;
+            break;
+          case "System.Reflection.AssemblyFileVersionAttribute":
+            value = ((AssemblyFileVersionAttribute) attribute).Version;
+            break;
           case "System.Reflection.AssemblyKeyFileAttribute":
             value = ((AssemblyKeyFileAttribute) attribute).KeyFile;
             break;
@@ -323,9 +328,6 @@ namespace AW.Winforms.Helpers.Forms
           case "System.Security.AllowPartiallyTrustedCallersAttribute":
             value = "(Present)";
             break;
-          case "System.Reflection.AssemblyFileVersionAttribute":
-            value = ((AssemblyFileVersionAttribute) attribute).Version;
-            break;
           case "System.Runtime.Versioning.TargetFrameworkAttribute":
             value = ((TargetFrameworkAttribute) attribute).FrameworkDisplayName;
             break;
@@ -335,34 +337,35 @@ namespace AW.Winforms.Helpers.Forms
           case "System.Runtime.CompilerServices.CompilationRelaxationsAttribute":
             value = ((CompilationRelaxationsAttribute) attribute).CompilationRelaxations.ToString();
             break;
-          case "System.Runtime.CompilerServices.ExtensionAttribute":
-            value = Convert.ToString(((ExtensionAttribute) attribute).TypeId);
-            break;
           case "System.Runtime.CompilerServices.InternalsVisibleToAttribute":
-            value = ((InternalsVisibleToAttribute) attribute).AllInternalsVisible.ToString();
-            break;
           case "System.Security.SecurityRulesAttribute":
-            value = ((SecurityRulesAttribute) attribute).SkipVerificationInFullTrust.ToString();
-            break;
+          case "System.Runtime.CompilerServices.ExtensionAttribute":
           case "System.Reflection.AssemblyMetadataAttribute":
           case "System.Security.Permissions.SecurityPermissionAttribute":
-            value = MetaDataHelper.GetPropertiesAndValuesAsString(attribute);
-            break;
+          case "System.Security.SecurityCriticalAttribute":
+          case "System.Net.DnsPermissionAttribute":
+          case "System.Runtime.InteropServices.BestFitMappingAttribute":
+          case "System.EnterpriseServices.ApplicationIDAttribute":
+          case "System.EnterpriseServices.ApplicationNameAttribute":
+          case "System.Runtime.CompilerServices.DefaultDependencyAttribute":
+          case "System.Runtime.CompilerServices.DependencyAttribute":
+          case "System.Runtime.CompilerServices.StringFreezingAttribute":
+          case "System.Drawing.BitmapSuffixInSatelliteAssemblyAttribute":
+          case "System.Runtime.ConstrainedExecution.ReliabilityContractAttribute":
+          case "System.Runtime.InteropServices.ImportedFromTypeLibAttribute":
           case "System.Security.SecurityTransparentAttribute":
-            value = ((SecurityTransparentAttribute) attribute).TypeId.ToString();
-            break;
           case "System.Reflection.AssemblySignatureKeyAttribute":
-            value = ((AssemblySignatureKeyAttribute) attribute).PublicKey;
-            break;
           case "System.Reflection.AssemblyKeyNameAttribute":
-            value = ((AssemblyKeyNameAttribute) attribute).KeyName;
+            value = MetaDataHelper.GetReadablePropertiesAndValuesAsString(attribute);
             break;
           case "System.Security.Permissions.FileIOPermissionAttribute":
-            value = MetaDataHelper.GetPropertiesAndValuesAsString(attribute);
+          case "System.Security.Permissions.EnvironmentPermissionAttribute":
+            value = MetaDataHelper.GetReadablePropertiesAndValuesAsString(attribute, "All", "ViewAndModify");
             break;
           default:
-            GeneralHelper.TraceOut("** unknown assembly attribute '" + typeName + "'"); //+ MetaDataHelper.GetPropertiesAndValuesAsString(attribute)
-            value = typeName;
+            var readablePropertiesAndValuesAsString = MetaDataHelper.GetReadablePropertiesAndValuesAsString(attribute);
+            GeneralHelper.TraceOut("** unknown assembly attribute '" + typeName + "' " + readablePropertiesAndValuesAsString);
+            value = readablePropertiesAndValuesAsString;
             break;
         }
 
@@ -372,33 +375,37 @@ namespace AW.Winforms.Helpers.Forms
 
       // add some extra values that are not in the AssemblyInfo, but nice to have
       // codebase
-      try
-      {
-        nvc.Add("CodeBase", a.CodeBase.Replace("file:///", ""));
-      }
-      catch (NotSupportedException)
-      {
-        nvc.Add("CodeBase", "(not supported)");
-      }
+
+      if (!a.IsDynamic)
+        try
+        {
+          nvc.Add("CodeBase", a.CodeBase.Replace("file:///", ""));
+        }
+        catch (NotSupportedException)
+        {
+          nvc.Add("CodeBase", "(not supported)");
+        }
       // build date
       var dt = AssemblyBuildDate(a, false);
       nvc.Add("BuildDate", dt == DateTime.MaxValue ? "(unknown)" : dt.ToString("yyyy-MM-dd hh:mm tt"));
       // location
-      try
-      {
-        nvc.Add("Location", a.Location);
-      }
-      catch (NotSupportedException)
-      {
-        nvc.Add("Location", "(not supported)");
-      }
+      if (!a.IsDynamic)
+        try
+        {
+          nvc.Add("Location", a.Location);
+        }
+        catch (NotSupportedException)
+        {
+          nvc.Add("Location", "(not supported)");
+        }
       // version
       try
       {
-        if (a.GetName().Version.Major == 0 && a.GetName().Version.Minor == 0)
+        var version = a.GetName().Version;
+        if (version.Major == 0 && version.Minor == 0)
           nvc.Add("Version", "(unknown)");
         else
-          nvc.Add("Version", a.GetName().Version.ToString());
+          nvc.Add("Version", version.ToString());
       }
       catch (Exception)
       {
@@ -520,7 +527,7 @@ namespace AW.Winforms.Helpers.Forms
       }
       catch (Exception e)
       {
-        lvi.Text += e.Message;
+        lvi.Text += e.GetBaseException().Message;
       }
 
       //lvi.SubItems.Add(AssemblyVersion(a))
@@ -564,7 +571,12 @@ namespace AW.Winforms.Helpers.Forms
       Text = ReplaceTokens(Text);
       AppTitleLabel.Text = ReplaceTokens(AppTitleLabel.Text);
       if (AppDescriptionLabel.Visible)
+      {
         AppDescriptionLabel.Text = ReplaceTokens(AppDescriptionLabel.Text);
+        var toGrow = TextRenderer.MeasureText(AppDescriptionLabel.Text, AppDescriptionLabel.Font).Width + AppDescriptionLabel.Left - ClientSize.Width;
+        if (toGrow > 0)
+          Width = Width + toGrow;
+      }
       if (AppCopyrightLabel.Visible)
         AppCopyrightLabel.Text = ReplaceTokens(AppCopyrightLabel.Text);
       if (AppVersionLabel.Visible)
@@ -760,7 +772,7 @@ namespace AW.Winforms.Helpers.Forms
 
       public int Compare(object x, object y)
       {
-        var intResult = String.CompareOrdinal(((ListViewItem) x).SubItems[_intCol].Text, ((ListViewItem) y).SubItems[_intCol].Text);
+        var intResult = string.CompareOrdinal(((ListViewItem) x).SubItems[_intCol].Text, ((ListViewItem) y).SubItems[_intCol].Text);
 
         if (_isAscending)
           return intResult;
