@@ -35,8 +35,8 @@ namespace AW.Test.Helpers
       ExpectedColumnCount = numProperties + numFieldsToShow;
       if (ExpectedColumnCount < 0)
       {
-        numProperties = MetaDataHelper.GetPropertiesToDisplay(typeof (T)).Count();
-        numFieldsToShow = typeof (T).GetFields(FieldBindingFlags).Length;
+        numProperties = MetaDataHelper.GetPropertiesToDisplay(typeof(T)).Count();
+        numFieldsToShow = typeof(T).GetFields(FieldBindingFlags).Length;
         ExpectedColumnCount = numProperties + numFieldsToShow;
       }
       return numProperties;
@@ -55,13 +55,25 @@ namespace AW.Test.Helpers
         var propertiesToDisplay = MetaDataHelper.GetPropertiesToDisplay(enumerable);
         var displayPropertyCount = propertiesToDisplay.Count();
         if (displayPropertyCount == 0)
+        {
           if (ValueTypeWrapper.TypeNeedsWrappingForBinding(MetaDataHelper.GetEnumerableItemType(enumerable)))
             displayPropertyCount = MetaDataHelper.GetPropertiesToDisplay(ValueTypeWrapper.CreateWrapperForBinding(enumerable)).Count();
+        }
+        else if (displayPropertyCount == 1)
+        {
+          var enumerableItemType = MetaDataHelper.GetEnumerableItemType(enumerable);
+          if (enumerableItemType.IsArray)
+          {
+            var current = enumerable.Cast<Array>().FirstOrDefault(); //enumerable.GetEnumerator().Current as Array;
+            if (current != null)
+              displayPropertyCount = current.Length;
+          }
+        }
 
         if (numProperties > 0)
         {
-         // Debugger.Break();
-          Assert.AreEqual(numProperties, displayPropertyCount, "Properties of " + enumerable.GetType() + " " + propertiesToDisplay.Select(p=>p.Name).JoinAsString());
+          // Debugger.Break();
+          Assert.AreEqual(numProperties, displayPropertyCount, "Properties of " + enumerable.GetType() + " " + propertiesToDisplay.Select(p => p.Name).JoinAsString());
         }
         else if (numProperties < 0)
         {
@@ -94,14 +106,13 @@ namespace AW.Test.Helpers
     }
 
     /// <summary>
-    /// Use this to leave the form showing
+    ///   Use this to leave the form showing
     /// </summary>
     /// <param name="name">The name.</param>
     /// <param name="hWnd">The h WND.</param>
     /// <param name="form">The form.</param>
     protected void NullHandler(string name, IntPtr hWnd, Form form)
     {
-
     }
 
     public static DataGridView GetDataGridViewFromGridDataEditor(Form form)
