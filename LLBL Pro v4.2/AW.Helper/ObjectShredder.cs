@@ -78,37 +78,41 @@ namespace AW.Helper
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public DataTable Shred(IEnumerable source, DataTable table, LoadOption? options)
     {
+      if (source == null)
+        return table;
       SetType(source);
       // Create a new table if the input table is null.
       if (table == null)
         table = new DataTable(Type.Name);
-
+      table.BeginLoadData();
+      var e = source.GetEnumerator();
       // Load the table from the scalar sequence if _type is a primitive type.
       if (ValueTypeWrapper.TypeNeedsWrappingForBinding(Type))
-        return ShredPrimitive(source, table, options);
-      if (Type.IsArray)
+      {
+        if (!table.Columns.Contains("Value"))
+          table.Columns.Add("Value", Type);
+
+        // Enumerate the source sequence and load the scalar values into rows.
+        var values1 = new object[table.Columns.Count];
+        while (e.MoveNext())
+        {
+          values1[table.Columns["Value"].Ordinal] = e.Current;
+          LoadDataRow(table, values1, options);
+        }
+      }
+      else if (Type.IsArray)
       {
         // Enumerate the source sequence and load the scalar values into rows.
-        table.BeginLoadData();
-        if (source != null)
+        while (e.MoveNext())
         {
-          var e = source.GetEnumerator();
-          while (e.MoveNext())
+          var values = (Array) e.Current;
+          for (var index = 0; index < values.Length; index++)
           {
-            var values = (Array) e.Current;
-            for (var index = 0; index < values.Length; index++)
-            {
-              var v = values.GetValue(index);
-              ExtendTable(table, "Column" + index, () => v.GetType());
-            }
-
-            if (options != null)
-              table.LoadDataRow((object[]) values, (LoadOption) options);
-            else
-              table.LoadDataRow((object[]) values, true);
+            var v = values.GetValue(index);
+            ExtendTable(table, "Index" + index, () => v.GetType());
           }
+          LoadDataRow(table, (object[])values, options);
         }
-        table.EndLoadData();
       }
       else
       {
@@ -116,65 +120,35 @@ namespace AW.Helper
         table = ExtendTable(table, Type);
 
         // Enumerate the source sequence and load the object values into rows.
-        table.BeginLoadData();
-        if (source != null)
+
+        while (e.MoveNext())
         {
-          var e = source.GetEnumerator();
-          while (e.MoveNext())
+          var values = ShredObject(table, e.Current);
+          if (options != null)
+            table.LoadDataRow(values, (LoadOption) options);
+          else
           {
-            var values = ShredObject(table, e.Current);
-            if (options != null)
-              table.LoadDataRow(values, (LoadOption) options);
-            else
+            var dataRow = table.LoadDataRow(values, true);
+            for (var index = 0; index < values.Length; index++)
             {
-              var dataRow = table.LoadDataRow(values, true);
-              for (var index = 0; index < values.Length; index++)
-              {
-                var value = values[index];
-                if (value != null && value.GetType().IsEnum)
-                  dataRow[index] = value;
-              }
+              var value = values[index];
+              if (value != null && value.GetType().IsEnum)
+                dataRow[index] = value;
             }
-          }
-        }
-        table.EndLoadData();
-      }
-      // Return the table.
-      return table;
-    }
-
-    public DataTable ShredPrimitive(IEnumerable source, DataTable table, LoadOption? options)
-    {
-      SetType(source);
-      // Create a new table if the input table is null.
-      if (table == null)
-        table = new DataTable(Type.Name);
-
-      if (!table.Columns.Contains("Value"))
-        table.Columns.Add("Value", Type);
-
-      // Enumerate the source sequence and load the scalar values into rows.
-      table.BeginLoadData();
-      if (source != null)
-      {
-        var e = source.GetEnumerator();
-        {
-          var values = new object[table.Columns.Count];
-          while (e.MoveNext())
-          {
-            values[table.Columns["Value"].Ordinal] = e.Current;
-
-            if (options != null)
-              table.LoadDataRow(values, (LoadOption) options);
-            else
-              table.LoadDataRow(values, true);
           }
         }
       }
       table.EndLoadData();
-
       // Return the table.
       return table;
+    }
+
+    private static void LoadDataRow(DataTable table, object[] values, LoadOption? options = null)
+    {
+      if (options == null)
+        table.LoadDataRow(values, true);
+      else
+        table.LoadDataRow(values, (LoadOption) options);
     }
 
     private object[] ShredObject(DataTable table, object instance)

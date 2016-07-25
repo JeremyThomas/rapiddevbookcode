@@ -15,10 +15,10 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 [assembly: AssemblyCompany("Jeremy Thomas")]
-[assembly: AssemblyProduct("LLBLGen Entity Explorer")]
+[assembly: AssemblyProduct("LLBLGen Pro Entity Explorer")]
 [assembly: AssemblyCopyright("Copyright © Jeremy Thomas 2016")]
 [assembly: AssemblyVersion("1")]
-[assembly: AssemblyInformationalVersion("Version 1.0.0.0 for LLBLGen Pro Version 4.2")]
+[assembly: AssemblyInformationalVersion("4.2")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]

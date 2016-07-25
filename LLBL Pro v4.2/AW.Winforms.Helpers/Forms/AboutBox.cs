@@ -389,6 +389,7 @@ namespace AW.Winforms.Helpers.Forms
       var dt = AssemblyBuildDate(a, false);
       nvc.Add("BuildDate", dt == DateTime.MaxValue ? "(unknown)" : dt.ToString("yyyy-MM-dd hh:mm tt"));
       // location
+
       if (!a.IsDynamic)
         try
         {
@@ -403,16 +404,26 @@ namespace AW.Winforms.Helpers.Forms
       {
         var version = a.GetName().Version;
         if (version.Major == 0 && version.Minor == 0)
-          nvc.Add("Version", "(unknown)");
+          AddVersionUnknown(nvc);
         else
           nvc.Add("Version", version.ToString());
       }
       catch (Exception)
       {
-        nvc.Add("Version", "(unknown)");
+        AddVersionUnknown(nvc);
       }
       nvc.Add("FullName", a.FullName);
       return nvc;
+    }
+
+    private static void AddVersionUnknown(NameValueCollection nvc)
+    {
+      var location = nvc["Location"];
+      if (!string.IsNullOrWhiteSpace(location) && location != "(not supported)" && File.Exists(location))
+      {
+        var fileVersionInfo = FileVersionInfo.GetVersionInfo(location);
+      }
+      nvc.Add("Version", "(unknown)");
     }
 
     // <summary>
