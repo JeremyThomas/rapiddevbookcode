@@ -72,7 +72,6 @@
       this.toolStripCheckBoxCascadeDeletes = new AW.Winforms.Helpers.Controls.ToolStripCheckBox();
       this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripNumericUpDownCommandTimeOut = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
-      this.toolStripLabelOrmProfilerStatus = new System.Windows.Forms.ToolStripLabel();
       this.toolStripButtonAbout = new System.Windows.Forms.ToolStripButton();
       this.contextMenuStripTabControl.SuspendLayout();
       this.panelSettings.SuspendLayout();
@@ -313,7 +312,6 @@
             this.toolStripCheckBoxCascadeDeletes,
             this.toolStripSeparator7,
             this.toolStripNumericUpDownCommandTimeOut,
-            this.toolStripLabelOrmProfilerStatus,
             this.toolStripButtonAbout});
       this.toolStrip.Location = new System.Drawing.Point(0, 0);
       this.toolStrip.Name = "toolStrip";
@@ -490,13 +488,6 @@
       this.toolStripNumericUpDownCommandTimeOut.ToolTipText = "The timeout value (in seconds) to use with the ADO.NET data fetching";
       this.toolStripNumericUpDownCommandTimeOut.Value = global::LLBLGen.EntityExplorer.Properties.Settings.Default.CommandTimeOut;
       // 
-      // toolStripLabelOrmProfilerStatus
-      // 
-      this.toolStripLabelOrmProfilerStatus.BackColor = System.Drawing.Color.Transparent;
-      this.toolStripLabelOrmProfilerStatus.Name = "toolStripLabelOrmProfilerStatus";
-      this.toolStripLabelOrmProfilerStatus.Size = new System.Drawing.Size(101, 25);
-      this.toolStripLabelOrmProfilerStatus.Text = "OrmProfilerStatus";
-      // 
       // toolStripButtonAbout
       // 
       this.toolStripButtonAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -579,7 +570,6 @@
     private AW.Winforms.Helpers.Controls.ToolStripNumericUpDown toolStripNumericUpDownPageSize;
     private AW.Winforms.Helpers.Controls.ToolStripCheckBox toolStripCheckBoxCascadeDeletes;
     private AW.Winforms.Helpers.Controls.ToolStripNumericUpDown toolStripNumericUpDownCommandTimeOut;
-    private System.Windows.Forms.ToolStripLabel toolStripLabelOrmProfilerStatus;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
     private System.Windows.Forms.ToolStripButton toolStripButtonAbout;
     private System.Windows.Forms.ToolStripMenuItem editConnectionStringToolStripMenuItem;

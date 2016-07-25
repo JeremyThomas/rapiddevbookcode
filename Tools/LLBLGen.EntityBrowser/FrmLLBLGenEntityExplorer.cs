@@ -76,7 +76,6 @@ namespace LLBLGen.EntityExplorer
 
     private void MainForm_Load(object sender, EventArgs e)
     {
-      toolStripLabelOrmProfilerStatus.Text = ProfilerHelper.OrmProfilerStatus;
       try
       {
         LoadAssembliesAndTabs();
@@ -202,14 +201,14 @@ namespace LLBLGen.EntityExplorer
 
     private void AddEntityExplorer(ConnectionStringSettings connectionStringSetting)
     {
-      if (connectionStringSetting== null || string.IsNullOrWhiteSpace(connectionStringSetting.ConnectionString))
+      if (connectionStringSetting == null || string.IsNullOrWhiteSpace(connectionStringSetting.ConnectionString))
         return;
       tabControl.TabPages.Add(connectionStringSetting.Name, connectionStringSetting.Name);
       var tabPage = tabControl.TabPages[connectionStringSetting.Name];
       tabPage.Tag = connectionStringSetting;
       var usrCntrlEntityExplorer = new UsrCntrlEntityExplorer(null, Settings.Default.UseSchema, Settings.Default.PrefixDelimiter,
         Settings.Default.EnsureFilteringEnabled, Settings.Default.UseContext, (int) Settings.Default.CacheDurationInSeconds,
-        (ushort) Settings.Default.PageSize,Settings.Default.CascadeDeletes)
+        (ushort) Settings.Default.PageSize, Settings.Default.CascadeDeletes)
       {
         Dock = DockStyle.Fill
       };
@@ -396,7 +395,7 @@ namespace LLBLGen.EntityExplorer
       labellinqMetaDataAssemblyVersion.Text = nameAndVersion.After(",", nameAndVersion);
       _daoBaseImplementationType = EntityHelper.GetDaoBaseImplementation(linqMetaDataAssembly);
     }
-    
+
     private static IEnumerable<Type> GetAdapterTypes()
     {
       var adapterAssemblyPaths = Settings.Default.AdapterAssemblyPath.Split(';');
@@ -563,9 +562,10 @@ namespace LLBLGen.EntityExplorer
     private void toolStripButtonAbout_Click(object sender, EventArgs e)
     {
       var assembly = GetType().Assembly;
-      AboutBox.ShowAboutBox(this, Environment.NewLine  + Environment.NewLine
-        +  assembly.GetInformationalVersionAttribute()+ Environment.NewLine + "File Version: " + assembly.GetVersion()
-        + Environment.NewLine + Environment.NewLine + "For more information see https://rapiddevbookcode.codeplex.com/wikipage?title=LLBLGen%20Entity%20Exploror");
+      AboutBox.ShowAboutBox(this, Environment.NewLine + Environment.NewLine
+                                  + "LLBLGen Pro Version: " + assembly.GetInformationalVersionAttribute() + Environment.NewLine + "File Version: " + assembly.GetVersion()
+                                  + Environment.NewLine + Environment.NewLine + ProfilerHelper.OrmProfilerStatus
+                                  + Environment.NewLine + Environment.NewLine + "For more information see https://rapiddevbookcode.codeplex.com/wikipage?title=LLBLGen%20Entity%20Exploror");
     }
   }
 
