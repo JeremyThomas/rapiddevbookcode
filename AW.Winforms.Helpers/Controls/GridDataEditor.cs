@@ -103,6 +103,12 @@ namespace AW.Winforms.Helpers.Controls
         SetItemType(enumerable);
         readOnly = readOnly || !_itemType.IsGenericType;
       }
+      else if (_itemType.IsArray)
+      {
+        var dt = enumerable.CopyToDataTable();
+        enumerable = dt.DefaultView;
+        SetItemType(enumerable);
+      }
       DelayBind = delayBind;
       DataEditorPersister = dataEditorPersister;
       Readonly = readOnly;

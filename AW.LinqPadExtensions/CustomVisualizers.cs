@@ -41,7 +41,7 @@ namespace LINQPad
 // ReSharper disable MemberCanBePrivate.Global
     public static IEnumerable DisplayInGrid(this IEnumerable enumerable, ushort pageSize)
     {
-      return DisplayInGrid(enumerable, null, pageSize);
+      return DisplayInGrid(enumerable, (IDataEditorPersister)null, pageSize);
     }
 
     // ReSharper disable PossibleMultipleEnumeration

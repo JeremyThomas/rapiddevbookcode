@@ -152,6 +152,14 @@ namespace AW.Tests
       TestEditInDataGridView(arrayList, 1);
     }
 
+
+    [TestCategory("Winforms"), TestMethod]
+    public void ShowListOfArraysInGrid()
+    {
+      var listOfArrays = new List<string[]> {new[] {"1", "2", "3"}, new[] {"a", "b", "c"}};
+      TestShowInGrid(listOfArrays, 3);
+    }
+
     [TestMethod]
     public void SettingsPropertyTest()
     {
