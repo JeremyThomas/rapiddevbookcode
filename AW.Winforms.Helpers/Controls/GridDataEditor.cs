@@ -80,7 +80,7 @@ namespace AW.Winforms.Helpers.Controls
         toolStripItemFromBeginButton.Checked = false;
         searchToolBar.Items.Remove(toolStripItemFromBeginButton);
       }
-      MoveLastItem(3);
+      MoveLastItem(3);                                             
       MoveLastItem(2);
       _searchToolStripButton = searchToolBar.Items[4] as ToolStripButton;
       _searchToolStripTextBox = searchToolBar.Items[3] as ToolStripTextBox;

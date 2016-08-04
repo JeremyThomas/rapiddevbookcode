@@ -940,7 +940,12 @@ namespace AW.Helper
     /// <returns></returns>
     public static string GetBclMajorMinorVersion()
     {
-      return FileVersionInfo.GetVersionInfo(typeof (Enumerable).Assembly.Location).FileVersion.Substring(0, 3);
+      return GetVersionInfo(typeof (Enumerable).Assembly).FileVersion.Substring(0, 3);
+    }
+
+    private static FileVersionInfo GetVersionInfo(Assembly assembly)
+    {
+      return FileVersionInfo.GetVersionInfo(assembly.Location);
     }
 
     public static string GetClassAssemblyName(Type t)
@@ -961,6 +966,12 @@ namespace AW.Helper
     {
       var assemblyInformationalVersionAttribute = GetCustomAttribute<AssemblyInformationalVersionAttribute>(assembly);
       return assemblyInformationalVersionAttribute == null ? null : assemblyInformationalVersionAttribute.InformationalVersion;
+    }
+
+    public static string GetProductVersion(this Assembly assembly)
+    {
+      var assemblyInformationalVersion = assembly.GetInformationalVersionAttribute();
+      return string.IsNullOrWhiteSpace(assemblyInformationalVersion) ? GetVersionInfo(assembly).ProductVersion : assemblyInformationalVersion;
     }
 
     public static string GetTitle(this Assembly assembly)

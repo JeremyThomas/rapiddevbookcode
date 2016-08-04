@@ -185,8 +185,9 @@ namespace AW.Winforms.Helpers.Forms
 
     private void buttonAbout_Click(object sender, EventArgs e)
     {
-      var assembly = GetType().Assembly;
-      var moreInfo = Environment.NewLine + Environment.NewLine + "Product Version: " + assembly.GetInformationalVersionAttribute() + Environment.NewLine + "File Version: " + assembly.GetVersion();
+      var assembly = Assembly.GetEntryAssembly();
+      var moreInfo = Environment.NewLine + Environment.NewLine + "Product Version: " + (assembly.GetInformationalVersionAttribute()?? SourceVisualizerFileVersionInfo.ProductVersion) 
+        + Environment.NewLine + "File Version: " + assembly.GetVersion();
       moreInfo = linkLabelWebSite.Links.Cast<LinkLabel.Link>().Aggregate(moreInfo, (current, link) => current + (Environment.NewLine + Environment.NewLine + link.LinkData) + Environment.NewLine);
       AboutBox.ShowAboutBox(this, moreInfo);
     }
