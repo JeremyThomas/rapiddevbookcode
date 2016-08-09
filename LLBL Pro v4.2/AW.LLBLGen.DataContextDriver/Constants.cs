@@ -19,9 +19,9 @@ namespace AW.LLBLGen.DataContextDriver
     public const string AssemblyProduct = "AW LLBLGen typed data context driver";
     public const string AssemblyDescription = LLBLGenNameVersion + " LINQPad typed data context driver";
     private const string MajorVersion = "3";
-    private const string MinorVersion = "0";
+    private const string MinorVersion = "1";
     private const string Version = MajorVersion + "." + MinorVersion;
-    public const string AssemblyVersion = Version + ".14.0";
+    public const string AssemblyVersion = Version + ".0.0";
   }
 
   public enum DisplayInGrid
