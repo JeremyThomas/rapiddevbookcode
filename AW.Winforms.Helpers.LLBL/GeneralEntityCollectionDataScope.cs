@@ -274,7 +274,7 @@ namespace AW.Winforms.Helpers.LLBL
     public Dictionary<string, int> GetChildCounts(object entityThatMayHaveChildren)
     {
       var dataAccessAdapter = TransactionController as IDataAccessAdapter;
-      return EntityHelper.GetExistingChildCounts(dataAccessAdapter, entityThatMayHaveChildren as EntityBase2);
+      return dataAccessAdapter == null ? EntityHelper.GetExistingChildCounts(null, entityThatMayHaveChildren as EntityBase): EntityHelper.GetExistingChildCounts(dataAccessAdapter, entityThatMayHaveChildren as EntityBase2);
     }
 
     public void Undo(object modifiedData = null)
