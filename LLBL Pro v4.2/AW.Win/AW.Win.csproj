@@ -82,11 +82,11 @@
       <HintPath>..\Lib\KorzhEasyQuery\Korzh.EasyQuery.WinControls.NET45.dll</HintPath>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.DQE.SqlServer, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <HintPath>..\packages\SD.LLBLGen.Pro.DQE.SqlServer.4.2.20160415\lib\net35\SD.LLBLGen.Pro.DQE.SqlServer.dll</HintPath>
+      <HintPath>..\packages\SD.LLBLGen.Pro.DQE.SqlServer.4.2.20160725\lib\net35\SD.LLBLGen.Pro.DQE.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <HintPath>..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20160517\lib\net45\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
+      <HintPath>..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20160725\lib\net45\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SD.Tools.Algorithmia, Version=1.2.0.0, Culture=neutral, PublicKeyToken=8ede9265bbb8e107, processorArchitecture=MSIL">
