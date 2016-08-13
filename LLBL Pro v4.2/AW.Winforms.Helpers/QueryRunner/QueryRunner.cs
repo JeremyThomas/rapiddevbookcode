@@ -18,7 +18,7 @@ namespace AW.Winforms.Helpers.QueryRunner
       InitializeComponent();
     }
 
-    public QueryRunner(Func<object, int> saveFunction, Func<object, bool, int> deleteFunction, params Type[] saveableTypes)
+    public QueryRunner(Func<object, bool, int> saveFunction, Func<object, bool, int> deleteFunction, params Type[] saveableTypes)
       : this()
     {
       gridDataEditorScript.DataEditorPersister = new DataEditorPersister(saveFunction, deleteFunction, null, saveableTypes);
