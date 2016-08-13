@@ -253,7 +253,7 @@ namespace AW.Winforms.Helpers.LLBL
     {
       if (dataToSave == null) return CommitAllChanges(cascadeDeletes);
       var dataAccessAdapter = TransactionController as IDataAccessAdapter;
-      var numberSaved = dataAccessAdapter == null ? EntityHelper.Save(dataToSave) : EntityHelper.Save(dataToSave, dataAccessAdapter, cascadeDeletes);
+      var numberSaved = dataAccessAdapter == null ? EntityHelper.Save(dataToSave, cascadeDeletes) : EntityHelper.Save(dataToSave, dataAccessAdapter, cascadeDeletes);
       for (var i = _entitiesRemovalTracker.Count - 1; i > -1; i--)
       {
         var entity = _entitiesRemovalTracker[i];

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using AW.Data;
 using AW.Data.CollectionClasses;
@@ -251,14 +250,14 @@ namespace AW.Tests
         Assert.AreEqual(1, childCounts.Count());
         Assert.AreEqual(3, childCounts.First().Item2);
 
-        var entityTypeRelationPredicateBucketTuple = EntityHelper.CreateRelationPredicateBucket(OrderEntity.Relations.OrderDetailEntityUsingOrderId, ((IEntity2)order).PrimaryKeyFields);
+        var entityTypeRelationPredicateBucketTuple = EntityHelper.CreateRelationPredicateBucket(OrderEntity.Relations.OrderDetailEntityUsingOrderId, ((IEntity2) order).PrimaryKeyFields);
         var entityFields2 = new EntityFields2(OrderEntity.Relations.OrderDetailEntityUsingOrderId.GetAllFKEntityFieldCoreObjects().ToArray(), null, null);
         Assert.AreEqual(3, dataAccessAdapter.GetDbCount(entityFields2, entityTypeRelationPredicateBucketTuple.Item2));
-        
+
         var asEntityFieldCoreArray = entityFields2.GetAsEntityFieldCoreArray();
-        var fieldPersistenceInfos = asEntityFieldCoreArray.Select(e => EntityHelper.GetFieldPersistenceInfoSafely(dataAccessAdapter, (IEntityField2)e)).ToArray();
+        var fieldPersistenceInfos = asEntityFieldCoreArray.Select(e => EntityHelper.GetFieldPersistenceInfoSafely(dataAccessAdapter, (IEntityField2) e)).ToArray();
         var dynamicQueryEngine = new DynamicQueryEngine();
-        var rowCountDq = dynamicQueryEngine.CreateRowCountDQ(asEntityFieldCoreArray, fieldPersistenceInfos, null, 
+        var rowCountDq = dynamicQueryEngine.CreateRowCountDQ(asEntityFieldCoreArray, fieldPersistenceInfos, null,
           entityTypeRelationPredicateBucketTuple.Item2.PredicateExpression, entityTypeRelationPredicateBucketTuple.Item2.Relations, true, null);
         var result = dataAccessAdapter.ExecuteScalarQuery(rowCountDq);
         Assert.AreEqual(3, result);
@@ -269,28 +268,24 @@ namespace AW.Tests
     public void GetChildCountSelfServicingTest()
     {
       var orders = new SalesOrderDetailCollection();
-      var salesOrderHeaderEntityUsingSalesOrderID = SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderID;
-      var relations = new RelationCollection {salesOrderHeaderEntityUsingSalesOrderID};
       var salesOrderHeaderEntity = new SalesOrderHeaderEntity(43659);
-      var predicate = SalesOrderHeaderFields.SalesOrderID.Equal(salesOrderHeaderEntity.SalesOrderID);
-      var amount = orders.GetDbCount(predicate, relations);
+      var salesOrderDetailFieldsSalesOrderIDPredicate = SalesOrderDetailFields.SalesOrderID.Equal(salesOrderHeaderEntity.SalesOrderID);
+
+      var amount = orders.GetDbCount(salesOrderDetailFieldsSalesOrderIDPredicate);
       Assert.AreEqual(12, amount);
       var salesOrderDetailDao = new SalesOrderDetailDAO();
       var salesOrderDetailEntity = new SalesOrderDetailEntity();
-      var amount2 = salesOrderDetailDao.GetDbCount(salesOrderDetailEntity.Fields, null, predicate, relations, null);
-      Assert.AreEqual(amount, amount2);
+      var amount1 = salesOrderDetailDao.GetDbCount(salesOrderDetailEntity.Fields, null, salesOrderDetailFieldsSalesOrderIDPredicate, null, null);
+      Assert.AreEqual(amount, amount1);
 
       var salesOrderDetailEntityUsingSalesOrderID = SalesOrderHeaderEntity.Relations.SalesOrderDetailEntityUsingSalesOrderID;
       var entityTypeRelationPredicateBucketTuple = EntityHelper.CreateRelationPredicateBucket(salesOrderDetailEntityUsingSalesOrderID, ((IEntity) salesOrderHeaderEntity).PrimaryKeyFields);
       var entityFields2 = new EntityFields(salesOrderDetailEntityUsingSalesOrderID.GetAllFKEntityFieldCoreObjects().ToArray(), null, null);
-      var amount3 = salesOrderDetailDao.GetDbCount(entityFields2, null, predicate, relations, null, true);
+      var amount3 = salesOrderDetailDao.GetDbCount(entityFields2, null, entityTypeRelationPredicateBucketTuple.Item2.PredicateExpression, null, null, true);
       Assert.AreEqual(amount, amount3);
 
-      var salesOrderDetailFieldsSalesOrderIDPredicate = SalesOrderDetailFields.SalesOrderID.Equal(salesOrderHeaderEntity.SalesOrderID);
       var amount4 = salesOrderDetailDao.GetDbCount(entityFields2, null, salesOrderDetailFieldsSalesOrderIDPredicate, null, null, true);
       Assert.AreEqual(amount, amount4);
-
-      var fieldCompareValuePredicate = new FieldCompareValuePredicate(SalesOrderDetailFields.SalesOrderID, null, ComparisonOperator.Equal, salesOrderHeaderEntity.SalesOrderID);
 
       var asEntityFieldCoreArray = entityFields2.GetAsEntityFieldCoreArray();
       var dynamicQueryEngine = new DynamicQueryEngine();
@@ -298,9 +293,8 @@ namespace AW.Tests
       var selectFilter = entityTypeRelationPredicateBucketTuple.Item2.PredicateExpression[0].Contents as IPredicate;
       var rowCountDq = dynamicQueryEngine.CreateRowCountDQ(asEntityFieldCoreArray, entityFields2.GetAsPersistenceInfoArray(), salesOrderDetailDao.DetermineConnectionToUse(null),
         selectFilter
-      //  salesOrderDetailFieldsSalesOrderIDPredicate
         , null, true, null);
-     var result =  salesOrderDetailDao.ExecuteScalarQuery(rowCountDq, null);
+      var result = salesOrderDetailDao.ExecuteScalarQuery(rowCountDq, null);
       Assert.AreEqual(amount, result);
 
       var amount5 = salesOrderDetailDao.GetDbCount(entityFields2, null, entityTypeRelationPredicateBucketTuple.Item2.PredicateExpression, entityTypeRelationPredicateBucketTuple.Item2.Relations, null, true);

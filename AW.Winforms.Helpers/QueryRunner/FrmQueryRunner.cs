@@ -11,7 +11,7 @@ namespace AW.Winforms.Helpers.QueryRunner
   public partial class FrmQueryRunner : FrmPersistantLocation
   {
     private readonly Type[] _saveableTypes;
-    public event Func<object, int> SaveFunction;
+    public event Func<object, bool, int> SaveFunction;
     public event Func<object, bool, int> DeleteFunction;
     private readonly SplitContainer[] _splitContainers;
 
@@ -22,7 +22,7 @@ namespace AW.Winforms.Helpers.QueryRunner
       _splitContainers = new[] {queryRunner1.splitContainerScript};
     }
 
-    public FrmQueryRunner(Func<object, int> saveFunction, Func<object, bool, int> deleteFunction, params Type[] saveableTypes)
+    public FrmQueryRunner(Func<object, bool, int> saveFunction, Func<object, bool, int> deleteFunction, params Type[] saveableTypes)
       : this()
     {
       _saveableTypes = saveableTypes;

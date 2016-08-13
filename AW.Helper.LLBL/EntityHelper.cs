@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -11,6 +12,7 @@ using System.Windows.Forms;
 using Microsoft.CSharp.RuntimeBinder;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+using SD.LLBLGen.Pro.QuerySpec;
 using Expression = System.Linq.Expressions.Expression;
 
 namespace AW.Helper.LLBL
@@ -740,12 +742,13 @@ namespace AW.Helper.LLBL
     ///   Deletes the entities.
     /// </summary>
     /// <param name="entitiesToDelete">The entities to delete.</param>
+    /// <param name="cascadeDeletes">if set to <c>true</c> [cascade deletes].</param>
     /// <returns></returns>
-    public static int DeleteEntities(IEnumerable entitiesToDelete)
+    public static int DeleteEntities(IEnumerable entitiesToDelete, bool cascadeDeletes = false)
     {
       var entityCollectionBase = entitiesToDelete as EntityCollectionBase<EntityBase>;
       if (entityCollectionBase != null)
-        return entityCollectionBase.DeleteMulti();
+        return DeleteEntities(entityCollectionBase, cascadeDeletes);
       return entitiesToDelete.Cast<EntityBase>().Count(entity => entity.Delete() || entity.IsNew);
     }
 
@@ -770,8 +773,9 @@ namespace AW.Helper.LLBL
     ///   Saves all dirty objects inside the enumeration passed to the persistent storage.
     /// </summary>
     /// <param name="entitiesToSave">The entities to save.</param>
+    /// <param name="cascadeDeletes">if set to <c>true</c> [cascadeDeletes].</param>
     /// <returns>the amount of persisted entities</returns>
-    public static int SaveEntities(IEnumerable entitiesToSave)
+    public static int SaveEntities(IEnumerable entitiesToSave, bool cascadeDeletes = false)
     {
       if (entitiesToSave is IEntityView)
         entitiesToSave = ((IEntityView) entitiesToSave).RelatedCollection;
@@ -782,7 +786,7 @@ namespace AW.Helper.LLBL
         var modifyCount = 0;
         if (entityCollection.RemovedEntitiesTracker != null)
         {
-          modifyCount = entityCollection.RemovedEntitiesTracker.DeleteMulti();
+          modifyCount = DeleteEntities(entityCollection.RemovedEntitiesTracker, cascadeDeletes);
           entityCollection.RemovedEntitiesTracker.Clear();
         }
         return modifyCount + entityCollection.SaveMulti();
@@ -790,18 +794,95 @@ namespace AW.Helper.LLBL
       return entitiesToSave.Cast<EntityBase>().Count(entity => entity.IsDirty && entity.Save());
     }
 
+    private static int DeleteEntities(IEntityCollection collectionToDelete, bool cascadeDeletes = false)
+    {
+      if (cascadeDeletes)
+      {
+        var unitOfWork = new UnitOfWork();
+        MakeDirectDeletesPerformBeforeEntityDeletes(unitOfWork);
+        unitOfWork.AddCollectionForDelete(collectionToDelete);
+        foreach (var entityToDelete in collectionToDelete.OfType<IEntity>())
+          MakeCascadeDeletesForAllChildren(unitOfWork, entityToDelete);
+        Type constructed = collectionToDelete.GetType(); // typeof(EntityCollectionBase<>).MakeGenericType(typeof(EntityBase));
+        var createTransactionMethod = constructed.GetMethod("CreateTransaction", BindingFlags.NonPublic | BindingFlags.Instance);
+        if (createTransactionMethod != null)
+        {
+          var transaction = createTransactionMethod.Invoke(collectionToDelete, new object[]{IsolationLevel.ReadCommitted, "UOW"}) as ITransaction;
+          return unitOfWork.Commit(transaction);
+        }
+      }
+      return collectionToDelete.DeleteMulti();
+    }
+
+    /// <summary>
+    ///   Makes the cascade deletes for all children of the rooty entity.
+    ///   Other entities that reference the root entity will remain unless onlyDeleteComponents is false
+    /// </summary>
+    /// <param name="uow">The uow.</param>
+    /// <param name="entity">The root entity.</param>
+    /// <param name="deleteDirectly">if set to <c>true</c> [delete directly].</param>
+    /// <param name="onlyDeleteComponents">if set to <c>true</c> only delete components i.e children.</param>
+    /// <param name="entityTypesToExclude">The entity types to exclude.</param>
+    public static void MakeCascadeDeletesForAllChildren(UnitOfWork uow, IEntity entity, bool deleteDirectly = false, bool onlyDeleteComponents = true, params string[] entityTypesToExclude)
+    {
+      // Delete children of Entity
+      var allFkEntityFieldCoreObjectList = GetAllFkEntityFieldCoreObjectsWhereStartEntityIsPkSide(entity, onlyDeleteComponents);
+      foreach (var allFkEntityFieldCoreObjects in allFkEntityFieldCoreObjectList)
+        AddDeleteRelatedEntitiesDirectlyCall(uow, entity, allFkEntityFieldCoreObjects);
+      if (deleteDirectly)
+        ChangeDeleteToDirect(uow, entity);
+    }
+
+    private static void ChangeDeleteToDirect(UnitOfWork uow, IEntity entity)
+    {
+      // Delete Entity directly
+      uow.AddDeleteMultiCall(entity.GetEntityFactory().CreateEntityCollection(), CreatePKPredicateExpression(entity));
+
+      // Remove Entity as it now being delete directly
+      uow.RemoveFromUoW(entity);
+    }
+
+    private static IPredicateExpression CreatePKPredicateExpression(IEntity entity)
+    {
+      IPredicateExpression predicateExpression = new PredicateExpression();
+      foreach (var primaryKeyField in entity.PrimaryKeyFields.OfType<EntityField>())
+        predicateExpression.Add(primaryKeyField == primaryKeyField.CurrentValue);
+      return predicateExpression;
+    }
+
+    private static void AddDeleteRelatedEntitiesDirectlyCall(UnitOfWork uow, IEntity entity, IEnumerable<IEntityFieldCore> allFkEntityFieldCoreObjects)
+    {
+      var relationPredicateBucket = CreateRelationPredicateBucket(allFkEntityFieldCoreObjects, entity.PrimaryKeyFields);
+      var type = entity.GetType();
+      var relatedType = type.Assembly.GetType(type.Namespace + "." + relationPredicateBucket.Item1);
+      if (relatedType != null)
+        uow.AddDeleteMultiCall((IEntityCollection) GetFactoryCore(relatedType).CreateEntityCollection(), relationPredicateBucket.Item2.PredicateExpression);
+    }
+
+    /// <summary>
+    ///   Makes the deletes perform first.
+    /// </summary>
+    /// <param name="unitOfWork">The unit of work.</param>
+    public static void MakeDirectDeletesPerformBeforeEntityDeletes(UnitOfWork unitOfWork)
+    {
+      var unitOfWorkDeletesBlockType = unitOfWork.CommitOrder.Single(bt => bt == UnitOfWorkBlockType.Deletes);
+      unitOfWork.CommitOrder.Remove(unitOfWorkDeletesBlockType);
+      unitOfWork.CommitOrder.Add(unitOfWorkDeletesBlockType);
+    }
+
     /// <summary>
     ///   Saves any changes to the specified data to the DB.
     /// </summary>
     /// <param name="dataToSave">The data to save, must be a CommonEntityBase or a list of CommonEntityBase's.</param>
+    /// <param name="cascadeDeletes">if set to <c>true</c> [cascade deletes].</param>
     /// <returns>The number of persisted entities.</returns>
-    public static int Save(object dataToSave)
+    public static int Save(object dataToSave, bool cascadeDeletes = false)
     {
       var listItemType = GetListItemType(dataToSave);
       if (typeof(IEntity).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToSave as IEnumerable;
-        return enumerable == null ? Convert.ToInt32(((IEntity) dataToSave).Save()) : SaveEntities(enumerable);
+        return enumerable == null ? Convert.ToInt32(((IEntity) dataToSave).Save()) : SaveEntities(enumerable, cascadeDeletes);
       }
       return 0;
     }
@@ -1207,8 +1288,8 @@ namespace AW.Helper.LLBL
         if (fkValue is IEntityField2)
           fkValue = ((IEntityField2) fkValue).CurrentValue;
         else if (fkValue is IEntityField)
-          fkValue = ((IEntityField)fkValue).CurrentValue;
-        var fieldCompareValuePredicate = new FieldCompareValuePredicate(foreignKeyField, null, ComparisonOperator.Equal, fkValue);
+          fkValue = ((IEntityField) fkValue).CurrentValue;
+        var fieldCompareValuePredicate = foreignKeyField.Equal(fkValue);
         bucket.PredicateExpression.Add(fieldCompareValuePredicate);
       }
       return new Tuple<string, IRelationPredicateBucket>(typeOfEntity, bucket);
@@ -1358,7 +1439,6 @@ namespace AW.Helper.LLBL
         }
       }
       return adapter as DataAccessAdapterBase;
-      ;
     }
 
     #endregion GetDataAccessAdapter
@@ -1508,9 +1588,9 @@ namespace AW.Helper.LLBL
     /// <summary>
     ///   Called right at the beginning of SetValue(), which is called from an entity field property setter
     /// </summary>
+    /// <param name="entity"></param>
     /// <param name="fieldIndex">Index of the field to set.</param>
     /// <param name="valueToSet">The value to set.</param>
-    /// <param name="cancel">if set to true, the setvalue is cancelled and the set action is terminated</param>
     /// <remarks>
     ///   This code fixes the flaw of the IDataErrorInfo + Refresh field value in controls.
     ///   For more explanation on this issue, please visit this forum's post:

@@ -119,11 +119,11 @@ namespace AW.Winforms.Helpers.Controls
   public class DataEditorPersister : IDataEditorPersister
   {
     private readonly Type[] _saveableTypes;
-    private readonly Func<object, int> _saveFunction;
+    private readonly Func<object, bool, int> _saveFunction;
     private readonly Func<object, bool, int> _deleteFunction;
     private readonly Func<object, bool> _undoMethod;
 
-    public DataEditorPersister(Func<object, int> saveFunction, Func<object, bool, int> deleteFunction, Func<object, bool> undoMethod, params Type[] saveableTypes)
+    public DataEditorPersister(Func<object, bool, int> saveFunction, Func<object, bool, int> deleteFunction, Func<object, bool> undoMethod, params Type[] saveableTypes)
     {
       _saveableTypes = saveableTypes;
       _saveFunction = saveFunction;
@@ -133,7 +133,7 @@ namespace AW.Winforms.Helpers.Controls
 
     public int Save(object dataToSave = null, bool cascadeDeletes = false)
     {
-      return _saveFunction != null ? _saveFunction(dataToSave) : 0;
+      return _saveFunction != null ? _saveFunction(dataToSave, cascadeDeletes) : 0;
     }
 
     public int Delete(object dataToDelete, bool cascade = false)
