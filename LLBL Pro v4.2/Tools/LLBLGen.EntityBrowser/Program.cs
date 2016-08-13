@@ -12,6 +12,8 @@ namespace LLBLGen.EntityExplorer
     private const string ErrorMsg = "An application error occurred. Please contact the adminstrator " +
                                     "with the following information:\n\n";
 
+    private static readonly Lazy<bool> IsAdministrator = new Lazy<bool>(GeneralHelper.IsAdministrator);
+
     /// <summary>
     ///   The main entry point for the application.
     /// </summary>
@@ -31,13 +33,13 @@ namespace LLBLGen.EntityExplorer
     }
 
     /// <summary>
-    /// Handles the ThreadException event of the Application control. Needed to use to avoid the
-    /// NativeWindow.DebuggableCallBack method when debugging.
+    ///   Handles the ThreadException event of the Application control. Needed to use to avoid the
+    ///   NativeWindow.DebuggableCallBack method when debugging.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="System.Threading.ThreadExceptionEventArgs" /> instance containing the event data.</param>
     /// <remarks>
-    /// http://support.microsoft.com/kb/836674
+    ///   http://support.microsoft.com/kb/836674
     /// </remarks>
     private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
     {
@@ -61,7 +63,7 @@ namespace LLBLGen.EntityExplorer
     }
 
     /// <summary>
-    /// Exits this instance.
+    ///   Exits this instance.
     /// </summary>
     /// <remarks>See Application.OnThreadException</remarks>
     private static void Exit()
@@ -72,12 +74,12 @@ namespace LLBLGen.EntityExplorer
     }
 
     /// <summary>
-    /// Handles the UnhandledException event of the CurrentDomain control.
+    ///   Handles the UnhandledException event of the CurrentDomain control.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="UnhandledExceptionEventArgs" /> instance containing the event data.</param>
     /// <remarks>
-    /// https://msdn.microsoft.com/en-us/library/system.windows.forms.application.setunhandledexceptionmode(v=vs.110).aspx
+    ///   https://msdn.microsoft.com/en-us/library/system.windows.forms.application.setunhandledexceptionmode(v=vs.110).aspx
     /// </remarks>
     private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -101,20 +103,20 @@ namespace LLBLGen.EntityExplorer
     }
 
     /// <summary>
-    /// Writes the exception to the event log.
+    ///   Writes the exception to the event log.
     /// </summary>
     /// <param name="exception">The exception.</param>
     /// <param name="source">The source.</param>
     /// <remarks>
-    /// https://msdn.microsoft.com/en-us/library/system.windows.forms.application.setunhandledexceptionmode(v=vs.110).aspx
+    ///   https://msdn.microsoft.com/en-us/library/system.windows.forms.application.setunhandledexceptionmode(v=vs.110).aspx
     /// </remarks>
     private static void WriteExceptionToEventLog(Exception exception, string source)
     {
-      if (!EventLog.SourceExists(source))
+      if (IsAdministrator.Value && !EventLog.SourceExists(source))
         EventLog.CreateEventSource(source, "Application");
       // Create an EventLog instance and assign its source.
       var myLog = new EventLog {Source = source};
-      myLog.WriteEntry(ErrorMsg +Environment.NewLine + exception + "\n\nStack Trace:\n" + exception.StackTrace);
+      myLog.WriteEntry(ErrorMsg + Environment.NewLine + exception + "\n\nStack Trace:\n" + exception.StackTrace);
     }
   }
 }
