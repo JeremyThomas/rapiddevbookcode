@@ -1162,7 +1162,7 @@ namespace AW.Helper.LLBL
       return null;
     }
 
-    private static Tuple<string, int> GetChildCount(IDao dao, EntityBase entity, IEntityRelation entityRelation, IEnumerable<string> entityTypesToExclude)
+    public static Tuple<string, int> GetChildCount(IDao dao, EntityBase entity, IEntityRelation entityRelation, IEnumerable<string> entityTypesToExclude)
     {
       var entityTypeRelationPredicateBucketTuple = CreateRelationPredicateBucket(entityRelation, ((IEntity) entity).PrimaryKeyFields);
       if (entityTypeRelationPredicateBucketTuple != null && !entityTypesToExclude.Contains(entityTypeRelationPredicateBucketTuple.Item1))
@@ -1177,7 +1177,7 @@ namespace AW.Helper.LLBL
         }
         if (dao != null)
         {
-          var count = dao.GetDbCount(entityFields2, null, null /*entityTypeRelationPredicateBucketTuple.Item2.PredicateExpression*/, entityTypeRelationPredicateBucketTuple.Item2.Relations, null);
+          var count = dao.GetDbCount(entityFields2, null, entityTypeRelationPredicateBucketTuple.Item2.PredicateExpression, entityTypeRelationPredicateBucketTuple.Item2.Relations, null);
           return new Tuple<string, int>(entityTypeRelationPredicateBucketTuple.Item1, count);
         }
       }
@@ -1206,7 +1206,10 @@ namespace AW.Helper.LLBL
         if (fkValue == null) return null;
         if (fkValue is IEntityField2)
           fkValue = ((IEntityField2) fkValue).CurrentValue;
-        bucket.PredicateExpression.Add(new FieldCompareValuePredicate(foreignKeyField, null, ComparisonOperator.Equal, fkValue));
+        else if (fkValue is IEntityField)
+          fkValue = ((IEntityField)fkValue).CurrentValue;
+        var fieldCompareValuePredicate = new FieldCompareValuePredicate(foreignKeyField, null, ComparisonOperator.Equal, fkValue);
+        bucket.PredicateExpression.Add(fieldCompareValuePredicate);
       }
       return new Tuple<string, IRelationPredicateBucket>(typeOfEntity, bucket);
     }

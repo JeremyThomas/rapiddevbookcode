@@ -37,6 +37,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     {
       "SD.LLBLGen.Pro.ORMSupportClasses",
       "SD.LLBLGen.Pro.LinqSupportClasses",
+      "SD.LLBLGen.Pro.QuerySpec",
       "LLBLGen.Linq.Prefetch",
       "AW.Helper",
       "AW.Helper.LLBL",
