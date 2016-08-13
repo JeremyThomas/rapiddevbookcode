@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Principal;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
@@ -182,9 +183,11 @@ namespace AW.Helper
     ///   directory
     /// </remarks>
     /// <see cref="https://github.com/AutoMapper/AutoMapper/issues/383" />
-    /// <see cref="https://connect.microsoft.com/VisualStudio/feedback/details/779370/vs2012-incorrectly-resolves-mscorlib-version-when-referencing-pcl-assembly" />
+    /// <see
+    ///   cref="https://connect.microsoft.com/VisualStudio/feedback/details/779370/vs2012-incorrectly-resolves-mscorlib-version-when-referencing-pcl-assembly" />
     /// <see cref="http://stackoverflow.com/questions/13871267/unable-to-resolve-assemblies-that-use-portable-class-libraries" />
-    /// <see cref="http://stackoverflow.com/questions/18277499/could-not-load-file-or-assembly-system-core-version-2-0-5-0-exception-wh?lq=1" />
+    /// <see
+    ///   cref="http://stackoverflow.com/questions/18277499/could-not-load-file-or-assembly-system-core-version-2-0-5-0-exception-wh?lq=1" />
     /// <see cref="https://github.com/Fody/Costura/issues/30" />
     /// <see cref="https://github.com/dennisdoomen/fluentassertions/issues/311" />
 #pragma warning restore 1584, 1711, 1572, 1581, 1580
@@ -636,7 +639,7 @@ namespace AW.Helper
         TraceOut(newFilePath);
         return null;
       }
-      var userSettingsGroup = configuration.SectionGroups[@"userSettings"];
+      var userSettingsGroup = configuration.SectionGroups["userSettings"];
       if (userSettingsGroup == null)
       {
         File.Copy(newFilePath, oldFilePath);
@@ -664,7 +667,7 @@ namespace AW.Helper
 
     private static ConfigurationSectionGroup GetUserSettingConfigurationSectionGroup(Configuration configuration)
     {
-      var configurationSectionGroup = configuration.SectionGroups[@"userSettings"];
+      var configurationSectionGroup = configuration.SectionGroups["userSettings"];
       return configurationSectionGroup;
     }
 
@@ -748,7 +751,7 @@ namespace AW.Helper
     {
       if (clientSettingsSection != null)
         foreach (SettingsPropertyValue settingsPropertyValue in settings.PropertyValues)
-         SetProperty(clientSettingsSection, settingsPropertyValue.Name, settings, Convert.ToString(settingsPropertyValue.SerializedValue));
+          SetProperty(clientSettingsSection, settingsPropertyValue.Name, settings, Convert.ToString(settingsPropertyValue.SerializedValue));
     }
 
     private static void SetProperty(ClientSettingsSection clientSettingsSection, string propertyName, SettingsBase settings, string value = null)
@@ -821,18 +824,34 @@ namespace AW.Helper
       get { return GetOSArchitecture() == 64; }
     }
 
+    /// <summary>
+    ///   http://stackoverflow.com/questions/3600322/check-if-the-current-user-is-administrator
+    /// </summary>
+    /// <returns></returns>
+    public static bool IsAdministrator()
+    {
+      var identity = WindowsIdentity.GetCurrent();
+      var principal = new WindowsPrincipal(identity);
+      return principal.IsInRole(WindowsBuiltInRole.Administrator);
+    }
+
     public static IEnumerable<string> FilterByFileExists(params string[] filePaths)
     {
       return filePaths.Where(File.Exists);
     }
 
     /// <summary>
-    /// Finds if file exists, throws a FileNotFoundException if it doesn't, searches for file relative to the Application.ExecutablePath.
+    ///   Finds if file exists, throws a FileNotFoundException if it doesn't, searches for file relative to the
+    ///   Application.ExecutablePath.
     /// </summary>
     /// <param name="fileName">Name of the file.</param>
     /// <param name="fileType">Type of the file, used in the exception message.</param>
-    /// <returns>fileName or full path of if relative to the Application.ExecutablePath and Environment.CurrentDirectory is not the executableDirectory</returns>
-    /// <exception cref="FileNotFoundException">If the file is not found
+    /// <returns>
+    ///   fileName or full path of if relative to the Application.ExecutablePath and Environment.CurrentDirectory is not
+    ///   the executableDirectory
+    /// </returns>
+    /// <exception cref="FileNotFoundException">
+    ///   If the file is not found
     /// </exception>
     public static string FindIfFileExists(string fileName, string fileType)
     {
