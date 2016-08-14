@@ -798,16 +798,16 @@ namespace AW.Helper.LLBL
     {
       if (cascadeDeletes)
       {
-        var unitOfWork = new UnitOfWork();
-        MakeDirectDeletesPerformBeforeEntityDeletes(unitOfWork);
-        unitOfWork.AddCollectionForDelete(collectionToDelete);
-        foreach (var entityToDelete in collectionToDelete.OfType<IEntity>())
-          MakeCascadeDeletesForAllChildren(unitOfWork, entityToDelete);
-        Type constructed = collectionToDelete.GetType(); // typeof(EntityCollectionBase<>).MakeGenericType(typeof(EntityBase));
+        var constructed = collectionToDelete.GetType();
         var createTransactionMethod = constructed.GetMethod("CreateTransaction", BindingFlags.NonPublic | BindingFlags.Instance);
         if (createTransactionMethod != null)
         {
-          var transaction = createTransactionMethod.Invoke(collectionToDelete, new object[]{IsolationLevel.ReadCommitted, "UOW"}) as ITransaction;
+          var unitOfWork = new UnitOfWork();
+          MakeDirectDeletesPerformBeforeEntityDeletes(unitOfWork);
+          unitOfWork.AddCollectionForDelete(collectionToDelete);
+          foreach (var entityToDelete in collectionToDelete.OfType<IEntity>())
+            MakeCascadeDeletesForAllChildren(unitOfWork, entityToDelete);
+          var transaction = createTransactionMethod.Invoke(collectionToDelete, new object[] {IsolationLevel.ReadCommitted, "UOW"}) as ITransaction;
           return unitOfWork.Commit(transaction);
         }
       }
@@ -837,7 +837,6 @@ namespace AW.Helper.LLBL
     {
       // Delete Entity directly
       uow.AddDeleteMultiCall(entity.GetEntityFactory().CreateEntityCollection(), CreatePKPredicateExpression(entity));
-
       // Remove Entity as it now being delete directly
       uow.RemoveFromUoW(entity);
     }
@@ -850,6 +849,18 @@ namespace AW.Helper.LLBL
       return predicateExpression;
     }
 
+    /// <summary>
+    /// DeleteMulti() and overloads are not supported for entities which are in a hierarchy of type TargetPerEntity. 
+    /// This is by design, as the delete action isn't possible in one go with proper checks due to referential integrity issues.
+    /// </summary>
+    /// <remarks>
+    /// https://www.llblgen.com/documentation/5.0/LLBLGen%20Pro%20RTF/Using%20the%20generated%20code/SelfServicing/gencode_usingcollectionclasses.htm
+    /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=15400
+    /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=4589 DeleteEntityDirectly with a hierarchy of type TargetPerEntity isn't supported.
+    /// </remarks>
+    /// <param name="uow"></param>
+    /// <param name="entity"></param>
+    /// <param name="allFkEntityFieldCoreObjects"></param>
     private static void AddDeleteRelatedEntitiesDirectlyCall(UnitOfWork uow, IEntity entity, IEnumerable<IEntityFieldCore> allFkEntityFieldCoreObjects)
     {
       var relationPredicateBucket = CreateRelationPredicateBucket(allFkEntityFieldCoreObjects, entity.PrimaryKeyFields);

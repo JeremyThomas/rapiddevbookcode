@@ -1,9 +1,16 @@
 ﻿using System;
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Security;
 using System.Security.Permissions;
 using System.Threading;
 using System.Windows.Forms;
 using AW.Helper;
+using Microsoft.CSharp;
 
 namespace LLBLGen.EntityExplorer
 {
@@ -18,8 +25,12 @@ namespace LLBLGen.EntityExplorer
     ///   The main entry point for the application.
     /// </summary>
     [STAThread]
-    static void Main()
+    public static void Main(string[] args)
     {
+      if (args != null && args.Length > 0)
+      {
+        var source = args[args.Length - 1];
+      }
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
       Application.ThreadException += Application_ThreadException;
@@ -50,7 +61,7 @@ namespace LLBLGen.EntityExplorer
           GeneralHelper.TraceOut(exception.ToString());
           try
           {
-            WriteExceptionToEventLog(exception, "ThreadException");
+            WriteExceptionToEventLog(exception, "LLBLGen.EntityExplorer");
           }
           catch (Exception ex)
           {
@@ -112,11 +123,67 @@ namespace LLBLGen.EntityExplorer
     /// </remarks>
     private static void WriteExceptionToEventLog(Exception exception, string source)
     {
-      if (IsAdministrator.Value && !EventLog.SourceExists(source))
-        EventLog.CreateEventSource(source, "Application");
       // Create an EventLog instance and assign its source.
       var myLog = new EventLog {Source = source};
-      myLog.WriteEntry(ErrorMsg + Environment.NewLine + exception + "\n\nStack Trace:\n" + exception.StackTrace);
+      try
+      {
+        myLog.WriteEntry(ErrorMsg + Environment.NewLine + exception + "\n\nStack Trace:\n" + exception.StackTrace);
+      }
+      catch (SecurityException)
+      {
+        var executableDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+        if (executableDirectory != null)
+        {
+          var createEventSourceExe = Path.Combine(executableDirectory, "CreateEventSource.exe");
+          if (!CreateEventSourceApp(createEventSourceExe).Any())
+          {
+            const int errorCancelled = 1223; //The operation was canceled by the user.
+            var info = new ProcessStartInfo(createEventSourceExe)
+            {
+              UseShellExecute = true,
+              Verb = "runas",
+              Arguments = source
+            };
+            try
+            {
+              Process.Start(info);
+            }
+            catch (Win32Exception ex)
+            {
+              if (ex.NativeErrorCode == errorCancelled)
+                MessageBox.Show("Why you no select Yes?");
+              else
+                throw;
+            }
+          }
+        }
+      }
+    }
+
+    [PrincipalPermission(SecurityAction.Demand, Role = @"BUILTIN\Administrators")]
+    public static void CreateEventSource(string source)
+    {
+      if (IsAdministrator.Value && !EventLog.SourceExists(source))
+        EventLog.CreateEventSource(source, "Application");
+    }
+
+    private static IEnumerable<CompilerError> CreateEventSourceApp(string exeName = "foo.exe")
+    {
+      var csc = new CSharpCodeProvider(new Dictionary<string, string> {{"CompilerVersion", "v3.5"}});
+      var parameters = new CompilerParameters(new[] {"mscorlib.dll", "System.Core.dll", "System.dll"}, exeName, true) {GenerateExecutable = true};
+      var results = csc.CompileAssemblyFromSource(parameters,
+        @"using System.Diagnostics;
+            class Program {
+              public static void Main(string[] args) {
+	              if (args != null && args.Length > 0)
+	              {
+		              var source = args[args.Length - 1];
+		              if (!System.Diagnostics.EventLog.SourceExists(source))
+			              System.Diagnostics.EventLog.CreateEventSource(source, ""Application"");
+	              }
+              }
+            }");
+      return results.Errors.Cast<CompilerError>();
     }
   }
 }
