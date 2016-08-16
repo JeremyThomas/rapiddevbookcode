@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Runtime.InteropServices;
@@ -253,13 +254,6 @@ namespace AW.Winforms.Helpers
 
     #endregion
 
-    private static ScrollBars GetVisibleScrollbars(ScrollableControl ctl)
-    {
-      if (ctl.HorizontalScroll.Visible)
-        return ctl.VerticalScroll.Visible ? ScrollBars.Both : ScrollBars.Horizontal;
-      return ctl.VerticalScroll.Visible ? ScrollBars.Vertical : ScrollBars.None;
-    }
-
     private const int GWL_STYLE = -16;
     private const int WS_VSCROLL = 0x00200000;
 
@@ -339,6 +333,37 @@ namespace AW.Winforms.Helpers
     {
       var typeConverter = TypeDescriptor.GetConverter(e.Value);
       e.Value = typeConverter.ConvertToString(e.Value);
+    }
+
+    /// <summary>
+    ///   Finds if file exists, throws a FileNotFoundException if it doesn't, searches for file relative to the
+    ///   Application.ExecutablePath.
+    /// </summary>
+    /// <param name="fileName">Name of the file.</param>
+    /// <param name="fileType">Type of the file, used in the exception message.</param>
+    /// <returns>
+    ///   fileName or full path of if relative to the Application.ExecutablePath and Environment.CurrentDirectory is not
+    ///   the executableDirectory
+    /// </returns>
+    /// <exception cref="FileNotFoundException">
+    ///   If the file is not found
+    /// </exception>
+    public static string FindIfFileExists(string fileName, string fileType)
+    {
+      if (!File.Exists(fileName))
+      {
+        var executableDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+        if (executableDirectory != Environment.CurrentDirectory && executableDirectory != null)
+        {
+          var fullPath = Path.Combine(executableDirectory, fileName);
+          if (!File.Exists(fullPath))
+            throw new FileNotFoundException(String.Format("{0}: {1} not found!{2}", fileType, fileName, Environment.NewLine), fileName);
+          fileName = fullPath;
+        }
+        else
+          throw new FileNotFoundException(String.Format("{0}: {1} not found!{2}", fileType, fileName, Environment.NewLine), fileName);
+      }
+      return fileName;
     }
   }
 

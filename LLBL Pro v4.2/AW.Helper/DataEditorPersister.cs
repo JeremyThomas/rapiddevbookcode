@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
 using System.Reflection;
-using AW.Helper;
 
-namespace AW.Winforms.Helpers.Controls
+namespace AW.Helper
 {
   /// <summary>
   ///   If an implementation of this is supplied to GridDataEditor it will be able to persist CUD changes

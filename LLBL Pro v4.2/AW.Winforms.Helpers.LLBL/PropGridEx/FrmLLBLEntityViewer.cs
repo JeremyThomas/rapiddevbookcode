@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Helper.PropertyDescriptors;
 using AW.Winforms.Helpers.Controls;
@@ -30,7 +31,7 @@ namespace AW.Winforms.Helpers.LLBL.PropGridEx
     }
 
     private FrmLLBLEntityViewer(object entity, IDataAccessAdapter dataAccessAdapter)
-      : base(entity, dataAccessAdapter == null ? null : new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter))
+      : base(entity, dataAccessAdapter == null ? null : new DataEditorLLBLAdapterPersister(dataAccessAdapter))
     {
     }
 
@@ -56,18 +57,18 @@ namespace AW.Winforms.Helpers.LLBL.PropGridEx
 
     public static Form Show(object entity)
     {
-      return Show(entity, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
+      return Show(entity, new DataEditorLLBLSelfServicingPersister());
     }
 
     public static Form Show(object entity, IDataAccessAdapter dataAccessAdapter)
     {
-      return Show(entity, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter));
+      return Show(entity, new DataEditorLLBLAdapterPersister(dataAccessAdapter));
     }
 
     public static Form Show(ILinqMetaData linqMetaData)
     {
       var adapter = EntityHelper.GetDataAccessAdapter(linqMetaData);
-      return adapter == null ? Show((object) linqMetaData) : Show(linqMetaData, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(adapter));
+      return adapter == null ? Show((object) linqMetaData) : Show(linqMetaData, new DataEditorLLBLAdapterPersister(adapter));
     }
 
     private static Form Show(object entity, IDataEditorPersister dataEditorPersister)

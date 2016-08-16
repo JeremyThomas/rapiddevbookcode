@@ -422,13 +422,13 @@ namespace AW.Winforms.Helpers.LLBL
       if (typeof(IEntity).IsAssignableFrom(entityQueryable.ElementType))
       {
         if (gridDataEditor.DataEditorPersister == null)
-          gridDataEditor.DataEditorPersister = new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister();
+          gridDataEditor.DataEditorPersister = new DataEditorLLBLSelfServicingPersister();
       }
       else
       {
         var provider = entityQueryable.Provider as LLBLGenProProvider2;
         if (provider != null && gridDataEditor.DataEditorPersister == null)
-          gridDataEditor.DataEditorPersister = new LLBLWinformHelper.DataEditorLLBLAdapterPersister(provider.AdapterToUse);
+          gridDataEditor.DataEditorPersister = new DataEditorLLBLAdapterPersister(provider.AdapterToUse);
       }
       gridDataEditor.BindEnumerable(CacheResultset(entityQueryable));
     }

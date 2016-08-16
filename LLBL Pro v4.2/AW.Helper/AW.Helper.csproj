@@ -63,6 +63,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.SqlLocalDb, Version=1.15.0.0, Culture=neutral, PublicKeyToken=9a192a7522c9e1a0, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SqlLocalDb.1.15.0\lib\net40\System.Data.SqlLocalDb.dll</HintPath>
       <Private>True</Private>
@@ -96,6 +97,7 @@
     <Compile Include="ChannelFactory2.cs" />
     <Compile Include="CommandToExecutableSQL.cs" />
     <Compile Include="CSharpSerializer.cs" />
+    <Compile Include="DataEditorPersister.cs" />
     <Compile Include="DataHelper.cs" />
     <Compile Include="LinqHelper.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

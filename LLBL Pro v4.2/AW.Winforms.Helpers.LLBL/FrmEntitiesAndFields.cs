@@ -150,12 +150,12 @@ namespace AW.Winforms.Helpers.LLBL
         ExpandRightPanel();
       if (gridDataEditor.DataEditorPersister == null)
         if (typeof (IEntity).IsAssignableFrom(entityQueryable.ElementType))
-          gridDataEditor.DataEditorPersister = new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister();
+          gridDataEditor.DataEditorPersister = new DataEditorLLBLSelfServicingPersister();
         else
         {
           var provider = entityQueryable.Provider as LLBLGenProProvider2;
           if (provider != null)
-            gridDataEditor.DataEditorPersister = new LLBLWinformHelper.DataEditorLLBLAdapterPersister(provider.AdapterToUse);
+            gridDataEditor.DataEditorPersister = new DataEditorLLBLAdapterPersister(provider.AdapterToUse);
         }
       gridDataEditor.BindEnumerable(entityQueryable, pageSize);
     }

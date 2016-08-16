@@ -40,11 +40,11 @@ namespace AW.LLBLGen.DataContextDriver
       {
         var elementType = LinqUtils.DetermineSetElementType(enumerable.GetType());
         if (typeof (EntityBase).IsAssignableFrom(elementType))
-          dataEditorPersister = new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister();
+          dataEditorPersister = new DataEditorLLBLSelfServicingPersister();
         else
         {
           var dataAccessAdapter = EntityHelper.GetDataAccessAdapter(enumerable);
-          if (dataAccessAdapter != null) dataEditorPersister = new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter);
+          if (dataAccessAdapter != null) dataEditorPersister = new DataEditorLLBLAdapterPersister(dataAccessAdapter);
         }
       }
       return enumerable.DisplayInGrid(dataEditorPersister, pageSize, options);
