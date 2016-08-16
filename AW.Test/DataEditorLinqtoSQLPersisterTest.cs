@@ -1,4 +1,5 @@
 ﻿using System.Data.Linq;
+using AW.Helper;
 using AW.LinqToSQL;
 using AW.Winforms.Helpers.Controls;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

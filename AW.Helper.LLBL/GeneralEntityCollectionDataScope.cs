@@ -2,13 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using AW.Helper;
-using AW.Helper.LLBL;
 using Fasterflect;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Winforms.Helpers.LLBL
+namespace AW.Helper.LLBL
 {
   public class GeneralEntityCollectionDataScope : DataScope
   {

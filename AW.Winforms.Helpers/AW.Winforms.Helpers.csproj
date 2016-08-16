@@ -145,7 +145,6 @@
     <Compile Include="ConnectionUI\SqlCeDataProvider\SqlCeConnectionUIControl.Designer.cs">
       <DependentUpon>SqlCeConnectionUIControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DataEditorPersister.cs" />
     <Compile Include="Controls\DataGridViewDateTimeColumn.cs" />
     <Compile Include="Controls\HierarchyEditor.cs">
       <SubType>UserControl</SubType>

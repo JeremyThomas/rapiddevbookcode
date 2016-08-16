@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Data.Linq;
+using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.Controls;

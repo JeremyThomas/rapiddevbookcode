@@ -26,7 +26,7 @@ namespace AW.Winforms.Helpers.LLBL
       BindingListHelper.RegisterbindingListViewCreater(typeof(IEntityCore), EntityHelper.CreateEntityView);
       BindingListHelper.RegisterBindingListSourceProvider(typeof(IEntityView), EntityHelper.GetRelatedCollection);
       BindingListHelper.RegisterBindingListSourceProvider(typeof(IEntityView2), EntityHelper.GetRelatedCollection);
-      DataEditorPersisterFactory.Register(DataEditorLLBLDataScopePersisterFactory);
+      DataEditorPersisterFactory.Register(DataEditorLLBLDataScopePersister.DataEditorLLBLDataScopePersisterFactory);
     }
 
     /// <summary>
@@ -36,15 +36,14 @@ namespace AW.Winforms.Helpers.LLBL
     {
     }
 
-    private static IDataEditorPersister DataEditorLLBLDataScopePersisterFactory(object data)
+    public static HierarchyEditor HierarchyEditorFactory<T, TName, TChildCollection>(IQueryable<T> query, Func<IEnumerable<T>, IEnumerable<T>> postProcessing,
+      Expression<Func<T, TName>> namePropertyExpression,
+      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : class, IEntityCore
     {
-      var queryable = data as IQueryable<IEntityCore>;
-      if (queryable == null)
-      {
-        var selfServcingData = data as IEnumerable<IEntity>;
-        return selfServcingData == null ? null : new DataEditorLLBLSelfServicingPersister();
-      }
-      return new DataEditorLLBLDataScopePersister(queryable);
+      var dataScope = new GeneralEntityCollectionDataScope();
+      var processedCollection = postProcessing(dataScope.FetchData(query));
+      return HierarchyEditor.HierarchyEditorFactory(processedCollection, namePropertyExpression, childCollectionPropertyExpression,
+        new DataEditorLLBLDataScopePersister(dataScope));
     }
 
     #region Validatation
@@ -99,146 +98,7 @@ namespace AW.Winforms.Helpers.LLBL
     }
 
     #endregion
-
-    public abstract class DataEditorLLBLPersister : IDataEditorPersisterWithCounts
-    {
-      /// <summary>
-      ///   Saves (persist CUD changes) the specified data.
-      /// </summary>
-      /// <param name="dataToSave">The data to save.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
-      /// <param name="cascadeDeletes">Deletes cascade non-recursively to children of the selected entity</param>
-      /// <returns></returns>
-      public abstract int Save(object dataToSave = null, bool cascadeDeletes = false);
-
-      /// <summary>
-      ///   Deletes the specified data, may not be needed if 'Save' can handle deletes.
-      /// </summary>
-      /// <param name="dataToDelete">The data to delete.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
-      /// <param name="cascade">if set to <c>true</c>Deletes cascade non-recursively to children of the selected entity.</param>
-      /// <returns></returns>
-      public abstract int Delete(object dataToDelete, bool cascade = false);
-
-      public virtual bool CanSave(Type typeToSave)
-      {
-        return typeof(IEntityCore).IsAssignableFrom(typeToSave);
-      }
-
-      public virtual bool Undo(object modifiedData)
-      {
-        EntityHelper.Undo(modifiedData);
-        return true;
-      }
-
-      public bool IsDirty(object data)
-      {
-        return EntityHelper.IsDirty(data);
-      }
-
-      public bool TracksRemoves(IEnumerable enumerable)
-      {
-        var entityCollection = enumerable as IEntityCollection;
-        if (entityCollection == null)
-        {
-          var entityCollection2 = enumerable as IEntityCollection2;
-          return entityCollection2 != null && entityCollection2.RemovedEntitiesTracker != null;
-        }
-        return entityCollection.RemovedEntitiesTracker != null;
-      }
-
-      public abstract IDictionary<string, int> GetChildCounts(object entityThatMayHaveChildren);
-    }
-
-    public class DataEditorLLBLSelfServicingPersister : DataEditorLLBLPersister
-    {
-      /// <summary>
-      ///   Saves (persist CUD changes) the specified data.
-      /// </summary>
-      /// <param name="dataToSave">The data to save.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
-      /// <param name="cascadeDeletes">Deletes cascade non-recursively to children of the selected entity</param>
-      /// <returns></returns>
-      public override int Save(object dataToSave = null, bool cascadeDeletes = false)
-      {
-        return EntityHelper.Save(dataToSave);
-      }
-
-      /// <summary>
-      ///   Deletes the specified data, may not be needed if 'Save' can handle deletes.
-      /// </summary>
-      /// <param name="dataToDelete">The data to delete.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
-      /// <param name="cascade">if set to <c>true</c>Deletes cascade non-recursively to children of the selected entity.</param>
-      /// <returns></returns>
-      public override int Delete(object dataToDelete, bool cascade = false)
-      {
-        return EntityHelper.Delete(dataToDelete, cascade);
-      }
-
-      public override bool CanSave(Type typeToSave)
-      {
-        return typeof(EntityBase).IsAssignableFrom(typeToSave);
-      }
-
-      public override IDictionary<string, int> GetChildCounts(object entityThatMayHaveChildren)
-      {
-        return EntityHelper.GetExistingChildCounts(null, entityThatMayHaveChildren as EntityBase2);
-      }
-    }
-
-    public static HierarchyEditor HierarchyEditorFactory<T, TName, TChildCollection>(IQueryable<T> query, Func<IEnumerable<T>, IEnumerable<T>> postProcessing,
-      Expression<Func<T, TName>> namePropertyExpression,
-      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : class, IEntityCore
-    {
-      var dataScope = new GeneralEntityCollectionDataScope();
-      var processedCollection = postProcessing(dataScope.FetchData(query));
-      return HierarchyEditor.HierarchyEditorFactory(processedCollection, namePropertyExpression, childCollectionPropertyExpression,
-        new DataEditorLLBLDataScopePersister(dataScope));
-    }
-
-    #region Adapter
-
-    public class DataEditorLLBLAdapterPersister : DataEditorLLBLPersister
-    {
-      private readonly IDataAccessAdapter _dataAccessAdapter;
-
-      public DataEditorLLBLAdapterPersister(IDataAccessAdapter dataAccessAdapter)
-      {
-        _dataAccessAdapter = dataAccessAdapter;
-      }
-
-      /// <summary>
-      ///   Saves (persist CUD changes) the specified data.
-      /// </summary>
-      /// <param name="dataToSave">The data to save.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
-      /// <param name="cascadeDeletes">Deletes cascade non-recursively to children of the selected entity</param>
-      /// <returns></returns>
-      public override int Save(object dataToSave = null, bool cascadeDeletes = false)
-      {
-        return EntityHelper.Save(dataToSave, _dataAccessAdapter, cascadeDeletes);
-      }
-
-      /// <summary>
-      ///   Deletes the specified data, may not be needed if 'Save' can handle deletes.
-      /// </summary>
-      /// <param name="dataToDelete">The data to delete.The data must a type that would pass 'CanSave' or an enumeration of that type</param>
-      /// <param name="cascade">if set to <c>true</c>Deletes cascade non-recursively to children of the selected entity.</param>
-      /// <returns></returns>
-      public override int Delete(object dataToDelete, bool cascade = false)
-      {
-        return EntityHelper.Delete(dataToDelete, _dataAccessAdapter, cascade);
-      }
-
-      public override bool CanSave(Type typeToSave)
-      {
-        return typeof(EntityBase2).IsAssignableFrom(typeToSave);
-      }
-
-      public override IDictionary<string, int> GetChildCounts(object entityThatMayHaveChildren)
-      {
-        return EntityHelper.GetExistingChildCounts(_dataAccessAdapter, entityThatMayHaveChildren as EntityBase2);
-      }
-    }
-
-    #endregion
-
+    
     #region PopulateTreeViewWithSchema
 
     public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, ILinqMetaData linqMetaData = null, Type baseType = null, bool useSchema = true,

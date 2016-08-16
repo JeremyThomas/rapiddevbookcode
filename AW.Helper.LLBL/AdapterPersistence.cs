@@ -14,7 +14,7 @@ namespace AW.Helper.LLBL
     public AdapterPersistence(Func<DataAccessAdapterBase> dataAccessAdapterFactory, IAdapterQueryableProvider queryableProvider)
     {
       _dataAccessAdapterFactory = dataAccessAdapterFactory;
-      this._queryableProvider = queryableProvider;
+      _queryableProvider = queryableProvider;
     }
 
     public void Save(IEntity2 entity, bool commit = true)

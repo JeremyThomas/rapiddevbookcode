@@ -379,7 +379,7 @@ namespace LLBLGen.EntityExplorer
     private void LoadLinqMetaData(string linqMetaDataAssemblyPath)
     {
       toolStripButtonAddConnection.Enabled = _linqMetaDataType != null;
-      linqMetaDataAssemblyPath = GeneralHelper.FindIfFileExists(linqMetaDataAssemblyPath, "LinqMetaData assembly");
+      linqMetaDataAssemblyPath = AWHelper.FindIfFileExists(linqMetaDataAssemblyPath, "LinqMetaData assembly");
       var linqMetaDataAssembly = LoadAssembly(linqMetaDataAssemblyPath);
       if (linqMetaDataAssembly.Location != linqMetaDataAssemblyPath && linqMetaDataAssembly.Location != Path.GetFullPath(linqMetaDataAssemblyPath))
         throw new ApplicationException("New assembly could not be loaded, restart to try again.");
@@ -408,7 +408,7 @@ namespace LLBLGen.EntityExplorer
       {
         if (String.IsNullOrWhiteSpace(adapterAssemblyPath))
           throw new ApplicationException("Adapter assembly not specified!");
-        adapterAssemblyPath = GeneralHelper.FindIfFileExists(adapterAssemblyPath, "Adapter assembly");
+        adapterAssemblyPath = AWHelper.FindIfFileExists(adapterAssemblyPath, "Adapter assembly");
         var dataAccessAdapterAssembly = LoadAssembly(adapterAssemblyPath);
         if (dataAccessAdapterAssembly == null)
           throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " could not be loaded!");

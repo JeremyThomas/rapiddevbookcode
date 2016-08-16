@@ -485,7 +485,7 @@ namespace AW.Helper
                   var parentPath = isListInit ? property.Name : ParentPath(parent, property.Name);
                   if (genericArguments.Length == 0)
                   {
-                    listItemType = ListBindingHelper.GetListItemType(list);
+                    listItemType = MetaDataHelper.GetListItemType(list);
                     if (property.CanWrite)
                       listParent = String.Format("{0} = new {1}", parentPath, pt);
                     else

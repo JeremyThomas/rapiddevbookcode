@@ -2,14 +2,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using AW.Winforms.Helpers.Controls;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Winforms.Helpers.LLBL
+namespace AW.Helper.LLBL
 {
-  public class DataEditorLLBLDataScopePersister : LLBLWinformHelper.DataEditorLLBLPersister, IDataEditorEventHandlers
+  public class DataEditorLLBLDataScopePersister : DataEditorLLBLPersister, IDataEditorEventHandlers
   {
     public GeneralEntityCollectionDataScope GeneralEntityCollectionDataScope;
+
+#pragma warning disable CS3002 // Return type is not CLS-compliant
+    public static IDataEditorPersister DataEditorLLBLDataScopePersisterFactory(object data)
+#pragma warning restore CS3002 // Return type is not CLS-compliant
+    {
+      var queryable = data as IQueryable<IEntityCore>;
+      if (queryable == null)
+      {
+        var selfServcingData = data as IEnumerable<IEntity>;
+        return selfServcingData == null ? null : new DataEditorLLBLSelfServicingPersister();
+      }
+      return new DataEditorLLBLDataScopePersister(queryable);
+    }
 
     protected DataEditorLLBLDataScopePersister()
     {
@@ -24,13 +36,13 @@ namespace AW.Winforms.Helpers.LLBL
     {
       GeneralEntityCollectionDataScope = generalEntityCollectionDataScope;
     }
-    
-    public DataEditorLLBLDataScopePersister(IEnumerable enumerable, ITransactionController transactionController) 
+
+    public DataEditorLLBLDataScopePersister(IEnumerable enumerable, ITransactionController transactionController)
       : this(new GeneralEntityCollectionDataScope(enumerable, transactionController))
     {
     }
 
-    public DataEditorLLBLDataScopePersister(IContextAwareElement contextAwareElement, ITransactionController transactionController = null) 
+    public DataEditorLLBLDataScopePersister(IContextAwareElement contextAwareElement, ITransactionController transactionController = null)
       : this(new GeneralEntityCollectionDataScope(contextAwareElement, transactionController))
     {
     }
@@ -42,7 +54,8 @@ namespace AW.Winforms.Helpers.LLBL
     }
 
     /// <summary>
-    ///   Raised when the data of an entity in the scope changed. Ignored during fetches. Sender is the entity which data was changed
+    ///   Raised when the data of an entity in the scope changed. Ignored during fetches. Sender is the entity which data was
+    ///   changed
     /// </summary>
     public event EventHandler ContainedDataChanged
     {
@@ -55,26 +68,14 @@ namespace AW.Winforms.Helpers.LLBL
     /// </summary>
     public event EventHandler EntityAdded
     {
-      add
-      {
-        GeneralEntityCollectionDataScope.EntityAdded += value;
-      }
-      remove
-      {
-        GeneralEntityCollectionDataScope.EntityAdded -= value;
-      }
+      add { GeneralEntityCollectionDataScope.EntityAdded += value; }
+      remove { GeneralEntityCollectionDataScope.EntityAdded -= value; }
     }
 
     public event EventHandler EntityRemoved
     {
-      add
-      {
-        GeneralEntityCollectionDataScope.EntityRemoved += value;
-      }
-      remove
-      {
-        GeneralEntityCollectionDataScope.EntityRemoved -= value;
-      }
+      add { GeneralEntityCollectionDataScope.EntityRemoved += value; }
+      remove { GeneralEntityCollectionDataScope.EntityRemoved -= value; }
     }
 
     public override int Save(object dataToSave = null, bool cascadeDeletes = false)
@@ -98,4 +99,5 @@ namespace AW.Winforms.Helpers.LLBL
       return GeneralEntityCollectionDataScope.GetChildCounts(entityThatMayHaveChildren);
     }
   }
+
 }

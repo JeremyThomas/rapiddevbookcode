@@ -558,6 +558,11 @@ namespace AW.Helper
       return array;
     }
 
+    public static Type GetListItemType(object modifiedData)
+    {
+      return ListBindingHelper.GetListItemType(modifiedData);
+    }
+
     /// <summary>
     ///   Returns the data type of the items in the specified list.
     /// </summary>
@@ -575,7 +580,7 @@ namespace AW.Helper
         return elementType;
       try
       {
-        itemType = ListBindingHelper.GetListItemType(enumerable);
+        itemType = GetListItemType(enumerable);
         if (itemType == typeof (object))
           itemType = GetEnumerableItemTypeWithFirst(enumerable, itemType);
       }
@@ -971,7 +976,7 @@ namespace AW.Helper
     public static string GetProductVersion(this Assembly assembly)
     {
       var assemblyInformationalVersion = assembly.GetInformationalVersionAttribute();
-      return string.IsNullOrWhiteSpace(assemblyInformationalVersion) ? GetVersionInfo(assembly).ProductVersion : assemblyInformationalVersion;
+      return String.IsNullOrWhiteSpace(assemblyInformationalVersion) ? GetVersionInfo(assembly).ProductVersion : assemblyInformationalVersion;
     }
 
     public static string GetTitle(this Assembly assembly)
@@ -1407,7 +1412,7 @@ namespace AW.Helper
       else
       {
         var serializeToString = ConvertOrSerializeToString(value, propertyType);
-        if (includeNullsAndDefault || !string.IsNullOrWhiteSpace(serializeToString))
+        if (includeNullsAndDefault || !String.IsNullOrWhiteSpace(serializeToString))
           dictionary.Add(propertyName, serializeToString);
       }
     }

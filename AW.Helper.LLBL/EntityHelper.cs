@@ -8,7 +8,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using System.Windows.Forms;
 using Microsoft.CSharp.RuntimeBinder;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -567,7 +566,7 @@ namespace AW.Helper.LLBL
         Undo(unitOfWorkCore);
         return;
       }
-      var listItemType = GetListItemType(modifiedData);
+      var listItemType = MetaDataHelper.GetListItemType(modifiedData);
       if (IsEntityCore(listItemType))
       {
         var enumerable = modifiedData as IEnumerable;
@@ -674,11 +673,6 @@ namespace AW.Helper.LLBL
       return false;
     }
 
-    private static Type GetListItemType(object modifiedData)
-    {
-      return ListBindingHelper.GetListItemType(modifiedData);
-    }
-
     #region Self Servicing
 
     /// <summary>
@@ -760,7 +754,7 @@ namespace AW.Helper.LLBL
     /// <returns></returns>
     public static int Delete(object dataToDelete, bool cascade = false)
     {
-      var listItemType = GetListItemType(dataToDelete);
+      var listItemType = MetaDataHelper.GetListItemType(dataToDelete);
       if (typeof(IEntity).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToDelete as IEnumerable;
@@ -889,7 +883,7 @@ namespace AW.Helper.LLBL
     /// <returns>The number of persisted entities.</returns>
     public static int Save(object dataToSave, bool cascadeDeletes = false)
     {
-      var listItemType = GetListItemType(dataToSave);
+      var listItemType = MetaDataHelper.GetListItemType(dataToSave);
       if (typeof(IEntity).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToSave as IEnumerable;
@@ -1007,7 +1001,7 @@ namespace AW.Helper.LLBL
     /// </returns>
     public static int Save(object dataToSave, IDataAccessAdapter dataAccessAdapter, bool cascadeDeletes = false)
     {
-      var listItemType = GetListItemType(dataToSave);
+      var listItemType = MetaDataHelper.GetListItemType(dataToSave);
       if (typeof(IEntity2).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToSave as IEnumerable;
@@ -1081,7 +1075,7 @@ namespace AW.Helper.LLBL
 
     public static int Delete(object dataToDelete, IDataAccessAdapter dataAccessAdapter, bool cascade = false)
     {
-      var listItemType = GetListItemType(dataToDelete);
+      var listItemType = MetaDataHelper.GetListItemType(dataToDelete);
       if (typeof(IEntity2).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToDelete as IEnumerable;
