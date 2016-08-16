@@ -77,7 +77,7 @@ namespace AW.Tests
       Assert.IsTrue(bindingSource.BindEnumerable((IEnumerable) listofNonSerializableClasses, false));
       if (bindingSource.SupportsSorting)
       {
-        Assert.IsInstanceOfType(bindingSource.List, typeof (ObjectListView<SerializableBaseClass>));
+        Assert.IsInstanceOfType(bindingSource.List, typeof(ObjectListView<SerializableBaseClass>));
         var objectListView = (ObjectListView<SerializableBaseClass>) bindingSource.List;
         Assert.AreEqual(listofNonSerializableClasses, objectListView.List);
       }
@@ -99,7 +99,7 @@ namespace AW.Tests
       TestBindEnumerable(TestData.GetAddressTypeDataTable().DefaultView);
 
       TestBindEnumerable(((IEntity) MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType, true, 2);
-      TestBindEnumerable(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)), true, 14);
+      TestBindEnumerable(MetaDataHelper.GetPropertiesToDisplay(typeof(AddressTypeEntity)), true, 14);
       TestBindEnumerable(NonSerializableClass.GenerateList(), true, 3);
       TestBindEnumerable(SerializableClass.GenerateList(), true, 4);
       TestBindEnumerable(SerializableClass.GenerateListWithBoth(), true, 3, false);
@@ -166,7 +166,7 @@ namespace AW.Tests
 
     private static void AssertObjectListView<T>(IList<T> list, bool assertRaiseItemChangedEvents = false)
     {
-      Assert.IsInstanceOfType(list, typeof (ObjectListView<T>));
+      Assert.IsInstanceOfType(list, typeof(ObjectListView<T>));
       if (assertRaiseItemChangedEvents)
       {
         var objectListView = (ObjectListView<T>) list;
@@ -180,7 +180,7 @@ namespace AW.Tests
     {
       var bindingSource = new BindingSource();
       Assert.IsTrue(bindingSource.BindEnumerable(enumerable, setReadonly));
-      Assert.IsInstanceOfType(bindingSource.List, typeof (IBindingListView));
+      Assert.IsInstanceOfType(bindingSource.List, typeof(IBindingListView));
       return bindingSource;
     }
 
@@ -196,7 +196,7 @@ namespace AW.Tests
           MaybeAssertObjectListView(list);
         }
         else
-          Assert.IsInstanceOfType(list, typeof (ObjectListView));
+          Assert.IsInstanceOfType(list, typeof(ObjectListView));
       if (numProperties > 0)
       {
         var properties = MetaDataHelper.GetPropertiesToDisplay(enumerable);
@@ -209,7 +209,7 @@ namespace AW.Tests
     {
       var bindingSource = new BindingSource();
       Assert.IsTrue(bindingSource.BindEnumerable(enumerable, setReadonly));
-      Assert.IsInstanceOfType(bindingSource.List, typeof (IBindingListView));
+      Assert.IsInstanceOfType(bindingSource.List, typeof(IBindingListView));
       // Assert.AreNotEqual(bindingSource.AllowEdit, setReadonly);
       return bindingSource;
     }
@@ -217,7 +217,7 @@ namespace AW.Tests
     [TestMethod]
     public void ToBindingListViewTest()
     {
-      TestToBindingListView(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)));
+      TestToBindingListView(MetaDataHelper.GetPropertiesToDisplay(typeof(AddressTypeEntity)));
       TestToBindingListView(((IEntity) MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType);
       TestToBindingListView(MetaSingletons.MetaData.AddressType);
 
@@ -264,7 +264,7 @@ namespace AW.Tests
     private static void TestLLBLQueryToBindingListView(IEnumerable enumerable, bool ensureFilteringEnabled = false)
     {
       var list = TestToBindingListView(enumerable, ensureFilteringEnabled);
-      Assert.IsInstanceOfType(list, typeof (ICollection));
+      Assert.IsInstanceOfType(list, typeof(ICollection));
       if (ensureFilteringEnabled)
       {
         MaybeAssertObjectListView(list);
@@ -274,9 +274,9 @@ namespace AW.Tests
         Assert.IsTrue(raiseItemChangedEvents.RaisesItemChangedEvents, "raiseItemChangedEvents.RaisesItemChangedEvents");
       }
       else
-        Assert.IsInstanceOfType(list, typeof (IEntityView));
+        Assert.IsInstanceOfType(list, typeof(IEntityView));
       var dataSource = (ICollection) BindingListHelper.GetDataSource(list);
-      Assert.IsInstanceOfType(dataSource, typeof (IEntityCollection));
+      Assert.IsInstanceOfType(dataSource, typeof(IEntityCollection));
     }
 
     [TestMethod]
@@ -284,8 +284,8 @@ namespace AW.Tests
     {
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
       var list = TestToBindingListView(addressTypeEntityCollection, true);
-      Assert.IsInstanceOfType(list, typeof (ICollection));
-      Assert.IsInstanceOfType(list, typeof (ObjectListView<AddressTypeEntity>));
+      Assert.IsInstanceOfType(list, typeof(ICollection));
+      Assert.IsInstanceOfType(list, typeof(ObjectListView<AddressTypeEntity>));
       var dataSource = (ICollection) BindingListHelper.GetDataSource(list);
       CollectionAssert.AreEqual(addressTypeEntityCollection, dataSource);
       var objectListView = (ObjectListView<AddressTypeEntity>) list;
@@ -296,14 +296,14 @@ namespace AW.Tests
       var listNg = TestToBindingListView(arrayListAddressType, true);
       Assert.IsInstanceOfType(listNg, typeof(ICollection));
       Assert.IsInstanceOfType(listNg, typeof(ObjectListView));
-      dataSource = (ICollection)BindingListHelper.GetDataSource(list);
+      dataSource = (ICollection) BindingListHelper.GetDataSource(list);
       CollectionAssert.AreEqual(arrayListAddressType, dataSource);
     }
 
     private static IBindingListView TestToBindingListView(IEnumerable enumerable, bool ensureFilteringEnabled = false)
     {
       var bindingListView = enumerable.ToBindingListView(ensureFilteringEnabled);
-      Assert.IsInstanceOfType(bindingListView, typeof (IBindingListView));
+      Assert.IsInstanceOfType(bindingListView, typeof(IBindingListView));
       Assert.IsTrue(bindingListView.Count > 0);
       return bindingListView;
     }
@@ -314,7 +314,7 @@ namespace AW.Tests
       var serializableClasses = SerializableClass.GenerateList();
       var bindingListView = serializableClasses.Cast<object>().ToBindingListView();
       var enumerableItemType = MetaDataHelper.GetEnumerableItemType(bindingListView);
-      Assert.AreEqual(typeof (SerializableClass), enumerableItemType);
+      Assert.AreEqual(typeof(SerializableClass), enumerableItemType);
       Assert.AreEqual(4, ListBindingHelper.GetListItemProperties(bindingListView).Count);
       Assert.AreEqual(ListBindingHelper.GetListItemProperties(serializableClasses), ListBindingHelper.GetListItemProperties(bindingListView));
     }
@@ -329,7 +329,7 @@ namespace AW.Tests
     private static IBindingListView TestListSourceToBindingListView(IListSource enumerable)
     {
       var bindingListView = BindingListHelper.ListSourceToBindingListView(enumerable);
-      Assert.IsInstanceOfType(bindingListView, typeof (IBindingListView));
+      Assert.IsInstanceOfType(bindingListView, typeof(IBindingListView));
       Assert.IsTrue(bindingListView.Count > 0);
       return bindingListView;
     }

@@ -44,7 +44,7 @@ namespace AW.Winforms.Helpers.Controls
       dataTreeView.ChildCollectionPropertyName = childCollectionPropertyName;
     }
 
-    public HierarchyEditor(IEnumerable hierarchicalData, string nameColumn, IDataEditorPersister dataEditorPersister, params string[] membersToExclude)
+    public HierarchyEditor(IEnumerable hierarchicalData, string nameColumn, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
       : this(hierarchicalData, nameColumn)
     {
       gridDataEditor.DataEditorPersister = dataEditorPersister;
@@ -56,9 +56,7 @@ namespace AW.Winforms.Helpers.Controls
         _canDetectDirty = true;
       }
       else
-      {
         saveToolStripButton.Enabled = gridDataEditor.DataEditorPersister != null;
-      }
       gridDataEditor.MembersToExclude = membersToExclude;
       toolStripButtonCancelEdit.Enabled = saveToolStripButton.Enabled;
     }

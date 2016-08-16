@@ -11,8 +11,6 @@ using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.Controls;
-using AW.Winforms.Helpers.DataEditor;
-using AW.Winforms.Helpers.LLBL;
 using Chaliy.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.Linq.Filters;
@@ -87,7 +85,7 @@ namespace AW.Tests
       TestDataTreeViewGroup(((IEnumerable) groupBy).ToBindingListView());
       var customerGroupedByCountry = NorthwindTest.GetNorthwindLinqMetaData().Customer.ToEntityCollection2().GroupByCountry();
       TestDataTreeViewGroup(customerGroupedByCountry.ToBindingListView());
-  //    TestDataTreeViewGroup(((IEnumerable)customerGroupedByCountry).ToBindingListView());
+      //    TestDataTreeViewGroup(((IEnumerable)customerGroupedByCountry).ToBindingListView());
       TestDataTreeViewGroup(customerGroupedByCountry);
     }
 
@@ -122,7 +120,7 @@ namespace AW.Tests
 
     private static void TestHierarchyEditorGroup(IEnumerable<IGrouping<string, CustomerEntity>> customerGroupedByCountry)
     {
-      var hierarchyEditor = new HierarchyEditor(customerGroupedByCountry, "CompanyName", null) {BindingContext = new BindingContext()};
+      var hierarchyEditor = new HierarchyEditor(customerGroupedByCountry, "CompanyName") {BindingContext = new BindingContext()};
       var dataTreeView = hierarchyEditor.Controls.Find("dataTreeView", true).Single() as TreeView;
       AssertCustomerGroupedByCountryInTree(dataTreeView);
     }
@@ -169,12 +167,12 @@ namespace AW.Tests
       FrmPersistantLocation.ShowControlInForm(HierarchyEditor.HierarchyEditorFactory(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, dataEditorPersister));
       return enumerable;
     }
-    
+
     private static IEnumerable<T> TestShowInTree<T>(IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn)
     {
       var actual = ShowHierarchyInTree(enumerable, iDPropertyName, parentIDPropertyName, nameColumn);
-      Assert.AreEqual<IEnumerable<T>>(enumerable, actual);
-      CollectionAssert.AreEqual(enumerable.ToList(), Enumerable.ToList<T>(actual));
+      Assert.AreEqual(enumerable, actual);
+      CollectionAssert.AreEqual(enumerable.ToList(), actual.ToList());
       return actual;
     }
 
@@ -182,8 +180,8 @@ namespace AW.Tests
       Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression)
     {
       var actual = ShowHierarchyInTree(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression);
-      Assert.AreEqual<IEnumerable<T>>(enumerable, actual);
-      CollectionAssert.AreEqual(enumerable.ToList(), Enumerable.ToList<T>(actual));
+      Assert.AreEqual(enumerable, actual);
+      CollectionAssert.AreEqual(enumerable.ToList(), actual.ToList());
       return actual;
     }
   }

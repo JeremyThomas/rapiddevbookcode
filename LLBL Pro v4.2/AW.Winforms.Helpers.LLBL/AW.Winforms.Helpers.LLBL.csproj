@@ -94,8 +94,6 @@
     <Compile Include="..\Ancillary\ToolsAssemblyInfo.cs">
       <Link>ToolsAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="GeneralEntityCollectionDataScope.cs" />
-    <Compile Include="DataEditorLLBLDataScopePersister.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="UsrCntrlEntityExplorer.cs">
       <SubType>UserControl</SubType>

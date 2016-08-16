@@ -72,7 +72,7 @@ namespace AW.Tests
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
       addressTypeEntityCollection.CreateHierarchicalProjection(dt);
       TestDataTableBinarySerializeDeserialize(dt.Tables[0]);
-      TestDataTableBinarySerializeDeserialize(GeneralHelper.CopyToDataTable(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity))));
+      TestDataTableBinarySerializeDeserialize(GeneralHelper.CopyToDataTable(MetaDataHelper.GetPropertiesToDisplay(typeof(AddressTypeEntity))));
       //TestDataTableSurrogateSerializeDeserialize(GeneralHelper.CopyToDataTable(MetaSingletons.MetaData.AddressType));
     }
 
@@ -84,7 +84,7 @@ namespace AW.Tests
     {
       var xmlSchema = TestData.GetTestXmlSchema();
       TestDataTableBinarySerializeDeserialize(xmlSchema.Items.CopyToDataTable(ObjectShredder.ShreddingMode.Safe));
-    //  TestDataTableSurrogateSerializeDeserialize(xmlSchema.Items.CopyToDataTable());
+      //  TestDataTableSurrogateSerializeDeserialize(xmlSchema.Items.CopyToDataTable());
     }
 
     [TestMethod]

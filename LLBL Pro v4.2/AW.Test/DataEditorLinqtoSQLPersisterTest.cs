@@ -1,7 +1,6 @@
 ﻿using System.Data.Linq;
 using AW.Helper;
 using AW.LinqToSQL;
-using AW.Winforms.Helpers.Controls;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AW.Tests
@@ -59,8 +58,8 @@ namespace AW.Tests
     {
       DataContext dataContext = AWDataClassesDataContext.GetNew();
       var target = new DataEditorLinqtoSQLPersister(dataContext);
-      Assert.IsTrue(target.CanSave(typeof (LinqToSQL.AddressType)));
-      Assert.IsFalse(target.CanSave(typeof (DataEditorLinqtoSQLPersisterTest)));
+      Assert.IsTrue(target.CanSave(typeof(LinqToSQL.AddressType)));
+      Assert.IsFalse(target.CanSave(typeof(DataEditorLinqtoSQLPersisterTest)));
     }
   }
 }
