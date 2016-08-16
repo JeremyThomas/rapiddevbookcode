@@ -81,7 +81,7 @@ namespace AW.Tests
     public void EditPropertiesInDataGridViewTest()
     {
       TestShowInGrid(((IEntity) MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType, 2);
-      TestShowInGrid(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)), 14);
+      TestShowInGrid(MetaDataHelper.GetPropertiesToDisplay(typeof(AddressTypeEntity)), 14);
     }
 
     /// <summary>
@@ -108,7 +108,7 @@ namespace AW.Tests
     }
 
     private static FieldsToPropertiesTypeDescriptionProvider _fieldsToPropertiesTypeDescriptionProvider;
-    private static readonly Attribute[] BrowsableAttributeList = new Attribute[] { new BrowsableAttribute(true) };
+    private static readonly Attribute[] BrowsableAttributeList = {new BrowsableAttribute(true)};
 
     private static void AddFieldsToPropertiesTypeDescriptionProvider(Type typeToEdit)
     {
@@ -131,17 +131,17 @@ namespace AW.Tests
     [TestMethod]
     public void FieldsToPropertiesTypeDescriptionProviderTest()
     {
-      var properties = MetaDataHelper.GetPropertiesToDisplay(typeof (NonSerializableClass));
+      var properties = MetaDataHelper.GetPropertiesToDisplay(typeof(NonSerializableClass));
       Assert.AreEqual(NonSerializableClass.NumberOfNonSerializableClassProperties, properties.Count());
-      AddFieldsToPropertiesTypeDescriptionProvider(typeof (NonSerializableClass));
+      AddFieldsToPropertiesTypeDescriptionProvider(typeof(NonSerializableClass));
       try
       {
-        properties = MetaDataHelper.GetPropertiesToDisplay(typeof (NonSerializableClass));
+        properties = MetaDataHelper.GetPropertiesToDisplay(typeof(NonSerializableClass));
         Assert.AreEqual(NonSerializableClass.NumberOfNonSerializableClassProperties*2, properties.Count());
       }
       finally
       {
-        TidyUp(typeof (NonSerializableClass));
+        TidyUp(typeof(NonSerializableClass));
       }
     }
 
@@ -313,7 +313,7 @@ namespace AW.Tests
       {
         searcher.Filter = "(uid=" + TestData.LdapUserName + ")";
         var searchResult = searcher.FindOne();
-        SingleValueCollectionConverter.AddConverter(typeof (ICollection));
+        SingleValueCollectionConverter.AddConverter(typeof(ICollection));
         var dictionaryEntries = searchResult.Properties.OfType<DictionaryEntry>();
         var dictionaryEntry = dictionaryEntries.First();
         var typeConverter = TypeDescriptor.GetConverter(dictionaryEntry.Value.GetType());
@@ -330,7 +330,7 @@ namespace AW.Tests
       ModalFormHandler = NullHandler;
       var nonSerializableClassWithSerializableClassProperties = NonSerializableClassWithSerializableClassProperty.GenerateList();
       //  FrmDataEditor.ShowInGrid(nonSerializableClassWithSerializableClassProperties);
-      var propertyDescriptors = MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity));
+      var propertyDescriptors = MetaDataHelper.GetPropertiesToDisplay(typeof(AddressTypeEntity));
       var copyToDataTable = propertyDescriptors.CopyToDataTable();
       //var propertyDescriptorCollection = TypeDescriptor.GetProperties(copyToDataTable.DefaultView);
       //CollectionAssert.AreEquivalent(propertyDescriptors.ToList(), propertyDescriptorCollection);
@@ -341,26 +341,26 @@ namespace AW.Tests
     [TestProperty("Winforms", "Interactive"), TestMethod]
     public void PropertiesToDisplayTest()
     {
-     // ObjectListView.IncludeNonBrowseable = true;
-     // ObjectListView<CategoryEntity>.IncludeNonBrowseable = true;
+      // ObjectListView.IncludeNonBrowseable = true;
+      // ObjectListView<CategoryEntity>.IncludeNonBrowseable = true;
       TestPropertiesToDisplay<CategoryEntity>(17, 12);
       TestPropertiesToDisplay<XElement>(GeneralHelperTest.NumXElementOtherToShow + GeneralHelperTest.NumXElementProperties, 0, GeneralHelperTest.NumXElementOtherToShow);
       var propertyDescriptorCollectionXElement = TypeDescriptor.GetProperties(typeof(XElement), BrowsableAttributeList);
-      AddFieldsToPropertiesTypeDescriptionProvider(typeof (NonSerializableClass));
+      AddFieldsToPropertiesTypeDescriptionProvider(typeof(NonSerializableClass));
       try
       {
         TestPropertiesToDisplay<NonSerializableClass>(NonSerializableClass.NumberOfNonSerializableClassProperties*2);
-        var propertyDescriptorCollectionNonSerializableClass = TypeDescriptor.GetProperties(typeof (NonSerializableClass), BrowsableAttributeList);
+        var propertyDescriptorCollectionNonSerializableClass = TypeDescriptor.GetProperties(typeof(NonSerializableClass), BrowsableAttributeList);
       }
       finally
       {
-        TidyUp(typeof (NonSerializableClass));
+        TidyUp(typeof(NonSerializableClass));
       }
     }
 
     private static void TestPropertiesToDisplay<T>(int expectedTotlal, int expectedNumNonBrowsable = 0, int numTypeDescriptionProviderDescriptors = 0)
     {
-      var propertyDescriptors = TypeDescriptor.GetProperties(typeof (T)).AsEnumerable();
+      var propertyDescriptors = TypeDescriptor.GetProperties(typeof(T)).AsEnumerable();
       Assert.AreEqual(expectedTotlal, propertyDescriptors.Count());
       Assert.AreEqual(expectedNumNonBrowsable, propertyDescriptors.Count(p => !p.IsBrowsable));
       var categoryEntities = new List<T>();
@@ -394,8 +394,8 @@ namespace AW.Tests
       var propertyDescriptorCollectionT = ListBindingHelper.GetListItemProperties(olvt);
 
       var BrowsableAttributeList = new Attribute[] {new BrowsableAttribute(true)};
-      var descriptorCollection = TypeDescriptor.GetProperties(typeof (XElement));
-      var descriptorCollectionB = TypeDescriptor.GetProperties(typeof (XElement), BrowsableAttributeList);
+      var descriptorCollection = TypeDescriptor.GetProperties(typeof(XElement));
+      var descriptorCollectionB = TypeDescriptor.GetProperties(typeof(XElement), BrowsableAttributeList);
       var descriptorCollectionO = TypeDescriptor.GetProperties(ListBindingHelper.GetListItemType(olv), BrowsableAttributeList);
       var dataGridView = new DataGridView {DataSource = new ObjectListView(new List<CategoryEntity>())};
       //dataGridView.DataConnection.GetCollectionOfBoundDataGridViewColumns()

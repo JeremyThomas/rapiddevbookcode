@@ -321,7 +321,7 @@ namespace AW.Tests
     }
 
     /// <summary>
-    /// Tests for filter by an interface.
+    ///   Tests for filter by an interface.
     /// </summary>
     [TestMethod, Description("http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=22914")]
     public void TestFilterByDiscontinued()
@@ -332,7 +332,7 @@ namespace AW.Tests
     }
 
     /// <summary>
-    /// Tests for filter by an interface.
+    ///   Tests for filter by an interface.
     /// </summary>
     [TestMethod, Description("http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=22914"), ExpectedException(typeof(ORMQueryConstructionException))]
     public void TestFilterByDiscontinuedI()
@@ -340,14 +340,14 @@ namespace AW.Tests
       var metaData = GetNorthwindLinqMetaData();
       Assert.IsTrue(metaData.Product.FilterByDiscontinuedI(true).Any());
     }
-    
+
     [TestMethod, Description("http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=22914"), ExpectedException(typeof(ORMQueryConstructionException))]
     public void TestFilterBySupplierIdI()
     {
       var metaData = GetNorthwindLinqMetaData();
       Assert.IsTrue(metaData.Product.FilterBySupplierIdI(1).ToList().Any()); //Still gives NullReferenceException
     }
-    
+
     [TestMethod, TestProperty("Bug", "Fixed")]
     public void TestFilterByProductName()
     {
@@ -405,7 +405,7 @@ namespace AW.Tests
         select new
         {
           o.CustomerId,
-          o.OrderId,
+          o.OrderId
         };
 
       var customers = from c in linqMetaData.Customer
@@ -464,7 +464,7 @@ namespace AW.Tests
       //  into orderCountry
       //  select orderCountry;
       var ordersGroupedByCountry = linqMetaData.Order.GroupBy(o => new CountryRegion {ShipCountry = o.ShipCountry, ShipRegion = o.ShipRegion});
-      var ordersGroupedByCountryAnon = linqMetaData.Order.GroupBy(o => new {ShipCountry = o.ShipCountry, ShipRegion = o.ShipRegion});
+      var ordersGroupedByCountryAnon = linqMetaData.Order.GroupBy(o => new {o.ShipCountry, o.ShipRegion});
 
       var ordersGroupedByCountryList = ordersGroupedByCountry.Select(o => new CountryRegion {ShipCountry = o.Key.ShipCountry, ShipRegion = o.Key.ShipRegion, Count = o.Count()}).ToList();
       Assert.AreEqual(35, ordersGroupedByCountryList.Count());
@@ -491,7 +491,7 @@ namespace AW.Tests
       var groupedByCountryWithCountDynamicList = groupedByCountryWithCountDynamic.ToList();
       Assert.AreEqual(35, groupedByCountryWithCountDynamicList.Count());
 
-      var groupedByCountryWithCount = ordersGroupedByCountryDynamic.Select(x => new {Key = x.Key, Count = x.Count()});
+      var groupedByCountryWithCount = ordersGroupedByCountryDynamic.Select(x => new {x.Key, Count = x.Count()});
 
       var groupedByCountryWithCountList = groupedByCountryWithCount.ToList();
 
@@ -563,7 +563,7 @@ namespace AW.Tests
     public void TestCrossJoinWithInterfaceQuery()
     {
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
-    // Assert.AreEqual(0, northwindLinqMetaData.Product.FilterByUnitsInStock(2).FilterByOrderQuery(northwindLinqMetaData.Order.Where(o => o.ShipCountry == "France")).Count());
+      // Assert.AreEqual(0, northwindLinqMetaData.Product.FilterByUnitsInStock(2).FilterByOrderQuery(northwindLinqMetaData.Order.Where(o => o.ShipCountry == "France")).Count());
       //Assert.AreEqual(53, northwindLinqMetaData.Order.FilterByIProductFullGenericQuery(northwindLinqMetaData.Product.FilterByUnitsInStock(10)).Count());
       Assert.AreEqual(29, northwindLinqMetaData.Supplier.FilterByIProductGenericJoinQuery(northwindLinqMetaData.Product).ToEntityCollection2().Count());
       Assert.AreEqual(29, northwindLinqMetaData.Supplier.FilterByIProductJoinQuery(northwindLinqMetaData.Product).ToList().Count());
@@ -584,8 +584,8 @@ namespace AW.Tests
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
       Assert.AreEqual(0,
         northwindLinqMetaData.Employee.FilterByOrder(1)
-        .Where(p => p.Staff.Any())
-        .FilterByTerritories(northwindLinqMetaData.Territory.Where(t => t.RegionId != 1)).Count());
+          .Where(p => p.Staff.Any())
+          .FilterByTerritories(northwindLinqMetaData.Territory.Where(t => t.RegionId != 1)).Count());
     }
   }
 }

@@ -17,7 +17,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using CustomerEntity = Northwind.DAL.EntityClasses.CustomerEntity;
-using GridDataEditorTestBase = AW.Test.Helpers.GridDataEditorTestBase;
 
 namespace AW.Tests
 {
@@ -55,14 +54,14 @@ namespace AW.Tests
     //}
     //
     //Use TestInitialize to run code before running each test
-    [TestInitialize()]
+    [TestInitialize]
     public void MyTestInitialize()
     {
       Init();
     }
 
     //Use TestCleanup to run code after each test has run
-    [TestCleanup()]
+    [TestCleanup]
     public void MyTestCleanup()
     {
       Verify();
@@ -191,7 +190,7 @@ namespace AW.Tests
     [TestMethod]
     public void PopulateTreeViewWithSchemaCommonEntityBaseTest()
     {
-      TestPopulateTreeViewWithSchema(EntityTreeView, typeof (CommonEntityBase), null);
+      TestPopulateTreeViewWithSchema(EntityTreeView, typeof(CommonEntityBase), null);
     }
 
     /// <summary>

@@ -54,9 +54,7 @@ namespace AW.Helper.LLBL
             TransactionController = EntityHelper.GetTransactionController(queryProvider);
         }
       else
-      {
         TransactionController = transactionController;
-      }
     }
 
     public GeneralEntityCollectionDataScope(IEnumerable enumerable, ITransactionController transactionController)
@@ -103,7 +101,6 @@ namespace AW.Helper.LLBL
     {
       if (Query == null)
         return false;
-
       _entityCollection = EntityHelper.ToEntityCollectionCore(Query as ILLBLGenProQuery);
       if (_entityCollection == null)
         return false;
@@ -129,14 +126,10 @@ namespace AW.Helper.LLBL
         }
       }
       else
-      {
         _currentRemovedEntitiesTracker = null;
-      }
       var enumerableItemType = MetaDataHelper.GetEnumerableItemType(entityCollectionCore);
       foreach (var entityCore in NewEntities.Where(e => e.GetType().IsAssignableTo(enumerableItemType)).WhereIsDirty())
-      {
         entityCollectionCore.Add(entityCore);
-      }
       RemoveEmptyNew();
     }
 
@@ -203,9 +196,7 @@ namespace AW.Helper.LLBL
     protected override void OnBeforeCommitChanges()
     {
       foreach (var entity in EntitiesMarkedForDeletion)
-      {
         MarkForDeletion(entity);
-      }
     }
 
     private IEnumerable<IEntityCore> EntitiesMarkedForDeletion
@@ -225,9 +216,7 @@ namespace AW.Helper.LLBL
       if (_currentRemovedEntitiesTracker != null) _currentRemovedEntitiesTracker.Clear();
 
       if (EditingFinished != null)
-      {
         EditingFinished(this, EventArgs.Empty);
-      }
     }
 
     /// <summary>
@@ -242,9 +231,7 @@ namespace AW.Helper.LLBL
     {
       if (_cascadeDeletes)
         foreach (var entityRelation in EntityHelper.GetAllRelationsWhereStartEntityIsPkSide(toDelete, true))
-        {
           workData.Add(entityRelation);
-        }
     }
 
     public int Save(object dataToSave = null, bool cascadeDeletes = false)
@@ -319,8 +306,7 @@ namespace AW.Helper.LLBL
       if (someRemoved)
         CallEditingFinishedIfNotDirty();
     }
-
-
+    
     private bool ContextIsDirty()
     {
       return NewEntities.Any(e => !e.MarkedForDeletion && e.IsDirty) || ExistingEntities.IsAnyDirty() || EntitiesMarkedForDeletion.Any();

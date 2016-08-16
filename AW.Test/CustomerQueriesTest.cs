@@ -52,7 +52,7 @@ namespace AW.Tests
     #endregion
 
     private const int MaxNumberOfItemsToReturn = 5;
-    private static readonly OrderSearchCriteria OrderSearchCriteria = new OrderSearchCriteria { StateName = "California", FirstName = "Jon" };
+    private static readonly OrderSearchCriteria OrderSearchCriteria = new OrderSearchCriteria {StateName = "California", FirstName = "Jon"};
 
     [TestMethod, Description("A test for GetCustomerViewTypedView. Example 5.18. pg59 maxNumberOfItemsToReturn does not result in a SQL TOP command")]
     public void GetCustomerViewTypedViewTest()
@@ -102,9 +102,9 @@ namespace AW.Tests
     {
       var actual = CustomerQueries.GetCustomerListLinqedTypedList(OrderSearchCriteria, MaxNumberOfItemsToReturn);
       Assert.AreEqual(MaxNumberOfItemsToReturn, actual.ToList().Count());
-    //  Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count());
+      //  Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count());
     }
-    
+
     [TestMethod, Description("A test for GetCustomerListLinqedTypedList")]
     public void GetCustomerListLinqedTypedListFilterFirstTest()
     {
@@ -117,7 +117,7 @@ namespace AW.Tests
     {
       var actual = CustomerQueries.GetCustomerListGeneratedLinqTypedList(OrderSearchCriteria, MaxNumberOfItemsToReturn);
       Assert.AreEqual(MaxNumberOfItemsToReturn, actual.ToList().Count());
-     // Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count());
+      // Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count());
     }
 
     [TestMethod, Description("A test for GetCustomerListTypedListQuerySpec")]

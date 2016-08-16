@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
-using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Test.Helpers;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NUnit.Extensions.Forms;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 
 namespace AW.Tests
@@ -46,14 +43,14 @@ namespace AW.Tests
     //}
     //
     //Use TestInitialize to run code before running each test
-    [TestInitialize()]
+    [TestInitialize]
     public void MyTestInitialize()
     {
       Init();
     }
 
     //Use TestCleanup to run code after each test has run
-    [TestCleanup()]
+    [TestCleanup]
     public void MyTestCleanup()
     {
       Verify();
@@ -80,7 +77,7 @@ namespace AW.Tests
     [TestMethod]
     public void ShowEntitiesAndFieldsCommonEntityBaseTest()
     {
-      TestShowEntitiesAndFields(typeof (CommonEntityBase), null);
+      TestShowEntitiesAndFields(typeof(CommonEntityBase), null);
     }
 
     private void TestShowEntitiesAndFields(Type baseType, ILinqMetaData linqMetaData)
@@ -100,7 +97,7 @@ namespace AW.Tests
     {
       var treeNodeCollection = GetTreeViewEntitiesFromFrmEntitiesAndFields(form).Nodes;
       _rootNodesCount = treeNodeCollection.Count;
-      _nodesCount = AWHelper.GetAllNodes(treeNodeCollection).Count();
+      _nodesCount = treeNodeCollection.GetAllNodes().Count();
       form.Close();
     }
 

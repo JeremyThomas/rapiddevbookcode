@@ -5,11 +5,8 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Resources;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
@@ -71,7 +68,7 @@ namespace AW.Tests
     {
       Assert.IsNotNull(SerializableClass.GenerateList().AsNullIfEmpty());
       Assert.IsNull((new List<SerializableClass>()).AsNullIfEmpty());
-   //   Assert.IsNull(new System.Collections.Specialized.NameValueCollection().AsNullIfEmpty());
+      //   Assert.IsNull(new System.Collections.Specialized.NameValueCollection().AsNullIfEmpty());
     }
 
     [TestMethod]
@@ -84,12 +81,12 @@ namespace AW.Tests
       Assert.IsTrue(new NameValueCollection().IsNullOrEmpty());
       Assert.IsTrue(new NonGenericEnumerable().IsNullOrEmpty());
     }
-    
+
     private static void CopyToDataTableAndAssert<T>(IEnumerable<T> source)
     {
       var actual = GeneralHelper.CopyToDataTable(source);
       Assert.AreEqual(source.Count(), actual.Rows.Count);
-      AssertCopyToDataTable(typeof (T), actual);
+      AssertCopyToDataTable(typeof(T), actual);
     }
 
     private static int CopyToDataTableAndAssert(ICollection source, Type type, ObjectShredder.ShreddingMode shreddingMode = ObjectShredder.ShreddingMode.AllFields)
@@ -116,11 +113,11 @@ namespace AW.Tests
       CopyToDataTableAndAssert(listofNonSerializableClasses);
       CopyToDataTableAndAssert(MetaSingletons.MetaData.AddressType);
       listofNonSerializableClasses.Add(new SerializableClass {DateTimeField = DateTime.Now, IntField = listofNonSerializableClasses.Count, StringField = listofNonSerializableClasses.Count.ToString(CultureInfo.InvariantCulture)});
-      CopyToDataTableAndAssert(listofNonSerializableClasses, typeof (SerializableClass));
+      CopyToDataTableAndAssert(listofNonSerializableClasses, typeof(SerializableClass));
       var d = new DataGridView {AutoGenerateColumns = true, DataSource = listofNonSerializableClasses};
       listofNonSerializableClasses.Insert(0, new SerializableClass {DateTimeField = DateTime.Now, IntField = listofNonSerializableClasses.Count, StringField = listofNonSerializableClasses.Count.ToString(CultureInfo.InvariantCulture)});
-      CopyToDataTableAndAssert(listofNonSerializableClasses, typeof (SerializableClass));
-      CopyToDataTableAndAssert(MetaDataHelper.GetPropertiesToSerialize(typeof (AddressTypeEntity)));
+      CopyToDataTableAndAssert(listofNonSerializableClasses, typeof(SerializableClass));
+      CopyToDataTableAndAssert(MetaDataHelper.GetPropertiesToSerialize(typeof(AddressTypeEntity)));
     }
 
     [TestMethod, Microsoft.VisualStudio.TestTools.UnitTesting.Description("A test for CopyToDataTable")]
@@ -137,7 +134,7 @@ namespace AW.Tests
     public void XElementCopyToDataTableTest()
     {
       var xElements = TestData.TestXElements();
-     Assert.AreEqual(NumXElementProperties, CopyToDataTableAndAssert(xElements, xElements.First().GetType()));
+      Assert.AreEqual(NumXElementProperties, CopyToDataTableAndAssert(xElements, xElements.First().GetType()));
     }
 
     [TestMethod]
@@ -167,7 +164,7 @@ namespace AW.Tests
 
     private static void EnumToStringTest<TEnum>() where TEnum : struct
     {
-      var enumType = typeof (TEnum);
+      var enumType = typeof(TEnum);
       var enumerationConverter = new HumanizedEnumConverter(enumType);
       var underlyingType = Enum.GetUnderlyingType(enumType);
       foreach (var anEnum in GeneralHelper.EnumAsEnumerable<TEnum>())
@@ -180,7 +177,7 @@ namespace AW.Tests
         var humanizedEnumString = ((Enum) (object) anEnum).Humanize();
         Assert.AreEqual(anEnum, enumerationConverter.ConvertFromString(humanizedEnumString), humanizedEnumString);
         HumanizedEnumConverter.AddEnumerationConverter(enumType);
-        Assert.IsInstanceOfType(TypeDescriptor.GetConverter(enumType), typeof (HumanizedEnumConverter), enumType.ToString());
+        Assert.IsInstanceOfType(TypeDescriptor.GetConverter(enumType), typeof(HumanizedEnumConverter), enumType.ToString());
       }
     }
 
@@ -244,7 +241,7 @@ namespace AW.Tests
 
     public override Type ComponentType
     {
-      get { return typeof (string); }
+      get { return typeof(string); }
     }
 
     public override bool IsReadOnly
@@ -254,7 +251,7 @@ namespace AW.Tests
 
     public override Type PropertyType
     {
-      get { return typeof (string); }
+      get { return typeof(string); }
     }
   }
 
@@ -275,7 +272,7 @@ namespace AW.Tests
 
     public override PropertyDescriptorCollection GetProperties()
     {
-      return _baseProvider.GetTypeDescriptor(typeof (string)).GetProperties();
+      return _baseProvider.GetTypeDescriptor(typeof(string)).GetProperties();
     }
   }
 
@@ -290,7 +287,7 @@ namespace AW.Tests
 
     public override ICustomTypeDescriptor GetTypeDescriptor(Type objectType, object instance)
     {
-      return objectType == typeof (string) ? new StringTypeDescriptor(_baseProvider) : _baseProvider.GetTypeDescriptor(objectType, instance);
+      return objectType == typeof(string) ? new StringTypeDescriptor(_baseProvider) : _baseProvider.GetTypeDescriptor(objectType, instance);
     }
   }
 }

@@ -25,14 +25,14 @@ namespace AW.Tests
     #endregion
 
     //Use TestInitialize to run code before running each test
-    [TestInitialize()]
+    [TestInitialize]
     public void MyTestInitialize()
     {
       Init();
     }
 
     //Use TestCleanup to run code after each test has run
-    [TestCleanup()]
+    [TestCleanup]
     public void MyTestCleanup()
     {
       Verify();

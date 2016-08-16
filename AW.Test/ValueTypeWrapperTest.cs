@@ -65,7 +65,7 @@ namespace AW.Tests
     {
       var actual = ValueTypeWrapper<T>.CreateWrapperForBinding(values);
       Assert.IsNotNull(actual);
-      Assert.IsInstanceOfType(actual, typeof (IEnumerable<ValueTypeWrapper<T>>));
+      Assert.IsInstanceOfType(actual, typeof(IEnumerable<ValueTypeWrapper<T>>));
       var expectedCount = values.IsNullOrEmpty() ? 0 : values.Count();
       Assert.AreEqual(expectedCount, actual.Count());
       if (values.IsNullOrEmpty())
@@ -148,7 +148,7 @@ namespace AW.Tests
     {
       var stringWrapperProperties = ListBindingHelper.GetListItemProperties(stringWrapperForBinding);
       Assert.AreEqual(1, stringWrapperProperties.Count);
-      Assert.AreEqual(typeof (string), stringWrapperProperties[0].PropertyType);
+      Assert.AreEqual(typeof(string), stringWrapperProperties[0].PropertyType);
     }
   }
 }

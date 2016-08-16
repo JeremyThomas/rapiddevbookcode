@@ -406,8 +406,8 @@ namespace AW.Tests
       Assert.AreEqual(0,
         MetaSingletons.MetaData.Product.FilterByUnitMeasureCode("AE")
 //        .FilterByStockedQuantity(3)
-        .Where(p=>p.WorkOrders.Any())
-        .FilterByVendorQuery(MetaSingletons.MetaData.Vendor.Where(v => v.Name != "")).Count());
+          .Where(p => p.WorkOrders.Any())
+          .FilterByVendorQuery(MetaSingletons.MetaData.Vendor.Where(v => v.Name != "")).Count());
     }
   }
 }

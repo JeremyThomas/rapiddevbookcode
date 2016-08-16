@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Northwind.DAL.EntityClasses;
 using Northwind.DAL.HelperClasses;
 
@@ -10,7 +8,6 @@ namespace AW.Tests
 {
   public partial class CSharpSerializerTests
   {
-
     public static EntityCollection<ProductEntity> GetProductsWithCategories()
     {
       var entityCollection12882670 = new EntityCollection<ProductEntity>
@@ -100,7 +97,7 @@ namespace AW.Tests
         Fax = "030-0076545",
         Phone = "030-0074321",
         PostalCode = "12209",
-        Region = "",
+        Region = ""
       };
       customerEntity1594500641.Orders.AddRange(new[]
       {
@@ -119,7 +116,7 @@ namespace AW.Tests
           ShippedDate = new DateTime(1997, 10, 13),
           ShipPostalCode = "12209",
           ShipRegion = "",
-          ShipVia = 2,
+          ShipVia = 2
         }
       }
         );
@@ -339,11 +336,11 @@ namespace AW.Tests
         Timestamp = "2"
       };
 
-      customer.Addresses = new List<Address> { homeAddress, businessAddress };
+      customer.Addresses = new List<Address> {homeAddress, businessAddress};
 
-      var department1 = new Department { Key = 0, Name = "Electronics", Timestamp = "4" };
-      var department2 = new Department { Key = 1, Name = "Computers", Timestamp = "5" };
-      var department3 = new Department { Key = 2, Name = "Music", Timestamp = "6" };
+      var department1 = new Department {Key = 0, Name = "Electronics", Timestamp = "4"};
+      var department2 = new Department {Key = 1, Name = "Computers", Timestamp = "5"};
+      var department3 = new Department {Key = 2, Name = "Music", Timestamp = "6"};
 
       Department[] batteryDepartments =
       {department1, department2};
@@ -361,17 +358,17 @@ namespace AW.Tests
         Key = 2,
         Name = "Sheet Music",
         SortOrder = 2,
-        Departments = new[] { department2, department3 },
+        Departments = new[] {department2, department3},
         Timestamp = "8"
       };
 
-      var product1 = new Product { Key = 0, Name = "Everready", Category = category1, Timestamp = "9" };
-      var product2 = new Product { Key = 1, Name = "Shroeder's Theme", Category = category2, Timestamp = "10" };
+      var product1 = new Product {Key = 0, Name = "Everready", Category = category1, Timestamp = "9"};
+      var product2 = new Product {Key = 1, Name = "Shroeder's Theme", Category = category2, Timestamp = "10"};
 
       // Add a parent ref to 
-      var item1 = new Item { Key = 0, Price = 13.13F, Quantity = 6, Product = product1, Timestamp = "11" };
-      var item2 = new Item { Key = 1, Price = 15.00F, Quantity = 1, Product = product2, Timestamp = "12" };
-      var item3 = new Item { Key = 2, Price = 5.00F, Quantity = 1, Product = product1, Timestamp = "13" };
+      var item1 = new Item {Key = 0, Price = 13.13F, Quantity = 6, Product = product1, Timestamp = "11"};
+      var item2 = new Item {Key = 1, Price = 15.00F, Quantity = 1, Product = product2, Timestamp = "12"};
+      var item3 = new Item {Key = 2, Price = 5.00F, Quantity = 1, Product = product1, Timestamp = "13"};
 
       var order = new Order
       {
@@ -379,12 +376,12 @@ namespace AW.Tests
         Name = "Business Order #1",
         Customer = customer,
         Address = businessAddress,
-        Items = new List<Item> { item1, item2, item3 },
+        Items = new List<Item> {item1, item2, item3},
         SentDate = null,
         Hold = true,
-        Coupons = new List<String> { "Summer", "Fall" },
-        Alerts = new long[] { 1234, 5678 },
-        ContactTimes = new[] { new DateTime(2013, 12, 25, 09, 30, 0), new DateTime(2014, 1, 1, 10, 0, 0) },
+        Coupons = new List<String> {"Summer", "Fall"},
+        Alerts = new long[] {1234, 5678},
+        ContactTimes = new[] {new DateTime(2013, 12, 25, 09, 30, 0), new DateTime(2014, 1, 1, 10, 0, 0)},
         Timestamp = "14" //,
         //Chars = new List<char?> { 'a', null, 'b', 'c' } // Not supported
       };
@@ -411,7 +408,7 @@ namespace AW.Tests
   {
     Business,
     Residential
-  };
+  }
 
   public class Address : PersistantObject
   {
@@ -509,4 +506,3 @@ namespace AW.Tests
     // public List<char?> Chars { get; set; } Not Supported
   }
 }
-

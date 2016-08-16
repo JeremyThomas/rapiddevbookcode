@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
 using AW.Data;
 using AW.Helper.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,7 +7,6 @@ using Northwind.DAL.FactoryClasses;
 using Northwind.DAL.Linq;
 using Northwind.DAL.Services;
 using Northwind.DAL.SqlServer;
-using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using EntityType = Northwind.DAL.EntityType;
 
@@ -103,14 +101,14 @@ namespace AW.Tests
     {
       IDataAccessAdapter adapter = new DataAccessAdapter();
       var actual = PersistanceDiagnostics.GetEntityFieldInformation<EntityType>(adapter, EntityFactoryFactory.GetFactory);
-      Assert.AreEqual(Enum.GetNames(typeof (EntityType)).Length, actual.Count());
+      Assert.AreEqual(Enum.GetNames(typeof(EntityType)).Length, actual.Count());
     }
 
     [TestMethod]
     public void GeAWEntityFieldInformationTest()
     {
       var actual = EntityInformation.EntityInfoFactory<Data.EntityType>(Data.FactoryClasses.EntityFactoryFactory.GetFactory).OrderBy(fi => fi.Entity);
-      Assert.AreEqual(Enum.GetNames(typeof (Data.EntityType)).Length, actual.Count());
+      Assert.AreEqual(Enum.GetNames(typeof(Data.EntityType)).Length, actual.Count());
       var individualEntityInformation = actual.Single(ei => ei.Entity == "Individual");
       Assert.AreEqual(2, individualEntityInformation.FieldInformation.Count());
 
@@ -123,6 +121,5 @@ namespace AW.Tests
         }
       }
     }
-    
   }
 }

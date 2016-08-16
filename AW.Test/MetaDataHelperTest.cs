@@ -15,7 +15,6 @@ using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Helper.PropertyDescriptors;
 using AW.Test.Helpers;
-using AW.Winforms.Helpers.EntityViewer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.EntityClasses;
 using Northwind.DAL.HelperClasses;
@@ -82,34 +81,34 @@ namespace AW.Tests
     {
       var xmlSchema = TestData.GetTestXmlSchema();
       var actual = MetaDataHelper.GetEnumerableItemType(xmlSchema.Items);
-      Assert.AreEqual(typeof (XmlSchemaObject), actual);
-      Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType(new List<int>()));
+      Assert.AreEqual(typeof(XmlSchemaObject), actual);
+      Assert.AreEqual(typeof(int), MetaDataHelper.GetEnumerableItemType(new List<int>()));
       var ints1To4 = (new List<int> {1, 2, 3, 4});
       var intsGreaterThan2 = ints1To4.Where(i => i > 2);
-      Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType(intsGreaterThan2));
-      Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType(ints1To4.Cast<object>()));
-      Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType(ints1To4.Cast<object>().Where(o => o != null)));
+      Assert.AreEqual(typeof(int), MetaDataHelper.GetEnumerableItemType(intsGreaterThan2));
+      Assert.AreEqual(typeof(int), MetaDataHelper.GetEnumerableItemType(ints1To4.Cast<object>()));
+      Assert.AreEqual(typeof(int), MetaDataHelper.GetEnumerableItemType(ints1To4.Cast<object>().Where(o => o != null)));
       var addressTypeCollection = new AddressTypeCollection();
-      Assert.AreEqual(typeof (AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(addressTypeCollection));
+      Assert.AreEqual(typeof(AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(addressTypeCollection));
       addressTypeCollection.AddNew();
-      Assert.AreEqual(typeof (AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(addressTypeCollection.Cast<object>().ToList()));
-      Assert.AreEqual(typeof (AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(MetaSingletons.MetaData.AddressType));
-      Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType(new ArrayList {1, 2, 3}));
-      Assert.AreEqual(typeof (object), MetaDataHelper.GetEnumerableItemType(new ArrayList()));
+      Assert.AreEqual(typeof(AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(addressTypeCollection.Cast<object>().ToList()));
+      Assert.AreEqual(typeof(AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(MetaSingletons.MetaData.AddressType));
+      Assert.AreEqual(typeof(int), MetaDataHelper.GetEnumerableItemType(new ArrayList {1, 2, 3}));
+      Assert.AreEqual(typeof(object), MetaDataHelper.GetEnumerableItemType(new ArrayList()));
 
-      Assert.AreEqual(typeof (string), MetaDataHelper.GetEnumerableItemType(new string[0]));
+      Assert.AreEqual(typeof(string), MetaDataHelper.GetEnumerableItemType(new string[0]));
       var emptySerializableClasses = new SerializableClass[0];
-      Assert.AreEqual(typeof (SerializableClass), MetaDataHelper.GetEnumerableItemType(emptySerializableClasses));
-      Assert.AreEqual(typeof (SerializableClass), MetaDataHelper.GetEnumerableItemType(emptySerializableClasses.Take(30)));
+      Assert.AreEqual(typeof(SerializableClass), MetaDataHelper.GetEnumerableItemType(emptySerializableClasses));
+      Assert.AreEqual(typeof(SerializableClass), MetaDataHelper.GetEnumerableItemType(emptySerializableClasses.Take(30)));
     }
 
     [TestMethod]
     public void GetPropertiesToDisplayTest()
     {
-      Assert.AreEqual(12, MetaDataHelper.GetPropertiesToDisplay(typeof (CustomerEntity)).Count());
-      Assert.AreEqual(12, MetaDataHelper.GetPropertiesToDisplay(typeof (List<CustomerEntity>)).Count());
-      Assert.AreEqual(4, MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)).Count());
-      Assert.AreEqual(4, MetaDataHelper.GetPropertiesToDisplay(typeof (List<AddressTypeEntity>)).Count());
+      Assert.AreEqual(12, MetaDataHelper.GetPropertiesToDisplay(typeof(CustomerEntity)).Count());
+      Assert.AreEqual(12, MetaDataHelper.GetPropertiesToDisplay(typeof(List<CustomerEntity>)).Count());
+      Assert.AreEqual(4, MetaDataHelper.GetPropertiesToDisplay(typeof(AddressTypeEntity)).Count());
+      Assert.AreEqual(4, MetaDataHelper.GetPropertiesToDisplay(typeof(List<AddressTypeEntity>)).Count());
     }
 
     /// <summary>
@@ -118,7 +117,7 @@ namespace AW.Tests
     [TestMethod]
     public void GetPropertiesToSerializeTest()
     {
-      var xmlSchemaElementType = typeof (XmlSchemaElement);
+      var xmlSchemaElementType = typeof(XmlSchemaElement);
 //      var xmlSchemaObjectType = typeof (XmlSchemaObject);
 
       var expected = MetaDataHelper.GetPropertiesToSerialize(xmlSchemaElementType);
@@ -127,8 +126,8 @@ namespace AW.Tests
       TypeDescriptor.AddProvider(fieldsToPropertiesTypeDescriptionProvider, xmlSchemaElementType);
       try
       {
-      //  MetaDataHelper.GetPropertiesToSerialize(xmlSchemaObjectType);
-      var actual = MetaDataHelper.GetPropertiesToSerialize(xmlSchemaElementType);
+        //  MetaDataHelper.GetPropertiesToSerialize(xmlSchemaObjectType);
+        var actual = MetaDataHelper.GetPropertiesToSerialize(xmlSchemaElementType);
         CollectionAssert.AreEqual(expected.ToList(), actual.ToList());
       }
       finally
@@ -140,7 +139,7 @@ namespace AW.Tests
     [TestMethod]
     public void GetCustomerEntityPropertiesToSerializeTest()
     {
-      var customerEntityType = typeof (CustomerEntity);
+      var customerEntityType = typeof(CustomerEntity);
       var expected = MetaDataHelper.GetPropertiesToSerialize(customerEntityType);
       Assert.IsTrue(MetaDataHelper.IsSerializable(customerEntityType));
       Assert.AreEqual(12, expected.Count());
@@ -162,7 +161,7 @@ namespace AW.Tests
       var dictionary = NonSerializableClass.GenerateList().ToDictionary(ns => ns.IntProperty, ns => ns);
       var dictionaryType = dictionary.GetType();
       var typeParametersOfGenericType = MetaDataHelper.GetTypeParametersOfGenericType(dictionaryType);
-      var expected = new[] {typeof (int), typeof (NonSerializableClass)};
+      var expected = new[] {typeof(int), typeof(NonSerializableClass)};
       CollectionAssert.AreEqual(expected, typeParametersOfGenericType);
       Assert.IsTrue(dictionaryType.IsSerializable);
       Assert.IsFalse(MetaDataHelper.IsSerializable(dictionaryType));
@@ -177,18 +176,18 @@ namespace AW.Tests
     [TestMethod]
     public void IsSerializableTest()
     {
-      AssertIsSerializable(typeof (List<SerializableClass>));
-      AssertIsSerializable(typeof (IEnumerable<SerializableClass>));
-      Assert.IsFalse(MetaDataHelper.IsSerializable(typeof (List<NonSerializableClass>)));
-      Assert.IsFalse(MetaDataHelper.IsSerializable(typeof (IEnumerable<NonSerializableClass>)));
-      AssertIsSerializable(typeof (int));
-      var customerEntityType = typeof (CustomerEntity);
+      AssertIsSerializable(typeof(List<SerializableClass>));
+      AssertIsSerializable(typeof(IEnumerable<SerializableClass>));
+      Assert.IsFalse(MetaDataHelper.IsSerializable(typeof(List<NonSerializableClass>)));
+      Assert.IsFalse(MetaDataHelper.IsSerializable(typeof(IEnumerable<NonSerializableClass>)));
+      AssertIsSerializable(typeof(int));
+      var customerEntityType = typeof(CustomerEntity);
       AssertIsSerializable(customerEntityType.BaseType.BaseType);
       AssertIsSerializable(customerEntityType.BaseType);
       AssertIsSerializable(customerEntityType);
-      AssertIsSerializable((typeof (AddressTypeEntity)));
-      AssertIsSerializable((typeof (EntityCollection<CustomerEntity>)));
-      AssertIsSerializable(typeof (AddressTypeCollection));
+      AssertIsSerializable((typeof(AddressTypeEntity)));
+      AssertIsSerializable((typeof(EntityCollection<CustomerEntity>)));
+      AssertIsSerializable(typeof(AddressTypeCollection));
     }
 
     private static void AssertIsSerializable(Type type)
@@ -199,8 +198,8 @@ namespace AW.Tests
     [TestMethod]
     public void FieldsToPropertiesTypeDescriptionProviderInheritanceTest()
     {
-      TestFieldsToPropertiesTypeDescriptionProviderInheritance(typeof (SerializableBaseClass), typeof (SerializableClass), 4);
-      TestFieldsToPropertiesTypeDescriptionProviderInheritance(typeof (XmlSchemaObject), typeof (XmlSchemaElement));
+      TestFieldsToPropertiesTypeDescriptionProviderInheritance(typeof(SerializableBaseClass), typeof(SerializableClass), 4);
+      TestFieldsToPropertiesTypeDescriptionProviderInheritance(typeof(XmlSchemaObject), typeof(XmlSchemaElement));
     }
 
     private static void TestFieldsToPropertiesTypeDescriptionProviderInheritance(Type baseType, Type derivedType, int numFields = 0)
@@ -229,7 +228,7 @@ namespace AW.Tests
     [TestMethod]
     public void FieldsToPropertiesTypeDescriptionProviderTest()
     {
-      var serializableClassType = typeof (SerializableClass);
+      var serializableClassType = typeof(SerializableClass);
 
       var browsableAttributeList = new Attribute[] {new BrowsableAttribute(true)};
       var expected = TypeDescriptor.GetProperties(serializableClassType, browsableAttributeList);
@@ -256,12 +255,12 @@ namespace AW.Tests
     {
       var serializableClassType = typeof(SerializableClass);
 
-      var browsableAttributeList = new Attribute[] { new BrowsableAttribute(true) };
+      var browsableAttributeList = new Attribute[] {new BrowsableAttribute(true)};
       var expected = TypeDescriptor.GetProperties(serializableClassType, browsableAttributeList);
 
       var actual = MetaDataHelper.GetPropertiesToSerialize(serializableClassType);
 
-      Assert.AreEqual(expected.Count * 2, actual.Count(), "Expect GetPropertiesToSerialize to bring back the fields as well");
+      Assert.AreEqual(expected.Count*2, actual.Count(), "Expect GetPropertiesToSerialize to bring back the fields as well");
     }
 
     [TestMethod]
@@ -269,12 +268,12 @@ namespace AW.Tests
     {
       var serializableClassType = typeof(XmlElement);
 
-      var browsableAttributeList = new Attribute[] { new BrowsableAttribute(true) };
+      var browsableAttributeList = new Attribute[] {new BrowsableAttribute(true)};
       var expected = TypeDescriptor.GetProperties(serializableClassType, browsableAttributeList);
 
       var actual = MetaDataHelper.GetPropertiesToSerialize(serializableClassType);
 
-      Assert.AreEqual(expected.Count * 2, actual.Count(), "Expect GetPropertiesToSerialize to bring back the fields as well");
+      Assert.AreEqual(expected.Count*2, actual.Count(), "Expect GetPropertiesToSerialize to bring back the fields as well");
     }
 
     [TestMethod]
@@ -282,7 +281,7 @@ namespace AW.Tests
     {
       var customer = new CustomerEntity();
       var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(customer.GetType());
-      var enumerableProperties = propertyDescriptors.FilterByIsEnumerable(typeof (IEntityCore));
+      var enumerableProperties = propertyDescriptors.FilterByIsEnumerable(typeof(IEntityCore));
       Assert.AreEqual(5, enumerableProperties.Count());
     }
 
@@ -293,16 +292,16 @@ namespace AW.Tests
       var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(customer.GetType());
       var propertyDescriptor = propertyDescriptors.SingleOrDefault(pd => pd.Name == "EmployeesViaOrdersInCode");
       var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(propertyDescriptor.PropertyType);
-      Assert.AreEqual(typeof (EmployeeEntity), typeParameterOfGenericType);
+      Assert.AreEqual(typeof(EmployeeEntity), typeParameterOfGenericType);
       var elementType = MetaDataHelper.GetElementType(propertyDescriptor.PropertyType);
-      Assert.AreEqual(typeof (EmployeeEntity), elementType);
+      Assert.AreEqual(typeof(EmployeeEntity), elementType);
       //var interfaces = propertyDescriptor.PropertyType.GetInterfaces();
 
       propertyDescriptor = propertyDescriptors.SingleOrDefault(pd => pd.Name == "EmployeesViaOrders");
       typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(propertyDescriptor.PropertyType);
-      Assert.AreEqual(typeof (EmployeeEntity), typeParameterOfGenericType);
+      Assert.AreEqual(typeof(EmployeeEntity), typeParameterOfGenericType);
       elementType = MetaDataHelper.GetElementType(propertyDescriptor.PropertyType);
-      Assert.AreEqual(typeof (EmployeeEntity), elementType);
+      Assert.AreEqual(typeof(EmployeeEntity), elementType);
       //interfaces = propertyDescriptor.PropertyType.GetInterfaces();
     }
 
@@ -312,10 +311,10 @@ namespace AW.Tests
     [TestMethod]
     public void FoldAllAssociatedMetadataProvidersIntoTheSubjectTypeTest()
     {
-      MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof (CommonEntityBase));
-      MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof (CommonEntityBase));
+      MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof(CommonEntityBase));
+      MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof(CommonEntityBase));
       AssertNorthwindFoldAllAssociatedMetadataProvidersIntoTheSubjectType();
-      MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof (Data.EntityClasses.CommonEntityBase));
+      MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof(Data.EntityClasses.CommonEntityBase));
       AssertAWFoldAllAssociatedMetadataProvidersIntoTheSubjectType();
     }
 
@@ -331,7 +330,7 @@ namespace AW.Tests
 
     private static void AssertNorthwindFoldAllAssociatedMetadataProvidersIntoTheSubjectType()
     {
-      var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(typeof (OrderDetailEntity));
+      var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(typeof(OrderDetailEntity));
       var quantityPropertyDescriptor = propertyDescriptors.Single(pd => pd.Name.Equals("Quantity"));
       Assert.AreEqual(StringConstants.QuantityDescription, quantityPropertyDescriptor.Description);
       var displayNameAttributes = MetaDataHelper.GetAttributes<DisplayNameAttribute>(propertyDescriptors, "Quantity");
@@ -344,7 +343,7 @@ namespace AW.Tests
     {
 //			var description = MetaDataHelper.GetDescriptionAttributes(typeof (AW.Data.EntityClasses.SalesOrderHeaderEntity)).Select(da => da.Description).JoinAsString();
       //		Assert.AreEqual("You can use this page to find out what is happening with an order", description);
-      var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(typeof (SalesOrderHeaderEntity));
+      var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(typeof(SalesOrderHeaderEntity));
       var quantityPropertyDescriptor = propertyDescriptors.Single(pd => pd.Name.Equals("PurchaseOrderNumber"));
       Assert.AreEqual(SalesOrderHeaderEntity.PurchaseOrderNumberDescription, quantityPropertyDescriptor.Description);
     }
@@ -361,7 +360,7 @@ namespace AW.Tests
       if (entityTypes.IsNullOrEmpty())
         entityTypes = GeneralHelper.EnumAsEnumerable<TEnum>().ToArray();
       else
-        GeneralHelper.CheckIsEnum(typeof (TEnum));
+        GeneralHelper.CheckIsEnum(typeof(TEnum));
       foreach (var entityType in entityTypes)
       {
         var entityFactoryCore = entityFactoryFactory(entityType);
@@ -377,7 +376,7 @@ namespace AW.Tests
     [TestMethod, Microsoft.VisualStudio.TestTools.UnitTesting.Description("")]
     public void GetTypeTest()
     {
-      var collectionViewType = typeof (CollectionView);
+      var collectionViewType = typeof(CollectionView);
       Assert.IsNull(MetaDataHelper.GetType(collectionViewType.FullName));
       Assert.IsNotNull(MetaDataHelper.GetType(MetaDataHelper.GetShortAssemblyQualifiedName(collectionViewType)));
     }
