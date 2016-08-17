@@ -15,7 +15,8 @@ namespace AW.Helper.LLBL
     #region Events
 
     /// <summary>
-    ///   Raised when an entity has been Removed from the scope. Ignored during fetches. Sender is the entity which was Removed.
+    ///   Raised when an entity has been Removed from the scope. Ignored during fetches. Sender is the entity which was
+    ///   Removed.
     /// </summary>
     public event EventHandler EntityRemoved;
 
@@ -116,7 +117,7 @@ namespace AW.Helper.LLBL
       {
         _currentRemovedEntitiesTracker = entityCollectionCore.EntityFactoryToUse.CreateEntityCollection();
         entityCollectionCore.RemovedEntitiesTracker = _currentRemovedEntitiesTracker;
-        entityCollectionCore.RemovedEntitiesTracker.EntityAdded += RemovedEntitiesTracker_EntityAdded;
+        entityCollectionCore.RemovedEntitiesTracker.EntityAdded += RemovedEntitiesTrackerEntityAdded;
         for (var i = entityCollectionCore.Count - 1; i > -1; i--)
         {
           var entity = entityCollectionCore[i];
@@ -139,7 +140,8 @@ namespace AW.Helper.LLBL
     //}
 
     /// <summary>
-    ///   The _entities removal tracker, this is used instead doing MarkForDeletion directly to enable undo, since there is no way to clear DataScopeContext._manualAddedEntitiesRemovalTracker
+    ///   The _entities removal tracker, this is used instead doing MarkForDeletion directly to enable undo, since there is no
+    ///   way to clear DataScopeContext._manualAddedEntitiesRemovalTracker
     ///   except, perhaps calling DataScopeContext.PerformPostCommitActions
     ///   also need to remove entities when opening and old page of data
     ///   e.g
@@ -152,14 +154,14 @@ namespace AW.Helper.LLBL
     private bool _cascadeDeletes;
     private Context _context;
     private IEntityCollectionCore _currentRemovedEntitiesTracker;
-    private static readonly MemberGetter DelegateForGetNewEntities = typeof (Context).DelegateForGetPropertyValue("NewEntities");
+    private static readonly MemberGetter DelegateForGetNewEntities = typeof(Context).DelegateForGetPropertyValue("NewEntities");
 
     private Dictionary<Guid, IEntityCore>.ValueCollection NewEntities
     {
       get { return ((Dictionary<Guid, IEntityCore>) DelegateForGetNewEntities(_context)).Values; }
     }
 
-    private static readonly MemberGetter DelegateForGetObjectIDToEntityInstance = typeof (Context).DelegateForGetPropertyValue("ObjectIDToEntityInstance");
+    private static readonly MemberGetter DelegateForGetObjectIDToEntityInstance = typeof(Context).DelegateForGetPropertyValue("ObjectIDToEntityInstance");
 
     private Dictionary<Guid, IEntityCore>.ValueCollection ExistingEntities
     {
@@ -170,12 +172,16 @@ namespace AW.Helper.LLBL
     ///   Handles the EntityAdded event of a removedEntitiesTracker.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="SD.LLBLGen.Pro.ORMSupportClasses.CollectionChangedEventArgs" /> instance containing the event data.</param>
-    private void RemovedEntitiesTracker_EntityAdded(object sender, CollectionChangedEventArgs e)
+    /// <param name="e">
+    ///   The <see cref="SD.LLBLGen.Pro.ORMSupportClasses.CollectionChangedEventArgs" /> instance containing the
+    ///   event data.
+    /// </param>
+    private void RemovedEntitiesTrackerEntityAdded(object sender, CollectionChangedEventArgs e)
     {
-      if (EntityRemoved != null && e.InvolvedEntity != null && !e.InvolvedEntity.IsNew)
+      if (e.InvolvedEntity != null && !e.InvolvedEntity.IsNew)
       {
-        EntityRemoved(sender, e);
+        if (EntityRemoved != null)
+          EntityRemoved(sender, e);
         _entitiesRemovalTracker.AddDistinct(e.InvolvedEntity);
       }
     }
@@ -230,8 +236,11 @@ namespace AW.Helper.LLBL
     protected override void OnEntityDelete(IEntityCore toDelete, WorkDataCollector workData)
     {
       if (_cascadeDeletes)
-        foreach (var entityRelation in EntityHelper.GetAllRelationsWhereStartEntityIsPkSide(toDelete, true))
-          workData.Add(entityRelation);
+        foreach (var entityRelation in EntityHelper.GetAllRelationsWhereStartEntityIsPkSide(toDelete))
+        {
+          var cascadeActionType = entityRelation.GetAllFKEntityFieldCoreObjects().All(f => f.IsNullable) ? CascadeActionType.Update : CascadeActionType.Delete;
+          workData.Add(entityRelation, cascadeActionType);
+        }
     }
 
     public int Save(object dataToSave = null, bool cascadeDeletes = false)
@@ -259,7 +268,7 @@ namespace AW.Helper.LLBL
     public Dictionary<string, int> GetChildCounts(object entityThatMayHaveChildren)
     {
       var dataAccessAdapter = TransactionController as IDataAccessAdapter;
-      return dataAccessAdapter == null ? EntityHelper.GetExistingChildCounts(null, entityThatMayHaveChildren as EntityBase): EntityHelper.GetExistingChildCounts(dataAccessAdapter, entityThatMayHaveChildren as EntityBase2);
+      return dataAccessAdapter == null ? EntityHelper.GetExistingChildCounts(null, entityThatMayHaveChildren as EntityBase) : EntityHelper.GetExistingChildCounts(dataAccessAdapter, entityThatMayHaveChildren as EntityBase2);
     }
 
     public void Undo(object modifiedData = null)
@@ -306,7 +315,7 @@ namespace AW.Helper.LLBL
       if (someRemoved)
         CallEditingFinishedIfNotDirty();
     }
-    
+
     private bool ContextIsDirty()
     {
       return NewEntities.Any(e => !e.MarkedForDeletion && e.IsDirty) || ExistingEntities.IsAnyDirty() || EntitiesMarkedForDeletion.Any();
