@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using AW.Data;
 using AW.Data.CollectionClasses;
 using AW.Data.DaoClasses;
@@ -137,7 +138,7 @@ namespace AW.Tests
     public void GetEntitiesTypesTest()
     {
       var allLoadedDescendanceEntitiesType = EntityHelper.GetEntitiesTypes().ToList();
-      if (allLoadedDescendanceEntitiesType.Count() == NumberOfEntities)
+      if (allLoadedDescendanceEntitiesType.Count == NumberOfEntities)
       {
         var commonEntityBaseEntitiesType = MetaDataHelper.GetDescendants(typeof(CommonEntityBase)).ToList();
         var assemblyEntitiesType = EntityHelper.GetEntitiesTypes(MetaSingletons.MetaData.GetType().Assembly).ToList();
@@ -302,6 +303,20 @@ namespace AW.Tests
 
       var amount6 = EntityHelper.GetChildCount(salesOrderDetailDao, salesOrderHeaderEntity, salesOrderDetailEntityUsingSalesOrderID, new List<string>());
       Assert.AreEqual(amount, amount6.Item2);
+    }
+
+    [TestMethod]
+    public void GeneralEntityCollectionDataScopeDeleteTest()
+    {
+      using (new TransactionScope())
+      {
+        var linqMetaData = MetaSingletons.MetaData;
+        var generalEntityCollectionDataScope = new GeneralEntityCollectionDataScope(linqMetaData);
+        var entityCollection = generalEntityCollectionDataScope.FetchData(linqMetaData.Contact.Take(5));
+        var contactEntity = entityCollection.First();
+        entityCollection.Remove(contactEntity);
+        generalEntityCollectionDataScope.Save(null, true); //Fails on deleting Employee - This method isn't supported for this entity
+      }
     }
   }
 }

@@ -1218,12 +1218,6 @@ namespace AW.Helper.LLBL
         select allFkEntityFieldCoreObjects;
     }
 
-    public static IEnumerable<IEntityRelation> GetAllRelationsWhereStartEntityIsPkSide(IEntityCore entity, bool onlyComponentsRelationShips)
-    {
-      return GetAllRelationsWhereStartEntityIsPkSide(entity)
-        .Where(entityRelation => !onlyComponentsRelationShips || entityRelation.GetAllFKEntityFieldCoreObjects().Any(f => f.IsPrimaryKey));
-    }
-
     public static IEnumerable<IEntityRelation> GetAllRelationsWhereStartEntityIsPkSide(IEntityCore entity)
     {
       return entity.GetAllRelations().Where(entityRelation => entityRelation.StartEntityIsPkSide);
