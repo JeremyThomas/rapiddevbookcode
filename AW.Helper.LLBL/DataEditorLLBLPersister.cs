@@ -66,7 +66,7 @@ namespace AW.Helper.LLBL
     /// <returns></returns>
     public override int Save(object dataToSave = null, bool cascadeDeletes = false)
     {
-      return EntityHelper.Save(dataToSave);
+      return EntityHelper.Save(dataToSave, cascadeDeletes);
     }
 
     /// <summary>
