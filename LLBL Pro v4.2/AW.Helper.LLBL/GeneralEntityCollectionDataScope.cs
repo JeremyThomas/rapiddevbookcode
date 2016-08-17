@@ -262,7 +262,7 @@ namespace AW.Helper.LLBL
     {
       if (dataToDelete == null) return CommitAllChanges(cascade);
       var dataAccessAdapter = TransactionController as IDataAccessAdapter;
-      return dataAccessAdapter == null ? EntityHelper.Delete(dataToDelete) : EntityHelper.Delete(dataToDelete, dataAccessAdapter, cascade);
+      return dataAccessAdapter == null ? EntityHelper.Delete(dataToDelete, cascade) : EntityHelper.Delete(dataToDelete, dataAccessAdapter, cascade);
     }
 
     public Dictionary<string, int> GetChildCounts(object entityThatMayHaveChildren)

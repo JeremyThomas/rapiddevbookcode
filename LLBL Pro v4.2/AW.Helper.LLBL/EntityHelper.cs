@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using Fasterflect;
 using Microsoft.CSharp.RuntimeBinder;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -758,7 +759,7 @@ namespace AW.Helper.LLBL
       if (typeof(IEntity).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToDelete as IEnumerable;
-        return enumerable == null ? Convert.ToInt32(((IEntity) dataToDelete).Delete()) : DeleteEntities(enumerable);
+        return enumerable == null ? Convert.ToInt32(((IEntity) dataToDelete).Delete()) : DeleteEntities(enumerable, cascade);
       }
       return 0;
     }
@@ -801,7 +802,7 @@ namespace AW.Helper.LLBL
           unitOfWork.AddCollectionForDelete(collectionToDelete);
           foreach (var entityToDelete in collectionToDelete.OfType<IEntity>())
             MakeCascadeDeletesForAllChildren(unitOfWork, entityToDelete);
-          var transaction = createTransactionMethod.Invoke(collectionToDelete, new object[] {IsolationLevel.ReadCommitted, "UOW"}) as ITransaction;
+          var transaction = createTransactionMethod.Invoke(collectionToDelete, new object[] { IsolationLevel.ReadCommitted, "UOW" }) as ITransaction;
           return unitOfWork.Commit(transaction);
         }
       }
@@ -1526,7 +1527,7 @@ namespace AW.Helper.LLBL
         var llblGenProProvider = provider as LLBLGenProProvider;
         if (llblGenProProvider == null)
           return null;
-        return llblGenProProvider.TransactionToUse;
+        return llblGenProProvider.TransactionToUse; //Usually null
       }
       return llblGenProProvider2.AdapterToUse;
     }
