@@ -7,6 +7,7 @@ using AW.Data.CollectionClasses;
 using AW.Data.DaoClasses;
 using AW.Data.EntityClasses;
 using AW.Data.HelperClasses;
+using AW.Data.Linq;
 using AW.Helper;
 using AW.Helper.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -307,6 +308,51 @@ namespace AW.Tests
 
     [TestMethod]
     public void GeneralEntityCollectionDataScopeDeleteTest()
+    {
+      using (new TransactionScope())
+      {
+        var linqMetaData = MetaSingletons.MetaData;
+        var generalEntityCollectionDataScope = new GeneralEntityCollectionDataScope(linqMetaData);
+        var entityCollection = generalEntityCollectionDataScope.FetchData(linqMetaData.Product.Take(5));
+        var contactEntity = entityCollection.First();
+        entityCollection.Remove(contactEntity);
+        Assert.AreEqual(1, generalEntityCollectionDataScope.Save(null, true));
+      }
+    }
+
+    [TestMethod]
+    public void GeneralEntityCollectionDataScopeDeleteViaSaveTest()
+    {
+      using (new TransactionScope())
+      {
+        var linqMetaData = new LinqMetaData();
+        var generalEntityCollectionDataScope = new GeneralEntityCollectionDataScope(linqMetaData);
+        var entityCollection = generalEntityCollectionDataScope.FetchData(linqMetaData.Product.Take(5));
+        var contactEntity = entityCollection.First();
+        entityCollection.Remove(contactEntity);
+        Assert.AreEqual(106, generalEntityCollectionDataScope.Save(entityCollection, true));
+      }
+    }
+
+    [TestMethod]
+    public void GeneralEntityCollectionDataScopeDeleteViaSaveWithTransactionTest()
+    {
+      using (new TransactionScope())
+      {
+        var linqMetaData = MetaSingletons.MetaData;
+        var generalEntityCollectionDataScope = new GeneralEntityCollectionDataScope(linqMetaData);
+        var entityCollection = generalEntityCollectionDataScope.FetchData(linqMetaData.Product.Take(5));
+        var contactEntity = entityCollection.First();
+        entityCollection.Remove(contactEntity);
+        Assert.AreEqual(106, generalEntityCollectionDataScope.Save(entityCollection, true));
+      }
+    }
+
+    /// <summary>
+    ///   Generals the entity collection data scope delete target per entity test.
+    /// </summary>
+    [TestMethod]
+    public void GeneralEntityCollectionDataScopeDeleteTargetPerEntityTest()
     {
       using (new TransactionScope())
       {

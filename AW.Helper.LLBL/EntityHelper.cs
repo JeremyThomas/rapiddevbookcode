@@ -8,7 +8,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using Fasterflect;
 using Microsoft.CSharp.RuntimeBinder;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -732,19 +731,27 @@ namespace AW.Helper.LLBL
     /// <summary>
     ///   Gets the factory of the entity with the .NET type specified
     /// </summary>
-    /// <returns>factory to use or null if not found</returns>
-    /// <summary>
-    ///   Deletes the entities.
-    /// </summary>
     /// <param name="entitiesToDelete">The entities to delete.</param>
     /// <param name="cascadeDeletes">if set to <c>true</c> [cascade deletes].</param>
-    /// <returns></returns>
-    public static int DeleteEntities(IEnumerable entitiesToDelete, bool cascadeDeletes = false)
+    /// <param name="transaction">The transaction.</param>
+    /// <returns>
+    ///   factory to use or null if not found
+    /// </returns>
+    public static int DeleteEntities(IEnumerable entitiesToDelete, bool cascadeDeletes = false, ITransaction transaction = null)
     {
       var entityCollectionBase = entitiesToDelete as EntityCollectionBase<EntityBase>;
       if (entityCollectionBase != null)
-        return DeleteEntities(entityCollectionBase, cascadeDeletes);
-      return entitiesToDelete.Cast<EntityBase>().Count(entity => entity.Delete() || entity.IsNew);
+        return DeleteEntities(entityCollectionBase, cascadeDeletes, transaction);
+      if (transaction == null)
+        return entitiesToDelete.Cast<EntityBase>().Count(entity => entity.Delete() || entity.IsNew);
+      var numDeleted = 0;
+      foreach (var entity in entitiesToDelete.Cast<EntityBase>())
+      {
+        numDeleted++;
+        if (!entity.IsNew)
+          transaction.Add(entity);
+      }
+      return numDeleted;
     }
 
     /// <summary>
@@ -755,11 +762,16 @@ namespace AW.Helper.LLBL
     /// <returns></returns>
     public static int Delete(object dataToDelete, bool cascade = false)
     {
+      return Delete(dataToDelete, cascade, null);
+    }
+
+    public static int Delete(object dataToDelete, bool cascade, ITransaction transaction)
+    {
       var listItemType = MetaDataHelper.GetListItemType(dataToDelete);
       if (typeof(IEntity).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToDelete as IEnumerable;
-        return enumerable == null ? Convert.ToInt32(((IEntity) dataToDelete).Delete()) : DeleteEntities(enumerable, cascade);
+        return enumerable == null ? Convert.ToInt32(((IEntity) dataToDelete).Delete()) : DeleteEntities(enumerable, cascade, transaction);
       }
       return 0;
     }
@@ -769,8 +781,11 @@ namespace AW.Helper.LLBL
     /// </summary>
     /// <param name="entitiesToSave">The entities to save.</param>
     /// <param name="cascadeDeletes">if set to <c>true</c> [cascadeDeletes].</param>
-    /// <returns>the amount of persisted entities</returns>
-    public static int SaveEntities(IEnumerable entitiesToSave, bool cascadeDeletes = false)
+    /// <param name="transaction">The transaction.</param>
+    /// <returns>
+    ///   the amount of persisted entities
+    /// </returns>
+    public static int SaveEntities(IEnumerable entitiesToSave, bool cascadeDeletes = false, ITransaction transaction = null)
     {
       if (entitiesToSave is IEntityView)
         entitiesToSave = ((IEntityView) entitiesToSave).RelatedCollection;
@@ -779,34 +794,64 @@ namespace AW.Helper.LLBL
       {
         var entityCollection = collection;
         var modifyCount = 0;
-        if (entityCollection.RemovedEntitiesTracker != null)
+        if (transaction == null)
         {
-          modifyCount = DeleteEntities(entityCollection.RemovedEntitiesTracker, cascadeDeletes);
-          entityCollection.RemovedEntitiesTracker.Clear();
+          if (!entityCollection.RemovedEntitiesTracker.IsNullOrEmpty())
+          {
+            modifyCount = DeleteEntities(entityCollection.RemovedEntitiesTracker, cascadeDeletes);
+            entityCollection.RemovedEntitiesTracker.Clear();
+          }
+          return modifyCount + entityCollection.SaveMulti();
         }
-        return modifyCount + entityCollection.SaveMulti();
+        var unitOfWork = new UnitOfWork();
+        if (!entityCollection.RemovedEntitiesTracker.IsNullOrEmpty())
+          DeleteEntities(entityCollection.RemovedEntitiesTracker, unitOfWork);
+        unitOfWork.AddCollectionForSave(entityCollection);
+        modifyCount = unitOfWork.Commit(transaction);
+        if (entityCollection.RemovedEntitiesTracker != null) entityCollection.RemovedEntitiesTracker.Clear();
+        return modifyCount;
       }
       return entitiesToSave.Cast<EntityBase>().Count(entity => entity.IsDirty && entity.Save());
     }
 
-    private static int DeleteEntities(IEntityCollection collectionToDelete, bool cascadeDeletes = false)
+    private static int DeleteEntities(IEntityCollection collectionToDelete, bool cascadeDeletes = false, ITransaction transaction = null)
     {
       if (cascadeDeletes)
       {
-        var constructed = collectionToDelete.GetType();
-        var createTransactionMethod = constructed.GetMethod("CreateTransaction", BindingFlags.NonPublic | BindingFlags.Instance);
-        if (createTransactionMethod != null)
-        {
-          var unitOfWork = new UnitOfWork();
-          MakeDirectDeletesPerformBeforeEntityDeletes(unitOfWork);
-          unitOfWork.AddCollectionForDelete(collectionToDelete);
-          foreach (var entityToDelete in collectionToDelete.OfType<IEntity>())
-            MakeCascadeDeletesForAllChildren(unitOfWork, entityToDelete);
-          var transaction = createTransactionMethod.Invoke(collectionToDelete, new object[] { IsolationLevel.ReadCommitted, "UOW" }) as ITransaction;
-          return unitOfWork.Commit(transaction);
-        }
+        if (transaction == null)
+          transaction = CreateTransaction(collectionToDelete);
+        var unitOfWork = new UnitOfWork();
+        DeleteEntities(collectionToDelete, unitOfWork);
+        return unitOfWork.Commit(transaction);
       }
-      return collectionToDelete.DeleteMulti();
+      if (transaction == null)
+        return collectionToDelete.DeleteMulti();
+      transaction.Add(collectionToDelete as ITransactionalElement);
+      return collectionToDelete.Count;
+    }
+
+    private static void DeleteEntities(IEntityCollection collectionToDelete, UnitOfWork unitOfWork, bool cascadeDeletes = true)
+    {
+      unitOfWork.AddCollectionForDelete(collectionToDelete);
+      if (cascadeDeletes)
+      {
+        MakeDirectDeletesPerformBeforeEntityDeletes(unitOfWork);
+        foreach (var entityToDelete in collectionToDelete.OfType<IEntity>())
+          MakeCascadeDeletesForAllChildren(unitOfWork, entityToDelete);
+      }
+    }
+
+    private static ITransaction CreateTransaction(IEntityCollection collectionToDelete)
+    {
+      var constructed = collectionToDelete.GetType();
+      var createTransactionMethod = constructed.GetMethod("CreateTransaction", BindingFlags.NonPublic | BindingFlags.Instance);
+      if (createTransactionMethod != null)
+      {
+        return createTransactionMethod.Invoke(collectionToDelete, new object[] {IsolationLevel.ReadCommitted, "UOW"}) as ITransaction;
+      }
+
+
+      return null;
     }
 
     /// <summary>
@@ -845,13 +890,15 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// DeleteMulti() and overloads are not supported for entities which are in a hierarchy of type TargetPerEntity. 
-    /// This is by design, as the delete action isn't possible in one go with proper checks due to referential integrity issues.
+    ///   DeleteMulti() and overloads are not supported for entities which are in a hierarchy of type TargetPerEntity.
+    ///   This is by design, as the delete action isn't possible in one go with proper checks due to referential integrity
+    ///   issues.
     /// </summary>
     /// <remarks>
-    /// https://www.llblgen.com/documentation/5.0/LLBLGen%20Pro%20RTF/Using%20the%20generated%20code/SelfServicing/gencode_usingcollectionclasses.htm
-    /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=15400
-    /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=4589 DeleteEntityDirectly with a hierarchy of type TargetPerEntity isn't supported.
+    ///   https://www.llblgen.com/documentation/5.0/LLBLGen%20Pro%20RTF/Using%20the%20generated%20code/SelfServicing/gencode_usingcollectionclasses.htm
+    ///   http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=15400
+    ///   http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=4589 DeleteEntityDirectly with a hierarchy of type
+    ///   TargetPerEntity isn't supported.
     /// </remarks>
     /// <param name="uow"></param>
     /// <param name="entity"></param>
@@ -859,10 +906,21 @@ namespace AW.Helper.LLBL
     private static void AddDeleteRelatedEntitiesDirectlyCall(UnitOfWork uow, IEntity entity, IEnumerable<IEntityFieldCore> allFkEntityFieldCoreObjects)
     {
       var relationPredicateBucket = CreateRelationPredicateBucket(allFkEntityFieldCoreObjects, entity.PrimaryKeyFields);
-      var type = entity.GetType();
-      var relatedType = type.Assembly.GetType(type.Namespace + "." + relationPredicateBucket.Item1);
+      var relatedType = GetRelatedType(entity, relationPredicateBucket.Item1);
       if (relatedType != null)
-        uow.AddDeleteMultiCall((IEntityCollection) GetFactoryCore(relatedType).CreateEntityCollection(), relationPredicateBucket.Item2.PredicateExpression);
+      {
+        var entityFactoryCore = GetFactoryCore(relatedType);
+        var entityCore = entityFactoryCore.Create();
+        if (entityCore.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.TargetPerEntity)
+          uow.AddDeleteMultiCall((IEntityCollection) entityFactoryCore.CreateEntityCollection(), relationPredicateBucket.Item2.PredicateExpression);
+      }
+    }
+
+    private static Type GetRelatedType(object entity, string entityName)
+    {
+      var type = entity.GetType();
+      var relatedType = type.Assembly.GetType(type.Namespace + "." + entityName);
+      return relatedType;
     }
 
     /// <summary>
@@ -876,19 +934,27 @@ namespace AW.Helper.LLBL
       unitOfWork.CommitOrder.Add(unitOfWorkDeletesBlockType);
     }
 
+    public static int Save(object dataToSave, bool cascadeDeletes = false)
+    {
+      return Save(dataToSave, (ITransaction) null, cascadeDeletes);
+    }
+
     /// <summary>
     ///   Saves any changes to the specified data to the DB.
     /// </summary>
     /// <param name="dataToSave">The data to save, must be a CommonEntityBase or a list of CommonEntityBase's.</param>
+    /// <param name="transaction">The transaction.</param>
     /// <param name="cascadeDeletes">if set to <c>true</c> [cascade deletes].</param>
-    /// <returns>The number of persisted entities.</returns>
-    public static int Save(object dataToSave, bool cascadeDeletes = false)
+    /// <returns>
+    ///   The number of persisted entities.
+    /// </returns>
+    public static int Save(object dataToSave, ITransaction transaction, bool cascadeDeletes = false)
     {
       var listItemType = MetaDataHelper.GetListItemType(dataToSave);
       if (typeof(IEntity).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToSave as IEnumerable;
-        return enumerable == null ? Convert.ToInt32(((IEntity) dataToSave).Save()) : SaveEntities(enumerable, cascadeDeletes);
+        return enumerable == null ? Convert.ToInt32(((IEntity) dataToSave).Save()) : SaveEntities(enumerable, cascadeDeletes, transaction);
       }
       return 0;
     }
@@ -1111,9 +1177,7 @@ namespace AW.Helper.LLBL
       // Delete children of Entity
       var allFkEntityFieldCoreObjectList = GetAllFkEntityFieldCoreObjectsWhereStartEntityIsPkSide(entity, onlyDeleteComponents);
       foreach (var allFkEntityFieldCoreObjects in allFkEntityFieldCoreObjectList)
-      {
         AddDeleteRelatedEntitiesDirectlyCall(uow, entity, allFkEntityFieldCoreObjects);
-      }
       if (deleteDirectly)
         ChangeDeleteToDirect(uow, entity);
     }
@@ -1121,7 +1185,16 @@ namespace AW.Helper.LLBL
     private static void AddDeleteRelatedEntitiesDirectlyCall(UnitOfWork2 uow, IEntity2 entity, IEnumerable<IEntityFieldCore> allFkEntityFieldCoreObjects)
     {
       var relationPredicateBucket = CreateRelationPredicateBucket(allFkEntityFieldCoreObjects, entity.PrimaryKeyFields);
-      uow.AddDeleteEntitiesDirectlyCall(relationPredicateBucket.Item1, relationPredicateBucket.Item2);
+      var relatedType = GetRelatedType(entity, relationPredicateBucket.Item1);
+      if (relatedType == null)
+        uow.AddDeleteEntitiesDirectlyCall(relationPredicateBucket.Item1, relationPredicateBucket.Item2);
+      else
+      {
+        var entityFactoryCore = GetFactoryCore(relatedType);
+        var entityCore = entityFactoryCore.Create();
+        if (entityCore.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.TargetPerEntity)
+          uow.AddDeleteEntitiesDirectlyCall(relationPredicateBucket.Item1, relationPredicateBucket.Item2);
+      }
     }
 
     private static void MakeCascadeDeletesForSpecifiedChildren(UnitOfWork2 uow, IEntity2 entity, IEnumerable<string> entityTypesToDelete, bool deleteDirectly = true)
