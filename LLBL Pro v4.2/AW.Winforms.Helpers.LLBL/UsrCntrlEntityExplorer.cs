@@ -104,7 +104,12 @@ namespace AW.Winforms.Helpers.LLBL
     public bool CascadeDeletes
     {
       get { return toolStripCheckBoxDeletesAreCascading.Checked; }
-      set { toolStripCheckBoxDeletesAreCascading.Checked = value; }
+      set
+      {
+        toolStripCheckBoxDeletesAreCascading.Checked = value;
+        gridDataEditor.CascadeDeletes = toolStripCheckBoxDeletesAreCascading.Checked;
+        OnPropertyChanged();
+      }
     }
 
     private void ensureFilteringEnabledCheckBox_Click(object sender, EventArgs e)

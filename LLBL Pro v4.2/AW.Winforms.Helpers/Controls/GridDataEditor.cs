@@ -379,6 +379,10 @@ namespace AW.Winforms.Helpers.Controls
         saveToolStripButton.Enabled = _canSave && !SupportsNotifyPropertyChanged;
         saveToolStripButton.Visible = _canSave;
         toolStripCheckBoxDeletesAreCascading.Visible = _canSave;
+        toolStripCheckBoxDeletesAreCascading.Enabled = true;
+        toolStripButtonRelatedCounts.Enabled = true;
+        toolStripButtonCSharp.Enabled = true;
+        toolStripButtonSearch.Enabled = true;
         copyToolStripButton.Enabled = true;
         printToolStripButton.Enabled = true;
         toolStripButtonObjectBrowser.Enabled = true;
@@ -394,6 +398,9 @@ namespace AW.Winforms.Helpers.Controls
         saveToolStripButton.Enabled = false;
         bindingNavigatorPaging.Enabled = true;
         toolStripCheckBoxDeletesAreCascading.Enabled = false;
+        toolStripButtonRelatedCounts.Enabled = false;
+        toolStripButtonCSharp.Enabled = false;
+        toolStripButtonSearch.Enabled = false;
       }
       toolStripLabelSaveResult.Text = "";
       toolStripLabelDeleteCount.Text = "";

@@ -169,6 +169,8 @@ namespace AW.Winforms.Helpers.LLBL
           if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
             if (entityType.BaseType != null && !entityType.BaseType.IsAbstract)
               entityNodeText += CreateSubTypeSuffix(GetEntityTypeName(entityType.BaseType));
+            else
+              entityNodeText += string.Format(" ({0} base)", entity.LLBLGenProIsInHierarchyOfType);
           var entityNode = treeNodeCollectionToAddTo.Add(entityType.Name, entityNodeText);
           entityNode.Tag = entityType;
 
@@ -271,7 +273,9 @@ namespace AW.Winforms.Helpers.LLBL
       var baseType = "";
       if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
         if (type.BaseType != null && !type.BaseType.IsAbstract)
-          baseType = "Base Type: " + type.BaseType.Name;
+          baseType = string.Format("Base Type: {0} in {1} hierarchy", type.BaseType.Name, entity.LLBLGenProIsInHierarchyOfType);
+        else
+          baseType = string.Format("Is the base class in a {0} hierarchy", entity.LLBLGenProIsInHierarchyOfType);
       var toolTipText = GeneralHelper.Join(Environment.NewLine, FormatTypeName(type, true), baseType,
         MetaDataHelper.GetDisplayNameAttributes(type).Select(da => da.DisplayName).Union(MetaDataHelper.GetDescriptionAttributes(type).Select(da => da.Description)).JoinAsString(),
         entity.CustomPropertiesOfType.Values.JoinAsString());

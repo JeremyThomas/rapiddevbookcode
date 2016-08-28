@@ -247,7 +247,7 @@ namespace AW.Helper.LLBL
     {
       if (dataToSave == null) return CommitAllChanges(cascadeDeletes);
       var dataAccessAdapter = TransactionController as IDataAccessAdapter;
-      var numberSaved = dataAccessAdapter == null ? EntityHelper.Save(dataToSave, cascadeDeletes) : EntityHelper.Save(dataToSave, dataAccessAdapter, cascadeDeletes);
+      var numberSaved = dataAccessAdapter == null ? EntityHelper.Save(dataToSave, (ITransaction)TransactionController, cascadeDeletes) : EntityHelper.Save(dataToSave, dataAccessAdapter, cascadeDeletes);
       for (var i = _entitiesRemovalTracker.Count - 1; i > -1; i--)
       {
         var entity = _entitiesRemovalTracker[i];
@@ -262,7 +262,7 @@ namespace AW.Helper.LLBL
     {
       if (dataToDelete == null) return CommitAllChanges(cascade);
       var dataAccessAdapter = TransactionController as IDataAccessAdapter;
-      return dataAccessAdapter == null ? EntityHelper.Delete(dataToDelete, cascade) : EntityHelper.Delete(dataToDelete, dataAccessAdapter, cascade);
+      return dataAccessAdapter == null ? EntityHelper.Delete(dataToDelete, cascade, (ITransaction)TransactionController) : EntityHelper.Delete(dataToDelete, dataAccessAdapter, cascade);
     }
 
     public Dictionary<string, int> GetChildCounts(object entityThatMayHaveChildren)
