@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -185,12 +186,9 @@ namespace AW.Winforms.Helpers.Forms
 
     private void buttonAbout_Click(object sender, EventArgs e)
     {
-      var assembly = Assembly.GetEntryAssembly();
-      var moreInfo = Environment.NewLine + Environment.NewLine + "Product Version: " + (assembly.GetInformationalVersionAttribute()?? SourceVisualizerFileVersionInfo.ProductVersion) 
-        + Environment.NewLine + "File Version: " + assembly.GetVersion();
-      moreInfo = linkLabelWebSite.Links.Cast<LinkLabel.Link>().Aggregate(moreInfo, (current, link) => current + (Environment.NewLine + Environment.NewLine + link.LinkData) + Environment.NewLine);
-      AboutBox.ShowAboutBox(this, moreInfo);
+      AboutBox.ShowAboutBox(this, SourceVisualizerFileVersionInfo.ProductVersion, linkLabelWebSite.Links.OfType<LinkLabel.Link>().Select(l => l.LinkData));
     }
+    
 
     private void buttonRegistered_Click(object sender, EventArgs e)
     {
@@ -213,6 +211,5 @@ namespace AW.Winforms.Helpers.Forms
       form.Controls.Add(textBox);
       form.ShowDialog();
     }
-
   }
 }

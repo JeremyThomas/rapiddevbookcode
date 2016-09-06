@@ -47,13 +47,15 @@ namespace AW.Winforms.Helpers.Controls
 
     public CSharpEditor()
     {
+      var  resources = new ComponentResourceManager(typeof(CSharpEditor));
+      resources.GetObject("CurrentTB.ServiceColors"); //test ilmerge
       InitializeComponent();
 
       //init menu images
-      var resources = new ComponentResourceManager(typeof (CSharpEditor));
-      copyToolStripMenuItem.Image = ((Image) (resources.GetObject("copyToolStripButton.Image")));
-      cutToolStripMenuItem.Image = ((Image) (resources.GetObject("cutToolStripButton.Image")));
-      pasteToolStripMenuItem.Image = ((Image) (resources.GetObject("pasteToolStripButton.Image")));
+
+      copyToolStripMenuItem.Image = (Image) resources.GetObject("copyToolStripButton.Image");
+      cutToolStripMenuItem.Image = (Image) resources.GetObject("cutToolStripButton.Image");
+      pasteToolStripMenuItem.Image = (Image) resources.GetObject("pasteToolStripButton.Image");
     }
 
 
@@ -129,9 +131,9 @@ namespace AW.Winforms.Helpers.Controls
     private void BuildAutocompleteMenu(AutocompleteMenu popupMenu)
     {
       var items = snippets.Select(item => new SnippetAutocompleteItem(item) {ImageIndex = 1}).Cast<AutocompleteItem>().ToList();
-      items.AddRange(declarationSnippets.Select(item => new DeclarationSnippet(item) {ImageIndex = 0}).Cast<AutocompleteItem>());
+      items.AddRange(declarationSnippets.Select(item => new DeclarationSnippet(item) {ImageIndex = 0}));
 
-      items.AddRange(methods.Select(item => new MethodAutocompleteItem(item) {ImageIndex = 2}).Cast<AutocompleteItem>());
+      items.AddRange(methods.Select(item => new MethodAutocompleteItem(item) {ImageIndex = 2}));
       items.AddRange(keywords.Select(item => new AutocompleteItem(item)));
 
       items.Add(new InsertSpaceSnippet());
@@ -181,10 +183,10 @@ namespace AW.Winforms.Helpers.Controls
       //remember last visit time
       if (tb.Selection.IsEmpty && tb.Selection.Start.iLine < tb.LinesCount)
       {
-        if (lastNavigatedDateTime != tb[tb.Selection.Start.iLine].LastVisit)
+        if (_lastNavigatedDateTime != tb[tb.Selection.Start.iLine].LastVisit)
         {
           tb[tb.Selection.Start.iLine].LastVisit = DateTime.Now;
-          lastNavigatedDateTime = tb[tb.Selection.Start.iLine].LastVisit;
+          _lastNavigatedDateTime = tb[tb.Selection.Start.iLine].LastVisit;
         }
       }
 
@@ -207,7 +209,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void tb_TextChangedDelayed(object sender, TextChangedEventArgs e)
     {
-      var tb = (sender as FastColoredTextBox);
+      var tb = sender as FastColoredTextBox;
       //rebuild object explorer
       var text = (sender as FastColoredTextBox).Text;
       ThreadPool.QueueUserWorkItem(
@@ -244,38 +246,38 @@ namespace AW.Winforms.Helpers.Controls
               s = s.Substring(0, i);
             s = s.Trim();
 
-            var item = new ExplorerItem {title = s, position = r.Index};
-            if (Regex.IsMatch(item.title, @"\b(class|struct|enum|interface)\b"))
+            var item = new ExplorerItem {Title = s, Position = r.Index};
+            if (Regex.IsMatch(item.Title, @"\b(class|struct|enum|interface)\b"))
             {
-              item.title = item.title.Substring(item.title.LastIndexOf(' ')).Trim();
-              item.type = ExplorerItemType.Class;
+              item.Title = item.Title.Substring(item.Title.LastIndexOf(' ')).Trim();
+              item.Type = ExplorerItemType.Class;
               list.Sort(lastClassIndex + 1, list.Count - (lastClassIndex + 1), new ExplorerItemComparer());
               lastClassIndex = list.Count;
             }
-            else if (item.title.Contains(" event "))
+            else if (item.Title.Contains(" event "))
             {
-              var ii = item.title.LastIndexOf(' ');
-              item.title = item.title.Substring(ii).Trim();
-              item.type = ExplorerItemType.Event;
+              var ii = item.Title.LastIndexOf(' ');
+              item.Title = item.Title.Substring(ii).Trim();
+              item.Type = ExplorerItemType.Event;
             }
-            else if (item.title.Contains("("))
+            else if (item.Title.Contains("("))
             {
-              var parts = item.title.Split('(');
-              item.title = parts[0].Substring(parts[0].LastIndexOf(' ')).Trim() + "(" + parts[1];
-              item.type = ExplorerItemType.Method;
+              var parts = item.Title.Split('(');
+              item.Title = parts[0].Substring(parts[0].LastIndexOf(' ')).Trim() + "(" + parts[1];
+              item.Type = ExplorerItemType.Method;
             }
-            else if (item.title.EndsWith("]"))
+            else if (item.Title.EndsWith("]"))
             {
-              var parts = item.title.Split('[');
+              var parts = item.Title.Split('[');
               if (parts.Length < 2) continue;
-              item.title = parts[0].Substring(parts[0].LastIndexOf(' ')).Trim() + "[" + parts[1];
-              item.type = ExplorerItemType.Method;
+              item.Title = parts[0].Substring(parts[0].LastIndexOf(' ')).Trim() + "[" + parts[1];
+              item.Type = ExplorerItemType.Method;
             }
             else
             {
-              var ii = item.title.LastIndexOf(' ');
-              item.title = item.title.Substring(ii).Trim();
-              item.type = ExplorerItemType.Property;
+              var ii = item.Title.LastIndexOf(' ');
+              item.Title = item.Title.Substring(ii).Trim();
+              item.Type = ExplorerItemType.Property;
             }
             list.Add(item);
           }
@@ -311,16 +313,16 @@ namespace AW.Winforms.Helpers.Controls
 
     public class ExplorerItem
     {
-      public ExplorerItemType type;
-      public string title;
-      public int position;
+      public ExplorerItemType Type;
+      public string Title;
+      public int Position;
     }
 
     private class ExplorerItemComparer : IComparer<ExplorerItem>
     {
       public int Compare(ExplorerItem x, ExplorerItem y)
       {
-        return x.title.CompareTo(y.title);
+        return x.Title.CompareTo(y.Title);
       }
     }
 
@@ -430,7 +432,7 @@ namespace AW.Winforms.Helpers.Controls
       {
         var item = _explorerList[e.RowIndex];
         CurrentTB.GoEnd();
-        CurrentTB.SelectionStart = item.position;
+        CurrentTB.SelectionStart = item.Position;
         CurrentTB.DoSelectionVisible();
         CurrentTB.Focus();
       }
@@ -442,9 +444,9 @@ namespace AW.Winforms.Helpers.Controls
       {
         var item = _explorerList[e.RowIndex];
         if (e.ColumnIndex == 1)
-          e.Value = item.title;
+          e.Value = item.Title;
         else
-          switch (item.type)
+          switch (item.Type)
           {
             case ExplorerItemType.Class:
               e.Value = Resources.class_libraries;
@@ -476,7 +478,7 @@ namespace AW.Winforms.Helpers.Controls
       NavigateForward();
     }
 
-    private DateTime lastNavigatedDateTime = DateTime.Now;
+    private DateTime _lastNavigatedDateTime = DateTime.Now;
 
     private bool NavigateBackward()
     {
@@ -487,7 +489,7 @@ namespace AW.Winforms.Helpers.Controls
       {
         var t = CurrentTB;
         for (var i = 0; i < t.LinesCount; i++)
-          if (t[i].LastVisit < lastNavigatedDateTime && t[i].LastVisit > max)
+          if (t[i].LastVisit < _lastNavigatedDateTime && t[i].LastVisit > max)
           {
             max = t[i].LastVisit;
             iLine = i;
@@ -497,8 +499,8 @@ namespace AW.Winforms.Helpers.Controls
       if (iLine >= 0)
       {
         tb.Navigate(iLine);
-        lastNavigatedDateTime = tb[iLine].LastVisit;
-        Console.WriteLine("Backward: " + lastNavigatedDateTime);
+        _lastNavigatedDateTime = tb[iLine].LastVisit;
+        Console.WriteLine("Backward: " + _lastNavigatedDateTime);
         tb.Focus();
         tb.Invalidate();
         return true;
@@ -514,7 +516,7 @@ namespace AW.Winforms.Helpers.Controls
       {
         var t = CurrentTB;
         for (var i = 0; i < t.LinesCount; i++)
-          if (t[i].LastVisit > lastNavigatedDateTime && t[i].LastVisit < min)
+          if (t[i].LastVisit > _lastNavigatedDateTime && t[i].LastVisit < min)
           {
             min = t[i].LastVisit;
             iLine = i;
@@ -524,8 +526,8 @@ namespace AW.Winforms.Helpers.Controls
       if (iLine >= 0)
       {
         tb.Navigate(iLine);
-        lastNavigatedDateTime = tb[iLine].LastVisit;
-        Console.WriteLine("Forward: " + lastNavigatedDateTime);
+        _lastNavigatedDateTime = tb[iLine].LastVisit;
+        Console.WriteLine("Forward: " + _lastNavigatedDateTime);
         tb.Focus();
         tb.Invalidate();
         return true;
@@ -1015,8 +1017,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void rTFToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      var sfd = new SaveFileDialog();
-      sfd.Filter = "RTF|*.rtf";
+      var sfd = new SaveFileDialog {Filter = "RTF|*.rtf"};
       if (sfd.ShowDialog() == DialogResult.OK)
       {
         var rtf = CurrentTB.Rtf;
@@ -1049,17 +1050,17 @@ namespace AW.Winforms.Helpers.Controls
 
   public class InvisibleCharsRenderer : Style
   {
-    private readonly Pen pen;
+    private readonly Pen _pen;
 
     public InvisibleCharsRenderer(Pen pen)
     {
-      this.pen = pen;
+      this._pen = pen;
     }
 
     public override void Draw(Graphics gr, Point position, Range range)
     {
       var tb = range.tb;
-      using (Brush brush = new SolidBrush(pen.Color))
+      using (Brush brush = new SolidBrush(_pen.Color))
         foreach (var place in range)
         {
           switch (tb[place].c)
@@ -1067,7 +1068,7 @@ namespace AW.Winforms.Helpers.Controls
             case ' ':
               var point = tb.PlaceToPoint(place);
               point.Offset(tb.CharWidth/2, tb.CharHeight/2);
-              gr.DrawLine(pen, point.X, point.Y, point.X + 1, point.Y);
+              gr.DrawLine(_pen, point.X, point.Y, point.X + 1, point.Y);
               break;
           }
 

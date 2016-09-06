@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace AW.DebugVisualizers
   public class EnumerableVisualizer : DialogDebuggerVisualizer
   {
     private IDialogVisualizerService _modalService;
+
+    public const string VisualizerWebSite = "https://rapiddevbookcode.codeplex.com/wikipage?title=EnumerableDebugVisualizer";
 
     /// <summary>
     ///   Shows the user interface for the visualizer
@@ -69,7 +72,7 @@ namespace AW.DebugVisualizers
         Text = "About",
         ToolTipText = "About"
       };
-      toolStripButtonAbout.Click += (sender, e) => {AboutBox.ShowAboutBox(Application.OpenForms[0]);};
+      toolStripButtonAbout.Click += (sender, e) => {AboutBox.ShowAboutBox(Application.OpenForms[0], FileVersionInfo.GetVersionInfo(Application.ExecutablePath).ProductVersion, VisualizerWebSite);};
       return FrmDataEditor.CreateDataViewForm(enumerable, toolStripButtonAbout);
     }
   }

@@ -67,7 +67,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release 2013|AnyCPU'">
-    <OutputPath>bin\Release2013\</OutputPath>
+    <OutputPath>bin\Release 2013\</OutputPath>
     <DefineConstants>TRACE;VS2013</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -136,6 +136,7 @@
     <None Include="AW.EnumerableVisualizer.glm" />
     <None Include="DebugDeploy2015.bat" />
     <None Include="DebugDeploy.bat" />
+    <None Include="MergeAndDeployDebug.Bat" />
     <None Include="MergeAndDeploy2013.Bat" />
     <None Include="MergeAndDeploy.Bat" />
     <None Include="packages.config" />

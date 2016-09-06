@@ -17,8 +17,8 @@ namespace AW.DebugVisualizers
       Application.SetCompatibleTextRenderingDefault(false);
       var description = "This is an Enumerable Debugger Visualizer that displays any registered IEnumerable object in a Grid." + Environment.NewLine +
                         "To install click on either of the buttons below which will copy this assembly to the directory chosen. " + Environment.NewLine +
-                        "To uninstall go to the folder and remove the AW.EnumerableVisualizer assembly." + Environment.NewLine +
-                        "For more info see: https://rapiddevbookcode.codeplex.com/wikipage?title=EnumerableDebugVisualizer";
+                        "To uninstall go to the folder and remove the AW.EnumerableVisualizer assembly." + Environment.NewLine + 
+                        "For more info see: " + EnumerableVisualizer.VisualizerWebSite;
       Application.Run(new FormDebuggerVisualizerInstaller(typeof(IDialogVisualizerService), "Enumerable Debugger Visualizer", description, DemoAction));
     }
 
