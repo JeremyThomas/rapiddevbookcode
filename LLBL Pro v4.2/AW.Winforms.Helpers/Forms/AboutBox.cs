@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -36,12 +37,38 @@ namespace AW.Winforms.Helpers.Forms
       AppMoreInfo += moreInfo;
     }
 
-    public static void ShowAboutBox(IWin32Window owner = null, string moreInfo = null)
+    public static void ShowAboutBox(IWin32Window owner = null)
     {
-      if (moreInfo == null)
-        moreInfo = Environment.NewLine + Environment.NewLine + "https://rapiddevbookcode.codeplex.com/documentation" + Environment.NewLine;
+      ShowAboutBox(owner, Environment.NewLine + Environment.NewLine + "https://rapiddevbookcode.codeplex.com/documentation" + Environment.NewLine);
+    }
+
+    public static void ShowAboutBox(IWin32Window owner, string productVersion, params object[] lines)
+    {
+      ShowAboutBox(owner, productVersion, (IEnumerable<object>)lines);
+    }
+
+    public static void ShowAboutBox(IWin32Window owner, string productVersion, IEnumerable<object> lines)
+    {
+      ShowAboutBox(owner, MoreInfo(productVersion, lines));
+    }
+
+    private static void ShowAboutBox(IWin32Window owner, string moreInfo)
+    {
       var ab = new AboutBox(moreInfo);
       ab.ShowDialog(owner);
+    }
+
+    public static string MoreInfo(string productVersion, params object[] lines)
+    {
+      return MoreInfo(productVersion, (IEnumerable<object>)lines);
+    }
+
+    private static string MoreInfo(string productVersion, IEnumerable<object> lines)
+    {
+      var assembly = Assembly.GetEntryAssembly();
+      var moreInfo = Environment.NewLine + Environment.NewLine + "Product Version: " + (assembly.GetInformationalVersionAttribute() ?? productVersion)
+                     + Environment.NewLine + "File Version: " + assembly.GetVersion();
+      return lines.Aggregate(moreInfo, (current, url) => current + Environment.NewLine + Environment.NewLine + url + Environment.NewLine);
     }
 
     private bool _isPainted;
@@ -165,7 +192,7 @@ namespace AW.Winforms.Helpers.Forms
       get { return MoreRichTextBox.Text; }
       set
       {
-        if (string.IsNullOrEmpty(value))
+        if (String.IsNullOrEmpty(value))
           MoreRichTextBox.Visible = false;
         else
         {
@@ -193,7 +220,7 @@ namespace AW.Winforms.Helpers.Forms
       if (a.IsDynamic) return DateTime.MaxValue;
       try
       {
-        return string.IsNullOrWhiteSpace(a.Location) ? DateTime.MaxValue : File.GetLastWriteTime(a.Location);
+        return String.IsNullOrWhiteSpace(a.Location) ? DateTime.MaxValue : File.GetLastWriteTime(a.Location);
       }
       catch (Exception)
       {
@@ -419,7 +446,7 @@ namespace AW.Winforms.Helpers.Forms
     private static void AddVersionUnknown(NameValueCollection nvc)
     {
       var location = nvc["Location"];
-      if (!string.IsNullOrWhiteSpace(location) && location != "(not supported)" && File.Exists(location))
+      if (!String.IsNullOrWhiteSpace(location) && location != "(not supported)" && File.Exists(location))
       {
         var fileVersionInfo = FileVersionInfo.GetVersionInfo(location);
       }
@@ -454,7 +481,7 @@ namespace AW.Winforms.Helpers.Forms
         strSysInfoPath = RegistryHklmValue(@"SOFTWARE\Microsoft\Shared Tools\MSINFO", "PATH");
       if (strSysInfoPath == "")
       {
-        MessageBox.Show(string.Format("System Information is unavailable at this time.{0}{0}(couldn't find path for Microsoft System Information Tool in the registry.)", Environment.NewLine),
+        MessageBox.Show(String.Format("System Information is unavailable at this time.{0}{0}(couldn't find path for Microsoft System Information Tool in the registry.)", Environment.NewLine),
           Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         return;
       }
@@ -464,7 +491,7 @@ namespace AW.Winforms.Helpers.Forms
       }
       catch (Exception)
       {
-        MessageBox.Show(string.Format("System Information is unavailable at this time.{0}{0}(couldn't launch '{1}')", Environment.NewLine, strSysInfoPath),
+        MessageBox.Show(String.Format("System Information is unavailable at this time.{0}{0}(couldn't launch '{1}')", Environment.NewLine, strSysInfoPath),
           Text, MessageBoxButtons.OK, MessageBoxIcon.Stop);
       }
     }
@@ -783,7 +810,7 @@ namespace AW.Winforms.Helpers.Forms
 
       public int Compare(object x, object y)
       {
-        var intResult = string.CompareOrdinal(((ListViewItem) x).SubItems[_intCol].Text, ((ListViewItem) y).SubItems[_intCol].Text);
+        var intResult = String.CompareOrdinal(((ListViewItem) x).SubItems[_intCol].Text, ((ListViewItem) y).SubItems[_intCol].Text);
 
         if (_isAscending)
           return intResult;

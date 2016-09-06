@@ -24,7 +24,7 @@ IF EXIST "%USERPROFILE%\My Documents\Visual Studio 2015\Visualizers" (
     )
  )
 @echo on
-MSBuild "..\AW.DebugVisualizers.sln" /p:Configuration="Release"
-"..\packages\ilmerge.2.14.1208\tools\ILMerge.exe" /out:bin\release\AW.EnumerableVisualizer.2015.exe bin\release\AW.DebugVisualizers.exe bin\release\AW.Helper.dll bin\release\AW.Winforms.Helpers.dll bin\release\Dynamic.dll bin\release\ObjectListView.dll bin\release\sliver.Windows.Forms.StateBrowser.dll bin\release\Humanizer.dll bin\release\AdvancedDataGridView.dll bin\release\Microsoft.ReportViewer.WinForms.dll bin\release\Microsoft.ReportViewer.Common.dll bin\release\FastColoredTextBox.dll
- xcopy /y bin\release\AW.EnumerableVisualizer.2015.exe %VisualizersDir% 
+MSBuild "..\AW.DebugVisualizers.sln" /p:Configuration="debug"
+"..\packages\ilmerge.2.14.1208\tools\ILMerge.exe" /out:bin\debug\AW.EnumerableVisualizer.2015.exe bin\debug\AW.DebugVisualizers.exe bin\debug\AW.Helper.dll bin\debug\AW.Winforms.Helpers.dll bin\debug\Dynamic.dll bin\debug\ObjectListView.dll bin\debug\sliver.Windows.Forms.StateBrowser.dll bin\debug\Humanizer.dll bin\debug\AdvancedDataGridView.dll bin\debug\Microsoft.ReportViewer.WinForms.dll bin\debug\Microsoft.ReportViewer.Common.dll bin\debug\FastColoredTextBox.dll
+ xcopy /y bin\debug\AW.EnumerableVisualizer.2015.exe %VisualizersDir% 
 pause

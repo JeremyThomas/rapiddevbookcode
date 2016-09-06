@@ -37,7 +37,7 @@ namespace AW.Winforms.Helpers.QueryRunner
         try
         {
           control.Enabled = false;
-          var firstMethod = textBoxScript.ExplorerList.FirstOrDefault(ei => ei.type == CSharpEditor.ExplorerItemType.Method);
+          var firstMethod = textBoxScript.ExplorerList.FirstOrDefault(ei => ei.Type == CSharpEditor.ExplorerItemType.Method);
           if (firstMethod != null)
             try
             {
@@ -51,7 +51,7 @@ namespace AW.Winforms.Helpers.QueryRunner
                 {
                   ExecuteQuery(startTime, () => methodDelegate.Invoke() as IEnumerable);
                 }
-                else if (textBoxScript.ExplorerList.Any(ei => ei.type == CSharpEditor.ExplorerItemType.Class && ei.title == "Script"))
+                else if (textBoxScript.ExplorerList.Any(ei => ei.Type == CSharpEditor.ExplorerItemType.Class && ei.Title == "Script"))
                 {
                   var scriptObject = helper.CreateObject("Script") as IQueryScript;
                   if (scriptObject != null)
