@@ -4,11 +4,16 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using AW.Helper;
 using AW.Winforms.Helpers.Properties;
 using FastColoredTextBoxNS;
+
+[assembly: TypeForwardedTo(typeof(FastColoredTextBox))]
 
 namespace AW.Winforms.Helpers.Controls
 {
@@ -45,10 +50,29 @@ namespace AW.Winforms.Helpers.Controls
       set { _explorerList = value; }
     }
 
+    static CSharpEditor()
+    {
+      AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_ResourceResolve;
+      AppDomain.CurrentDomain.ResourceResolve += CurrentDomain_ResourceResolve;
+      AppDomain.CurrentDomain.TypeResolve += CurrentDomain_ResourceResolve;
+    }
+
+    private static Assembly CurrentDomain_ResourceResolve(object sender, ResolveEventArgs args)
+    {
+      if (args.Name.Contains("FastColoredTextBox"))
+      {
+        var returnAssemblyIfAMatch = Assembly.GetExecutingAssembly();
+        if (returnAssemblyIfAMatch.FullName.Contains("AW.EnumerableVisualizer"))
+          return returnAssemblyIfAMatch;
+      }
+      return null;
+    }
+
     public CSharpEditor()
     {
       var  resources = new ComponentResourceManager(typeof(CSharpEditor));
-      resources.GetObject("CurrentTB.ServiceColors"); //test ilmerge
+      var image = (Image)resources.GetObject("copyToolStripButton.Image");
+      var x=  resources.GetObject("CurrentTB.ServiceColors"); //test ilmerge
       InitializeComponent();
 
       //init menu images
