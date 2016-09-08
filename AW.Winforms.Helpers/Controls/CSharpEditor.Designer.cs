@@ -665,7 +665,6 @@ namespace AW.Winforms.Helpers.Controls
       this.CurrentTB.Name = "CurrentTB";
       this.CurrentTB.Paddings = new System.Windows.Forms.Padding(0);
       this.CurrentTB.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-      this.CurrentTB.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("CurrentTB.ServiceColors")));
       this.CurrentTB.Size = new System.Drawing.Size(845, 369);
       this.CurrentTB.TabIndex = 7;
       this.CurrentTB.Zoom = 100;

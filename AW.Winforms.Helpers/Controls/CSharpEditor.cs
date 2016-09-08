@@ -50,29 +50,9 @@ namespace AW.Winforms.Helpers.Controls
       set { _explorerList = value; }
     }
 
-    static CSharpEditor()
-    {
-      AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_ResourceResolve;
-      AppDomain.CurrentDomain.ResourceResolve += CurrentDomain_ResourceResolve;
-      AppDomain.CurrentDomain.TypeResolve += CurrentDomain_ResourceResolve;
-    }
-
-    private static Assembly CurrentDomain_ResourceResolve(object sender, ResolveEventArgs args)
-    {
-      if (args.Name.Contains("FastColoredTextBox"))
-      {
-        var returnAssemblyIfAMatch = Assembly.GetExecutingAssembly();
-        if (returnAssemblyIfAMatch.FullName.Contains("AW.EnumerableVisualizer"))
-          return returnAssemblyIfAMatch;
-      }
-      return null;
-    }
-
     public CSharpEditor()
     {
       var  resources = new ComponentResourceManager(typeof(CSharpEditor));
-      var image = (Image)resources.GetObject("copyToolStripButton.Image");
-      var x=  resources.GetObject("CurrentTB.ServiceColors"); //test ilmerge
       InitializeComponent();
 
       //init menu images
