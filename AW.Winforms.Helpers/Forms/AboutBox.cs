@@ -42,17 +42,17 @@ namespace AW.Winforms.Helpers.Forms
       ShowAboutBox(owner, Environment.NewLine + Environment.NewLine + "https://rapiddevbookcode.codeplex.com/documentation" + Environment.NewLine);
     }
 
-    public static void ShowAboutBox(IWin32Window owner, string productVersion, params object[] lines)
+    public static void ShowAboutBoxWithVersion(IWin32Window owner, string productVersion, params object[] lines)
     {
-      ShowAboutBox(owner, productVersion, (IEnumerable<object>)lines);
+      ShowAboutBoxWithVersion(owner, productVersion, (IEnumerable<object>)lines);
     }
 
-    public static void ShowAboutBox(IWin32Window owner, string productVersion, IEnumerable<object> lines)
+    public static void ShowAboutBoxWithVersion(IWin32Window owner, string productVersion, IEnumerable<object> lines)
     {
       ShowAboutBox(owner, MoreInfo(productVersion, lines));
     }
 
-    private static void ShowAboutBox(IWin32Window owner, string moreInfo)
+    public static void ShowAboutBox(IWin32Window owner, string moreInfo)
     {
       var ab = new AboutBox(moreInfo);
       ab.ShowDialog(owner);
@@ -68,7 +68,7 @@ namespace AW.Winforms.Helpers.Forms
       var assembly = Assembly.GetEntryAssembly();
       var moreInfo = Environment.NewLine + Environment.NewLine + "Product Version: " + (assembly.GetInformationalVersionAttribute() ?? productVersion)
                      + Environment.NewLine + "File Version: " + assembly.GetVersion();
-      return lines.Aggregate(moreInfo, (current, url) => current + Environment.NewLine + Environment.NewLine + url + Environment.NewLine);
+      return lines.Aggregate(moreInfo, (current, line) => current + Environment.NewLine + Environment.NewLine + line + Environment.NewLine);
     }
 
     private bool _isPainted;
