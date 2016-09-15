@@ -72,7 +72,7 @@ namespace AW.DebugVisualizers
         Text = "About",
         ToolTipText = "About"
       };
-      toolStripButtonAbout.Click += (sender, e) => {AboutBox.ShowAboutBox(Application.OpenForms[0], FileVersionInfo.GetVersionInfo(Application.ExecutablePath).ProductVersion, VisualizerWebSite);};
+      toolStripButtonAbout.Click += (sender, e) => {AboutBox.ShowAboutBoxWithVersion(Application.OpenForms[0], FileVersionInfo.GetVersionInfo(Application.ExecutablePath).ProductVersion, VisualizerWebSite);};
       return FrmDataEditor.CreateDataViewForm(enumerable, toolStripButtonAbout);
     }
   }

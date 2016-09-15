@@ -186,7 +186,7 @@ namespace AW.Winforms.Helpers.Forms
 
     private void buttonAbout_Click(object sender, EventArgs e)
     {
-      AboutBox.ShowAboutBox(this, SourceVisualizerFileVersionInfo.ProductVersion, linkLabelWebSite.Links.OfType<LinkLabel.Link>().Select(l => l.LinkData));
+      AboutBox.ShowAboutBoxWithVersion(this, SourceVisualizerFileVersionInfo.ProductVersion, linkLabelWebSite.Links.OfType<LinkLabel.Link>().Select(l => l.LinkData));
     }
     
 

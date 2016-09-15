@@ -1264,7 +1264,8 @@ namespace AW.Winforms.Helpers.Controls
     {
       if (!dataGridViewEnumerable.CurrentCell.IsInEditMode)
         foreach (DataGridViewCell selectedCell in dataGridViewEnumerable.SelectedCells)
-          selectedCell.Value = selectedCell.ValueType == typeof(string) ? string.Empty : MetaDataHelper.GetDefault(selectedCell.ValueType);
+          if (!selectedCell.OwningRow.Selected)
+            selectedCell.Value = selectedCell.ValueType == typeof(string) ? string.Empty : MetaDataHelper.GetDefault(selectedCell.ValueType);
     }
 
     /// <summary>
