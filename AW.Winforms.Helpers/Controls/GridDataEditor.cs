@@ -322,7 +322,7 @@ namespace AW.Winforms.Helpers.Controls
     public void SaveEdits(bool external = true)
     {
       dataGridViewEnumerable.EndEdit();
-      var numSaved = DataEditorPersister.Save(BindingSourceEnumerableList, CascadeDeletes);
+      var numSaved = DataEditorPersister.Save(PageSourceEnumerable, CascadeDeletes);
       toolStripLabelSaveResult.Text = @"numSaved: " + numSaved;
       if (HasDeletes)
       {
