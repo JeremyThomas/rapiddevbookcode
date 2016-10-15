@@ -514,6 +514,7 @@ namespace AW.DebugVisualizers.Tests
     /// Searches the result collection test.
     /// </summary>
     [TestCategory("Winforms"), TestCategory("Slow"), TestCategory("LDAP"), TestMethod]
+    [Timeout(2000)]
     public void SearchResultCollectionTest()
     {
       using (var entry = TestData.CreateLdapDirectoryEntry())
@@ -525,6 +526,7 @@ namespace AW.DebugVisualizers.Tests
     }
 
     [TestCategory("Winforms"), TestCategory("Slow"), TestCategory("LDAP"), TestMethod]
+    [Timeout(2000)]
     public void ResultPropertyCollectionTest()
     {
       using (var entry = TestData.CreateLdapDirectoryEntry())
