@@ -103,7 +103,7 @@ namespace AW.Winforms.Helpers.Controls
         SetItemType(enumerable);
         readOnly = readOnly || !_itemType.IsGenericType;
       }
-      else if (_itemType.IsArray)
+      else if (_itemType.IsArray || _itemType.Implements(typeof(IList)))
       {
         var dt = enumerable.CopyToDataTable();
         enumerable = dt.DefaultView;
