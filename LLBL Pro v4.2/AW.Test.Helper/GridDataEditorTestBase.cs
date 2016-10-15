@@ -68,6 +68,12 @@ namespace AW.Test.Helpers
             if (current != null)
               displayPropertyCount = current.Length;
           }
+          else if (enumerableItemType.Implements(typeof(IList)))
+          {
+            var current = enumerable.Cast<IList>().FirstOrDefault(); //enumerable.GetEnumerator().Current as Array;
+            if (current != null)
+              displayPropertyCount = current.Count;
+          }
         }
 
         if (numProperties > 0)
