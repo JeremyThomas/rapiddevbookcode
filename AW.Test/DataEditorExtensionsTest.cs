@@ -151,13 +151,21 @@ namespace AW.Tests
       var arrayList = new ArrayList {1, 2, "3"};
       TestEditInDataGridView(arrayList, 1);
     }
-
-
+    
     [TestCategory("Winforms"), TestMethod]
     public void ShowListOfArraysInGrid()
     {
       var listOfArrays = new List<string[]> {new[] {"1", "2", "3"}, new[] {"a", "b", "c"}};
       TestShowInGrid(listOfArrays, 3);
+    }
+
+    [TestCategory("Winforms"), TestCategory("Interactive"), TestMethod]
+    public void ShowListOfListOfStringsInGrid()
+    {
+     // ModalFormHandler = NullHandler;
+      var listOfArrays = new List<List<string> > { new List<string> { "1", "2", "3" }, new List<string> { "a", "b", "c" } };
+      TestShowInGrid(listOfArrays, 3);
+    //  FrmDataEditor.ShowInGrid(listOfArrays);
     }
 
     [TestMethod]

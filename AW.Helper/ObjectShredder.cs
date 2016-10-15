@@ -114,6 +114,21 @@ namespace AW.Helper
           LoadDataRow(table, (object[])values, options);
         }
       }
+      else if (Type.Implements(typeof(IList)))
+      {
+        // Enumerate the source sequence and load the scalar values into rows.
+        while (e.MoveNext())
+        {
+          var values = (IList)e.Current;
+          for (var index = 0; index < values.Count; index++)
+          {
+            var v = values[index];
+            ExtendTable(table, "Index" + index, () => v.GetType());
+          }
+          var valuesAsArray = ToArray(values);
+          LoadDataRow(table, valuesAsArray, options);
+        }
+      }
       else
       {
         // Initialize the ordinal map and extend the table schema based on type T.
@@ -141,6 +156,13 @@ namespace AW.Helper
       table.EndLoadData();
       // Return the table.
       return table;
+    }
+
+    public static object[] ToArray(ICollection collection)
+    {
+      var objArray = new object[collection.Count];
+      collection.CopyTo(objArray, 0);
+      return objArray;
     }
 
     private static void LoadDataRow(DataTable table, object[] values, LoadOption? options = null)
