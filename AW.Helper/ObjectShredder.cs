@@ -114,7 +114,7 @@ namespace AW.Helper
           LoadDataRow(table, (object[])values, options);
         }
       }
-      else if (Type.Implements(typeof(IList)))
+      else if (Type.Implements(typeof(IList)) && Type.IsGenericType)
       {
         // Enumerate the source sequence and load the scalar values into rows.
         while (e.MoveNext())
