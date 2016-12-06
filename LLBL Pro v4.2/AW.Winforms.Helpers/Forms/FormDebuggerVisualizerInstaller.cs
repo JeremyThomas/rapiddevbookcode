@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -136,18 +135,17 @@ namespace AW.Winforms.Helpers.Forms
       {
         var baseDirectory = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
         foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-        {
-          try
-          {
-            var sourceFileName = assembly.Location;
-            var sourceFileNameDirectory = Path.GetDirectoryName(sourceFileName);
-            if (sourceFileNameDirectory == baseDirectory)
-              File.Copy(sourceFileName, Path.Combine(directoryName, Path.GetFileName(sourceFileName)), overwrite);
-          }
-          catch (Exception)
-          {
-          }
-        }
+          if (!assembly.IsDynamic)
+            try
+            {
+              var sourceFileName = assembly.Location;
+              var sourceFileNameDirectory = Path.GetDirectoryName(sourceFileName);
+              if (sourceFileNameDirectory == baseDirectory && sourceFileName != null)
+                File.Copy(sourceFileName, Path.Combine(directoryName, Path.GetFileName(sourceFileName)), overwrite);
+            }
+            catch (Exception)
+            {
+            }
       }
     }
 
@@ -188,7 +186,7 @@ namespace AW.Winforms.Helpers.Forms
     {
       AboutBox.ShowAboutBoxWithVersion(this, SourceVisualizerFileVersionInfo.ProductVersion, linkLabelWebSite.Links.OfType<LinkLabel.Link>().Select(l => l.LinkData));
     }
-    
+
 
     private void buttonRegistered_Click(object sender, EventArgs e)
     {

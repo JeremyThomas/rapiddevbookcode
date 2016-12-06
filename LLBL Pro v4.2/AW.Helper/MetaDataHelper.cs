@@ -964,7 +964,9 @@ namespace AW.Helper
       if (assemblyFileVersionAttribute != null && !String.IsNullOrEmpty(assemblyFileVersionAttribute.Version)) return assemblyFileVersionAttribute.Version;
       var assemblyVersionAttribute = GetCustomAttribute<AssemblyVersionAttribute>(assembly);
       if (assemblyVersionAttribute != null && !String.IsNullOrEmpty(assemblyVersionAttribute.Version)) return assemblyVersionAttribute.Version;
-      return assembly.GetName().Version.ToString();
+      if (assembly == null) return null;
+      var assemblyName = assembly.GetName();
+      return Convert.ToString(assemblyName.Version);
     }
 
     public static string GetInformationalVersionAttribute(this Assembly assembly)
@@ -993,7 +995,9 @@ namespace AW.Helper
 
     public static T GetCustomAttribute<T>(this Assembly assembly) where T : Attribute
     {
-      return ((T) assembly.GetCustomAttributes(typeof (T), false).SingleOrDefault());
+      if (assembly == null) return null;
+      var customAttributes = assembly.GetCustomAttributes(typeof (T), false);
+      return (T) customAttributes.SingleOrDefault();
     }
 
     //public static CustomAttributeData GetCustomAttributeReflectionOnly<T>(this Assembly assembly) where T : Attribute

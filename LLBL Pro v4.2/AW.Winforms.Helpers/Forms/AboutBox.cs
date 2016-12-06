@@ -31,10 +31,61 @@ namespace AW.Winforms.Helpers.Forms
   [SuppressMessage("ReSharper", "CatchAllClause")]
   public partial class AboutBox : FrmPersistantLocation
   {
+    static AboutBox()
+    {
+      SetAppEntryAssembly();
+    }
+
     public AboutBox(string moreInfo)
     {
       InitializeComponent();
       AppMoreInfo += moreInfo;
+    }
+
+    static void SetAppEntryAssembly()
+    {
+      // if the user didn't provide an assembly, try to guess which one is the entry assembly
+      if (AppEntryAssembly == null)
+        AppEntryAssembly = Assembly.GetEntryAssembly();
+      if (AppEntryAssembly == null)
+      {
+        //http://stackoverflow.com/questions/14165785/i-need-an-alternative-to-assembly-getentryassembly-that-never-returns-null
+        var stackTrace = new StackTrace();
+        var stackFrames = stackTrace.GetFrames();
+        if (stackFrames == null)
+          AppEntryAssembly = Assembly.GetExecutingAssembly();
+        else
+        {
+          var methodFrames = stackFrames.Select(t => t.GetMethod()).ToArray();
+          MethodBase entryMethod = null;
+          var firstInvokeMethod = 0;
+          for (var i = 0; i < methodFrames.Length; i++)
+          {
+            var method = methodFrames[i] as MethodInfo;
+            if (method == null)
+              continue;
+            if (method.Name == "Main" && method.ReturnType == typeof(void))
+              entryMethod = method;
+            else if (firstInvokeMethod == 0 && method.Name == "InvokeMethod" && method.IsStatic && method.DeclaringType == typeof(RuntimeMethodHandle))
+              firstInvokeMethod = i;
+          }
+
+          if (entryMethod == null)
+            entryMethod = firstInvokeMethod != 0 ? methodFrames[firstInvokeMethod - 1] : methodFrames.Last();
+
+          AppEntryAssembly = entryMethod.Module.Assembly;
+        }
+      }
+
+      try
+      {
+        // for web hosted apps, GetEntryAssembly = nothing
+        _entryAssemblyName = AppEntryAssembly.GetName().Name;
+      }
+      catch (Exception ex)
+      {
+        ex.TraceOut();
+      }
     }
 
     public static void ShowAboutBox(IWin32Window owner = null)
@@ -44,7 +95,7 @@ namespace AW.Winforms.Helpers.Forms
 
     public static void ShowAboutBoxWithVersion(IWin32Window owner, string productVersion, params object[] lines)
     {
-      ShowAboutBoxWithVersion(owner, productVersion, (IEnumerable<object>)lines);
+      ShowAboutBoxWithVersion(owner, productVersion, (IEnumerable<object>) lines);
     }
 
     public static void ShowAboutBoxWithVersion(IWin32Window owner, string productVersion, IEnumerable<object> lines)
@@ -60,19 +111,18 @@ namespace AW.Winforms.Helpers.Forms
 
     public static string MoreInfo(string productVersion, params object[] lines)
     {
-      return MoreInfo(productVersion, (IEnumerable<object>)lines);
+      return MoreInfo(productVersion, (IEnumerable<object>) lines);
     }
 
     private static string MoreInfo(string productVersion, IEnumerable<object> lines)
     {
-      var assembly = Assembly.GetEntryAssembly();
-      var moreInfo = Environment.NewLine + Environment.NewLine + "Product Version: " + (assembly.GetInformationalVersionAttribute() ?? productVersion)
-                     + Environment.NewLine + "File Version: " + assembly.GetVersion();
+      var moreInfo = Environment.NewLine + Environment.NewLine + "Product Version: " + (AppEntryAssembly.GetInformationalVersionAttribute() ?? productVersion)
+                     + Environment.NewLine + "File Version: " + AppEntryAssembly.GetVersion();
       return lines.Aggregate(moreInfo, (current, line) => current + Environment.NewLine + Environment.NewLine + line + Environment.NewLine);
     }
 
     private bool _isPainted;
-    private string _entryAssemblyName;
+    private static string _entryAssemblyName;
     private string _callingAssemblyName;
     private string _executingAssemblyName;
     private NameValueCollection _entryAssemblyAttributeCollection;
@@ -84,7 +134,7 @@ namespace AW.Winforms.Helpers.Forms
     // This is usually read-only, but in some weird cases (Smart Client apps) 
     // you won't have an entry assembly, so you may want to set this manually.
     // </remarks>
-    public Assembly AppEntryAssembly { get; set; }
+    public static Assembly AppEntryAssembly { get; set; }
 
     // <summary>
     // single line of text to show in the application title section of the about box dialog
@@ -192,7 +242,7 @@ namespace AW.Winforms.Helpers.Forms
       get { return MoreRichTextBox.Text; }
       set
       {
-        if (String.IsNullOrEmpty(value))
+        if (string.IsNullOrEmpty(value))
           MoreRichTextBox.Visible = false;
         else
         {
@@ -220,7 +270,7 @@ namespace AW.Winforms.Helpers.Forms
       if (a.IsDynamic) return DateTime.MaxValue;
       try
       {
-        return String.IsNullOrWhiteSpace(a.Location) ? DateTime.MaxValue : File.GetLastWriteTime(a.Location);
+        return string.IsNullOrWhiteSpace(a.Location) ? DateTime.MaxValue : File.GetLastWriteTime(a.Location);
       }
       catch (Exception)
       {
@@ -244,7 +294,7 @@ namespace AW.Winforms.Helpers.Forms
         dt = AssemblyLastWriteTime(a);
       else
       {
-        dt = DateTime.Parse("01/01/2000").AddDays(assemblyVersion.Build).AddSeconds(assemblyVersion.Revision*2);
+        dt = DateTime.Parse("01/01/2000").AddDays(assemblyVersion.Build).AddSeconds(assemblyVersion.Revision * 2);
         if (TimeZone.IsDaylightSavingTime(dt, TimeZone.CurrentTimeZone.GetDaylightChanges(dt.Year)))
           dt = dt.AddHours(1);
         if (dt > DateTime.Now || assemblyVersion.Build < 730 || assemblyVersion.Revision == 0)
@@ -446,7 +496,7 @@ namespace AW.Winforms.Helpers.Forms
     private static void AddVersionUnknown(NameValueCollection nvc)
     {
       var location = nvc["Location"];
-      if (!String.IsNullOrWhiteSpace(location) && location != "(not supported)" && File.Exists(location))
+      if (!string.IsNullOrWhiteSpace(location) && location != "(not supported)" && File.Exists(location))
       {
         var fileVersionInfo = FileVersionInfo.GetVersionInfo(location);
       }
@@ -481,7 +531,7 @@ namespace AW.Winforms.Helpers.Forms
         strSysInfoPath = RegistryHklmValue(@"SOFTWARE\Microsoft\Shared Tools\MSINFO", "PATH");
       if (strSysInfoPath == "")
       {
-        MessageBox.Show(String.Format("System Information is unavailable at this time.{0}{0}(couldn't find path for Microsoft System Information Tool in the registry.)", Environment.NewLine),
+        MessageBox.Show(string.Format("System Information is unavailable at this time.{0}{0}(couldn't find path for Microsoft System Information Tool in the registry.)", Environment.NewLine),
           Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         return;
       }
@@ -491,7 +541,7 @@ namespace AW.Winforms.Helpers.Forms
       }
       catch (Exception)
       {
-        MessageBox.Show(String.Format("System Information is unavailable at this time.{0}{0}(couldn't launch '{1}')", Environment.NewLine, strSysInfoPath),
+        MessageBox.Show(string.Format("System Information is unavailable at this time.{0}{0}(couldn't launch '{1}')", Environment.NewLine, strSysInfoPath),
           Text, MessageBoxButtons.OK, MessageBoxIcon.Stop);
       }
     }
@@ -677,23 +727,8 @@ namespace AW.Winforms.Helpers.Forms
     // </summary>
     private void AboutBoxLoad(object sender, EventArgs e)
     {
-      // if the user didn't provide an assembly, try to guess which one is the entry assembly
-      if (AppEntryAssembly == null)
-        AppEntryAssembly = Assembly.GetEntryAssembly();
-      if (AppEntryAssembly == null)
-        AppEntryAssembly = Assembly.GetExecutingAssembly();
-
       _executingAssemblyName = Assembly.GetExecutingAssembly().GetName().Name;
       _callingAssemblyName = Assembly.GetCallingAssembly().GetName().Name;
-      try
-      {
-        // for web hosted apps, GetEntryAssembly = nothing
-        _entryAssemblyName = AppEntryAssembly.GetName().Name;
-      }
-      catch (Exception ex)
-      {
-        ex.TraceOut();
-      }
 
       TabPanelDetails.Visible = false;
       if (!MoreRichTextBox.Visible)
@@ -810,7 +845,7 @@ namespace AW.Winforms.Helpers.Forms
 
       public int Compare(object x, object y)
       {
-        var intResult = String.CompareOrdinal(((ListViewItem) x).SubItems[_intCol].Text, ((ListViewItem) y).SubItems[_intCol].Text);
+        var intResult = string.CompareOrdinal(((ListViewItem) x).SubItems[_intCol].Text, ((ListViewItem) y).SubItems[_intCol].Text);
 
         if (_isAscending)
           return intResult;
