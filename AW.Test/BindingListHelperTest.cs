@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Data.HelperClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Test.Helpers;
@@ -156,12 +157,17 @@ namespace AW.Tests
       }
       if (testNonGeneric)
         TestBindEnumerable((IEnumerable) enumerable, isObjectListView, numProperties);
-      return (IEnumerable<T>) list;
+      if (list.GetType().IsGenericType)
+        return (IEnumerable<T>) list;
+      return null;
     }
 
     private static void MaybeAssertObjectListView(dynamic list, bool assertRaiseItemChangedEvents = false)
     {
-      AssertObjectListView(list, assertRaiseItemChangedEvents);
+      if (list.GetType().IsGenericType)
+        AssertObjectListView(list, assertRaiseItemChangedEvents);
+      else
+        AssertObjectListViewNg(list, assertRaiseItemChangedEvents);
     }
 
     private static void AssertObjectListView<T>(IList<T> list, bool assertRaiseItemChangedEvents = false)
@@ -170,6 +176,18 @@ namespace AW.Tests
       if (assertRaiseItemChangedEvents)
       {
         var objectListView = (ObjectListView<T>) list;
+        var raiseItemChangedEvents = objectListView.List as IRaiseItemChangedEvents;
+        Assert.IsNotNull(raiseItemChangedEvents, "objectListView.List as IRaiseItemChangedEvents");
+        Assert.IsTrue(raiseItemChangedEvents.RaisesItemChangedEvents, "raiseItemChangedEvents.RaisesItemChangedEvents");
+      }
+    }
+
+    private static void AssertObjectListViewNg(IList list, bool assertRaiseItemChangedEvents = false)
+    {
+      Assert.IsInstanceOfType(list, typeof(ObjectListView));
+      if (assertRaiseItemChangedEvents)
+      {
+        var objectListView = (ObjectListView)list;
         var raiseItemChangedEvents = objectListView.List as IRaiseItemChangedEvents;
         Assert.IsNotNull(raiseItemChangedEvents, "objectListView.List as IRaiseItemChangedEvents");
         Assert.IsTrue(raiseItemChangedEvents.RaisesItemChangedEvents, "raiseItemChangedEvents.RaisesItemChangedEvents");
@@ -191,12 +209,7 @@ namespace AW.Tests
       var list = bindingSource.List;
       if (isObjectListView)
         // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-        if (list.GetType().IsGenericType)
-        {
           MaybeAssertObjectListView(list);
-        }
-        else
-          Assert.IsInstanceOfType(list, typeof(ObjectListView));
       if (numProperties > 0)
       {
         var properties = MetaDataHelper.GetPropertiesToDisplay(enumerable);
@@ -277,6 +290,28 @@ namespace AW.Tests
         Assert.IsInstanceOfType(list, typeof(IEntityView));
       var dataSource = (ICollection) BindingListHelper.GetDataSource(list);
       Assert.IsInstanceOfType(dataSource, typeof(IEntityCollection));
+    }
+
+    [TestMethod]
+    public void LLBLFieldsToBindingListViewTest()
+    {
+      var addressTypeFields = new AddressTypeEntity().Fields;
+      TestToBindingListViewPropertiesCounts(addressTypeFields, TestData.NumFieldProperties);
+      TestToBindingListViewPropertiesCounts(addressTypeFields.ToList(), TestData.NumFieldProperties);
+      TestToBindingListViewPropertiesCounts(addressTypeFields.Cast<IEntityField>(), TestData.NumFieldProperties);
+      TestToBindingListViewPropertiesCounts(addressTypeFields.Cast<IEntityField>().ToList(), TestData.NumFieldProperties);
+
+      var customerFields = new Northwind.DAL.EntityClasses.CustomerEntity().Fields;
+      TestToBindingListViewPropertiesCounts(customerFields, TestData.NumField2Properties);
+      TestToBindingListViewPropertiesCounts(customerFields.ToList(), TestData.NumField2Properties);
+      TestToBindingListViewPropertiesCounts(customerFields.Cast<IEntityField2>(), TestData.NumField2Properties);
+      TestToBindingListViewPropertiesCounts(customerFields.Cast<IEntityField2>().ToList(), TestData.NumField2Properties);
+    }
+
+    static void TestToBindingListViewPropertiesCounts(IEnumerable fields, int numProperties)
+    {
+      var bindingListView = TestToBindingListView(fields);
+      Assert.AreEqual(numProperties, ListBindingHelper.GetListItemProperties(bindingListView).Count);
     }
 
     [TestMethod]

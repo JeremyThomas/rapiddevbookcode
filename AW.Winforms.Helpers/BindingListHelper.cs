@@ -86,9 +86,13 @@ namespace AW.Winforms.Helpers
     private static IBindingListView CreateBindingListView<T>(IEnumerable<T> enumerable, bool ensureFilteringEnabled = false,
       Func<IEnumerable, Type, IBindingListView> bindingListViewCreater = null)
     {
-      var itemType = typeof (T);
-      if (itemType == typeof (object))
-        return CreateBindingListView((IEnumerable) enumerable, ensureFilteringEnabled); //else ListBindingHelper.GetListItemProperties doesn't get the properties
+      var itemType = typeof(T);
+      if (!MetaDataHelper.IsTheActualType(itemType))
+      {
+        var actualItemType = MetaDataHelper.GetEnumerableItemType(enumerable);
+        if (actualItemType != itemType)
+          return CreateBindingListView(enumerable, actualItemType, ensureFilteringEnabled, bindingListViewCreater); //else ListBindingHelper.GetListItemProperties doesn't get the properties
+      }
 
       var bindingListView = bindingListViewCreater == null
         ? GetValidAndPotentialBindingListViews(enumerable, itemType, ensureFilteringEnabled, BindingListViewCreaters)
@@ -229,7 +233,7 @@ namespace AW.Winforms.Helpers
 
     public static IBindingListView CreateObjectListViewGeneric(Type type)
     {
-      return (IBindingListView) MetaDataHelper.CreateGeneric(typeof (ObjectListView<>), type, MetaDataHelper.CreateList(type));
+      return (IBindingListView) MetaDataHelper.CreateGeneric(typeof(ObjectListView<>), type, MetaDataHelper.CreateList(type));
     }
 
     public static IBindingListView CreateObjectListView(Type type)
@@ -324,7 +328,7 @@ namespace AW.Winforms.Helpers
         var raiseListChangedEvents = bindingSource.RaiseListChangedEvents;
         bindingSource.RaiseListChangedEvents = false;
         try
-        { 
+        {
           if (bindingSource.SupportsSorting && (bindingSource.IsSorted || !string.IsNullOrWhiteSpace(bindingSource.Sort)))
             bindingSource.RemoveSort();
           if (bindingSource.SupportsFiltering && !string.IsNullOrWhiteSpace(bindingSource.Filter))
@@ -419,7 +423,7 @@ namespace AW.Winforms.Helpers
 
     public static bool IsObjectListView(object anObject)
     {
-      return anObject != null && (anObject is ObjectListView || anObject.GetType().HasGenericTypeDefinition(typeof (ObjectListView<>)));
+      return anObject != null && (anObject is ObjectListView || anObject.GetType().HasGenericTypeDefinition(typeof(ObjectListView<>)));
     }
 
     public static IEnumerable GetDataSource(this BindingSource bindingSource, bool wantRaiseItemChangedEvents = false)

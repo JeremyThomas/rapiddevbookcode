@@ -19,10 +19,24 @@ namespace AW.Test.Helpers
   public static class TestData
   {
     /// <summary>
-    ///   37 - The number of field properties.
+    ///   37 - The number of EntityField properties. 
+    /// IEntityFieldCore(10) + IFieldInfo (15)
     ///   No LinkedSubTypeFields or LinkedSuperTypeField in LLBL 4
     /// </summary>
+    /// <see cref="IEntityFieldCore"/>
+    /// <see cref="IFieldInfo"/>
+    /// <see cref="IEntityField"/>
+    /// <see cref="EntityField"/>
     public const int NumFieldProperties = 37;
+
+    /// <summary>
+    ///   The number of EntityField2 properties. 
+    /// </summary>
+    /// <see cref="IEntityFieldCore"/>
+    /// <see cref="IFieldInfo"/>
+    /// <see cref="IEntityField2"/>
+    /// <see cref="EntityField2"/>
+    public const int NumField2Properties = 24;
 
     /// <summary>
     ///   8 browseable address properties

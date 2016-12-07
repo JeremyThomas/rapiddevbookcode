@@ -576,12 +576,12 @@ namespace AW.Helper
       Type itemType;
       var enumerableType = enumerable.GetType();
       var elementType = GetElementType(enumerableType);
-      if (elementType != enumerableType && elementType != typeof (object))
+      if (elementType != enumerableType && elementType != typeof(object) && !elementType.IsInterface && !elementType.IsAbstract)
         return elementType;
       try
       {
         itemType = GetListItemType(enumerable);
-        if (itemType == typeof (object))
+        if (!IsTheActualType(itemType))
           itemType = GetEnumerableItemTypeWithFirst(enumerable, itemType);
       }
       catch (NotImplementedException)
@@ -590,6 +590,11 @@ namespace AW.Helper
         itemType = GetEnumerableItemTypeWithFirst(enumerable, null);
       }
       return itemType;
+    }
+
+    public static bool IsTheActualType(Type itemType)
+    {
+      return itemType != typeof(object) && !itemType.IsInterface && !itemType.IsAbstract;
     }
 
     private static Type GetEnumerableItemTypeWithFirst(IEnumerable enumerable, Type itemType)
