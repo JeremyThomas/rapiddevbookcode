@@ -81,7 +81,7 @@ namespace AW.Tests
     {
       var xmlSchema = TestData.GetTestXmlSchema();
       var actual = MetaDataHelper.GetEnumerableItemType(xmlSchema.Items);
-      Assert.AreEqual(typeof(XmlSchemaObject), actual);
+      Assert.AreEqual(typeof(XmlSchemaElement), actual);
       Assert.AreEqual(typeof(int), MetaDataHelper.GetEnumerableItemType(new List<int>()));
       var ints1To4 = (new List<int> {1, 2, 3, 4});
       var intsGreaterThan2 = ints1To4.Where(i => i > 2);

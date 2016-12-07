@@ -242,9 +242,9 @@ namespace AW.DebugVisualizers.Tests
       var addressType = MetaSingletons.MetaData.AddressType.First();
       //ShowObjectSourceVisualizer(addressType);
       TestShow(addressType.Fields, TestData.NumFieldProperties);
-      TestShow(addressType.Fields.ToList(), 10);
+      TestShow(addressType.Fields.ToList(), TestData.NumFieldProperties);
       TestShow(addressType.Fields.Cast<IEntityField>(), TestData.NumFieldProperties);
-      TestShow(addressType.Fields.Cast<IEntityField>().ToList(), 10);
+      TestShow(addressType.Fields.Cast<IEntityField>().ToList(), TestData.NumFieldProperties);
     }
 
     /// <summary>
