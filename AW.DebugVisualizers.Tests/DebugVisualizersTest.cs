@@ -258,8 +258,11 @@ namespace AW.DebugVisualizers.Tests
       TestSerialize(enums);
       enums.Add(ProductCategoryFieldIndex.AmountOfFields);
       TestSerialize(enums);
-      var productCategoryFieldIndices = GeneralHelper.EnumAsEnumerable((Enum) ProductCategoryFieldIndex.AmountOfFields);
+      var productCategoryFieldIndices = GeneralHelper.EnumAsEnumerable<ProductCategoryFieldIndex>();
       TestSerialize(productCategoryFieldIndices);
+
+      var productCategoryFieldIndicesAsEnum = GeneralHelper.EnumAsEnumerable((Enum) ProductCategoryFieldIndex.AmountOfFields);
+      TestSerialize(productCategoryFieldIndicesAsEnum);
     }
 
     [TestMethod]
@@ -299,6 +302,7 @@ namespace AW.DebugVisualizers.Tests
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
       var customerList = northwindLinqMetaData.Customer.ToList();
       const int expectedColumnCount = 12;
+      //Show(northwindLinqMetaData.Customer);
       //Show(customerList);
       //Show(customerList.ToEntityCollection2());
       TestShowTransported(customerList, expectedColumnCount);

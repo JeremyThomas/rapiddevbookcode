@@ -1514,7 +1514,7 @@ namespace JesseJohnston
         sortedEvent(this, EventArgs.Empty);
     }
 
-    private bool ListSupportsListChanged(IList<T> list)
+    private static bool ListSupportsListChanged(IList<T> list)
     {
       if (list == null)
         throw new ArgumentNullException("list");
@@ -1705,66 +1705,70 @@ namespace JesseJohnston
       for (var i = 0; i < sortProps.Count; i++)
       {
         var desc = sortProps[i];
+        if (desc != null)
+        {
+          PropertyDescriptor prop;
+          if (desc.PropertyDescriptor != null)
+            prop = desc.PropertyDescriptor;
+          else
+            prop = itemProperties.Find(desc.PropertyName, true);
+          if (prop != null)
+          {
+            object firstValue = null;
+            try
+            {
+              firstValue = prop.GetValue(first);
+            }
+            catch (TargetException)
+            {
+              // inaccessible property path
+            }
+            catch (TargetInvocationException)
+            {
+              // inaccessible property path
+            }
 
-        PropertyDescriptor prop;
-        if (desc.PropertyDescriptor != null)
-          prop = desc.PropertyDescriptor;
-        else
-          prop = itemProperties.Find(desc.PropertyName, true);
+            object secondValue = null;
+            try
+            {
+              secondValue = prop.GetValue(second);
+            }
+            catch (TargetException)
+            {
+              // inaccessible property path
+            }
+            catch (TargetInvocationException)
+            {
+              // inaccessible property path
+            }
 
-        object firstValue = null;
-        try
-        {
-          firstValue = prop.GetValue(first);
-        }
-        catch (TargetException)
-        {
-          // inaccessible property path
-        }
-        catch (TargetInvocationException)
-        {
-          // inaccessible property path
-        }
-
-        object secondValue = null;
-        try
-        {
-          secondValue = prop.GetValue(second);
-        }
-        catch (TargetException)
-        {
-          // inaccessible property path
-        }
-        catch (TargetInvocationException)
-        {
-          // inaccessible property path
-        }
-
-        if (firstValue == null || secondValue == null)
-          if (firstValue == null)
-            if (secondValue == null)
-              result = 0;
+            if (firstValue == null || secondValue == null)
+              if (firstValue == null)
+                if (secondValue == null)
+                  result = 0;
+                else
+                  result = -1;
+              else
+                result = 1;
             else
-              result = -1;
-          else
-            result = 1;
-        else
-          // Use the user-supplied comparer, if any.
-          if (propertyComparers.ContainsKey(desc.PropertyName))
-            result = propertyComparers[desc.PropertyName].Compare(firstValue, secondValue);
-          else
-            result = ((IComparable) firstValue).CompareTo(secondValue);
+              // Use the user-supplied comparer, if any. Will be null after serialization
+            if (propertyComparers != null && propertyComparers.ContainsKey(desc.PropertyName))
+              result = propertyComparers[desc.PropertyName].Compare(firstValue, secondValue);
+            else
+              result = ((IComparable) firstValue).CompareTo(secondValue);
 
-        // An inequal key was found.
-        if (result != 0)
-        {
-          if (desc.Direction == ListSortDirection.Descending)
-            result *= -1;
+            // An inequal key was found.
+            if (result != 0)
+            {
+              if (desc.Direction == ListSortDirection.Descending)
+                result *= -1;
 
-          // Record the highest (narrowest) sort property index that has actually affected the sort.
-          lastSortingPropertyIndex = Math.Max(lastSortingPropertyIndex, i);
+              // Record the highest (narrowest) sort property index that has actually affected the sort.
+              lastSortingPropertyIndex = Math.Max(lastSortingPropertyIndex, i);
 
-          return result;
+              return result;
+            }
+          }
         }
       }
 
