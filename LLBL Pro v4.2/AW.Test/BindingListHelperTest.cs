@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
-using AW.Data.HelperClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Test.Helpers;
@@ -14,6 +14,7 @@ using AW.Winforms.Helpers.LLBL;
 using JesseJohnston;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+using CustomerEntity = Northwind.DAL.EntityClasses.CustomerEntity;
 
 namespace AW.Tests
 {
@@ -187,7 +188,7 @@ namespace AW.Tests
       Assert.IsInstanceOfType(list, typeof(ObjectListView));
       if (assertRaiseItemChangedEvents)
       {
-        var objectListView = (ObjectListView)list;
+        var objectListView = (ObjectListView) list;
         var raiseItemChangedEvents = objectListView.List as IRaiseItemChangedEvents;
         Assert.IsNotNull(raiseItemChangedEvents, "objectListView.List as IRaiseItemChangedEvents");
         Assert.IsTrue(raiseItemChangedEvents.RaisesItemChangedEvents, "raiseItemChangedEvents.RaisesItemChangedEvents");
@@ -209,7 +210,7 @@ namespace AW.Tests
       var list = bindingSource.List;
       if (isObjectListView)
         // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-          MaybeAssertObjectListView(list);
+        MaybeAssertObjectListView(list);
       if (numProperties > 0)
       {
         var properties = MetaDataHelper.GetPropertiesToDisplay(enumerable);
@@ -301,17 +302,33 @@ namespace AW.Tests
       TestToBindingListViewPropertiesCounts(addressTypeFields.Cast<IEntityField>(), TestData.NumFieldProperties);
       TestToBindingListViewPropertiesCounts(addressTypeFields.Cast<IEntityField>().ToList(), TestData.NumFieldProperties);
 
-      var customerFields = new Northwind.DAL.EntityClasses.CustomerEntity().Fields;
+      var customerFields = new CustomerEntity().Fields;
       TestToBindingListViewPropertiesCounts(customerFields, TestData.NumField2Properties);
       TestToBindingListViewPropertiesCounts(customerFields.ToList(), TestData.NumField2Properties);
       TestToBindingListViewPropertiesCounts(customerFields.Cast<IEntityField2>(), TestData.NumField2Properties);
       TestToBindingListViewPropertiesCounts(customerFields.Cast<IEntityField2>().ToList(), TestData.NumField2Properties);
     }
 
-    static void TestToBindingListViewPropertiesCounts(IEnumerable fields, int numProperties)
+    [TestMethod]
+    public void RegexToBindingListViewTest()
     {
-      var bindingListView = TestToBindingListView(fields);
-      Assert.AreEqual(numProperties, ListBindingHelper.GetListItemProperties(bindingListView).Count);
+      var r = @"(?m)^\s*(?'name'\w+)\s*=\s*(?'value'.*)\s*(?=\r?$)";
+      var text = @"id = 3    secure = true    timeout = 30";
+      var ms = Regex.Matches(text, r);
+      TestToBindingListViewPropertiesCounts(ms, 6);
+
+      foreach (Match m in ms)
+      {
+        TestToBindingListViewPropertiesCounts(m.Groups.OfType<Group>(), 5);
+        TestToBindingListViewPropertiesCounts(m.Captures.OfType<Capture>(), 3);
+      }
+    }
+
+    static void TestToBindingListViewPropertiesCounts(IEnumerable enumerable, int numProperties)
+    {
+      var bindingListView = TestToBindingListView(enumerable);
+      var propertyDescriptorCollection = ListBindingHelper.GetListItemProperties(bindingListView);
+      Assert.AreEqual(numProperties, propertyDescriptorCollection.Count);
     }
 
     [TestMethod]

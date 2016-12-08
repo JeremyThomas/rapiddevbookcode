@@ -564,11 +564,14 @@ namespace AW.Helper
     }
 
     /// <summary>
-    ///   Returns the data type of the items in the specified list.
+    /// Returns the data type of the items in the specified list.
     /// </summary>
-    /// <param name="enumerable"> The enumerable to be examined for type information. </param>
-    /// <returns> The System.Type of the items contained in the list. </returns>
-    public static Type GetEnumerableItemType(IEnumerable enumerable)
+    /// <param name="enumerable">The enumerable to be examined for type information.</param>
+    /// <param name="getActual">if set to <c>true</c> attempt to get actual type if a non-concrete type is first found.</param>
+    /// <returns>
+    /// The System.Type of the items contained in the list.
+    /// </returns>
+    public static Type GetEnumerableItemType(IEnumerable enumerable, bool getActual = true)
     {
       var queryable = enumerable as IQueryable;
       if (queryable != null)
@@ -576,12 +579,12 @@ namespace AW.Helper
       Type itemType;
       var enumerableType = enumerable.GetType();
       var elementType = GetElementType(enumerableType);
-      if (elementType != enumerableType && elementType != typeof(object) && !elementType.IsInterface && !elementType.IsAbstract)
+      if (elementType != enumerableType && (IsTheActualType(elementType) || !getActual))
         return elementType;
       try
       {
         itemType = GetListItemType(enumerable);
-        if (!IsTheActualType(itemType))
+        if (!IsTheActualType(itemType) && getActual)
           itemType = GetEnumerableItemTypeWithFirst(enumerable, itemType);
       }
       catch (NotImplementedException)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data.Linq;
+using System.Diagnostics;
 using System.DirectoryServices;
 using System.Linq;
 using System.Reflection;
@@ -159,7 +160,7 @@ namespace AW.Tests
       TestShowInGrid(listOfArrays, 3);
     }
 
-    [TestCategory("Winforms"), TestCategory("Interactive"), TestMethod]
+    [TestCategory("Winforms"), TestMethod]
     public void ShowListOfListOfStringsInGrid()
     {
      // ModalFormHandler = NullHandler;
@@ -345,8 +346,14 @@ namespace AW.Tests
       FrmDataEditor.ShowInGrid(copyToDataTable.DefaultView);
     }
 
-
     [TestProperty("Winforms", "Interactive"), TestMethod]
+    public void GetProcessesTest()
+    {
+      ModalFormHandler = NullHandler;
+      FrmDataEditor.ShowInGrid(Process.GetProcesses());
+    }
+    
+    [TestCategory("Winforms"), TestMethod]
     public void PropertiesToDisplayTest()
     {
       // ObjectListView.IncludeNonBrowseable = true;

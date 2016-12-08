@@ -117,7 +117,7 @@ namespace AW.DebugVisualizers
       var enumerable = target as IEnumerable;
       if (enumerable != null)
       {
-        var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
+        var itemType = MetaDataHelper.GetEnumerableItemType(enumerable, false);
         var queryable = enumerable as IQueryable;
         if (queryable != null)
           enumerable = queryable.Take(100);

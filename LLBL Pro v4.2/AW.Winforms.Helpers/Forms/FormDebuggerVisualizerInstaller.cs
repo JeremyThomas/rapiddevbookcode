@@ -136,15 +136,11 @@ namespace AW.Winforms.Helpers.Forms
         var baseDirectory = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
         foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
           if (!assembly.IsDynamic)
-            try
             {
               var sourceFileName = assembly.Location;
               var sourceFileNameDirectory = Path.GetDirectoryName(sourceFileName);
               if (sourceFileNameDirectory == baseDirectory && sourceFileName != null)
                 File.Copy(sourceFileName, Path.Combine(directoryName, Path.GetFileName(sourceFileName)), overwrite);
-            }
-            catch (Exception)
-            {
             }
       }
     }
