@@ -514,15 +514,34 @@ namespace JesseJohnston
     {
       if (list == null)
         throw new ArgumentNullException("list");
-      if (!IsListHomogeneous(list))
-        throw new ArgumentException("The list contains multiple item types", "list");
+
+
+      Type bestCandidateItemType = null;
+      var listType = list.GetType();
+      if (listType.IsArray)
+        bestCandidateItemType = listType.GetElementType();
+      else if (listType.IsGenericType)
+      {
+        var genericArgs = listType.GetGenericArguments();
+        if (genericArgs.Length == 1)
+          bestCandidateItemType = genericArgs[0];
+      }
 
       this.list = list;
 
       if (ListSupportsListChanged(list))
       {
         supportsListChanged = true;
-        WireListChangedEvent(list);
+
+        var bindingList = list as IBindingList;
+        if (bindingList != null)
+          bindingList.ListChanged += list_ListChanged;
+        else
+        {
+          var listChanged = listType.GetEvent("ListChanged");
+          if (listChanged != null)
+            listChanged.AddEventHandler(list, new ListChangedEventHandler(list_ListChanged));
+        }
       }
 
       // Monitor list item change events.
@@ -530,30 +549,62 @@ namespace JesseJohnston
 
       // If the list implements IRaiseItemChangedEvents (e.g. BindingList<T>), it will convert list item changes for INotifyChanged.PropertyChanged
       // into ListChanged events, but not for .NET 1.x-style propertyNameChanged events.
-      if (list is IRaiseItemChangedEvents)
-        if (((IRaiseItemChangedEvents) list).RaisesItemChangedEvents)
+      var raiseItemChangedEvents = list as IRaiseItemChangedEvents;
+      if (raiseItemChangedEvents != null)
+        if (raiseItemChangedEvents.RaisesItemChangedEvents)
           monitorItemChanges = ListItemChangeEvents.PropertyChangedEvents;
-
-      var listType = list.GetType();
 
       // Infer item type from existing list items or generic list parameters.
       if (list.Count > 0)
       {
-        ItemType = list[0].GetType();
-
-        // If needed, attach handlers to item change events for existing list items.
+        bool doesSupportsNotifyPropertyChanged = false;
+        Dictionary<string, EventHandlerInfo> propertyChangedEvents = null;
+        if (bestCandidateItemType != null)
+        {
+          doesSupportsNotifyPropertyChanged = typeof(INotifyPropertyChanged).IsAssignableFrom(bestCandidateItemType);
+          propertyChangedEvents = GetPropertyChangedEvents(bestCandidateItemType);
+        }
+        if (bestCandidateItemType == null || bestCandidateItemType.IsAbstract || bestCandidateItemType.IsInterface)
+        {
+          var typesInList = new HashSet<Type>();
+          var candidateItemTypes = new HashSet<Type>();
+          var concreteCandidateItemTypes = new HashSet<Type>();
+          if (bestCandidateItemType != null)
+            candidateItemTypes.Add(bestCandidateItemType);
+          foreach (var item in list)
+          {
+            var type = item.GetType();
+            if (!typesInList.Contains(type))
+              typesInList.Add(type);
+            // If needed, attach handlers to item change events for existing list items.
+            if (monitorItemChanges != ListItemChangeEvents.None)
+              WirePropertyChangedEvents(item, doesSupportsNotifyPropertyChanged, propertyChangedEvents);
+          }
+          //TODO Shouldn't need double loop
+          bestCandidateItemType = typesInList.First();
+          foreach (var type in typesInList)
+          {
+            var closestType = GetClosestType(type, bestCandidateItemType);
+            if (closestType == null || closestType == typeof(object))
+              throw new ArgumentException("The list contains multiple item types: " + string.Join(",", typesInList.Select(Convert.ToString).ToArray()), "list");
+            if (closestType.IsAbstract || closestType.IsInterface)
+            {
+              if (!candidateItemTypes.Contains(closestType))
+                candidateItemTypes.Add(closestType);
+            }
+            else if (!concreteCandidateItemTypes.Contains(closestType))
+              concreteCandidateItemTypes.Add(closestType);
+          }
+          bestCandidateItemType = GetBestCandidateItemType(concreteCandidateItemTypes) ?? GetBestCandidateItemType(candidateItemTypes);
+        }
+        else
+          // If needed, attach handlers to item change events for existing list items.
         if (monitorItemChanges != ListItemChangeEvents.None)
           foreach (var item in list)
-            WirePropertyChangedEvents(item);
+            WirePropertyChangedEvents(item, doesSupportsNotifyPropertyChanged, propertyChangedEvents);
       }
-      else if (listType.IsGenericType)
-      {
-        var genericArgs = listType.GetGenericArguments();
-        if (genericArgs.Length == 1)
-          ItemType = genericArgs[0];
-      }
-      else if (listType.IsArray)
-        ItemType = listType.GetElementType();
+      if (ItemType == null && bestCandidateItemType!=null)
+        ItemType = bestCandidateItemType;
 
       RebuildSortIndexes();
 
@@ -561,6 +612,33 @@ namespace JesseJohnston
       allowNew = !list.IsReadOnly && !list.IsFixedSize;
       allowRemove = !list.IsReadOnly && !list.IsFixedSize;
       synced = list.IsSynchronized && list.SyncRoot != null;
+    }
+
+    static Type GetBestCandidateItemType(HashSet<Type> candidateItemTypes)
+    {
+      var bestCandidateItemType = candidateItemTypes.FirstOrDefault();
+      foreach (var candidateItemType in candidateItemTypes)
+        if (bestCandidateItemType != candidateItemType && candidateItemType.IsAssignableFrom(bestCandidateItemType))
+          bestCandidateItemType = candidateItemType;
+      return bestCandidateItemType;
+    }
+
+    /// <summary>
+    /// Gets the type of the minimum covariant type for best fit between two types.
+    /// http://stackoverflow.com/questions/14472103/how-to-find-the-minimum-covariant-type-for-best-fit-between-two-types
+    /// </summary>
+    /// <param name="a">a.</param>
+    /// <param name="b">The b.</param>
+    /// <returns></returns>
+    static Type GetClosestType(Type a,Type b)
+    {
+      while (a != null)
+      {
+        if (a.IsAssignableFrom(b))
+          return a;
+        a = a.BaseType;
+      }
+      return null;
     }
 
     /// <summary>
@@ -1800,28 +1878,7 @@ namespace JesseJohnston
         sortedEvent(this, EventArgs.Empty);
     }
 
-    private bool IsListHomogeneous(IList list)
-    {
-      if (list == null)
-        throw new ArgumentNullException("list");
-
-      if (list.GetType().IsArray)
-        return true;
-
-      Type itemType = null;
-      foreach (var item in list)
-      {
-        if (item.GetType() != itemType)
-          if (itemType == null)
-            itemType = item.GetType();
-          else
-            return false;
-      }
-
-      return true;
-    }
-
-    private bool ListSupportsListChanged(IList list)
+    private static bool ListSupportsListChanged(IList list)
     {
       if (list == null)
         throw new ArgumentNullException("list");
@@ -1832,21 +1889,6 @@ namespace JesseJohnston
       {
         var listChanged = list.GetType().GetEvent("ListChanged");
         return (listChanged != null && listChanged.EventHandlerType == typeof (ListChangedEventHandler));
-      }
-    }
-
-    private void WireListChangedEvent(IList list)
-    {
-      if (list == null)
-        throw new ArgumentNullException("list");
-
-      if (list is IBindingList)
-        ((IBindingList) list).ListChanged += list_ListChanged;
-      else
-      {
-        var listChanged = list.GetType().GetEvent("ListChanged");
-        if (listChanged != null)
-          listChanged.AddEventHandler(list, new ListChangedEventHandler(list_ListChanged));
       }
     }
 
@@ -1877,10 +1919,15 @@ namespace JesseJohnston
 
     private void WirePropertyChangedEvents(object item)
     {
-      if ((monitorItemChanges & ListItemChangeEvents.INotifyPropertyChanged) != 0 && supportsNotifyPropertyChanged)
+      WirePropertyChangedEvents(item, supportsNotifyPropertyChanged, itemPropertyChangedEvents);
+    }
+
+    void WirePropertyChangedEvents(object item, bool doesSupportsNotifyPropertyChanged, Dictionary<string, EventHandlerInfo> propertyChangedEvents)
+    {
+      if ((monitorItemChanges & ListItemChangeEvents.INotifyPropertyChanged) != 0 && doesSupportsNotifyPropertyChanged)
         ((INotifyPropertyChanged) item).PropertyChanged += listItem_PropertyChanged;
-      else if ((monitorItemChanges & ListItemChangeEvents.PropertyChangedEvents) != 0 && supportsPropertyChangedEvents)
-        foreach (var pair in itemPropertyChangedEvents)
+      else if ((monitorItemChanges & ListItemChangeEvents.PropertyChangedEvents) != 0 && doesSupportsNotifyPropertyChanged)
+        foreach (var pair in propertyChangedEvents)
         {
           pair.Value.EventInfo.AddEventHandler(item, pair.Value.EventHandler);
         }
