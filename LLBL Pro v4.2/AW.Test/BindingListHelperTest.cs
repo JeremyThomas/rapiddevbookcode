@@ -312,14 +312,16 @@ namespace AW.Tests
     [TestMethod]
     public void RegexToBindingListViewTest()
     {
-      var r = @"(?m)^\s*(?'name'\w+)\s*=\s*(?'value'.*)\s*(?=\r?$)";
-      var text = @"id = 3    secure = true    timeout = 30";
+      const string r = @"(?m)^\s*(?'name'\w+)\s*=\s*(?'value'.*)\s*(?=\r?$)";
+      const string text = @"id = 3    secure = true    timeout = 30";
       var ms = Regex.Matches(text, r);
       TestToBindingListViewPropertiesCounts(ms, 6);
 
       foreach (Match m in ms)
       {
+        TestToBindingListViewPropertiesCounts(m.Groups, 5);
         TestToBindingListViewPropertiesCounts(m.Groups.OfType<Group>(), 5);
+        TestToBindingListViewPropertiesCounts(m.Captures, 6);
         TestToBindingListViewPropertiesCounts(m.Captures.OfType<Capture>(), 3);
       }
     }

@@ -1707,11 +1707,7 @@ namespace JesseJohnston
         var desc = sortProps[i];
         if (desc != null)
         {
-          PropertyDescriptor prop;
-          if (desc.PropertyDescriptor != null)
-            prop = desc.PropertyDescriptor;
-          else
-            prop = itemProperties.Find(desc.PropertyName, true);
+          var prop = desc.PropertyDescriptor ?? itemProperties.Find(desc.PropertyName, true);
           if (prop != null)
           {
             object firstValue = null;

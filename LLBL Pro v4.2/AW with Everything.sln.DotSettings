@@ -16,4 +16,5 @@
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=LINQ/@EntryIndexedValue">LINQ</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=LLBL/@EntryIndexedValue">LLBL</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=PK/@EntryIndexedValue">PK</s:String>
-	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=VM/@EntryIndexedValue">VM</s:String></wpf:ResourceDictionary>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=VM/@EntryIndexedValue">VM</s:String>
+	<s:Boolean x:Key="/Default/Environment/UnitTesting/DisabledProviders/=NUnit2x/@EntryIndexedValue">False</s:Boolean></wpf:ResourceDictionary>
