@@ -554,15 +554,18 @@ namespace JesseJohnston
         if (raiseItemChangedEvents.RaisesItemChangedEvents)
           monitorItemChanges = ListItemChangeEvents.PropertyChangedEvents;
 
+      var doesSupportsNotifyPropertyChanged = false;
+      var doesSupportsPropertyChangedEvents = false;
+      Dictionary<string, EventHandlerInfo> propertyChangedEvents = null;
       // Infer item type from existing list items or generic list parameters.
       if (list.Count > 0)
       {
-        bool doesSupportsNotifyPropertyChanged = false;
-        Dictionary<string, EventHandlerInfo> propertyChangedEvents = null;
         if (bestCandidateItemType != null)
         {
           doesSupportsNotifyPropertyChanged = typeof(INotifyPropertyChanged).IsAssignableFrom(bestCandidateItemType);
           propertyChangedEvents = GetPropertyChangedEvents(bestCandidateItemType);
+          if (propertyChangedEvents != null)
+            doesSupportsPropertyChangedEvents = propertyChangedEvents.Count > 0;
         }
         if (bestCandidateItemType == null || bestCandidateItemType.IsAbstract || bestCandidateItemType.IsInterface)
         {
@@ -578,7 +581,7 @@ namespace JesseJohnston
               typesInList.Add(type);
             // If needed, attach handlers to item change events for existing list items.
             if (monitorItemChanges != ListItemChangeEvents.None)
-              WirePropertyChangedEvents(item, doesSupportsNotifyPropertyChanged, propertyChangedEvents);
+              WirePropertyChangedEvents(item, doesSupportsNotifyPropertyChanged, doesSupportsPropertyChangedEvents, propertyChangedEvents);
           }
           //TODO Shouldn't need double loop
           bestCandidateItemType = typesInList.First();
@@ -598,13 +601,23 @@ namespace JesseJohnston
           bestCandidateItemType = GetBestCandidateItemType(concreteCandidateItemTypes) ?? GetBestCandidateItemType(candidateItemTypes);
         }
         else
-          // If needed, attach handlers to item change events for existing list items.
+        // If needed, attach handlers to item change events for existing list items.
         if (monitorItemChanges != ListItemChangeEvents.None)
           foreach (var item in list)
-            WirePropertyChangedEvents(item, doesSupportsNotifyPropertyChanged, propertyChangedEvents);
+            WirePropertyChangedEvents(item, doesSupportsNotifyPropertyChanged, doesSupportsPropertyChangedEvents, propertyChangedEvents);
       }
-      if (ItemType == null && bestCandidateItemType!=null)
+      if (ItemType == null && bestCandidateItemType != null)
+      {
         ItemType = bestCandidateItemType;
+        // If needed, attach handlers to item change events for existing list items.
+        if (monitorItemChanges != ListItemChangeEvents.None)
+        {
+          if (doesSupportsNotifyPropertyChanged != supportsNotifyPropertyChanged
+            || doesSupportsPropertyChangedEvents != supportsPropertyChangedEvents)
+          foreach (var item in list)
+            WirePropertyChangedEvents(item);
+        }
+      }
 
       RebuildSortIndexes();
 
@@ -1919,14 +1932,14 @@ namespace JesseJohnston
 
     private void WirePropertyChangedEvents(object item)
     {
-      WirePropertyChangedEvents(item, supportsNotifyPropertyChanged, itemPropertyChangedEvents);
+      WirePropertyChangedEvents(item, supportsNotifyPropertyChanged,supportsPropertyChangedEvents, itemPropertyChangedEvents);
     }
 
-    void WirePropertyChangedEvents(object item, bool doesSupportsNotifyPropertyChanged, Dictionary<string, EventHandlerInfo> propertyChangedEvents)
+    void WirePropertyChangedEvents(object item, bool doesSupportsNotifyPropertyChanged, bool doesSupportsPropertyChangedEvents, Dictionary<string, EventHandlerInfo> propertyChangedEvents)
     {
       if ((monitorItemChanges & ListItemChangeEvents.INotifyPropertyChanged) != 0 && doesSupportsNotifyPropertyChanged)
         ((INotifyPropertyChanged) item).PropertyChanged += listItem_PropertyChanged;
-      else if ((monitorItemChanges & ListItemChangeEvents.PropertyChangedEvents) != 0 && doesSupportsNotifyPropertyChanged)
+      else if ((monitorItemChanges & ListItemChangeEvents.PropertyChangedEvents) != 0 && doesSupportsPropertyChangedEvents)
         foreach (var pair in propertyChangedEvents)
         {
           pair.Value.EventInfo.AddEventHandler(item, pair.Value.EventHandler);
