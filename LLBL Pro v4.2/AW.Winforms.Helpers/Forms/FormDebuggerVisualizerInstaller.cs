@@ -122,8 +122,8 @@ namespace AW.Winforms.Helpers.Forms
     {
       if (destinationVisualizerFileInfo.Exists && sourceVisualizerFileInfo.LastWriteTime > destinationVisualizerFileInfo.LastWriteTime)
         CopyNewAssemblies(destinationVisualizerFileInfo, true);
-      else
-        CopyNewAssemblies(destinationVisualizerFileInfo, false);
+      //else
+      //  CopyNewAssemblies(destinationVisualizerFileInfo, false);
       return GetStatus(destinationVisualizerFileInfo.FullName, statusLabel);
     }
 

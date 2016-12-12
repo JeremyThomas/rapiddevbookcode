@@ -380,7 +380,7 @@ namespace AW.Winforms.Helpers.Controls
         saveToolStripButton.Visible = _canSave;
         toolStripCheckBoxDeletesAreCascading.Visible = _canSave;
         toolStripCheckBoxDeletesAreCascading.Enabled = true;
-        toolStripButtonRelatedCounts.Enabled = true;
+        toolStripButtonRelatedCounts.Enabled = DataEditorPersister != null;
         toolStripButtonCSharp.Enabled = true;
         toolStripButtonSearch.Enabled = true;
         copyToolStripButton.Enabled = true;
