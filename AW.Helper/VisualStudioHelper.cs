@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using Microsoft.VisualStudio.Setup.Configuration;
 using Microsoft.Win32;
 
 namespace AW.Helper
@@ -15,6 +17,7 @@ namespace AW.Helper
   public enum VisualStudioVersion
   {
     // ReSharper disable InconsistentNaming
+    VS2017 = 150,
     VS2015 = 140,
     VS2013 = 120,
     VS2012 = 110,
@@ -24,7 +27,7 @@ namespace AW.Helper
     VSNet2003 = 71,
     VSNet2002 = 70,
     Other = 0
-  };
+  }
 
 // ReSharper restore InconsistentNaming
 
@@ -53,13 +56,63 @@ namespace AW.Helper
             return installDirIde.Remove(installDirIde.Length - ideLength, ideLength); //Remove /IDE
         }
       var vscomntoolsDir = Environment.GetEnvironmentVariable("VS" + (int) version + "COMNTOOLS");
+
+      if (vscomntoolsDir == null)
+      {
+        var query = GetQuery();
+        var query2 = (ISetupConfiguration2)query;
+        var e = query2.EnumAllInstances();
+        int fetched;
+        var instances = new ISetupInstance[1];
+        do
+        {
+          e.Next(1, instances, out fetched);
+          if (fetched > 0)
+          {
+            var instance2 = (ISetupInstance2)instances[0];
+            return Path.Combine(instance2.GetInstallationPath(), "Common7");
+          }
+        }
+        while (fetched > 0);
+        return null;
+      }
       var toolsLength = @"/Tools".Length;
-      return vscomntoolsDir == null ? null : vscomntoolsDir.Remove(vscomntoolsDir.Length - toolsLength, toolsLength); //Remove /Tools
+      return vscomntoolsDir.Remove(vscomntoolsDir.Length - toolsLength, toolsLength);
+    }
+
+    // ReSharper disable once InconsistentNaming
+    private const int REGDB_E_CLASSNOTREG = unchecked((int)0x80040154);
+
+    [DllImport("Microsoft.VisualStudio.Setup.Configuration.Native.dll", ExactSpelling = true, PreserveSig = true)]
+    private static extern int GetSetupConfiguration(
+    [MarshalAs(UnmanagedType.Interface), Out] out ISetupConfiguration configuration,
+    IntPtr reserved);
+
+    private static ISetupConfiguration GetQuery()
+    {
+      try
+      {
+        // Try to CoCreate the class object.
+        return new SetupConfiguration();
+      }
+      catch (COMException ex) when (ex.HResult == REGDB_E_CLASSNOTREG)
+      {
+        // Try to get the class object using app-local call.
+        ISetupConfiguration query;
+        var result = GetSetupConfiguration(out query, IntPtr.Zero);
+
+        if (result < 0)
+        {
+          throw new COMException("Failed to get query", result);
+        }
+
+        return query;
+      }
     }
 
     private static string GetRegistryKeyString(VisualStudioVersion version, bool is64BitProcess)
     {
-      var registryKeyString = String.Format(@"SOFTWARE{0}Microsoft\VisualStudio\{1}",
+      var registryKeyString = string.Format(@"SOFTWARE{0}Microsoft\VisualStudio\{1}",
         is64BitProcess ? @"\Wow6432Node\" : "\\",
         GetVersionNumber(version));
       return registryKeyString;
@@ -67,7 +120,7 @@ namespace AW.Helper
 
     public static string GetVisualStudioDebuggerVisualizersDir(VisualStudioVersion version)
     {
-      return GetVisualStudioInstallationCommonDir(version) + @"Packages\Debugger\Visualizers";
+      return Path.Combine(GetVisualStudioInstallationCommonDir(version), @"Packages\Debugger\Visualizers");
     }
 
     internal static string GetVisualStudioUserDir(VisualStudioVersion version)
@@ -109,15 +162,15 @@ namespace AW.Helper
     {
       if (version == VisualStudioVersion.Other)
         throw new Exception("Not supported version");
-      return ((int) version/10).ToString("00.0", CultureInfo.InvariantCulture);
+      return ((int) version / 10).ToString("00.0", CultureInfo.InvariantCulture);
     }
 
     public static VisualStudioVersion GetVisualStudioVersion(int versionNumber)
     {
-      var enumType = typeof (VisualStudioVersion);
+      var enumType = typeof(VisualStudioVersion);
       if (Enum.IsDefined(enumType, versionNumber))
         return (VisualStudioVersion) versionNumber;
-      versionNumber = versionNumber*10;
+      versionNumber = versionNumber * 10;
       if (Enum.IsDefined(enumType, versionNumber))
         return (VisualStudioVersion) versionNumber;
       //GeneralHelper.EnumAsEnumerable<VisualStudioVersion>().FirstOrDefault()
@@ -145,14 +198,10 @@ namespace AW.Helper
           else
             File.Copy(source, target);
         else
-        {
           result = sourceVisualizerFileInfo.FullName + " does not exist";
-        }
       }
       else
-      {
         result = string.Format("{0} or {1} does not exist", debuggerVisualizersDir, debuggerVisualizerSourceDir);
-      }
       if (result != null)
         Trace.WriteLine(result);
       return result;
