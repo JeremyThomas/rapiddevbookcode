@@ -43,7 +43,8 @@ namespace AW.Winforms.Helpers.Forms
       var microsoftVisualStudioDebuggerVisualizersAssembly = Assembly.GetAssembly(dialogVisualizerServiceType);
       var fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly = FileVersionInfo.GetVersionInfo(microsoftVisualStudioDebuggerVisualizersAssembly.Location);
       var visualStudioVersion = VisualStudioHelper.GetVisualStudioVersion(fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductMajorPart);
-
+      if (visualStudioVersion == VisualStudioVersion.Other)
+        throw new Exception("Not supported version: " + fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductMajorPart+ " from "+ fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly);
       string productName = fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductName;
       if (!productName.Contains("20"))
         productName += visualStudioVersion.EnumToString().Replace("VS","");
