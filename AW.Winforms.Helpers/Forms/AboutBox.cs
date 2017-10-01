@@ -684,7 +684,7 @@ namespace AW.Winforms.Helpers.Forms
       s = s.Replace("%copyright%", EntryAssemblyAttribute("copyright"));
       s = s.Replace("%description%", EntryAssemblyAttribute("description"));
       s = s.Replace("%company%", EntryAssemblyAttribute("company"));
-      s = s.Replace("%product%", EntryAssemblyAttribute("product"));
+       s = s.Replace("%product%", EntryAssemblyAttribute("product"));
       s = s.Replace("%trademark%", EntryAssemblyAttribute("trademark"));
       s = s.Replace("%year%", DateTime.Now.Year.ToString());
       s = s.Replace("%version%", EntryAssemblyAttribute("version"));

@@ -10,19 +10,26 @@ IF EXIST "!USERPROFILE!\Documents" (
 ) 
 )
 
-set VisualizersDir= "%USERPROFILE%\My Documents\Visual Studio 2013\Visualizers"
-IF EXIST "%USERPROFILE%\My Documents\Visual Studio 2013\Visualizers" (
+set VisualizersDir= "%VisualStudioDir%\Visualizers"
+IF EXIST "%VisualizersDir%" (
+ echo using VisualStudioDir !VisualizersDir!
+ goto build
+) else (
+set VisualizersDir= "%USERPROFILE%\My Documents\Visual Studio 2017\Visualizers"
+IF EXIST "%USERPROFILE%\My Documents\Visual Studio 2017\Visualizers" (
   echo using 1 !VisualizersDir!
 ) else (
     echo !VisualizersDir! not found 1
-    set VisualizersDir= "%USERPROFILE%\Documents\Visual Studio 2013\Visualizers"
-    IF EXIST "%USERPROFILE%\Documents\Visual Studio 2013\Visualizers" (
+    set VisualizersDir= "%USERPROFILE%\Documents\Visual Studio 2017\Visualizers"
+    IF EXIST "%USERPROFILE%\Documents\Visual Studio 2017\Visualizers" (
       echo using 2 !VisualizersDir!
       ) else (
       echo !VisualizersDir! not found 2
       goto:eof
     )
  )
+ )
+:build
 
 xcopy /y  bin\debug\AW.DebugVisualizers.* %VisualizersDir%
 xcopy /y  bin\debug\AW.Helper.* %VisualizersDir%
@@ -33,4 +40,5 @@ xcopy /y  bin\debug\sliver.Windows.Forms.StateBrowser.* %VisualizersDir%
 xcopy /y  bin\debug\AdvancedDataGridView.dll %VisualizersDir%
 xcopy /y  bin\debug\Humanizer.dll %VisualizersDir%
 xcopy /y  bin\debug\FastColoredTextBox.dll %VisualizersDir%
+xcopy /y  bin\debug\Microsoft.VisualStudio.DebuggerVisualizers.dll %VisualizersDir%
 pause
