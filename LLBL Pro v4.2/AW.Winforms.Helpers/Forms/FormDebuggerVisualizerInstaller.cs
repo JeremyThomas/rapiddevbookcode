@@ -25,7 +25,7 @@ namespace AW.Winforms.Helpers.Forms
     {
       InitializeComponent();
     }
-
+    
     /// <exception cref="ArgumentOutOfRangeException">
     ///   <paramref /> is less than zero or greater than the length of this
     ///   instance.
@@ -44,8 +44,11 @@ namespace AW.Winforms.Helpers.Forms
       var fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly = FileVersionInfo.GetVersionInfo(microsoftVisualStudioDebuggerVisualizersAssembly.Location);
       var visualStudioVersion = VisualStudioHelper.GetVisualStudioVersion(fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductMajorPart);
 
+      string productName = fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductName;
+      if (!productName.Contains("20"))
+        productName += visualStudioVersion.EnumToString().Replace("VS","");
       labelVersion.Text = string.Format("This is version {0} for {1}. Last modified: {2}", SourceVisualizerFileVersionInfo.ProductVersion,
-        fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductName, SourceVisualizerFileInfo.LastWriteTime);
+        productName, SourceVisualizerFileInfo.LastWriteTime);
 
       linkLabelAll.Text = VisualStudioHelper.GetVisualStudioDebuggerVisualizersDir(visualStudioVersion);
       linkLabelAll.Links.Add(0, linkLabelAll.Text.Length, linkLabelAll.Text);
