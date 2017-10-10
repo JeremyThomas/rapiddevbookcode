@@ -199,6 +199,7 @@ namespace AW.Test.Helpers
     }
 
     public const string LdapUserName = "guest1";
+    public const string LdapUserNameWildCard = "guest*";
 
     /// <summary>
     /// Creates the LDAP directory entry.

@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{109114F1-DE48-4B10-AF10-A18D9AF68E8B}"
 	ProjectSection(SolutionItems) = preProject
@@ -172,30 +172,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectAsSourceCodeVisualizer", "Tools\ObjectSourceVisualizer\ObjectAsSourceCodeVisualizer.csproj", "{131ADE94-66B8-4FE5-96ED-D01E61955327}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AW.WebDbEditor 4.2", "http://localhost/AW.WebDbEditor 4.2", "{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}"
-	ProjectSection(WebsiteProperties) = preProject
-		SccProjectName = "SAK"
-		SccAuxPath = "SAK"
-		SccLocalPath = "SAK"
-		SccProvider = "SAK"
-		UseIISExpress = "false"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
-		ProjectReferences = "{47f52527-a001-405b-9cec-fcbf7fa10855}|AW.Data.dll;{FFC5B55E-9157-4CE6-81BD-E593E4C08422}|AW.Helper.dll;{7919C746-73F3-4279-A53B-CC6C08F42318}|AW.Helper.LLBL.dll;"
-		Debug.AspNetCompiler.VirtualPath = "/AW.WebDbEditor 4.2"
-		Debug.AspNetCompiler.PhysicalPath = "AW.WebDbEditor\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\AW.WebDbEditor 4.2\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/AW.WebDbEditor 4.2"
-		Release.AspNetCompiler.PhysicalPath = "AW.WebDbEditor\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\AW.WebDbEditor 4.2\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "AW.WebDbEditor\"
-	EndProjectSection
 	ProjectSection(WebsiteProperties) = preProject
 		SccProjectName = "SAK"
 		SccAuxPath = "SAK"
@@ -1012,8 +988,11 @@ Global
 		{3FB3D9FE-B63A-4A28-9924-ABF47487128C} = {79351B3D-6F22-43FC-B6E3-84403C789513}
 		{AA92D1DD-B208-43CE-8E8F-7C5A04D6EB89} = {79351B3D-6F22-43FC-B6E3-84403C789513}
 	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {137DC18D-5C88-4EE2-8FCD-965CE1E5F566}
+	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 33
+		SccNumberOfProjects = 32
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
@@ -1136,12 +1115,6 @@ Global
 		SccProjectTopLevelParentUniqueName31 = AW\u0020with\u0020Everything.sln
 		SccProjectName31 = Tools/LLBLGen.EntityBrowser
 		SccLocalPath31 = Tools\\LLBLGen.EntityBrowser
-		SccWebProject32 = true
-		SccProjectUniqueName32 = http://localhost/AW.WebDbEditor\u00204.2
-		SccProjectTopLevelParentUniqueName32 = AW\u0020with\u0020Everything.sln
-		SccProjectName32 = AW.WebDbEditor
-		SccLocalPath32 = http://localhost/AW.WebDbEditor\u00204.2/
-		SccProjectEnlistmentChoice32 = 2
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW with Everything.vsmdi

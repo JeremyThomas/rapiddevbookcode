@@ -521,19 +521,20 @@ namespace AW.DebugVisualizers.Tests
     /// Searches the result collection test.
     /// </summary>
     [TestCategory("Winforms"), TestCategory("Slow"), TestCategory("LDAP"), TestMethod]
-    [Timeout(2000)]
+    [Timeout(5000)]
     public void SearchResultCollectionTest()
     {
       using (var entry = TestData.CreateLdapDirectoryEntry())
       using (var searcher = new DirectorySearcher(entry))
       {
-        searcher.PageSize = 5;
+        searcher.SizeLimit = 5;
+        searcher.Filter = "(uid=" + TestData.LdapUserNameWildCard + ")";
         TestShowTransported(searcher.FindAll(), 2);
       }
     }
 
     [TestCategory("Winforms"), TestCategory("Slow"), TestCategory("LDAP"), TestMethod]
-    [Timeout(2000)]
+    [Timeout(5000)]
     public void ResultPropertyCollectionTest()
     {
       using (var entry = TestData.CreateLdapDirectoryEntry())
