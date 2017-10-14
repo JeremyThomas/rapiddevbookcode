@@ -646,12 +646,22 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.TypedViewBase`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.UniqueList`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.QuerySpec.Grouping`2, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
+
+// V4
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase+<GetDependentRelatedEntityCoreInstances>d__6, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase+<GetDependingRelatedEntityCoreInstances>d__0, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase+<GetMemberEntityCollectionCoreInstances>d__c, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2+<GetDependentRelatedEntityCoreInstances>d__8, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2+<GetDependingRelatedEntityCoreInstances>d__2, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2+<GetMemberEntityCollectionCoreInstances>d__e, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.Description)]
+
+// V5
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase+<GetDependentRelatedEntityCoreInstances>d__31, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.DescriptionV47)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase+<GetDependingRelatedEntityCoreInstances>d__30, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.DescriptionV47)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase+<GetMemberEntityCollectionCoreInstances>d__32, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.DescriptionV47)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2+<GetDependentRelatedEntityCoreInstances>d__11, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.DescriptionV47)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2+<GetDependingRelatedEntityCoreInstances>d__10, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.DescriptionV47)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2+<GetMemberEntityCollectionCoreInstances>d__12, SD.LLBLGen.Pro.ORMSupportClasses", Description = VisualizerRegistration.DescriptionV47)]
 
 //-LLBL 3
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.CollectionCore`1, SD.LLBLGen.Pro.ORMSupportClasses.NET20", Description = VisualizerRegistration.Description)]
@@ -660,6 +670,8 @@ using JesseJohnston;
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.LLBLGenProQuery`1, SD.LLBLGen.Pro.LinqSupportClasses.NET35", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1, SD.LLBLGen.Pro.ORMSupportClasses.NET20", Description = VisualizerRegistration.Description)]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityFieldsCore`1, SD.LLBLGen.Pro.ORMSupportClasses.NET20", Description = VisualizerRegistration.Description)]
+
+
 
 //misc
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "Microsoft.Data.ConnectionUI.DataConnectionDialog+DataSourceCollection, Microsoft.Data.ConnectionUI.Dialog", Description = VisualizerRegistration.Description)]
@@ -686,7 +698,7 @@ namespace AW.DebugVisualizers
     ///   Enumerable Visualizer
     /// </summary>
     public const string Description = "Enumerable Visualizer";
-
+    public const string DescriptionV47 = Description + " V4.7";
     public const string DescriptionV46 = Description + " V4.6";
     public const string DescriptionV45 = Description + " V4.0";
     private const string VisualizerRegistrationsPart1 = "[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), ";
