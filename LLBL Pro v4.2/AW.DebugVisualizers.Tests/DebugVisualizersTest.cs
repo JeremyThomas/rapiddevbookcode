@@ -138,7 +138,9 @@ namespace AW.DebugVisualizers.Tests
           if (MetaDataHelper.GetAssembly(assemblyName) == null)
             _visualizerAttributesNotFound.Add(debuggerVisualizerAttribute); //This is OK
           else if (debuggerVisualizerAttribute.Description.Contains(majorMinorVersion) || !debuggerVisualizerAttribute.Description.Contains("4"))
-            _visualizerAttributesNotFoundInAssembly.Add(debuggerVisualizerAttribute); //This is not
+            if (!debuggerVisualizerAttribute.TargetTypeName.Contains("SD.LLBLGen.Pro.ORMSupportClasses.EntityBase+")
+              && !debuggerVisualizerAttribute.TargetTypeName.Contains("SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2+"))
+              _visualizerAttributesNotFoundInAssembly.Add(debuggerVisualizerAttribute); //This is not
         }
         else
           _visualizerAttributes.AddWithErrorInfo(type, debuggerVisualizerAttribute);
