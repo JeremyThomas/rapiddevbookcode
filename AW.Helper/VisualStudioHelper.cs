@@ -112,7 +112,7 @@ namespace AW.Helper
 
     private static string GetRegistryKeyString(VisualStudioVersion version, bool is64BitProcess)
     {
-      var registryKeyString = string.Format(@"SOFTWARE{0}Microsoft\VisualStudio\{1}",
+      var registryKeyString = String.Format(@"SOFTWARE{0}Microsoft\VisualStudio\{1}",
         is64BitProcess ? @"\Wow6432Node\" : "\\",
         GetVersionNumber(version));
       return registryKeyString;
@@ -137,18 +137,18 @@ namespace AW.Helper
           if (Directory.Exists(visualStudioUserDir))
             return visualStudioUserDir;
         }
-      visualStudioUserDir = string.Format("{0}\\{1}", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), version.EnumToString().Replace("VS", "Visual Studio"));
+      visualStudioUserDir = String.Format("{0}\\{1}", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), version.EnumToString().Replace("VS", "Visual Studio"));
       return Directory.Exists(visualStudioUserDir) ? visualStudioUserDir : null;
     }
 
     public static string GetVisualStudioDebuggerVisualizersUserDir(VisualStudioVersion version)
     {
       var visualStudioUserDir = GetVisualStudioUserDir(version);
-      if (string.IsNullOrWhiteSpace(visualStudioUserDir))
+      if (String.IsNullOrWhiteSpace(visualStudioUserDir))
         return "Visualizers Dir not found";
       var visualStudioDebuggerVisualizersUserDir = visualStudioUserDir + @"\Visualizers";
       if (!Directory.Exists(visualStudioDebuggerVisualizersUserDir))
-        return string.Format("Visualizers Dir, <{0}>, not found", visualStudioDebuggerVisualizersUserDir);
+        return String.Format("Visualizers Dir, <{0}>, not found", visualStudioDebuggerVisualizersUserDir);
       return visualStudioDebuggerVisualizersUserDir;
     }
 
@@ -163,6 +163,16 @@ namespace AW.Helper
       if (version == VisualStudioVersion.Other)
         throw new Exception("Not supported version");
       return ((int) version / 10).ToString("00.0", CultureInfo.InvariantCulture);
+    }
+
+    public static VisualStudioVersion GetVisualStudioVersion(int productMajorPart, object fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly)
+    {
+      var visualStudioVersion = VisualStudioHelper.GetVisualStudioVersion(productMajorPart);
+      if (visualStudioVersion == VisualStudioVersion.Other)
+        throw new Exception("Not supported version: " +
+                            productMajorPart + " from " +
+                            fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly);
+      return visualStudioVersion;
     }
 
     public static VisualStudioVersion GetVisualStudioVersion(int versionNumber)
@@ -201,7 +211,7 @@ namespace AW.Helper
           result = sourceVisualizerFileInfo.FullName + " does not exist";
       }
       else
-        result = string.Format("{0} or {1} does not exist", debuggerVisualizersDir, debuggerVisualizerSourceDir);
+        result = String.Format("{0} or {1} does not exist", debuggerVisualizersDir, debuggerVisualizerSourceDir);
       if (result != null)
         Trace.WriteLine(result);
       return result;
