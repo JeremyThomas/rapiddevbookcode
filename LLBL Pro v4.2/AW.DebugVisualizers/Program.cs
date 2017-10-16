@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -39,6 +42,10 @@ namespace AW.DebugVisualizers
                         "For more info see: " + EnumerableVisualizer.VisualizerWebSite;
       try
       {
+        var x = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
+       var yDebuggerVisualizers = x.FirstOrDefault(a=>a.Name.Equals("Microsoft.VisualStudio.DebuggerVisualizers"));
+        AppDomain currentDomain = AppDomain.CurrentDomain;
+        currentDomain.AssemblyResolve += new ResolveEventHandler(LoadFromReferenceAssemblies);
         LaunchHelper.FormDebuggerVisualizerInstallerLauncher(description);
       }
       catch (Exception e)
@@ -51,5 +58,13 @@ namespace AW.DebugVisualizers
 
     }
 
+    private static Assembly LoadFromReferenceAssemblies(object sender, ResolveEventArgs args)
+    {
+      string folderPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+      string assemblyPath = Path.Combine(folderPath, new AssemblyName(args.Name).Name + ".dll");
+      if (!File.Exists(assemblyPath)) return null;
+      Assembly assembly = Assembly.LoadFrom(assemblyPath);
+      return assembly;
+    }
   }
 }

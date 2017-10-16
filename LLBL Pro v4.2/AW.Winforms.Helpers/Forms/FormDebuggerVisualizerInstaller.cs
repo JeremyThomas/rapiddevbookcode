@@ -12,14 +12,14 @@ namespace AW.Winforms.Helpers.Forms
 {
   public sealed partial class FormDebuggerVisualizerInstaller : FrmPersistantLocation
   {
-    private readonly string _destinationFileNameAll;
-    private readonly string _destinationFileNameUser;
+    private string _destinationFileNameAll;
+    private string _destinationFileNameUser;
     private static readonly FileInfo SourceVisualizerFileInfo = new FileInfo(Application.ExecutablePath);
     private static readonly FileVersionInfo SourceVisualizerFileVersionInfo = FileVersionInfo.GetVersionInfo(Application.ExecutablePath);
     private static readonly string SourceFileName = Path.GetFileName(Application.ExecutablePath);
     private FileInfo _destinationVisualizerFileInfoAll;
     private FileInfo _destinationVisualizerFileInfoUser;
-    private readonly string _title;
+    private string _title;
 
     public FormDebuggerVisualizerInstaller()
     {
@@ -38,17 +38,24 @@ namespace AW.Winforms.Helpers.Forms
     /// <exception cref="FileNotFoundException">The file specified cannot be found. </exception>
     /// <exception cref="IOException"><see cref="M:System.IO.FileSystemInfo.Refresh" /> cannot initialize the data. </exception>
     /// <exception cref="PlatformNotSupportedException">The current operating system is not Windows NT or later.</exception>
-    public FormDebuggerVisualizerInstaller(Type dialogVisualizerServiceType, string title, string description, Action demoAction = null) : this()
+    public FormDebuggerVisualizerInstaller(Type dialogVisualizerServiceType, string title, string description, Action demoAction = null) : this(Assembly.GetAssembly(dialogVisualizerServiceType), title, description, demoAction)
     {
-      var microsoftVisualStudioDebuggerVisualizersAssembly = Assembly.GetAssembly(dialogVisualizerServiceType);
+    }
+
+    private FormDebuggerVisualizerInstaller(Assembly microsoftVisualStudioDebuggerVisualizersAssembly, string title, string description, Action demoAction) : this()
+    {
       var fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly = FileVersionInfo.GetVersionInfo(microsoftVisualStudioDebuggerVisualizersAssembly.Location);
-      var visualStudioVersion = VisualStudioHelper.GetVisualStudioVersion(fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductMajorPart);
-      if (visualStudioVersion == VisualStudioVersion.Other)
-        throw new Exception("Not supported version: " + fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductMajorPart+ " from "+ fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly);
-      string productName = fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductName;
+      var assemblyName = microsoftVisualStudioDebuggerVisualizersAssembly.GetName();
+      InitFormDebuggerVisualizerInstaller(VisualStudioHelper.GetVisualStudioVersion(assemblyName.Version.Major, fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly), 
+        fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductName, title, description, demoAction);
+    }
+
+    private void InitFormDebuggerVisualizerInstaller(VisualStudioVersion visualStudioVersion, string productName, string title, string description, Action demoAction)
+    {
       if (!productName.Contains("20"))
-        productName += visualStudioVersion.EnumToString().Replace("VS","");
-      labelVersion.Text = string.Format("This is version {0} for {1}. Last modified: {2}", SourceVisualizerFileVersionInfo.ProductVersion,
+        productName += visualStudioVersion.EnumToString().Replace("VS", "");
+      labelVersion.Text = string.Format("This is version {0} for {1}. Last modified: {2}",
+        SourceVisualizerFileVersionInfo.ProductVersion,
         productName, SourceVisualizerFileInfo.LastWriteTime);
 
       linkLabelAll.Text = VisualStudioHelper.GetVisualStudioDebuggerVisualizersDir(visualStudioVersion);
