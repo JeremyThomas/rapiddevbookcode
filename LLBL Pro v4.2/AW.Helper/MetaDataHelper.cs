@@ -995,6 +995,12 @@ namespace AW.Helper
       return assemblyTitleAttribute == null ? null : assemblyTitleAttribute.Title;
     }
 
+    public static string GetProduct(this Assembly assembly)
+    {
+      var assemblyTitleAttribute = GetCustomAttribute<AssemblyProductAttribute>(assembly);
+      return assemblyTitleAttribute == null ? null : assemblyTitleAttribute.Product;
+    }
+
     public static string GetDescription(this Assembly assembly)
     {
       var assemblyDescriptionAttribute = GetCustomAttribute<AssemblyDescriptionAttribute>(assembly);
