@@ -26,31 +26,7 @@ namespace AW.Winforms.Helpers.Forms
       InitializeComponent();
     }
     
-    /// <exception cref="ArgumentOutOfRangeException">
-    ///   <paramref /> is less than zero or greater than the length of this
-    ///   instance.
-    /// </exception>
-    /// <exception cref="ArgumentNullException"><paramref /> is null. </exception>
-    /// <exception cref="NotSupportedException">
-    ///   The current assembly is a dynamic assembly, represented by an
-    ///   <see cref="T:System.Reflection.Emit.AssemblyBuilder" /> object.
-    /// </exception>
-    /// <exception cref="FileNotFoundException">The file specified cannot be found. </exception>
-    /// <exception cref="IOException"><see cref="M:System.IO.FileSystemInfo.Refresh" /> cannot initialize the data. </exception>
-    /// <exception cref="PlatformNotSupportedException">The current operating system is not Windows NT or later.</exception>
-    public FormDebuggerVisualizerInstaller(Type dialogVisualizerServiceType, string title, string description, Action demoAction = null) : this(Assembly.GetAssembly(dialogVisualizerServiceType), title, description, demoAction)
-    {
-    }
-
-    private FormDebuggerVisualizerInstaller(Assembly microsoftVisualStudioDebuggerVisualizersAssembly, string title, string description, Action demoAction) : this()
-    {
-      var fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly = FileVersionInfo.GetVersionInfo(microsoftVisualStudioDebuggerVisualizersAssembly.Location);
-      var assemblyName = microsoftVisualStudioDebuggerVisualizersAssembly.GetName();
-      InitFormDebuggerVisualizerInstaller(VisualStudioHelper.GetVisualStudioVersion(assemblyName.Version.Major, fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly), 
-        fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductName, title, description, demoAction);
-    }
-
-    private void InitFormDebuggerVisualizerInstaller(VisualStudioVersion visualStudioVersion, string productName, string title, string description, Action demoAction)
+    private FormDebuggerVisualizerInstaller(VisualStudioVersion visualStudioVersion, string productName, string title, string description, Action demoAction):this()
     {
       if (!productName.Contains("20"))
         productName += visualStudioVersion.EnumToString().Replace("VS", "");
@@ -92,6 +68,28 @@ namespace AW.Winforms.Helpers.Forms
             buttonDemo.Enabled = true;
           }
         };
+    }
+
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///   <paramref /> is less than zero or greater than the length of this
+    ///   instance.
+    /// </exception>
+    /// <exception cref="ArgumentNullException"><paramref /> is null. </exception>
+    /// <exception cref="NotSupportedException">
+    ///   The current assembly is a dynamic assembly, represented by an
+    ///   <see cref="T:System.Reflection.Emit.AssemblyBuilder" /> object.
+    /// </exception>
+    /// <exception cref="FileNotFoundException">The file specified cannot be found. </exception>
+    /// <exception cref="IOException"><see cref="M:System.IO.FileSystemInfo.Refresh" /> cannot initialize the data. </exception>
+    /// <exception cref="PlatformNotSupportedException">The current operating system is not Windows NT or later.</exception>
+    public FormDebuggerVisualizerInstaller(Type dialogVisualizerServiceType, string title, string description, Action demoAction = null) : this(Assembly.GetAssembly(dialogVisualizerServiceType), title, description, demoAction)
+    {
+    }
+
+    public FormDebuggerVisualizerInstaller(Assembly microsoftVisualStudioDebuggerVisualizersAssembly, string title, string description, Action demoAction)
+      : this(VisualStudioHelper.GetVisualStudioVersion(microsoftVisualStudioDebuggerVisualizersAssembly),
+        microsoftVisualStudioDebuggerVisualizersAssembly.GetProduct(), title, description, demoAction)
+    {
     }
 
     private void FormDebuggerVisualizerInstaller_Shown(object sender, EventArgs e)

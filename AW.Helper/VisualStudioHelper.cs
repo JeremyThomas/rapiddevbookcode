@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Setup.Configuration;
@@ -38,12 +39,14 @@ namespace AW.Helper
   /// </summary>
   public static class VisualStudioHelper
   {
+    private static string _visualStudioInstallationCommonDir;
+
     /// <summary>
     ///   Gets the installation (Common7) directory of a given Visual Studio Version
     /// </summary>
     /// <param name="version">Visual Studio Version</param>
     /// <returns>Null if not installed the installation directory otherwise</returns>
-    internal static string GetVisualStudioInstallationCommonDir(VisualStudioVersion version)
+    public static string GetVisualStudioInstallationCommonDir(VisualStudioVersion version)
     {
       var registryKeyString = GetRegistryKeyString(version, Environment.Is64BitProcess);
 
@@ -82,6 +85,8 @@ namespace AW.Helper
 
     // ReSharper disable once InconsistentNaming
     private const int REGDB_E_CLASSNOTREG = unchecked((int)0x80040154);
+
+    private const string MicrosoftVisualstudioDebuggerVisualizersAssemblyName = "Microsoft.VisualStudio.DebuggerVisualizers";
 
     [DllImport("Microsoft.VisualStudio.Setup.Configuration.Native.dll", ExactSpelling = true, PreserveSig = true)]
     private static extern int GetSetupConfiguration(
@@ -165,13 +170,21 @@ namespace AW.Helper
       return ((int) version / 10).ToString("00.0", CultureInfo.InvariantCulture);
     }
 
-    public static VisualStudioVersion GetVisualStudioVersion(int productMajorPart, object fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly)
+    public static VisualStudioVersion GetVisualStudioVersion(Assembly microsoftVisualStudioDebuggerVisualizersAssembly)
     {
-      var visualStudioVersion = VisualStudioHelper.GetVisualStudioVersion(productMajorPart);
+      return GetVisualStudioVersion(microsoftVisualStudioDebuggerVisualizersAssembly.GetName(), microsoftVisualStudioDebuggerVisualizersAssembly);
+    }
+
+    public static VisualStudioVersion GetVisualStudioVersion(AssemblyName assemblyName, object visualStudioDebuggerVisualizersAssembly = null)
+    {
+      return GetVisualStudioVersion(assemblyName.Version.Major, visualStudioDebuggerVisualizersAssembly??assemblyName);
+    }
+
+    public static VisualStudioVersion GetVisualStudioVersion(int productMajorPart, object visualStudioDebuggerVisualizersAssembly)
+    {
+      var visualStudioVersion = GetVisualStudioVersion(productMajorPart);
       if (visualStudioVersion == VisualStudioVersion.Other)
-        throw new Exception("Not supported version: " +
-                            productMajorPart + " from " +
-                            fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly);
+        throw new Exception(string.Format("Not supported version: {0} from {1}", productMajorPart, visualStudioDebuggerVisualizersAssembly));
       return visualStudioVersion;
     }
 
@@ -230,6 +243,30 @@ namespace AW.Helper
         Debug.WriteLine(ex.Message);
       }
       return debuggerVisualizerSourceDir;
+    }
+
+    public static void AddAssemblyResolver(Assembly executingAssembly)
+    {
+      var debuggerVisualizersAssemblyName = executingAssembly.GetReferencedAssemblies()
+        .FirstOrDefault(a => a.Name.Equals(MicrosoftVisualstudioDebuggerVisualizersAssemblyName));
+      var visualStudioVersion = GetVisualStudioVersion(debuggerVisualizersAssemblyName);
+      _visualStudioInstallationCommonDir = GetVisualStudioInstallationCommonDir(visualStudioVersion);
+
+      var currentDomain = AppDomain.CurrentDomain;
+      currentDomain.AssemblyResolve += LoadFromReferenceAssemblies;
+    }
+
+    private static Assembly LoadFromReferenceAssemblies(object sender, ResolveEventArgs args)
+    {
+      if (args.Name.Contains(MicrosoftVisualstudioDebuggerVisualizersAssemblyName))
+      {
+        var assemblyPath = _visualStudioInstallationCommonDir + @"\IDE\ReferenceAssemblies\v2.0";
+        if (!Directory.Exists(assemblyPath))
+          return null;
+        var assembly = MetaDataHelper.LoadFrom(assemblyPath, args.Name);
+        return assembly;
+      }
+      return null;
     }
   }
 }
