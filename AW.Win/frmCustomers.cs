@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.Linq.Filters;
@@ -12,6 +14,8 @@ namespace AW.Win
 {
   public partial class FrmCustomers : FrmPersistantLocation
   {
+    private CancellationTokenSource cancellationToken;
+
     public FrmCustomers()
     {
       InitializeComponent();
@@ -37,9 +41,30 @@ namespace AW.Win
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
-    private void toolStripButtonPlaintypedview_Click(object sender, EventArgs e)
+    private async void toolStripButtonPlaintypedview_ClickAsync(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerViewTypedView(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
+      progressBar1.Show();
+      labelProgress.Text = "GetCriteria";
+      cancellationToken = new CancellationTokenSource();
+      var token = cancellationToken.Token;
+      Application.DoEvents();
+      try
+      {
+        var orderSearchCriteria = orderSearchCriteria1.GetCriteria();
+        var maxNumberOfItemsToReturn = MaxNumberOfItemsToReturn;
+      labelProgress.Text = "Fetching";
+      var customerViewTypedView = await Task.Run(() => CustomerQueries.GetCustomerViewTypedView(orderSearchCriteria, maxNumberOfItemsToReturn), token);
+      labelProgress.Text = "Rendering";
+      Application.DoEvents();
+        token.ThrowIfCancellationRequested();
+        bindingSourceCustomerList.DataSource = customerViewTypedView;
+        labelProgress.Text = "Done";
+      }
+      catch (OperationCanceledException)
+      {
+        labelProgress.Text = "Cancelled.";}
+
+      progressBar1.Hide();
     }
 
     private void toolStripButtonTypedViewQuerySpec_Click(object sender, EventArgs e)
@@ -104,12 +129,24 @@ namespace AW.Win
 
     private void toolStripButtonLinqFilterFirst_Click(object sender, EventArgs e)
     {
+      progressBar1.Show();
       bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListLinqedTypedListFilterFirst(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
+      progressBar1.Hide();
     }
 
-    private void toolStripButtonLinqTypedview_Click(object sender, EventArgs e)
+    private async void toolStripButtonLinqTypedview_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerViewTypedViewLinq(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
+      labelProgress.Text = "GetCriteria";
+      Application.DoEvents();
+      var orderSearchCriteria = orderSearchCriteria1.GetCriteria();
+      var maxNumberOfItemsToReturn = MaxNumberOfItemsToReturn;
+      labelProgress.Text = "Fetching";
+      var customerViewTypedView = await CustomerQueries.GetCustomerViewTypedViewLinqAsync(orderSearchCriteria, maxNumberOfItemsToReturn);
+      labelProgress.Text = "Rendering";
+      Application.DoEvents();
+      bindingSourceCustomerList.DataSource = customerViewTypedView;
+      labelProgress.Text = "Done";
+      progressBar1.Hide();
     }
 
     private void toolStripButtonTypedListLinq_Click(object sender, EventArgs e)
@@ -173,6 +210,12 @@ namespace AW.Win
       dgvResults.ClearFilter(true);
       if (bindingSourceCustomerList.SupportsFiltering)
         bindingSourceCustomerList.RemoveFilter();
+    }
+
+    private void buttonCancel_Click(object sender, EventArgs e)
+    {
+      if (cancellationToken != null)
+        cancellationToken.Cancel();
     }
   }
 }

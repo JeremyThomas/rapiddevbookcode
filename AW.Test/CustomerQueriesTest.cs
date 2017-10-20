@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Threading.Tasks;
 using AW.Data.Queries;
 using AW.Data.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -75,10 +76,10 @@ namespace AW.Tests
       Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count);
     }
 
-    [TestMethod, Description("A test for GetCustomerViewTypedViewLinq.")]
-    public void GetCustomerViewTypedViewLinqTest()
+    [TestMethod, Description("A test for GetCustomerViewTypedViewLinqAsync.")]
+    public async Task GetCustomerViewTypedViewLinqTest()
     {
-      var actual = CustomerQueries.GetCustomerViewTypedViewLinq(OrderSearchCriteria, MaxNumberOfItemsToReturn);
+      var actual = await CustomerQueries.GetCustomerViewTypedViewLinqAsync(OrderSearchCriteria, MaxNumberOfItemsToReturn);
       Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count);
     }
 
