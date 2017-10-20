@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AW.Data.CollectionClasses;
 using AW.Data.DaoClasses;
 using AW.Data.EntityClasses;
@@ -9,6 +10,7 @@ using AW.Data.Linq.Filters;
 using AW.Data.TypedListClasses;
 using AW.Data.TypedViewClasses;
 using AW.Data.ViewModels;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using SD.LLBLGen.Pro.QuerySpec;
 using SD.LLBLGen.Pro.QuerySpec.SelfServicing;
@@ -90,9 +92,9 @@ namespace AW.Data.Queries
       return customers;
     }
 
-    public static List<CustomerViewLinqRow> GetCustomerViewTypedViewLinq(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
+    public static Task<List<CustomerViewLinqRow>> GetCustomerViewTypedViewLinqAsync(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
     {
-      return MetaSingletons.MetaData.CustomerViewLinq.FilterByDateCustomerNameAddress(orderSearchCriteria).Take(maxNumberOfItemsToReturn).ToList();
+      return MetaSingletons.MetaData.CustomerViewLinq.FilterByDateCustomerNameAddress(orderSearchCriteria).Take(maxNumberOfItemsToReturn).ToListAsync();
     }
 
     public static CustomerViewRelatedCollection GetCustomerViewViaEntity(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)

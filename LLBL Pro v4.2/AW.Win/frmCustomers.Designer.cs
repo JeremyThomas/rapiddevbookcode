@@ -60,6 +60,7 @@ namespace AW.Win
       this.toolStripButtonViewAsEntity = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonTypedList = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonTypedListQuerySpecPoco = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonTypedListQuerySpec = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonTypedListLinq = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonLinqFilterFirst = new System.Windows.Forms.ToolStripButton();
@@ -68,21 +69,22 @@ namespace AW.Win
       this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonClearSort = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonClearFilters = new System.Windows.Forms.ToolStripButton();
-      this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
+      this.numericUpDownNumRows = new AW.Winforms.Helpers.Controls.ToolStripNumericUpDown();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.progressBar1 = new System.Windows.Forms.ProgressBar();
+      this.labelProgress = new System.Windows.Forms.Label();
       this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
-      this.toolStripButtonTypedListQuerySpecPoco = new System.Windows.Forms.ToolStripButton();
+      this.buttonCancel = new System.Windows.Forms.Button();
       ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceCustomerList)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorCustomerList)).BeginInit();
       this.bindingNavigatorCustomerList.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).BeginInit();
       this.SuspendLayout();
       // 
       // dgvResults
       // 
       this.dgvResults.AutoGenerateColumns = false;
-   this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dgvResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.FirstName,
@@ -91,10 +93,12 @@ namespace AW.Win
             this.StateProvinceName,
             this.CountryRegionName});
       this.dgvResults.DataSource = this.bindingSourceCustomerList;
+      this.dgvResults.DefaultCellBehavior = ADGV.ADGVColumnHeaderCellBehavior.SortingFiltering;
+      this.dgvResults.DefaultDateTimeGrouping = ADGV.ADGVFilterMenuDateTimeGrouping.Second;
       this.dgvResults.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.dgvResults.Location = new System.Drawing.Point(0, 294);
+      this.dgvResults.Location = new System.Drawing.Point(0, 299);
       this.dgvResults.Name = "dgvResults";
-      this.dgvResults.Size = new System.Drawing.Size(1040, 193);
+      this.dgvResults.Size = new System.Drawing.Size(1040, 188);
       this.dgvResults.TabIndex = 0;
       this.dgvResults.Tag = "True";
       this.toolTip1.SetToolTip(this.dgvResults, "Double click to view");
@@ -209,7 +213,8 @@ namespace AW.Win
             this.toolStripButtonLinqAnonymous,
             this.toolStripSeparator4,
             this.toolStripButtonClearSort,
-            this.toolStripButtonClearFilters});
+            this.toolStripButtonClearFilters,
+            this.numericUpDownNumRows});
       this.bindingNavigatorCustomerList.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
       this.bindingNavigatorCustomerList.Location = new System.Drawing.Point(0, 225);
       this.bindingNavigatorCustomerList.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
@@ -218,7 +223,7 @@ namespace AW.Win
       this.bindingNavigatorCustomerList.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
       this.bindingNavigatorCustomerList.Name = "bindingNavigatorCustomerList";
       this.bindingNavigatorCustomerList.PositionItem = this.bindingNavigatorPositionItem;
-      this.bindingNavigatorCustomerList.Size = new System.Drawing.Size(1040, 69);
+      this.bindingNavigatorCustomerList.Size = new System.Drawing.Size(1040, 74);
       this.bindingNavigatorCustomerList.TabIndex = 1;
       this.bindingNavigatorCustomerList.Text = "bindingNavigator1";
       // 
@@ -294,18 +299,18 @@ namespace AW.Win
       this.toolStripButtonPlaintypedview.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPlaintypedview.Image")));
       this.toolStripButtonPlaintypedview.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonPlaintypedview.Name = "toolStripButtonPlaintypedview";
-      this.toolStripButtonPlaintypedview.Size = new System.Drawing.Size(88, 20);
+      this.toolStripButtonPlaintypedview.Size = new System.Drawing.Size(87, 20);
       this.toolStripButtonPlaintypedview.Text = "Typed View";
       this.toolStripButtonPlaintypedview.ToolTipText = "vIndividualCustomer exposed via Typed view CustomerViewTypedView. \r\nExample 5.18." +
     " pg59\r\nNote: sales order filters are ignored";
-      this.toolStripButtonPlaintypedview.Click += new System.EventHandler(this.toolStripButtonPlaintypedview_Click);
+      this.toolStripButtonPlaintypedview.Click += new System.EventHandler(this.toolStripButtonPlaintypedview_ClickAsync);
       // 
       // toolStripButtonLinqTypedview
       // 
       this.toolStripButtonLinqTypedview.Image = global::AW.Win.Properties.Resources.AdventureWorksCycleIcon;
       this.toolStripButtonLinqTypedview.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonLinqTypedview.Name = "toolStripButtonLinqTypedview";
-      this.toolStripButtonLinqTypedview.Size = new System.Drawing.Size(117, 20);
+      this.toolStripButtonLinqTypedview.Size = new System.Drawing.Size(116, 20);
       this.toolStripButtonLinqTypedview.Text = "Typed View Linq ";
       this.toolStripButtonLinqTypedview.Click += new System.EventHandler(this.toolStripButtonLinqTypedview_Click);
       // 
@@ -314,7 +319,7 @@ namespace AW.Win
       this.toolStripButtonTypedViewQuerySpecPoco.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTypedViewQuerySpecPoco.Image")));
       this.toolStripButtonTypedViewQuerySpecPoco.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonTypedViewQuerySpecPoco.Name = "toolStripButtonTypedViewQuerySpecPoco";
-      this.toolStripButtonTypedViewQuerySpecPoco.Size = new System.Drawing.Size(178, 20);
+      this.toolStripButtonTypedViewQuerySpecPoco.Size = new System.Drawing.Size(177, 20);
       this.toolStripButtonTypedViewQuerySpecPoco.Text = "Typed View QuerySpec Poco";
       this.toolStripButtonTypedViewQuerySpecPoco.ToolTipText = "vIndividualCustomer exposed via Typed view CustomerViewTypedView. \r\nExample 5.18." +
     " pg59\r\nNote: sales order filters are ignored";
@@ -325,7 +330,7 @@ namespace AW.Win
       this.toolStripButtonTypedViewQuerySpec.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTypedViewQuerySpec.Image")));
       this.toolStripButtonTypedViewQuerySpec.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonTypedViewQuerySpec.Name = "toolStripButtonTypedViewQuerySpec";
-      this.toolStripButtonTypedViewQuerySpec.Size = new System.Drawing.Size(148, 20);
+      this.toolStripButtonTypedViewQuerySpec.Size = new System.Drawing.Size(147, 20);
       this.toolStripButtonTypedViewQuerySpec.Text = "Typed View QuerySpec";
       this.toolStripButtonTypedViewQuerySpec.ToolTipText = "vIndividualCustomer exposed via Typed view CustomerViewTypedView. \r\nExample 5.18." +
     " pg59\r\nNote: sales order filters are ignored";
@@ -390,18 +395,29 @@ namespace AW.Win
       this.toolStripButtonTypedList.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTypedList.Image")));
       this.toolStripButtonTypedList.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonTypedList.Name = "toolStripButtonTypedList";
-      this.toolStripButtonTypedList.Size = new System.Drawing.Size(81, 20);
+      this.toolStripButtonTypedList.Size = new System.Drawing.Size(80, 20);
       this.toolStripButtonTypedList.Text = "Typed List";
       this.toolStripButtonTypedList.ToolTipText = "CustomerListTypedList -Recreation of vIndividualCustomer as a Typed List. \r\nExamp" +
     "le 5.29. pg64.\r\nNote: sales order filters are ignored";
       this.toolStripButtonTypedList.Click += new System.EventHandler(this.toolStripButtonTypedList_Click);
+      // 
+      // toolStripButtonTypedListQuerySpecPoco
+      // 
+      this.toolStripButtonTypedListQuerySpecPoco.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTypedListQuerySpecPoco.Image")));
+      this.toolStripButtonTypedListQuerySpecPoco.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonTypedListQuerySpecPoco.Name = "toolStripButtonTypedListQuerySpecPoco";
+      this.toolStripButtonTypedListQuerySpecPoco.Size = new System.Drawing.Size(170, 20);
+      this.toolStripButtonTypedListQuerySpecPoco.Text = "Typed List QuerySpec Poco";
+      this.toolStripButtonTypedListQuerySpecPoco.ToolTipText = "CustomerListTypedList -Recreation of vIndividualCustomer as a Typed List. \r\nExamp" +
+    "le 5.29. pg64.\r\nNote: sales order filters are ignored";
+      this.toolStripButtonTypedListQuerySpecPoco.Click += new System.EventHandler(this.toolStripButtonTypedListQuerySpecPoco_Click);
       // 
       // toolStripButtonTypedListQuerySpec
       // 
       this.toolStripButtonTypedListQuerySpec.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTypedListQuerySpec.Image")));
       this.toolStripButtonTypedListQuerySpec.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonTypedListQuerySpec.Name = "toolStripButtonTypedListQuerySpec";
-      this.toolStripButtonTypedListQuerySpec.Size = new System.Drawing.Size(141, 20);
+      this.toolStripButtonTypedListQuerySpec.Size = new System.Drawing.Size(140, 20);
       this.toolStripButtonTypedListQuerySpec.Text = "Typed List QuerySpec";
       this.toolStripButtonTypedListQuerySpec.ToolTipText = "CustomerListTypedList -Recreation of vIndividualCustomer as a Typed List. \r\nExamp" +
     "le 5.29. pg64.\r\nNote: sales order filters are ignored";
@@ -412,7 +428,7 @@ namespace AW.Win
       this.toolStripButtonTypedListLinq.Image = global::AW.Win.Properties.Resources.AdventureWorksCycleIcon;
       this.toolStripButtonTypedListLinq.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonTypedListLinq.Name = "toolStripButtonTypedListLinq";
-      this.toolStripButtonTypedListLinq.Size = new System.Drawing.Size(107, 20);
+      this.toolStripButtonTypedListLinq.Size = new System.Drawing.Size(106, 20);
       this.toolStripButtonTypedListLinq.Text = "Typed List Linq";
       this.toolStripButtonTypedListLinq.Click += new System.EventHandler(this.toolStripButtonTypedListLinq_Click);
       // 
@@ -476,18 +492,36 @@ namespace AW.Win
       // 
       // numericUpDownNumRows
       // 
-      this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.numericUpDownNumRows.BackColor = System.Drawing.Color.Transparent;
+      this.numericUpDownNumRows.DecimalPlaces = 0;
       this.numericUpDownNumRows.Increment = new decimal(new int[] {
             5,
             0,
             0,
             0});
-      this.numericUpDownNumRows.Location = new System.Drawing.Point(901, 251);
       this.numericUpDownNumRows.Name = "numericUpDownNumRows";
-      this.numericUpDownNumRows.Size = new System.Drawing.Size(42, 20);
-      this.numericUpDownNumRows.TabIndex = 2;
-      this.toolTip1.SetToolTip(this.numericUpDownNumRows, "Set the number or rows to return");
+      this.numericUpDownNumRows.NumBackColor = System.Drawing.SystemColors.Window;
+      this.numericUpDownNumRows.Size = new System.Drawing.Size(204, 22);
+      this.numericUpDownNumRows.Text = "MaxNumberOfItemsToReturn";
       this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
+      // 
+      // progressBar1
+      // 
+      this.progressBar1.Location = new System.Drawing.Point(105, 164);
+      this.progressBar1.Name = "progressBar1";
+      this.progressBar1.Size = new System.Drawing.Size(159, 23);
+      this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+      this.progressBar1.TabIndex = 4;
+      this.progressBar1.Visible = false;
+      // 
+      // labelProgress
+      // 
+      this.labelProgress.AutoSize = true;
+      this.labelProgress.Location = new System.Drawing.Point(285, 174);
+      this.labelProgress.Name = "labelProgress";
+      this.labelProgress.Size = new System.Drawing.Size(35, 13);
+      this.labelProgress.TabIndex = 5;
+      this.labelProgress.Text = "label1";
       // 
       // orderSearchCriteria1
       // 
@@ -497,23 +531,24 @@ namespace AW.Win
       this.orderSearchCriteria1.Size = new System.Drawing.Size(1040, 225);
       this.orderSearchCriteria1.TabIndex = 3;
       // 
-      // toolStripButtonTypedListQuerySpecPoco
+      // buttonCancel
       // 
-      this.toolStripButtonTypedListQuerySpecPoco.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTypedListQuerySpecPoco.Image")));
-      this.toolStripButtonTypedListQuerySpecPoco.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonTypedListQuerySpecPoco.Name = "toolStripButtonTypedListQuerySpecPoco";
-      this.toolStripButtonTypedListQuerySpecPoco.Size = new System.Drawing.Size(171, 20);
-      this.toolStripButtonTypedListQuerySpecPoco.Text = "Typed List QuerySpec Poco";
-      this.toolStripButtonTypedListQuerySpecPoco.ToolTipText = "CustomerListTypedList -Recreation of vIndividualCustomer as a Typed List. \r\nExamp" +
-    "le 5.29. pg64.\r\nNote: sales order filters are ignored";
-      this.toolStripButtonTypedListQuerySpecPoco.Click += new System.EventHandler(this.toolStripButtonTypedListQuerySpecPoco_Click);
+      this.buttonCancel.Location = new System.Drawing.Point(13, 164);
+      this.buttonCancel.Name = "buttonCancel";
+      this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+      this.buttonCancel.TabIndex = 6;
+      this.buttonCancel.Text = "Cancel";
+      this.buttonCancel.UseVisualStyleBackColor = true;
+      this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
       // 
       // FrmCustomers
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(1040, 487);
-      this.Controls.Add(this.numericUpDownNumRows);
+      this.Controls.Add(this.buttonCancel);
+      this.Controls.Add(this.labelProgress);
+      this.Controls.Add(this.progressBar1);
       this.Controls.Add(this.dgvResults);
       this.Controls.Add(this.bindingNavigatorCustomerList);
       this.Controls.Add(this.orderSearchCriteria1);
@@ -530,7 +565,6 @@ namespace AW.Win
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorCustomerList)).EndInit();
       this.bindingNavigatorCustomerList.ResumeLayout(false);
       this.bindingNavigatorCustomerList.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -560,7 +594,7 @@ namespace AW.Win
         private System.Windows.Forms.ToolStripButton toolStripButtonViewAsEntity;
         private System.Windows.Forms.ToolStripButton toolStripButtonTypedList;
         private System.Windows.Forms.ToolStripButton toolStripButtonLinq;
-        private System.Windows.Forms.NumericUpDown numericUpDownNumRows;
+        private Winforms.Helpers.Controls.ToolStripNumericUpDown numericUpDownNumRows;
         private System.Windows.Forms.ToolStripButton toolStripButtonLinqAnonymous;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButtonViewAsEntityLinq;
@@ -580,6 +614,8 @@ namespace AW.Win
         private System.Windows.Forms.ToolStripButton toolStripButtonTypedListLinq;
         private System.Windows.Forms.ToolStripButton toolStripButtonTypedViewQuerySpecPoco;
         private System.Windows.Forms.ToolStripButton toolStripButtonTypedListQuerySpecPoco;
-
-    }
+    private System.Windows.Forms.ProgressBar progressBar1;
+    private System.Windows.Forms.Label labelProgress;
+    private System.Windows.Forms.Button buttonCancel;
+  }
 }

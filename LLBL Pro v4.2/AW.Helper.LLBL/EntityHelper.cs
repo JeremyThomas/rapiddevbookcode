@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.CSharp.RuntimeBinder;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -326,10 +327,37 @@ namespace AW.Helper.LLBL
       return entities;
     }
 
+    public static async Task<IEntityCollectionCore> ToEntityCollectionAsync(IEnumerable enumerable, Type itemType)
+    {
+      var entities = enumerable as IEntityCollectionCore;
+      if (entities != null)
+        return entities;
+      var llblQuery = enumerable as ILLBLGenProQuery;
+      entities = await ToEntityCollectionCoreAsync(llblQuery);
+      if (entities == null)
+      {
+        var entityFactoryCore = GetFactoryCore(enumerable, itemType);
+        var entityFactory = (entityFactoryCore as IEntityFactory);
+        entities = entityFactory == null ? (IEntityCollectionCore)((IEntityFactory2)entityFactoryCore).CreateEntityCollection() : entityFactory.CreateEntityCollection();
+        foreach (IEntityCore item in enumerable)
+          entities.Add(item);
+      }
+      if (!entities.IsNullOrEmpty())
+        entities.RemovedEntitiesTracker = entities.EntityFactoryToUse.CreateEntityCollection();
+      return entities;
+    }
+
     public static IEntityCollectionCore ToEntityCollectionCore(ILLBLGenProQuery llblQuery)
     {
       if (llblQuery != null)
         return llblQuery.Execute() as IEntityCollectionCore;
+      return null;
+    }
+
+    public static async Task<IEntityCollectionCore> ToEntityCollectionCoreAsync(ILLBLGenProQuery llblQuery)
+    {
+      if (llblQuery != null)
+        return await llblQuery.ExecuteAsync() as IEntityCollectionCore;
       return null;
     }
 

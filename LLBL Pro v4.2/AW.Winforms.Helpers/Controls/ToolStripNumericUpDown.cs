@@ -124,6 +124,11 @@ namespace AW.Winforms.Helpers.Controls
       set { _num.BackColor = value; }
     }
 
+    public ControlBindingsCollection DataBindings
+    {
+      get { return _num.DataBindings; }
+    }
+
     public ToolStripNumericUpDown() : base(new FlowLayoutPanel())
     {
       // Set up the FlowLayouPanel.
