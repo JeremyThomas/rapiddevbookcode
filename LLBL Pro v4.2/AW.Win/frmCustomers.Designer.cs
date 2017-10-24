@@ -29,6 +29,9 @@ namespace AW.Win
         private void InitializeComponent()
         {
       this.components = new System.ComponentModel.Container();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCustomers));
       this.dgvResults = new ADGV.AdvancedDataGridView();
       this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -73,8 +76,8 @@ namespace AW.Win
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
       this.progressBar1 = new System.Windows.Forms.ProgressBar();
       this.labelProgress = new System.Windows.Forms.Label();
-      this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
       this.buttonCancel = new System.Windows.Forms.Button();
+      this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
       ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceCustomerList)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorCustomerList)).BeginInit();
@@ -84,6 +87,14 @@ namespace AW.Win
       // dgvResults
       // 
       this.dgvResults.AutoGenerateColumns = false;
+      dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+      dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+      dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+      dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+      dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+      this.dgvResults.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
       this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dgvResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -93,19 +104,39 @@ namespace AW.Win
             this.StateProvinceName,
             this.CountryRegionName});
       this.dgvResults.DataSource = this.bindingSourceCustomerList;
-      this.dgvResults.DefaultCellBehavior = ADGV.ADGVColumnHeaderCellBehavior.SortingFiltering;
+      this.dgvResults.DefaultCellBehavior = ADGV.ADGVColumnHeaderCellBehavior.Disabled;
+      dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+      dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+      dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+      dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+      dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+      this.dgvResults.DefaultCellStyle = dataGridViewCellStyle2;
       this.dgvResults.DefaultDateTimeGrouping = ADGV.ADGVFilterMenuDateTimeGrouping.Second;
       this.dgvResults.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dgvResults.Location = new System.Drawing.Point(0, 299);
       this.dgvResults.Name = "dgvResults";
+      dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+      dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+      dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+      dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+      dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+      this.dgvResults.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+      this.dgvResults.RowHeadersVisible = false;
       this.dgvResults.Size = new System.Drawing.Size(1040, 188);
       this.dgvResults.TabIndex = 0;
       this.dgvResults.Tag = "True";
       this.toolTip1.SetToolTip(this.dgvResults, "Double click to view");
       this.dgvResults.SortStringChanged += new System.EventHandler(this.dgvResults_SortStringChanged);
       this.dgvResults.FilterStringChanged += new System.EventHandler(this.dgvResults_FilterStringChanged);
+      this.dgvResults.DataSourceChanged += new System.EventHandler(this.dgvResults_DataSourceChanged);
       this.dgvResults.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResults_CellDoubleClick);
+      this.dgvResults.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvResults_DataBindingComplete);
       this.dgvResults.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvResults_RowHeaderMouseClick);
+      this.dgvResults.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvResults_RowsAdded);
       // 
       // Column1
       // 
@@ -175,6 +206,8 @@ namespace AW.Win
       // bindingSourceCustomerList
       // 
       this.bindingSourceCustomerList.AllowNew = false;
+      this.bindingSourceCustomerList.DataSourceChanged += new System.EventHandler(this.bindingSourceCustomerList_DataSourceChanged);
+      this.bindingSourceCustomerList.ListChanged += new System.ComponentModel.ListChangedEventHandler(this.bindingSourceCustomerList_ListChanged);
       // 
       // bindingNavigatorCustomerList
       // 
@@ -501,9 +534,13 @@ namespace AW.Win
             0});
       this.numericUpDownNumRows.Name = "numericUpDownNumRows";
       this.numericUpDownNumRows.NumBackColor = System.Drawing.SystemColors.Window;
-      this.numericUpDownNumRows.Size = new System.Drawing.Size(204, 22);
+      this.numericUpDownNumRows.Size = new System.Drawing.Size(222, 25);
       this.numericUpDownNumRows.Text = "MaxNumberOfItemsToReturn";
-      this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
+      this.numericUpDownNumRows.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
       // 
       // progressBar1
       // 
@@ -517,19 +554,11 @@ namespace AW.Win
       // labelProgress
       // 
       this.labelProgress.AutoSize = true;
-      this.labelProgress.Location = new System.Drawing.Point(285, 174);
+      this.labelProgress.Location = new System.Drawing.Point(287, 134);
       this.labelProgress.Name = "labelProgress";
-      this.labelProgress.Size = new System.Drawing.Size(35, 13);
+      this.labelProgress.Size = new System.Drawing.Size(67, 65);
       this.labelProgress.TabIndex = 5;
-      this.labelProgress.Text = "label1";
-      // 
-      // orderSearchCriteria1
-      // 
-      this.orderSearchCriteria1.Dock = System.Windows.Forms.DockStyle.Top;
-      this.orderSearchCriteria1.Location = new System.Drawing.Point(0, 0);
-      this.orderSearchCriteria1.Name = "orderSearchCriteria1";
-      this.orderSearchCriteria1.Size = new System.Drawing.Size(1040, 225);
-      this.orderSearchCriteria1.TabIndex = 3;
+      this.labelProgress.Text = "label1\r\n123\r\n1234567890\r\n123\r\n23";
       // 
       // buttonCancel
       // 
@@ -540,6 +569,14 @@ namespace AW.Win
       this.buttonCancel.Text = "Cancel";
       this.buttonCancel.UseVisualStyleBackColor = true;
       this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+      // 
+      // orderSearchCriteria1
+      // 
+      this.orderSearchCriteria1.Dock = System.Windows.Forms.DockStyle.Top;
+      this.orderSearchCriteria1.Location = new System.Drawing.Point(0, 0);
+      this.orderSearchCriteria1.Name = "orderSearchCriteria1";
+      this.orderSearchCriteria1.Size = new System.Drawing.Size(1040, 225);
+      this.orderSearchCriteria1.TabIndex = 3;
       // 
       // FrmCustomers
       // 

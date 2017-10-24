@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
@@ -269,10 +270,12 @@ namespace AW.Tests
     }
 
     [TestMethod]
-    public void LLBLQueryToBindingListViewTest()
+    public async Task LLBLQueryToBindingListViewTest()
     {
       TestLLBLQueryToBindingListView(MetaSingletons.MetaData.AddressType);
       TestLLBLQueryToBindingListView(MetaSingletons.MetaData.AddressType, true);
+      await TestLLBLQueryToBindingListViewAsync(MetaSingletons.MetaData.AddressType);
+      await TestLLBLQueryToBindingListViewAsync(MetaSingletons.MetaData.AddressType, true);
     }
 
     private static void TestLLBLQueryToBindingListView(IEnumerable enumerable, bool ensureFilteringEnabled = false)
@@ -290,6 +293,24 @@ namespace AW.Tests
       else
         Assert.IsInstanceOfType(list, typeof(IEntityView));
       var dataSource = (ICollection) BindingListHelper.GetDataSource(list);
+      Assert.IsInstanceOfType(dataSource, typeof(IEntityCollection));
+    }
+
+    private static async Task TestLLBLQueryToBindingListViewAsync(IEnumerable enumerable, bool ensureFilteringEnabled = false)
+    {
+      var list = await TestToBindingListViewAsync(enumerable, ensureFilteringEnabled);
+      Assert.IsInstanceOfType(list, typeof(ICollection));
+      if (ensureFilteringEnabled)
+      {
+        MaybeAssertObjectListView(list);
+        Assert.IsTrue(list.SupportsFiltering);
+        var raiseItemChangedEvents = list as IRaiseItemChangedEvents;
+        Assert.IsNotNull(raiseItemChangedEvents);
+        Assert.IsTrue(raiseItemChangedEvents.RaisesItemChangedEvents, "raiseItemChangedEvents.RaisesItemChangedEvents");
+      }
+      else
+        Assert.IsInstanceOfType(list, typeof(IEntityView));
+      var dataSource = (ICollection)BindingListHelper.GetDataSource(list);
       Assert.IsInstanceOfType(dataSource, typeof(IEntityCollection));
     }
 
@@ -357,6 +378,14 @@ namespace AW.Tests
     private static IBindingListView TestToBindingListView(IEnumerable enumerable, bool ensureFilteringEnabled = false)
     {
       var bindingListView = enumerable.ToBindingListView(ensureFilteringEnabled);
+      Assert.IsInstanceOfType(bindingListView, typeof(IBindingListView));
+      Assert.IsTrue(bindingListView.Count > 0);
+      return bindingListView;
+    }
+
+    private static async Task<IBindingListView> TestToBindingListViewAsync(IEnumerable enumerable, bool ensureFilteringEnabled = false)
+    {
+      var bindingListView = await enumerable.ToBindingListViewAsync(ensureFilteringEnabled);
       Assert.IsInstanceOfType(bindingListView, typeof(IBindingListView));
       Assert.IsTrue(bindingListView.Count > 0);
       return bindingListView;

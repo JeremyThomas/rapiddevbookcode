@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Helper;
 using AW.Winforms.Helpers.LLBL;
+using Serilog;
 
 namespace AW.Win
 {
@@ -32,6 +33,11 @@ namespace AW.Win
     [STAThread]
     private static void Main()
     {
+      Log.Logger = new LoggerConfiguration()
+        .MinimumLevel.Debug()
+       // .WriteTo.Trace()
+        .WriteTo.Debug()
+        .CreateLogger();
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
       Application.ThreadException += Application_ThreadException;

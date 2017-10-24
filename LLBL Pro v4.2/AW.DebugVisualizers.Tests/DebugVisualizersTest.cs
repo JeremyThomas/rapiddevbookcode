@@ -521,22 +521,25 @@ namespace AW.DebugVisualizers.Tests
 
     /// <summary>
     /// Searches the result collection test.
+    /// Timeout will cause ThreadAbortException when debugging
     /// </summary>
     [TestCategory("Winforms"), TestCategory("Slow"), TestCategory("LDAP"), TestMethod]
-    [Timeout(5000)]
+ //   [Timeout(5000)]
     public void SearchResultCollectionTest()
     {
       using (var entry = TestData.CreateLdapDirectoryEntry())
       using (var searcher = new DirectorySearcher(entry))
       {
         searcher.SizeLimit = 5;
-        searcher.Filter = "(uid=" + TestData.LdapUserNameWildCard + ")";
+        const string searcherFilter = "(uid=" + TestData.LdapUserNameWildCard + ")";
+        searcher.Filter = searcherFilter;
         TestShowTransported(searcher.FindAll(), 2);
       }
     }
 
+    /// Timeout will cause ThreadAbortException when debugging
     [TestCategory("Winforms"), TestCategory("Slow"), TestCategory("LDAP"), TestMethod]
-    [Timeout(5000)]
+ //   [Timeout(5000)]
     public void ResultPropertyCollectionTest()
     {
       using (var entry = TestData.CreateLdapDirectoryEntry())
