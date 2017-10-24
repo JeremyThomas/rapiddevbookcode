@@ -9,6 +9,7 @@ using AW.Data.Queries;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.EntityViewer;
+using Serilog;
 
 namespace AW.Win
 {
@@ -36,7 +37,7 @@ namespace AW.Win
       dgvResults.AutoGenerateColumns = true;
     }
 
-    /// <summary>
+    /// <summary> 
     ///   Handles the Click event of the toolStripButtonPlaintypedview control. Example 5.18. pg59.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
@@ -44,7 +45,8 @@ namespace AW.Win
     private async void toolStripButtonPlaintypedview_ClickAsync(object sender, EventArgs e)
     {
       progressBar1.Show();
-      labelProgress.Text = "GetCriteria";
+      labelProgress.Text = "GetCriteria "+ DateTime.Now.ToLongTimeString();
+      Log.Logger.Debug("GetCriteria ");
       cancellationToken = new CancellationTokenSource();
       var token = cancellationToken.Token;
       Application.DoEvents();
@@ -52,17 +54,21 @@ namespace AW.Win
       {
         var orderSearchCriteria = orderSearchCriteria1.GetCriteria();
         var maxNumberOfItemsToReturn = MaxNumberOfItemsToReturn;
-      labelProgress.Text = "Fetching";
-      var customerViewTypedView = await Task.Run(() => CustomerQueries.GetCustomerViewTypedView(orderSearchCriteria, maxNumberOfItemsToReturn), token);
-      labelProgress.Text = "Rendering";
-      Application.DoEvents();
+      labelProgress.Text += Environment.NewLine+ "Fetching " +DateTime.Now.ToLongTimeString();
+        Log.Logger.Debug("Fetching ");
+        var customerViewTypedView = await Task.Run(() => CustomerQueries.GetCustomerViewTypedView(orderSearchCriteria, maxNumberOfItemsToReturn), token);
+      labelProgress.Text += Environment.NewLine + "Rendering " + DateTime.Now.ToLongTimeString();
+        Log.Logger.Debug("Rendering ");
+        Application.DoEvents();
         token.ThrowIfCancellationRequested();
         bindingSourceCustomerList.DataSource = customerViewTypedView;
-        labelProgress.Text = "Done";
+        Log.Logger.Debug("Done ");
+        labelProgress.Text += Environment.NewLine + "Done" + DateTime.Now.ToLongTimeString(); ;
       }
       catch (OperationCanceledException)
       {
-        labelProgress.Text = "Cancelled.";}
+        labelProgress.Text += Environment.NewLine + "Cancelled. " + DateTime.Now.ToLongTimeString(); ;
+      }
 
       progressBar1.Hide();
     }
@@ -107,14 +113,14 @@ namespace AW.Win
       bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListTypedList(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
     }
 
-    private void toolStripButtonTypedListQuerySpec_Click(object sender, EventArgs e)
+    private async void toolStripButtonTypedListQuerySpec_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListTypedListQuerySpec(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
+      await bindingSourceCustomerList.BindEnumerableAsync(CustomerQueries.GetCustomerListTypedListQuerySpec(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
     }
 
-    private void toolStripButtonTypedListQuerySpecPoco_Click(object sender, EventArgs e)
+    private async void toolStripButtonTypedListQuerySpecPoco_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListTypedListQuerySpecPoco(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
+      await bindingSourceCustomerList.BindEnumerableAsync(CustomerQueries.GetCustomerListTypedListQuerySpecPoco(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
     }
 
     /// <summary>
@@ -127,10 +133,10 @@ namespace AW.Win
       BindingListHelper.BindEnumerable(bindingSourceCustomerList, CustomerQueries.GetCustomerListLinqedTypedList(orderSearchCriteria1.GetCriteria(), 0).ToList().Distinct().Take(MaxNumberOfItemsToReturn));
     }
 
-    private void toolStripButtonLinqFilterFirst_Click(object sender, EventArgs e)
+    private async void toolStripButtonLinqFilterFirst_Click(object sender, EventArgs e)
     {
       progressBar1.Show();
-      bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListLinqedTypedListFilterFirst(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
+      await bindingSourceCustomerList.BindEnumerableAsync(CustomerQueries.GetCustomerListLinqedTypedListFilterFirst(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
       progressBar1.Hide();
     }
 
@@ -160,9 +166,9 @@ namespace AW.Win
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
-    private void toolStripButtonLinqBarf_Click(object sender, EventArgs e)
+    private async void toolStripButtonLinqBarf_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.BindEnumerable(CustomerQueries.GetCustomerListAnonymousLinq(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
+      await bindingSourceCustomerList.BindEnumerableAsync(CustomerQueries.GetCustomerListAnonymousLinq(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
     }
 
     private void toolStripButtonViewAsEntityLinq_Click(object sender, EventArgs e)
@@ -216,6 +222,36 @@ namespace AW.Win
     {
       if (cancellationToken != null)
         cancellationToken.Cancel();
+    }
+
+    private void dgvResults_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+    {
+      Log.Logger.Debug("Row {0}", e.RowIndex);
+      Application.DoEvents();
+    }
+
+    private void dgvResults_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+    {
+      Log.Logger.Debug("DataBindingComplete {0}", e.ListChangedType);
+      Application.DoEvents();
+    }
+
+    private void dgvResults_DataSourceChanged(object sender, EventArgs e)
+    {
+      Log.Logger.Debug("dgvResults_DataSourceChanged {0}", e);
+      Application.DoEvents();
+    }
+
+    private void bindingSourceCustomerList_ListChanged(object sender, System.ComponentModel.ListChangedEventArgs e)
+    {
+      Log.Logger.Debug("dgvResults_DataSourceChanged {0}", e);
+      Application.DoEvents();
+    }
+
+    private void bindingSourceCustomerList_DataSourceChanged(object sender, EventArgs e)
+    {
+      Log.Logger.Debug("dgvResults_DataSourceChanged {0}", e);
+      Application.DoEvents();
     }
   }
 }

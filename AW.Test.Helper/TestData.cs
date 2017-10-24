@@ -202,7 +202,7 @@ namespace AW.Test.Helpers
     public const string LdapUserNameWildCard = "guest*";
 
     /// <summary>
-    /// Creates the LDAP directory entry.
+    /// Creates the LDAP directory entry. LDAP://www.zflexldap.com"
     /// </summary>
     /// <remarks>
     /// http://www.zflexldapadministrator.com/index.php/blog/82-free-online-ldap

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using ADGV;
 using AW.Helper;
@@ -25,6 +26,7 @@ using AW.Winforms.Helpers.QueryRunner;
 using AW.Winforms.Helpers.Reporting;
 using JesseJohnston;
 using Microsoft.VisualBasic;
+using Serilog;
 
 namespace AW.Winforms.Helpers.Controls
 {
@@ -443,6 +445,22 @@ namespace AW.Winforms.Helpers.Controls
       return isEnumerable;
     }
 
+    private async Task<bool> GetFirstPageAsync(IEnumerable enumerable)
+    {
+      var firstPageEnumerable = enumerable;
+      if (Paging())
+      {
+        var queryable = enumerable as IQueryable;
+        firstPageEnumerable = queryable == null ? LinqHelper.Take(firstPageEnumerable, PageSize) : queryable.Take(PageSize);
+      }
+      UnBindGrids();
+
+      var isEnumerable = await bindingSourceEnumerable.BindEnumerableAsync(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null), EnsureFilteringEnabled, AsyncBindingListViewCreaters);
+      SetRemovingItem();
+      _isBinding = false;
+      return isEnumerable;
+    }
+
     protected bool Paging()
     {
       return bindingSourcePaging.Count > 1;
@@ -533,6 +551,12 @@ namespace AW.Winforms.Helpers.Controls
     {
       UnBindGrids();
       bindingSourceEnumerable.BindEnumerable(SkipTake(), false, EnsureFilteringEnabled, BindingListViewCreater);
+    }
+
+    private async Task BindEnumerableAsync()
+    {
+      UnBindGrids();
+      await bindingSourceEnumerable.BindEnumerableAsync(SkipTake(), false, EnsureFilteringEnabled, AsyncBindingListViewCreaters);
     }
 
     public bool BindEnumerable(IEnumerable enumerable)
@@ -786,6 +810,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void dataGridViewEnumerable_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
     {
+      Log.Logger.Debug("dataGridViewEnumerable_ColumnAdded ");
       var dataGridView = e.Column.DataGridView;
       if (MembersToExclude != null && MembersToExclude.Contains(e.Column.DataPropertyName))
         dataGridView.Columns.Remove(e.Column);
@@ -905,6 +930,7 @@ namespace AW.Winforms.Helpers.Controls
       //  e.Column.Tag = true;
       //  dataGridView.Columns.Add(e.Column);
       //}
+      Log.Logger.Debug("dataGridViewEnumerable_ColumnAdded end");
     }
 
     private void dataGridViewEnumerable_ColumnRemoved(object sender, DataGridViewColumnEventArgs e)
@@ -1052,6 +1078,7 @@ namespace AW.Winforms.Helpers.Controls
     }
 
     public Func<IEnumerable, Type, IBindingListView> BindingListViewCreater;
+    public Func<IEnumerable, Type, Task<IBindingListView>> AsyncBindingListViewCreaters;
     private readonly ToolStripButton _searchToolStripButton;
     private readonly ToolStripTextBox _searchToolStripTextBox;
 

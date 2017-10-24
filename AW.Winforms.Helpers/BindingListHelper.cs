@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AW.Helper;
 using JesseJohnston;
@@ -12,14 +13,17 @@ namespace AW.Winforms.Helpers
 {
   public static class BindingListHelper
   {
-    private static readonly Dictionary<Type, Func<IEnumerable, Type, IBindingListView>> BindingListViewCreaters = new Dictionary<Type, Func<IEnumerable, Type, IBindingListView>>();
+    private static readonly Dictionary<Type, Func<IEnumerable, Type, IBindingListView>> BindingListViewCreators = new Dictionary<Type, Func<IEnumerable, Type, IBindingListView>>();
+    public static readonly Dictionary<Type, Func<IEnumerable, Type, Task<IBindingListView>>> AsyncBindingListViewCreaters = new Dictionary<Type, Func<IEnumerable, Type, Task<IBindingListView>>>();
 
     public static void RegisterbindingListViewCreater(Type itemType, Func<IEnumerable, Type, IBindingListView> bindingListViewCreater)
     {
-      if (BindingListViewCreaters.ContainsKey(itemType))
-        BindingListViewCreaters[itemType] = bindingListViewCreater;
-      else
-        BindingListViewCreaters.Add(itemType, bindingListViewCreater);
+        BindingListViewCreators[itemType] = bindingListViewCreater;
+    }
+
+    public static void RegisterAsyncBindingListViewCreater(Type itemType, Func<IEnumerable, Type, Task<IBindingListView>> bindingListViewCreater)
+    {
+        AsyncBindingListViewCreaters[itemType] = bindingListViewCreater;
     }
 
     private static readonly Dictionary<Type, Func<IBindingList, IEnumerable>> BindingListViewSources
@@ -48,6 +52,27 @@ namespace AW.Winforms.Helpers
             return bindingListView;
         }
         return MaybeCreateBindingListView(enumerable, ensureFilteringEnabled, bindingListViewCreater);
+      }
+      return null;
+    }
+
+    public static async Task<IBindingListView> ToBindingListViewAsync(this IEnumerable enumerable, bool ensureFilteringEnabled = false
+      , Func<IEnumerable, Type, Task<IBindingListView>> bindingListViewCreater = null)
+    {
+      var showenEnumerable = enumerable != null && !(enumerable is string);
+      if (showenEnumerable)
+      {
+        var iBindingListView = enumerable as IBindingListView;
+        if (iBindingListView != null && (!ensureFilteringEnabled || iBindingListView.SupportsFiltering))
+          return iBindingListView;
+        var listSource = enumerable as IListSource;
+        if (listSource != null)
+        {
+          var bindingListView = ListSourceToBindingListView(listSource);
+          if (bindingListView != null && (!ensureFilteringEnabled || bindingListView.SupportsFiltering))
+            return bindingListView;
+        }
+        return await MaybeCreateAsyncBindingListView(enumerable, ensureFilteringEnabled, bindingListViewCreater);
       }
       return null;
     }
@@ -95,12 +120,32 @@ namespace AW.Winforms.Helpers
       }
 
       var bindingListView = bindingListViewCreater == null
-        ? GetValidAndPotentialBindingListViews(enumerable, itemType, ensureFilteringEnabled, BindingListViewCreaters)
+        ? GetValidAndPotentialBindingListViews(enumerable, itemType, ensureFilteringEnabled, BindingListViewCreators)
         : bindingListViewCreater(enumerable, itemType);
       if (bindingListView != null && (!ensureFilteringEnabled || bindingListView.SupportsFiltering))
         return bindingListView;
 
       return ToObjectListView((IEnumerable<T>) GetDataSource(bindingListView, ensureFilteringEnabled) ?? enumerable);
+    }
+
+    private static async Task<IBindingListView> CreateBindingListViewAsync<T>(IEnumerable<T> enumerable, bool ensureFilteringEnabled = false,
+      Func<IEnumerable, Type, Task<IBindingListView>> bindingListViewCreater = null)
+    {
+      var itemType = typeof(T);
+      if (!MetaDataHelper.IsTheActualType(itemType))
+      {
+        var actualItemType = MetaDataHelper.GetEnumerableItemType(enumerable);
+        if (actualItemType != itemType)
+          return await CreateAsyncBindingListView(enumerable, actualItemType, ensureFilteringEnabled, bindingListViewCreater); //else ListBindingHelper.GetListItemProperties doesn't get the properties
+      }
+
+      var bindingListView = bindingListViewCreater == null
+        ? await GetValidAndPotentialAsyncBindingListViews(enumerable, itemType, ensureFilteringEnabled, AsyncBindingListViewCreaters)
+        : bindingListViewCreater(enumerable, itemType).Result;
+      if (bindingListView != null && (!ensureFilteringEnabled || bindingListView.SupportsFiltering))
+        return bindingListView;
+
+      return ToObjectListView((IEnumerable<T>)GetDataSource(bindingListView, ensureFilteringEnabled) ?? enumerable);
     }
 
     private static IBindingListView MaybeCreateBindingListView(dynamic enumerable, bool ensureFilteringEnabled = false,
@@ -114,6 +159,19 @@ namespace AW.Winforms.Helpers
     {
       var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
       return CreateBindingListView(enumerable, itemType, ensureFilteringEnabled, bindingListViewCreater);
+    }
+
+    private static async Task<IBindingListView> MaybeCreateAsyncBindingListView(dynamic enumerable, bool ensureFilteringEnabled = false,
+      Func<IEnumerable, Type, Task<IBindingListView>> bindingListViewCreater = null)
+    {
+      return await CreateAsyncBindingListView(enumerable, ensureFilteringEnabled, bindingListViewCreater);
+    }
+
+    private static Task<IBindingListView> CreateAsyncBindingListView(IEnumerable enumerable, bool ensureFilteringEnabled = false,
+      Func<IEnumerable, Type, Task<IBindingListView>> bindingListViewCreater = null)
+    {
+      var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
+      return CreateAsyncBindingListView(enumerable, itemType, ensureFilteringEnabled, bindingListViewCreater);
     }
 
     /// <summary>
@@ -133,7 +191,7 @@ namespace AW.Winforms.Helpers
       Func<IEnumerable, Type, IBindingListView> bindingListViewCreater = null)
     {
       var bindingListView = bindingListViewCreater == null
-        ? GetValidAndPotentialBindingListViews(enumerable, itemType, ensureFilteringEnabled, BindingListViewCreaters)
+        ? GetValidAndPotentialBindingListViews(enumerable, itemType, ensureFilteringEnabled, BindingListViewCreators)
         : bindingListViewCreater(enumerable, itemType);
       if (bindingListView != null && (!ensureFilteringEnabled || bindingListView.SupportsFiltering))
         return bindingListView;
@@ -141,15 +199,44 @@ namespace AW.Winforms.Helpers
     }
 
     private static IBindingListView GetValidAndPotentialBindingListViews(IEnumerable enumerable, Type itemType, bool ensureFilteringEnabled,
-      Dictionary<Type, Func<IEnumerable, Type, IBindingListView>> bindingListViewCreaters)
+      Dictionary<Type, Func<IEnumerable, Type, IBindingListView>> bindingListViewCreators)
     {
-      var potentialBindingListViews = bindingListViewCreaters
-        .Where(bindingListViewCreator => bindingListViewCreator.Key.IsAssignableFrom(itemType))
-        .Select(bindingListViewCreator => bindingListViewCreator.Value(enumerable, itemType));
+      var potentialBindingListViewCreaters = bindingListViewCreators.Where(bindingListViewCreator => bindingListViewCreator.Key.IsAssignableFrom(itemType));
 
       IBindingListView first = null;
-      foreach (var bindingListView in potentialBindingListViews)
+      foreach (var bindingListView in potentialBindingListViewCreaters.Select(bindingListViewCreator => bindingListViewCreator.Value(enumerable, itemType)))
       {
+        if (bindingListView != null && (!ensureFilteringEnabled || bindingListView.SupportsFiltering))
+          return bindingListView;
+        if (first == null)
+          first = bindingListView;
+      }
+      return first;
+      //return potentialBindingListViews.FirstOrDefault(bindingListView => bindingListView != null && (!ensureFilteringEnabled || bindingListView.SupportsFiltering)) 
+      //  ?? potentialBindingListViews.FirstOrDefault();
+    }
+
+    private static async Task<IBindingListView> CreateAsyncBindingListView(IEnumerable enumerable, Type itemType, bool ensureFilteringEnabled = false,
+      Func<IEnumerable, Type, Task<IBindingListView>> bindingListViewCreater = null)
+    {
+      var bindingListView = bindingListViewCreater == null
+        ? await GetValidAndPotentialAsyncBindingListViews(enumerable, itemType, ensureFilteringEnabled, AsyncBindingListViewCreaters)
+        : await bindingListViewCreater(enumerable, itemType);
+      if (bindingListView != null && (!ensureFilteringEnabled || bindingListView.SupportsFiltering))
+        return bindingListView;
+      return CreateObjectListView(GetDataSource(bindingListView) ?? enumerable, itemType);
+    }
+
+    private static async Task<IBindingListView> GetValidAndPotentialAsyncBindingListViews(IEnumerable enumerable, Type itemType, bool ensureFilteringEnabled,
+      Dictionary<Type, Func<IEnumerable, Type, Task<IBindingListView>>> bindingListViewCreators)
+    {
+      var potentialBindingListViewCreaters = bindingListViewCreators.Where(bindingListViewCreator => bindingListViewCreator.Key.IsAssignableFrom(itemType));
+
+      IBindingListView first = null;
+      foreach (var bindingListViewCreator in potentialBindingListViewCreaters)
+      {
+        // ReSharper disable once PossibleMultipleEnumeration
+        var bindingListView = await bindingListViewCreator.Value(enumerable, itemType);
         if (bindingListView != null && (!ensureFilteringEnabled || bindingListView.SupportsFiltering))
           return bindingListView;
         if (first == null)
@@ -209,7 +296,7 @@ namespace AW.Winforms.Helpers
           if (collection == null)
           {
             objectListView = CreateObjectListView();
-            foreach (var item in enumerable)
+            foreach (var item in enumerable) //Might hit DB - make async
               objectListView.Add(item);
           }
           else
@@ -296,6 +383,31 @@ namespace AW.Winforms.Helpers
       return showenEnumerable;
     }
 
+    public static async Task<bool> BindEnumerableAsync(this BindingSource bindingSource, IEnumerable enumerable, bool setReadonly, bool ensureFilteringEnabled = false
+      , Func<IEnumerable, Type, Task<IBindingListView>> bindingListViewCreater = null)
+    {
+      var showenEnumerable = await BindEnumerableInternalAsync(bindingSource, enumerable, ensureFilteringEnabled, bindingListViewCreater);
+      if (showenEnumerable)
+      {
+        var list = bindingSource.DataSource as IBindingList;
+        if (setReadonly && (bindingSource.AllowEdit || bindingSource.AllowRemove) && list != null && SetReadonly(list))
+        {
+          bindingSource.ResetBindings(true); //To update UI for bindingSource.AllowRemove
+        }
+        else
+          try
+          {
+            bindingSource.AllowNew = !setReadonly;
+          }
+          catch (InvalidOperationException e)
+          {
+            e.TraceOut();
+          }
+      }
+
+      return showenEnumerable;
+    }
+
     public static bool BindEnumerable<T>(BindingSource bindingSource, IEnumerable<T> enumerable)
     {
       bool showenEnumerable;
@@ -348,6 +460,47 @@ namespace AW.Winforms.Helpers
       try
       {
         var bindingListView = enumerable.ToBindingListView(ensureFilteringEnabled, bindingListViewCreater);
+        bindingSource.DataSource = bindingListView;
+        shownEnumerable = bindingSource.DataSource != null;
+      }
+      catch (ArgumentException) //From ObjectListView constructor
+      {
+        bindingSource.DataSource = enumerable; //To use default
+        shownEnumerable = bindingSource.DataSource != null;
+      }
+
+      return shownEnumerable;
+    }
+
+    private static async Task<bool> BindEnumerableInternalAsync(BindingSource bindingSource, IEnumerable enumerable, bool ensureFilteringEnabled = false
+      , Func<IEnumerable, Type, Task<IBindingListView>> bindingListViewCreater = null)
+    {
+      try
+      {
+        bindingSource.SuspendBinding();
+        var raiseListChangedEvents = bindingSource.RaiseListChangedEvents;
+        bindingSource.RaiseListChangedEvents = false;
+        try
+        {
+          if (bindingSource.SupportsSorting && (bindingSource.IsSorted || !string.IsNullOrWhiteSpace(bindingSource.Sort)))
+            bindingSource.RemoveSort();
+          if (bindingSource.SupportsFiltering && !string.IsNullOrWhiteSpace(bindingSource.Filter))
+            bindingSource.RemoveFilter();
+        }
+        finally
+        {
+          bindingSource.ResumeBinding();
+          bindingSource.RaiseListChangedEvents = raiseListChangedEvents;
+        }
+      }
+      catch (Exception e)
+      {
+        e.TraceOut();
+      }
+      bool shownEnumerable;
+      try
+      {
+        var bindingListView = await enumerable.ToBindingListViewAsync(ensureFilteringEnabled, bindingListViewCreater);
         bindingSource.DataSource = bindingListView;
         shownEnumerable = bindingSource.DataSource != null;
       }

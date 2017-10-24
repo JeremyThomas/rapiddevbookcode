@@ -377,6 +377,22 @@ namespace AW.Helper.LLBL
       return defaultView as IBindingListView;
     }
 
+    public static async Task<IBindingListView> CreateEntityViewAsync(IEnumerable enumerable, Type itemType)
+    {
+      var entityCollectionCore = await ToEntityCollectionAsync(enumerable, itemType);
+      if (entityCollectionCore == null) return null;
+      var entityCollection = entityCollectionCore as IEntityCollection;
+      if (entityCollection == null)
+      {
+        var defaultView2 = ((IEntityCollection2)entityCollectionCore).DefaultView;
+        defaultView2.DataChangeAction = PostCollectionChangeAction.NoAction;
+        return defaultView2 as IBindingListView;
+      }
+      var defaultView = entityCollection.DefaultView;
+      defaultView.DataChangeAction = PostCollectionChangeAction.NoAction;
+      return defaultView as IBindingListView;
+    }
+
     public static IEntityCollectionCore GetRelatedCollection(IBindingList entityView)
     {
       var view = entityView as IEntityView;
