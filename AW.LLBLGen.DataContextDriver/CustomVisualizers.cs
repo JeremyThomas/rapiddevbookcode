@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.Controls;
@@ -77,10 +78,10 @@ namespace AW.LLBLGen.DataContextDriver
       return true;
     }
 
-    public static IQueryable<T> DisplayHierarchyInTree<T, TName, TChildCollection>(this IQueryable<T> queryable, Func<IEnumerable<T>, IEnumerable<T>> postProcessing, Expression<Func<T, TName>> namePropertyExpression,
+    public static async Task<IQueryable<T>> DisplayHierarchyInTree<T, TName, TChildCollection>(this IQueryable<T> queryable, Func<IEnumerable<T>, IEnumerable<T>> postProcessing, Expression<Func<T, TName>> namePropertyExpression,
       Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : class, IEntityCore
     {
-      return LINQPad.CustomVisualizers.DisplayControl(queryable, LLBLWinformHelper.HierarchyEditorFactory(queryable, postProcessing, namePropertyExpression, childCollectionPropertyExpression));
+      return LINQPad.CustomVisualizers.DisplayControl(queryable, await LLBLWinformHelper.HierarchyEditorFactoryAsync(queryable, postProcessing, namePropertyExpression, childCollectionPropertyExpression));
     }
 
     public static IEnumerable DisplayInGrid(this IEnumerable enumerable, ITransactionController transactionController, ushort pageSize)

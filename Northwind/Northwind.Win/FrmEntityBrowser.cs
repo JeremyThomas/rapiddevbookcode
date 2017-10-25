@@ -100,10 +100,10 @@ namespace Northwind.Win
       usrCntrlEntityBrowser1.UseContext = useContextCheckBox.Checked;
     }
 
-    private void toolStripButtonShowEmployeeHierarchyInTreePostProcessing_Click(object sender, EventArgs e)
+    private async void toolStripButtonShowEmployeeHierarchyInTreePostProcessing_ClickAsync(object sender, EventArgs e)
     {
       var linqMetaData = Factories.CreateLinqMetaData();
-      ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactory(linqMetaData.Employee,
+      ShowControlInForm(await LLBLWinformHelper.HierarchyEditorFactoryAsync(linqMetaData.Employee,
         EmployeeEntity.WireUpSelfJoinAndRemoveChildren,
         em => em.FirstName, em => em.Staff));
     }

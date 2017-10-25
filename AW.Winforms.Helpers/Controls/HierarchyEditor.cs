@@ -23,25 +23,12 @@ namespace AW.Winforms.Helpers.Controls
       : this()
     {
       if (hierarchicalData == null) throw new ArgumentNullException("hierarchicalData");
-      bindingSourceHierarchicalData.BindEnumerable(hierarchicalData, false);
+      bindingSourceHierarchicalData.BindEnumerable(hierarchicalData, false); //See http://blog.stephencleary.com/2013/01/async-oop-2-constructors.html
       bindingNavigatorDeleteItem.Enabled = bindingSourceHierarchicalData.AllowRemove;
       dataTreeView.NameColumn = nameColumn;
       dataTreeView.Sorted = true;
       bindingNavigatorAddNewItem.Enabled = dataTreeView.CanEdit;
       dataTreeView.LabelEdit = dataTreeView.CanEdit;
-    }
-
-    private HierarchyEditor(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn)
-      : this(hierarchicalData, nameColumn)
-    {
-      dataTreeView.IDColumn = iDPropertyName;
-      dataTreeView.ParentIDColumn = parentIDPropertyName;
-    }
-
-    private HierarchyEditor(IEnumerable hierarchicalData, string nameColumn, string childCollectionPropertyName)
-      : this(hierarchicalData, nameColumn)
-    {
-      dataTreeView.ChildCollectionPropertyName = childCollectionPropertyName;
     }
 
     public HierarchyEditor(IEnumerable hierarchicalData, string nameColumn, IDataEditorPersister dataEditorPersister = null, params string[] membersToExclude)
@@ -130,7 +117,7 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
-    private void dataTreeView1_AfterSelect(object sender, TreeViewEventArgs e)
+    private async void dataTreeView1_AfterSelect(object sender, TreeViewEventArgs e)
     {
       var selectedNode = (dataTreeView).SelectedNode;
       if (selectedNode != null) toolStripStatusLabelSelectePath.Text = selectedNode.FullPath;
@@ -141,7 +128,7 @@ namespace AW.Winforms.Helpers.Controls
       else
       {
         splitContainerHorizontal.Panel1Collapsed = ListBindingHelper.GetListItemProperties(propertyGrid1.SelectedObject.GetType()).Count < 2;
-        gridDataEditor.BindEnumerable(dataTreeView.GetChildEnumerable(e));
+        gridDataEditor.BindEnumerable(await dataTreeView.GetChildEnumerableAsync(e));
       }
       ExpandIfSingleTopNode(selectedNode);
     }

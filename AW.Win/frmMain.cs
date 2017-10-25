@@ -287,7 +287,7 @@ namespace AW.Win
       form.Tag = true;
     }
 
-    private void organizationStructureEditorSelfJoinToolStripMenuItem_Click(object sender, EventArgs e)
+    private async void organizationStructureEditorSelfJoinToolStripMenuItem_Click(object sender, EventArgs e)
     {
       //var employeeEntities = EmployeeEntity.WireUpSelfJoin(MetaSingletons.MetaData.Employee.PrefetchAllButManages().ToEntityCollection());  
       //var employeeEntities = EmployeeEntity.WireUpSelfJoin(LinqMetaData.CreateWithContext().Employee.PrefetchAll()).ToEntityCollection();
@@ -297,7 +297,7 @@ namespace AW.Win
       //  ), 
       //  "Employee Hierarchy In Tree " + employeeEntities, this);
 
-      var hierarchyEditor = LLBLWinformHelper.HierarchyEditorFactory(MetaSingletons.MetaData.Employee.PrefetchAll(),
+      var hierarchyEditor = await LLBLWinformHelper.HierarchyEditorFactoryAsync(MetaSingletons.MetaData.Employee.PrefetchAll(),
         EmployeeEntity.WireUpSelfJoinAndRemoveChildren,
         em => em.EmployeeDisplayName, em => em.Manages);
       var form = ShowControlInForm(hierarchyEditor, "Employee Hierarchy In Tree ", this);

@@ -574,7 +574,7 @@ namespace AW.Winforms.Helpers.Controls
       // 
       // bindingSourcePaging
       // 
-      this.bindingSourcePaging.PositionChanged += new System.EventHandler(this.bindingSourcePaging_PositionChanged);
+      this.bindingSourcePaging.PositionChanged += new System.EventHandler(this.bindingSourcePaging_PositionChangedAsync);
       // 
       // bindingNavigatorCountItem
       // 
@@ -691,7 +691,7 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonUnPage.Name = "toolStripButtonUnPage";
       this.toolStripButtonUnPage.Size = new System.Drawing.Size(94, 22);
       this.toolStripButtonUnPage.Text = "Remove Paging";
-      this.toolStripButtonUnPage.Click += new System.EventHandler(this.toolStripButtonUnPage_Click);
+      this.toolStripButtonUnPage.Click += new System.EventHandler(this.toolStripButtonUnPage_ClickAsync);
       // 
       // toolStripLabel4
       // 

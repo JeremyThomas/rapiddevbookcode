@@ -9,6 +9,7 @@ using System.Drawing.Design;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.PropertyDescriptors;
@@ -778,12 +779,34 @@ namespace Chaliy.Windows.Forms
       return GetChildEnumerable(e.Node);
     }
 
+    public Task<IBindingListView> GetChildEnumerableAsync(TreeViewEventArgs e)
+    {
+      return GetChildEnumerableAsync(e.Node);
+    }
+
     private IBindingListView GetChildEnumerable(TreeNode treeNode)
     {
       var children = Children(treeNode.Tag);
       if (children == null)
       {
         var childBindingListView = ChildTags(treeNode).ToBindingListView();
+        if (childBindingListView != null && (!childBindingListView.IsReadOnly && childBindingListView.AllowEdit))
+        {
+          childBindingListView.ListChanged += DataTreeView_ChildListChanged;
+          _bindingLists.Add(treeNode.Tag, childBindingListView);
+        }
+        return childBindingListView;
+      }
+      var bindingListView = children.ToBindingListView();
+      return bindingListView;
+    }
+
+    private async Task<IBindingListView> GetChildEnumerableAsync(TreeNode treeNode)
+    {
+      var children = Children(treeNode.Tag);
+      if (children == null)
+      {
+        var childBindingListView = await ChildTags(treeNode).ToBindingListViewAsync();
         if (childBindingListView != null && (!childBindingListView.IsReadOnly && childBindingListView.AllowEdit))
         {
           childBindingListView.ListChanged += DataTreeView_ChildListChanged;

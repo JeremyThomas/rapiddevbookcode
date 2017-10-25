@@ -429,6 +429,11 @@ namespace AW.Winforms.Helpers.Controls
       return GetFirstPage(_superset);
     }
 
+    private Task<bool> GetFirstPageAsync()
+    {
+      return GetFirstPageAsync(_superset);
+    }
+
     private bool GetFirstPage(IEnumerable enumerable)
     {
       var firstPageEnumerable = enumerable;
@@ -526,6 +531,12 @@ namespace AW.Winforms.Helpers.Controls
         BindPage();
     }
 
+    private async void bindingSourcePaging_PositionChangedAsync(object sender, EventArgs e)
+    {
+      if (Paging())
+        await BindPageAsync();
+    }
+
     private void BindPage()
     {
       try
@@ -547,21 +558,47 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
+    private async Task BindPageAsync()
+    {
+      try
+      {
+        _isBinding = true;
+        if (GetPageIndex() > 0)
+        {
+          await BindEnumerableAsync();
+          SetRemovingItem();
+        }
+        else
+        {
+          await GetFirstPageAsync();
+        }
+      }
+      finally
+      {
+        _isBinding = false;
+      }
+    }
+
     private void BindEnumerable()
     {
       UnBindGrids();
       bindingSourceEnumerable.BindEnumerable(SkipTake(), false, EnsureFilteringEnabled, BindingListViewCreater);
     }
 
-    private async Task BindEnumerableAsync()
+    private Task BindEnumerableAsync()
     {
       UnBindGrids();
-      await bindingSourceEnumerable.BindEnumerableAsync(SkipTake(), false, EnsureFilteringEnabled, AsyncBindingListViewCreaters);
+      return bindingSourceEnumerable.BindEnumerableAsync(SkipTake(), false, EnsureFilteringEnabled, AsyncBindingListViewCreaters);
     }
 
     public bool BindEnumerable(IEnumerable enumerable)
     {
       return BindEnumerable(enumerable, PageSize);
+    }
+
+    public Task<bool> BindEnumerableAsync(IEnumerable enumerable)
+    {
+      return BindEnumerableAsync(enumerable, PageSize);
     }
 
     public bool BindEnumerable(IEnumerable enumerable, ushort pageSize)
@@ -573,6 +610,17 @@ namespace AW.Winforms.Helpers.Controls
       if (Paging())
         return BindingSourceEnumerableList != null;
       return GetFirstPage(enumerable);
+    }
+
+    public async Task<bool> BindEnumerableAsync(IEnumerable enumerable, ushort pageSize)
+    {
+      _isBinding = true;
+      SetItemType(enumerable);
+      bindingSourcePaging.DataSource = null;
+      bindingSourcePaging.DataSource = CreatePageDataSource(pageSize, enumerable);
+      if (Paging())
+        return BindingSourceEnumerableList != null;
+      return await GetFirstPageAsync(enumerable);
     }
 
     private IEnumerable SkipTake()
@@ -1013,14 +1061,14 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
-    private void toolStripButtonUnPage_Click(object sender, EventArgs e)
+    private async void toolStripButtonUnPage_ClickAsync(object sender, EventArgs e)
     {
-      ChangePageSize(0);
+      await ChangePageSizeAsync(0);
     }
 
-    private void toolStripButtonSetPageSize_Click(object sender, EventArgs e)
+    private async void toolStripButtonSetPageSize_Click(object sender, EventArgs e)
     {
-      ChangePageSize(Convert.ToUInt16(toolStripTextBoxNewPageSize.Text));
+      await ChangePageSizeAsync(Convert.ToUInt16(toolStripTextBoxNewPageSize.Text));
     }
 
     private void ChangePageSize(ushort pageSize)
@@ -1028,6 +1076,15 @@ namespace AW.Winforms.Helpers.Controls
       if (PageSize == pageSize) return;
       PageSize = pageSize;
       BindEnumerable(SourceEnumerable);
+      if (pageSize == 0)
+        toolStripLabelSuperSetCount.Text = "";
+    }
+
+    private async Task ChangePageSizeAsync(ushort pageSize)
+    {
+      if (PageSize == pageSize) return;
+      PageSize = pageSize;
+      await BindEnumerableAsync(SourceEnumerable);
       if (pageSize == 0)
         toolStripLabelSuperSetCount.Text = "";
     }

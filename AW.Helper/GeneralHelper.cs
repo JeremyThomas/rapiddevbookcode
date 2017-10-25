@@ -912,7 +912,7 @@ namespace AW.Helper
     public static ICollection<T> WireUpSelfJoin<T, TI>(IEnumerable<T> entities,
       Func<T, TI> iDFunc, Func<T, bool> isChildFunc, Func<T, TI> parentIDFunc, Action<T, T> assignToParentFunc)
     {
-      var edDictionary = entities.ToDictionary(iDFunc);
+      var edDictionary = entities.ToDictionary(iDFunc); //TODO Make async
       foreach (var entity in edDictionary.Values.Where(isChildFunc))
       {
         var parent = edDictionary[parentIDFunc(entity)];

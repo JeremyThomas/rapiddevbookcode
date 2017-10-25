@@ -3,6 +3,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.Controls;
@@ -309,6 +310,7 @@ namespace AW.Winforms.Helpers.LLBL
       _getQueryableForEntityDelegate = getQueryableForEntityDelegate;
       gridDataEditor.MembersToExclude = membersToExclude;
       gridDataEditor.BindingListViewCreater = BindingListViewCreater;
+      gridDataEditor.AsyncBindingListViewCreaters = BindingListViewCreaterAsync;
       PopulateTreeViewWithSchema();
     }
 
@@ -347,6 +349,18 @@ namespace AW.Winforms.Helpers.LLBL
           enumerable = genericDataScopeBase.FetchData(queryable);
       }
       return EntityHelper.CreateEntityView(enumerable, itemType);
+    }
+
+    private async Task<IBindingListView> BindingListViewCreaterAsync(IEnumerable enumerable, Type itemType)
+    {
+      var genericDataScopeBase = EntityCollectionDataScope;
+      if (genericDataScopeBase != null && enumerable != null)
+      {
+        var queryable = enumerable as IQueryable;
+        if (queryable != null)
+          enumerable = await genericDataScopeBase.FetchDataAsync(queryable);
+      }
+      return await EntityHelper.CreateEntityViewAsync(enumerable, itemType);
     }
 
     private void PopulateTreeViewWithSchema()
@@ -415,6 +429,14 @@ namespace AW.Winforms.Helpers.LLBL
         ViewEntities(entityQueryable);
     }
 
+    private async Task OpenAsync()
+    {
+      var entityQueryable = GetEntityQueryable();
+      if (entityQueryable != null)
+        await ViewEntitiesAsync(entityQueryable);
+    }
+    
+
     private IQueryable GetEntityQueryable()
     {
       return _getQueryableForEntityDelegate == null
@@ -438,6 +460,22 @@ namespace AW.Winforms.Helpers.LLBL
       gridDataEditor.BindEnumerable(CacheResultset(entityQueryable));
     }
 
+    private Task ViewEntitiesAsync(IQueryable entityQueryable)
+    {
+      if (typeof(IEntity).IsAssignableFrom(entityQueryable.ElementType))
+      {
+        if (gridDataEditor.DataEditorPersister == null)
+          gridDataEditor.DataEditorPersister = new DataEditorLLBLSelfServicingPersister();
+      }
+      else
+      {
+        var provider = entityQueryable.Provider as LLBLGenProProvider2;
+        if (provider != null && gridDataEditor.DataEditorPersister == null)
+          gridDataEditor.DataEditorPersister = new DataEditorLLBLAdapterPersister(provider.AdapterToUse);
+      }
+      return gridDataEditor.BindEnumerableAsync(CacheResultset(entityQueryable));
+    }
+
     /// <summary>
     ///   Set a Cache on the base query of the gridDataEditor, which means all paging based off that query will be cached too.
     /// </summary>
@@ -448,9 +486,9 @@ namespace AW.Winforms.Helpers.LLBL
       return CacheDurationInSeconds > 0 ? QueryableExtensionMethods.CacheResultset(entityQueryable, CacheDurationInSeconds, false, Name) : entityQueryable;
     }
 
-    private void openPagedToolStripMenuItem_Click()
+    private Task openPagedToolStripMenuItem_Click()
     {
-      Open();
+      return OpenAsync();
     }
 
     private void treeViewEntities_Click(object sender, EventArgs e)

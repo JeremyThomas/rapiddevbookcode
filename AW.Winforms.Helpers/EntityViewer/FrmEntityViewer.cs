@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.PropertyDescriptors;
@@ -84,22 +85,22 @@ namespace AW.Winforms.Helpers.EntityViewer
       checkBoxShowDataTypes_CheckedChanged(this, e);
     }
 
-    private void propertyGrid1_SelectedGridItemChanged(object sender, SelectedGridItemChangedEventArgs e)
+    private async void propertyGrid1_SelectedGridItemChangedAsync(object sender, SelectedGridItemChangedEventArgs e)
     {
       if (!_doingObjectBrowserNodeSelection && e.NewSelection.Value != null && !(e.OldSelection == null && gridDataEditor.DataSource == propertyGrid1.SelectedObject))
-        if (!ShowEnumerable(e.NewSelection.Value as IEnumerable))
+        if (!await ShowEnumerable(e.NewSelection.Value as IEnumerable))
           if (e.NewSelection.PropertyDescriptor != null && !e.NewSelection.PropertyDescriptor.PropertyType.IsValueType)
             gridDataEditor.DataSource = e.NewSelection.Value;
     }
 
-    private void ObjectBrowser_NodeSelected(object sender, EventArgs e)
+    private async void ObjectBrowser_NodeSelectedAsync(object sender, EventArgs e)
     {
       _doingObjectBrowserNodeSelection = true;
       try
       {
         toolStripStatusLabelSelectePath.Text = (((TreeView) (ObjectBrowser.ActiveControl)).SelectedNode).FullPath;
         propertyGrid1.SelectedObject = sender;
-        if (!ShowEnumerable(sender as IEnumerable))
+        if (!await ShowEnumerable(sender as IEnumerable))
           gridDataEditor.DataSource = null;
       }
       finally
@@ -108,9 +109,9 @@ namespace AW.Winforms.Helpers.EntityViewer
       }
     }
 
-    private bool ShowEnumerable(IEnumerable enumerable)
+    private async Task<bool> ShowEnumerable(IEnumerable enumerable)
     {
-      var iSEnumerable = gridDataEditor.BindEnumerable(enumerable);
+      var iSEnumerable = await gridDataEditor.BindEnumerableAsync(enumerable);
       splitContainerHorizontal.Panel2Collapsed = !iSEnumerable;
       return iSEnumerable;
     }
