@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.LLBL;
@@ -43,6 +44,16 @@ namespace AW.Winforms.Helpers.LLBL
     {
       var dataScope = new GeneralEntityCollectionDataScope();
       var processedCollection = postProcessing(dataScope.FetchData(query));
+      return HierarchyEditor.HierarchyEditorFactory(processedCollection, namePropertyExpression, childCollectionPropertyExpression,
+        new DataEditorLLBLDataScopePersister(dataScope));
+    }
+
+    public static async Task<HierarchyEditor> HierarchyEditorFactoryAsync<T, TName, TChildCollection>(IQueryable<T> query, Func<IEnumerable<T>, IEnumerable<T>> postProcessing,
+      Expression<Func<T, TName>> namePropertyExpression,
+      Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : class, IEntityCore
+    {
+      var dataScope = new GeneralEntityCollectionDataScope();
+      var processedCollection = postProcessing(await dataScope.FetchDataAsync(query));
       return HierarchyEditor.HierarchyEditorFactory(processedCollection, namePropertyExpression, childCollectionPropertyExpression,
         new DataEditorLLBLDataScopePersister(dataScope));
     }

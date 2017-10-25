@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.LLBL;
@@ -127,16 +128,16 @@ namespace AW.Winforms.Helpers.LLBL
       toolStripStatusLabelSelected.Text = treeViewEntities.SelectedNode.Text;
     }
 
-    private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
+    private async void toolStripMenuItemOpen_Click(object sender, EventArgs e)
     {
-      Open(0);
+      await Open(0);
     }
 
-    private void Open(ushort pageSize)
+    private async Task Open(ushort pageSize)
     {
       var entityQueryable = GetEntityQueryable();
       if (entityQueryable != null)
-        ViewEntities(entityQueryable, pageSize);
+        await ViewEntities(entityQueryable, pageSize);
     }
 
     private IQueryable GetEntityQueryable()
@@ -144,7 +145,7 @@ namespace AW.Winforms.Helpers.LLBL
       return EntityHelper.GetQueryableForEntityIgnoreIfNull(_linqMetaData, treeViewEntities.SelectedNode.Tag as Type);
     }
 
-    private void ViewEntities(IQueryable entityQueryable, ushort pageSize)
+    private Task ViewEntities(IQueryable entityQueryable, ushort pageSize)
     {
       if (splitContainerVertical.Panel2Collapsed)
         ExpandRightPanel();
@@ -157,12 +158,12 @@ namespace AW.Winforms.Helpers.LLBL
           if (provider != null)
             gridDataEditor.DataEditorPersister = new DataEditorLLBLAdapterPersister(provider.AdapterToUse);
         }
-      gridDataEditor.BindEnumerable(entityQueryable, pageSize);
+      return gridDataEditor.BindEnumerableAsync(entityQueryable, pageSize);
     }
 
-    private void openPagedToolStripMenuItem_Click(object sender, EventArgs e)
+    private async void openPagedToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      Open(GridDataEditor.DefaultPageSize);
+      await Open(GridDataEditor.DefaultPageSize);
     }
 
     private void getCountToolStripMenuItem_Click(object sender, EventArgs e)

@@ -199,7 +199,7 @@
       this.ObjectBrowser.Size = new System.Drawing.Size(343, 540);
       this.ObjectBrowser.TabIndex = 0;
       this.toolTip1.SetToolTip(this.ObjectBrowser, "Properties of selected object");
-      this.ObjectBrowser.NodeSelected += new System.EventHandler(this.ObjectBrowser_NodeSelected);
+      this.ObjectBrowser.NodeSelected += new System.EventHandler(this.ObjectBrowser_NodeSelectedAsync);
       // 
       // propertyGrid1
       // 
@@ -213,7 +213,7 @@
       this.propertyGrid1.Name = "propertyGrid1";
       this.propertyGrid1.Size = new System.Drawing.Size(684, 134);
       this.propertyGrid1.TabIndex = 0;
-      this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
+      this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChangedAsync);
       // 
       // panelOptions
       // 

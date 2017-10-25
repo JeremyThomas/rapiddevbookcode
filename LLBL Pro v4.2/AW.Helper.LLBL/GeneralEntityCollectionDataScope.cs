@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Fasterflect;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -93,9 +95,24 @@ namespace AW.Helper.LLBL
       return entityCollectionCore;
     }
 
+    public async Task<IEntityCollectionCore> FetchDataAsync(IQueryable query)
+    {
+      Query = TryTrackQuery(query);
+      if (Query != null)
+        await FetchDataAsync();
+      var entityCollectionCore = _entityCollection;
+      _entityCollection = null;
+      return entityCollectionCore;
+    }
+
     public CollectionCore<T> FetchData<T>(IQueryable<T> query) where T : class, IEntityCore
     {
       return (CollectionCore<T>) FetchData((IQueryable) query);
+    }
+
+    public async Task<CollectionCore<T>> FetchDataAsync<T>(IQueryable<T> query) where T : class, IEntityCore
+    {
+      return (CollectionCore<T>)await FetchDataAsync((IQueryable)query);
     }
 
     protected override bool FetchDataImpl(params object[] fetchMethodParameters)
@@ -103,6 +120,18 @@ namespace AW.Helper.LLBL
       if (Query == null)
         return false;
       _entityCollection = EntityHelper.ToEntityCollectionCore(Query as ILLBLGenProQuery);
+      if (_entityCollection == null)
+        return false;
+      SetRemovedEntitiesTracker(_entityCollection);
+      var anyData = _entityCollection.Count > 0;
+      return anyData;
+    }
+
+    protected override async Task<bool> FetchDataAsyncImpl(CancellationToken cancellationToken, params object[] fetchMethodParameters)
+    {
+      if (Query == null)
+        return false;
+      _entityCollection = await EntityHelper.ToEntityCollectionCoreAsync(Query as ILLBLGenProQuery);
       if (_entityCollection == null)
         return false;
       SetRemovedEntitiesTracker(_entityCollection);

@@ -97,6 +97,26 @@ namespace AW.Winforms.Helpers
       return null;
     }
 
+    public static async Task<IBindingListView> ToBindingListViewAsync<T>(this IEnumerable<T> enumerable)
+    {
+      var showenEnumerable = enumerable != null && !(enumerable is string);
+      if (showenEnumerable)
+      {
+        var view = enumerable as IBindingListView;
+        if (view != null)
+          return view;
+        var listSource = enumerable as IListSource;
+        if (listSource != null)
+        {
+          var bindingListView = ListSourceToBindingListView(listSource);
+          if (bindingListView != null)
+            return bindingListView;
+        }
+        return await CreateBindingListViewAsync(enumerable);
+      }
+      return null;
+    }
+
     public static IBindingListView ListSourceToBindingListView(IListSource listSource)
     {
       if (listSource != null)
