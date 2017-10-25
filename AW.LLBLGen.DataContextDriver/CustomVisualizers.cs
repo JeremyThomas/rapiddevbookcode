@@ -78,11 +78,13 @@ namespace AW.LLBLGen.DataContextDriver
       return true;
     }
 
+#if async
     public static async Task<IQueryable<T>> DisplayHierarchyInTree<T, TName, TChildCollection>(this IQueryable<T> queryable, Func<IEnumerable<T>, IEnumerable<T>> postProcessing, Expression<Func<T, TName>> namePropertyExpression,
       Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : class, IEntityCore
     {
       return LINQPad.CustomVisualizers.DisplayControl(queryable, await LLBLWinformHelper.HierarchyEditorFactoryAsync(queryable, postProcessing, namePropertyExpression, childCollectionPropertyExpression));
     }
+#endif
 
     public static IEnumerable DisplayInGrid(this IEnumerable enumerable, ITransactionController transactionController, ushort pageSize)
     {
