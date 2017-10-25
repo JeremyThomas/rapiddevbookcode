@@ -100,6 +100,7 @@ namespace Northwind.Win
       usrCntrlEntityBrowser1.UseContext = useContextCheckBox.Checked;
     }
 
+#if async
     private async void toolStripButtonShowEmployeeHierarchyInTreePostProcessing_ClickAsync(object sender, EventArgs e)
     {
       var linqMetaData = Factories.CreateLinqMetaData();
@@ -107,6 +108,15 @@ namespace Northwind.Win
         EmployeeEntity.WireUpSelfJoinAndRemoveChildren,
         em => em.FirstName, em => em.Staff));
     }
+#else
+    private void toolStripButtonShowEmployeeHierarchyInTreePostProcessing_Click(object sender, EventArgs e)
+    {
+      var linqMetaData = Factories.CreateLinqMetaData();
+      ShowControlInForm(LLBLWinformHelper.HierarchyEditorFactory(linqMetaData.Employee,
+        EmployeeEntity.WireUpSelfJoinAndRemoveChildren,
+        em => em.FirstName, em => em.Staff));
+    }
+#endif
 
     private void toolStripButtonFilterByDiscontinued_Click(object sender, EventArgs e)
     {

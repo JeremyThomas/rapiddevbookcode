@@ -48,6 +48,7 @@ namespace AW.Winforms.Helpers.LLBL
         new DataEditorLLBLDataScopePersister(dataScope));
     }
 
+#if async
     public static async Task<HierarchyEditor> HierarchyEditorFactoryAsync<T, TName, TChildCollection>(IQueryable<T> query, Func<IEnumerable<T>, IEnumerable<T>> postProcessing,
       Expression<Func<T, TName>> namePropertyExpression,
       Expression<Func<T, TChildCollection>> childCollectionPropertyExpression) where T : class, IEntityCore
@@ -57,6 +58,7 @@ namespace AW.Winforms.Helpers.LLBL
       return HierarchyEditor.HierarchyEditorFactory(processedCollection, namePropertyExpression, childCollectionPropertyExpression,
         new DataEditorLLBLDataScopePersister(dataScope));
     }
+#endif
 
     #region Validatation
 

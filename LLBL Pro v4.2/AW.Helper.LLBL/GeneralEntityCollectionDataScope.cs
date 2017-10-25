@@ -95,6 +95,8 @@ namespace AW.Helper.LLBL
       return entityCollectionCore;
     }
 
+
+#if async
     public async Task<IEntityCollectionCore> FetchDataAsync(IQueryable query)
     {
       Query = TryTrackQuery(query);
@@ -104,17 +106,19 @@ namespace AW.Helper.LLBL
       _entityCollection = null;
       return entityCollectionCore;
     }
+#endif
 
     public CollectionCore<T> FetchData<T>(IQueryable<T> query) where T : class, IEntityCore
     {
       return (CollectionCore<T>) FetchData((IQueryable) query);
     }
 
+#if async
     public async Task<CollectionCore<T>> FetchDataAsync<T>(IQueryable<T> query) where T : class, IEntityCore
     {
       return (CollectionCore<T>)await FetchDataAsync((IQueryable)query);
     }
-
+#endif
     protected override bool FetchDataImpl(params object[] fetchMethodParameters)
     {
       if (Query == null)
@@ -127,6 +131,7 @@ namespace AW.Helper.LLBL
       return anyData;
     }
 
+#if async
     protected override async Task<bool> FetchDataAsyncImpl(CancellationToken cancellationToken, params object[] fetchMethodParameters)
     {
       if (Query == null)
@@ -138,6 +143,7 @@ namespace AW.Helper.LLBL
       var anyData = _entityCollection.Count > 0;
       return anyData;
     }
+#endif
 
     private void SetRemovedEntitiesTracker(IEntityCollectionCore entityCollectionCore)
     {

@@ -115,7 +115,7 @@
       this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Name = "toolStripButtonShowEmployeeHierarchyInTreePostProcessing";
       this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Size = new System.Drawing.Size(270, 22);
       this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Text = "Show Employee Hierarchy In Tree PostProcessing";
-      this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Click += new System.EventHandler(this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing_ClickAsync);
+      this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing.Click += new System.EventHandler(this.toolStripButtonShowEmployeeHierarchyInTreePostProcessing_Click);
       // 
       // toolStripButtonShowEmployeeHierarchyInTree
       // 

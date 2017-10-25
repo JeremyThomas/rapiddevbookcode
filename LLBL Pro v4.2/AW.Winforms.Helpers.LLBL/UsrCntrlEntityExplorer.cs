@@ -310,7 +310,9 @@ namespace AW.Winforms.Helpers.LLBL
       _getQueryableForEntityDelegate = getQueryableForEntityDelegate;
       gridDataEditor.MembersToExclude = membersToExclude;
       gridDataEditor.BindingListViewCreater = BindingListViewCreater;
+#if async
       gridDataEditor.AsyncBindingListViewCreaters = BindingListViewCreaterAsync;
+#endif
       PopulateTreeViewWithSchema();
     }
 
@@ -351,6 +353,7 @@ namespace AW.Winforms.Helpers.LLBL
       return EntityHelper.CreateEntityView(enumerable, itemType);
     }
 
+#if async
     private async Task<IBindingListView> BindingListViewCreaterAsync(IEnumerable enumerable, Type itemType)
     {
       var genericDataScopeBase = EntityCollectionDataScope;
@@ -362,6 +365,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
       return await EntityHelper.CreateEntityViewAsync(enumerable, itemType);
     }
+#endif
 
     private void PopulateTreeViewWithSchema()
     {
