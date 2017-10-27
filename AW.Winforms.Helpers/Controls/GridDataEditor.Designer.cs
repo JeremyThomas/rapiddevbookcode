@@ -47,6 +47,8 @@ namespace AW.Winforms.Helpers.Controls
       this.bindingNavigatorAddNewItem1 = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorCountItem1 = new System.Windows.Forms.ToolStripLabel();
       this.bindingNavigatorDeleteItem1 = new System.Windows.Forms.ToolStripButton();
+      this.toolStripProgressBarFetching = new System.Windows.Forms.ToolStripProgressBar();
+      this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorMoveFirstItem1 = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorMovePreviousItem1 = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -136,6 +138,8 @@ namespace AW.Winforms.Helpers.Controls
       this.bindingNavigatorData.DeleteItem = this.bindingNavigatorDeleteItem1;
       this.bindingNavigatorData.Font = new System.Drawing.Font("Segoe UI", 9F);
       this.bindingNavigatorData.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripProgressBarFetching,
+            this.toolStripButtonCancel,
             this.bindingNavigatorMoveFirstItem1,
             this.bindingNavigatorMovePreviousItem1,
             this.bindingNavigatorSeparator3,
@@ -209,6 +213,23 @@ namespace AW.Winforms.Helpers.Controls
       this.bindingNavigatorDeleteItem1.Size = new System.Drawing.Size(23, 22);
       this.bindingNavigatorDeleteItem1.Text = "Delete";
       this.bindingNavigatorDeleteItem1.Click += new System.EventHandler(this.bindingNavigatorDeleteItem1_Click);
+      // 
+      // toolStripProgressBarFetching
+      // 
+      this.toolStripProgressBarFetching.Name = "toolStripProgressBarFetching";
+      this.toolStripProgressBarFetching.Size = new System.Drawing.Size(100, 22);
+      this.toolStripProgressBarFetching.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+      this.toolStripProgressBarFetching.Visible = false;
+      // 
+      // toolStripButtonCancel
+      // 
+      this.toolStripButtonCancel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCancel.Image")));
+      this.toolStripButtonCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonCancel.Name = "toolStripButtonCancel";
+      this.toolStripButtonCancel.Size = new System.Drawing.Size(63, 22);
+      this.toolStripButtonCancel.Text = "Cancel";
+      this.toolStripButtonCancel.Visible = false;
+      this.toolStripButtonCancel.Click += new System.EventHandler(this.toolStripButtonCancel_Click);
       // 
       // bindingNavigatorMoveFirstItem1
       // 
@@ -455,7 +476,7 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonObjectBrowser.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonObjectBrowser.Image")));
       this.toolStripButtonObjectBrowser.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonObjectBrowser.Name = "toolStripButtonObjectBrowser";
-      this.toolStripButtonObjectBrowser.Size = new System.Drawing.Size(132, 22);
+      this.toolStripButtonObjectBrowser.Size = new System.Drawing.Size(132, 19);
       this.toolStripButtonObjectBrowser.Text = "View in Object Browser";
       this.toolStripButtonObjectBrowser.Click += new System.EventHandler(this.toolStripButtonObjectBrowser_Click);
       // 
@@ -859,5 +880,7 @@ namespace AW.Winforms.Helpers.Controls
     private ToolStripButton toolStripButtonCSharp;
     private ToolStripButton toolStripButtonRelatedCounts;
     private ToolStripCheckBox toolStripCheckBoxDeletesAreCascading;
+    private ToolStripProgressBar toolStripProgressBarFetching;
+    private ToolStripButton toolStripButtonCancel;
   }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CSharp.RuntimeBinder;
 using SD.LLBLGen.Pro.LinqSupportClasses;
@@ -327,13 +328,13 @@ namespace AW.Helper.LLBL
       return entities;
     }
 
-    public static async Task<IEntityCollectionCore> ToEntityCollectionAsync(IEnumerable enumerable, Type itemType)
+    public static async Task<IEntityCollectionCore> ToEntityCollectionAsync(IEnumerable enumerable, Type itemType, CancellationToken cancellationToken)
     {
       var entities = enumerable as IEntityCollectionCore;
       if (entities != null)
         return entities;
       var llblQuery = enumerable as ILLBLGenProQuery;
-      entities = await ToEntityCollectionCoreAsync(llblQuery);
+      entities = await ToEntityCollectionCoreAsync(llblQuery, cancellationToken);
       if (entities == null)
       {
         var entityFactoryCore = GetFactoryCore(enumerable, itemType);
@@ -350,14 +351,14 @@ namespace AW.Helper.LLBL
     public static IEntityCollectionCore ToEntityCollectionCore(ILLBLGenProQuery llblQuery)
     {
       if (llblQuery != null)
-        return llblQuery.Execute() as IEntityCollectionCore;
+        return llblQuery.Execute<IEntityCollectionCore>();
       return null;
     }
 
-    public static async Task<IEntityCollectionCore> ToEntityCollectionCoreAsync(ILLBLGenProQuery llblQuery)
+    public static async Task<IEntityCollectionCore> ToEntityCollectionCoreAsync(ILLBLGenProQuery llblQuery, CancellationToken cancellationToken)
     {
       if (llblQuery != null)
-        return await llblQuery.ExecuteAsync() as IEntityCollectionCore;
+        return await llblQuery.ExecuteAsync<IEntityCollectionCore>(cancellationToken);
       return null;
     }
 
@@ -377,9 +378,9 @@ namespace AW.Helper.LLBL
       return defaultView as IBindingListView;
     }
 
-    public static async Task<IBindingListView> CreateEntityViewAsync(IEnumerable enumerable, Type itemType)
+    public static async Task<IBindingListView> CreateEntityViewAsync(IEnumerable enumerable, Type itemType, CancellationToken cancellationToken)
     {
-      var entityCollectionCore = await ToEntityCollectionAsync(enumerable, itemType);
+      var entityCollectionCore = await ToEntityCollectionAsync(enumerable, itemType, cancellationToken);
       if (entityCollectionCore == null) return null;
       var entityCollection = entityCollectionCore as IEntityCollection;
       if (entityCollection == null)

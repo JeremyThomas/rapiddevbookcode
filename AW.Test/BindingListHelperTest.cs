@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AW.Data;
@@ -298,7 +299,7 @@ namespace AW.Tests
 
     private static async Task TestLLBLQueryToBindingListViewAsync(IEnumerable enumerable, bool ensureFilteringEnabled = false)
     {
-      var list = await TestToBindingListViewAsync(enumerable, ensureFilteringEnabled);
+      var list = await TestToBindingListViewAsync(enumerable, new CancellationTokenSource().Token, ensureFilteringEnabled);
       Assert.IsInstanceOfType(list, typeof(ICollection));
       if (ensureFilteringEnabled)
       {
@@ -383,9 +384,9 @@ namespace AW.Tests
       return bindingListView;
     }
 
-    private static async Task<IBindingListView> TestToBindingListViewAsync(IEnumerable enumerable, bool ensureFilteringEnabled = false)
+    private static async Task<IBindingListView> TestToBindingListViewAsync(IEnumerable enumerable, CancellationToken cancellationToken, bool ensureFilteringEnabled = false)
     {
-      var bindingListView = await enumerable.ToBindingListViewAsync(ensureFilteringEnabled);
+      var bindingListView = await enumerable.ToBindingListViewAsync(cancellationToken, ensureFilteringEnabled);
       Assert.IsInstanceOfType(bindingListView, typeof(IBindingListView));
       Assert.IsTrue(bindingListView.Count > 0);
       return bindingListView;

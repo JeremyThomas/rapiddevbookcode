@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Windows.Forms;
 using AW.Helper;
 
@@ -102,6 +103,7 @@ namespace AW.Winforms.Helpers.Controls
     }
 
     bool _fullyPainted;
+    private CancellationTokenSource _cancellationTokenSource;
 
     /// <summary>
     /// http://stackoverflow.com/questions/7309736/which-event-is-launched-right-after-control-is-fully-loaded
@@ -128,7 +130,8 @@ namespace AW.Winforms.Helpers.Controls
       else
       {
         splitContainerHorizontal.Panel1Collapsed = ListBindingHelper.GetListItemProperties(propertyGrid1.SelectedObject.GetType()).Count < 2;
-        gridDataEditor.BindEnumerable(await dataTreeView.GetChildEnumerableAsync(e));
+        _cancellationTokenSource = new CancellationTokenSource();
+        gridDataEditor.BindEnumerable(await dataTreeView.GetChildEnumerableAsync(e, _cancellationTokenSource.Token));
       }
       ExpandIfSingleTopNode(selectedNode);
     }
