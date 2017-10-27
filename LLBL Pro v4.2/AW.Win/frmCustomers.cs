@@ -115,12 +115,12 @@ namespace AW.Win
 
     private async void toolStripButtonTypedListQuerySpec_Click(object sender, EventArgs e)
     {
-      await bindingSourceCustomerList.BindEnumerableAsync(CustomerQueries.GetCustomerListTypedListQuerySpec(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
+      await bindingSourceCustomerList.BindEnumerableAsync(CustomerQueries.GetCustomerListTypedListQuerySpec(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, cancellationToken.Token, true);
     }
 
     private async void toolStripButtonTypedListQuerySpecPoco_Click(object sender, EventArgs e)
     {
-      await bindingSourceCustomerList.BindEnumerableAsync(CustomerQueries.GetCustomerListTypedListQuerySpecPoco(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
+      await bindingSourceCustomerList.BindEnumerableAsync(CustomerQueries.GetCustomerListTypedListQuerySpecPoco(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, cancellationToken.Token, true);
     }
 
     /// <summary>
@@ -136,7 +136,7 @@ namespace AW.Win
     private async void toolStripButtonLinqFilterFirst_Click(object sender, EventArgs e)
     {
       progressBar1.Show();
-      await bindingSourceCustomerList.BindEnumerableAsync(CustomerQueries.GetCustomerListLinqedTypedListFilterFirst(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
+      await bindingSourceCustomerList.BindEnumerableAsync(CustomerQueries.GetCustomerListLinqedTypedListFilterFirst(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, cancellationToken.Token, true);
       progressBar1.Hide();
     }
 
@@ -168,7 +168,7 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
     private async void toolStripButtonLinqBarf_Click(object sender, EventArgs e)
     {
-      await bindingSourceCustomerList.BindEnumerableAsync(CustomerQueries.GetCustomerListAnonymousLinq(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, true);
+      await bindingSourceCustomerList.BindEnumerableAsync(CustomerQueries.GetCustomerListAnonymousLinq(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn), true, cancellationToken.Token, true);
     }
 
     private void toolStripButtonViewAsEntityLinq_Click(object sender, EventArgs e)

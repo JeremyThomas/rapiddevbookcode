@@ -11,6 +11,7 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ADGV;
@@ -429,9 +430,9 @@ namespace AW.Winforms.Helpers.Controls
       return GetFirstPage(_superset);
     }
 
-    private Task<bool> GetFirstPageAsync()
+    private Task<bool> GetFirstPageAsync(CancellationToken cancellationToken)
     {
-      return GetFirstPageAsync(_superset);
+      return GetFirstPageAsync(_superset, cancellationToken);
     }
 
     private bool GetFirstPage(IEnumerable enumerable)
@@ -450,7 +451,7 @@ namespace AW.Winforms.Helpers.Controls
       return isEnumerable;
     }
 
-    private async Task<bool> GetFirstPageAsync(IEnumerable enumerable)
+    private async Task<bool> GetFirstPageAsync(IEnumerable enumerable, CancellationToken cancellationToken)
     {
       var firstPageEnumerable = enumerable;
       if (Paging())
@@ -460,10 +461,18 @@ namespace AW.Winforms.Helpers.Controls
       }
       UnBindGrids();
 
-      var isEnumerable = await bindingSourceEnumerable.BindEnumerableAsync(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null), EnsureFilteringEnabled, AsyncBindingListViewCreaters);
+      var isEnumerable = await bindingSourceEnumerable.BindEnumerableAsync(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null), cancellationToken, EnsureFilteringEnabled, AsyncBindingListViewCreaters);
       SetRemovingItem();
       _isBinding = false;
+      toolStripButtonCancel.Visible = false;
+      toolStripProgressBarFetching.Visible = false;
       return isEnumerable;
+    }
+
+    private void toolStripButtonCancel_Click(object sender, EventArgs e)
+    {
+      if (_cancellationTokenSource != null)
+        _cancellationTokenSource.Cancel();
     }
 
     protected bool Paging()
@@ -534,7 +543,10 @@ namespace AW.Winforms.Helpers.Controls
     private async void bindingSourcePaging_PositionChangedAsync(object sender, EventArgs e)
     {
       if (Paging())
-        await BindPageAsync();
+      {
+        _cancellationTokenSource = new CancellationTokenSource();
+        await BindPageAsync(_cancellationTokenSource.Token);
+      }
     }
 
     private void BindPage()
@@ -558,19 +570,19 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
-    private async Task BindPageAsync()
+    private async Task BindPageAsync(CancellationToken cancellationToken)
     {
       try
       {
         _isBinding = true;
         if (GetPageIndex() > 0)
         {
-          await BindEnumerableAsync();
+          await BindEnumerableAsync(cancellationToken);
           SetRemovingItem();
         }
         else
         {
-          await GetFirstPageAsync();
+          await GetFirstPageAsync(cancellationToken);
         }
       }
       finally
@@ -585,10 +597,10 @@ namespace AW.Winforms.Helpers.Controls
       bindingSourceEnumerable.BindEnumerable(SkipTake(), false, EnsureFilteringEnabled, BindingListViewCreater);
     }
 
-    private Task BindEnumerableAsync()
+    private Task BindEnumerableAsync(CancellationToken cancellationToken)
     {
       UnBindGrids();
-      return bindingSourceEnumerable.BindEnumerableAsync(SkipTake(), false, EnsureFilteringEnabled, AsyncBindingListViewCreaters);
+      return bindingSourceEnumerable.BindEnumerableAsync(SkipTake(), false, cancellationToken, EnsureFilteringEnabled, AsyncBindingListViewCreaters);
     }
 
     public bool BindEnumerable(IEnumerable enumerable)
@@ -598,9 +610,15 @@ namespace AW.Winforms.Helpers.Controls
 
     public Task<bool> BindEnumerableAsync(IEnumerable enumerable)
     {
-      return BindEnumerableAsync(enumerable, PageSize);
+      _cancellationTokenSource = new CancellationTokenSource();
+      return BindEnumerableAsync(enumerable, _cancellationTokenSource.Token);
     }
 
+    public Task<bool> BindEnumerableAsync(IEnumerable enumerable, CancellationToken cancellationToken)
+    {
+      return BindEnumerableAsync(enumerable, PageSize, cancellationToken);
+    }
+    
     public bool BindEnumerable(IEnumerable enumerable, ushort pageSize)
     {
       _isBinding = true;
@@ -612,15 +630,23 @@ namespace AW.Winforms.Helpers.Controls
       return GetFirstPage(enumerable);
     }
 
-    public async Task<bool> BindEnumerableAsync(IEnumerable enumerable, ushort pageSize)
+    public Task<bool> BindEnumerableAsync(IEnumerable enumerable, ushort pageSize)
+    {
+      _cancellationTokenSource = new CancellationTokenSource();
+      return BindEnumerableAsync(enumerable, PageSize, _cancellationTokenSource.Token);
+    }
+
+    public async Task<bool> BindEnumerableAsync(IEnumerable enumerable, ushort pageSize, CancellationToken cancellationToken)
     {
       _isBinding = true;
+      toolStripButtonCancel.Visible = true;
+      toolStripProgressBarFetching.Visible = true;
       SetItemType(enumerable);
       bindingSourcePaging.DataSource = null;
       bindingSourcePaging.DataSource = CreatePageDataSource(pageSize, enumerable);
       if (Paging())
         return BindingSourceEnumerableList != null;
-      return await GetFirstPageAsync(enumerable);
+      return await GetFirstPageAsync(enumerable, cancellationToken);
     }
 
     private IEnumerable SkipTake()
@@ -1063,12 +1089,14 @@ namespace AW.Winforms.Helpers.Controls
 
     private async void toolStripButtonUnPage_ClickAsync(object sender, EventArgs e)
     {
-      await ChangePageSizeAsync(0);
+      _cancellationTokenSource = new CancellationTokenSource();
+      await ChangePageSizeAsync(0, _cancellationTokenSource.Token);
     }
 
     private async void toolStripButtonSetPageSize_Click(object sender, EventArgs e)
     {
-      await ChangePageSizeAsync(Convert.ToUInt16(toolStripTextBoxNewPageSize.Text));
+      _cancellationTokenSource = new CancellationTokenSource();
+      await ChangePageSizeAsync(Convert.ToUInt16(toolStripTextBoxNewPageSize.Text), _cancellationTokenSource.Token);
     }
 
     private void ChangePageSize(ushort pageSize)
@@ -1080,11 +1108,11 @@ namespace AW.Winforms.Helpers.Controls
         toolStripLabelSuperSetCount.Text = "";
     }
 
-    private async Task ChangePageSizeAsync(ushort pageSize)
+    private async Task ChangePageSizeAsync(ushort pageSize, CancellationToken cancellationToken)
     {
       if (PageSize == pageSize) return;
       PageSize = pageSize;
-      await BindEnumerableAsync(SourceEnumerable);
+      await BindEnumerableAsync(SourceEnumerable, cancellationToken);
       if (pageSize == 0)
         toolStripLabelSuperSetCount.Text = "";
     }
@@ -1135,9 +1163,10 @@ namespace AW.Winforms.Helpers.Controls
     }
 
     public Func<IEnumerable, Type, IBindingListView> BindingListViewCreater;
-    public Func<IEnumerable, Type, Task<IBindingListView>> AsyncBindingListViewCreaters;
+    public Func<IEnumerable, Type, CancellationToken, Task<IBindingListView>> AsyncBindingListViewCreaters;
     private readonly ToolStripButton _searchToolStripButton;
     private readonly ToolStripTextBox _searchToolStripTextBox;
+    private CancellationTokenSource _cancellationTokenSource;
 
     private void toolStripButtonClearFilters_Click(object sender, EventArgs e)
     {
@@ -1369,5 +1398,7 @@ namespace AW.Winforms.Helpers.Controls
         && isComboBox && dataGridView.EndEdit())
         dataGridView.BindingContext[dataGridView.DataSource].EndCurrentEdit();
     }
+
+
   }
 }

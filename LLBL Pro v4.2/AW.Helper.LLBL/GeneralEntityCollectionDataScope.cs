@@ -193,14 +193,17 @@ namespace AW.Helper.LLBL
 
     private Dictionary<Guid, IEntityCore>.ValueCollection NewEntities
     {
-      get { return ((Dictionary<Guid, IEntityCore>) DelegateForGetNewEntities(_context)).Values; }
+      get
+      {
+        return _context==null ? new Dictionary<Guid, IEntityCore>.ValueCollection(new Dictionary<Guid, IEntityCore>()) : ((Dictionary<Guid, IEntityCore>) DelegateForGetNewEntities(_context)).Values;
+      }
     }
 
     private static readonly MemberGetter DelegateForGetObjectIDToEntityInstance = typeof(Context).DelegateForGetPropertyValue("ObjectIDToEntityInstance");
 
     private Dictionary<Guid, IEntityCore>.ValueCollection ExistingEntities
     {
-      get { return ((Dictionary<Guid, IEntityCore>) DelegateForGetObjectIDToEntityInstance(_context)).Values; }
+      get { return _context == null ? new Dictionary<Guid, IEntityCore>.ValueCollection(new Dictionary<Guid, IEntityCore>()) : ((Dictionary<Guid, IEntityCore>) DelegateForGetObjectIDToEntityInstance(_context)).Values; }
     }
 
     /// <summary>
@@ -351,7 +354,7 @@ namespace AW.Helper.LLBL
         CallEditingFinishedIfNotDirty();
     }
 
-    private bool ContextIsDirty()
+    public bool ContextIsDirty()
     {
       return NewEntities.Any(e => !e.MarkedForDeletion && e.IsDirty) || ExistingEntities.IsAnyDirty() || EntitiesMarkedForDeletion.Any();
     }

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AW.Helper;
@@ -137,7 +138,9 @@ namespace AW.Winforms.Helpers.LLBL
     {
       var entityQueryable = GetEntityQueryable();
       if (entityQueryable != null)
+      {
         await ViewEntities(entityQueryable, pageSize);
+      }
     }
 
     private IQueryable GetEntityQueryable()

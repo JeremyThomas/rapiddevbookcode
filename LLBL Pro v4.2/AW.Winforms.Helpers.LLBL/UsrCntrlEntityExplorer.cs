@@ -3,6 +3,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AW.Helper.LLBL;
@@ -552,7 +553,8 @@ namespace AW.Winforms.Helpers.LLBL
 
     private void DataEditorEventHandlers_EntityAdded(object sender, EventArgs e)
     {
-      toolStripButtonCancelEdit.Enabled = true;
+      var dataScope = gridDataEditor.DataEditorPersister as DataEditorLLBLDataScopePersister;
+      toolStripButtonCancelEdit.Enabled = toolStripButtonCancelEdit.Enabled ||(dataScope?.GeneralEntityCollectionDataScope.ContextIsDirty()).GetValueOrDefault();
     }
 
     private void treeViewEntities_AfterExpand(object sender, TreeViewEventArgs e)
