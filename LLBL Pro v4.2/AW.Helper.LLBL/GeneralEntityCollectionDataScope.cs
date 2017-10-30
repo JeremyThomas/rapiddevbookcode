@@ -97,7 +97,13 @@ namespace AW.Helper.LLBL
 
 
 #if async
-    public async Task<IEntityCollectionCore> FetchDataAsync(IQueryable query)
+
+    public async Task<CollectionCore<T>> FetchDataAsync<T>(IQueryable<T> query) where T : class, IEntityCore
+    {
+      return (CollectionCore<T>)await FetchDataAsync((IQueryable)query);
+    }
+
+    async Task<IEntityCollectionCore> FetchDataAsync(IQueryable query)
     {
       Query = TryTrackQuery(query);
       if (Query != null)
@@ -106,6 +112,17 @@ namespace AW.Helper.LLBL
       _entityCollection = null;
       return entityCollectionCore;
     }
+
+    public async Task<IEntityCollectionCore> FetchDataAsync(IQueryable query, CancellationToken cancellationToken)
+    {
+      Query = TryTrackQuery(query);
+      if (Query != null)
+        await FetchDataAsync(cancellationToken);
+      var entityCollectionCore = _entityCollection;
+      _entityCollection = null;
+      return entityCollectionCore;
+    }
+
 #endif
 
     public CollectionCore<T> FetchData<T>(IQueryable<T> query) where T : class, IEntityCore
@@ -113,12 +130,6 @@ namespace AW.Helper.LLBL
       return (CollectionCore<T>) FetchData((IQueryable) query);
     }
 
-#if async
-    public async Task<CollectionCore<T>> FetchDataAsync<T>(IQueryable<T> query) where T : class, IEntityCore
-    {
-      return (CollectionCore<T>)await FetchDataAsync((IQueryable)query);
-    }
-#endif
     protected override bool FetchDataImpl(params object[] fetchMethodParameters)
     {
       if (Query == null)
