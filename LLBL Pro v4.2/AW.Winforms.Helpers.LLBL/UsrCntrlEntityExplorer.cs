@@ -355,7 +355,7 @@ namespace AW.Winforms.Helpers.LLBL
     }
 
 #if async
-    private async Task<IBindingListView> BindingListViewCreaterAsync(IEnumerable enumerable, Type itemType)
+    private async Task<IBindingListView> BindingListViewCreaterAsync(IEnumerable enumerable, Type itemType, CancellationToken cancellationToken)
     {
       var genericDataScopeBase = EntityCollectionDataScope;
       if (genericDataScopeBase != null && enumerable != null)
@@ -364,7 +364,7 @@ namespace AW.Winforms.Helpers.LLBL
         if (queryable != null)
           enumerable = await genericDataScopeBase.FetchDataAsync(queryable);
       }
-      return await EntityHelper.CreateEntityViewAsync(enumerable, itemType);
+      return await EntityHelper.CreateEntityViewAsync(enumerable, itemType, cancellationToken);
     }
 #endif
 
