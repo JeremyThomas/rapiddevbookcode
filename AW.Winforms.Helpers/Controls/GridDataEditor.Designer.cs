@@ -476,7 +476,7 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonObjectBrowser.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonObjectBrowser.Image")));
       this.toolStripButtonObjectBrowser.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonObjectBrowser.Name = "toolStripButtonObjectBrowser";
-      this.toolStripButtonObjectBrowser.Size = new System.Drawing.Size(132, 19);
+      this.toolStripButtonObjectBrowser.Size = new System.Drawing.Size(132, 22);
       this.toolStripButtonObjectBrowser.Text = "View in Object Browser";
       this.toolStripButtonObjectBrowser.Click += new System.EventHandler(this.toolStripButtonObjectBrowser_Click);
       // 
@@ -487,7 +487,7 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonObjectListViewVisualizer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonObjectListViewVisualizer.Image")));
       this.toolStripButtonObjectListViewVisualizer.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonObjectListViewVisualizer.Name = "toolStripButtonObjectListViewVisualizer";
-      this.toolStripButtonObjectListViewVisualizer.Size = new System.Drawing.Size(141, 19);
+      this.toolStripButtonObjectListViewVisualizer.Size = new System.Drawing.Size(141, 22);
       this.toolStripButtonObjectListViewVisualizer.Text = "ObjectListView Visualizer";
       this.toolStripButtonObjectListViewVisualizer.Click += new System.EventHandler(this.toolStripButtonObjectListViewVisualizer_Click);
       // 
@@ -502,7 +502,7 @@ namespace AW.Winforms.Helpers.Controls
       this.toolStripButtonRelatedCounts.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRelatedCounts.Image")));
       this.toolStripButtonRelatedCounts.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonRelatedCounts.Name = "toolStripButtonRelatedCounts";
-      this.toolStripButtonRelatedCounts.Size = new System.Drawing.Size(129, 19);
+      this.toolStripButtonRelatedCounts.Size = new System.Drawing.Size(129, 22);
       this.toolStripButtonRelatedCounts.Text = "Related Object Counts";
       this.toolStripButtonRelatedCounts.Click += new System.EventHandler(this.toolStripButtonRelatedCounts_Click);
       // 

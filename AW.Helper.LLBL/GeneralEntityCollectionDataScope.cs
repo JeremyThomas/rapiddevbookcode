@@ -136,7 +136,7 @@ namespace AW.Helper.LLBL
     {
       if (Query == null)
         return false;
-      _entityCollection = await EntityHelper.ToEntityCollectionCoreAsync(Query as ILLBLGenProQuery);
+      _entityCollection = await EntityHelper.ToEntityCollectionCoreAsync(Query as ILLBLGenProQuery, cancellationToken);
       if (_entityCollection == null)
         return false;
       SetRemovedEntitiesTracker(_entityCollection);
