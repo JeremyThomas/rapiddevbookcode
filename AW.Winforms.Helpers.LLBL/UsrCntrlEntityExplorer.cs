@@ -362,7 +362,7 @@ namespace AW.Winforms.Helpers.LLBL
       {
         var queryable = enumerable as IQueryable;
         if (queryable != null)
-          enumerable = await genericDataScopeBase.FetchDataAsync(queryable);
+          enumerable = await genericDataScopeBase.FetchDataAsync(queryable, cancellationToken);
       }
       return await EntityHelper.CreateEntityViewAsync(enumerable, itemType, cancellationToken);
     }

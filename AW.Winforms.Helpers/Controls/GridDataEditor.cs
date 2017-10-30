@@ -472,7 +472,10 @@ namespace AW.Winforms.Helpers.Controls
     private void toolStripButtonCancel_Click(object sender, EventArgs e)
     {
       if (_cancellationTokenSource != null)
+      {
         _cancellationTokenSource.Cancel();
+        toolStripButtonCancel.Visible = false;
+      }
     }
 
     protected bool Paging()
