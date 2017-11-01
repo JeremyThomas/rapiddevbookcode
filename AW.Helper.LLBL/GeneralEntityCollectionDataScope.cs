@@ -10,6 +10,14 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Helper.LLBL
 {
+  /// <summary>
+  /// Universal DataScope which enables the commiting and undoing of all changes in one go.
+  /// Without it save, undo only works for the what is in current UI
+  /// </summary>
+  /// <remarks>https://www.llblgen.com/documentation/5.3/ReferenceManuals/LLBLGenProRTF/html/DC16C427.htm
+  /// https://www.llblgen.com/documentation/5.2/LLBLGen%20Pro%20RTF/Using%20the%20generated%20code/gencode_datascopes.htm
+  /// </remarks>
+  /// <inheritdoc cref="DataScope"/>
   public class GeneralEntityCollectionDataScope : DataScope
   {
     protected ITransactionController TransactionController { get; set; }
@@ -85,6 +93,11 @@ namespace AW.Helper.LLBL
       return null;
     }
 
+    public CollectionCore<T> FetchData<T>(IQueryable<T> query) where T : class, IEntityCore
+    {
+      return (CollectionCore<T>)FetchData((IQueryable)query);
+    }
+
     public IEntityCollectionCore FetchData(IQueryable query)
     {
       Query = TryTrackQuery(query);
@@ -125,10 +138,7 @@ namespace AW.Helper.LLBL
 
 #endif
 
-    public CollectionCore<T> FetchData<T>(IQueryable<T> query) where T : class, IEntityCore
-    {
-      return (CollectionCore<T>) FetchData((IQueryable) query);
-    }
+
 
     protected override bool FetchDataImpl(params object[] fetchMethodParameters)
     {
@@ -274,6 +284,7 @@ namespace AW.Helper.LLBL
         EditingFinished(this, EventArgs.Empty);
     }
 
+    /// <inheritdoc />
     /// <summary>
     ///   Called when toDelete is about to be deleted. Use this method to specify work to be done by the scope to
     ///   avoid FK constraint issues. workData is meant to collect this work. It can either be additional entities to
@@ -374,7 +385,7 @@ namespace AW.Helper.LLBL
     {
       if (EditingFinished == null) return;
       if (!ContextIsDirty())
-        EditingFinished(this, EventArgs.Empty);
+        if (EditingFinished != null) EditingFinished(this, EventArgs.Empty);
     }
   }
 }
