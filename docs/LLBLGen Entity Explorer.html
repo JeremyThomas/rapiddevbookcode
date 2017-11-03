@@ -1,0 +1,31 @@
+<div class="wikidoc">
+<h1>LLBLGen Entity Explorer</h1>
+<p>An application that lets you explore, browse and edit the data in a database via the mapped
+<a title="LLBLGen Pro" href="http://www.llblgen.com/">LLBLGen Pro</a> entities.</p>
+<p>Specify the path to the <a title="LLBLGen Pro" href="http://www.llblgen.com/">
+Lower Level Business Logic</a> generated assemblies and then the connection information for the databases you wish to browse.</p>
+<p><a href="http://download-codeplex.sec.s-msft.com/Download?ProjectName=rapiddevbookcode&DownloadId=1572804"><img title="image" src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=rapiddevbookcode&DownloadId=1572805" alt="image" width="908" height="460" border="0" style="padding-top:0px; padding-left:0px; display:inline; padding-right:0px; border-width:0px"></a></p>
+<p>The UI consists of two parts, at the top is the configuration, and below that there is a tab for every database specified, the tab contains an&nbsp;<a href="https://rapiddevbookcode.codeplex.com/wikipage?title=Entity%20Explorer">Entity Explorer Control</a>.</p>
+<h1>Installation</h1>
+<p><a title="https://rapiddevbookcode.codeplex.com/releases/clickOnce/LLBLGen.EntityExplorer.application" href="https://rapiddevbookcode.codeplex.com/releases/clickOnce/LLBLGen.EntityExplorer.application">There is a ClickOnce Installation for LLBL V4.2 here</a>
+ or to download LLBL V4.2 and V5.0 XCOPY zip files go to <a title="https://rapiddevbookcode.codeplex.com/releases/view/625330" href="https://rapiddevbookcode.codeplex.com/releases/view/625330">
+the release page for LLBLGen Entity Explorer V1.0</a></p>
+<h1>Setup</h1>
+<p><font style="font-weight:bold">Linq Meta Data Assembly Path</font> - Path to a LLBL generated assembly containing an ILinqMetaData implementation, path can be relative the the EXE or to the starting directory.</p>
+<p><font style="font-weight:bold">Adapter Assembly Path - <font style="font-weight:normal">
+Path to a LLBL generated assembly containing an Adapter implementation, if there are more than one adapter, e.g. one each for Oracle and SQL Server, include both paths separated by a semicolon. Upon specifying the&nbsp; Linq Meta Data Assembly above it will
+ attempt to fill in the adapter assembly if they are in the same directory.</font></font></p>
+<p>The other setup options are the defaults for the&nbsp;<a href="https://rapiddevbookcode.codeplex.com/wikipage?title=Entity%20Explorer">Entity Explorer</a>&nbsp;tabs&nbsp;and can be overridden in each tab, to set all the tabs back to the defaults press &lsquo;Reload&rsquo;.</p>
+<p>To add a connection click &lsquo;Add&rsquo; or right click anywhere in the application to bring up a menu to do so. The connection dialog is a standard Visual Studio database connection dialog.</p>
+<p>The connection/tab name can be edited in a separate dialog.</p>
+<p>The configuration and connections are saved on application shutdown to the applications config file.</p>
+<h1>Usage</h1>
+<p>Is as described here:&nbsp;<a href="https://rapiddevbookcode.codeplex.com/wikipage?title=Entity%20Explorer">Entity Explorer Control</a></p>
+<h1>Todo</h1>
+<ul>
+<li>Add loading and saving of config files to swap between different LLBL assemblies
+</li><li>Shadow load LLBL asemblies so they dont become locked </li><li>Others as described here:&nbsp; <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=Entity%20Explorer">
+Entity Explorer Control</a> </li></ul>
+<p>&nbsp;</p>
+<p>Formerly known as the LLBLGen Entity Browser.</p>
+</div><div class="ClearBoth"></div>

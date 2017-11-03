@@ -1,0 +1,52 @@
+<div class="wikidoc">
+<p>The <strong>Object-as-Source-Code Debugger Visualizer</strong> is a Debugger Visualizer that displays C# source code that will generate the .Net object chosen in the debugger. In other words: It will serialize the object as C# source text.<br>
+Its main purpose is to generate an object graph for input into a unit test. The specific use case it was made for is testing code that processed the results of a
+<a href="http://www.llblgen.com/">LLBLGen Pro</a> LINQ query.<br>
+It is essentially a Debugger Visualizer wrapper around a modified version of <a href="https://github.com/jefflomax/csharp-object-to-object-literal">
+https://github.com/jefflomax/csharp-object-to-object-literal</a> </p>
+<h2>Installation</h2>
+<p>Download x or y, you will be presented with this install screen:</p>
+<p><a href="http://download-codeplex.sec.s-msft.com/Download?ProjectName=rapiddevbookcode&DownloadId=1574964"><img title="image" border="0" alt="image" src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=rapiddevbookcode&DownloadId=1574965" width="922" height="199" style="border-top:0px; border-right:0px; border-bottom:0px; padding-top:0px; padding-left:0px; border-left:0px; display:inline; padding-right:0px"></a></p>
+<p>You may need to run it as admin to install for all users.<br>
+As well as this <a href="http://msdn.microsoft.com/en-us/library/zayyhzts(v=vs.120).aspx">
+Debugger Visualizer for Visual Studio</a> the source code generation functionality is exposed in the
+<a href="wikipage?title=GridDataEditor">GridDataEditor</a> and hence available in any tools that uses it such as the
+<a href="wikipage?title=LLBL4linqpad">LLBLGen Pro LINQPad Driver</a> and <a href="wikipage?title=LLBLGen%20Entity%20Browser">
+LLBLGen Entity Browser</a><strong></strong><strong></strong></p>
+<h2>Similar Tools</h2>
+<ul>
+<li><a href="https://github.com/jefflomax/csharp-object-to-object-literal">https://github.com/jefflomax/csharp-object-to-object-literal</a> emit a C# object literal constructor for a NHibernate object (graph) in memory. (Which this is based on).
+</li><li><a href="https://visualstudiogallery.msdn.microsoft.com/52d49c26-6e9f-4347-b1d3-b70a2a6b973d">CarbonCopy in the Visual Studio Gallery for VS2013</a> Source
+<a href="http://jmethot79.github.io/CarbonCopy/">http://jmethot79.github.io/CarbonCopy/</a> Currently VB.Net only.
+</li><li><a href="https://visualstudiogallery.msdn.microsoft.com/c6a21c68-f815-4895-999f-cd0885d8774f">Object Exporter in the Visual Studio Gallery</a></li></ul>
+<p>At the time I wrote this tool, late 2014, none of these other tools did quite what I needed.</p>
+<h2>Using the Source Code Generation API</h2>
+<p>The class is here <a href="https://rapiddevbookcode.codeplex.com/SourceControl/latest#LLBL">
+CSharpSerializer.cs</a>, the method to call is CSharpSerializer.SerializeToCSharp, unit tests are here
+<a href="https://rapiddevbookcode.codeplex.com/SourceControl/latest#LLBL Pro v4.2/AW.Test/CSharpSerializerTests.cs">
+CSharpSerializerTests.cs</a></p>
+<p>Example calling from <a href="http://www.linqpad.net/">LINQPad</a> using the <a href="wikipage?title=LLBL4linqpad">
+LLBLGen Pro LINQPad Driver</a> against the Northwind DB.</p>
+<p>Customer.PrefetchOrders().ToEntityCollection2().SerializeToCSharp(OutputFormat.LinqpadProgram,&quot;Fields,EntityFactoryToUse,Picture&quot;)</p>
+<p>which creates code like this:</p>
+<p>// Object Literal<br>
+// Globally Excluded Properties:<br>
+//&nbsp; Fields,EntityFactoryToUse,Picture<br>
+void Main()<br>
+{<br>
+&nbsp; ResultContainer.Result().Dump();<br>
+}<br>
+public static class ResultContainer<br>
+{<br>
+public&nbsp; static object Result() <br>
+{<br>
+var entityCollection9082615 = new EntityCollection&lt;CustomerEntity&gt;<br>
+{<br>
+new CustomerEntity<br>
+&nbsp; {<br>
+&nbsp;&nbsp;&nbsp; Address = &quot;Obere Str. 57&quot;,<br>
+&nbsp;&nbsp;&nbsp; City = &quot;Berlin&quot;, </p>
+<p>… </p>
+<p>&nbsp; </p>
+<p>which is runnable in <a href="http://www.linqpad.net/">LINQPad</a></p>
+</div><div class="ClearBoth"></div>

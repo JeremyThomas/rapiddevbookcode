@@ -1,0 +1,70 @@
+
+<div class="wikidoc">
+<h2>LINQPad DataEditor</h2>
+<div class="wikidoc">Like <a href="http://www.aneyfamily.com/terryandann/post/2008/12/Ive-Left-Query-Analyzer-Hell-For-LINQPad-Heaven.aspx">
+others&nbsp;</a> I have taken the <a href="http://www.linqpad.net/Challenge.aspx">
+The LINQPad Challenge</a> but I found myself having to go back to SQL Server Management Studio to edit data. So to further eliminate trips to that place I have created a DataGridView based DataEditor and accompanying IEnumerable and IQueryable Extensions to
+ edit the results of queries. <br>
+Coincidentally this implements this LINQPad feature suggestion <a href="http://linqpad.uservoice.com/forums/18302-linqpad-feature-suggestions/suggestions/335352-open-table-for-edit-as-in-sql-server-mgmt-studio">
+open table for edit as in sql server mgmt studio</a> and now also implemented as a
+<a href="http://www.linqpad.net/CustomVisualizers.aspx">Custom Visualizer</a>. <br>
+<br>
+The contents of the DataEditor can also copied to the clipboard as CSV or exported to Excel or PDF via a Microsoft.Reporting.WinForms.ReportViewer control.
+<br>
+<br>
+The LINQPad DataEditor shows the normal properties that a datagridview would show plus public fields - this has been done as it seems the automatic LINQToSQL datacontext uses fields rather than properties.</div>
+<h2>Installation</h2>
+<p>If you are using the <a href="/wikipage?title=LLBL4linqpad&referringTitle=LINQPad">
+Static LLBLGen Pro Data Context Driver</a> this is included and should be available for queries using this driver. If not, download and reference my
+<a href="/wikipage?title=EnumerableDebugVisualizer&referringTitle=Documentation">
+Enumerable Debugger Visualizer</a> which is a merge of all the assemblies required.</p>
+<h2>Usage</h2>
+<div class="wikidoc">Call one of these extension methods:</div>
+<div style="background-color:white; color:black">
+<pre class="csharpcode"><span class="kwrd">public</span> <span class="kwrd">static</span> IEnumerable ShowInGrid(<span class="kwrd">this</span> IQueryable enumerable, <span class="kwrd">ushort</span> pageSize)
+<span class="kwrd">public</span> <span class="kwrd">static</span> IEnumerable ShowInGrid(<span class="kwrd">this</span> IEnumerable enumerable, IDataEditorPersister gridDataEditorPersister)
+<span class="kwrd">public</span> <span class="kwrd">static</span> IEnumerable ShowInGrid(<span class="kwrd">this</span> IEnumerable enumerable, IDataEditorPersister gridDataEditorPersister, <span class="kwrd">ushort</span> pageSize)
+<span class="kwrd">public</span> <span class="kwrd">static</span> IEnumerable&lt;T&gt; ShowInGrid&lt;T&gt;(<span class="kwrd">this</span> IEnumerable&lt;T&gt; enumerable, IDataEditorPersister gridDataEditorPersister)
+<span class="kwrd">public</span> <span class="kwrd">static</span> IEnumerable&lt;T&gt; ShowInGrid&lt;T&gt;(<span class="kwrd">this</span> IEnumerable&lt;T&gt; enumerable, IDataEditorPersister gridDataEditorPersister, <span class="kwrd">ushort</span> pageSize)
+<span class="rem">// LINQToSQL</span>
+<span class="kwrd">public</span> <span class="kwrd">static</span> IEnumerable&lt;T&gt; ShowInGrid&lt;T&gt;(<span class="kwrd">this</span> Table&lt;T&gt; table) <span class="kwrd">where</span> T : <span class="kwrd">class</span>
+<span class="kwrd">public</span> <span class="kwrd">static</span> IEnumerable&lt;T&gt; ShowInGrid&lt;T&gt;(<span class="kwrd">this</span> Table&lt;T&gt; table, <span class="kwrd">ushort</span> pageSize) <span class="kwrd">where</span> T : <span class="kwrd">class</span>
+<span class="kwrd">public</span> <span class="kwrd">static</span> IEnumerable&lt;T&gt; ShowInGrid&lt;T&gt;(<span class="kwrd">this</span> IQueryable&lt;T&gt; dataQuery, DataContext dataContext) <span class="kwrd">where</span> T : <span class="kwrd">class</span>
+<span class="kwrd">public</span> <span class="kwrd">static</span> IEnumerable&lt;T&gt; ShowInGrid&lt;T&gt;(<span class="kwrd">this</span> IQueryable&lt;T&gt; dataQuery, DataContext dataContext, <span class="kwrd">ushort</span> pageSize) <span class="kwrd">where</span> T : <span class="kwrd">class</span>
+<span class="rem">// LLBL</span>
+<span class="kwrd">public</span> <span class="kwrd">static</span> IEnumerable&lt;T&gt; ShowSelfServicingInGrid&lt;T&gt;(<span class="kwrd">this</span> IEnumerable&lt;T&gt; enumerable, <span class="kwrd">ushort</span> pageSize) <span class="kwrd">where</span> T : EntityBase
+<span class="kwrd">public</span> <span class="kwrd">static</span> IEnumerable&lt;T&gt; ShowSelfServicingInGrid&lt;T&gt;(<span class="kwrd">this</span> IEnumerable&lt;T&gt; enumerable) <span class="kwrd">where</span> T : EntityBase
+<span class="kwrd">public</span> <span class="kwrd">static</span> IEnumerable ShowInGrid(<span class="kwrd">this</span> IEnumerable enumerable, IDataAccessAdapter dataAccessAdapter, <span class="kwrd">ushort</span> pageSize)   
+<span class="kwrd">public</span> <span class="kwrd">static</span> IEnumerable&lt;T&gt; ShowInGrid&lt;T&gt;(<span class="kwrd">this</span> IEnumerable&lt;T&gt; enumerable, IDataAccessAdapter dataAccessAdapter, <span class="kwrd">ushort</span> pageSize) <span class="kwrd">where</span> T : EntityBase2
+<span class="kwrd">public</span> <span class="kwrd">static</span> IEnumerable&lt;T&gt; ShowAdapterInGrid&lt;T&gt;(<span class="kwrd">this</span> IQueryable&lt;T&gt; query, <span class="kwrd">ushort</span> pageSize) <span class="kwrd">where</span> T : EntityBase2
+<span class="kwrd">public</span> <span class="kwrd">static</span> IEnumerable&lt;T&gt; ShowAdapterInGrid&lt;T&gt;(<span class="kwrd">this</span> IQueryable&lt;T&gt; query) <span class="kwrd">where</span> T : EntityBase2</pre>
+<p>The GridDataEditor is paged and defaults to a page size of 30, note that clicking a column sorts the current page not the whole enumeration as is normal in paged grids.</p>
+<div class="wikidoc">The results of the edits can then be chained to other operations down the line such as LINQPad's dump command.</div>
+<h2>Saving changes</h2>
+<div class="wikidoc">To save the changes to the DB a DataEditorPersister must be supplied, except for LINQToSQL and LLBL queries, where there are extension methods which use built-in LINQToSQL and LLBL DataEditorPersisters.
+<br>
+If no DataEditorPersister is provided and the data is IQueryable then the DataEditor will be in readonly mode, if the data is IEnumerable only the output will reflect the results of any editing.</div>
+<h2>Examples</h2>
+<p>NutShell</p>
+<pre class="csharpcode">AW.Winforms.Helpers.DataEditor.DataEditorExtensions.ShowInGrid(Customers).Dump (<span class="str">&quot;All customers&quot;</span>);<br>Customers.ShowInGrid();</pre>
+<p>Northwind</p>
+<div style="background-color:white; color:black">
+<pre>Customers.ShowInGrid()
+</pre>
+</div>
+<pre class="csharpcode"><span style="font-family:consolas; font-size:x-small"><span style="font-family:consolas; font-size:x-small"><img src="http://download.codeplex.com/download?ProjectName=RapidDevBookCode&DownloadId=145828" alt=""> </span></span></pre>
+<p>SourceCode</p>
+<div class="wikidoc">
+<div class="wikidoc">EditInDataGridView*.linq and ShowInGrid*.linq files in the SampleQueryFiles folder.</div>
+</div>
+<div class="wikidoc">
+<h2>To do</h2>
+<div class="wikidoc">
+<ul>
+<li>Improve the paging </li><li>Support filtering </li></ul>
+</div>
+</div>
+</div>
+</div>
+<div id="_mcePaste" style="width:1px; height:1px; overflow:hidden; top:0px; left:-10000px">
+</div>

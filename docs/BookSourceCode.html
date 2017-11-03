@@ -1,0 +1,77 @@
+<div class="wikidoc"><b>There are nine versions of the source code:</b>
+<ol>
+<li><a href="https://rapiddevbookcode.codeplex.com/releases/view/16468">Original source code that came with the book</a>
+</li><li><a href="https://rapiddevbookcode.codeplex.com/releases/view/38670">Source code updated to LLBL Pro version 2.6</a>
+</li><li><b>VS2008</b> branch in the repository (Visual Studio 2008/LLBL v2.6) </li><li><b>VS2010</b> branch in the repository (Visual Studio 2010/LLBL v3.0) </li><li><b>LLBL Pro v3.1</b> branch in the repository (Visual Studio 2010/LLBL v3.1) </li><li><b>LLBL Pro v3.5</b> branch in the repository (Visual Studio 2010/LLBL v3.5) </li><li><b>LLBL Pro v4.0</b> branch in the repository (Visual Studio 2012/LLBL v4.0) </li><li><b>LLBL Pro v4.1</b> branch in the repository (Visual Studio 2013/LLBL v4.1) </li><li><b>LLBL Pro v4.2</b> branch in the repository (Visual Studio 2015/LLBL v4.2)</li></ol>
+<p>The <strong>LLBL Pro v4.2</strong> branch is the active one.</p>
+The repository code is downloadable from the source code tab in a zip file but I recommend using
+<a href="http://codeplex.codeplex.com/Wiki/View.aspx?title=Using%20TortoiseSVN%20with%20CodePlex">
+TortoiseSVN</a> to get it, for instance use <a href="https://rapiddevbookcode.svn.codeplex.com/svn/LLBL Pro v4.2">
+https://rapiddevbookcode.svn.codeplex.com/svn/LLBL Pro v4.2</a> to get the LLBL Pro v4.2 branch only.<br>
+<table>
+<tbody>
+<tr>
+<th>Solutions files in LLBL Pro v4.2 branch </th>
+<th>Contains projects needed for </th>
+</tr>
+<tr>
+<td>AW.sln </td>
+<td>Joseph Chancellor’s worked example with tests </td>
+</tr>
+<tr>
+<td>AW-NoTests.sln </td>
+<td>Joseph Chancellor’s worked example </td>
+</tr>
+<tr>
+<td>AW.LINQPad.sln </td>
+<td>The <a href="/RapidDevBookCode/wikipage?title=LLBL4linqpad&referringTitle=BookSourceCode">
+LINQPad driver</a> and <a href="/RapidDevBookCode/wikipage?title=LINQPadCustomVisualizer&referringTitle=BookSourceCode">
+Custom Visualizer</a> with tests </td>
+</tr>
+<tr>
+<td>AW.DebugVisualizers.sln </td>
+<td><a href="/RapidDevBookCode/wikipage?title=EnumerableDebugVisualizer&referringTitle=BookSourceCode">Enumerable Debugger Visualizer</a></td>
+</tr>
+<tr>
+<td>AW.DebugVisualizersWithTests.sln </td>
+<td><a href="/RapidDevBookCode/wikipage?title=EnumerableDebugVisualizer&referringTitle=BookSourceCode">Enumerable Debugger Visualizer</a> with tests
+</td>
+</tr>
+<tr>
+<td>AW with Everything.sln </td>
+<td>Contains all the projects </td>
+</tr>
+</tbody>
+</table>
+<br>
+<b>How to use the book code</b>
+<ol>
+<li>Obtain a version of the source code </li><li>Install the Adventure Works(2005) DB (if you don't already have it see the related project).
+</li><li>Edit the app.config to point to your Adventure Works DB. </li><li>Build AW.sln or AW-NoTests.sln (if using Visual studio you might get errors about solution bindings - ignore them).
+</li><li>Run. </li><li>Optionally install the <a href="http://www.llblgen.com/pages/try.aspx">Llblgen Pro trial</a> to modify the entity classes or to see the Llblgen project file</li></ol>
+<b>Differences between the current code and the original</b>
+<ul>
+<li>Upgrade to <a href="http://www.llblgen.com">LLBLGen Pro</a> 2.6, 3.0, 3.1, 3.5, 4.0, 4.1 and 4.2
+</li><li>Validation has been completely reworked and is now specified using System.ComponentModel.DataAnnotations.
+</li><li>Most of the queries have been moved to a query folder in AW.Data. </li><li>Some disabled code has been enabled. </li><li>Some refactoring. </li><li>Added inheritance to the LLBL project and hence the domain model (VS2010 and later).</li></ul>
+<b>Additions to the original</b>
+<ul>
+<li>LINQ versions of the queries added. </li><li>A second order search form has been added which doesn't use any fields from CustomerViewRelated.
+</li><li>A form to edit the employee organization structure using a <a href="http://www.codeproject.com/KB/tree/bindablehierarchicaltree.aspx">
+Databound TreeView control</a> (FrmOrganizationStructure). </li><li>A query runner (poor man's version of <a href="http://www.linqpad.net/">LINQPad</a>)
+<a href="http://www.csscript.net">using the C# Script Engine</a> (AW.Winforms.Helpers - FrmQueryRunner).
+</li><li>A trace window to view the generated SQL (FrmTrace). </li><li>Added all the other Adventure Works tables to the domain model(VS2010 and later).</li></ul>
+<p><strong>Notes</strong></p>
+<p>All third party dependencies are via nuget, except <a title="https://adgv.codeplex.com/" href="https://adgv.codeplex.com/">
+Advanced DataGridView</a> and the <a title="http://www.codeproject.com/Articles/161871/Fast-Colored-TextBox-for-syntax-highlighting" href="http://www.codeproject.com/Articles/161871/Fast-Colored-TextBox-for-syntax-highlighting">
+Fast Colored TextBox for Syntax Highlighting</a> which I needed to compile my self so as to be signed.</p>
+<br>
+<a href="/RapidDevBookCode/wikipage?title=Notes&referringTitle=BookSourceCode">Background</a><br>
+<br>
+<b>Links</b><br>
+<a href="http://www.lulu.com/josephchancellor">http://www.lulu.com/josephchancellor</a><br>
+<a href="http://josephchancellor.wordpress.com">http://josephchancellor.wordpress.com</a><br>
+<a href="https://tfs.codeplex.com/tfs/services/v1.0/ServerStatus.asmx?op=CheckAuthentication">https://tfs.codeplex.com/tfs/services/v1.0/ServerStatus.asmx?op=CheckAuthentication</a><br>
+<br>
+Thanks to Joseph Chancellor for writing the book and making the code available for this project
+</div><div class="ClearBoth"></div>

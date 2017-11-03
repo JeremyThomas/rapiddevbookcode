@@ -1,0 +1,95 @@
+
+<h2>Four LINQPad Custom Visualizers</h2>
+<p>I have created two packages of <a href="http://www.linqpad.net/CustomVisualizers.aspx">
+LINQPad Custom Visualizers</a>, the first, <a href="https://rapiddevbookcode.codeplex.com/downloads/get/847551">
+AW.LinqPadCustomVisualizers.V2.0.zip</a> , is non-<a title="LLBLGen Pro" href="http://www.llblgen.com/">LLBLGen Pro</a> specific and exposes these 3
+<a href="wikipage?title=Controls&referringTitle=Documentation">Controls</a> to <a href="http://www.linqpad.net/">
+LINQPad</a> to be displayed in the output panel: the <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=GridDataEditor">
+GridDataEditor</a>, <a title="HierarchyEditor" href="https://rapiddevbookcode.codeplex.com/wikipage?title=LINQPadHierarchyEditor">
+HierarchyEditor</a> and <a title="Object Inspector" href="https://rapiddevbookcode.codeplex.com/wikipage?title=ObjectInspector">
+Object Inspector</a>. <br>
+The second package is my <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=LLBL4linqpad">
+LLBLGen Pro Data Driver</a> which contains the first package with additional <a title="LLBLGen Pro" href="http://www.llblgen.com/">
+LLBLGen Pro</a> specific calls to those visualizers, plus an additional control: the
+<a href="https://rapiddevbookcode.codeplex.com/wikipage?title=Entity%20Explorer">
+Entity Explorer</a>.</p>
+<h3>1: DisplayInGrid</h3>
+<p>This displays the results of a <a title="LINQPad" href="http://www.linqpad.net">
+LINQPad</a> query in the <a title="http://msdn.microsoft.com/en-us/library/system.windows.forms.datagridview.aspx" href="https://rapiddevbookcode.codeplex.com/wikipage?title=GridDataEditor">
+GridDataEditor</a> in the output panel to enable filtering of the data via the UI and editing of
+<a title="LLBLGen Pro" href="http://www.llblgen.com/">LLBLGen Pro</a> entities, as the
+<a title="LINQPad" href="http://www.linqpad.net">LINQPad</a> grid can only edit LINQToSQL entities.
+<br>
+DisplayInGrid shows the normal properties that a datagridview would show plus public fields - this has been done as it seems the automatic LINQToSQL datacontext uses fields rather than properties.
+<br>
+DisplayInGrid returns an empty enumeration rather than void simply so it can be used with the
+<a title="LINQPad" href="http://www.linqpad.net">LINQPad</a> expression language where the output gets piped to the dump command which throws and error if it returns void.</p>
+<h4>Saving changes</h4>
+<p>To save the changes to the DB a DataEditorPersister must be supplied, except for LINQToSQL and LLBL queries, where there are extension methods which use built-in LINQToSQL and LLBL DataEditorPersisters. If no
+<a href="https://rapiddevbookcode.codeplex.com/SourceControl/latest#LLBL%20Pro v4.1/AW.Winforms.Helpers/Controls/DataEditorPersister.cs">
+DataEditorPersister</a> is provided then the <a title="http://msdn.microsoft.com/en-us/library/system.windows.forms.datagridview.aspx" href="https://rapiddevbookcode.codeplex.com/wikipage?title=GridDataEditor">
+GridDataEditor</a> will be in a readonly mode.</p>
+<h4>Example</h4>
+<p>NutShell DB (included with <a title="LINQPad" href="http://www.linqpad.net">LINQPad</a> samples)</p>
+<pre class="csharpcode">Customers.DisplayInGrid()</pre>
+<h4>Usage</h4>
+<div class="wikidoc">Call one of the overloads and variations of the DisplayInGrid extension method listed here:
+<a href="https://rapiddevbookcode.codeplex.com/SourceControl/latest#LLBL Pro v4.1/AW.LLBLGen.DataContextDriver/CustomVisualizers.cs">
+LLBL</a>, <a href="https://rapiddevbookcode.codeplex.com/SourceControl/latest#LLBL Pro v4.1/AW.LinqPadExtensions/CustomVisualizers.cs">
+Other</a></div>
+<div class="wikidoc">&nbsp;</div>
+<h3>2: DisplayHierarchyInTree</h3>
+<p>This displays the results of a <a title="LINQPad" href="http://www.linqpad.net">
+LINQPad</a> query in the <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=LINQPadHierarchyEditor&referringTitle=LINQPad">
+HierarchyEditor</a> in the output panel for displaying and editing <a href="http://articles.sitepoint.com/article/hierarchical-data-database">
+Adjacency List</a> (self referencing) data in a tree. </p>
+<h4>Example</h4>
+<p style="color:black; background-color:white">An example of this data is the HumanResources.Employee table in the adventureworks DB.</p>
+<div style="color:black; background-color:white">
+<pre>Employee.ToEntityCollection().DisplaySelfServicingHierarchyInTree(&quot;EmployeeID&quot;, &quot;ManagerID&quot;, &quot;EmployeeDisplayName&quot;) 
+</pre>
+</div>
+<p>Which display in the <a title="LINQPad" href="http://www.linqpad.net">LINQPad</a> output panel like so:<br>
+<a href="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=839096"><img title="image" border="0" alt="image" src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=839097" width="1111" height="397" style="border-left-width:0px; border-right-width:0px; border-bottom-width:0px; padding-top:0px; padding-left:0px; display:inline; padding-right:0px; border-top-width:0px"></a><br>
+As well as the treeview there is a propertygrid showing the currently selected node and a grid showing all the children of that node.</p>
+<h4>Usage</h4>
+<div class="wikidoc">Call one of the overloads and variations of the DisplayHierarchyInTree extension method listed here:
+<a href="https://rapiddevbookcode.codeplex.com/SourceControl/latest#LLBL Pro v4.1/AW.LLBLGen.DataContextDriver/CustomVisualizers.cs">
+LLBL</a>, <a href="https://rapiddevbookcode.codeplex.com/SourceControl/latest#LLBL Pro v4.1/AW.LinqPadExtensions/CustomVisualizers.cs">
+Other</a><br>
+You need to supply the name of the identity property, the parent property name and the name of the property to be displayed in the tree. You can optionally supply an
+<a href="https://rapiddevbookcode.codeplex.com/SourceControl/latest#LLBL Pro v4.1/AW.Winforms.Helpers/Controls/DataEditorPersister.cs">
+DataEditorPersister</a> to persist any changes you make.</div>
+<div class="wikidoc">&nbsp;</div>
+<h3>3: Inspect</h3>
+<p>This displays an <a title="Object Inspector" href="https://rapiddevbookcode.codeplex.com/wikipage?title=ObjectInspector&referringTitle=Documentation">
+Object Inspector</a> for browsing the properties of an object and any objects it references in the output panel.</p>
+<h4>Example</h4>
+<p>NutShell DB (included with <a title="LINQPad" href="http://www.linqpad.net">LINQPad</a> samples)</p>
+<pre class="csharpcode">Customers.First().Inspect()</pre>
+<p>&nbsp;</p>
+<h3>4: Explore</h3>
+<p>This displays an <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=Entity%20Explorer">
+Entity Explorer</a> to browse and edit <a href="http://www.llblgen.com/">LLBLGen Pro</a> entities from a database in the output panel.</p>
+<h4>Example</h4>
+<pre class="csharpcode">this.Explore()</pre>
+<h4>Usage</h4>
+<div class="wikidoc">Call the Explore extension method listed here: <a href="https://rapiddevbookcode.codeplex.com/SourceControl/latest#LLBL Pro v4.1/AW.LLBLGen.DataContextDriver/CustomVisualizers.cs">
+LLBL</a></div>
+<p>&nbsp;</p>
+<h3>Installation</h3>
+<p>If you are using the <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=LLBL4linqpad&referringTitle=LINQPad">
+LLBLGen Pro Data Context Driver</a> this is included and should be available for queries using this driver.
+<br>
+If not, download <a href="https://rapiddevbookcode.codeplex.com/downloads/get/847551">
+AW.LinqPadCustomVisualizers.V2.0.zip</a> and then unzip to the <a title="LINQPad" href="http://www.linqpad.net">
+LINQPad</a> plugins folder (usually %USERPROFILE%\Documents\LINQPad Plugins).</p>
+<h4>For version history see release notes in download pages: <a title="https://rapiddevbookcode.codeplex.com/releases/view/122441" href="https://rapiddevbookcode.codeplex.com/releases/view/122441">
+Version 2.0</a>, <a href="https://rapiddevbookcode.codeplex.com/releases/view/77305">
+Version 1.0</a></h4>
+<p>Other <a href="http://www.linqpad.net/CustomVisualizers.aspx">LINQPad Custom Visualizers</a></p>
+<ul>
+<li><a title="https://github.com/vincpa/linqpadspy" href="https://github.com/vincpa/linqpadspy">LINQPadSpy</a> - shows decompiled sources from queries which have been compiled by LINQPad allowing one to see any additional compiler generated code
+</li><li><a title="http://www.shotgunventure.com/?tag=linqpad" href="http://www.shotgunventure.com/?tag=linqpad">Histograms and LinqPad</a>
+</li><li><a title="http://www.aboutmycode.com/miscellaneous/introducing-linqpad-queryplanvisualizer/" href="http://www.aboutmycode.com/miscellaneous/introducing-linqpad-queryplanvisualizer/">LINQPad.QueryPlanVisualizer</a> - view query execution plan and missing
+ indexes</li></ul>

@@ -1,0 +1,87 @@
+
+<h1>Enumerable Debugger Visualizer</h1>
+<div class="wikidoc">An enumerable <a href="http://msdn.microsoft.com/en-us/library/zayyhzts(v=vs.120).aspx">
+Debugger Visualizer for Visual Studio</a> that displays any registered IEnumerable object such as a lists, collections, dictionaries and Linq enumerables in a
+<a title="https://rapiddevbookcode.codeplex.com/wikipage?title=GridDataEditor" href="wikipage?title=GridDataEditor">
+GridDataEditor</a>&nbsp;
+<h2><a href="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=827272"><img title="image" src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=827274" alt="image" width="786" height="408" border="0" style="padding-top:0px; padding-left:0px; display:inline; padding-right:0px; border-width:0px"></a></h2>
+<p>The&nbsp;<a title="https://rapiddevbookcode.codeplex.com/wikipage?title=GridDataEditor" href="wikipage?title=GridDataEditor">GridDataEditor</a> supports filtering, sorting and exporting.</p>
+<h2>Installation</h2>
+<h3>Binary</h3>
+<h6><font size="3">- </font><a href="https://rapiddevbookcode.codeplex.com/releases/view/620823"><font size="3">Version 3.2</font></a></h6>
+Download <a href="https://rapiddevbookcode.codeplex.com/downloads/get/1561285">AW.EnumerableVisualizer.2015.exe</a> or
+<a href="https://rapiddevbookcode.codeplex.com/downloads/get/1561287">AW.EnumerableVisualizer.2013.exe</a>&nbsp; and run, you will be presented with this install screen:
+<p><a href="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=1561302"><img title="image_thumb[1]" src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=1561303" alt="image_thumb[1]" width="827" height="182" border="0" style="padding-top:0px; padding-left:0px; display:inline; padding-right:0px; border-width:0px"></a></p>
+<p>You may need to run it as admin to install for all users.</p>
+<h6><font size="3">- Earlier versions</font></h6>
+<p><a href="https://rapiddevbookcode.codeplex.com/releases/view/120880">Version 3</a>: Download
+<a href="https://rapiddevbookcode.codeplex.com/downloads/get/827254">AW.EnumerableVisualizer.2012.exe</a>&nbsp; and run:</p>
+</div>
+<div class="wikidoc">
+<h4>&nbsp;</h4>
+<p>Download <a href="http://rapiddevbookcode.codeplex.com/releases/view/51056">AW.EnumerableVisualizer.dll(VS2008)</a> or
+<a href="http://rapiddevbookcode.codeplex.com/releases/view/57678">AW.EnumerableVisualizer.dll(VS2010)</a> then copy it to either of the debugger visualizers directories:
+<a href="http://msdn.microsoft.com/en-us/library/sb2yca43.aspx">How to: Install a Visualizer</a></p>
+<p>Note, the binary is an ilmerge of the AW.DebugVisualizers.dll and its support assemblies.</p>
+<h3>Source code</h3>
+<ol>
+<li>Repository code is downloadable from the source code tab, though I recommend using TortoiseSVN for the getting the source from the repository.
+</li><li>Build the solution AW.DebugVisualizers.sln </li><li>Run DebugDeploy.bat which copies AW.DebugVisualizers.dll and its support assemblies to %userprofile%\My Documents\Visual Studio 20XX\Visualizers.<br>
+or use <a title="Graphical interface to the Microsoft ILMerge utility" href="https://ilmergegui.codeplex.com/">
+ILMerge-GUI</a> to build a single executable from AW.DebugVisualizers.ilproj </li></ol>
+<h3>Note</h3>
+</div>
+<p>Unfortunately you can't register a debugger visualizer for interfaces so every IEnumerable class must registered individually. The, over 500, mainly BCL, classes that are registered can be seen in the file
+<a href="https://rapiddevbookcode.codeplex.com/SourceControl/latest#LLBL Pro v4.2/AW.DebugVisualizers/VisualizerRegistrations.cs">
+VisualizerRegistrations.cs</a>, you can easily add more to the source code.</p>
+<p>If you wish to visualize a non-registered variable you can wrap the variable you want to inspect like this:
+<strong>new System.WeakReference(variable_to_inspect) </strong>in the same way that
+<a href="http://code.google.com/p/linqpadvisualizer/">http://code.google.com/p/linqpadvisualizer/</a>&nbsp; supports.</p>
+<h3>How it works</h3>
+<p style="margin:7.5pt 0cm">Uses the Bi&shy;na&shy;ry&shy;For&shy;mat&shy;ter se&shy;ri&shy;al&shy;iz&shy;er.</p>
+<p style="margin:7.5pt 0cm">Strategy is:<br>
+<font color="#2e75b6">if</font> the items are serializable <font color="#2e75b6">
+then</font><br>
+&nbsp; <font color="#2e75b6">if</font> the enumerable is also serializable <font color="#2e75b6">
+then</font><br>
+&nbsp;&nbsp;&nbsp; serialize the enumerable<br>
+<font color="#2e75b6">else</font><br>
+&nbsp; create an ObjectListView to contain the items and serialize that.<br>
+Full back is to:<br>
+Copy the enumerable to a DataTable and serialize that.</p>
+<div class="wikidoc">
+<h3>Lists of other Debugger Visualizers</h3>
+<a href="https://bitbucket.org/brianritchie/wiki/wiki/Debug%20Visualizers%20List" target="_blank">Dotnetpowered Debugger Visualizers List</a>
+<br>
+<a href="http://alexpinsker.blogspot.com/2009/06/comprehensive-list-of-debugger.html" target="_blank">Comprehensive list of Debugger Visualizers for Visual Studio</a>
+<h3>Universal Debugger Visualizers</h3>
+<div class="wikidoc"><a title="https://github.com/nbasakuragi/LINQBridgeVs" href="https://github.com/nbasakuragi/LINQBridgeVs">LINQBridgeVs</a> (<a title="http://visualstudiogallery.msdn.microsoft.com/8ede652c-396f-4dc9-bc4f-c88f9b8291d2" href="http://visualstudiogallery.msdn.microsoft.com/8ede652c-396f-4dc9-bc4f-c88f9b8291d2">LINQBridgeVs
+ SV extension</a>) (Uses LINQPad, adds VS command to generate a Debugger Visualizer for all types in the selected project)</div>
+<div class="wikidoc"><a href="https://oceanware.wordpress.com/mole-visual-studio-debugger-visualizer">https://oceanware.wordpress.com/mole-visual-studio-debugger-visualizer</a>&nbsp;<a title="http://www.codeproject.com/Articles/22576/Mole-For-Visual-Studio-With-Editing-Visualize-All" href="http://www.codeproject.com/Articles/22576/Mole-For-Visual-Studio-With-Editing-Visualize-All">http://www.codeproject.com/Articles/22576/Mole-For-Visual-Studio-With-Editing-Visualize-All</a></div>
+<div class="wikidoc">&nbsp;</div>
+<h3>Other collection Debugger Visualizers</h3>
+<div class="wikidoc"><a href="http://www.adamdawes.com/programming/vs2005/adcollectionsvisualizer.html">http://www.adamdawes.com/programming/vs2005/adcollectionsvisualizer.html</a> (VS2010 and below)<br>
+<a href="http://www.codeproject.com/Articles/25268/A-Generic-List-and-Dictionary-Debugger-Visualizer">http://www.codeproject.com/Articles/25268/A-Generic-List-and-Dictionary-Debugger-Visualizer</a> (VS2010 and below with source)</div>
+<div class="wikidoc"><a href="http://code.google.com/p/linqpadvisualizer/">LINQPad Debugger Visualizer for VS2010 and earlier</a>,
+<a href="https://github.com/Kyle123/linqpadvisualizer/issues/5">LINQPad Debugger Visualizer for VS2013</a> (Recommend
+<a title="https://github.com/nbasakuragi/LINQBridgeVs" href="https://github.com/nbasakuragi/LINQBridgeVs">
+LINQBridgeVs</a> instead)</div>
+<div class="wikidoc"><a title="https://vsdatawatchers.codeplex.com" href="https://vsdatawatchers.codeplex.com">Visual Studio Watchers</a> (VS2012 and below)</div>
+<div class="wikidoc"><a href="http://www.antoniob.com/visual-studio-list-debugger-visualizer.html">http://www.antoniob.com/visual-studio-list-debugger-visualizer.html</a> (VS2015, VS2013 and VS2012)</div>
+<h3>Objects that can have debugger visualizers:</h3>
+<a href="http://msdn.microsoft.com/en-us/library/e2zc529c.aspx">You can write a custom visualizer for an object of any managed class except for Object or Array</a>
+<br>
+<a href="http://weblogs.asp.net/fbouma/archive/2006/02/06/437536.aspx">Debugger visualizers won't work on interface types</a>
+<br>
+<a href="http://social.msdn.microsoft.com/Forums/en-US/vsdebug/thread/93d53290-998e-48ad-98bc-9fcd9e642f57">Debugger visualizers won't work on nested classes in VS2008</a></div>
+<div class="wikidoc">&nbsp;</div>
+<h3>Other debugger visualizers Links</h3>
+<div class="wikidoc"><a title="http://pixelanalytics.co.uk/?p=56" href="http://pixelanalytics.co.uk/?p=56" target="_blank">Visual Studio Debugger Visualizers: what I wish I&rsquo;d known</a></div>
+<div class="wikidoc"><a title="http://stackoverflow.com/questions/787334/how-to-keep-visual-studio-debugger-visualizers-from-timing-out" href="http://stackoverflow.com/questions/787334/how-to-keep-visual-studio-debugger-visualizers-from-timing-out">http://stackoverflow.com/questions/787334/how-to-keep-visual-studio-debugger-visualizers-from-timing-out</a></div>
+<div class="wikidoc"><a title="http://karlshifflett.wordpress.com/2011/04/04/extending-mole-2010s-reach-mole-type-loader/" href="http://karlshifflett.wordpress.com/2011/04/04/extending-mole-2010s-reach-mole-type-loader/">http://karlshifflett.wordpress.com/2011/04/04/extending-mole-2010s-reach-mole-type-loader/</a></div>
+<div class="wikidoc"><a href="http://connect.microsoft.com/VisualStudio/feedback/details/473105/vsix-support-for-debugger-visualizer">VSIX : Support for Debugger visualizer</a>&nbsp;</div>
+<div class="wikidoc">&nbsp;</div>
+<h3>Other debugging Links</h3>
+<div class="wikidoc"><a title="http://blogs.msdn.com/b/habibh/archive/2009/09/21/coverage-of-the-visual-studio-2010-historical-debugger.aspx" href="http://blogs.msdn.com/b/habibh/archive/2009/09/21/coverage-of-the-visual-studio-2010-historical-debugger.aspx">http://blogs.msdn.com/b/habibh/archive/2009/09/21/coverage-of-the-visual-studio-2010-historical-debugger.aspx</a></div>
+<div class="wikidoc">&nbsp;</div>
+<div class="wikidoc"><font color="#ffffff">Collection Debugger Visualizer, List Debugger Visualizer</font></div>

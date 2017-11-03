@@ -1,0 +1,233 @@
+<div class="wikidoc">
+<h1>LLBLGen Pro Typed Data Context Driver for LINQPad</h1>
+<p><a href="http://www.llblgen.com">A&nbsp;LLBLGen Pro</a> Typed Data Context Driver for
+<a href="http://www.linqpad.net/">LINQPad</a> which provides first-class support for
+<a href="http://www.llblgen.com">LLBLGen Pro</a> ILinqMetaData to enable, among other things, the generated entities to be shown in the Schema Explorer. Notable features include: schema explorer tool-tips, displaying SQL column information, grouping entities
+ by schema and/or table prefix, ability to select additional assemblies and namespaces, ability to import connections from those of earlier LLBL versions, includes&nbsp;<a href="https://rapiddevbookcode.codeplex.com/wikipage?title=LINQPadCustomVisualizer&referringTitle=LINQPad">Four
+ Custom Visualizers</a>.</p>
+<p>Even if you are not using Linq you can still use LINQPad to run classic LLBL API or the newer QuerySpec queries by specifying the an IElementCreator rather than an ILinqMetaData type, see bottom of page for examples.</p>
+<h2>Installation</h2>
+<p><strong>Binary via LINQPad drivers gallery</strong></p>
+<ol>
+<li>Run LINQPad </li><li>Click 'Add connection' </li><li>Click 'View more drivers' </li><li>In the 'LINQPad Supplementary Data Context Drivers' page select the appropriate version:
+<br>
+Download Alternative Driver for LLBLGen X.Y </li></ol>
+<p><strong>Binary from file</strong></p>
+<ol>
+<li>Download the LINQPad driver for the version of LLBLGen Pro you are using <a title="AW.LLBLGenV4.1.DataContextDriver.lpx" href="https://rapiddevbookcode.codeplex.com/downloads/get/864006">
+AW.LLBLGenV4.2.DataContextDriver.lpx</a>, <a title="AW.LLBLGenV4.1.DataContextDriver.lpx" href="https://rapiddevbookcode.codeplex.com/releases/view/122221#DownloadId=842886">
+AW.LLBLGenV4.1.DataContextDriver.lpx</a>, <a title="AW.LLBLGenV4.0.DataContextDriver.lpx" href="https://rapiddevbookcode.codeplex.com/releases/view/122221#DownloadId=843501">
+AW.LLBLGenV4.0.DataContextDriver.lpx</a>, <a title="AW.LLBLGenV3.5.DataContextDriver.lpx" href="https://rapiddevbookcode.codeplex.com/downloads/get/625391">
+AW.LLBLGenV3.5.DataContextDriver.lpx</a>, <a title="AW.LLBLGenV3.1.DataContextDriver.lpx (v2.2.1.0)" href="https://rapiddevbookcode.codeplex.com/downloads/get/625392">
+AW.LLBLGenV3.1.DataContextDriver.lpx (v2.2.1.0)</a><br>
+<a title="AW.LLBLGenV3.0.DataContextDriverV2.0.lpx" href="https://rapiddevbookcode.codeplex.com/downloads/get/271101">AW.LLBLGenV3.0.DataContextDriverV2.0.lpx</a> and
+<a title="AW.LLBLGenV2.6.DataContextDriver.lpx" href="https://rapiddevbookcode.codeplex.com/downloads/get/130358">
+AW.LLBLGenV2.6.DataContextDriver.lpx</a> </li><li>Do steps 1-3 above </li><li>Browse to and select the *.lpx file that was downloaded </li></ol>
+<p><strong>Source</strong></p>
+<ol>
+<li><a title="Get the source" href="http://rapiddevbookcode.codeplex.com/wikipage?title=BookSourceCode">Get the source</a>
+</li><li>Compile AW.LINQPad.sln or 'AW with Everything.sln' (you will probably need to fix the reference to LINQPad.exe)
+</li><li>Run AW.LLBLGen.DataContextDriver\bin\Debug\DevDeploy.bat (or DevDeploy4.bat) </li><li>Then in LINQPad:
+<ol>
+<li>Click add connection </li><li>Select AW LLBL Driver, click next </li></ol>
+</li></ol>
+<p><strong>For version history see release notes in download pages<br>
+</strong>Current LLBLV4.2 and LLBL V5.0 version are at Version 3.2 and are&nbsp;only&nbsp;available via the LINQPad drivers gallery, for previous versions see<strong>&nbsp;<a title="https://rapiddevbookcode.codeplex.com/releases/view/122221" href="https://rapiddevbookcode.codeplex.com/releases/view/122221">Version
+ 3.0</a>, <a href="http://rapiddevbookcode.codeplex.com/releases/view/102058">Version 2.2.1 and V2.3.1</a>,
+<a href="http://rapiddevbookcode.codeplex.com/releases/view/71936">Version 2.0</a>,
+<a href="http://rapiddevbookcode.codeplex.com/releases/view/48255">Version 1.1</a></strong><strong><br>
+</strong></p>
+<h3>Example usage</h3>
+<p>In the connection dialog put in:</p>
+<ol>
+<li><em>AW.Data.dll</em> (with full path) </li><li><em>AW.Data.Linq.LinqMetaData</em> (type or click choose) </li><li>Either <em>AW.Win.exe.config</em> or <em>data source=(local)\sqlexpress;initial catalog=AdventureWorks;integrated security=SSPI</em>
+</li></ol>
+<p><a href="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=842861"><img title="image" src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=842862" alt="image" width="907" height="361" border="0" style="padding-top:0px; padding-left:0px; display:inline; padding-right:0px; border-width:0px"></a></p>
+<h3>And for Northwind with Adapter, with the adapter there is an option to specify a method to use to register
+<a href="http://www.llblgen.com/documentation/4.1/LLBLGen%20Pro%20RTF/Using%20the%20generated%20code/Linq/gencode_linq_functionmappings.htm#FunctionMappingStore" target="_blank">
+Custom Function Mapping</a> so they are available to LINQPad</h3>
+<p><a href="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=842863"><img title="image" src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=842864" alt="image" width="908" height="437" border="0" style="padding-top:0px; padding-left:0px; display:inline; padding-right:0px; border-width:0px"></a></p>
+<h3>UI Options</h3>
+<p><a href="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=842865"><img title="image" src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=842866" alt="image" width="921" height="313" border="0" style="padding-top:0px; padding-left:0px; display:inline; padding-right:0px; border-width:0px"></a></p>
+<p>New in version 3 is the option to group the entities by schema and/or group them by table prefix.</p>
+<p>There are four options for display the results of a query in a grid</p>
+<ol>
+<li>Exclude EntityBase Properties </li><li>Default Linqpad behaviour </li><li>Use the <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=GridDataEditor">
+GridDataEditor</a> included with the driver rather than the read-only LinqPad one, unpaged
+</li><li>Use the <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=GridDataEditor">
+GridDataEditor</a> with a page size of 10 </li></ol>
+<h3>DataAccessAdapter factory</h3>
+<p>There is an alternative way of creating the adapter and that is to have a static DataAccessAdapter factory method with this signature:</p>
+<pre>Func&lt;string, IDataAccessAdapter&gt; <br><span style="font-family:calibri">e.g.</span> public static DataAccessAdapterBase CreateDataAccessAdapter(string connectionString)</pre>
+<p>This allows you to have custom code executed when the adapter is created and maybe select the appropriate adapter based on the connection string (or whatever data the string parameter has). The assembly, type and method name must be supplied.</p>
+<h3>Default connection properties</h3>
+<p>If you want to have a lot of connections with similar properties you can specify defaults to populate new connections. These can set by either the 'save as default' button in the first tab of the connection dialog or by editing them directly in the third
+ tab shown below. This allows you to easily clone a connection say if you want to have the same code connected to multiple databases. This is redundant now that LINQPad has the &lsquo;Create Similar Connection&hellip;&rsquo; feature.</p>
+<p><a href="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=842867"><img title="image" src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=842868" alt="image" width="758" height="431" border="0" style="padding-top:0px; padding-left:0px; display:inline; padding-right:0px; border-width:0px"></a></p>
+<h3>Additional assemblies and namespaces</h3>
+<p>The driver adds these namespaces and assemblies to the ones LINQPad provides</p>
+<pre><span class="str">&quot;SD.LLBLGen.Pro.ORMSupportClasses&quot;</span>, <span class="str">&quot;SD.LLBLGen.Pro.LinqSupportClasses&quot;</span>, <span class="str">&quot;AW.Helper&quot;</span>, <br><span class="str">&quot;AW.Helper.LLBL&quot;</span>, <span class="str">&quot;AW.Winforms.Helpers.DataEditor&quot;</span>, <span class="str">&quot;AW.Winforms.Helpers.LLBL&quot;, &quot;AW.LinqPadExtensions&quot;, <br>&quot;AW.LLBLGen.DataContextDriver&quot;, </span>&quot;AW.LLBLGen.DataContextDriver.Static&quot;</pre>
+<pre>&quot;SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll&quot;, &quot;SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll&quot;,
+&quot;AW.Helper.dll&quot;, &quot;AW.Helper.LLBL.dll&quot;, &quot;System.Windows.Forms.dll&quot;,&quot;AW.Winforms.Helpers.dll&quot;, <br>&quot;AW.Winforms.Helpers.LLBL.dll&quot;, &quot;AW.LinqPadExtensions.dll&quot;</pre>
+<p>If you want to have additional assemblies and namespaces used in the queries against your typed data context (ILinqMetaData) these can be specified in &lsquo;Driver&rsquo; tab of the connection dialog shown above or in the &lsquo;Additional Assemblies and
+ Namespaces&rsquo; tab shown below.</p>
+<p><a href="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=842869"><img title="image" src="http://download-codeplex.sec.s-msft.com/Download?ProjectName=RapidDevBookCode&DownloadId=842870" alt="image" width="672" height="664" border="0" style="padding-top:0px; padding-left:0px; display:inline; padding-right:0px; border-width:0px"></a>
+<br>
+The &lsquo;Driver&rsquo; tab assemblies and namespaces are global to the AW.LLBLGen.DataContextDriver, while the &lsquo;Additional Assemblies and Namespaces&rsquo; (version 2.3 and later only) are per connection. The additional assemblies can have relative
+ or absolute paths. This an alternative to specifying them in each query. The &lsquo;Add namespaces from selected assemblies&rsquo; button adds all the namespaces from any selected assemblies in the &lsquo;Additional Assemblies&rsquo; grid plus all the assemblies
+ defined in the driver.</p>
+<h3>SQL Translation Tab</h3>
+<p>The V2.3.1 and later drivers will show a non-executable SQL log in the SQL Translation Tab when a query is run using the TraceHelper.QueryExecutionSwitch. In earlier versions or to view executable SQL you must define an event called SQLTraceEvent in your
+ data adapters or, if using LLBL V3 or later selfservicing, a static event of that name in the CommonDaoBase class, e.g</p>
+<p style="color:black; background-color:white">public static event EventHandler<span style="color:blue">&lt;</span><span style="color:#a31515">SQLTraceEventArgs</span><span style="color:blue">&gt;</span> SQLTraceEvent;</p>
+<p>where SQLTraceEventArgs is a descendent of EventArgs and has a public SD.LLBLGen.Pro.ORMSupportClasses.IQuery property Query. For example:</p>
+<p style="color:black; background-color:white"><span style="color:blue">public</span>
+<span style="color:blue">class</span> SQLTraceEventArgs : EventArgs <br>
+{ <br>
+<span style="color:blue">&nbsp; </span><span style="color:blue">public</span> IQuery Query {
+<span style="color:blue">get</span>; <span style="color:blue">private</span> <span style="color:blue">
+set</span>; } <br>
+<span style="color:blue">&nbsp; </span><span style="color:blue">public</span> SQLTraceEventArgs(IQuery query)
+<br>
+&nbsp; { <br>
+<span style="color:blue">&nbsp;&nbsp;&nbsp; </span><span style="color:blue">if</span> (query ==
+<span style="color:blue">null</span>) <span style="color:blue">throw</span> <span style="color:blue">
+new</span> ArgumentNullException(<span style="color:#a31515">&quot;query&quot;</span>); <br>
+&nbsp;&nbsp;&nbsp; Query = query; <br>
+&nbsp; } <br>
+}</p>
+<p>See <a href="https://rapiddevbookcode.codeplex.com/SourceControl/latest#LLBL Pro v4.1/AW.Helper.LLBL/SQLTraceEventArgs.cs">
+SQLTraceEventArgs.cs</a> and <a href="https://rapiddevbookcode.codeplex.com/SourceControl/latest#LLBL Pro v4.1/AW.Data/DaoClasses/CommonDaoBase.Extended.cs">
+CommonDaoBase.Extended.cs</a> for an example of how to do this. <br>
+For selfservicing the SQL trace only works for entity queries but not projections.
+<br>
+<br>
+For Adapter you could add references to AW.Helper.dll and AW.Helper.LLBL.dll and then put this in your DataAccessAdapter:</p>
+<pre><span style="color:green">// __LLBLGENPRO_USER_CODE_REGION_START CustomDataAccessAdapterCode</span>
+
+<span style="color:gray">///</span> <span style="color:gray">&lt;summary&gt;</span>
+<span style="color:gray">///</span><span style="color:green"> Event which is raised whenever a query is executed. Use this event to perform SQL tracing. </span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;/summary&gt;</span>
+<span style="color:blue">public</span> <span style="color:blue">event</span> EventHandler&lt;SQLTraceEventArgs&gt; SQLTraceEvent;
+
+<span style="color:gray">///</span> <span style="color:gray">&lt;summary&gt;</span>
+<span style="color:gray">///</span><span style="color:green"> Called whenever a query is executed.</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;/summary&gt;</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;param name=&quot;query&quot;&gt;</span><span style="color:green">The query.&lt;/param&gt;</span>
+<span style="color:blue">protected</span> <span style="color:blue">void</span> OnExecuteQuery(IQuery query)
+{
+<span style="color:blue">  if</span> (SQLTraceEvent != <span style="color:blue">null</span>) 
+    SQLTraceEvent(<span style="color:blue">this</span>, <span style="color:blue">new</span> SQLTraceEventArgs(query));
+}
+
+<span style="color:gray">///</span> <span style="color:gray">&lt;summary&gt;</span>
+<span style="color:gray">///</span><span style="color:green"> 	Executes the passed in action query and, if not null, runs it inside the passed in transaction.</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;/summary&gt;</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;param name = &quot;queryToExecute&quot;&gt;</span><span style="color:green">ActionQuery to execute.&lt;/param&gt;</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;returns&gt;</span><span style="color:green">execution result, which is the amount of rows affected (if applicable)&lt;/returns&gt;</span>
+<span style="color:blue">public</span> <span style="color:blue">override</span> <span style="color:blue">int</span> ExecuteActionQuery(IActionQuery queryToExecute)
+{
+  OnExecuteQuery(queryToExecute);
+<span style="color:blue">  return</span> <span style="color:blue">base</span>.ExecuteActionQuery(queryToExecute);
+}
+
+<span style="color:gray">///</span> <span style="color:gray">&lt;summary&gt;</span>
+<span style="color:gray">///</span><span style="color:green"> 	Creates a new Select DQ for the fields passed in using the parameters specified.</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;/summary&gt;</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;param name = &quot;fieldsToFetch&quot;&gt;</span><span style="color:green">fields to fetch using the select&lt;/param&gt;</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;param name = &quot;persistenceInfoObjects&quot;&gt;</span><span style="color:green">persistence info objects for the fields&lt;/param&gt;</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;param name = &quot;filter&quot;&gt;</span><span style="color:green">filter to use for the where clause&lt;/param&gt;</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;param name = &quot;maxNumberOfItemsToReturn&quot;&gt;</span><span style="color:green">max. amount of rows to return&lt;/param&gt;</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;param name = &quot;sortClauses&quot;&gt;</span><span style="color:green">sort clause specifications to use&lt;/param&gt;</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;param name = &quot;relationsToWalk&quot;&gt;</span><span style="color:green">relations to walk to build the FROM clause&lt;/param&gt;</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;param name = &quot;allowDuplicates&quot;&gt;</span><span style="color:green">flag to specify if duplicates should be returned&lt;/param&gt;</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;param name = &quot;groupByClause&quot;&gt;</span><span style="color:green">group by clause to embed in the query&lt;/param&gt;</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;param name = &quot;pageNumber&quot;&gt;</span><span style="color:green">The page number to retrieve&lt;/param&gt;</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;param name = &quot;pageSize&quot;&gt;</span><span style="color:green">the page size to retrieve&lt;/param&gt;</span>
+<span style="color:gray">///</span> <span style="color:gray">&lt;returns&gt;</span><span style="color:green">ready to use query to use.&lt;/returns&gt;</span>
+<span style="color:blue">protected</span> <span style="color:blue">override</span> IRetrievalQuery CreateSelectDQ(IEntityFields2 fieldsToFetch, IFieldPersistenceInfo[] persistenceInfoObjects,
+	IPredicateExpression filter, <span style="color:blue">long</span> maxNumberOfItemsToReturn, ISortExpression sortClauses, IRelationCollection relationsToWalk,
+	<span style="color:blue">bool</span> allowDuplicates, IGroupByCollection groupByClause, <span style="color:blue">int</span> pageNumber, <span style="color:blue">int</span> pageSize)
+{
+<span style="color:blue">  var</span> query = <span style="color:blue">base</span>.CreateSelectDQ(fieldsToFetch, persistenceInfoObjects, filter, maxNumberOfItemsToReturn, sortClauses, relationsToWalk,
+  allowDuplicates, groupByClause, pageNumber, pageSize);
+  OnExecuteQuery(query);
+<span style="color:blue">  return</span> query;
+}
+
+<span style="color:green">// __LLBLGENPRO_USER_CODE_REGION_END</span></pre>
+<h3>Extras</h3>
+<p>The driver also includes <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=LINQPadCustomVisualizer&referringTitle=LINQPad">
+Four Custom Visualizers:</a>&nbsp; <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=GridDataEditor">
+GridDataEditor</a>, <a href="/wikipage?title=LINQPadHierarchyEditor&referringTitle=LLBL4linqpad">
+HierarchyEditor</a>, <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=ObjectInspector&referringTitle=Documentation">
+Object Inspector</a> and the <a href="/wikipage?title=EntityDataBrowser&referringTitle=LLBL4linqpad">
+Entity Browser.</a>, the appropriate assemblies and namespaces are automatically included.<br>
+Version 3 has the ability to import connections from earlier LLBL version connections</p>
+<h3>Difference between this and the Official LINQPad LLBLGen Pro drivers</h3>
+<p><a href="http://www.llblgen.com" target="_blank">Solutions Design</a> have produced the
+<a title="Official LINQPad driver for LLBLGen Pro v3.5 and v4.0 from Solutions Design" href="http://llblgenlinqpad.codeplex.com/" target="_blank">
+Official LINQPad drivers for LLBLGen Pro v3.5 and 4.x</a>, some of the differences are: theirs</p>
+<ul>
+<li>Doesn't have the schema explorer tooltips nor displays SQL column information
+</li><li>Doesn't fully support SQL execution </li><li>SQL trace is not executable </li><li>Doesn't support DataAccessAdapter factories </li><li>Doesn't support selection of Additional assemblies and namespaces (they would have to be added to every query)
+</li><li>Doesn&rsquo;t support grouping entities by Schema and/or table prefix </li><li>Doesn&rsquo;t support <a href="http://www.llblgen.com/documentation/4.1/LLBLGen%20Pro%20RTF/Using%20the%20generated%20code/Linq/gencode_linq_functionmappings.htm#FunctionMappingStore" target="_blank">
+Custom Function Mapping</a> (they would have to be added to every query) </li><li>Does not create the adapter for SQL Server with CatalogNameUsage.Clear which means the it ignores the catalog name in connection string
+</li><li>Does not have ability to import connections from earlier LLBL version connections
+</li><li>Is a single Assembly (mine is 15) </li><li>Is more likely to work, I expect </li></ul>
+<h3>Related links:</h3>
+<ul>
+<li><a title="Official LINQPad driver for LLBLGen Pro v3.5 from Solutions Design" href="http://llblgenlinqpad.codeplex.com/" target="_blank">Official LINQPad driver for LLBLGen Pro v3.5 and v4.x from Solutions Design</a>
+</li><li><a title="LLBL Forum about LinqPad for Linq to LLBL" href="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=15083">LINQPad thread on the LLBLGen Pro forum.</a>
+</li><li><a title="LLBL Forum about LinqPad for Linq to LLBL" href="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=15083">LLBLGen Pro thread on LINQPad forum</a>.
+</li><li><a href="http://www.linqpad.net/Extensibility.aspx">LINQPad Data Context Extensibility Model</a> which offers first-class support in LINQPad for querying other data sources.
+</li><li>The .linq files in the SampleQueryFiles folder. </li><li><a href="http://www.linqpad.net/RichClient/DataContextDrivers.aspx">LINQPad Supplementary Data Context Drivers</a>
+</li></ul>
+<h3>Example Non Linq LLBL queries (Language C# Statement):</h3>
+<h4>AdventureWorks (selfservicing)</h4>
+<h5>QuerySpec</h5>
+<pre style="color:black"><span style="color:blue">var</span> qf = <span style="color:blue">new</span> AW.Data.FactoryClasses.QueryFactory(); 
+<span style="color:blue">var</span> q = qf.Address.Where(AddressFields.AddressID == 3); 
+<span style="color:blue">var</span> addresses = <span style="color:blue">new</span> AddressCollection(); 
+addresses.GetMulti(q); 
+addresses.Dump();</pre>
+<h5>LLBL Classic Query API</h5>
+<p><span style="color:#0000ff">&nbsp;</span></p>
+<div style="color:black">
+<pre><span style="color:blue">var</span> soh = <span style="color:blue">new</span> AW.Data.EntityClasses.SalesOrderHeaderEntity (43659);<br>soh.GetMultiSalesOrderDetails(<span style="color:blue">false</span>).Dump();</pre>
+</div>
+<h4>Northwind (adapter)</h4>
+<h5>QuerySpec</h5>
+<p style="color:black; background-color:white"><span style="color:blue">using</span> (<span style="color:blue">var</span> adapter =
+<span style="color:blue">this</span>.AdapterToUse) <br>
+{ <br>
+&nbsp; <span style="color:blue">var</span> qf = <span style="color:blue">new</span> Northwind.DAL.FactoryClasses.QueryFactory();
+<br>
+&nbsp; <span style="color:blue">var</span> q = qf.Customer <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .From(QueryTarget.InnerJoin(CustomerEntity.Relations.OrderEntityUsingCustomerId)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .InnerJoin(OrderEntity.Relations.OrderDetailEntityUsingOrderId)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .InnerJoin(OrderDetailEntity.Relations.ProductEntityUsingProductId))
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .Where(Northwind.DAL.HelperClasses.ProductFields.ProductId == 1);
+<br>
+<br>
+&nbsp; adapter.FetchQuery(q).Dump(); <br>
+}</p>
+<h5>LLBL Classic Query API</h5>
+<div style="color:black; background-color:white">
+<pre><span style="color:blue">var</span> product = <span style="color:blue">new</span> Northwind.DAL.EntityClasses.ProductEntity(10);
+<span style="color:blue">this</span>.AdapterToUse.FetchEntityCollection(product.OrderDetails, product.GetRelationInfoOrderDetails()); 
+product.OrderDetails.Dump();</pre>
+</div>
+<h6>Authorization example where 'this' is an IElementCreator rather than an ILinqMetaData</h6>
+<div style="color:black">
+<pre>SD.LLBLGen.Pro.Examples.Authorization.Identity.LoginHelper.Login(<span style="color:#a31515">&quot;cr1&quot;</span>,<span style="color:#a31515">&quot;cr1&quot;</span>);
+<span style="color:blue">var</span> order = <span style="color:blue">new</span> SD.LLBLGen.Pro.Examples.Authorization.EntityClasses.OrdersEntity(10248);
+LLBLGenStaticDriver.GetAdapter(<span style="color:blue">this</span>).FetchEntityCollection(order.OrderDetails, order.GetRelationInfoOrderDetails());
+order.OrderDetails.Dump();</pre>
+</div>
+<p>Note: For IElementCreator LLBLGenStaticDriver.GetAdapter(<span style="color:blue">this</span>) has to be used instead of
+<span style="color:blue">this</span>.AdapterToUse</p>
+</div><div class="ClearBoth"></div>
