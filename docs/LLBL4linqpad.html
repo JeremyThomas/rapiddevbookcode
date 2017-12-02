@@ -3,7 +3,7 @@
 <p><a href="http://www.llblgen.com">A&nbsp;LLBLGen Pro</a> Typed Data Context Driver for
 <a href="http://www.linqpad.net/">LINQPad</a> which provides first-class support for
 <a href="http://www.llblgen.com">LLBLGen Pro</a> ILinqMetaData to enable, among other things, the generated entities to be shown in the Schema Explorer. Notable features include: schema explorer tool-tips, displaying SQL column information, grouping entities
- by schema and/or table prefix, ability to select additional assemblies and namespaces, ability to import connections from those of earlier LLBL versions, includes&nbsp;<a href="https://rapiddevbookcode.codeplex.com/wikipage?title=LINQPadCustomVisualizer&referringTitle=LINQPad">Four
+ by schema and/or table prefix, ability to select additional assemblies and namespaces, ability to import connections from those of earlier LLBL versions, includes&nbsp;<a href="LINQPadCustomVisualizer&referringTitle=LINQPad">Four
  Custom Visualizers</a>.</p>
 <p>Even if you are not using Linq you can still use LINQPad to run classic LLBL API or the newer QuerySpec queries by specifying the an IElementCreator rather than an ILinqMetaData type, see bottom of page for examples.</p>
 <h2>Installation</h2>
@@ -25,7 +25,7 @@ AW.LLBLGenV3.1.DataContextDriver.lpx (v2.2.1.0)</a><br>
 AW.LLBLGenV2.6.DataContextDriver.lpx</a> </li><li>Do steps 1-3 above </li><li>Browse to and select the *.lpx file that was downloaded </li></ol>
 <p><strong>Source</strong></p>
 <ol>
-<li><a title="Get the source" href="http://rapiddevbookcode.codeplex.com/wikipage?title=BookSourceCode">Get the source</a>
+<li><a title="Get the source" href="http://rapiddevbookcode.codeplex.com/BookSourceCode">Get the source</a>
 </li><li>Compile AW.LINQPad.sln or 'AW with Everything.sln' (you will probably need to fix the reference to LINQPad.exe)
 </li><li>Run AW.LLBLGen.DataContextDriver\bin\Debug\DevDeploy.bat (or DevDeploy4.bat) </li><li>Then in LINQPad:
 <ol>
@@ -52,9 +52,9 @@ Custom Function Mapping</a> so they are available to LINQPad</h3>
 <p>New in version 3 is the option to group the entities by schema and/or group them by table prefix.</p>
 <p>There are four options for display the results of a query in a grid</p>
 <ol>
-<li>Exclude EntityBase Properties </li><li>Default Linqpad behaviour </li><li>Use the <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=GridDataEditor">
+<li>Exclude EntityBase Properties </li><li>Default Linqpad behaviour </li><li>Use the <a href="GridDataEditor">
 GridDataEditor</a> included with the driver rather than the read-only LinqPad one, unpaged
-</li><li>Use the <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=GridDataEditor">
+</li><li>Use the <a href="GridDataEditor">
 GridDataEditor</a> with a page size of 10 </li></ol>
 <h3>DataAccessAdapter factory</h3>
 <p>There is an alternative way of creating the adapter and that is to have a static DataAccessAdapter factory method with this signature:</p>
@@ -157,11 +157,11 @@ For Adapter you could add references to AW.Helper.dll and AW.Helper.LLBL.dll and
 
 <span style="color:green">// __LLBLGENPRO_USER_CODE_REGION_END</span></pre>
 <h3>Extras</h3>
-<p>The driver also includes <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=LINQPadCustomVisualizer&referringTitle=LINQPad">
-Four Custom Visualizers:</a>&nbsp; <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=GridDataEditor">
-GridDataEditor</a>, <a href="/wikipage?title=LINQPadHierarchyEditor&referringTitle=LLBL4linqpad">
-HierarchyEditor</a>, <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=ObjectInspector&referringTitle=Documentation">
-Object Inspector</a> and the <a href="/wikipage?title=EntityDataBrowser&referringTitle=LLBL4linqpad">
+<p>The driver also includes <a href="LINQPadCustomVisualizer&referringTitle=LINQPad">
+Four Custom Visualizers:</a>&nbsp; <a href="GridDataEditor">
+GridDataEditor</a>, <a href="/LINQPadHierarchyEditor&referringTitle=LLBL4linqpad">
+HierarchyEditor</a>, <a href="ObjectInspector&referringTitle=Documentation">
+Object Inspector</a> and the <a href="/EntityDataBrowser&referringTitle=LLBL4linqpad">
 Entity Browser.</a>, the appropriate assemblies and namespaces are automatically included.<br>
 Version 3 has the ability to import connections from earlier LLBL version connections</p>
 <h3>Difference between this and the Official LINQPad LLBLGen Pro drivers</h3>

@@ -3,19 +3,19 @@
 <p>I have created two packages of <a href="http://www.linqpad.net/CustomVisualizers.aspx">
 LINQPad Custom Visualizers</a>, the first, <a href="https://rapiddevbookcode.codeplex.com/downloads/get/847551">
 AW.LinqPadCustomVisualizers.V2.0.zip</a> , is non-<a title="LLBLGen Pro" href="http://www.llblgen.com/">LLBLGen Pro</a> specific and exposes these 3
-<a href="wikipage?title=Controls&referringTitle=Documentation">Controls</a> to <a href="http://www.linqpad.net/">
-LINQPad</a> to be displayed in the output panel: the <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=GridDataEditor">
-GridDataEditor</a>, <a title="HierarchyEditor" href="https://rapiddevbookcode.codeplex.com/wikipage?title=LINQPadHierarchyEditor">
-HierarchyEditor</a> and <a title="Object Inspector" href="https://rapiddevbookcode.codeplex.com/wikipage?title=ObjectInspector">
+<a href="Controls&referringTitle=Documentation">Controls</a> to <a href="http://www.linqpad.net/">
+LINQPad</a> to be displayed in the output panel: the <a href="GridDataEditor">
+GridDataEditor</a>, <a title="HierarchyEditor" href="LINQPadHierarchyEditor">
+HierarchyEditor</a> and <a title="Object Inspector" href="ObjectInspector">
 Object Inspector</a>. <br>
-The second package is my <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=LLBL4linqpad">
+The second package is my <a href="LLBL4linqpad.html">
 LLBLGen Pro Data Driver</a> which contains the first package with additional <a title="LLBLGen Pro" href="http://www.llblgen.com/">
 LLBLGen Pro</a> specific calls to those visualizers, plus an additional control: the
-<a href="https://rapiddevbookcode.codeplex.com/wikipage?title=Entity%20Explorer">
+<a href="Entity%20Explorer">
 Entity Explorer</a>.</p>
 <h3>1: DisplayInGrid</h3>
 <p>This displays the results of a <a title="LINQPad" href="http://www.linqpad.net">
-LINQPad</a> query in the <a title="http://msdn.microsoft.com/en-us/library/system.windows.forms.datagridview.aspx" href="https://rapiddevbookcode.codeplex.com/wikipage?title=GridDataEditor">
+LINQPad</a> query in the <a title="http://msdn.microsoft.com/en-us/library/system.windows.forms.datagridview.aspx" href="GridDataEditor">
 GridDataEditor</a> in the output panel to enable filtering of the data via the UI and editing of
 <a title="LLBLGen Pro" href="http://www.llblgen.com/">LLBLGen Pro</a> entities, as the
 <a title="LINQPad" href="http://www.linqpad.net">LINQPad</a> grid can only edit LINQToSQL entities.
@@ -27,7 +27,7 @@ DisplayInGrid returns an empty enumeration rather than void simply so it can be 
 <h4>Saving changes</h4>
 <p>To save the changes to the DB a DataEditorPersister must be supplied, except for LINQToSQL and LLBL queries, where there are extension methods which use built-in LINQToSQL and LLBL DataEditorPersisters. If no
 <a href="https://rapiddevbookcode.codeplex.com/SourceControl/latest#LLBL%20Pro v4.1/AW.Winforms.Helpers/Controls/DataEditorPersister.cs">
-DataEditorPersister</a> is provided then the <a title="http://msdn.microsoft.com/en-us/library/system.windows.forms.datagridview.aspx" href="https://rapiddevbookcode.codeplex.com/wikipage?title=GridDataEditor">
+DataEditorPersister</a> is provided then the <a title="http://msdn.microsoft.com/en-us/library/system.windows.forms.datagridview.aspx" href="GridDataEditor">
 GridDataEditor</a> will be in a readonly mode.</p>
 <h4>Example</h4>
 <p>NutShell DB (included with <a title="LINQPad" href="http://www.linqpad.net">LINQPad</a> samples)</p>
@@ -40,7 +40,7 @@ Other</a></div>
 <div class="wikidoc">&nbsp;</div>
 <h3>2: DisplayHierarchyInTree</h3>
 <p>This displays the results of a <a title="LINQPad" href="http://www.linqpad.net">
-LINQPad</a> query in the <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=LINQPadHierarchyEditor&referringTitle=LINQPad">
+LINQPad</a> query in the <a href="LINQPadHierarchyEditor&referringTitle=LINQPad">
 HierarchyEditor</a> in the output panel for displaying and editing <a href="http://articles.sitepoint.com/article/hierarchical-data-database">
 Adjacency List</a> (self referencing) data in a tree. </p>
 <h4>Example</h4>
@@ -62,14 +62,14 @@ You need to supply the name of the identity property, the parent property name a
 DataEditorPersister</a> to persist any changes you make.</div>
 <div class="wikidoc">&nbsp;</div>
 <h3>3: Inspect</h3>
-<p>This displays an <a title="Object Inspector" href="https://rapiddevbookcode.codeplex.com/wikipage?title=ObjectInspector&referringTitle=Documentation">
+<p>This displays an <a title="Object Inspector" href="ObjectInspector&referringTitle=Documentation">
 Object Inspector</a> for browsing the properties of an object and any objects it references in the output panel.</p>
 <h4>Example</h4>
 <p>NutShell DB (included with <a title="LINQPad" href="http://www.linqpad.net">LINQPad</a> samples)</p>
 <pre class="csharpcode">Customers.First().Inspect()</pre>
 <p>&nbsp;</p>
 <h3>4: Explore</h3>
-<p>This displays an <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=Entity%20Explorer">
+<p>This displays an <a href="Entity%20Explorer">
 Entity Explorer</a> to browse and edit <a href="http://www.llblgen.com/">LLBLGen Pro</a> entities from a database in the output panel.</p>
 <h4>Example</h4>
 <pre class="csharpcode">this.Explore()</pre>
@@ -78,7 +78,7 @@ Entity Explorer</a> to browse and edit <a href="http://www.llblgen.com/">LLBLGen
 LLBL</a></div>
 <p>&nbsp;</p>
 <h3>Installation</h3>
-<p>If you are using the <a href="https://rapiddevbookcode.codeplex.com/wikipage?title=LLBL4linqpad&referringTitle=LINQPad">
+<p>If you are using the <a href="LLBL4linqpad&referringTitle=LINQPad">
 LLBLGen Pro Data Context Driver</a> this is included and should be available for queries using this driver.
 <br>
 If not, download <a href="https://rapiddevbookcode.codeplex.com/downloads/get/847551">

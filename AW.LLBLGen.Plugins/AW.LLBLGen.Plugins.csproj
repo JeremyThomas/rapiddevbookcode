@@ -76,14 +76,14 @@
       <HintPath>..\packages\Humanizer.Core.2.2.0\lib\netstandard1.0\Humanizer.dll</HintPath>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.ApplicationCore">
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Solutions Design\LLBLGen Pro v4.2\SD.LLBLGen.Pro.ApplicationCore.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Solutions Design\LLBLGen Pro v4.2\SD.LLBLGen.Pro.ApplicationCore.dll</HintPath>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.Core">
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Solutions Design\LLBLGen Pro v4.2\SD.LLBLGen.Pro.Core.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Solutions Design\LLBLGen Pro v4.2\SD.LLBLGen.Pro.Core.dll</HintPath>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.DBDriverCore, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Solutions Design\LLBLGen Pro v4.2\SD.LLBLGen.Pro.DBDriverCore.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Solutions Design\LLBLGen Pro v4.2\SD.LLBLGen.Pro.DBDriverCore.dll</HintPath>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <HintPath>..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20160929\lib\net45\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
