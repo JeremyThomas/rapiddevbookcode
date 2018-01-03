@@ -130,9 +130,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticReflection.cs" />
     <Compile Include="TypeConverters\BaseNumericConverter.cs" />
+    <Compile Include="TypeConverters\SystemTypeConverters.cs" />
     <Compile Include="TypeConverters\NumericConverters.cs" />
     <Compile Include="TypeConverters\SpecificTypeConverter.cs" />
     <Compile Include="TypeConverters\SingleValueCollectionConverter.cs" />
+    <Compile Include="TypeConverters\SystemTypeConverterBase.cs" />
     <Compile Include="TypeConverters\TypeConverterHelper.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="ValueTypeWrapper.cs" />

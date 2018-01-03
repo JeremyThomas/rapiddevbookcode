@@ -177,7 +177,7 @@ namespace Northwind.DAL.Oracle
 		private void InitOrderDetailEntityMappings()
 		{
 			this.AddElementMapping("OrderDetailEntity", @"//localhost/xe", @"DBO_NORTHWIND", "ORDER_DETAILS", 5, 0);
-			this.AddElementFieldMapping("OrderDetailEntity", "Discount", "DISCOUNT", false, "Decimal", 0, 38, 38, false, "", new AW.Helper.TypeConverters.SingleNumericConverter(), typeof(System.Decimal), 0);
+			this.AddElementFieldMapping("OrderDetailEntity", "Discount", "DISCOUNT", false, "Decimal", 0, 38, 38, false, "", new SD.LLBLGen.Pro.ORMSupportClasses.SingleDecimalConverter(), typeof(System.Decimal), 0);
 			this.AddElementFieldMapping("OrderDetailEntity", "OrderId", "ORDERID", false, "Decimal", 0, 10, 0, false, "", new AW.Helper.TypeConverters.IntegerNonNullNumericConverter(), typeof(System.Int64), 1);
 			this.AddElementFieldMapping("OrderDetailEntity", "ProductId", "PRODUCTID", false, "Decimal", 0, 10, 0, false, "", new AW.Helper.TypeConverters.IntegerNumericConverter(), typeof(System.Int64), 2);
 			this.AddElementFieldMapping("OrderDetailEntity", "Quantity", "QUANTITY", false, "Decimal", 0, 5, 0, false, "", new AW.Helper.TypeConverters.SmallIntegerNumericConverter(), typeof(System.Int32), 3);

@@ -2351,7 +2351,7 @@ return schemaOracle.Views;]]></SavedQuery>
         </EntityMapping>
         <EntityMapping EntityName=":OrderDetail" TargetName="//localhost/xe:DBO_NORTHWIND:ORDER_DETAILS">
           <FieldMappings>
-            <FieldMapping FieldName="Discount" TargetFieldName="DISCOUNT" TypeConverterToUse="AW.Helper.TypeConverters.SingleNumericConverter" />
+            <FieldMapping FieldName="Discount" TargetFieldName="DISCOUNT" TypeConverterToUse="SD.LLBLGen.Pro.TypeConverters.SingleDecimalConverter" />
             <FieldMapping FieldName="OrderId" TargetFieldName="ORDERID" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNonNullNumericConverter" />
             <FieldMapping FieldName="ProductId" TargetFieldName="PRODUCTID" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNumericConverter" />
             <FieldMapping FieldName="Quantity" TargetFieldName="QUANTITY" TypeConverterToUse="AW.Helper.TypeConverters.SmallIntegerNumericConverter" />
