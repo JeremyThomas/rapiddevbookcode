@@ -41,7 +41,9 @@ namespace Chaliy.Windows.Forms
 
     private object _dataSource;
     private string _dataMember;
+#pragma warning disable 414
     private bool _initializing;
+#pragma warning restore 414
     private CurrencyManager _listManager;
 
     private string _idPropertyName;

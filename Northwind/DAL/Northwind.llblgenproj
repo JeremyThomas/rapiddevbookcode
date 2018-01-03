@@ -328,7 +328,7 @@ return schemaOracle.Views;]]></SavedQuery>
         </Fields>
         <OutputSettingValues>
           <Attributes>
-            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;CustomerId&quot;,&quot;CustomerTypeId&quot;)" />
+            <Attribute Value="System.Data.Services.Common.DataServiceKey(&quot;CustomerId&quot;,&quot;CustomerTypeId&quot;)" />
           </Attributes>
         </OutputSettingValues>
       </EntityDefinition>
@@ -439,7 +439,7 @@ return schemaOracle.Views;]]></SavedQuery>
         </Fields>
         <OutputSettingValues>
           <Attributes>
-            <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;EmployeeId&quot;,&quot;TerritoryId&quot;)" />
+            <Attribute Value="System.Data.Services.Common.DataServiceKey(&quot;EmployeeId&quot;,&quot;TerritoryId&quot;)" />
           </Attributes>
         </OutputSettingValues>
       </EntityDefinition>

@@ -244,7 +244,7 @@ namespace LLBLGen.EntityExplorer
                 connectionStringSettings.Name = name;
             }
           }
-          catch (ArgumentException ex)
+          catch (ArgumentException)
           {
             MessageBox.Show(connectionStringSettings.ProviderName);
             throw;

@@ -310,8 +310,7 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
       var modelProvider = (LLBLGenProDataModelProvider)DataModel;
       var oppositeEntityName = relation.StartEntityIsPkSide ? relation.GetFKEntityFieldCore(0).ActualContainingObjectName : relation.GetPKEntityFieldCore(0).ActualContainingObjectName;
 
-      IEntityRelation toReturn = null;
-      LLBLGenProEntityProvider oppositeEntityProvider = null;
+	    LLBLGenProEntityProvider oppositeEntityProvider = null;
       if (!modelProvider.EntityNameToEntityProvider.TryGetValue(oppositeEntityName, out oppositeEntityProvider))
       {
         return null;
