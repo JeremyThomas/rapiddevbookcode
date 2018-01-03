@@ -34,11 +34,11 @@ namespace AW.Data.EntityClasses
   using System.Linq;
   // __LLBLGENPRO_USER_CODE_REGION_END
 
-  /// <summary>Entity class which represents the entity 'Employee'. <br/><br/>
-  /// 
-  /// MS_Description: Employee information such as salary, department, and title.<br/>
-  /// </summary>
-  [Serializable]
+	/// <summary>Entity class which represents the entity 'Employee'. <br/><br/>
+	/// 
+	/// MS_Description: Employee information such as salary, department, and title.<br/>
+	/// </summary>
+	[Serializable]
 	public partial class EmployeeEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	
@@ -1922,10 +1922,10 @@ namespace AW.Data.EntityClasses
     }
 
     // __LLBLGENPRO_USER_CODE_REGION_END
-    #endregion
+		#endregion
 
-    #region Included code
+		#region Included code
 
-    #endregion
-  }
+		#endregion
+	}
 }

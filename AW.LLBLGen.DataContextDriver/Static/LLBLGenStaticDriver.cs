@@ -114,7 +114,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       return new[] {"System.Data.Linq", "System.Data.SqlClient", "System.Data.Linq.SqlClient"};
     }
 
-    /// <summary>
+    /// <summary> 
     ///   Gets the custom display member provider.
     /// </summary>
     /// <param name="objectToWrite"> The object to write. </param>

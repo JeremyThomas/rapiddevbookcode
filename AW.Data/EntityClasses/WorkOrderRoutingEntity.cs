@@ -23,6 +23,7 @@ using AW.Data.RelationClasses;
 using AW.Data.HelperClasses;
 using AW.Data.CollectionClasses;
 using System.ComponentModel.DataAnnotations;
+using AW.Helper;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.EntityClasses

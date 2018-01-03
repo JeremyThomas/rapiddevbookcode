@@ -155,6 +155,7 @@
       <Defaults>
         <Namespaces>
           <Namespace Name="System.ComponentModel.DataAnnotations" />
+          <Namespace Name="AW.Helper" />
         </Namespaces>
       </Defaults>
     </TargetElement>

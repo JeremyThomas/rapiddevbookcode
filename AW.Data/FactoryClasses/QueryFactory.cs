@@ -550,6 +550,7 @@ namespace AW.Data.FactoryClasses
 			get { return Create<StoreContactEntity>(); }
 		}
 
+
  
 		/// <summary>Creates and returns the query to fetch the typed view Sales.CustomerViewQuerySpec</summary>
 		public DynamicQuery<AW.Data.TypedViewClasses.CustomerViewQuerySpecRow> CustomerViewQuerySpec
@@ -590,7 +591,6 @@ namespace AW.Data.FactoryClasses
 								.InnerJoin(this.Individual).On(CustomerAddressFields.CustomerID.Equal(IndividualFields.CustomerID))
 								.InnerJoin(this.Contact).On(IndividualFields.ContactID.Equal(ContactFields.ContactID)));
 		}
-
 
 	}
 }
