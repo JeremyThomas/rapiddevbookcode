@@ -30,57 +30,57 @@ namespace Northwind.DAL.TypedViewClasses
 		}
 
 		#region Class Property Declarations
-		/// <summary>Gets the Address field.</summary>
+		/// <summary>Gets or sets the Address field.</summary>
 		public System.String Address { get; set; }
-		/// <summary>Gets the City field.</summary>
+		/// <summary>Gets or sets the City field.</summary>
 		public System.String City { get; set; }
-		/// <summary>Gets the Country field.</summary>
+		/// <summary>Gets or sets the Country field.</summary>
 		public System.String Country { get; set; }
-		/// <summary>Gets the CustomerId field.</summary>
+		/// <summary>Gets or sets the CustomerId field.</summary>
 		public System.String CustomerId { get; set; }
-		/// <summary>Gets the CustomerName field.</summary>
+		/// <summary>Gets or sets the CustomerName field.</summary>
 		public System.String CustomerName { get; set; }
-		/// <summary>Gets the Discount field.</summary>
+		/// <summary>Gets or sets the Discount field.</summary>
 		public System.Single Discount { get; set; }
-		/// <summary>Gets the ExtendedPrice field.</summary>
+		/// <summary>Gets or sets the ExtendedPrice field.</summary>
 		public Nullable<System.Decimal> ExtendedPrice { get; set; }
-		/// <summary>Gets the Freight field.</summary>
+		/// <summary>Gets or sets the Freight field.</summary>
 		public Nullable<System.Decimal> Freight { get; set; }
-		/// <summary>Gets the OrderDate field.</summary>
+		/// <summary>Gets or sets the OrderDate field.</summary>
 		public Nullable<System.DateTime> OrderDate { get; set; }
-		/// <summary>Gets the OrderId field.</summary>
+		/// <summary>Gets or sets the OrderId field.</summary>
 		public System.Int32 OrderId { get; set; }
-		/// <summary>Gets the PostalCode field.</summary>
+		/// <summary>Gets or sets the PostalCode field.</summary>
 		public System.String PostalCode { get; set; }
-		/// <summary>Gets the ProductId field.</summary>
+		/// <summary>Gets or sets the ProductId field.</summary>
 		public System.Int32 ProductId { get; set; }
-		/// <summary>Gets the ProductName field.</summary>
+		/// <summary>Gets or sets the ProductName field.</summary>
 		public System.String ProductName { get; set; }
-		/// <summary>Gets the Quantity field.</summary>
+		/// <summary>Gets or sets the Quantity field.</summary>
 		public System.Int16 Quantity { get; set; }
-		/// <summary>Gets the Region field.</summary>
+		/// <summary>Gets or sets the Region field.</summary>
 		public System.String Region { get; set; }
-		/// <summary>Gets the RequiredDate field.</summary>
+		/// <summary>Gets or sets the RequiredDate field.</summary>
 		public Nullable<System.DateTime> RequiredDate { get; set; }
-		/// <summary>Gets the Salesperson field.</summary>
+		/// <summary>Gets or sets the Salesperson field.</summary>
 		public System.String Salesperson { get; set; }
-		/// <summary>Gets the ShipAddress field.</summary>
+		/// <summary>Gets or sets the ShipAddress field.</summary>
 		public System.String ShipAddress { get; set; }
-		/// <summary>Gets the ShipCity field.</summary>
+		/// <summary>Gets or sets the ShipCity field.</summary>
 		public System.String ShipCity { get; set; }
-		/// <summary>Gets the ShipCountry field.</summary>
+		/// <summary>Gets or sets the ShipCountry field.</summary>
 		public System.String ShipCountry { get; set; }
-		/// <summary>Gets the ShipName field.</summary>
+		/// <summary>Gets or sets the ShipName field.</summary>
 		public System.String ShipName { get; set; }
-		/// <summary>Gets the ShippedDate field.</summary>
+		/// <summary>Gets or sets the ShippedDate field.</summary>
 		public Nullable<System.DateTime> ShippedDate { get; set; }
-		/// <summary>Gets the ShipperName field.</summary>
+		/// <summary>Gets or sets the ShipperName field.</summary>
 		public System.String ShipperName { get; set; }
-		/// <summary>Gets the ShipPostalCode field.</summary>
+		/// <summary>Gets or sets the ShipPostalCode field.</summary>
 		public System.String ShipPostalCode { get; set; }
-		/// <summary>Gets the ShipRegion field.</summary>
+		/// <summary>Gets or sets the ShipRegion field.</summary>
 		public System.String ShipRegion { get; set; }
-		/// <summary>Gets the UnitPrice field.</summary>
+		/// <summary>Gets or sets the UnitPrice field.</summary>
 		public System.Decimal UnitPrice { get; set; }
 		#endregion
 	}

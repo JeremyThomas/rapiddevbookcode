@@ -30,13 +30,13 @@ namespace Northwind.DAL.TypedViewClasses
 		}
 
 		#region Class Property Declarations
-		/// <summary>Gets the CompanyName field.</summary>
+		/// <summary>Gets or sets the CompanyName field.</summary>
 		public System.String CompanyName { get; set; }
-		/// <summary>Gets the OrderId field.</summary>
+		/// <summary>Gets or sets the OrderId field.</summary>
 		public System.Int32 OrderId { get; set; }
-		/// <summary>Gets the SaleAmount field.</summary>
+		/// <summary>Gets or sets the SaleAmount field.</summary>
 		public Nullable<System.Decimal> SaleAmount { get; set; }
-		/// <summary>Gets the ShippedDate field.</summary>
+		/// <summary>Gets or sets the ShippedDate field.</summary>
 		public Nullable<System.DateTime> ShippedDate { get; set; }
 		#endregion
 	}

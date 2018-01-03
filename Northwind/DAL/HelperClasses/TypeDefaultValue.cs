@@ -91,10 +91,28 @@ namespace Northwind.DAL.HelperClasses
 						case "System.Byte[]":
 							valueToReturn = new byte[0];
 							break;
+						case "System.DateTimeOffset":
+							valueToReturn = DateTimeOffset.MinValue;
+							break;
+						case "System.TimeSpan":
+							valueToReturn = TimeSpan.MinValue;
+							break;
 					}
 					break;					
 				case TypeCode.Single:
 					valueToReturn = 0.0f;
+					break;
+				case TypeCode.UInt16:
+					valueToReturn = (ushort)0;
+					break;
+				case TypeCode.UInt32:
+					valueToReturn = (uint)0;
+					break;
+				case TypeCode.UInt64:
+					valueToReturn = (ulong)0;
+					break;
+				case TypeCode.SByte:
+					valueToReturn = (SByte)0;
 					break;
 				default:
 					// do nothing, return null.

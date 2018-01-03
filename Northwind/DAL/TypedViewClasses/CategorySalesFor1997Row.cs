@@ -30,9 +30,9 @@ namespace Northwind.DAL.TypedViewClasses
 		}
 
 		#region Class Property Declarations
-		/// <summary>Gets the CategoryName field.</summary>
+		/// <summary>Gets or sets the CategoryName field.</summary>
 		public System.String CategoryName { get; set; }
-		/// <summary>Gets the CategorySales field.</summary>
+		/// <summary>Gets or sets the CategorySales field.</summary>
 		public Nullable<System.Decimal> CategorySales { get; set; }
 		#endregion
 	}

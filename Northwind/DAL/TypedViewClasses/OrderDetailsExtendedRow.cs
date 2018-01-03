@@ -30,19 +30,19 @@ namespace Northwind.DAL.TypedViewClasses
 		}
 
 		#region Class Property Declarations
-		/// <summary>Gets the Discount field.</summary>
+		/// <summary>Gets or sets the Discount field.</summary>
 		public System.Single Discount { get; set; }
-		/// <summary>Gets the ExtendedPrice field.</summary>
+		/// <summary>Gets or sets the ExtendedPrice field.</summary>
 		public Nullable<System.Decimal> ExtendedPrice { get; set; }
-		/// <summary>Gets the OrderId field.</summary>
+		/// <summary>Gets or sets the OrderId field.</summary>
 		public System.Int32 OrderId { get; set; }
-		/// <summary>Gets the ProductId field.</summary>
+		/// <summary>Gets or sets the ProductId field.</summary>
 		public System.Int32 ProductId { get; set; }
-		/// <summary>Gets the ProductName field.</summary>
+		/// <summary>Gets or sets the ProductName field.</summary>
 		public System.String ProductName { get; set; }
-		/// <summary>Gets the Quantity field.</summary>
+		/// <summary>Gets or sets the Quantity field.</summary>
 		public System.Int16 Quantity { get; set; }
-		/// <summary>Gets the UnitPrice field.</summary>
+		/// <summary>Gets or sets the UnitPrice field.</summary>
 		public System.Decimal UnitPrice { get; set; }
 		#endregion
 	}

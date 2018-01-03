@@ -30,45 +30,45 @@ namespace Northwind.DAL.TypedViewClasses
 		}
 
 		#region Class Property Declarations
-		/// <summary>Gets the Address field.</summary>
+		/// <summary>Gets or sets the Address field.</summary>
 		public System.String Address { get; set; }
-		/// <summary>Gets the City field.</summary>
+		/// <summary>Gets or sets the City field.</summary>
 		public System.String City { get; set; }
-		/// <summary>Gets the CompanyName field.</summary>
+		/// <summary>Gets or sets the CompanyName field.</summary>
 		public System.String CompanyName { get; set; }
-		/// <summary>Gets the Country field.</summary>
+		/// <summary>Gets or sets the Country field.</summary>
 		public System.String Country { get; set; }
-		/// <summary>Gets the CustomerId field.</summary>
+		/// <summary>Gets or sets the CustomerId field.</summary>
 		public System.String CustomerId { get; set; }
-		/// <summary>Gets the EmployeeId field.</summary>
+		/// <summary>Gets or sets the EmployeeId field.</summary>
 		public Nullable<System.Int32> EmployeeId { get; set; }
-		/// <summary>Gets the Freight field.</summary>
+		/// <summary>Gets or sets the Freight field.</summary>
 		public Nullable<System.Decimal> Freight { get; set; }
-		/// <summary>Gets the OrderDate field.</summary>
+		/// <summary>Gets or sets the OrderDate field.</summary>
 		public Nullable<System.DateTime> OrderDate { get; set; }
-		/// <summary>Gets the OrderId field.</summary>
+		/// <summary>Gets or sets the OrderId field.</summary>
 		public System.Int32 OrderId { get; set; }
-		/// <summary>Gets the PostalCode field.</summary>
+		/// <summary>Gets or sets the PostalCode field.</summary>
 		public System.String PostalCode { get; set; }
-		/// <summary>Gets the Region field.</summary>
+		/// <summary>Gets or sets the Region field.</summary>
 		public System.String Region { get; set; }
-		/// <summary>Gets the RequiredDate field.</summary>
+		/// <summary>Gets or sets the RequiredDate field.</summary>
 		public Nullable<System.DateTime> RequiredDate { get; set; }
-		/// <summary>Gets the ShipAddress field.</summary>
+		/// <summary>Gets or sets the ShipAddress field.</summary>
 		public System.String ShipAddress { get; set; }
-		/// <summary>Gets the ShipCity field.</summary>
+		/// <summary>Gets or sets the ShipCity field.</summary>
 		public System.String ShipCity { get; set; }
-		/// <summary>Gets the ShipCountry field.</summary>
+		/// <summary>Gets or sets the ShipCountry field.</summary>
 		public System.String ShipCountry { get; set; }
-		/// <summary>Gets the ShipName field.</summary>
+		/// <summary>Gets or sets the ShipName field.</summary>
 		public System.String ShipName { get; set; }
-		/// <summary>Gets the ShippedDate field.</summary>
+		/// <summary>Gets or sets the ShippedDate field.</summary>
 		public Nullable<System.DateTime> ShippedDate { get; set; }
-		/// <summary>Gets the ShipPostalCode field.</summary>
+		/// <summary>Gets or sets the ShipPostalCode field.</summary>
 		public System.String ShipPostalCode { get; set; }
-		/// <summary>Gets the ShipRegion field.</summary>
+		/// <summary>Gets or sets the ShipRegion field.</summary>
 		public System.String ShipRegion { get; set; }
-		/// <summary>Gets the ShipVia field.</summary>
+		/// <summary>Gets or sets the ShipVia field.</summary>
 		public Nullable<System.Int32> ShipVia { get; set; }
 		#endregion
 	}

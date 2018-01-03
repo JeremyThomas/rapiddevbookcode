@@ -30,9 +30,9 @@ namespace Northwind.DAL.TypedViewClasses
 		}
 
 		#region Class Property Declarations
-		/// <summary>Gets the ProductName field.</summary>
+		/// <summary>Gets or sets the ProductName field.</summary>
 		public System.String ProductName { get; set; }
-		/// <summary>Gets the UnitPrice field.</summary>
+		/// <summary>Gets or sets the UnitPrice field.</summary>
 		public Nullable<System.Decimal> UnitPrice { get; set; }
 		#endregion
 	}

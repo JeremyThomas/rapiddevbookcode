@@ -184,7 +184,7 @@ namespace Northwind.DAL.FactoryClasses
 			get { return Create<TerritoryEntity>(); }
 		}
 
- 
 
+ 
 	}
 }

@@ -18,7 +18,8 @@ using Northwind.DAL;
 using Northwind.DAL.HelperClasses;
 using Northwind.DAL.FactoryClasses;
 using Northwind.DAL.RelationClasses;
-
+using AW.Helper;
+using System.Linq;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.EntityClasses
@@ -712,11 +713,11 @@ namespace Northwind.DAL.EntityClasses
 			get { return (int)Northwind.DAL.EntityType.CustomerEntity; }
 		}
 
-    #endregion
+		#endregion
 
 
-    #region Custom Entity code
-
+		#region Custom Entity code
+		
     // __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 
     public virtual IEnumerable<EmployeeEntity> EmployeesViaOrdersInCode
@@ -725,10 +726,10 @@ namespace Northwind.DAL.EntityClasses
     }
 
     // __LLBLGENPRO_USER_CODE_REGION_END
-    #endregion
+		#endregion
 
-    #region Included code
+		#region Included code
 
-    #endregion
-  }
+		#endregion
+	}
 }

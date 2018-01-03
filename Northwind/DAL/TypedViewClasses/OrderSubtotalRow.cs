@@ -30,9 +30,9 @@ namespace Northwind.DAL.TypedViewClasses
 		}
 
 		#region Class Property Declarations
-		/// <summary>Gets the OrderId field.</summary>
+		/// <summary>Gets or sets the OrderId field.</summary>
 		public System.Int32 OrderId { get; set; }
-		/// <summary>Gets the Subtotal field.</summary>
+		/// <summary>Gets or sets the Subtotal field.</summary>
 		public Nullable<System.Decimal> Subtotal { get; set; }
 		#endregion
 	}

@@ -30,13 +30,13 @@ namespace Northwind.DAL.TypedViewClasses
 		}
 
 		#region Class Property Declarations
-		/// <summary>Gets the City field.</summary>
+		/// <summary>Gets or sets the City field.</summary>
 		public System.String City { get; set; }
-		/// <summary>Gets the CompanyName field.</summary>
+		/// <summary>Gets or sets the CompanyName field.</summary>
 		public System.String CompanyName { get; set; }
-		/// <summary>Gets the ContactName field.</summary>
+		/// <summary>Gets or sets the ContactName field.</summary>
 		public System.String ContactName { get; set; }
-		/// <summary>Gets the Relationship field.</summary>
+		/// <summary>Gets or sets the Relationship field.</summary>
 		public System.String Relationship { get; set; }
 		#endregion
 	}

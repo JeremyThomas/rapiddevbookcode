@@ -10,24 +10,21 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 #if !CF
 using System.Runtime.Serialization;
 #endif
 using System.Xml.Serialization;
-using AW.Helper;
-using AW.Helper.LLBL;
 using Northwind.DAL;
 using Northwind.DAL.HelperClasses;
 using Northwind.DAL.FactoryClasses;
 using Northwind.DAL.RelationClasses;
-
+using AW.Helper;
+using System.Linq;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.EntityClasses
 {
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
-	using System.Linq;
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity class which represents the entity 'Employee'.<br/><br/></summary>
 	[Serializable]
@@ -983,10 +980,10 @@ namespace Northwind.DAL.EntityClasses
     }
 
     // __LLBLGENPRO_USER_CODE_REGION_END
-    #endregion
+		#endregion
 
-    #region Included code
+		#region Included code
 
-    #endregion
+		#endregion
 	}
 }

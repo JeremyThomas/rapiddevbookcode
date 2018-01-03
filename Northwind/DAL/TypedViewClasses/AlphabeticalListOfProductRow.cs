@@ -30,27 +30,27 @@ namespace Northwind.DAL.TypedViewClasses
 		}
 
 		#region Class Property Declarations
-		/// <summary>Gets the CategoryId field.</summary>
+		/// <summary>Gets or sets the CategoryId field.</summary>
 		public Nullable<System.Int32> CategoryId { get; set; }
-		/// <summary>Gets the CategoryName field.</summary>
+		/// <summary>Gets or sets the CategoryName field.</summary>
 		public System.String CategoryName { get; set; }
-		/// <summary>Gets the Discontinued field.</summary>
+		/// <summary>Gets or sets the Discontinued field.</summary>
 		public System.Boolean Discontinued { get; set; }
-		/// <summary>Gets the ProductId field.</summary>
+		/// <summary>Gets or sets the ProductId field.</summary>
 		public System.Int32 ProductId { get; set; }
-		/// <summary>Gets the ProductName field.</summary>
+		/// <summary>Gets or sets the ProductName field.</summary>
 		public System.String ProductName { get; set; }
-		/// <summary>Gets the QuantityPerUnit field.</summary>
+		/// <summary>Gets or sets the QuantityPerUnit field.</summary>
 		public System.String QuantityPerUnit { get; set; }
-		/// <summary>Gets the ReorderLevel field.</summary>
+		/// <summary>Gets or sets the ReorderLevel field.</summary>
 		public Nullable<System.Int16> ReorderLevel { get; set; }
-		/// <summary>Gets the SupplierId field.</summary>
+		/// <summary>Gets or sets the SupplierId field.</summary>
 		public Nullable<System.Int32> SupplierId { get; set; }
-		/// <summary>Gets the UnitPrice field.</summary>
+		/// <summary>Gets or sets the UnitPrice field.</summary>
 		public Nullable<System.Decimal> UnitPrice { get; set; }
-		/// <summary>Gets the UnitsInStock field.</summary>
+		/// <summary>Gets or sets the UnitsInStock field.</summary>
 		public Nullable<System.Int16> UnitsInStock { get; set; }
-		/// <summary>Gets the UnitsOnOrder field.</summary>
+		/// <summary>Gets or sets the UnitsOnOrder field.</summary>
 		public Nullable<System.Int16> UnitsOnOrder { get; set; }
 		#endregion
 	}

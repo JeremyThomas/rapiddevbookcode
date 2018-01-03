@@ -202,6 +202,14 @@ return schemaOracle.Views;]]></SavedQuery>
     </SettingValues>
   </OutputSettingValues>
   <CodeGenerationMetaDataDefaults>
+    <TargetElement Type="2">
+      <Defaults>
+        <Namespaces>
+          <Namespace Name="AW.Helper" />
+          <Namespace Name="System.Linq" />
+        </Namespaces>
+      </Defaults>
+    </TargetElement>
     <TargetElement Type="16">
       <Defaults>
         <Namespaces>

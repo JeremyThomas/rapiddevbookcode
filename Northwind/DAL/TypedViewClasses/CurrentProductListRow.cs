@@ -30,9 +30,9 @@ namespace Northwind.DAL.TypedViewClasses
 		}
 
 		#region Class Property Declarations
-		/// <summary>Gets the ProductId field.</summary>
+		/// <summary>Gets or sets the ProductId field.</summary>
 		public System.Int32 ProductId { get; set; }
-		/// <summary>Gets the ProductName field.</summary>
+		/// <summary>Gets or sets the ProductName field.</summary>
 		public System.String ProductName { get; set; }
 		#endregion
 	}

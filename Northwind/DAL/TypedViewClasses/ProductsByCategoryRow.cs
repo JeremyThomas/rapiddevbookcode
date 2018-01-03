@@ -30,15 +30,15 @@ namespace Northwind.DAL.TypedViewClasses
 		}
 
 		#region Class Property Declarations
-		/// <summary>Gets the CategoryName field.</summary>
+		/// <summary>Gets or sets the CategoryName field.</summary>
 		public System.String CategoryName { get; set; }
-		/// <summary>Gets the Discontinued field.</summary>
+		/// <summary>Gets or sets the Discontinued field.</summary>
 		public System.Boolean Discontinued { get; set; }
-		/// <summary>Gets the ProductName field.</summary>
+		/// <summary>Gets or sets the ProductName field.</summary>
 		public System.String ProductName { get; set; }
-		/// <summary>Gets the QuantityPerUnit field.</summary>
+		/// <summary>Gets or sets the QuantityPerUnit field.</summary>
 		public System.String QuantityPerUnit { get; set; }
-		/// <summary>Gets the UnitsInStock field.</summary>
+		/// <summary>Gets or sets the UnitsInStock field.</summary>
 		public Nullable<System.Int16> UnitsInStock { get; set; }
 		#endregion
 	}
