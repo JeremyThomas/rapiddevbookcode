@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /docs
+/Northwind/DAL/Northwind20180105000558.llblgenproj

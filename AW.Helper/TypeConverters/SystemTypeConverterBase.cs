@@ -37,11 +37,13 @@
 // Contributers to the code:
 //		- Frans Bouma [FB]
 //////////////////////////////////////////////////////////////////////
+
 using System;
 using System.ComponentModel;
 
-namespace SD.LLBLGen.Pro.TypeConverters
+namespace AW.Helper.TypeConverters
 {
+	/// <inheritdoc />
 	/// <summary>
 	/// Abstract base class for the system type converters shipped with llblgen pro.
 	/// </summary>
@@ -51,13 +53,6 @@ namespace SD.LLBLGen.Pro.TypeConverters
 	[DesignOnly(true)]
 	public abstract class SystemTypeConverterBase : TypeConverter
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="SystemTypeConverterBase"/> class.
-		/// </summary>
-		protected SystemTypeConverterBase() : base()
-		{
-		}
-
 
 		/// <summary>
 		/// Returns whether this converter can convert an object of the given type to the type of this converter

@@ -4,6 +4,7 @@ using System.ComponentModel;
 namespace AW.Helper.TypeConverters
 {
 
+	/// <inheritdoc />
 	/// <summary>
 	///   Converts a nullable number into nullable Int16 in Oracle
 	/// </summary>

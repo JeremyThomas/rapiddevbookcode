@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using SD.LLBLGen.Pro.TypeConverters;
 
 namespace AW.Helper.TypeConverters
 {
@@ -14,8 +13,8 @@ namespace AW.Helper.TypeConverters
 	/// the type converters.
 	/// <br /><br />
 	/// Accepted types are: Int64</remarks>
-	[Description(
-		"Converter with as core type System.Int32, for mapping a field with a .NET type System.Int32 onto a decimal database field")]
+	[Description("Converter with as core type System.Int32, for mapping a field with a .NET type System.Int32 onto a Int64 database field")]
+	[DesignOnly(true)]
 	public class Int32Int64Converter : SystemTypeConverterBase
 	{
 		/// <inheritdoc />
@@ -63,8 +62,7 @@ namespace AW.Helper.TypeConverters
 	/// the type converters.
 	/// <br /><br />
 	/// Accepted types are: Int64</remarks>
-	[Description(
-		"Converter with as core type System.Int32, for mapping a field with a .NET type System.Int32 onto a decimal database field")]
+	[Description("Converter with as core type System.Int16, for mapping a field with a .NET type System.Int16 onto a Int32 or Int64 database field")]
 	public class Int16IntConverter : SystemTypeConverterBase
 	{
 		/// <inheritdoc />
