@@ -173,6 +173,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSScriptQueryPad", "Tools\C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LLBLGen.EntityExplorer", "Tools\LLBLGen.EntityBrowser\LLBLGen.EntityExplorer.csproj", "{AA92D1DD-B208-43CE-8E8F-7C5A04D6EB89}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Databases", "Databases", "{D0999493-5656-45C6-81C7-97141D848FB7}"
+	ProjectSection(SolutionItems) = preProject
+		Databases\NORTHWND.MDF = Databases\NORTHWND.MDF
+		Databases\NORTHWND_Log.ldf = Databases\NORTHWND_Log.ldf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug no unit tests|Any CPU = Debug no unit tests|Any CPU
