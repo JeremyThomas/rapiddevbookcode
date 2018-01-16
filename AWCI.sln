@@ -175,6 +175,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LLBLGen.EntityExplorer", "T
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Databases", "Databases", "{D0999493-5656-45C6-81C7-97141D848FB7}"
 	ProjectSection(SolutionItems) = preProject
+		Databases\adventure-works-2008-lt-data-file.mdf = Databases\adventure-works-2008-lt-data-file.mdf
 		Databases\NORTHWND.MDF = Databases\NORTHWND.MDF
 		Databases\NORTHWND_Log.ldf = Databases\NORTHWND_Log.ldf
 	EndProjectSection
