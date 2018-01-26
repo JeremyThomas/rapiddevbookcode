@@ -315,22 +315,45 @@ namespace AW.Helper
       }
     }
 
-    public static bool ServerNotFoundError(SqlException e)
+		/// <summary>
+		/// An error has occurred while establishing a connection to the server
+		/// </summary>
+		/// <param name="e"></param>
+		/// <returns></returns>
+		public static bool ServerNotFoundError(SqlException e)
     {
       return (e.Number == -1 || e.Number == 2) && e.State == 0 && String.IsNullOrWhiteSpace(e.Server);
     }
 
-    public static bool DbNotFoundError(SqlException e)
+		/// <summary>
+		/// Cannot open database "%.*ls" requested by the login. The login failed.
+		/// </summary>
+		/// <param name="e"></param>
+		/// <returns></returns>
+		public static bool DbNotFoundError(SqlException e)
     {
       return e.Number == 4060 && e.State == 1;
     }
 
-    public static bool LogonError(SqlException e)
+		/// <summary>
+		/// A connection was successfully established with the server, 
+		/// but then an error occurred during the login process. 
+		/// (provider: Shared Memory Provider, error: 0 - No process is on the other end of the pipe.) 
+		/// (Microsoft SQL Server, Error: 233)
+		/// </summary>
+		/// <param name="e"></param>
+		/// <returns></returns>
+		public static bool NoProcessError(SqlException e)
     {
       return e.Number == 233 && e.State == 0;
     }
 
-    public static IEnumerable<string> GetSqlLocalDBAndLocalInstanceNames()
+	  public static bool DatabaseIsNotOnTheServer(SqlException e)
+	  {
+		  return ServerNotFoundError(e) || DbNotFoundError(e) || NoProcessError(e);
+	  }
+
+	  public static IEnumerable<string> GetSqlLocalDBAndLocalInstanceNames()
     {
       return GetSqlLocalDBInstanceNames().Union(GetSqlInstanceNames());
     }

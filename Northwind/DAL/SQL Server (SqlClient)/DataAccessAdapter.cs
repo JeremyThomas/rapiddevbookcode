@@ -226,36 +226,38 @@ namespace Northwind.DAL.SqlServer
       }
       catch (SqlException e)
       {
-        if ((DataHelper.ServerNotFoundError(e) || DataHelper.DbNotFoundError(e)) && ConnectToOtherLocalServers()) 
+        if (DataHelper.DatabaseIsNotOnTheServer(e) && ConnectToOtherLocalServers()) 
           return;
         throw;
       }
     }
 
-    private bool ConnectToOtherLocalServers()
-    {
-      var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(ConnectionString);
-         var dataSource = sqlConnectionStringBuilder.DataSource;
-         foreach (var sqlInstanceName in DataHelper.GetSqlLocalDBAndLocalInstanceNames().Where(sqlInstanceName => dataSource != sqlInstanceName))
-      {
-        sqlConnectionStringBuilder.DataSource = sqlInstanceName;
-        ConnectionString = sqlConnectionStringBuilder.ConnectionString;
-        try
-        {
-          base.OpenConnection();
-          return true;
-        }
-        catch (SqlException e)
-        {
-          if (DataHelper.ServerNotFoundError(e) || DataHelper.DbNotFoundError(e) || DataHelper.LogonError(e))
-            continue;
-          throw;
-        }
-      }
-      return false;
-    }
+		private bool ConnectToOtherLocalServers()
+		{
+			var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(ConnectionString);
+			var dataSource = sqlConnectionStringBuilder.DataSource;
+			var otherSqlInstanceNames = DataHelper.GetSqlLocalDBAndLocalInstanceNames().Where(sqlInstanceName => dataSource != sqlInstanceName);
+			foreach (var sqlInstanceName in otherSqlInstanceNames)
+			{
+				sqlConnectionStringBuilder.DataSource = sqlInstanceName;
+				ConnectionString = sqlConnectionStringBuilder.ConnectionString;
+				try
+				{
+					base.OpenConnection();
+					return true;
+				}
+				catch (SqlException e)
+				{
+					if (DataHelper.DatabaseIsNotOnTheServer(e))
+						continue;
+					throw;
+				}
+			}
 
-    // __LLBLGENPRO_USER_CODE_REGION_END
+			return false;
+		}
+
+		// __LLBLGENPRO_USER_CODE_REGION_END
 		#endregion
 		
 		#region Included Code
