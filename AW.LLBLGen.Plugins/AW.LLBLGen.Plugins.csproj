@@ -88,12 +88,11 @@
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses, Version=4.2.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <HintPath>..\packages\SD.LLBLGen.Pro.ORMSupportClasses.4.2.20160929\lib\net45\SD.LLBLGen.Pro.ORMSupportClasses.dll</HintPath>
     </Reference>
-    <Reference Include="SD.Tools.Algorithmia, Version=1.2.0.0, Culture=neutral, PublicKeyToken=8ede9265bbb8e107, processorArchitecture=MSIL">
-      <HintPath>..\packages\SD.Tools.Algorithmia.1.2.1\lib\net35\SD.Tools.Algorithmia.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="SD.Tools.Algorithmia, Version=1.3.5.0, Culture=neutral, PublicKeyToken=8ede9265bbb8e107, processorArchitecture=MSIL">
+      <HintPath>..\packages\SD.Tools.Algorithmia.1.3.5\lib\net452\SD.Tools.Algorithmia.dll</HintPath>
     </Reference>
-    <Reference Include="SD.Tools.BCLExtensions, Version=1.1.0.0, Culture=neutral, PublicKeyToken=a3f87088dcb994e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SD.Tools.BCLExtensions.1.1.1\lib\net35\SD.Tools.BCLExtensions.dll</HintPath>
+    <Reference Include="SD.Tools.BCLExtensions, Version=1.2.2.0, Culture=neutral, PublicKeyToken=a3f87088dcb994e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SD.Tools.BCLExtensions.1.2.2\lib\net452\SD.Tools.BCLExtensions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
