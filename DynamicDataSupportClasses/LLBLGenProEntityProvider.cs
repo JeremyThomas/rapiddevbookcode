@@ -197,8 +197,7 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
           continue;
         }
 
-        PropertyDescriptor descriptor = null;
-        if (!unusedPropertyDescriptorPerName.TryGetValue(relation.MappedFieldName, out descriptor))
+        if (!unusedPropertyDescriptorPerName.TryGetValue(relation.MappedFieldName, out var descriptor))
         {
           // hidden mapped field.
           continue;
@@ -240,8 +239,7 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
       var oppositeEntityName = relation.StartEntityIsPkSide ? relation.GetFKEntityFieldCore(0).ActualContainingObjectName : relation.GetPKEntityFieldCore(0).ActualContainingObjectName;
 
       IEntityRelation toReturn = null;
-      LLBLGenProEntityProvider oppositeEntityProvider = null;
-      if (!modelProvider.EntityNameToEntityProvider.TryGetValue(oppositeEntityName, out oppositeEntityProvider))
+      if (!modelProvider.EntityNameToEntityProvider.TryGetValue(oppositeEntityName, out var oppositeEntityProvider))
       {
         return null;
       }
@@ -310,8 +308,7 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
       var modelProvider = (LLBLGenProDataModelProvider)DataModel;
       var oppositeEntityName = relation.StartEntityIsPkSide ? relation.GetFKEntityFieldCore(0).ActualContainingObjectName : relation.GetPKEntityFieldCore(0).ActualContainingObjectName;
 
-	    LLBLGenProEntityProvider oppositeEntityProvider = null;
-      if (!modelProvider.EntityNameToEntityProvider.TryGetValue(oppositeEntityName, out oppositeEntityProvider))
+      if (!modelProvider.EntityNameToEntityProvider.TryGetValue(oppositeEntityName, out var oppositeEntityProvider))
       {
         return null;
       }

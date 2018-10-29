@@ -6,18 +6,21 @@ using System.Linq;
 
 namespace AW.Helper.TypeConverters
 {
+  /// <inheritdoc />
   /// <summary>
   ///   An Enum Converter that converts to/from strings using Humanizer.
   /// </summary>
+  /// <remarks>Not used by LLBL</remarks>
   [Description("An Enum Converter that converts to/from strings using Humanizer")]
   public class HumanizedEnumConverter : EnumConverter
   {
+    private static bool _humanizerNotLoading;
     private readonly Type _coreEnumType;
     private readonly bool _isNullable;
-    private static bool _humanizerNotLoading;
 
+    /// <inheritdoc />
     /// <summary>
-    ///   Initializes a new instance of the <see cref="HumanizedEnumConverter" /> class.
+    ///   Initializes a new instance of the <see cref="T:AW.Helper.TypeConverters.HumanizedEnumConverter" /> class.
     /// </summary>
     /// <param name="type">
     ///   A <see cref="T:System.Type" /> that represents the type of enumeration to associate with this
@@ -40,6 +43,7 @@ namespace AW.Helper.TypeConverters
       TypeConverterHelper.AddConverter(typeof(HumanizedEnumConverter), enumType, coreType);
     }
 
+    /// <inheritdoc />
     /// <summary>
     ///   Converts the given value object to the specified destination type.
     ///   When the converting to string and the enum is not defined then return empty string rather than the number
@@ -63,10 +67,11 @@ namespace AW.Helper.TypeConverters
           if (_humanizerNotLoading)
           {
             var description = MetaDataHelper.GetDisplayNameOrDescription(theEnum);
-            if (!String.IsNullOrEmpty(description))
+            if (!string.IsNullOrEmpty(description))
               return description;
           }
           else
+          {
             try
             {
               return theEnum.EnumToString();
@@ -76,14 +81,20 @@ namespace AW.Helper.TypeConverters
               _humanizerNotLoading = true;
               e.TraceOut();
               var description = MetaDataHelper.GetDisplayNameOrDescription(theEnum);
-              if (!String.IsNullOrEmpty(description))
+              if (!string.IsNullOrEmpty(description))
                 return description;
             }
+          }
         }
-        else return string.Empty;
+        else
+        {
+          return string.Empty;
+        }
+
       return base.ConvertTo(context, culture, value, destinationType);
     }
 
+    /// <inheritdoc />
     /// <summary>
     ///   Converts the specified value object to an enumeration object.
     /// </summary>
@@ -98,8 +109,8 @@ namespace AW.Helper.TypeConverters
     /// </returns>
     public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
     {
-      var s = value as string;
-      if (s == null) return base.ConvertFrom(context, culture, value);
+      if (!(value is string s))
+        return base.ConvertFrom(context, culture, value);
       object enumConversion;
       if (_humanizerNotLoading)
         enumConversion = Enum.IsDefined(EnumType, s) ? base.ConvertFrom(context, culture, s) : DisplayNameOrDescriptionToEnum(s);
@@ -114,6 +125,7 @@ namespace AW.Helper.TypeConverters
           e.TraceOut();
           enumConversion = Enum.IsDefined(EnumType, s) ? base.ConvertFrom(context, culture, s) : DisplayNameOrDescriptionToEnum(s);
         }
+
       if (enumConversion == null && !_isNullable)
         return base.ConvertFrom(context, culture, s); // To throw an exception
       return enumConversion;

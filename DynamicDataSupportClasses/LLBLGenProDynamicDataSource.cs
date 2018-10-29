@@ -214,8 +214,10 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
   public class LLBLGenProDynamicDataSource2 : LLBLGenProDataSource2, IDynamicDataSource
   {
     #region Events
-
+    
+#pragma warning disable
     public event EventHandler<DynamicValidatorEventArgs> Exception;
+#pragma warning restore
 
     #endregion
 

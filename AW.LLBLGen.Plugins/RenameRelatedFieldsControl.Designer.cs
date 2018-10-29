@@ -28,28 +28,28 @@ namespace AW.LLBLGen.Plugins
     /// </summary>
     private void InitializeComponent()
     {
-      this.labelDescription = new System.Windows.Forms.Label();
-      this.SuspendLayout();
-      // 
-      // labelDescription
-      // 
-      this.labelDescription.AutoSize = true;
-      this.labelDescription.Dock = System.Windows.Forms.DockStyle.Top;
-      this.labelDescription.Location = new System.Drawing.Point(0, 0);
-      this.labelDescription.Name = "labelDescription";
-      this.labelDescription.Size = new System.Drawing.Size(82, 13);
-      this.labelDescription.TabIndex = 0;
-      this.labelDescription.Text = "labelDescription";
-      // 
-      // RenameRelatedFieldsControl
-      // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.labelDescription);
-      this.Name = "RenameRelatedFieldsControl";
-      this.Load += new System.EventHandler(this.RenameRelatedFieldsControl_Load);
-      this.ResumeLayout(false);
-      this.PerformLayout();
+			this.labelDescription = new System.Windows.Forms.Label();
+			this.SuspendLayout();
+			// 
+			// labelDescription
+			// 
+			this.labelDescription.AutoSize = true;
+			this.labelDescription.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labelDescription.Location = new System.Drawing.Point(0, 0);
+			this.labelDescription.Name = "labelDescription";
+			this.labelDescription.Size = new System.Drawing.Size(82, 13);
+			this.labelDescription.TabIndex = 0;
+			this.labelDescription.Text = "labelDescription";
+			// 
+			// RenameRelatedFieldsControl
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.labelDescription);
+			this.Name = "RenameRelatedFieldsControl";
+			this.Load += new System.EventHandler(this.RenameRelatedFieldsControl_Load);
+			this.ResumeLayout(false);
+			this.PerformLayout();
 
     }
 

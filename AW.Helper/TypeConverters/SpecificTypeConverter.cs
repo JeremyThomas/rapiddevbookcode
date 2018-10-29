@@ -10,9 +10,10 @@ namespace AW.Helper.TypeConverters
   }
 
   /// <summary>
-  /// To convert using the specific TypeConverter for the type of value being convertered rather than and an ancestor type.
+  /// To convert using the specific TypeConverter for the type of value being converted rather than and an ancestor type.
   /// For use when a value of a descendant type is assigned to a property with an ancestor type
   /// </summary>
+  /// <remarks>Not used by LLBL</remarks>
   public class SpecificTypeConverter : TypeConverter, IExtendingOriginalConverter
   {
     public TypeConverter OriginalConverter { get;  set; }
@@ -31,8 +32,7 @@ namespace AW.Helper.TypeConverters
       var typeConverter = TypeDescriptor.GetConverter(value);
       if (typeConverter.GetType() == GetType())
         return OriginalConverter == null ? base.ConvertTo(context, culture, value, destinationType) : OriginalConverter.ConvertTo(context, culture, value, destinationType);
-      var extendingOriginalConverter = typeConverter as IExtendingOriginalConverter;
-      if (extendingOriginalConverter != null) extendingOriginalConverter.OriginalConverter = OriginalConverter;
+      if (typeConverter is IExtendingOriginalConverter extendingOriginalConverter) extendingOriginalConverter.OriginalConverter = OriginalConverter;
       return typeConverter.ConvertTo(context, culture, value, destinationType);
     }
 

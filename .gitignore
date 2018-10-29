@@ -262,3 +262,4 @@ __pycache__/
 /Databases/adventure-works-2008-lt-data-file_log.ldf
 /Ancillary
 *.ps1
+/Northwind/DAL

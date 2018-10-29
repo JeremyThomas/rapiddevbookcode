@@ -15,7 +15,9 @@ namespace AW.LLBLGen.Plugins
 		#region Implementation of IPluginConfigurationControl
 
 		public event EventHandler DataIsValid;
+#pragma warning disable
 		public event EventHandler DataIsInvalid;
+#pragma warning restore
 
 		#endregion
 

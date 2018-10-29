@@ -10,22 +10,23 @@ namespace AW.LLBLGen.Plugins
 	/// </summary>
 	public class RenameRelatedFieldsPlugin : PluginBase
 	{
-		public const string Description = "Plug-in to rename related fields based on the related entity name. " +
-		                                  "Useful if you change the name of an entity and want the fields of related entities to change as well.";
+		public const string Description = "Plug-in to reset the names of navigators based on the related entity name. " +
+		                                  "Useful if you change the name of an entity and want the navigators of related entities to change as well." +
+		                                  "only works on the FK navigators of the selected entites";
+
 		private const string Version = "4.2.0.0";
 		private const string Build = "29102018";
-		public const string PluginName = "Rename related fields based on the related entity name";
+		public const string PluginName = "Reset navigator names";
 		private const string Vendor = "AW: Jeremy Thomas";
 
 		#region Overrides of PluginBase
 
 		/// <summary>
-		/// This last worked in V3 needs updating for v4 and beyond
+		///   This last worked in V3 needs updating for v4 and beyond
 		/// </summary>
 		public override void Execute()
 		{
-			ProgressTaskInit(Entities.Count);
-			var manyToManySeparator = ProjectToTarget.Properties.FieldMappedOntoRelatedFieldPattern.Split('{', '}')[2]; // FieldMappedOnManyToManyPattern
+			//	ProgressTaskInit(Entities.Count);
 			foreach (var entity in Entities)
 			{
 				ProgressTaskStart("Processing entity: " + entity.Name);
@@ -34,51 +35,23 @@ namespace AW.LLBLGen.Plugins
 
 				foreach (var relation in entity.GetAllRelationshipsContainingFkField(fieldElementCore))
 				{
-					// var entityChanged = false;
-					var oldPropertyName = relation.NavigatorFkSide;
-					//   var newPropertyName = GeneralUtils. CreateUtilizingPropertyName(relation, ProjectToTarget.Properties);
-					var intermediateName = string.Empty;
-					if (relation.RelationshipType == EntityRelationshipType.ManyToMany)
-						intermediateName = relation.FullDescription.Substring(relation.FullDescription.IndexOf("via ", StringComparison.Ordinal) + 4).Trim(')');
-					if (!relation.NavigatorFkSide.Contains(relation.EntityFkSide.Name))
-					{
-						string newPropertyName = null;
-						switch (relation.RelationshipType)
-						{
-							case EntityRelationshipType.OneToOne:
-								break;
-							case EntityRelationshipType.OneToMany:
-								newPropertyName =
-									oldPropertyName + "s"; //Inflector.Pluralize(relation.EntityFkSide.Name);
-								break;
-							case EntityRelationshipType.ManyToMany:
-								newPropertyName = relation.EntityFkSide + manyToManySeparator + intermediateName;
-								break;
-							case EntityRelationshipType.ManyToOne:
-								newPropertyName = relation.EntityFkSide.Name;
-								break;
-							default:
-								newPropertyName = oldPropertyName;
-								break;
-						}
-							
-						//Make sure 'Setting up pluralization and singularization of names' is done as described here: http://www.llblgen.com/documentation/2.6/hh_start.htm
-						//else newPropertyName will be singular
-						if (relation.NavigatorFkSide != newPropertyName)
-						{
-							relation.EndEntityNavigator = newPropertyName;
-							base.LogLineToApplicationOutput($"Related field '{oldPropertyName}' of entity '{entity.Name}' has been changed to '{newPropertyName}' ","RenameRelatedFieldsPlugin", false, true);
-							// //   entityChanged = true;
-						}
+					ApplicationUtils.CreateNavigatorNames(relation, ProjectToTarget.Properties, out var startNavigator, out var endNavigator);
 
-						//if (entityChanged)
-						//{
-						//    entity.MarkEntityDefinitionAsChanged(ObjectChangeType.EntityFields);
-						//    entity.MarkEntityDefinitionRequiresRedraw(ObjectChangeType.EntityFields);
-						//}
+					if (relation.StartEntityNavigator != startNavigator)
+					{
+						var oldPropertyName = relation.StartEntityNavigator;
+						relation.StartEntityNavigator = startNavigator;
+						base.LogLineToApplicationOutput($"Navigator '{oldPropertyName}' of entity '{entity.Name}' has been changed to '{startNavigator}' ", "RenameRelatedFieldsPlugin", false, true);
 					}
 
-					ProgressTaskComplete();
+					if (relation.NavigatorFkSide != startNavigator)
+					{
+						var oldPropertyName = relation.EndEntityNavigator;
+						relation.EndEntityNavigator = endNavigator;
+						base.LogLineToApplicationOutput($"Navigator '{oldPropertyName}' of entity '{relation.EntityFkSide.Name}' has been changed to '{endNavigator}' ", "RenameRelatedFieldsPlugin", false, true);
+					}
+
+					//		ProgressTaskComplete();
 				}
 			}
 		}

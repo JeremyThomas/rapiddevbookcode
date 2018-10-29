@@ -60,15 +60,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AdvancedDataGridView">
-      <HintPath>..\packages\ADGV.0.1.0.10\lib\net40\AdvancedDataGridView.dll</HintPath>
-    </Reference>
-    <Reference Include="AW.Winforms.Helpers">
-      <HintPath>..\AW.Winforms.Helpers\obj\Debug\AW.Winforms.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="AW.Winforms.Helpers.LLBL">
-      <HintPath>..\AW.Winforms.Helpers.LLBL\obj\Debug\AW.Winforms.Helpers.LLBL.dll</HintPath>
-    </Reference>
     <Reference Include="Dynamic">
       <HintPath>..\packages\DynamicQuery.1.0\lib\35\Dynamic.dll</HintPath>
     </Reference>

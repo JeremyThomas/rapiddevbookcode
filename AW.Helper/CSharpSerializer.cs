@@ -92,7 +92,7 @@ namespace AW.Helper
               key = (Int64)convertTo;
           }
         }
-        Key = key.HasValue ? key.Value : obj.GetHashCode();
+        Key = key ?? obj.GetHashCode();
         Path = (path.Length == 0)
           ? UniqueName
           : path;
@@ -220,8 +220,7 @@ namespace AW.Helper
               sb.AppendLine("using " + genericTypeArgument.Namespace + ";");
           else
           {
-            var enumerable = obj as IEnumerable;
-            if (enumerable != null)
+            if (obj is IEnumerable enumerable)
             {
               var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
               var usingLine = "using " + itemType.Namespace + ";";
@@ -331,8 +330,7 @@ namespace AW.Helper
         return;
       }
 
-      Entity canonicalEntity;
-      if (!isListInit && entityMap.TryGetValue(entity, out canonicalEntity))
+      if (!isListInit && entityMap.TryGetValue(entity, out Entity canonicalEntity))
       {
         // Entity has already been processed, such as a parent reference.  Emit at it's
         // original definition
@@ -367,8 +365,7 @@ namespace AW.Helper
       else
         sb.AppendFormat("{0} = new {1}{2}{3}{{{4}", parent, workingTypeName, NewLine, Tabs(level), NewLine);
 
-      var enumerable1 = obj as IEnumerable;
-      if (enumerable1 != null && !(obj is string))
+      if (obj is IEnumerable enumerable1 && !(obj is string))
       {
         WalkList(enumerable1, MetaDataHelper.GetEnumerableItemType(enumerable1), sb, entityMap, restrictions, excludeProperties, level + 1);
         sb.AppendFormat("{0}{1}}};{2}", NewLine, Tabs(level), NewLine);
@@ -423,9 +420,8 @@ namespace AW.Helper
             if (isIList || isCollection || isEnumerable)
             {
               var enumerable = (IEnumerable) property.GetValue(obj, null);
-              var list = enumerable as ICollection;
 
-              if (list == null)
+              if (!(enumerable is ICollection list))
               {
                 if (property.CanWrite)
                   sb.AppendFormat("{0}.{1} = null;{2}", parent, property.Name, NewLine);
@@ -881,8 +877,7 @@ namespace AW.Helper
               // Lookup to see if this entity has ref'ed
               var listEntity = new Entity(obj, String.Empty);
 
-              Entity canonicalEntity;
-              if (entityMap.TryGetValue(listEntity, out canonicalEntity))
+              if (entityMap.TryGetValue(listEntity, out var canonicalEntity))
               {
                 listEntities.Add(canonicalEntity);
               }

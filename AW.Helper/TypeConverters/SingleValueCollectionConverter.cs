@@ -8,6 +8,7 @@ namespace AW.Helper.TypeConverters
   /// <summary>
   /// If a collection only contains 1 item then, when converting to string, convert that 1 item
   /// </summary>
+  /// <remarks>Not used by LLBL</remarks>
   public class SingleValueCollectionConverter : CollectionConverter, IExtendingOriginalConverter
   {
     public TypeConverter OriginalConverter { get;  set; }
@@ -23,8 +24,7 @@ namespace AW.Helper.TypeConverters
 
     public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
     {
-      var collection = value as ICollection;
-      if (collection != null && typeof(string) == destinationType && collection.Count == 1)
+      if (value is ICollection collection && typeof(string) == destinationType && collection.Count == 1)
         return base.ConvertTo(context, culture, GetFirstItemByEnumerable(collection), destinationType);
       return OriginalConverter == null ? base.ConvertTo(context, culture, value, destinationType) : OriginalConverter.ConvertTo(context, culture, value, destinationType);
     }
@@ -46,8 +46,7 @@ namespace AW.Helper.TypeConverters
     private static object GetFirstItemByEnumerable(IEnumerable enumerable)
     {
       object obj = null;
-      var list1 = enumerable as IList;
-      if (list1 != null)
+      if (enumerable is IList list1)
       {
         var list = list1;
         obj = list.Count > 0 ? list[0] : null;
