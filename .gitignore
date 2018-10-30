@@ -264,4 +264,6 @@ __pycache__/
 /Databases/NORTHWND_Log.ldf
 /Ancillary
 *.ps1
-/Northwind/DAL
+*.MDF
+*.ldf
+/Northwind/DAL/Northwind2*.llblgenproj
