@@ -165,8 +165,7 @@ namespace Northwind.DAL.SqlServer
     /// <param name="query">The query.</param>
     private void OnExecuteQuery(IQuery query)
     {
-      if (SQLTraceEvent != null)
-        SQLTraceEvent(this, new SQLTraceEventArgs(query));
+      SQLTraceEvent?.Invoke(this, new SQLTraceEventArgs(query));
     }
 
     /// <summary>

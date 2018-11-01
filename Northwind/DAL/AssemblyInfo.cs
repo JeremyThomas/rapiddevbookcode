@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Runtime.InteropServices;
+using System.Reflection;
 
 //
 // General Information about an assembly is controlled through the following 
@@ -7,7 +8,7 @@
 //
 [assembly: AssemblyTitle(NorthwindAssemblyInfoConstants.AssemblyCompany + " Lower Level Business logic Layer")]
 [assembly: AssemblyDescription(NorthwindAssemblyInfoConstants.AssemblyCompany + " LLBL DAL")]
-[assembly: System.CLSCompliant(true)]
+[assembly: System.CLSCompliant(false)]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 
@@ -36,3 +37,5 @@
 //
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyName("")]
+[assembly: ComVisible(false)]
+

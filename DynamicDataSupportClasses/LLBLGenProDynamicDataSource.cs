@@ -60,7 +60,9 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
   {
     #region Events
 
+#pragma warning disable
     public event EventHandler<DynamicValidatorEventArgs> Exception;
+#pragma warning restore
 
     #endregion
 

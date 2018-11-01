@@ -168,8 +168,7 @@ namespace AW.Data.DaoClasses
 
     public void OnExecuteQuery(IQuery query)
     {
-      if (SQLTraceEvent != null)
-        SQLTraceEvent(this, new SQLTraceEventArgs(query));
+      SQLTraceEvent?.Invoke(this, new SQLTraceEventArgs(query));
     }
 
     public static event EventHandler<SQLTraceEventArgs> SQLTraceEvent;

@@ -281,10 +281,9 @@ namespace AW.Helper
       var dbProviderFactory = GetFactoryIfExists(invariantName);
       if (dbProviderFactory != null)
         return dbProviderFactory;
-      var dbProvidersFactoriesDataTable = typeof (DbProviderFactories).GetMethod("GetProviderTable",
-        BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, null)
-        as DataTable;
-      if (dbProvidersFactoriesDataTable != null)
+      if (typeof (DbProviderFactories).GetMethod("GetProviderTable",
+          BindingFlags.NonPublic | BindingFlags.Static)
+        ?.Invoke(null, null) is DataTable dbProvidersFactoriesDataTable)
       {
         var row = dbProvidersFactoriesDataTable.NewRow();
         row["name"] = name;

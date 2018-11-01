@@ -385,8 +385,7 @@ namespace AW.Helper
 
     private static DataTable CopyToDataTable(IEnumerable source, PropertyDescriptorGenerator propertyDescriptorGenerator, ObjectShredder.ShreddingMode shreddingMode)
     {
-      var dataView = source as DataView;
-      if (dataView != null && dataView.Table != null)
+      if (source is DataView dataView && dataView.Table != null)
         return dataView.Table;
       return new ObjectShredder(propertyDescriptorGenerator, shreddingMode).Shred(source, null, null);
     }
@@ -427,10 +426,7 @@ namespace AW.Helper
       return ValueTypeWrapper<string>.CreateWrapperForBinding(strings);
     }
 
-    public static IEnumerable<string> AsEnumerable(this StringCollection strings)
-    {
-      return strings == null ? null : strings.Cast<string>();
-    }
+    public static IEnumerable<string> AsEnumerable(this StringCollection strings) => strings?.Cast<string>();
 
     public static IEnumerable<T> UnWrap<T>(this IEnumerable<ValueTypeWrapper<T>> values)
     {
@@ -674,7 +670,7 @@ namespace AW.Helper
     private static SettingValueElement GetSetting(ConfigurationSectionGroup configurationSectionGroup, string settingName)
     {
       var settingElement = GetSettingElement(configurationSectionGroup, settingName);
-      return settingElement == null ? null : settingElement.Value;
+      return settingElement?.Value;
     }
 
     public static ClientSettingsSection GetClientSettingsSection(Configuration configuration, string sectionGroup)
@@ -694,7 +690,7 @@ namespace AW.Helper
     private static SettingElement GetSettingElement(ConfigurationSectionGroup configurationSectionGroup, string settingName)
     {
       var clientSection = GetClientSettingsSection(configurationSectionGroup);
-      return clientSection == null ? null : clientSection.Settings.Get(settingName);
+      return clientSection?.Settings.Get(settingName);
     }
 
     public static bool HasSetting(ApplicationSettingsBase applicationSettingsBase, string settingName)

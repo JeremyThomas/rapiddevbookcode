@@ -108,16 +108,9 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
       {
         throw new ArgumentException("entityTypeEnum has to be an enum type");
       }
-      if (linqMetaData == null)
-      {
-        throw new ArgumentNullException("linqMetaData");
-      }
-      if (elementCreator == null)
-      {
-        throw new ArgumentNullException("elementCreator");
-      }
-      _linqMetaData = linqMetaData;
-      _elementCreator = elementCreator;
+
+      _linqMetaData = linqMetaData ?? throw new ArgumentNullException("linqMetaData");
+      _elementCreator = elementCreator ?? throw new ArgumentNullException("elementCreator");
       _entityTypeEnum = entityTypeEnum;
       _entityNameToEntityProvider = new Dictionary<string, LLBLGenProEntityProvider>();
       ContextType = typeof (object); // has to be non-null, but other than that can be any type.
