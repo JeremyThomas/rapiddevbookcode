@@ -83,7 +83,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.toolTip1.SetToolTip(this.treeViewEntities, "Entities amd their proerties");
       this.treeViewEntities.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEntities_AfterExpand);
       this.treeViewEntities.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEntities_AfterExpand);
-      this.treeViewEntities.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEntities_AfterSelect);
+      this.treeViewEntities.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewEntities_AfterSelect);
       this.treeViewEntities.Click += new System.EventHandler(this.treeViewEntities_Click);
       this.treeViewEntities.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewEntities_KeyDown);
       // 

@@ -3,7 +3,6 @@ using System.Collections;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AW.Helper.LLBL;
@@ -26,11 +25,12 @@ namespace AW.Winforms.Helpers.LLBL
     private int _cacheDurationInSeconds;
     private bool _useContext;
 
-    [DefaultValue(DefaultPrefixDelimiter), Category("EntityBrowser"),
-     Description("Table Prefix Delimiter to group Entities by (e.g. with a delimiter of _ table Sales_Order would grouped into a node called Sales)")]
+    [DefaultValue(DefaultPrefixDelimiter)]
+    [Category("EntityBrowser")]
+    [Description("Table Prefix Delimiter to group Entities by (e.g. with a delimiter of _ table Sales_Order would grouped into a node called Sales)")]
     public string PrefixDelimiter
     {
-      get { return _prefixDelimiter; }
+      get => _prefixDelimiter;
       set
       {
         if (_prefixDelimiter != value)
@@ -39,15 +39,17 @@ namespace AW.Winforms.Helpers.LLBL
           PopulateTreeViewWithSchema();
           OnPropertyChanged();
         }
+
         prefixDelimiterTextBox.Text = value;
       }
     }
 
-    [DefaultValue(true), Category("EntityBrowser"),
-     Description("Use Table Schema to group the Entities")]
+    [DefaultValue(true)]
+    [Category("EntityBrowser")]
+    [Description("Use Table Schema to group the Entities")]
     public bool UseSchema
     {
-      get { return _useSchema; }
+      get => _useSchema;
       set
       {
         if (_useSchema != value)
@@ -56,14 +58,16 @@ namespace AW.Winforms.Helpers.LLBL
           PopulateTreeViewWithSchema();
           OnPropertyChanged();
         }
+
         useSchemaCheckBox.Checked = value;
       }
     }
 
-    [Category("EntityBrowser"), Description("Specifies whether filtering is enabled in the grid, even if the underlying collection doesn't support it.")]
+    [Category("EntityBrowser")]
+    [Description("Specifies whether filtering is enabled in the grid, even if the underlying collection doesn't support it.")]
     public bool EnsureFilteringEnabled
     {
-      get { return gridDataEditor.EnsureFilteringEnabled; }
+      get => gridDataEditor.EnsureFilteringEnabled;
       set
       {
         gridDataEditor.EnsureFilteringEnabled = value;
@@ -72,10 +76,11 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-    [Category("EntityBrowser"), Description("Page size in the grid. Zero for no paging.")]
+    [Category("EntityBrowser")]
+    [Description("Page size in the grid. Zero for no paging.")]
     public ushort PageSize
     {
-      get { return gridDataEditor.PageSize; }
+      get => gridDataEditor.PageSize;
       set
       {
         gridDataEditor.PageSize = value;
@@ -84,28 +89,27 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-    [DefaultValue(DefaultCacheDurationInSeconds), Category("EntityBrowser"),
-     Description("Specifies the duration that the query's result set should be cached for. Zero to turn caching off.")]
+    [DefaultValue(DefaultCacheDurationInSeconds)]
+    [Category("EntityBrowser")]
+    [Description("Specifies the duration that the query's result set should be cached for. Zero to turn caching off.")]
     public int CacheDurationInSeconds
     {
-      get { return _cacheDurationInSeconds; }
+      get => _cacheDurationInSeconds;
       set
       {
-        if (value == 0)
-        {
-          CacheController.PurgeResultsets(Name);
-        }
+        if (value == 0) CacheController.PurgeResultsets(Name);
         _cacheDurationInSeconds = value;
         cacheDurationInSecondsNumericUpDown.Value = value;
         OnPropertyChanged();
       }
     }
 
-    [DefaultValue(true), Category("EntityBrowser"),
-     Description("Deletes cascade non-recursively to children of the selected entity.")]
+    [DefaultValue(true)]
+    [Category("EntityBrowser")]
+    [Description("Deletes cascade non-recursively to children of the selected entity.")]
     public bool CascadeDeletes
     {
-      get { return toolStripCheckBoxDeletesAreCascading.Checked; }
+      get => toolStripCheckBoxDeletesAreCascading.Checked;
       set
       {
         toolStripCheckBoxDeletesAreCascading.Checked = value;
@@ -155,17 +159,17 @@ namespace AW.Winforms.Helpers.LLBL
     [NotifyPropertyChangedInvocator]
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
-      if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    [DefaultValue(true), Category("EntityBrowser"),
-     Description(
-       "Specifies whether a Context is used for entity fetches, if true then entities will remain dirty until saved or reverted, i.e. the entity stays in memory and will be reused even if re-fetched."
-       )]
+    [DefaultValue(true)]
+    [Category("EntityBrowser")]
+    [Description("Specifies whether a Context is used for entity fetches, if true then entities will remain dirty until saved or reverted, " +
+                 "i.e. the entity stays in memory and will be reused even if re-fetched.")]
     public bool UseContext
     {
-      get { return HasLinqMetaData ? ContextToUse != null : _useContext; }
-      set { SetContextToUse(value); }
+      get => HasLinqMetaData ? ContextToUse != null : _useContext;
+      set => SetContextToUse(value);
     }
 
     private void SetContextToUse()
@@ -200,23 +204,23 @@ namespace AW.Winforms.Helpers.LLBL
         }
       }
       else
+      {
         _useContext = value;
+      }
+
       useContextCheckBox.Checked = value;
       // ReSharper disable once UseNameofExpression
       OnPropertyChanged("UseContext");
     }
 
-    private bool HasLinqMetaData
-    {
-      get { return _linqMetaData != null; }
-    }
+    private bool HasLinqMetaData => _linqMetaData != null;
 
     /// <summary>
     /// </summary>
     public Context ContextToUse
     {
       //IContextAwareElement contextAwareElement = (object) query as IContextAwareElement;
-      get { return HasLinqMetaData ? EntityHelper.GetContextToUse(_linqMetaData) : null; }
+      get => HasLinqMetaData ? EntityHelper.GetContextToUse(_linqMetaData) : null;
       set
       {
         if (HasLinqMetaData)
@@ -229,13 +233,12 @@ namespace AW.Winforms.Helpers.LLBL
       get
       {
         var dataEditorLLBLDataScopePersister = gridDataEditor.DataEditorPersister as DataEditorLLBLDataScopePersister;
-        if (dataEditorLLBLDataScopePersister == null) return null;
-        return dataEditorLLBLDataScopePersister.GeneralEntityCollectionDataScope;
+        return dataEditorLLBLDataScopePersister?.GeneralEntityCollectionDataScope;
       }
     }
 
     public static FrmPersistantLocation ShowDataBrowser(ILinqMetaData linqMetaData, Form parentForm = null,
-      bool useSchema = true, string prefixDelimiter = DefaultPrefixDelimiter, bool ensureFilteringEnabled = true, 
+      bool useSchema = true, string prefixDelimiter = DefaultPrefixDelimiter, bool ensureFilteringEnabled = true,
       bool useContext = true, int cacheDurationInSeconds = DefaultCacheDurationInSeconds,
       ushort pageSize = GridDataEditor.DefaultPageSize, bool cascadeDeletes = true,
       params string[] membersToExclude)
@@ -306,11 +309,11 @@ namespace AW.Winforms.Helpers.LLBL
     {
       _linqMetaData = linqMetaData;
       var dataAccessAdapter = EntityHelper.GetTransactionController(_linqMetaData) as IDataAccessAdapter;
-      toolStripNumericUpDownCommandTimeOut.Value = dataAccessAdapter == null ? DaoBase.CommandTimeOut : dataAccessAdapter.CommandTimeOut;
+      toolStripNumericUpDownCommandTimeOut.Value = dataAccessAdapter?.CommandTimeOut ?? DaoBase.CommandTimeOut;
       SetContextToUse();
       _getQueryableForEntityDelegate = getQueryableForEntityDelegate;
       gridDataEditor.MembersToExclude = membersToExclude;
-      gridDataEditor.BindingListViewCreater = BindingListViewCreater;
+      gridDataEditor.BindingListViewCreater = BindingListViewCreator;
 #if async
       gridDataEditor.AsyncBindingListViewCreaters = BindingListViewCreaterAsync;
 #endif
@@ -321,6 +324,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     /// <summary>
     ///   http://stackoverflow.com/questions/7309736/which-event-is-launched-right-after-control-is-fully-loaded
+    ///   ReSharper disable once CommentTypo
     ///   TCM_SETCURSEL==32
     /// </summary>
     /// <param name="m">The Message.</param>
@@ -342,15 +346,12 @@ namespace AW.Winforms.Helpers.LLBL
     {
     }
 
-    private IBindingListView BindingListViewCreater(IEnumerable enumerable, Type itemType)
+    private IBindingListView BindingListViewCreator(IEnumerable enumerable, Type itemType)
     {
       var genericDataScopeBase = EntityCollectionDataScope;
       if (genericDataScopeBase != null && enumerable != null)
-      {
-        var queryable = enumerable as IQueryable;
-        if (queryable != null)
+        if (enumerable is IQueryable queryable)
           enumerable = genericDataScopeBase.FetchData(queryable);
-      }
       return EntityHelper.CreateEntityView(enumerable, itemType);
     }
 
@@ -392,12 +393,11 @@ namespace AW.Winforms.Helpers.LLBL
 
     //#endregion
 
-    private void treeViewEntities_AfterSelect(object sender, TreeViewEventArgs e)
+    private void TreeViewEntities_AfterSelect(object sender, TreeViewEventArgs e)
     {
       if (!_userHasInteracted)
         return;
-      var prop = treeViewEntities.SelectedNode.Tag as PropertyDescriptor;
-      if (prop != null)
+      if (treeViewEntities.SelectedNode.Tag is PropertyDescriptor prop)
       {
         var typeParameter = ListBindingHelper.GetListItemType(prop.PropertyType);
         //if (typeof(IEntityCore).IsAssignableFrom(prop.PropertyType))
@@ -423,7 +423,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
       else
       {
-        openPagedToolStripMenuItem_Click();
+        openPagedToolStripMenuItem_ClickAsync();
       }
     }
 
@@ -438,9 +438,9 @@ namespace AW.Winforms.Helpers.LLBL
     {
       var entityQueryable = GetEntityQueryable();
       if (entityQueryable != null)
-        await ViewEntitiesAsync(entityQueryable);
+        await ViewEntitiesAsync(entityQueryable).ConfigureAwait(false);
     }
-    
+
 
     private IQueryable GetEntityQueryable()
     {
@@ -458,11 +458,11 @@ namespace AW.Winforms.Helpers.LLBL
       }
       else
       {
-        var provider = entityQueryable.Provider as LLBLGenProProvider2;
-        if (provider != null && gridDataEditor.DataEditorPersister == null)
+        if (entityQueryable.Provider is LLBLGenProProvider2 provider && gridDataEditor.DataEditorPersister == null)
           gridDataEditor.DataEditorPersister = new DataEditorLLBLAdapterPersister(provider.AdapterToUse);
       }
-      gridDataEditor.BindEnumerable(CacheResultset(entityQueryable));
+
+      gridDataEditor.BindEnumerable(CacheResultSet(entityQueryable));
     }
 
     private Task ViewEntitiesAsync(IQueryable entityQueryable)
@@ -474,11 +474,11 @@ namespace AW.Winforms.Helpers.LLBL
       }
       else
       {
-        var provider = entityQueryable.Provider as LLBLGenProProvider2;
-        if (provider != null && gridDataEditor.DataEditorPersister == null)
+        if (entityQueryable.Provider is LLBLGenProProvider2 provider && gridDataEditor.DataEditorPersister == null)
           gridDataEditor.DataEditorPersister = new DataEditorLLBLAdapterPersister(provider.AdapterToUse);
       }
-      return gridDataEditor.BindEnumerableAsync(CacheResultset(entityQueryable));
+
+      return gridDataEditor.BindEnumerableAsync(CacheResultSet(entityQueryable));
     }
 
     /// <summary>
@@ -486,12 +486,12 @@ namespace AW.Winforms.Helpers.LLBL
     /// </summary>
     /// <param name="entityQueryable">The entity queryable.</param>
     /// <returns></returns>
-    private dynamic CacheResultset(dynamic entityQueryable)
+    private dynamic CacheResultSet(dynamic entityQueryable)
     {
       return CacheDurationInSeconds > 0 ? QueryableExtensionMethods.CacheResultset(entityQueryable, CacheDurationInSeconds, false, Name) : entityQueryable;
     }
 
-    private Task openPagedToolStripMenuItem_Click()
+    private Task openPagedToolStripMenuItem_ClickAsync()
     {
       return OpenAsync();
     }
@@ -528,7 +528,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
-    void dataEditorLLBLDataScopePersister_EditingFinished(object sender, EventArgs e)
+    private void dataEditorLLBLDataScopePersister_EditingFinished(object sender, EventArgs e)
     {
       SetSaveButtons();
     }
@@ -554,7 +554,7 @@ namespace AW.Winforms.Helpers.LLBL
     private void DataEditorEventHandlers_EntityAdded(object sender, EventArgs e)
     {
       var dataScope = gridDataEditor.DataEditorPersister as DataEditorLLBLDataScopePersister;
-      toolStripButtonCancelEdit.Enabled = toolStripButtonCancelEdit.Enabled ||(dataScope?.GeneralEntityCollectionDataScope.ContextIsDirty()).GetValueOrDefault();
+      toolStripButtonCancelEdit.Enabled = toolStripButtonCancelEdit.Enabled || (dataScope?.GeneralEntityCollectionDataScope.ContextIsDirty()).GetValueOrDefault();
     }
 
     private void treeViewEntities_AfterExpand(object sender, TreeViewEventArgs e)
