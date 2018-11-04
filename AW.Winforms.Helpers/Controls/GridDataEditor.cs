@@ -459,14 +459,66 @@ namespace AW.Winforms.Helpers.Controls
         var queryable = enumerable as IQueryable;
         firstPageEnumerable = queryable == null ? LinqHelper.Take(firstPageEnumerable, PageSize) : queryable.Take(PageSize);
       }
-      UnBindGrids();
 
-      var isEnumerable = await bindingSourceEnumerable.BindEnumerableAsync(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null), cancellationToken, EnsureFilteringEnabled, AsyncBindingListViewCreaters);
-      SetRemovingItem();
-      _isBinding = false;
-      toolStripButtonCancel.Visible = false;
-      toolStripProgressBarFetching.Visible = false;
+      UnBindGrids();
+      bool isEnumerable;
+      try
+      {
+        isEnumerable = await bindingSourceEnumerable.BindEnumerableAsync(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null), cancellationToken, EnsureFilteringEnabled, AsyncBindingListViewCreaters);
+        SetRemovingItem();
+      }
+      finally
+      {
+        _isBinding = false;
+        this.SetToolStripItemVisible(toolStripButtonCancel, false);
+        //var toolStrip = toolStripButtonCancel.GetCurrentParent();
+        //toolStrip.Invoke(rb => rb.Visible = false);
+       // toolStripProgressBarFetching.Visible = false;
+        this.SetToolStripItemVisible(toolStripProgressBarFetching, false);
+      }
+
       return isEnumerable;
+    }
+
+    //https://stackoverflow.com/questions/31007145/asynchronous-ui-updates-in-winforms
+    public static void Do<TControl>(TControl control, Action<TControl> action) where TControl : Control
+    {
+      if (control.InvokeRequired)
+      {
+        control.Invoke(action, control);
+      }
+      else
+      {
+        action(control);
+      }
+    }
+
+    delegate void SetToolstripValueCallback(ToolStripItem toolstripItem, string property, object value);
+
+    //https://stackoverflow.com/questions/7145408/invoke-toolstripmenuitem
+    //public static void DoToolStripItem<TControl>(TControl ToolStripItem, Action<TControl> action) where TControl : ToolStripItem
+    //{
+    //  var toolStrip = ToolStripItem.GetCurrentParent();
+    //  SetToolstripValueCallback callback = new SetToolstripValueCallback(SetToolstripPropertyValue);
+
+    //  toolstripItem.Owner.Invoke(callback, new object[] { toolstripItem, property, value });
+    //}
+
+    //https://www.codeproject.com/Questions/159320/Enabling-Disabling-menu-item-from-different-thread
+
+    private delegate void SetMenuItemEnableHandler(object sender, Boolean bValue);
+
+    private void SetToolStripItemVisible(object sender, Boolean bValue)
+    {
+      ToolStripItem menuStripItem = (ToolStripItem)sender;
+      if (this.InvokeRequired)
+      {
+        this.Invoke(new SetMenuItemEnableHandler(SetToolStripItemVisible), new object[] { sender, bValue });
+      }
+      else
+      {
+        menuStripItem.Visible = bValue;
+      }
     }
 
     private void toolStripButtonCancel_Click(object sender, EventArgs e)

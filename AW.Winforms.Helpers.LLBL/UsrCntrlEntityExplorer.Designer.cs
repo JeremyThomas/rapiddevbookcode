@@ -83,7 +83,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.toolTip1.SetToolTip(this.treeViewEntities, "Entities amd their proerties");
       this.treeViewEntities.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEntities_AfterExpand);
       this.treeViewEntities.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEntities_AfterExpand);
-      this.treeViewEntities.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewEntities_AfterSelect);
+      this.treeViewEntities.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewEntities_AfterSelectAsync);
       this.treeViewEntities.Click += new System.EventHandler(this.treeViewEntities_Click);
       this.treeViewEntities.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewEntities_KeyDown);
       // 
@@ -305,7 +305,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.gridDataEditor.MembersToExclude = null;
       this.gridDataEditor.Name = "gridDataEditor";
       this.gridDataEditor.PageSize = ((ushort)(15));
-      this.gridDataEditor.Readonly = false;
+      this.gridDataEditor.ShowPublicFields = false;
       this.gridDataEditor.Size = new System.Drawing.Size(950, 585);
       this.gridDataEditor.TabIndex = 0;
       this.toolTip1.SetToolTip(this.gridDataEditor, "Data in the Tables");

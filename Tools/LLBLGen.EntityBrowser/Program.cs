@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security;
 using System.Security.Permissions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AW.Helper;
 using Microsoft.CSharp;
@@ -40,7 +41,14 @@ namespace LLBLGen.EntityExplorer
       // Add the event handler for handling non-UI thread exceptions to the event. 
       AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
+      TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+
       Application.Run(new FrmLLBLGenEntityExplorer());
+    }
+
+    private static void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+    {
+      ShowThreadExceptionDialog(e.Exception);
     }
 
     /// <summary>
@@ -54,7 +62,11 @@ namespace LLBLGen.EntityExplorer
     /// </remarks>
     private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
     {
-      var exception = e.Exception;
+      ShowThreadExceptionDialog(e.Exception);
+    }
+
+    private static void ShowThreadExceptionDialog(Exception exception)
+    {
       if (exception != null)
         using (var dialog = new ThreadExceptionDialog(exception))
         {
@@ -67,6 +79,7 @@ namespace LLBLGen.EntityExplorer
           {
             GeneralHelper.TraceOut(ex.ToString());
           }
+
           if (exception.StackTrace != null && !exception.StackTrace.Contains("System.Windows.Forms.DataGridTextBoxColumn.GetText(Object value)")) //As DataGrid doesn't have DataError event
             if (dialog.ShowDialog() == DialogResult.Abort)
               Exit();
@@ -175,12 +188,12 @@ namespace LLBLGen.EntityExplorer
         @"using System.Diagnostics;
             class Program {
               public static void Main(string[] args) {
-	              if (args != null && args.Length > 0)
-	              {
-		              var source = args[args.Length - 1];
-		              if (!System.Diagnostics.EventLog.SourceExists(source))
-			              System.Diagnostics.EventLog.CreateEventSource(source, ""Application"");
-	              }
+                if (args != null && args.Length > 0)
+                {
+                  var source = args[args.Length - 1];
+                  if (!System.Diagnostics.EventLog.SourceExists(source))
+                    System.Diagnostics.EventLog.CreateEventSource(source, ""Application"");
+                }
               }
             }");
       return results.Errors.Cast<CompilerError>();

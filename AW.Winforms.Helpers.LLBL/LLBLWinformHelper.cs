@@ -24,8 +24,8 @@ namespace AW.Winforms.Helpers.LLBL
     /// </summary>
     static LLBLWinformHelper()
     {
-      BindingListHelper.RegisterbindingListViewCreater(typeof(IEntityCore), EntityHelper.CreateEntityView);
-      BindingListHelper.RegisterAsyncBindingListViewCreater(typeof(IEntityCore), EntityHelper.CreateEntityViewAsync);
+      BindingListHelper.RegisterBindingListViewCreator(typeof(IEntityCore), EntityHelper.CreateEntityView);
+      BindingListHelper.RegisterAsyncBindingListViewCreator(typeof(IEntityCore), EntityHelper.CreateEntityViewAsync);
       BindingListHelper.RegisterBindingListSourceProvider(typeof(IEntityView), EntityHelper.GetRelatedCollection);
       BindingListHelper.RegisterBindingListSourceProvider(typeof(IEntityView2), EntityHelper.GetRelatedCollection);
       DataEditorPersisterFactory.Register(DataEditorLLBLDataScopePersister.DataEditorLLBLDataScopePersisterFactory);

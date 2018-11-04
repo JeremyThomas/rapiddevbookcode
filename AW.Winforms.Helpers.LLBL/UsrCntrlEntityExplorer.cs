@@ -315,7 +315,7 @@ namespace AW.Winforms.Helpers.LLBL
       gridDataEditor.MembersToExclude = membersToExclude;
       gridDataEditor.BindingListViewCreater = BindingListViewCreator;
 #if async
-      gridDataEditor.AsyncBindingListViewCreaters = BindingListViewCreaterAsync;
+      gridDataEditor.AsyncBindingListViewCreators = BindingListViewCreaterAsync;
 #endif
       PopulateTreeViewWithSchema();
     }
@@ -393,7 +393,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     //#endregion
 
-    private void TreeViewEntities_AfterSelect(object sender, TreeViewEventArgs e)
+    private async void TreeViewEntities_AfterSelectAsync(object sender, TreeViewEventArgs e)
     {
       if (!_userHasInteracted)
         return;
@@ -423,7 +423,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
       else
       {
-        openPagedToolStripMenuItem_ClickAsync();
+        await OpenAsync();
       }
     }
 
@@ -438,7 +438,7 @@ namespace AW.Winforms.Helpers.LLBL
     {
       var entityQueryable = GetEntityQueryable();
       if (entityQueryable != null)
-        await ViewEntitiesAsync(entityQueryable).ConfigureAwait(false);
+        await ViewEntitiesAsync(entityQueryable);
     }
 
 
@@ -489,11 +489,6 @@ namespace AW.Winforms.Helpers.LLBL
     private dynamic CacheResultSet(dynamic entityQueryable)
     {
       return CacheDurationInSeconds > 0 ? QueryableExtensionMethods.CacheResultset(entityQueryable, CacheDurationInSeconds, false, Name) : entityQueryable;
-    }
-
-    private Task openPagedToolStripMenuItem_ClickAsync()
-    {
-      return OpenAsync();
     }
 
     private void treeViewEntities_Click(object sender, EventArgs e)
