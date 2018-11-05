@@ -313,9 +313,9 @@ namespace AW.Winforms.Helpers.LLBL
       SetContextToUse();
       _getQueryableForEntityDelegate = getQueryableForEntityDelegate;
       gridDataEditor.MembersToExclude = membersToExclude;
-      gridDataEditor.BindingListViewCreater = BindingListViewCreator;
+      gridDataEditor.BindingListViewCreator = BindingListViewCreator;
 #if async
-      gridDataEditor.AsyncBindingListViewCreators = BindingListViewCreaterAsync;
+      gridDataEditor.AsyncBindingListViewCreators = BindingListViewCreatorAsync;
 #endif
       PopulateTreeViewWithSchema();
     }
@@ -356,7 +356,7 @@ namespace AW.Winforms.Helpers.LLBL
     }
 
 #if async
-    private async Task<IBindingListView> BindingListViewCreaterAsync(IEnumerable enumerable, Type itemType, CancellationToken cancellationToken)
+    private async Task<IBindingListView> BindingListViewCreatorAsync(IEnumerable enumerable, Type itemType, CancellationToken cancellationToken)
     {
       var genericDataScopeBase = EntityCollectionDataScope;
       if (genericDataScopeBase != null && enumerable != null)
@@ -423,7 +423,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
       else
       {
-        await OpenAsync();
+        await OpenAsync().ConfigureAwait(false);
       }
     }
 
@@ -438,7 +438,7 @@ namespace AW.Winforms.Helpers.LLBL
     {
       var entityQueryable = GetEntityQueryable();
       if (entityQueryable != null)
-        await ViewEntitiesAsync(entityQueryable);
+        await ViewEntitiesAsync(entityQueryable).ConfigureAwait(false);
     }
 
 

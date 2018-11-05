@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Globalization;
@@ -34,15 +35,7 @@ namespace AW.Winforms.Helpers.Controls
   public partial class GridDataEditor : UserControl, ISupportInitialize, INotifyPropertyChanged
   {
     /// <summary>
-    /// Gets or sets the members(columns) to exclude from displaying in the grid.
-    /// </summary>
-    /// <value>
-    /// The members to exclude.
-    /// </value>
-    public string[] MembersToExclude { get; set; }
-
-    /// <summary>
-    /// The default page size
+    ///   The default page size
     /// </summary>
     public const int DefaultPageSize = 30;
 
@@ -50,19 +43,34 @@ namespace AW.Winforms.Helpers.Controls
     ///   The maximum automatic generate column width - 300
     /// </summary>
     private const int MaxAutoGenerateColumnWidth = 300;
+
     private const bool AllowPagingWhenEditing = true;
-    private IEnumerable _delayedEnumerable;
-    private readonly ArrayList _deleteItems = new ArrayList();
-    private bool _isBinding = true;
-    private bool _loaded;
-    private bool _canSave;
-    private IEnumerable _superset;
-    private IDataEditorPersister _dataEditorPersister;
-    private IDataEditorPersisterWithCounts _dataEditorPersisterWithCounts;
-    private bool _fullyPainted;
 
     private static readonly Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider> FieldsToPropertiesTypeDescriptionProviders
       = new Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider>();
+
+    public static OutputFormat SerializeToCSharpOutputFormat = OutputFormat.Compileable;
+    private readonly ArrayList _deleteItems = new ArrayList();
+    private readonly ToolStripButton _searchToolStripButton;
+    private readonly ToolStripTextBox _searchToolStripTextBox;
+    private CancellationTokenSource _cancellationTokenSource;
+    private bool _canSave;
+    private IDataEditorPersister _dataEditorPersister;
+    private IDataEditorPersisterWithCounts _dataEditorPersisterWithCounts;
+    private IEnumerable _delayedEnumerable;
+    private bool _fullyPainted;
+    private bool _isBinding = true;
+
+    private Type _itemType;
+    private bool _loaded;
+    private ushort _pageSize;
+    private IEnumerable _superset;
+
+    private int? _superSetCount;
+    public Func<IEnumerable, Type, CancellationToken, Task<IBindingListView>> AsyncBindingListViewCreators;
+
+    public Func<IEnumerable, Type, IBindingListView> BindingListViewCreator;
+    protected bool SupportsNotifyPropertyChanged;
 
     static GridDataEditor()
     {
@@ -83,7 +91,8 @@ namespace AW.Winforms.Helpers.Controls
         toolStripItemFromBeginButton.Checked = false;
         searchToolBar.Items.Remove(toolStripItemFromBeginButton);
       }
-      MoveLastItem(3);                                             
+
+      MoveLastItem(3);
       MoveLastItem(2);
       _searchToolStripButton = searchToolBar.Items[4] as ToolStripButton;
       _searchToolStripTextBox = searchToolBar.Items[3] as ToolStripTextBox;
@@ -92,6 +101,7 @@ namespace AW.Winforms.Helpers.Controls
     /// <summary>
     ///   Initializes a new instance of the <see cref="T:System.Windows.Forms.UserControl" /> class.
     /// </summary>
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public GridDataEditor(IEnumerable enumerable, bool delayBind = false, IDataEditorPersister dataEditorPersister = null, ushort pageSize = DefaultPageSize, bool readOnly = true,
       bool showPublicFields = false,
       params string[] membersToExclude)
@@ -112,6 +122,7 @@ namespace AW.Winforms.Helpers.Controls
         enumerable = dt.DefaultView;
         SetItemType(enumerable);
       }
+
       DelayBind = delayBind;
       DataEditorPersister = dataEditorPersister;
       Readonly = readOnly;
@@ -122,119 +133,103 @@ namespace AW.Winforms.Helpers.Controls
         _delayedEnumerable = enumerable;
       }
       else
+      {
         BindEnumerable(enumerable, pageSize);
+      }
     }
-    
+
+    /// <summary>
+    ///   Gets or sets the members(columns) to exclude from displaying in the grid.
+    /// </summary>
+    /// <value>
+    ///   The members to exclude.
+    /// </value>
+    public string[] MembersToExclude { get; set; }
+
+    private bool HasDeletes
+    {
+      get { return _deleteItems != null && _deleteItems.Count > 0; }
+    }
+
+    private bool DataSourceIsObjectListView
+    {
+      get { return IsObjectListView(); }
+    }
+
+    private Type ItemType
+    {
+      get
+      {
+        if (_itemType == null && bindingSourceEnumerable.DataSource != null)
+          ItemType = MetaDataHelper.GetEnumerableItemType(BindingSourceEnumerableList);
+        return _itemType;
+      }
+      set
+      {
+        if (_itemType == value) return;
+        TidyUp();
+        _itemType = value;
+        OnSetItemType();
+      }
+    }
+
+    private IList BindingSourceEnumerableList
+    {
+      get { return bindingSourceEnumerable.List; }
+    }
+
+    private IEnumerable SourceEnumerable
+    {
+      get { return _superset ?? PageSourceEnumerable; }
+    }
+
+    private IEnumerable PageSourceEnumerable
+    {
+      get { return bindingSourceEnumerable.GetDataSource(); }
+    }
+
+    private DataView SourceDataView
+    {
+      get { return SourceEnumerable as DataView; }
+    }
+
+    public IDataEditorPersister DataEditorPersister
+    {
+      get { return _dataEditorPersister; }
+      set
+      {
+        _dataEditorPersister = value;
+        _dataEditorPersisterWithCounts = value as IDataEditorPersisterWithCounts;
+        toolStripButtonRelatedCounts.Enabled = _dataEditorPersisterWithCounts != null;
+      }
+    }
+
+    public void BeginInit()
+    {
+      ((ISupportInitialize) bindingSourceEnumerable).BeginInit();
+      ((ISupportInitialize) bindingNavigatorData).BeginInit();
+      ((ISupportInitialize) dataGridViewEnumerable).BeginInit();
+      ((ISupportInitialize) bindingNavigatorPaging).BeginInit();
+      ((ISupportInitialize) bindingSourcePaging).BeginInit();
+      ((ISupportInitialize) dataGridEnumerable).BeginInit();
+    }
+
+    public void EndInit()
+    {
+      ((ISupportInitialize) bindingSourceEnumerable).EndInit();
+      ((ISupportInitialize) bindingNavigatorData).EndInit();
+      ((ISupportInitialize) dataGridViewEnumerable).EndInit();
+      ((ISupportInitialize) bindingNavigatorPaging).EndInit();
+      ((ISupportInitialize) bindingSourcePaging).EndInit();
+      ((ISupportInitialize) dataGridEnumerable).EndInit();
+    }
+
     private void MoveLastItem(int offset)
     {
       var toolStripItem = searchToolBar.Items[searchToolBar.Items.Count - 1];
       searchToolBar.Items.Remove(toolStripItem);
       searchToolBar.Items.Insert(searchToolBar.Items.Count - offset, toolStripItem);
     }
-
-    #region Properties
-
-    [Category("Data"), Description("Delay binding until the grid is visible")]
-    public bool DelayBind { get; set; }
-
-    [Category("Data"), Description("Show public fields as well as properties, used by LINQPad LINQToSQL")]
-    public bool ShowPublicFields { get; set; }
-
-    [Category("Data"), Description("Size of the page")]
-    public ushort PageSize
-    {
-      get { return _pageSize; }
-      set
-      {
-        _pageSize = value;
-        toolStripLabelCurrentPagesSize.Text = _pageSize.ToString(CultureInfo.InvariantCulture);
-        OnPropertyChanged();
-      }
-    }
-
-    [Description("Deletes cascade non-recursively to children of the selected entity")]
-    public bool CascadeDeletes
-    {
-      get { return toolStripCheckBoxDeletesAreCascading.Checked; }
-      set { toolStripCheckBoxDeletesAreCascading.Checked = value; }
-    }
-
-    [Category("GridDataEditor"), Description("Gets or sets wether filtering is enabled in the grid, even if the underlying collection doesn't support it.")]
-    public bool EnsureFilteringEnabled { get; set; }
-
-    [AttributeProvider(typeof(IListSource)),
-     Category("Data"),
-     Description("Data source of the tree.")]
-    public object DataSource
-    {
-      get { return bindingSourceEnumerable.DataSource; }
-      set
-      {
-        if (bindingSourceEnumerable.DataSource != value)
-          bindingSourceEnumerable.DataSource = value;
-      }
-    }
-
-    [Editor("System.Windows.Forms.Design.DataMemberListEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor)),
-     RefreshProperties(RefreshProperties.Repaint),
-     Category("Data"),
-     Description("Data member of the tree.")]
-    public string DataMember
-    {
-      get { return bindingSourceEnumerable.DataMember; }
-      set
-      {
-        if (bindingSourceEnumerable.DataMember != value)
-          bindingSourceEnumerable.DataMember = value;
-      }
-    }
-
-    [Description("ToolStripItemsDescr"), MergableProperty(false), Category("CatData"), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-    public ToolStripItemCollection Items
-    {
-      get { return BindingNavigator.Items; }
-    }
-
-    public BindingNavigator BindingNavigator
-    {
-      get { return bindingNavigatorData; }
-    }
-
-    public BindingSource BindingSource
-    {
-      get { return bindingSourceEnumerable; }
-    }
-
-    /// <summary>
-    ///   Gets or sets a value indicating whether the grid was set read-only.
-    /// </summary>
-    /// <value>
-    ///   <c>true</c> if [read-only]; otherwise, <c>false</c>.
-    /// </value>
-    [
-    Browsable(true),
-    DefaultValue(false)
-]
-    public bool Readonly
-    {
-      get { return dataGridViewEnumerable.ReadOnly; }
-      set { dataGridViewEnumerable.ReadOnly = value; }
-    }
-
-    /// <summary>
-    ///   Was the last bound Enumerable not writable when grid is not read-only
-    /// </summary>
-    private bool _shouldBeReadonly;
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    [NotifyPropertyChangedInvocator]
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-      if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    #endregion
 
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
@@ -248,9 +243,11 @@ namespace AW.Winforms.Helpers.Controls
             searchToolBar.Focus();
             _searchToolStripTextBox.Focus();
           }
+
           _searchToolStripButton.PerformClick();
           break;
       }
+
       return base.ProcessCmdKey(ref msg, keyData);
     }
 
@@ -299,6 +296,7 @@ namespace AW.Winforms.Helpers.Controls
       _loaded = true;
     }
 
+    /// <inheritdoc />
     /// <summary>
     ///   http://stackoverflow.com/questions/7309736/which-event-is-launched-right-after-control-is-fully-loaded
     /// </summary>
@@ -343,7 +341,10 @@ namespace AW.Winforms.Helpers.Controls
         }
       }
       else
-        saveToolStripButton.Enabled = (!external && numSaved == 0) || !SupportsNotifyPropertyChanged;
+      {
+        saveToolStripButton.Enabled = !external && numSaved == 0 || !SupportsNotifyPropertyChanged;
+      }
+
       SetButtonsOnEditEnded();
     }
 
@@ -351,11 +352,6 @@ namespace AW.Winforms.Helpers.Controls
     {
       // ReSharper disable once ExplicitCallerInfoArgument
       OnPropertyChanged("CascadeDeletes");
-    }
-
-    private bool HasDeletes
-    {
-      get { return _deleteItems != null && _deleteItems.Count > 0; }
     }
 
     private void SetButtonsOnEditEnded()
@@ -368,10 +364,7 @@ namespace AW.Winforms.Helpers.Controls
     {
       Trace.Write(Name + " " + PageSourceEnumerable + " ");
       e.Exception.TraceOut();
-      if (_canSave && !toolStripButtonCancelEdit.Enabled && DataEditorPersister.IsDirty(PageSourceEnumerable))
-      {
-        toolStripButtonCancelEdit.Enabled = true;
-      }
+      if (_canSave && !toolStripButtonCancelEdit.Enabled && DataEditorPersister.IsDirty(PageSourceEnumerable)) toolStripButtonCancelEdit.Enabled = true;
     }
 
     private void bindingSourceEnumerable_DataSourceChanged(object sender, EventArgs e)
@@ -405,6 +398,7 @@ namespace AW.Winforms.Helpers.Controls
         toolStripButtonCSharp.Enabled = false;
         toolStripButtonSearch.Enabled = false;
       }
+
       toolStripLabelSaveResult.Text = "";
       toolStripLabelDeleteCount.Text = "";
     }
@@ -422,6 +416,7 @@ namespace AW.Winforms.Helpers.Controls
           typeToEdit = queryable.ElementType;
         _shouldBeReadonly = !CanSave(typeToEdit);
       }
+
       return _shouldBeReadonly;
     }
 
@@ -435,6 +430,7 @@ namespace AW.Winforms.Helpers.Controls
       return GetFirstPageAsync(_superset, cancellationToken);
     }
 
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     private bool GetFirstPage(IEnumerable enumerable)
     {
       var firstPageEnumerable = enumerable;
@@ -443,14 +439,16 @@ namespace AW.Winforms.Helpers.Controls
         var queryable = enumerable as IQueryable;
         firstPageEnumerable = queryable == null ? LinqHelper.Take(firstPageEnumerable, PageSize) : queryable.Take(PageSize);
       }
+
       UnBindGrids();
 
-      var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null), EnsureFilteringEnabled, BindingListViewCreater);
+      var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null), EnsureFilteringEnabled, BindingListViewCreator);
       SetRemovingItem();
       _isBinding = false;
       return isEnumerable;
     }
 
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     private async Task<bool> GetFirstPageAsync(IEnumerable enumerable, CancellationToken cancellationToken)
     {
       var firstPageEnumerable = enumerable;
@@ -464,62 +462,22 @@ namespace AW.Winforms.Helpers.Controls
       bool isEnumerable;
       try
       {
-        isEnumerable = await bindingSourceEnumerable.BindEnumerableAsync(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null), cancellationToken, EnsureFilteringEnabled, AsyncBindingListViewCreaters);
+        isEnumerable = await bindingSourceEnumerable.BindEnumerableAsync(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null), cancellationToken, EnsureFilteringEnabled, AsyncBindingListViewCreators).ConfigureAwait(true);
         SetRemovingItem();
       }
       finally
       {
         _isBinding = false;
-        this.SetToolStripItemVisible(toolStripButtonCancel, false);
+        AWHelper.SetToolStripItemVisible(toolStripButtonCancel, false);
         //var toolStrip = toolStripButtonCancel.GetCurrentParent();
         //toolStrip.Invoke(rb => rb.Visible = false);
-       // toolStripProgressBarFetching.Visible = false;
-        this.SetToolStripItemVisible(toolStripProgressBarFetching, false);
+        // toolStripProgressBarFetching.Visible = false;
+        AWHelper.SetToolStripItemVisible(toolStripProgressBarFetching, false);
       }
 
       return isEnumerable;
     }
 
-    //https://stackoverflow.com/questions/31007145/asynchronous-ui-updates-in-winforms
-    public static void Do<TControl>(TControl control, Action<TControl> action) where TControl : Control
-    {
-      if (control.InvokeRequired)
-      {
-        control.Invoke(action, control);
-      }
-      else
-      {
-        action(control);
-      }
-    }
-
-    delegate void SetToolstripValueCallback(ToolStripItem toolstripItem, string property, object value);
-
-    //https://stackoverflow.com/questions/7145408/invoke-toolstripmenuitem
-    //public static void DoToolStripItem<TControl>(TControl ToolStripItem, Action<TControl> action) where TControl : ToolStripItem
-    //{
-    //  var toolStrip = ToolStripItem.GetCurrentParent();
-    //  SetToolstripValueCallback callback = new SetToolstripValueCallback(SetToolstripPropertyValue);
-
-    //  toolstripItem.Owner.Invoke(callback, new object[] { toolstripItem, property, value });
-    //}
-
-    //https://www.codeproject.com/Questions/159320/Enabling-Disabling-menu-item-from-different-thread
-
-    private delegate void SetMenuItemEnableHandler(object sender, Boolean bValue);
-
-    private void SetToolStripItemVisible(object sender, Boolean bValue)
-    {
-      ToolStripItem menuStripItem = (ToolStripItem)sender;
-      if (this.InvokeRequired)
-      {
-        this.Invoke(new SetMenuItemEnableHandler(SetToolStripItemVisible), new object[] { sender, bValue });
-      }
-      else
-      {
-        menuStripItem.Visible = bValue;
-      }
-    }
 
     private void toolStripButtonCancel_Click(object sender, EventArgs e)
     {
@@ -535,6 +493,7 @@ namespace AW.Winforms.Helpers.Controls
       return bindingSourcePaging.Count > 1;
     }
 
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     private IEnumerable<int> CreatePageDataSource(ushort pageSize, IEnumerable enumerable)
     {
       _superSetCount = null;
@@ -543,6 +502,7 @@ namespace AW.Winforms.Helpers.Controls
         _superset = null;
         return Enumerable.Empty<int>();
       }
+
       try
       {
         if (enumerable is ArrayList || enumerable is Array || enumerable is DataView || !IsGenericType(enumerable))
@@ -551,6 +511,7 @@ namespace AW.Winforms.Helpers.Controls
           _superset = null;
           return Enumerable.Empty<int>();
         }
+
         _superset = enumerable;
         if (ValueTypeWrapper.TypeNeedsWrappingForBinding(ItemType))
           _superset = ValueTypeWrapper.CreateWrapperForBinding(enumerable).AsQueryable();
@@ -561,6 +522,7 @@ namespace AW.Winforms.Helpers.Controls
         _superset = null;
         return Enumerable.Empty<int>();
       }
+
       PageSize = pageSize;
       return Enumerable.Range(1, GetPageCount());
     }
@@ -568,15 +530,13 @@ namespace AW.Winforms.Helpers.Controls
     private static bool IsGenericType(IEnumerable enumerable)
     {
       var type = enumerable.GetType();
-      return type.IsGenericType || (type.BaseType != null && type.BaseType.IsGenericType);
+      return type.IsGenericType || type.BaseType != null && type.BaseType.IsGenericType;
     }
 
     protected int GetPageCount()
     {
       return LinqHelper.GetPageCount(PageSize, SuperSetCount());
     }
-
-    private int? _superSetCount;
 
     private int SuperSetCount()
     {
@@ -586,6 +546,7 @@ namespace AW.Winforms.Helpers.Controls
         _superSetCount = queryable == null ? _superset.Cast<object>().Count() : queryable.Count();
         toolStripLabelSuperSetCount.Text = _superSetCount.ToString();
       }
+
       return _superSetCount.Value;
     }
 
@@ -600,7 +561,7 @@ namespace AW.Winforms.Helpers.Controls
       if (Paging())
       {
         _cancellationTokenSource = new CancellationTokenSource();
-        await BindPageAsync(_cancellationTokenSource.Token);
+        await BindPageAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
       }
     }
 
@@ -632,12 +593,12 @@ namespace AW.Winforms.Helpers.Controls
         _isBinding = true;
         if (GetPageIndex() > 0)
         {
-          await BindEnumerableAsync(cancellationToken);
+          await BindEnumerableAsync(cancellationToken).ConfigureAwait(true);
           SetRemovingItem();
         }
         else
         {
-          await GetFirstPageAsync(cancellationToken);
+          await GetFirstPageAsync(cancellationToken).ConfigureAwait(false);
         }
       }
       finally
@@ -649,13 +610,13 @@ namespace AW.Winforms.Helpers.Controls
     private void BindEnumerable()
     {
       UnBindGrids();
-      bindingSourceEnumerable.BindEnumerable(SkipTake(), false, EnsureFilteringEnabled, BindingListViewCreater);
+      bindingSourceEnumerable.BindEnumerable(SkipTake(), false, EnsureFilteringEnabled, BindingListViewCreator);
     }
 
     private Task BindEnumerableAsync(CancellationToken cancellationToken)
     {
       UnBindGrids();
-      return bindingSourceEnumerable.BindEnumerableAsync(SkipTake(), false, cancellationToken, EnsureFilteringEnabled, AsyncBindingListViewCreaters);
+      return bindingSourceEnumerable.BindEnumerableAsync(SkipTake(), false, cancellationToken, EnsureFilteringEnabled, AsyncBindingListViewCreators);
     }
 
     public bool BindEnumerable(IEnumerable enumerable)
@@ -673,7 +634,7 @@ namespace AW.Winforms.Helpers.Controls
     {
       return BindEnumerableAsync(enumerable, PageSize, cancellationToken);
     }
-    
+
     public bool BindEnumerable(IEnumerable enumerable, ushort pageSize)
     {
       _isBinding = true;
@@ -691,6 +652,7 @@ namespace AW.Winforms.Helpers.Controls
       return BindEnumerableAsync(enumerable, PageSize, _cancellationTokenSource.Token);
     }
 
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public async Task<bool> BindEnumerableAsync(IEnumerable enumerable, ushort pageSize, CancellationToken cancellationToken)
     {
       _isBinding = true;
@@ -701,7 +663,7 @@ namespace AW.Winforms.Helpers.Controls
       bindingSourcePaging.DataSource = CreatePageDataSource(pageSize, enumerable);
       if (Paging())
         return BindingSourceEnumerableList != null;
-      return await GetFirstPageAsync(enumerable, cancellationToken);
+      return await GetFirstPageAsync(enumerable, cancellationToken).ConfigureAwait(false);
     }
 
     private IEnumerable SkipTake()
@@ -773,11 +735,6 @@ namespace AW.Winforms.Helpers.Controls
       return BindingListHelper.IsObjectListView(bindingSourceEnumerable.DataSource);
     }
 
-    private bool DataSourceIsObjectListView
-    {
-      get { return IsObjectListView(); }
-    }
-
     protected void GridDataEditor_RemovingItem(object sender, RemovingItemEventArgs e)
     {
       _deleteItems.Add(bindingSourceEnumerable[e.Index]);
@@ -807,28 +764,6 @@ namespace AW.Winforms.Helpers.Controls
     {
       base.OnHandleDestroyed(e);
       TidyUp();
-    }
-
-    private Type _itemType;
-    protected bool SupportsNotifyPropertyChanged;
-    private ushort _pageSize;
-    public static OutputFormat SerializeToCSharpOutputFormat = OutputFormat.Compileable;
-
-    private Type ItemType
-    {
-      get
-      {
-        if (_itemType == null && bindingSourceEnumerable.DataSource != null)
-          ItemType = MetaDataHelper.GetEnumerableItemType(BindingSourceEnumerableList);
-        return _itemType;
-      }
-      set
-      {
-        if (_itemType == value) return;
-        TidyUp();
-        _itemType = value;
-        OnSetItemType();
-      }
     }
 
     private void SetItemType(IEnumerable enumerable)
@@ -893,6 +828,7 @@ namespace AW.Winforms.Helpers.Controls
         bindingSourceEnumerable.ResetBindings(false);
         saveToolStripButton.Enabled = false;
       }
+
       _deleteItems.Clear();
       SetButtonsOnEditEnded();
       return !saveToolStripButton.Enabled;
@@ -967,8 +903,11 @@ namespace AW.Winforms.Helpers.Controls
           }
         }
         else
+        {
           valueType = propertyInfo.PropertyType;
+        }
       }
+
       var coreType = MetaDataHelper.GetCoreType(valueType);
 
       dataGridViewEnumerable.DefaultCellBehavior = bindingSourceEnumerable.SupportsFiltering ? ADGVColumnHeaderCellBehavior.SortingFiltering : ADGVColumnHeaderCellBehavior.SortingStandartGlyph;
@@ -991,7 +930,7 @@ namespace AW.Winforms.Helpers.Controls
           DataPropertyName = e.Column.DataPropertyName,
           SortMode = e.Column.SortMode,
           Name = e.Column.Name,
-          DefaultCellStyle = e.Column.DefaultCellStyle,
+          DefaultCellStyle = e.Column.DefaultCellStyle
         };
         dataGridViewCheckBoxColumn.SortMode = e.Column.SortMode;
         if (valueType == typeof(bool?))
@@ -999,6 +938,7 @@ namespace AW.Winforms.Helpers.Controls
           dataGridViewCheckBoxColumn.ThreeState = true;
           dataGridViewCheckBoxColumn.DefaultCellStyle.NullValue = CheckState.Indeterminate;
         }
+
         dataGridView.Columns.Remove(e.Column);
         dataGridView.Columns.Add(dataGridViewCheckBoxColumn);
       }
@@ -1016,7 +956,10 @@ namespace AW.Winforms.Helpers.Controls
             //enumDataSource = enumDataSource.OfType<Enum>().Select(value => new {Display = value.EnumToString(), Value = Convert.ChangeType(value, valueType)}).ToList();
           }
           else
+          {
             HumanizedEnumConverter.AddEnumerationConverter(valueType);
+          }
+
           var enumDataGridViewComboBoxColumn = new DataGridViewComboBoxColumn
           {
             HeaderText = e.Column.HeaderText,
@@ -1033,6 +976,7 @@ namespace AW.Winforms.Helpers.Controls
             enumDataGridViewComboBoxColumn.ValueMember = "Value";
             enumDataGridViewComboBoxColumn.DisplayMember = "Display";
           }
+
           dataGridView.Columns.Remove(e.Column);
           dataGridView.Columns.Add(enumDataGridViewComboBoxColumn);
           enumDataGridViewComboBoxColumn.SortMode = e.Column.SortMode;
@@ -1053,6 +997,7 @@ namespace AW.Winforms.Helpers.Controls
           dataGridView.Columns.Add(dataGridViewDateTimeColumn);
         }
       }
+
       //else if(e.Column.Tag==null)
       //{
       //  dataGridView.Columns.Remove(e.Column);
@@ -1078,6 +1023,7 @@ namespace AW.Winforms.Helpers.Controls
           e.Value = ""; //e.CellStyle.NullValue
           e.FormattingApplied = true;
         } //e.Value = e.Value.ToString();
+
         //else
         //  if (e.Value is ValueTypeWrapper)
         //  {
@@ -1105,6 +1051,7 @@ namespace AW.Winforms.Helpers.Controls
           dataGridViewEnumerable.AutoGenerateColumns = false;
           dataGridViewEnumerable.AutoGenerateColumns = true;
         }
+
         // Resize the master DataGridView columns to fit the newly loaded data.
         dataGridViewEnumerable.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.DisplayedCells);
         foreach (var column in dataGridViewEnumerable.Columns.Cast<DataGridViewColumn>().Where(column => column.Width > MaxAutoGenerateColumnWidth))
@@ -1145,13 +1092,15 @@ namespace AW.Winforms.Helpers.Controls
     private async void toolStripButtonUnPage_ClickAsync(object sender, EventArgs e)
     {
       _cancellationTokenSource = new CancellationTokenSource();
-      await ChangePageSizeAsync(0, _cancellationTokenSource.Token);
+      // ReSharper disable once AsyncConverter.AsyncAwaitMayBeElidedHighlighting
+      await ChangePageSizeAsync(0, _cancellationTokenSource.Token).ConfigureAwait(false);
     }
 
     private async void toolStripButtonSetPageSize_Click(object sender, EventArgs e)
     {
       _cancellationTokenSource = new CancellationTokenSource();
-      await ChangePageSizeAsync(Convert.ToUInt16(toolStripTextBoxNewPageSize.Text), _cancellationTokenSource.Token);
+      // ReSharper disable once AsyncConverter.AsyncAwaitMayBeElidedHighlighting
+      await ChangePageSizeAsync(Convert.ToUInt16(toolStripTextBoxNewPageSize.Text), _cancellationTokenSource.Token).ConfigureAwait(false);
     }
 
     private void ChangePageSize(ushort pageSize)
@@ -1167,7 +1116,7 @@ namespace AW.Winforms.Helpers.Controls
     {
       if (PageSize == pageSize) return;
       PageSize = pageSize;
-      await BindEnumerableAsync(SourceEnumerable, cancellationToken);
+      await BindEnumerableAsync(SourceEnumerable, cancellationToken).ConfigureAwait(true);
       if (pageSize == 0)
         toolStripLabelSuperSetCount.Text = "";
     }
@@ -1185,43 +1134,6 @@ namespace AW.Winforms.Helpers.Controls
         toolStripButtonEnableFilter.Visible = false;
       }
     }
-
-    private IList BindingSourceEnumerableList
-    {
-      get { return bindingSourceEnumerable.List; }
-    }
-
-    private IEnumerable SourceEnumerable
-    {
-      get { return _superset ?? PageSourceEnumerable; }
-    }
-
-    private IEnumerable PageSourceEnumerable
-    {
-      get { return bindingSourceEnumerable.GetDataSource(); }
-    }
-
-    private DataView SourceDataView
-    {
-      get { return SourceEnumerable as DataView; }
-    }
-
-    public IDataEditorPersister DataEditorPersister
-    {
-      get { return _dataEditorPersister; }
-      set
-      {
-        _dataEditorPersister = value;
-        _dataEditorPersisterWithCounts = value as IDataEditorPersisterWithCounts;
-        toolStripButtonRelatedCounts.Enabled = _dataEditorPersisterWithCounts != null;
-      }
-    }
-
-    public Func<IEnumerable, Type, IBindingListView> BindingListViewCreater;
-    public Func<IEnumerable, Type, CancellationToken, Task<IBindingListView>> AsyncBindingListViewCreaters;
-    private readonly ToolStripButton _searchToolStripButton;
-    private readonly ToolStripTextBox _searchToolStripTextBox;
-    private CancellationTokenSource _cancellationTokenSource;
 
     private void toolStripButtonClearFilters_Click(object sender, EventArgs e)
     {
@@ -1265,6 +1177,7 @@ namespace AW.Winforms.Helpers.Controls
           startRow = dataGridViewEnumerable.CurrentCell.RowIndex + (endcol ? 1 : 0);
         }
       }
+
       var c = dataGridViewEnumerable.FindCell(
         e.ValueToSearch,
         e.ColumnToSearch != null ? e.ColumnToSearch.Name : null,
@@ -1273,7 +1186,6 @@ namespace AW.Winforms.Helpers.Controls
         e.WholeWord,
         e.CaseSensitive);
       if (c == null && startRow != 0)
-      {
         c = dataGridViewEnumerable.FindCell(
           e.ValueToSearch,
           e.ColumnToSearch != null ? e.ColumnToSearch.Name : null,
@@ -1281,7 +1193,6 @@ namespace AW.Winforms.Helpers.Controls
           0,
           e.WholeWord,
           e.CaseSensitive);
-      }
       if (c != null)
         dataGridViewEnumerable.CurrentCell = c;
     }
@@ -1314,23 +1225,10 @@ namespace AW.Winforms.Helpers.Controls
       var selectedColumns = dataGridViewEnumerable.SelectedColumns.OfType<DataGridViewTextBoxColumn>().ToList();
       if (selectedColumns.Any())
         foreach (var selectedColumn in selectedColumns)
-        {
           selectedColumn.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-        }
       else
-      {
         foreach (var dataGridTextBoxColumn in dataGridViewEnumerable.SelectedCells.OfType<DataGridViewTextBoxCell>())
-        {
           dataGridTextBoxColumn.Style.WrapMode = DataGridViewTriState.True;
-        }
-        //         var currentDataGridTextBoxColumn = dataGridViewEnumerable.CurrentCell as ;
-        // if (currentDataGridTextBoxColumn != null)
-        // {
-        ////   currentDataGridTextBoxColumn.WrapMode = DataGridViewTriState.True;
-        //   dataGridViewEnumerable.CurrentCell.Style.WrapMode = DataGridViewTriState.True;
-        //  // dataGridViewEnumerable.CurrentCell.
-        // }
-      }
 
       dataGridViewEnumerable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
     }
@@ -1338,11 +1236,7 @@ namespace AW.Winforms.Helpers.Controls
     private void dataGridViewEnumerable_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
     {
       var textBox = e.Control as TextBox;
-      if (textBox != null)
-      {
-        //textBox.Multiline = true;
-        textBox.ScrollBars = ScrollBars.Both;
-      }
+      if (textBox != null) textBox.ScrollBars = ScrollBars.Both;
     }
 
     private void toolStripButtonCellPopOut_Click(object sender, EventArgs e)
@@ -1375,36 +1269,12 @@ namespace AW.Winforms.Helpers.Controls
       return Helper.Properties.Settings.Default.PropertiesToExclude;
     }
 
-    public void BeginInit()
-    {
-      ((ISupportInitialize) bindingSourceEnumerable).BeginInit();
-      ((ISupportInitialize) bindingNavigatorData).BeginInit();
-      ((ISupportInitialize) dataGridViewEnumerable).BeginInit();
-      ((ISupportInitialize) bindingNavigatorPaging).BeginInit();
-      ((ISupportInitialize) bindingSourcePaging).BeginInit();
-      ((ISupportInitialize) dataGridEnumerable).BeginInit();
-    }
-
-    public void EndInit()
-    {
-      ((ISupportInitialize) bindingSourceEnumerable).EndInit();
-      ((ISupportInitialize) bindingNavigatorData).EndInit();
-      ((ISupportInitialize) dataGridViewEnumerable).EndInit();
-      ((ISupportInitialize) bindingNavigatorPaging).EndInit();
-      ((ISupportInitialize) bindingSourcePaging).EndInit();
-      ((ISupportInitialize) dataGridEnumerable).EndInit();
-    }
-
     private void toolStripButtonRelatedCounts_Click(object sender, EventArgs e)
     {
       if (bindingSourceEnumerable.Current != null)
       {
         var existingRelatedCounts = GetExistingRelatedCounts(bindingSourceEnumerable.Current);
-        if (existingRelatedCounts.Any())
-        {
-          //toolStripLabelNumChildren.Text = existingRelatedCounts.JoinAsString(Environment.NewLine);
-          MessageBox.Show(existingRelatedCounts.JoinAsString(Environment.NewLine), string.Format("Number of references to {0}", bindingSourceEnumerable.Current));
-        }
+        if (existingRelatedCounts.Any()) MessageBox.Show(existingRelatedCounts.JoinAsString(Environment.NewLine), string.Format("Number of references to {0}", bindingSourceEnumerable.Current));
       }
     }
 
@@ -1437,23 +1307,132 @@ namespace AW.Winforms.Helpers.Controls
     }
 
     /// <summary>
-    /// Handles the CurrentCellDirtyStateChanged event of the dataGridViewEnumerable control.
+    ///   Handles the CurrentCellDirtyStateChanged event of the dataGridViewEnumerable control.
     /// </summary>
     /// <remarks>http://stackoverflow.com/questions/9608343/datagridview-combobox-column-change-cell-value-after-selection-from-dropdown-is</remarks>
     /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
     private void dataGridViewEnumerable_CurrentCellDirtyStateChanged(object sender, EventArgs e)
     {
       var dataGridView = sender as DataGridView;
       if (dataGridView == null)
         return;
       var isComboBox = dataGridView.CurrentCell is DataGridViewComboBoxCell;
-      if ((isComboBox || dataGridView.CurrentCell is DataGridViewCheckBoxCell) 
-        && dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit) 
-        && isComboBox && dataGridView.EndEdit())
+      if ((isComboBox || dataGridView.CurrentCell is DataGridViewCheckBoxCell)
+          && dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit)
+          && isComboBox && dataGridView.EndEdit())
         dataGridView.BindingContext[dataGridView.DataSource].EndCurrentEdit();
     }
 
 
+
+    #region Properties
+
+    [Category("Data")]
+    [Description("Delay binding until the grid is visible")]
+    public bool DelayBind { get; set; }
+
+    [Category("Data")]
+    [Description("Show public fields as well as properties, used by LINQPad LINQToSQL")]
+    public bool ShowPublicFields { get; set; }
+
+    [Category("Data")]
+    [Description("Size of the page")]
+    public ushort PageSize
+    {
+      get { return _pageSize; }
+      set
+      {
+        _pageSize = value;
+        toolStripLabelCurrentPagesSize.Text = _pageSize.ToString(CultureInfo.InvariantCulture);
+        OnPropertyChanged();
+      }
+    }
+
+    [Description("Deletes cascade non-recursively to children of the selected entity")]
+    public bool CascadeDeletes
+    {
+      get { return toolStripCheckBoxDeletesAreCascading.Checked; }
+      set { toolStripCheckBoxDeletesAreCascading.Checked = value; }
+    }
+
+    [Category("GridDataEditor")]
+    [Description("Gets or sets wether filtering is enabled in the grid, even if the underlying collection doesn't support it.")]
+    public bool EnsureFilteringEnabled { get; set; }
+
+    [AttributeProvider(typeof(IListSource))]
+    [Category("Data")]
+    [Description("Data source of the tree.")]
+    public object DataSource
+    {
+      get { return bindingSourceEnumerable.DataSource; }
+      set
+      {
+        if (bindingSourceEnumerable.DataSource != value)
+          bindingSourceEnumerable.DataSource = value;
+      }
+    }
+
+    [Editor("System.Windows.Forms.Design.DataMemberListEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
+    [RefreshProperties(RefreshProperties.Repaint)]
+    [Category("Data")]
+    [Description("Data member of the tree.")]
+    public string DataMember
+    {
+      get { return bindingSourceEnumerable.DataMember; }
+      set
+      {
+        if (bindingSourceEnumerable.DataMember != value)
+          bindingSourceEnumerable.DataMember = value;
+      }
+    }
+
+    [Description("ToolStripItemsDescr")]
+    [MergableProperty(false)]
+    [Category("CatData")]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+    public ToolStripItemCollection Items
+    {
+      get { return BindingNavigator.Items; }
+    }
+
+    public BindingNavigator BindingNavigator
+    {
+      get { return bindingNavigatorData; }
+    }
+
+    public BindingSource BindingSource
+    {
+      get { return bindingSourceEnumerable; }
+    }
+
+    /// <summary>
+    ///   Gets or sets a value indicating whether the grid was set read-only.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if [read-only]; otherwise, <c>false</c>.
+    /// </value>
+    [Browsable(true)]
+    [DefaultValue(false)]
+    public bool Readonly
+    {
+      get { return dataGridViewEnumerable.ReadOnly; }
+      set { dataGridViewEnumerable.ReadOnly = value; }
+    }
+
+    /// <summary>
+    ///   Was the last bound Enumerable not writable when grid is not read-only
+    /// </summary>
+    private bool _shouldBeReadonly;
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    [NotifyPropertyChangedInvocator]
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+      if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    #endregion
   }
 }

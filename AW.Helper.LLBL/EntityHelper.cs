@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -102,7 +103,7 @@ namespace AW.Helper.LLBL
 
     public static IQueryProvider GetProvider(ILinqMetaData linqMetaData)
     {
-      return linqMetaData == null ? null : linqMetaData.GetQueryableForEntity(0).Provider;
+      return linqMetaData?.GetQueryableForEntity(0).Provider;
     }
 
     public static IQueryable CreateLLBLGenProQueryFromEnumerableExpression(IQueryProvider provider, Expression expression)
@@ -133,8 +134,7 @@ namespace AW.Helper.LLBL
     private static Tuple<Expression, Expression, Expression> GetMethodCallExpressionParts(Tuple<Expression, Expression, Expression> result
       , Expression expression)
     {
-      var methodCallExpression = expression as MethodCallExpression;
-      if (methodCallExpression != null)
+      if (expression is MethodCallExpression methodCallExpression)
       {
         if (methodCallExpression.Method.Name == "Where")
           result = new Tuple<Expression, Expression, Expression>(result.Item1, methodCallExpression.Arguments.Last(), result.Item3);
@@ -245,12 +245,12 @@ namespace AW.Helper.LLBL
       return GetFactoryCore(enumerable, typeof(T));
     }
 
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     private static IEntityFactoryCore GetFactoryCore(IEnumerable enumerable, Type type)
     {
       if (!enumerable.IsNullOrEmpty())
       {
-        var first = enumerable.OfType<object>().FirstOrDefault(e => e.GetType() == type) as IEntityCore;
-        if (first != null) return GetFactoryCore(first);
+        if (enumerable.OfType<object>().FirstOrDefault(e => e.GetType() == type) is IEntityCore first) return GetFactoryCore(first);
       }
       return GetFactoryCore(type);
     }
@@ -308,10 +308,10 @@ namespace AW.Helper.LLBL
 
     #endregion GetEntitiesType
 
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public static IEntityCollectionCore ToEntityCollection(IEnumerable enumerable, Type itemType)
     {
-      var entities = enumerable as IEntityCollectionCore;
-      if (entities != null)
+      if (enumerable is IEntityCollectionCore entities)
         return entities;
       var llblQuery = enumerable as ILLBLGenProQuery;
       entities = ToEntityCollectionCore(llblQuery);
@@ -328,13 +328,13 @@ namespace AW.Helper.LLBL
       return entities;
     }
 
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public static async Task<IEntityCollectionCore> ToEntityCollectionAsync(IEnumerable enumerable, Type itemType, CancellationToken cancellationToken)
     {
-      var entities = enumerable as IEntityCollectionCore;
-      if (entities != null)
+      if (enumerable is IEntityCollectionCore entities)
         return entities;
       var llblQuery = enumerable as ILLBLGenProQuery;
-      entities = await ToEntityCollectionCoreAsync(llblQuery, cancellationToken);
+      entities = await ToEntityCollectionCoreAsync(llblQuery, cancellationToken).ConfigureAwait(false);
       if (entities == null)
       {
         var entityFactoryCore = GetFactoryCore(enumerable, itemType);
@@ -350,15 +350,13 @@ namespace AW.Helper.LLBL
 
     public static IEntityCollectionCore ToEntityCollectionCore(ILLBLGenProQuery llblQuery)
     {
-      if (llblQuery != null)
-        return llblQuery.Execute<IEntityCollectionCore>();
-      return null;
+      return llblQuery?.Execute<IEntityCollectionCore>();
     }
 
     public static async Task<IEntityCollectionCore> ToEntityCollectionCoreAsync(ILLBLGenProQuery llblQuery, CancellationToken cancellationToken)
     {
       if (llblQuery != null)
-        return await llblQuery.ExecuteAsync<IEntityCollectionCore>(cancellationToken);
+        return await llblQuery.ExecuteAsync<IEntityCollectionCore>(cancellationToken).ConfigureAwait(false);
       return null;
     }
 
@@ -380,7 +378,7 @@ namespace AW.Helper.LLBL
 
     public static async Task<IBindingListView> CreateEntityViewAsync(IEnumerable enumerable, Type itemType, CancellationToken cancellationToken)
     {
-      var entityCollectionCore = await ToEntityCollectionAsync(enumerable, itemType, cancellationToken);
+      var entityCollectionCore = await ToEntityCollectionAsync(enumerable, itemType, cancellationToken).ConfigureAwait(false);
       if (entityCollectionCore == null) return null;
       var entityCollection = entityCollectionCore as IEntityCollection;
       if (entityCollection == null)
@@ -396,11 +394,9 @@ namespace AW.Helper.LLBL
 
     public static IEntityCollectionCore GetRelatedCollection(IBindingList entityView)
     {
-      var view = entityView as IEntityView;
-      if (view == null)
+      if (!(entityView is IEntityView view))
       {
-        var view2 = entityView as IEntityView2;
-        if (view2 != null)
+        if (entityView is IEntityView2 view2)
           return view2.RelatedCollection;
       }
       else
@@ -461,8 +457,7 @@ namespace AW.Helper.LLBL
       if (collection == null)
       {
         var entityCollection2 = entityCollection as IEntityCollection2;
-        if (entityCollection2 != null)
-          entityCollection2.RevertChangesToDBValue();
+        entityCollection2?.RevertChangesToDBValue();
       }
       else
         collection.RevertChangesToDBValue();
@@ -496,7 +491,7 @@ namespace AW.Helper.LLBL
 
     public static IEnumerable<IEntityCore> WhereDeleted(this IEnumerable<IEntityCore> entities)
     {
-      return entities.Where(entity => IsDeleted(entity));
+      return entities.Where(IsDeleted);
     }
 
     public static bool IsDeleted(this IEntityCore entity)
@@ -544,8 +539,8 @@ namespace AW.Helper.LLBL
         modifiedEntities = ((IEntityView2) modifiedEntities).RelatedCollection;
         postCollectionChangeActionNoAction = view2.DataChangeAction == PostCollectionChangeAction.NoAction;
       }
-      var entities = modifiedEntities as IEntityCollectionCore;
-      if (entities != null)
+
+      if (modifiedEntities is IEntityCollectionCore entities)
       {
         var entityCollection = entities;
         if (entityCollection.RemovedEntitiesTracker != null)
@@ -557,11 +552,9 @@ namespace AW.Helper.LLBL
           }
           try
           {
-            var collection = modifiedEntities as IEntityCollection;
-            if (collection == null)
+            if (!(modifiedEntities is IEntityCollection collection))
             {
-              var entityCollection2 = modifiedEntities as IEntityCollection2;
-              if (entityCollection2 != null)
+              if (modifiedEntities is IEntityCollection2 entityCollection2)
               {
                 foreach (var entity in WhereNotDeleted(entityCollection.RemovedEntitiesTracker.AsEnumerable())) //Hasn't been deleted
                 {
@@ -584,8 +577,7 @@ namespace AW.Helper.LLBL
           }
         }
         RevertChangesToDBValue(entityCollection);
-        if (entityCollection.RemovedEntitiesTracker != null)
-          entityCollection.RemovedEntitiesTracker.Clear();
+        entityCollection.RemovedEntitiesTracker?.Clear();
       }
       else
       {
@@ -605,8 +597,7 @@ namespace AW.Helper.LLBL
     /// </param>
     public static void Undo(object modifiedData)
     {
-      var unitOfWorkCore = modifiedData as IUnitOfWorkCore;
-      if (unitOfWorkCore != null)
+      if (modifiedData is IUnitOfWorkCore unitOfWorkCore)
       {
         Undo(unitOfWorkCore);
         return;
@@ -617,8 +608,7 @@ namespace AW.Helper.LLBL
         var enumerable = modifiedData as IEnumerable;
         if (enumerable == null)
         {
-          var entity = modifiedData as IEntity;
-          if (entity != null)
+          if (modifiedData is IEntity entity)
             RevertChangesToDBValue(entity);
           else
             RevertChangesToDBValue((IEntity2) modifiedData);
@@ -630,11 +620,9 @@ namespace AW.Helper.LLBL
 
     private static void Undo(IUnitOfWorkCore unitOfWorkCore)
     {
-      var unitOfWork = unitOfWorkCore as UnitOfWork;
-      if (unitOfWork == null)
+      if (!(unitOfWorkCore is UnitOfWork unitOfWork))
       {
-        var unitOfWork2 = unitOfWorkCore as UnitOfWork2;
-        if (unitOfWork2 != null)
+        if (unitOfWorkCore is UnitOfWork2 unitOfWork2)
         {
           foreach (var unitOfWorkCollectionElement2 in unitOfWork2.GetCollectionElementsToSave())
             Undo(unitOfWorkCollectionElement2.Collection);
@@ -659,11 +647,9 @@ namespace AW.Helper.LLBL
 
     public static bool IsDirty(IUnitOfWorkCore unitOfWorkCore)
     {
-      var unitOfWork = unitOfWorkCore as UnitOfWork;
-      if (unitOfWork == null)
+      if (!(unitOfWorkCore is UnitOfWork unitOfWork))
       {
-        var unitOfWork2 = unitOfWorkCore as UnitOfWork2;
-        if (unitOfWork2 != null)
+        if (unitOfWorkCore is UnitOfWork2 unitOfWork2)
         {
           if (unitOfWork2.GetCollectionElementsToSave().Any())
             return true;
@@ -698,8 +684,7 @@ namespace AW.Helper.LLBL
         var entityCollection = data as IEntityCollection;
         if (entityCollection == null)
         {
-          var entityCollection2 = data as IEntityCollection2;
-          return entityCollection2 != null && (entityCollection2.ContainsDirtyContents
+          return data is IEntityCollection2 entityCollection2 && (entityCollection2.ContainsDirtyContents
                                                || ContainsEntityFieldsErrors(entityCollection2)
                                                || (entityCollection2.RemovedEntitiesTracker != null && entityCollection2.RemovedEntitiesTracker.Count > 0))
             //   || entityCollection2.AsEnumerable().Any(e=>e.IsNew)
@@ -736,8 +721,7 @@ namespace AW.Helper.LLBL
       if (llblQuery != null)
         return llblQuery.Execute<EntityCollectionBase<T>>();
       var entities = ((IEntityFactory) GetFactoryCore(enumerable)).CreateEntityCollection() as EntityCollectionBase<T>;
-      if (entities != null)
-        entities.AddRange(enumerable);
+      entities?.AddRange(enumerable);
       return entities;
     }
 
@@ -853,7 +837,7 @@ namespace AW.Helper.LLBL
           DeleteEntities(entityCollection.RemovedEntitiesTracker, unitOfWork);
         unitOfWork.AddCollectionForSave(entityCollection);
         modifyCount = unitOfWork.Commit(transaction);
-        if (entityCollection.RemovedEntitiesTracker != null) entityCollection.RemovedEntitiesTracker.Clear();
+        entityCollection.RemovedEntitiesTracker?.Clear();
         return modifyCount;
       }
       return entitiesToSave.Cast<EntityBase>().Count(entity => entity.IsDirty && entity.Save());
@@ -1643,9 +1627,7 @@ namespace AW.Helper.LLBL
       if (llblGenProProvider2 == null)
       {
         var llblGenProProvider = provider as LLBLGenProProvider;
-        if (llblGenProProvider == null)
-          return null;
-        return llblGenProProvider.TransactionToUse; //Usually null
+        return llblGenProProvider?.TransactionToUse; //Usually null
       }
       return llblGenProProvider2.AdapterToUse;
     }
@@ -1782,14 +1764,14 @@ namespace AW.Helper.LLBL
     {
       var ef = CreateEntity(type) as IEntity;
       //			return ef.Create().Fields;
-      return ef == null ? null : ef.Fields;
+      return ef?.Fields;
     }
 
     public static IEntityFields2 GetFieldsFromType2(Type type)
     {
       var ef = CreateEntity(type) as IEntity2;
       //			return ef.Create().Fields;
-      return ef == null ? null : ef.Fields;
+      return ef?.Fields;
     }
 
     public static IEnumerable<PropertyDescriptor> GetNavigatorProperties(IEntityCore entityCore)
@@ -1834,7 +1816,7 @@ namespace AW.Helper.LLBL
     public static IFieldPersistenceInfo GetFieldPersistenceInfo(IDataAccessAdapter dataAccessAdapter, IEntityField2 field)
     {
       var fullListQueryMethod = dataAccessAdapter.GetType().GetMethod("GetFieldPersistenceInfo", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {typeof(IEntityField2)}, null);
-      return fullListQueryMethod.Invoke(dataAccessAdapter, new[] {field}) as IFieldPersistenceInfo;
+      return fullListQueryMethod?.Invoke(dataAccessAdapter, new[] {field}) as IFieldPersistenceInfo;
     }
 
     public static IFieldPersistenceInfo GetFieldPersistenceInfoSafely(IDataAccessAdapter dataAccessAdapter, IEntityField2 field)
@@ -1853,8 +1835,7 @@ namespace AW.Helper.LLBL
 
     public static IFieldPersistenceInfo GetFieldPersistenceInfo(IEntityFieldCore field, IDataAccessAdapter adapter = null)
     {
-      var entityField = field as IEntityField;
-      if (entityField != null)
+      if (field is IEntityField entityField)
         return entityField;
       return adapter == null ? null : GetFieldPersistenceInfo(adapter, (IEntityField2) field);
     }
@@ -1915,8 +1896,7 @@ namespace AW.Helper.LLBL
         var contextAwareElement = potentialContextAwareElement as IContextAwareElement;
         if (contextAwareElement == null)
         {
-          var queryable = potentialContextAwareElement as IQueryable;
-          if (queryable != null)
+          if (potentialContextAwareElement is IQueryable queryable)
             contextAwareElement = queryable.Provider as IContextAwareElement;
         }
         if (contextAwareElement == null)

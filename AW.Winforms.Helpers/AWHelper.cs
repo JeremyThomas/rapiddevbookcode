@@ -224,7 +224,7 @@ namespace AW.Winforms.Helpers
     }
 
     /// <summary>
-    ///   Recursivly gets all the contained controls.
+    ///   Recursively gets all the contained controls.
     /// </summary>
     /// <param name="controls">The controls.</param>
     /// <see cref="http://weblogs.asp.net/dfindley/archive/2007/06/29/linq-the-uber-findcontrol.aspx" />
@@ -243,7 +243,7 @@ namespace AW.Winforms.Helpers
     }
 
     /// <summary>
-    ///   Recursivly gets all the contained controls.
+    ///   Recursively gets all the contained controls.
     /// </summary>
     /// <param name="control">The control.</param>
     /// <returns>All the contained controls.</returns>
@@ -251,6 +251,44 @@ namespace AW.Winforms.Helpers
     {
       return control.Controls.All();
     }
+
+    
+    //https://stackoverflow.com/questions/31007145/asynchronous-ui-updates-in-winforms
+
+    public static void Do<TControl>(TControl control, Action<TControl> action) where TControl : Control
+    {
+      if (control.InvokeRequired)
+        control.Invoke(action, control);
+      else
+        action(control);
+    }
+
+    public static void SetToolStripItemVisible(object sender, bool bValue)
+    {
+      var menuStripItem = (ToolStripItem) sender;
+      var currentParent = menuStripItem.GetCurrentParent();
+      if (currentParent.InvokeRequired)
+      {
+        currentParent.Invoke(new AWHelper.SetMenuItemEnableHandler(SetToolStripItemVisible), sender, bValue);
+      }
+      else
+        menuStripItem.Visible = bValue;
+    }
+
+    private delegate void SetToolstripValueCallback(ToolStripItem toolstripItem, string property, object value);
+
+    //https://stackoverflow.com/questions/7145408/invoke-toolstripmenuitem
+    //public static void DoToolStripItem<TControl>(TControl ToolStripItem, Action<TControl> action) where TControl : ToolStripItem
+    //{
+    //  var toolStrip = ToolStripItem.GetCurrentParent();
+    //  SetToolstripValueCallback callback = new SetToolstripValueCallback(SetToolstripPropertyValue);
+
+    //  toolstripItem.Owner.Invoke(callback, new object[] { toolstripItem, property, value });
+    //}
+
+    //https://www.codeproject.com/Questions/159320/Enabling-Disabling-menu-item-from-different-thread
+
+    public delegate void SetMenuItemEnableHandler(object sender, bool bValue);
 
     #endregion
 
