@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -95,6 +96,7 @@ namespace AW.Helper
       return GetAssembly(AppDomain.CurrentDomain.GetAssemblies(), assemblyName);
     }
 
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public static Assembly GetAssembly(this IEnumerable<Assembly> assemblies, AssemblyName assemblyName)
     {
       try
@@ -112,6 +114,7 @@ namespace AW.Helper
       return GetAssembly(AppDomain.CurrentDomain.GetAssemblies(), assemblyName);
     }
 
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public static Assembly GetAssembly(this IEnumerable<Assembly> assemblies, string assemblyName)
     {
       try
@@ -310,7 +313,7 @@ namespace AW.Helper
     /// <exception cref="System.ArgumentNullException">assembly</exception>
     public static IEnumerable<Type> GetLoadableTypes(this Assembly assembly)
     {
-      if (assembly == null) throw new ArgumentNullException("assembly");
+      if (assembly == null) throw new ArgumentNullException(nameof(assembly));
       try
       {
         return assembly.GetTypes();
@@ -484,8 +487,8 @@ namespace AW.Helper
 
     public static Type GetElementType(Type enumerableType)
     {
-      var ienumType = FindGenericType(typeof (IEnumerable<>), enumerableType);
-      return ienumType == null ? enumerableType : GetTypeParameterOfGenericType(ienumType);
+      var enumType = FindGenericType(typeof (IEnumerable<>), enumerableType);
+      return enumType == null ? enumerableType : GetTypeParameterOfGenericType(enumType);
     }
 
     internal static Type FindGenericType(Type definition, Type type)
@@ -495,7 +498,7 @@ namespace AW.Helper
         if (type.IsGenericType && type.GetGenericTypeDefinition() == definition)
           return type;
         if (definition.IsInterface)
-          foreach (var found in type.GetInterfaces().Select(itype => FindGenericType(definition, itype)).Where(found => found != null))
+          foreach (var found in type.GetInterfaces().Select(iType => FindGenericType(definition, iType)).Where(found => found != null))
             return found;
         type = type.BaseType;
       }
@@ -542,8 +545,7 @@ namespace AW.Helper
       var enumerable = potentialEnumerable as IEnumerable;
       if (enumerable == null)
       {
-        var dataTable = potentialEnumerable as DataTable;
-        if (dataTable != null)
+        if (potentialEnumerable is DataTable dataTable)
           enumerable = dataTable.DefaultView;
       }
       return enumerable;
@@ -551,8 +553,7 @@ namespace AW.Helper
 
     private static Array ConvertToArray(ICollection collection)
     {
-      var array = collection as Array;
-      if (array != null) return array;
+      if (collection is Array array) return array;
       array = Array.CreateInstance(GetEnumerableItemType(collection), collection.Count);
       collection.CopyTo(array, 0);
       return array;
@@ -573,8 +574,7 @@ namespace AW.Helper
     /// </returns>
     public static Type GetEnumerableItemType(IEnumerable enumerable, bool getActual = true)
     {
-      var queryable = enumerable as IQueryable;
-      if (queryable != null)
+      if (enumerable is IQueryable queryable)
         return queryable.ElementType;
       Type itemType;
       var enumerableType = enumerable.GetType();
@@ -615,7 +615,7 @@ namespace AW.Helper
     private static Type GetEnumerableItemTypeWithFirst(IEnumerable enumerable)
     {
       var first = enumerable.Cast<object>().FirstOrDefault();
-      return first == null ? null : first.GetType();
+      return first?.GetType();
     }
 
     /// <summary>
@@ -623,12 +623,11 @@ namespace AW.Helper
     /// </summary>
     /// <param name="o"> The object. </param>
     /// <returns> </returns>
-    public static Type GetObjectTypeorEnumerableItemType(object o)
+    public static Type GetObjectTypeOrEnumerableItemType(object o)
     {
       if (o == null)
         return null;
-      var objects = o as IEnumerable;
-      return objects == null ? o.GetType() : GetEnumerableItemType(objects);
+      return !(o is IEnumerable objects) ? o.GetType() : GetEnumerableItemType(objects);
     }
 
     /// <summary>
@@ -661,8 +660,7 @@ namespace AW.Helper
     public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay(IEnumerable enumerable)
     {
       var target = ListBindingHelper.GetList(enumerable);
-      var typedList = target as ITypedList;
-      if (typedList != null)
+      if (target is ITypedList typedList)
         return FilterToPropertiesToDisplay(typedList.GetItemProperties(null).AsEnumerable());
       var enumerableItemType = GetEnumerableItemType(enumerable);
       return GetPropertiesToDisplay(enumerableItemType == typeof(object) ? enumerable.GetType() : enumerableItemType);
@@ -827,9 +825,9 @@ namespace AW.Helper
 
       if (Environment.Version.Major < 4) // Not needed if .net 4.0 and FoldAllAssociatedMetadataProvidersIntoTheSubjectType(); is used
       {
-        var metadataAttrib = modelClass.GetCustomAttributes(typeof (MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
-        if (metadataAttrib != null)
-          modelClassProperties.AddRange(TypeDescriptor.GetProperties(metadataAttrib.MetadataClassType).AsEnumerable());
+        var metadataAttribute = modelClass.GetCustomAttributes(typeof (MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
+        if (metadataAttribute != null)
+          modelClassProperties.AddRange(TypeDescriptor.GetProperties(metadataAttribute.MetadataClassType).AsEnumerable());
       }
       return modelClassProperties;
     }
@@ -939,7 +937,7 @@ namespace AW.Helper
       if (displayNameAttribute != null)
         return displayNameAttribute.DisplayName;
       var descriptionAttribute = enumMember.GetCustomAttribute<DescriptionAttribute>();
-      return descriptionAttribute == null ? null : descriptionAttribute.Description;
+      return descriptionAttribute?.Description;
     }
 
     public static T[] GetCustomAttributes<T>(Type type, bool inherit = true) where T : Attribute
@@ -980,7 +978,7 @@ namespace AW.Helper
     public static string GetInformationalVersionAttribute(this Assembly assembly)
     {
       var assemblyInformationalVersionAttribute = GetCustomAttribute<AssemblyInformationalVersionAttribute>(assembly);
-      return assemblyInformationalVersionAttribute == null ? null : assemblyInformationalVersionAttribute.InformationalVersion;
+      return assemblyInformationalVersionAttribute?.InformationalVersion;
     }
 
     public static string GetProductVersion(this Assembly assembly)
@@ -992,19 +990,19 @@ namespace AW.Helper
     public static string GetTitle(this Assembly assembly)
     {
       var assemblyTitleAttribute = GetCustomAttribute<AssemblyTitleAttribute>(assembly);
-      return assemblyTitleAttribute == null ? null : assemblyTitleAttribute.Title;
+      return assemblyTitleAttribute?.Title;
     }
 
     public static string GetProduct(this Assembly assembly)
     {
       var assemblyTitleAttribute = GetCustomAttribute<AssemblyProductAttribute>(assembly);
-      return assemblyTitleAttribute == null ? null : assemblyTitleAttribute.Product;
+      return assemblyTitleAttribute?.Product;
     }
 
     public static string GetDescription(this Assembly assembly)
     {
       var assemblyDescriptionAttribute = GetCustomAttribute<AssemblyDescriptionAttribute>(assembly);
-      return assemblyDescriptionAttribute == null ? null : assemblyDescriptionAttribute.Description;
+      return assemblyDescriptionAttribute?.Description;
     }
 
     public static T GetCustomAttribute<T>(this Assembly assembly) where T : Attribute
@@ -1022,14 +1020,12 @@ namespace AW.Helper
 
     public static MethodInfo GetMethodInfo<T>(Expression<Action<T>> expression)
     {
-      var methodCallExpression = expression.Body as MethodCallExpression;
-      return methodCallExpression == null ? null : methodCallExpression.Method;
+      return !(expression.Body is MethodCallExpression methodCallExpression) ? null : methodCallExpression.Method;
     }
 
     public static MemberInfo GetMemberInfo<T>(Expression<Func<T, object>> expression)
     {
-      var memberExpression = expression.Body as MemberExpression;
-      return memberExpression == null ? null : memberExpression.Member;
+      return !(expression.Body is MemberExpression memberExpression) ? null : memberExpression.Member;
     }
 
     public static object GetPropertyValue(object obj, string propertyName)
@@ -1051,11 +1047,9 @@ namespace AW.Helper
 
     public static string GetDisplayName(Type type)
     {
-      var displayAttributes = Attribute.GetCustomAttribute(type, typeof (DisplayAttribute)) as DisplayAttribute;
-      if (displayAttributes == null)
+      if (!(Attribute.GetCustomAttribute(type, typeof(DisplayAttribute)) is DisplayAttribute displayAttributes))
       {
-        var displayNameAttributes = Attribute.GetCustomAttribute(type, typeof (DisplayNameAttribute)) as DisplayNameAttribute;
-        if (displayNameAttributes != null) return displayNameAttributes.DisplayName;
+        if (Attribute.GetCustomAttribute(type, typeof(DisplayNameAttribute)) is DisplayNameAttribute displayNameAttributes) return displayNameAttributes.DisplayName;
       }
       else
       {
@@ -1085,7 +1079,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    ///   DisplayNameAttribute comparer that gives precedent to LocalizedDisplayNameAttributeover others.
+    ///   DisplayNameAttribute comparer that gives precedent to LocalizedDisplayNameAttribute over others.
     /// </summary>
     /// <param name="displayNameAttributeX">The display name attribute X.</param>
     /// <param name="displayNameAttributeY">The display name attribute Y.</param>
@@ -1169,17 +1163,13 @@ namespace AW.Helper
         }
         return ((Enum) value).EnumToString();
       }
-      var dictionary = value as StringDictionary;
-      if (dictionary != null)
+      if (value is StringDictionary dictionary)
         return StringDictionaryToString(dictionary);
-      var value1 = value as IDictionary;
-      if (value1 != null)
+      if (value is IDictionary value1)
         return DictionaryToString(value1);
-      var list = value as ICollection;
-      if (list != null)
+      if (value is ICollection list)
         return ListToString(list, enumWithUnderlyingType);
-      var node = value as XmlNode;
-      if (node != null)
+      if (value is XmlNode node)
         return node.Name + "{" + node.InnerXml + "}";
       return ConvertToString(value);
     }
@@ -1192,19 +1182,19 @@ namespace AW.Helper
     public static IEnumerable<string> GetPropertiesAndValuesAsStringList(object myObject)
     {
       return from kv in GetPropertiesAndValues(myObject, false)
-        select String.Format("{0}={1}", kv.Key, DisplayAsString(kv.Value));
+        select $"{kv.Key}={DisplayAsString(kv.Value)}";
     }
 
     public static IEnumerable<string> GetReadablePropertiesAndValuesAsStringList(object myObject, params string[] propertiesToExclude)
     {
       return from kv in GetReadablePropertiesAndValuesAsStrings(myObject, propertiesToExclude)
-             select String.Format("{0}={1}", kv.Key, DisplayAsString(kv.Value));
+             select $"{kv.Key}={DisplayAsString(kv.Value)}";
     }
 
     public static IEnumerable<string> GetSpecifiedPropertiesAndValuesAsStringList(object myObject, params string[] propertiesToInclude)
     {
       return from kv in GetSpecifiedPropertiesAndValues(myObject, false, propertiesToInclude)
-        select String.Format("{0}={1}", kv.Key, DisplayAsString(kv.Value));
+        select $"{kv.Key}={DisplayAsString(kv.Value)}";
     }
 
     public static string ConvertToIdentifiableString(object myObject)
@@ -1278,8 +1268,7 @@ namespace AW.Helper
       var defaultValue = GetDefault(type);
       if (defaultValue == null)
       {
-        var collection = value as ICollection;
-        if (collection == null)
+        if (!(value is ICollection collection))
           return Convert.ToString(value) == type.ToString();
         return collection.Count == 0;
       }
@@ -1319,11 +1308,9 @@ namespace AW.Helper
     /// </returns>
     public static bool IsNullOrEmpty(object o)
     {
-      var enumerable = o as IEnumerable;
-      if (enumerable == null)
+      if (!(o is IEnumerable enumerable))
         return IsNull(o);
-      var strings = enumerable as IEnumerable<string>;
-      if (strings == null)
+      if (!(enumerable is IEnumerable<string> strings))
         return !LinqHelper.Any(enumerable);
       return IsNullOrEmptyOrFirstIsNull(strings);
     }

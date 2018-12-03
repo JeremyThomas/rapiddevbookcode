@@ -151,7 +151,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
             }
             if (toDisplay != null)
             {
-              options.MembersToExclude = MembersToExcludeCache.GetMembersToExclude(MetaDataHelper.GetObjectTypeorEnumerableItemType(objectToDisplay), _membersToExclude);
+              options.MembersToExclude = MembersToExcludeCache.GetMembersToExclude(MetaDataHelper.GetObjectTypeOrEnumerableItemType(objectToDisplay), _membersToExclude);
               CustomVisualizers.DisplayInGrid(toDisplay, _howToDisplayInGrid == DisplayInGrid.UseEditableGrid ? (ushort) 0 : LINQPad.CustomVisualizers.DefaultPageSize, options);
               return;
             }
