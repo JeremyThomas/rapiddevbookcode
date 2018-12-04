@@ -11,7 +11,7 @@ namespace AW.LLBLGen.DataContextDriver
     /// </summary>
     public const string LLBLVersion = "4.2";
 
-    private const string CopyrightYear = "2017";
+    private const string CopyrightYear = "2018";
     public const string LLBLGenNameVersion = "LLBLGen Pro v" + LLBLVersion;
     public const string DriverName = "AW " + LLBLGenNameVersion;
     public const string Name = DriverName + " (v" + AssemblyVersion + ")";
@@ -19,7 +19,7 @@ namespace AW.LLBLGen.DataContextDriver
     public const string AssemblyProduct = "AW LLBLGen typed data context driver";
     public const string AssemblyDescription = LLBLGenNameVersion + " LINQPad typed data context driver";
     private const string MajorVersion = "3";
-    private const string MinorVersion = "2";
+    private const string MinorVersion = "3";
     private const string Version = MajorVersion + "." + MinorVersion;
     public const string AssemblyVersion = Version + ".0.0";
   }

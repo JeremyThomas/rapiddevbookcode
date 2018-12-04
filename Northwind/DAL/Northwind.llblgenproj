@@ -207,6 +207,7 @@ return schemaOracle.Views;]]></SavedQuery>
         <Namespaces>
           <Namespace Name="AW.Helper" />
           <Namespace Name="System.Linq" />
+          <Namespace Name="System.ComponentModel.DataAnnotations" />
         </Namespaces>
       </Defaults>
     </TargetElement>
@@ -242,6 +243,9 @@ return schemaOracle.Views;]]></SavedQuery>
               <CustomProperties>
                 <CustomProperty Name="MS_Description" Value="Name of food category." />
               </CustomProperties>
+              <Attributes>
+                <Attribute Value="Display(Name = &quot;Category Name&quot;)" />
+              </Attributes>
             </OutputSettingValues>
           </Field>
           <Field Name="Description" Type="string" IsOptional="true" MaxLength="1073741823" />
@@ -280,8 +284,20 @@ return schemaOracle.Views;]]></SavedQuery>
               </Attributes>
             </OutputSettingValues>
           </Field>
-          <Field Name="ContactName" Type="string" IsOptional="true" MaxLength="30" />
-          <Field Name="ContactTitle" Type="string" IsOptional="true" MaxLength="30" />
+          <Field Name="ContactName" Type="string" IsOptional="true" MaxLength="30">
+            <OutputSettingValues>
+              <Attributes>
+                <Attribute Value="Display(Name = &quot;Contact Name&quot;)" />
+              </Attributes>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="ContactTitle" Type="string" IsOptional="true" MaxLength="30">
+            <OutputSettingValues>
+              <Attributes>
+                <Attribute Value="Display(Name = &quot;Contact Title&quot;)" />
+              </Attributes>
+            </OutputSettingValues>
+          </Field>
           <Field Name="Country" Type="string" IsOptional="true" MaxLength="15" />
           <Field Name="CustomerId" Type="string" MaxLength="5" IsPrimaryKey="true">
             <OutputSettingValues>
@@ -529,9 +545,6 @@ return schemaOracle.Views;]]></SavedQuery>
           <Field Name="UnitPrice" Type="decimal" Precision="19" Scale="4" />
         </Fields>
         <OutputSettingValues>
-          <Namespaces>
-            <Namespace Name="System.ComponentModel.DataAnnotations" />
-          </Namespaces>
           <Attributes>
             <Attribute Value="System.Data.Services.Common.DataServiceKeyAttribute(&quot;OrderId&quot;)" />
             <Attribute Value="MetadataType(typeof(IOrderDetailMetadata))" />

@@ -20,6 +20,7 @@ using Northwind.DAL.FactoryClasses;
 using Northwind.DAL.RelationClasses;
 using AW.Helper;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.EntityClasses

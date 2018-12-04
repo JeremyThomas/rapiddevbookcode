@@ -10,6 +10,7 @@ using AW.Data.Linq;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.LLBLGen.DataContextDriver.Static;
+using FluentAssertions;
 using LINQPad.Extensibility.DataContext;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -118,6 +119,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
       var customerExplorerItem = TestNorthWindToolTips(explorerItems);
       var employeeExplorerItem = customerExplorerItem.Children.Single(e => e.Text == "EmployeesViaOrders");
       Assert.AreEqual(ExplorerIcon.ManyToMany, employeeExplorerItem.Icon);
+
     }
 
     private static ExplorerItem TestNorthWindToolTips(List<ExplorerItem> explorerItems, bool testForeignKey = true)
@@ -128,22 +130,22 @@ namespace AW.LLBLGen.DataContextDriver.Tests
       var orderExplorerItem = explorerItems.Single(e => e.Text == EntityHelper.GetNameFromEntityEnum(Northwind.DAL.EntityType.OrderEntity));
       var customerNavigator = orderExplorerItem.Children.Single(e => e.Text == customerName);
 
-      var customerEntitytype = typeof (Northwind.DAL.EntityClasses.CustomerEntity);
-      var displayNameAttributes = MetaDataHelper.GetDisplayNameAttributes(customerEntitytype).ToList();
+      var customerEntityType = typeof (Northwind.DAL.EntityClasses.CustomerEntity);
+      var displayNameAttributes = MetaDataHelper.GetDisplayNameAttributes(customerEntityType).ToList();
       foreach (var displayNameAttribute in displayNameAttributes)
       {
-        StringAssert.Contains(explorerItem.ToolTipText, displayNameAttribute.DisplayName);
-        StringAssert.Contains(customerNavigator.ToolTipText, displayNameAttribute.DisplayName);
+        explorerItem.ToolTipText.Should().Contain(displayNameAttribute.DisplayName);
+        customerNavigator.ToolTipText.Should().Contain(displayNameAttribute.DisplayName);
       }
-      var descriptionAttributes = MetaDataHelper.GetDescriptionAttributes(customerEntitytype).ToList();
+      var descriptionAttributes = MetaDataHelper.GetDescriptionAttributes(customerEntityType).ToList();
       foreach (var descriptionAttribute in descriptionAttributes)
       {
-        StringAssert.Contains(explorerItem.ToolTipText, descriptionAttribute.Description);
-        StringAssert.Contains(customerNavigator.ToolTipText, descriptionAttribute.Description);
+        explorerItem.ToolTipText.Should().Contain(descriptionAttribute.Description);
+        customerNavigator.ToolTipText.Should().Contain(descriptionAttribute.Description);
       }
 
-      var orderEntitytype = typeof (OrderEntity);
-      var orderPropertiesToShowInSchema = LLBLGenDriverHelper.GetPropertiesToShowInSchema(orderEntitytype);
+      var orderEntityType = typeof (OrderEntity);
+      var orderPropertiesToShowInSchema = LLBLGenDriverHelper.GetPropertiesToShowInSchema(orderEntityType);
       var customerPropertyDescriptor = orderPropertiesToShowInSchema.Single(p => p.Name == customerName);
       StringAssert.Contains(customerNavigator.ToolTipText, customerPropertyDescriptor.Description);
       StringAssert.Contains(customerNavigator.ToolTipText, customerPropertyDescriptor.DisplayName);
@@ -153,7 +155,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 
       var first = explorerItem.Children.First();
       Assert.IsFalse(string.IsNullOrWhiteSpace(first.ToolTipText));
-      var customerPropertiesToShowInSchema = LLBLGenDriverHelper.GetPropertiesToShowInSchema(customerEntitytype);
+      var customerPropertiesToShowInSchema = LLBLGenDriverHelper.GetPropertiesToShowInSchema(customerEntityType);
       var description = customerPropertiesToShowInSchema.First().Description;
       Assert.IsFalse(String.IsNullOrEmpty(description));
       Assert.IsTrue(first.ToolTipText.Contains(description));
@@ -162,6 +164,8 @@ namespace AW.LLBLGen.DataContextDriver.Tests
       var quantityExplorerItem = orderDetailExplorerItem.Children.Single(ei => ei.DragText == "Quantity");
       StringAssert.Contains(quantityExplorerItem.ToolTipText, StringConstants.QuantityDescription);
 
+      var contactTitleExplorerItem = explorerItem.Children.Single(e => e.DragText == "ContactTitle");
+      contactTitleExplorerItem.ToolTipText.Should().Contain("Contact Title");
       return explorerItem;
     }
 

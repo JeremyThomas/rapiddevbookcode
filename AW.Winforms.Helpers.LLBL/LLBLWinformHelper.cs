@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
@@ -324,6 +325,11 @@ namespace AW.Winforms.Helpers.LLBL
         e.TraceOut();
       }
       displayName = displayName == propertyDescriptor.Name ? "" : displayName;
+      if (string.IsNullOrWhiteSpace(displayName))
+      {
+        if (propertyDescriptor.Attributes[typeof (DisplayAttribute)] is DisplayAttribute displayAttribute) 
+          displayName = displayAttribute.Name;
+      }
       var toolTipText = GeneralHelper.Join(GeneralHelper.StringJoinSeparator, displayName, propertyDescriptor.Description);
       return toolTipText;
     }
