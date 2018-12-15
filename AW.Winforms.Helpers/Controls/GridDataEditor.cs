@@ -998,6 +998,39 @@ namespace AW.Winforms.Helpers.Controls
         }
       }
 
+      if (e.Column.HeaderText == e.Column.DataPropertyName)
+      {
+        var displayAttribute = MetaDataHelper.GetDisplayAttributes(ItemType, e.Column.DataPropertyName).FirstOrDefault();
+        if (displayAttribute != null)
+        {
+          e.Column.HeaderText = displayAttribute.GetShortName();
+          e.Column.ToolTipText = displayAttribute.Description;
+        }
+        if (string.IsNullOrWhiteSpace(e.Column.ToolTipText))
+        {
+          var descriptionAttribute = MetaDataHelper.GetDescriptionAttributes(ItemType, e.Column.DataPropertyName).FirstOrDefault();
+          if (descriptionAttribute != null)
+          {
+            e.Column.ToolTipText = descriptionAttribute.Description;
+          }
+        }
+      }
+      else if (string.IsNullOrWhiteSpace(e.Column.ToolTipText))
+      {
+        var displayAttribute = MetaDataHelper.GetDisplayAttributes(ItemType, e.Column.DataPropertyName).FirstOrDefault();
+        if (displayAttribute != null)
+        {
+          e.Column.ToolTipText = displayAttribute.Description;
+        }
+        else
+        {
+          var descriptionAttribute = MetaDataHelper.GetDescriptionAttributes(ItemType, e.Column.DataPropertyName).FirstOrDefault();
+          if (descriptionAttribute != null)
+          {
+            e.Column.ToolTipText = descriptionAttribute.Description;
+          }
+        }
+      }
       //else if(e.Column.Tag==null)
       //{
       //  dataGridView.Columns.Remove(e.Column);

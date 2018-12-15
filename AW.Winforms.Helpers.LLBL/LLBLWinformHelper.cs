@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.Controls;
+using Fasterflect;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -306,14 +307,17 @@ namespace AW.Winforms.Helpers.LLBL
     {
       if (propertyDescriptor != null)
       {
-        var toolTipText = CreateDisplayNameDescriptionToolTipText(propertyDescriptor);
-        toolTipText += Environment.NewLine + EntityHelper.GetFieldsCustomProperties(entity, propertyDescriptor.Name).JoinAsString();
+        var description = EntityHelper.GetFieldsCustomProperties(entity, propertyDescriptor.Name).JoinAsString();
+        var toolTipText = CreateDisplayNameDescriptionToolTipText(propertyDescriptor, description);
+        toolTipText += Environment.NewLine + description;
         return toolTipText.Trim();
       }
       return "";
     }
 
-    public static string CreateDisplayNameDescriptionToolTipText(MemberDescriptor propertyDescriptor)
+    private static readonly MemberSetter DelegateForSetDescriptionValue = typeof(DescriptionAttribute).DelegateForSetPropertyValue("DescriptionValue");
+
+    public static string CreateDisplayNameDescriptionToolTipText(MemberDescriptor propertyDescriptor, string description = null)
     {
       var displayName = string.Empty;
       try
@@ -325,10 +329,23 @@ namespace AW.Winforms.Helpers.LLBL
         e.TraceOut();
       }
       displayName = displayName == propertyDescriptor.Name ? "" : displayName;
-      if (string.IsNullOrWhiteSpace(displayName))
+      var hasDescription = !string.IsNullOrWhiteSpace(description);
+      if (string.IsNullOrWhiteSpace(displayName) || hasDescription)
       {
-        if (propertyDescriptor.Attributes[typeof (DisplayAttribute)] is DisplayAttribute displayAttribute) 
+        if (propertyDescriptor.Attributes[typeof(DisplayAttribute)] is DisplayAttribute displayAttribute)
+        {
           displayName = displayAttribute.Name;
+          if (string.IsNullOrWhiteSpace(displayAttribute.Description) && !string.IsNullOrWhiteSpace(description))
+            displayAttribute.Description = description;
+        }
+        else
+        {
+          var descriptionAttribute = (DescriptionAttribute) propertyDescriptor.Attributes[typeof(DescriptionAttribute)];
+          //if (string.IsNullOrWhiteSpace(descriptionAttribute.Description))
+          //{
+          //  DelegateForSetDescriptionValue.Invoke(descriptionAttribute, description); //descriptionAttribute.DescriptionValue = description;
+          //}
+        }
       }
       var toolTipText = GeneralHelper.Join(GeneralHelper.StringJoinSeparator, displayName, propertyDescriptor.Description);
       return toolTipText;

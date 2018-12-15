@@ -294,7 +294,7 @@ return schemaOracle.Views;]]></SavedQuery>
           <Field Name="ContactTitle" Type="string" IsOptional="true" MaxLength="30">
             <OutputSettingValues>
               <Attributes>
-                <Attribute Value="Display(Name = &quot;Contact Title&quot;)" />
+                <Attribute Value="Display(Name = &quot;Contact Title&quot;, Description = &quot;Contact Title tooltip&quot;)" />
               </Attributes>
             </OutputSettingValues>
           </Field>

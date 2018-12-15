@@ -598,7 +598,7 @@ namespace Northwind.DAL.EntityClasses
 		/// <remarks>Mapped on  table field: "Customers"."ContactTitle"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 30<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		[Display(Name = "Contact Title")]
+		[Display(Name = "Contact Title", Description = "Contact Title tooltip")]
 		public virtual System.String ContactTitle
 		{
 			get { return (System.String)GetValue((int)CustomerFieldIndex.ContactTitle, true); }
