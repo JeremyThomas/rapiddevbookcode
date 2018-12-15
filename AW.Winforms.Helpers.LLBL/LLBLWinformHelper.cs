@@ -309,47 +309,42 @@ namespace AW.Winforms.Helpers.LLBL
       {
         var description = EntityHelper.GetFieldsCustomProperties(entity, propertyDescriptor.Name).JoinAsString();
         var toolTipText = CreateDisplayNameDescriptionToolTipText(propertyDescriptor, description);
-        toolTipText += Environment.NewLine + description;
         return toolTipText.Trim();
       }
       return "";
     }
 
-    private static readonly MemberSetter DelegateForSetDescriptionValue = typeof(DescriptionAttribute).DelegateForSetPropertyValue("DescriptionValue");
+	  static readonly MemberSetter DelegateForMemberDescriptorDescription = typeof(MemberDescriptor).DelegateForSetFieldValue("description");
 
-    public static string CreateDisplayNameDescriptionToolTipText(MemberDescriptor propertyDescriptor, string description = null)
-    {
-      var displayName = string.Empty;
-      try
-      {
-        displayName = propertyDescriptor.DisplayName;
-      }
-      catch (Exception e)
-      {
-        e.TraceOut();
-      }
-      displayName = displayName == propertyDescriptor.Name ? "" : displayName;
-      var hasDescription = !string.IsNullOrWhiteSpace(description);
-      if (string.IsNullOrWhiteSpace(displayName) || hasDescription)
-      {
-        if (propertyDescriptor.Attributes[typeof(DisplayAttribute)] is DisplayAttribute displayAttribute)
-        {
-          displayName = displayAttribute.Name;
-          if (string.IsNullOrWhiteSpace(displayAttribute.Description) && !string.IsNullOrWhiteSpace(description))
-            displayAttribute.Description = description;
-        }
-        else
-        {
-          var descriptionAttribute = (DescriptionAttribute) propertyDescriptor.Attributes[typeof(DescriptionAttribute)];
-          //if (string.IsNullOrWhiteSpace(descriptionAttribute.Description))
-          //{
-          //  DelegateForSetDescriptionValue.Invoke(descriptionAttribute, description); //descriptionAttribute.DescriptionValue = description;
-          //}
-        }
-      }
-      var toolTipText = GeneralHelper.Join(GeneralHelper.StringJoinSeparator, displayName, propertyDescriptor.Description);
-      return toolTipText;
-    }
+	  public static string CreateDisplayNameDescriptionToolTipText(MemberDescriptor propertyDescriptor, string description = null)
+	  {
+		  var displayName = string.Empty;
+		  try
+		  {
+			  displayName = propertyDescriptor.DisplayName;
+		  }
+		  catch (Exception e)
+		  {
+			  e.TraceOut();
+		  }
+
+		  displayName = displayName == propertyDescriptor.Name ? "" : displayName;
+		  var hasDescription = !string.IsNullOrWhiteSpace(description);
+		  if (string.IsNullOrWhiteSpace(displayName) || hasDescription)
+		  {
+			  if (propertyDescriptor.Attributes[typeof(DisplayAttribute)] is DisplayAttribute displayAttribute)
+			  {
+				  displayName = displayAttribute.Name;
+				  if (string.IsNullOrWhiteSpace(displayAttribute.Description) && !string.IsNullOrWhiteSpace(description))
+					  displayAttribute.Description = description;
+			  }
+		  }
+
+		  if (hasDescription)
+			  DelegateForMemberDescriptorDescription.Invoke(propertyDescriptor, GeneralHelper.Join(Environment.NewLine, propertyDescriptor.Description, description));
+		  var toolTipText = GeneralHelper.Join(Environment.NewLine, displayName, propertyDescriptor.Description);
+		  return toolTipText;
+	  }
 
     public static string CreateNavigatorToolTipText(IEntityCore entity, PropertyDescriptor navigatorProperty, string targetToolTipText)
     {

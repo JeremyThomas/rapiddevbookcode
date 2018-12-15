@@ -1008,27 +1008,27 @@ namespace AW.Winforms.Helpers.Controls
         }
         if (string.IsNullOrWhiteSpace(e.Column.ToolTipText))
         {
-          var descriptionAttribute = MetaDataHelper.GetDescriptionAttributes(ItemType, e.Column.DataPropertyName).FirstOrDefault();
-          if (descriptionAttribute != null)
+	        var propertyDescriptor = TypeDescriptor.GetProperties(ItemType)[e.Column.DataPropertyName];
+          if (propertyDescriptor != null)
           {
-            e.Column.ToolTipText = descriptionAttribute.Description;
+            e.Column.ToolTipText = propertyDescriptor.Description;
           }
         }
       }
       else if (string.IsNullOrWhiteSpace(e.Column.ToolTipText))
       {
-        var displayAttribute = MetaDataHelper.GetDisplayAttributes(ItemType, e.Column.DataPropertyName).FirstOrDefault();
+	      var displayAttribute = MetaDataHelper.GetDisplayAttributes(ItemType, e.Column.DataPropertyName).FirstOrDefault();
         if (displayAttribute != null)
         {
           e.Column.ToolTipText = displayAttribute.Description;
         }
         else
         {
-          var descriptionAttribute = MetaDataHelper.GetDescriptionAttributes(ItemType, e.Column.DataPropertyName).FirstOrDefault();
-          if (descriptionAttribute != null)
-          {
-            e.Column.ToolTipText = descriptionAttribute.Description;
-          }
+	        var propertyDescriptor = TypeDescriptor.GetProperties(ItemType)[e.Column.DataPropertyName];
+	        if (propertyDescriptor != null)
+	        {
+		        e.Column.ToolTipText = propertyDescriptor.Description;
+	        }
         }
       }
       //else if(e.Column.Tag==null)
