@@ -23,14 +23,19 @@ namespace AW.Helper
     ///   SD.Tools.OrmProfiler.Interceptor.NET45
     /// </summary>
     public const string OrmProfilerAssemblyString45 = OrmProfilerAssemblyString + ".NET45";
+    public const string OrmProfilerAssemblyStringNetFull = OrmProfilerAssemblyString + ".NetFull";
 
     public const string OrmProfilerAssemblyFileName = OrmProfilerAssemblyString + ".dll";
     public const string OrmProfilerAssemblyFileName45 = OrmProfilerAssemblyString45 + ".dll";
+    public const string OrmProfilerAssemblyFileNameNetFull= OrmProfilerAssemblyStringNetFull + ".dll";
 
     /// <summary>
     ///   SD.Tools.OrmProfiler.Interceptor.InterceptorCore
     /// </summary>
     public const string OrmProfilerInterceptorTypeName = OrmProfilerAssemblyString + ".InterceptorCore";
+
+    public const string OrmProfilerInterceptorPath = "Interceptor\\NetFull";
+    
 
     /// <summary>
     ///   SD.Tools.OrmProfiler.Interceptor.InterceptorCore, SD.Tools.OrmProfiler.Interceptor.dll
@@ -125,13 +130,24 @@ namespace AW.Helper
       if (interceptorType == null)
       {
         var ormProfilerPath = GetOrmProfilerPath();
+
         if (ormProfilerPath != null)
         {
           var interceptorLocation = Path.Combine(ormProfilerPath, dotNet45Installed ? OrmProfilerAssemblyFileName45 : OrmProfilerAssemblyFileName);
-          var interceptorAssembly = Assembly.LoadFrom(interceptorLocation);
+          Assembly interceptorAssembly;
+          if (File.Exists(interceptorLocation))
+            interceptorAssembly = Assembly.LoadFrom(interceptorLocation);
+          else
+          {
+            interceptorLocation = Path.Combine(ormProfilerPath, OrmProfilerInterceptorPath);
+            interceptorLocation = Path.Combine(interceptorLocation, OrmProfilerAssemblyFileNameNetFull);
+            interceptorAssembly = Assembly.LoadFrom(interceptorLocation);
+          }
+
           interceptorType = interceptorAssembly.GetType(OrmProfilerInterceptorTypeName);
         }
       }
+
       return interceptorType;
     }
 

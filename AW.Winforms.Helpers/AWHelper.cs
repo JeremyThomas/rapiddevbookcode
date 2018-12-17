@@ -267,7 +267,7 @@ namespace AW.Winforms.Helpers
     {
       var menuStripItem = (ToolStripItem) sender;
       var currentParent = menuStripItem.GetCurrentParent();
-      if (currentParent.InvokeRequired)
+      if (currentParent != null && currentParent.InvokeRequired)
       {
         currentParent.Invoke(new AWHelper.SetMenuItemEnableHandler(SetToolStripItemVisible), sender, bValue);
       }
