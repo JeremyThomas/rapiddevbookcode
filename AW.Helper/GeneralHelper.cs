@@ -99,6 +99,10 @@ namespace AW.Helper
       {
         TraceOut(e);
       }
+      catch (FileLoadException e)
+      {
+        TraceOut(e);
+      }
       return value ?? (coreType == enumType && throwException ? Enum.Parse(coreType, strOfEnum, true) : null);
       //Throw exception if null and type is not nullable and throwException flag is true
     }

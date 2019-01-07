@@ -36,16 +36,20 @@ namespace AW.Helper
 
     public const string OrmProfilerInterceptorPath = "Interceptor\\NetFull";
     
-
     /// <summary>
-    ///   SD.Tools.OrmProfiler.Interceptor.InterceptorCore, SD.Tools.OrmProfiler.Interceptor.dll
+    ///   SD.Tools.OrmProfiler.Interceptor.InterceptorCore, SD.Tools.OrmProfiler.Interceptor
     /// </summary>
     public const string OrmProfilerInterceptorAssemblyQualifiedTypeName = OrmProfilerInterceptorTypeName + ", " + OrmProfilerAssemblyString;
-
+   
     /// <summary>
-    ///   SD.Tools.OrmProfiler.Interceptor.InterceptorCore, SD.Tools.OrmProfiler.Interceptor.NET45.dll
+    ///   SD.Tools.OrmProfiler.Interceptor.InterceptorCore, SD.Tools.OrmProfiler.Interceptor.NET45
     /// </summary>
     public const string OrmProfilerInterceptorAssemblyQualifiedTypeName45 = OrmProfilerInterceptorTypeName + ", " + OrmProfilerAssemblyString45;
+
+    /// <summary>
+    ///   SD.Tools.OrmProfiler.Interceptor.InterceptorCore, SD.Tools.OrmProfiler.Interceptor.NETFull
+    /// </summary>
+    public const string OrmProfilerInterceptorAssemblyQualifiedTypeNameFull = OrmProfilerInterceptorTypeName + ", " + OrmProfilerAssemblyStringNetFull;
 
     /// <summary>
     ///   Initialize
@@ -125,7 +129,7 @@ namespace AW.Helper
       Type interceptorType = null;
       var dotNet45Installed = Environment.Version.Major == 4 && Environment.Version.Revision >= 18051;
       if (dotNet45Installed) //.NET45 installed
-        interceptorType = Type.GetType(OrmProfilerInterceptorAssemblyQualifiedTypeName45);
+        interceptorType = Type.GetType(OrmProfilerInterceptorAssemblyQualifiedTypeNameFull) ?? Type.GetType(OrmProfilerInterceptorAssemblyQualifiedTypeName45);
       interceptorType = interceptorType ?? (Type.GetType(OrmProfilerInterceptorAssemblyQualifiedTypeName));
       if (interceptorType == null)
       {
@@ -136,12 +140,12 @@ namespace AW.Helper
           var interceptorLocation = Path.Combine(ormProfilerPath, dotNet45Installed ? OrmProfilerAssemblyFileName45 : OrmProfilerAssemblyFileName);
           Assembly interceptorAssembly;
           if (File.Exists(interceptorLocation))
-            interceptorAssembly = Assembly.LoadFrom(interceptorLocation);
+            interceptorAssembly = Assembly.LoadFrom(interceptorLocation); // v1.x
           else
-          {
+          { 
             interceptorLocation = Path.Combine(ormProfilerPath, OrmProfilerInterceptorPath);
             interceptorLocation = Path.Combine(interceptorLocation, OrmProfilerAssemblyFileNameNetFull);
-            interceptorAssembly = Assembly.LoadFrom(interceptorLocation);
+            interceptorAssembly = Assembly.LoadFrom(interceptorLocation); // v2.x
           }
 
           interceptorType = interceptorAssembly.GetType(OrmProfilerInterceptorTypeName);
