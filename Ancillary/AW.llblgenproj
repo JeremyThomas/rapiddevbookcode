@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--LLBLGen Pro v4.2 project file. Do not manually edit this file. Incorrect references could lead to an unloadable project file.-->
-<Project Version="4.2" TargetFrameworkName="LLBLGen Pro Runtime Framework">
+<!--LLBLGen Pro v5.0 project file. Do not manually edit this file. Incorrect references could lead to an unloadable project file.-->
+<Project Version="5.0" TargetFrameworkName="LLBLGen Pro Runtime Framework">
   <Properties>
     <Abbreviations>
       <Abbreviation Name="id" Value="ID" />
@@ -10,12 +10,15 @@
     <Property Name="AdditionalTasksFolder" Value="" />
     <Property Name="AdditionalTemplatesFolder" Value="" />
     <Property Name="AdditionalTypeConverterFolder" Value="..\AW.Data\bin\Debug" />
-    <Property Name="AddNewElementsAfterRefresh" Value="0" />
-    <Property Name="AddNewFieldsAfterRefresh" Value="0" />
-    <Property Name="AddNewViewsAsEntitiesAfterRefresh" Value="0" />
+    <Property Name="AddNewElementsAfterRefresh_v5" Value="false" />
+    <Property Name="AddNewElementsAfterRelationalModelDataSync_v5" Value="false" />
+    <Property Name="AddNewFieldsAfterRefresh_v5" Value="true" />
+    <Property Name="AddNewFieldsAfterRelationalModelDataSync_v5" Value="true" />
+    <Property Name="AddNewViewsAsEntitiesAfterRefresh_v5" Value="false" />
+    <Property Name="AddNewViewsAsEntitiesAfterRelationalModelDataSync_v5" Value="false" />
     <Property Name="AutoAddManyToManyRelationships" Value="false" />
     <Property Name="AutoAssignSequencesToIntegerPks" Value="true" />
-    <Property Name="AutoAssignTypeConverterToFieldMapping" Value="false" />
+    <Property Name="AutoAssignTypeConverterToFieldMapping" Value="true" />
     <Property Name="CleanUpVsNetProjects" Value="false" />
     <Property Name="ConnectionStringKeyNamePattern" Value="Main.ConnectionString" />
     <Property Name="DefaultDeleteRuleAction" Value="1" />
@@ -32,10 +35,10 @@
     <Property Name="ForeignKeyConstraintPattern" Value="FK_{$Guid}" />
     <Property Name="ForeignKeyFieldPattern" Value="{$NavigatorName}{$RelatedFieldName}" />
     <Property Name="GroupUsage" Value="0" />
-    <Property Name="IdentifyingFieldsFollowDBPrimaryKeyConstraints" Value="0" />
+    <Property Name="IdentifyingFieldsFollowDBPrimaryKeyConstraints_v5" Value="true" />
     <Property Name="InsertUnderscoreAtWordBreakCaseInsensitiveDBs" Value="false" />
     <Property Name="InsertUnderscoreAtWordBreakCaseSensitiveDBs" Value="false" />
-    <Property Name="LengthPrecisionScaleFollowDBLengthPrecisionScale" Value="0" />
+    <Property Name="LengthPrecisionScaleFollowDBLengthPrecisionScale_v5" Value="true" />
     <Property Name="MakeElementNamePascalCasing" Value="true" />
     <Property Name="NavigatorMappedOntoManyToManyPattern" Value="{$EndEntityName}CollectionVia{$IntermediateEntityName$S}" />
     <Property Name="NavigatorMappedOntoOneManyToOnePattern" Value="{$EndEntityName$S}" />
@@ -48,13 +51,16 @@
     <Property Name="PrimaryKeyConstraintPattern" Value="PK_{$Guid}" />
     <Property Name="ProjectCreator" Value="Jeremy" />
     <Property Name="ProjectName" Value="AW.Data" />
-    <Property Name="ReflectNullabilityOfElementFieldInTargetField" Value="0" />
+    <Property Name="ReflectNullabilityOfElementFieldInTargetField_v5" Value="false" />
+    <Property Name="ReflectTypeOfElementFieldInTargetField_v5" Value="true" />
     <Property Name="RelationalModelDataElementNameCasingCaseInsensitiveDBs" Value="3" />
     <Property Name="RelationalModelDataElementNameCasingCaseSensitiveDBs" Value="3" />
-    <Property Name="RelationshipsFollowDBForeignKeyConstraints" Value="0" />
+    <Property Name="RelationshipsFollowDBForeignKeyConstraints_v5" Value="true" />
     <Property Name="RemoveUnderscoresFromElementName" Value="true" />
-    <Property Name="RemoveUnmappedElementsAfterRefresh" Value="0" />
+    <Property Name="RemoveUnmappedElementsAfterRefresh_v5" Value="false" />
+    <Property Name="RemoveUnmappedElementsAfterRelationalModelDataSync_v5" Value="false" />
     <Property Name="ResetFieldOrderBasedOnTargetOrderAtRefresh" Value="false" />
+    <Property Name="ResetFieldOrderBasedOnTargetOrderAtRelationalModelDataSync" Value="false" />
     <Property Name="RetrieveDBCustomProperties" Value="true" />
     <Property Name="RootNamespace" Value="" />
     <Property Name="SequenceNameMatchingPattern" Value="SEQ_{$TableName}" />
@@ -64,41 +70,44 @@
     <Property Name="SingularizeElementNames" Value="true" />
     <Property Name="StoredProcNameStripPattern" Value="{pr_, sp_}{}" />
     <Property Name="StoreTimeLastGeneratedIntoProject" Value="false" />
-    <Property Name="SyncMappedElementNamesAfterRefresh" Value="0" />
-    <Property Name="SyncRelationalModelDataElementNameAfterRename" Value="0" />
-    <Property Name="SyncRenamedMappedElementNamesAfterRefresh" Value="0" />
+    <Property Name="SyncMappedElementNamesAfterRefresh_v5" Value="false" />
+    <Property Name="SyncMappedElementNamesAfterRelationalModelDataSync_v5" Value="false" />
+    <Property Name="SyncRelationalModelDataElementNameWithModelElementName_v5" Value="false" />
+    <Property Name="SyncRenamedMappedElementNamesAfterRefresh_v5" Value="false" />
+    <Property Name="SyncRenamedMappedElementNamesAfterRelationalModelDataSync_v5" Value="false" />
     <Property Name="TableValuedFunctionNameStripPattern" Value="{fn_, pr_, sp_}{}" />
     <Property Name="TargetPerEntityEdgesRequireBackingFkConstraint" Value="true" />
     <Property Name="TypedViewFieldNameStripPattern" Value="{}{}" />
     <Property Name="TypedViewMappedOnResultsetPattern" Value="{$ProcFunctionName}{$ResultsetName}Result" />
     <Property Name="TypedViewNameStripPattern" Value="{vw_}{}" />
     <Property Name="UniqueConstraintPattern" Value="UC_{$Guid}" />
-    <Property Name="UniqueConstraintsFollowDBUniqueConstraints" Value="0" />
-    <Property Name="UpdateCustomPropertiesAfterRefresh" Value="0" />
+    <Property Name="UniqueConstraintsFollowDBUniqueConstraints_v5" Value="true" />
+    <Property Name="UpdateCustomPropertiesAfterRefresh_v5" Value="false" />
+    <Property Name="UpdateCustomPropertiesAfterRelationalModelDataSync_v5" Value="false" />
     <Property Name="UseCustomFieldOrderingOnNewElements" Value="false" />
   </Properties>
   <TypeShortcuts>
-    <TypeShortcut Shortcut="AddressType" Type="AW.Data.AddressType, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="ContactType" Type="AW.Data.ContactType, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="CreditRating" Type="AW.Data.CreditRating, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="Current" Type="AW.Data.Current, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="EmailPromotion" Type="AW.Data.EmailPromotion, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="Gender" Type="AW.Data.Gender, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="JobClassification" Type="AW.Data.JobClassification, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="MaritalStatus" Type="AW.Data.MaritalStatus, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="NameStyle" Type="AW.Data.NameStyle, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="OrderPlacesBy" Type="AW.Data.OrderPlacesBy, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="OrderStatus" Type="AW.Data.OrderStatus, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="PayFrequency" Type="AW.Data.PayFrequency, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="ProductClass" Type="AW.Data.ProductClass, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="ProductFinished" Type="AW.Data.ProductFinished, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="ProductLine" Type="AW.Data.ProductLine, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="ProductMaintenanceDocumentStatus" Type="AW.Data.ProductMaintenanceDocumentStatus, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="ProductMake" Type="AW.Data.ProductMake, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="ProductStyle" Type="AW.Data.ProductStyle, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="PurchaseOrderStatus" Type="AW.Data.PurchaseOrderStatus, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="StateProvinceCodeExistence" Type="AW.Data.StateProvinceCodeExistence, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="TaxApplication" Type="AW.Data.TaxApplication, AW.Data, Version=4.2.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="AddressType" Type="AW.Data.AddressType, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ContactType" Type="AW.Data.ContactType, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="CreditRating" Type="AW.Data.CreditRating, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="Current" Type="AW.Data.Current, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="EmailPromotion" Type="AW.Data.EmailPromotion, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="Gender" Type="AW.Data.Gender, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="JobClassification" Type="AW.Data.JobClassification, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="MaritalStatus" Type="AW.Data.MaritalStatus, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="NameStyle" Type="AW.Data.NameStyle, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="OrderPlacesBy" Type="AW.Data.OrderPlacesBy, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="OrderStatus" Type="AW.Data.OrderStatus, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="PayFrequency" Type="AW.Data.PayFrequency, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductClass" Type="AW.Data.ProductClass, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductFinished" Type="AW.Data.ProductFinished, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductLine" Type="AW.Data.ProductLine, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductMaintenanceDocumentStatus" Type="AW.Data.ProductMaintenanceDocumentStatus, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductMake" Type="AW.Data.ProductMake, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductStyle" Type="AW.Data.ProductStyle, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="PurchaseOrderStatus" Type="AW.Data.PurchaseOrderStatus, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="StateProvinceCodeExistence" Type="AW.Data.StateProvinceCodeExistence, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="TaxApplication" Type="AW.Data.TaxApplication, AW.Data, Version=5.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
   </TypeShortcuts>
   <IgnoredWarnings />
   <SavedSearchQueries />
@@ -5360,7 +5369,7 @@
     </SPCallDefinition>
   </SPCallDefinitions>
   <TargetDatabases>
-    <TargetDatabase Type="2D18D138-1DD2-467E-86CC-4838250611AE">
+    <TargetDatabase Type="2D18D138-1DD2-467E-86CC-4838250611AE" SyncSource="2">
       <ConnectionElements>
         <ConnectionElement Name="ServerName" Value="(local)\SQLEXPRESS" />
         <ConnectionElement Name="CatalogName" Value="master" />
@@ -5373,9 +5382,9 @@
         <Sequence Name="@@IDENTITY" />
       </SystemSequences>
       <Catalogs>
-        <Catalog Name="AdventureWorks">
+        <Catalog Name="AdventureWorks" SyncSource="2">
           <Schemas>
-            <Schema Name="dbo">
+            <Schema Name="dbo" SyncSource="2">
               <Tables>
                 <Table Name="AWBuildVersion">
                   <PkConstraintName Name="PK_AWBuildVersion_SystemInformationID" />
@@ -5639,7 +5648,7 @@
                 </StoredProcedure>
               </StoredProcedures>
             </Schema>
-            <Schema Name="HumanResources">
+            <Schema Name="HumanResources" SyncSource="2">
               <Tables>
                 <Table Name="Department">
                   <PkConstraintName Name="PK_Department_DepartmentID" />
@@ -6154,7 +6163,7 @@
                 </StoredProcedure>
               </StoredProcedures>
             </Schema>
-            <Schema Name="Person">
+            <Schema Name="Person" SyncSource="2">
               <Tables>
                 <Table Name="Address">
                   <PkConstraintName Name="PK_Address_AddressID" />
@@ -6455,7 +6464,7 @@
                 </View>
               </Views>
             </Schema>
-            <Schema Name="Production">
+            <Schema Name="Production" SyncSource="2">
               <Tables>
                 <Table Name="BillOfMaterials">
                   <PkConstraintName Name="PK_BillOfMaterials_BillOfMaterialsID" />
@@ -7552,7 +7561,7 @@
                 </View>
               </Views>
             </Schema>
-            <Schema Name="Purchasing">
+            <Schema Name="Purchasing" SyncSource="2">
               <Tables>
                 <Table Name="ProductVendor">
                   <PkConstraintName Name="PK_ProductVendor_ProductID_VendorID" />
@@ -7923,7 +7932,7 @@
                 </View>
               </Views>
             </Schema>
-            <Schema Name="Sales">
+            <Schema Name="Sales" SyncSource="2">
               <Tables>
                 <Table Name="ContactCreditCard">
                   <PkConstraintName Name="PK_ContactCreditCard_ContactID_CreditCardID" />
