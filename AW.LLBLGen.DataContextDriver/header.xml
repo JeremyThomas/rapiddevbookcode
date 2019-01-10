@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <DataContextDriver>
-	 <MainAssembly>AW.LLBLGen.DataContextDriver.50.dll</MainAssembly>
+	 <MainAssembly>AW.LLBLGen.DataContextDriver.41.dll</MainAssembly>
 	 <SupportUri>http://rapiddevbookcode.codeplex.com/wikipage?title=LLBL4linqpad</SupportUri>
 </DataContextDriver>
