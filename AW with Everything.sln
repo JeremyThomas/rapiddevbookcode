@@ -172,35 +172,31 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LLBLGen.Plugins", "AW.LL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectAsSourceCodeVisualizer", "Tools\ObjectSourceVisualizer\ObjectAsSourceCodeVisualizer.csproj", "{131ADE94-66B8-4FE5-96ED-D01E61955327}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AW.WebDbEditor 4.2", "http://localhost/AW.WebDbEditor 4.2", "{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSScriptQueryPad", "Tools\CsScriptQueryPad\CSScriptQueryPad.csproj", "{3FB3D9FE-B63A-4A28-9924-ABF47487128C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LLBLGen.EntityExplorer", "Tools\LLBLGen.EntityBrowser\LLBLGen.EntityExplorer.csproj", "{AA92D1DD-B208-43CE-8E8F-7C5A04D6EB89}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AW.WebDbEditor", "AW.WebDbEditor\", "{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}"
 	ProjectSection(WebsiteProperties) = preProject
-		SccProjectName = "SAK"
-		SccAuxPath = "SAK"
-		SccLocalPath = "SAK"
-		SccProvider = "SAK"
-		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
 		ProjectReferences = "{47f52527-a001-405b-9cec-fcbf7fa10855}|AW.Data.dll;{FFC5B55E-9157-4CE6-81BD-E593E4C08422}|AW.Helper.dll;{7919C746-73F3-4279-A53B-CC6C08F42318}|AW.Helper.LLBL.dll;"
-		Debug.AspNetCompiler.VirtualPath = "/AW.WebDbEditor 4.2"
-		Debug.AspNetCompiler.PhysicalPath = "..\..\Codeplex\RapidDevBookCode\LLBL Pro v4.2\AW.WebDbEditor\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\AW.WebDbEditor 4.2\"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_54069"
+		Debug.AspNetCompiler.PhysicalPath = "AW.WebDbEditor\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54069\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/AW.WebDbEditor 4.2"
-		Release.AspNetCompiler.PhysicalPath = "..\..\Codeplex\RapidDevBookCode\LLBL Pro v4.2\AW.WebDbEditor\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\AW.WebDbEditor 4.2\"
+		Release.AspNetCompiler.VirtualPath = "/localhost_54069"
+		Release.AspNetCompiler.PhysicalPath = "AW.WebDbEditor\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54069\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "..\..\Codeplex\RapidDevBookCode\LLBL Pro v4.2\AW.WebDbEditor\"
+		VWDPort = "54069"
+		SlnRelativePath = "AW.WebDbEditor\"
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSScriptQueryPad", "Tools\CsScriptQueryPad\CSScriptQueryPad.csproj", "{3FB3D9FE-B63A-4A28-9924-ABF47487128C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LLBLGen.EntityExplorer", "Tools\LLBLGen.EntityBrowser\LLBLGen.EntityExplorer.csproj", "{AA92D1DD-B208-43CE-8E8F-7C5A04D6EB89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1001,32 +997,6 @@ Global
 		{131ADE94-66B8-4FE5-96ED-D01E61955327}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{131ADE94-66B8-4FE5-96ED-D01E61955327}.Release|Any CPU.Build.0 = Release|Any CPU
 		{131ADE94-66B8-4FE5-96ED-D01E61955327}.Release|x86.ActiveCfg = Release|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug no unit tests|x86.Build.0 = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug No Web|Any CPU.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug No Web|x86.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug No Web|x86.Build.0 = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug|x86.Build.0 = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release - Test|Any CPU.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release - Test|Any CPU.Build.0 = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release - Test|x86.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release - Test|x86.Build.0 = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release 2013|Any CPU.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release 2013|x86.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release 2015|Any CPU.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release 2015|Any CPU.Build.0 = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release 2015|x86.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release 2015|x86.Build.0 = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release 2017|Any CPU.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release 2017|x86.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release|x86.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release|x86.Build.0 = Debug|Any CPU
 		{3FB3D9FE-B63A-4A28-9924-ABF47487128C}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
 		{3FB3D9FE-B63A-4A28-9924-ABF47487128C}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
 		{3FB3D9FE-B63A-4A28-9924-ABF47487128C}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
@@ -1084,6 +1054,38 @@ Global
 		{AA92D1DD-B208-43CE-8E8F-7C5A04D6EB89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA92D1DD-B208-43CE-8E8F-7C5A04D6EB89}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AA92D1DD-B208-43CE-8E8F-7C5A04D6EB89}.Release|x86.ActiveCfg = Release|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Debug no unit tests|x86.Build.0 = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Debug No Web|Any CPU.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Debug No Web|Any CPU.Build.0 = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Debug No Web|x86.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Debug No Web|x86.Build.0 = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Debug|x86.Build.0 = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release - Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release - Test|Any CPU.Build.0 = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release - Test|x86.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release - Test|x86.Build.0 = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release 2013|Any CPU.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release 2013|Any CPU.Build.0 = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release 2013|x86.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release 2013|x86.Build.0 = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release 2015|Any CPU.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release 2015|Any CPU.Build.0 = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release 2015|x86.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release 2015|x86.Build.0 = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release 2017|Any CPU.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release 2017|Any CPU.Build.0 = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release 2017|x86.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release 2017|x86.Build.0 = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release|x86.ActiveCfg = Debug|Any CPU
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E}.Release|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1115,9 +1117,9 @@ Global
 		{AE12F25F-02C9-498D-9420-1C6B32913D22} = {79351B3D-6F22-43FC-B6E3-84403C789513}
 		{0455FCEB-846A-42C7-AECB-47A895213FF2} = {79351B3D-6F22-43FC-B6E3-84403C789513}
 		{131ADE94-66B8-4FE5-96ED-D01E61955327} = {79351B3D-6F22-43FC-B6E3-84403C789513}
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
 		{3FB3D9FE-B63A-4A28-9924-ABF47487128C} = {79351B3D-6F22-43FC-B6E3-84403C789513}
 		{AA92D1DD-B208-43CE-8E8F-7C5A04D6EB89} = {79351B3D-6F22-43FC-B6E3-84403C789513}
+		{42C77892-62D0-4A8A-82CA-6E06D08F2B2E} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {137DC18D-5C88-4EE2-8FCD-965CE1E5F566}
