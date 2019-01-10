@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 4.2
+// Code is generated using LLBLGen Pro version: 5.0
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
@@ -672,7 +672,7 @@ namespace AW.Data.Linq
 		{
 			get { return new DataSource<StoreContactEntity>(_transactionToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
- 
+
 		/// <summary>returns the datasource to use in a Linq query when targeting Sales.CustomerViewLinq instances in the database.</summary>
 		public DataSource<AW.Data.TypedViewClasses.CustomerViewLinqRow> CustomerViewLinq
 		{
