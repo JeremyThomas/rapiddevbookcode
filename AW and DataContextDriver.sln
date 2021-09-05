@@ -1,10 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Win", "AW.Win\AW.Win.csproj", "{C3B6A2C2-7333-4250-9384-ECB7CE06FE21}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Data", "AW.Data\AW.Data.csproj", "{47F52527-A001-405B-9CEC-FCBF7FA10855}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31612.314
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{109114F1-DE48-4B10-AF10-A18D9AF68E8B}"
 	ProjectSection(SolutionItems) = preProject
 		Ancillary\AdventureWorks.snk = Ancillary\AdventureWorks.snk
@@ -50,8 +48,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleQueryFiles", "SampleQ
 		SampleQueryFiles\ViewInDataGridView.cs = SampleQueryFiles\ViewInDataGridView.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicQuery", "DynamicQuery\DynamicQuery.csproj", "{F285CEB0-4108-440C-AD94-1C1A7C159D7C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LLBL", "LLBL", "{F90642C7-E5E0-4B67-A97C-464F8697A452}"
 	ProjectSection(SolutionItems) = preProject
 		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll
@@ -62,8 +58,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LLBL", "LLBL", "{F90642C7-E
 		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.pdb = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.pdb
 		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.xml = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.xml
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Helper", "AW.Helper\AW.Helper.csproj", "{FFC5B55E-9157-4CE6-81BD-E593E4C08422}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{F15CB949-7617-4315-BC90-9A4A94633C86}"
 	ProjectSection(SolutionItems) = preProject
@@ -83,6 +77,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hawkeye", "Hawkeye", "{A951
 		Lib\ACorns.Hawkeye.Injector.pdb = Lib\ACorns.Hawkeye.Injector.pdb
 		Lib\ACorns.PropertyGridExtender.dll = Lib\ACorns.PropertyGridExtender.dll
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Win", "AW.Win\AW.Win.csproj", "{C3B6A2C2-7333-4250-9384-ECB7CE06FE21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Data", "AW.Data\AW.Data.csproj", "{47F52527-A001-405B-9CEC-FCBF7FA10855}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicQuery", "DynamicQuery\DynamicQuery.csproj", "{F285CEB0-4108-440C-AD94-1C1A7C159D7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Helper", "AW.Helper\AW.Helper.csproj", "{FFC5B55E-9157-4CE6-81BD-E593E4C08422}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Winforms.Helpers", "AW.Winforms.Helpers\AW.Winforms.Helpers.csproj", "{D8041984-1823-4672-9B6E-3E99AB6A3A7A}"
 EndProject
@@ -105,57 +107,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LinqToSQL", "AW.LinqToSQL\AW.LinqToSQL.csproj", "{3A769AFA-83F9-4CB0-8F69-60B8487055E0}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 15
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = AW.Win\\AW.Win.csproj
-		SccProjectName1 = AW.Win
-		SccLocalPath1 = AW.Win
-		SccProjectUniqueName2 = AW.Data\\AW.Data.csproj
-		SccProjectName2 = AW.Data
-		SccLocalPath2 = AW.Data
-		SccProjectUniqueName3 = DynamicQuery\\DynamicQuery.csproj
-		SccProjectName3 = DynamicQuery
-		SccLocalPath3 = DynamicQuery
-		SccProjectUniqueName4 = AW.Helper\\AW.Helper.csproj
-		SccProjectName4 = AW.Helper
-		SccLocalPath4 = AW.Helper
-		SccProjectUniqueName5 = AW.Winforms.Helpers\\AW.Winforms.Helpers.csproj
-		SccProjectName5 = AW.Winforms.Helpers
-		SccLocalPath5 = AW.Winforms.Helpers
-		SccProjectUniqueName6 = AW.Helper.LLBL\\AW.Helper.LLBL.csproj
-		SccProjectName6 = AW.Helper.LLBL
-		SccLocalPath6 = AW.Helper.LLBL
-		SccProjectUniqueName7 = AW.Winforms.Helpers.LLBL\\AW.Winforms.Helpers.LLBL.csproj
-		SccProjectName7 = AW.Winforms.Helpers.LLBL
-		SccLocalPath7 = AW.Winforms.Helpers.LLBL
-		SccProjectUniqueName8 = AW.LLBLGen.DataContextDriver\\AW.LLBLGen.DataContextDriver.csproj
-		SccProjectName8 = AW.LLBLGen.DataContextDriver
-		SccLocalPath8 = AW.LLBLGen.DataContextDriver
-		SccProjectUniqueName9 = AW.DebugVisualizers\\AW.DebugVisualizers.csproj
-		SccProjectName9 = AW.DebugVisualizers
-		SccLocalPath9 = AW.DebugVisualizers
-		SccProjectUniqueName10 = AW.DebugVisualizers.Tests\\AW.DebugVisualizers.Tests.csproj
-		SccProjectName10 = AW.DebugVisualizers.Tests
-		SccLocalPath10 = AW.DebugVisualizers.Tests
-		SccProjectUniqueName11 = AW.Win.Tests\\AW.Win.Tests.csproj
-		SccProjectName11 = AW.Win.Tests
-		SccLocalPath11 = AW.Win.Tests
-		SccProjectUniqueName12 = AW.Test\\AW.Tests.csproj
-		SccProjectName12 = AW.Test
-		SccLocalPath12 = AW.Test
-		SccProjectUniqueName13 = ObjectListView\\ObjectListView.csproj
-		SccProjectName13 = ObjectListView
-		SccLocalPath13 = ObjectListView
-		SccProjectUniqueName14 = AW.LinqToSQL\\AW.LinqToSQL.csproj
-		SccProjectName14 = AW.LinqToSQL
-		SccLocalPath14 = AW.LinqToSQL
-	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = AW.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug no unit tests|Any CPU = Debug no unit tests|Any CPU
 		Debug|Any CPU = Debug|Any CPU
@@ -282,6 +233,12 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F90642C7-E5E0-4B67-A97C-464F8697A452} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{A951B179-B81E-42E2-81CD-242D8E1D278D} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0D604BF6-9E57-427B-9072-581770A636B9}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = AW.vsmdi
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
 		SpecExplorer.ActivityCompletionStatus = 
